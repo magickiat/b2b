@@ -1,0 +1,92 @@
+
+.menu  {font-family: Tahoma; font-size: 11px; color: #FFFFFF; text-decoration: none;}
+a.menu:link {font-family: Tahoma; font-size: 11px; color: #FFFFFF; text-decoration: none;}
+a.menu:visited {font-family: Tahoma; font-size: 11px; color: #FFFFFF; text-decoration: none;}
+a.menu:hover {font-family: Tahoma; font-size: 11px; color: #CAE001; text-decoration: none;}
+
+.txt-link  {font-family: Tahoma; font-size: 12px; color: #CCCCCC; text-decoration: none;}
+a.txt-link:link {font-family: Tahoma; font-size: 12px; color: #006600; text-decoration: none;}
+a.txt-link:visited {font-family: Tahoma; font-size: 12px; color: #006600; text-decoration: none;}
+a.txt-link:hover {font-family: Tahoma; font-size: 12px; color: #00CC00; text-decoration: underline;}
+
+.footer  {font-family: Tahoma; font-size: 11px; color: #FFF; text-decoration: none;}
+.footer a:link {font-family: Tahoma; font-size: 11px; color: #676768; text-decoration: none;}
+a.footer:visited {font-family: Tahoma; font-size: 11px; color: #FFFFFF; text-decoration: none;}
+a.footer:hover {font-family: Tahoma; font-size: 11px; color: #CAE001; text-decoration: none;}
+
+DIV.text P {font-family: Tahoma; font-size: 12px; color:#333333 }
+DIV.text STRONG {font-family: Tahoma; font-size: 12px; color:#333333 }
+DIV.text {font-family: Tahoma; font-size: 12px; color:#333333 }
+
+.text {font-family: Tahoma; font-size: 12px; color:#33FF33; text-decoration: none;}
+.txt-detail {font-family: Tahoma; font-size: 12px; color:#333333; text-decoration: none;}
+A.text,A.order:link,A.order:visited {text-decoration: none; Color: #000000}
+A.text:hover {text-decoration: none; font-weight: underline; Color: #CAE001 }
+
+.linkRed {font-family: Tahoma; font-size: 12px; }
+A.linkRed,A.order:link,A.order:visited {text-decoration: none; Color: #FF0000}
+A.linkRed:hover {text-decoration: none; font-weight: underline; Color: #000000 }
+
+.textTitel {font-family: Tahoma; font-size: 16px; Color: #345B80}
+.textTitelRed {font-family: Tahoma; font-size: 16px; Color: #FF0000}
+.text12 {font-family: Tahoma; font-size: 12px; Color: #000000}
+
+.textWhite {font-family: Tahoma; font-size: 14px; Color: #FFFFFF}
+.textRedPig {font-family: Tahoma; font-size: 14px; Color: #990000}
+.textRed {font-family: Tahoma; font-size: 13px; Color: #FF0000}
+
+.textFooter  {font-family: Tahoma; font-size: 14px; color: #FFFFFF; text-decoration: none;}
+A.textFooter,A.textFooter:link,A.textFooter:visited {text-decoration: none; Color: #FFFFFF}
+A.textFooter:hover {text-decoration: none; font-weight: underline; Color: #CAE001 }
+
+.table-1 {
+	background-color: #FFFFFF;
+	font-family: tahoma, ms sans serif;
+	font-size: 12px;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+}
+
+.table-row-header {
+	color: #FFFFFF;	
+	font-family: tahoma, ms sans serif;
+	font-size: 12px;
+	background-color: #747533;
+
+}
+
+.table-row-1 {
+	font-family: tahoma, ms sans serif;
+	font-size: 12px;
+	background-color: #FFFFFF;
+}
+
+.table-row-2 {
+	font-family: tahoma, ms sans serif;
+	font-size: 12px;
+	background-color: #F6F6F6;
+}
+
+.table-2 {
+	background-color: #FFFFFF;
+	font-family: tahoma, ms sans serif;
+	font-size: 11px;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	vertical-align: top;
+}
+
+
+

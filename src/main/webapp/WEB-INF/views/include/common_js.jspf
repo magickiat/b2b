@@ -1,0 +1,7 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<c:url var="jquery" value="/webjars/jquery/1.11.1/jquery.min.js"></c:url>
+<c:url var="jquery_ui" value="/webjars/jquery-ui/1.11.4/jquery-ui.min.js"></c:url>
+
+<script type="text/javascript" src="${jquery}"></script>
+<script type="text/javascript" src="${jquery_ui}"></script>

@@ -1,0 +1,70 @@
+@CHARSET "UTF-8";
+
+   p:nth-child(even)
+    {
+     background: #D8D8D8;
+    }
+   p:nth-child(odd)
+    {
+   	background:  #BDBDBD;
+    }
+    
+   /* unvisited link */
+  a:link {
+    color: #000000;
+    }
+
+  /* visited link */
+  a:visited {
+    color: #000000;
+    
+    }
+  /* mouse over link */
+  a:hover {
+    color:#000000;
+	text-decoration: underline;
+   }
+
+  /* selected link */
+  a:active {
+    color: #000000;
+  }
+  div.product-list {
+	float: left;
+	width: 65%;
+	padding-right:30px;
+}
+
+.ProImage
+{
+	display: inline-block;
+	float:left;
+	font-size:120%;
+	text-align:center;
+	width:20%;
+	border-radius: 10px;
+	padding: 2%;
+	margin:2%;
+	background:linear-gradient(#656565,#343434);/* StanDard */
+	background: -webkit-linear-gradient(#656565,#343434); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#656565,#343434); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#656565,#343434); /* For Firefox 3.6 to 15 */
+    color: #FFFFFF !important;
+}
+
+.ProImage:hover
+{
+	display: inline-block;
+	float:left;
+	font-size:120%;
+	text-align:center;
+	width:20%;
+	border-radius: 10px;
+	padding: 2%;
+	margin:2%;
+	background:linear-gradient(#75BE47,#378D15);/* StanDard */
+	background: -webkit-linear-gradient(#75BE47,#378D15); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#75BE47,#378D15); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#75BE47,#378D15); /* For Firefox 3.6 to 15 */
+	
+}

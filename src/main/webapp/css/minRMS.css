@@ -1,0 +1,4239 @@
+DIV.row {
+	CLEAR: both
+}
+.noOverflow {
+	OVERFLOW: hidden
+}
+#dBoxOverLayerRelativeContainer {
+	Z-INDEX: 1199; POSITION: fixed; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; TOP: 0px; PADDING-TOP: 0px; LEFT: 0px
+}
+* HTML #dBoxOverLayerRelativeContainer {
+	POSITION: absolute
+}
+.dBoxOverLayerContainer {
+	Z-INDEX: 1000; POSITION: fixed; FILTER: alpha(opacity=60); PADDING-BOTTOM: 0px; BACKGROUND-COLOR: #000; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; DISPLAY: none; TOP: 0px; CURSOR: wait; PADDING-TOP: 0px; LEFT: 0px; -moz-opacity: .6; opacity: .6
+}
+* HTML .dBoxOverLayerContainer {
+	POSITION: absolute; CURSOR: wait
+}
+.dBoxModal {
+	Z-INDEX: 1200; POSITION: fixed; DISPLAY: block
+}
+* HTML .dBoxModal {
+	Z-INDEX: 1400; POSITION: absolute
+}
+INPUT.watermark {
+	COLOR: gray
+}
+.textBoxWithDropDownSelection {
+	BORDER-BOTTOM: #000 1px solid; BORDER-LEFT: #dfdfdf 1px solid; PADDING-BOTTOM: 1px; PADDING-LEFT: 1px; PADDING-RIGHT: 1px; DISPLAY: none; BACKGROUND: #fff 0px 0px; FLOAT: none; FONT-SIZE: 12px; OVERFLOW: auto; BORDER-TOP: #efefef 1px solid; BORDER-RIGHT: #000 1px solid; PADDING-TOP: 1px
+}
+.textBoxWithDropDownSelection UL {
+	LIST-STYLE-TYPE: none; FLOAT: none; LIST-STYLE-IMAGE: none
+}
+.textBoxWithDropDownSelection UL LI {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 5px; PADDING-RIGHT: 0px; FONT-WEIGHT: 400; PADDING-TOP: 2px
+}
+.textBoxWithDropDownSelection UL LI:hover {
+	BACKGROUND: #fbee99
+}
+HTML {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+BODY {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+DIV {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+SPAN {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+APPLET {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+OBJECT {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+IFRAME {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+H1 {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+H2 {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+H3 {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+H4 {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+H5 {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+H6 {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+P {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+BLOCKQUOTE {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+PRE {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+A {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+ABBR {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+ACRONYM {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+ADDRESS {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+BIG {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+CITE {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+CODE {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+DEL {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+DFN {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+EM {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+FONT {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+IMG {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+INS {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+KBD {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+Q {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+S {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+SAMP {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+SMALL {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+STRIKE {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+STRONG {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+SUB {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+SUP {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+TT {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+VAR {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+DL {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+DT {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+DD {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+UL {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+LI {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+FIELDSET {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+FORM {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+LABEL {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+LEGEND {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+TABLE {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+CAPTION {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+TBODY {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+TFOOT {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+THEAD {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+TR {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+TH {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+TD {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; FONT-STYLE: inherit; MARGIN: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert; PADDING-LEFT: 0px; OUTLINE-WIDTH: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, inherit; FONT-SIZE: 100%; VERTICAL-ALIGN: baseline; BORDER-TOP: 0px; FONT-WEIGHT: inherit; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+:focus {
+	OUTLINE-STYLE: none; OUTLINE-COLOR: invert; OUTLINE-WIDTH: 0px
+}
+BODY {
+	BACKGROUND: white; COLOR: #000
+}
+UL {
+	LIST-STYLE-TYPE: none; LIST-STYLE-IMAGE: none
+}
+TABLE {
+	BORDER-COLLAPSE: separate
+}
+CAPTION {
+	TEXT-ALIGN: left; FONT-WEIGHT: 400
+}
+TH {
+	TEXT-ALIGN: left; FONT-WEIGHT: 400
+}
+TD {
+	TEXT-ALIGN: left; FONT-WEIGHT: 400
+}
+BLOCKQUOTE:before {
+	CONTENT: ""
+}
+BLOCKQUOTE:after {
+	CONTENT: ""
+}
+Q:before {
+	CONTENT: ""
+}
+Q:after {
+	CONTENT: ""
+}
+BLOCKQUOTE {
+	QUOTES: "" ""
+}
+Q {
+	QUOTES: "" ""
+}
+* {
+	MARGIN: 0px
+}
+HTML {
+	HEIGHT: 100%
+}
+BODY {
+	HEIGHT: 100%
+}
+.wrapper {
+	MIN-HEIGHT: 100%; HEIGHT: auto !important
+}
+.wrapJS {
+	MARGIN: 0px auto -70px
+}
+.wrapRMS {
+	MARGIN: 0px auto -65px
+}
+.wrapPopup {
+	MARGIN: 0px auto -20px
+}
+BODY {
+	FONT-FAMILY: tahoma, arial, helvetica, clean, sans-serif; FONT-SIZE: 62.5%
+}
+H1 {
+	MARGIN: 0px 0px 10px; FONT-FAMILY: tahoma, Georgia, "Times New Roman"; FONT-WEIGHT: 400
+}
+H2 {
+	MARGIN: 0px 0px 10px; FONT-FAMILY: tahoma, Georgia, "Times New Roman"; FONT-WEIGHT: 400
+}
+H3 {
+	MARGIN: 0px 0px 10px; FONT-FAMILY: tahoma, Georgia, "Times New Roman"; FONT-WEIGHT: 400
+}
+H1 {
+	COLOR: #555
+}
+H2 {
+	COLOR: #555
+}
+H3 {
+	COLOR: #555
+}
+H4 {
+	COLOR: #555
+}
+H5 {
+	COLOR: #555
+}
+EM {
+	TEXT-TRANSFORM: uppercase; FONT-STYLE: normal; COLOR: #666; FONT-WEIGHT: 400
+}
+DEL {
+	TEXT-DECORATION: line-through
+}
+LABEL {
+	MARGIN: 0px 5px 0px 0px; COLOR: #666
+}
+LEGEND {
+	TEXT-TRANSFORM: uppercase; MARGIN: 0px 0px 0px -7px; COLOR: #bb4722; FONT-SIZE: 1em
+}
+IMG {
+	VERTICAL-ALIGN: middle
+}
+INPUT {
+	FONT-FAMILY: tahoma, arial, helvetica, clean, sans-serif; VERTICAL-ALIGN: middle
+}
+TEXTAREA {
+	FONT-FAMILY: tahoma, rial, helvetica, clean, sans-serif; VERTICAL-ALIGN: middle
+}
+SELECT {
+	FONT-FAMILY: tahoma, arial, helvetica, clean, sans-serif; VERTICAL-ALIGN: middle
+}
+INPUT[type='text']:focus {
+	BORDER-BOTTOM: #5aa7d4 2px solid; BORDER-LEFT: #5aa7d4 2px solid; BORDER-TOP: #5aa7d4 2px solid; BORDER-RIGHT: #5aa7d4 2px solid
+}
+SELECT {
+	PADDING-BOTTOM: 1px; MARGIN: 0px 3px 0px 0px; PADDING-LEFT: 1px; PADDING-RIGHT: 1px; PADDING-TOP: 1px
+}
+SELECT OPTION {
+	WIDTH: auto
+}
+* + HTML SELECT {
+	HEIGHT: 22px
+}
+TEXTAREA {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: inherit; PADDING-TOP: 0px
+}
+INPUT[type='text'] {
+	PADDING-BOTTOM: 1px; MARGIN: 0px; PADDING-LEFT: 2px; PADDING-RIGHT: 5px; PADDING-TOP: 1px
+}
+INPUT[type='password'] {
+	PADDING-BOTTOM: 1px; MARGIN: 0px; PADDING-LEFT: 2px; PADDING-RIGHT: 5px; PADDING-TOP: 1px
+}
+INPUT[type='checkbox'] {
+	MARGIN: 0px 5px 1px 0px
+}
+INPUT[type='radio'] {
+	MARGIN: 0px 3px 2px 0px
+}
+INPUT[type='button'] {
+	PADDING-BOTTOM: 1px; MARGIN: 0px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; CURSOR: pointer; PADDING-TOP: 1px
+}
+* + HTML INPUT[type='radio'] {
+	MARGIN: -3px 3px 2px 0px
+}
+* + HTML INPUT[type='button'] {
+	MARGIN: -2px 0px 0px; OVERFLOW: visible
+}
+* + HTML INPUT[type='text'] {
+	PADDING-BOTTOM: 1px; MARGIN: 0px; PADDING-LEFT: 1px; PADDING-RIGHT: 5px; PADDING-TOP: 1px
+}
+* + HTML INPUT[type='checkbox'] {
+	MARGIN: -3px 3px 0px -4px
+}
+P {
+	LINE-HEIGHT: 1.4em; MARGIN: 0px 0px 8px; FONT-SIZE: 1.2em
+}
+A {
+	COLOR: #043d8a; CURSOR: pointer; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #2d7fc3; TEXT-DECORATION: underline
+}
+H1 {
+	FONT-SIZE: 2.2em
+}
+H2 {
+	FONT-SIZE: 1.8em
+}
+H3 {
+	FONT-SIZE: 1.6em
+}
+H4 {
+	MARGIN: 0px 0px 5px; FONT-SIZE: 1.4em
+}
+H5 {
+	FONT-SIZE: 1.2em; FONT-WEIGHT: 700
+}
+H6 {
+	TEXT-TRANSFORM: uppercase; LETTER-SPACING: 0.1em; COLOR: #000; FONT-SIZE: 1.1em
+}
+SMALL {
+	COLOR: #666; FONT-SIZE: 90%; FONT-WEIGHT: 400
+}
+TABLE {
+	VERTICAL-ALIGN: top
+}
+TD {
+	VERTICAL-ALIGN: top
+}
+.textHighlight {
+	COLOR: #bb4722
+}
+.textHighlightG {
+	COLOR: #3c7322
+}
+.text_gCaution {
+	COLOR: #3c7322
+}
+.textDG {
+	COLOR: #555
+}
+.textG {
+	COLOR: #666
+}
+.textLG {
+	COLOR: #999
+}
+.textPG {
+	COLOR: #ccc
+}
+.textCG {
+	COLOR: #4d4d4d
+}
+.text_B {
+	COLOR: #000
+}
+.fBlack {
+	COLOR: #000
+}
+.textNon {
+	FONT-WEIGHT: 400
+}
+A.blackLink:link {
+	COLOR: #000; TEXT-DECORATION: none
+}
+A.blackLink:visited {
+	COLOR: #000; TEXT-DECORATION: none
+}
+A.blackLink:hover {
+	COLOR: #000; TEXT-DECORATION: underline
+}
+A.blackLink:active {
+	COLOR: #000; TEXT-DECORATION: underline
+}
+A.greyLink:link {
+	COLOR: #444; TEXT-DECORATION: none
+}
+A.greyLink:visited {
+	COLOR: #444; TEXT-DECORATION: none
+}
+A.greyLink:hover {
+	COLOR: #444; TEXT-DECORATION: underline
+}
+A.greyLink:active {
+	COLOR: #444; TEXT-DECORATION: underline
+}
+A.linkHighlight:link {
+	COLOR: #2d7fc3; TEXT-DECORATION: none
+}
+A.linkHighlight:visited {
+	COLOR: #2d7fc3; TEXT-DECORATION: none
+}
+A.linkHighlight:hover {
+	BACKGROUND: #2d7fc3; COLOR: #fff; TEXT-DECORATION: none
+}
+A.linkHighlight:active {
+	BACKGROUND: #2d7fc3; COLOR: #fff; TEXT-DECORATION: none
+}
+A.linkHighlightEMP:link {
+	COLOR: #3c7322; TEXT-DECORATION: none
+}
+A.linkHighlightEMP:visited {
+	COLOR: #3c7322; TEXT-DECORATION: none
+}
+A.linkHighlightEMP:hover {
+	BACKGROUND: #3c7322; COLOR: #fff; TEXT-DECORATION: none
+}
+A.linkHighlightEMP:active {
+	BACKGROUND: #3c7322; COLOR: #fff; TEXT-DECORATION: none
+}
+A.linkUn:link {
+	TEXT-DECORATION: underline
+}
+A.linkUn:visited {
+	TEXT-DECORATION: underline
+}
+A.linkUn:hover {
+	TEXT-DECORATION: underline
+}
+A.linkUn:active {
+	TEXT-DECORATION: underline
+}
+A.linkNoUn:link {
+	TEXT-DECORATION: none
+}
+A.linkNoUn:visited {
+	TEXT-DECORATION: none
+}
+A.linkNoUn:hover {
+	TEXT-DECORATION: none
+}
+A.linkNoUn:active {
+	TEXT-DECORATION: none
+}
+INPUT.blueBtn {
+	BORDER-BOTTOM: #7d7d7d 1px solid; BORDER-LEFT: #ccc 1px solid; MARGIN: 0px 1px; BACKGROUND: #043d8a; COLOR: #fff; BORDER-TOP: #ccc 1px solid; BORDER-RIGHT: #7d7d7d 1px solid
+}
+INPUT.greyBtn {
+	BORDER-BOTTOM: #7d7d7d 1px solid; BORDER-LEFT: #ccc 1px solid; MARGIN: 0px 1px; BACKGROUND: #ddd; COLOR: #555; BORDER-TOP: #ccc 1px solid; BORDER-RIGHT: #7d7d7d 1px solid
+}
+INPUT.dsb {
+	BORDER-BOTTOM: #7d7d7d 1px solid; BORDER-LEFT: #ccc 1px solid; MARGIN: 0px 1px; BACKGROUND: #ddd; COLOR: #999; BORDER-TOP: #ccc 1px solid; BORDER-RIGHT: #7d7d7d 1px solid
+}
+.left {
+	FLOAT: left
+}
+.right {
+	FLOAT: right
+}
+.clearboth {
+	CLEAR: both
+}
+.clearfix {
+	MARGIN: 0px; ZOOM: 1
+}
+.poseB {
+	POSITION: absolute; BOTTOM: 0px
+}
+.hidden {
+	DISPLAY: none
+}
+.displayInline {
+	DISPLAY: inline
+}
+.displayBlock {
+	DISPLAY: block
+}
+.lineBrk {
+	
+}
+.verAlignTop {
+	VERTICAL-ALIGN: top
+}
+.verAlignBn {
+	VERTICAL-ALIGN: baseline
+}
+.verAlignBm {
+	VERTICAL-ALIGN: bottom
+}
+.verAlignMd {
+	VERTICAL-ALIGN: middle
+}
+.contentWrap10 {
+	MARGIN: 10px 0px
+}
+.contentWrap20 {
+	MARGIN: 20px 0px
+}
+.textAlignL {
+	TEXT-ALIGN: left
+}
+.textAlignR {
+	TEXT-ALIGN: right
+}
+.textAlignC {
+	TEXT-ALIGN: center
+}
+.brDivider {
+	BORDER-BOTTOM: #dcdcdc 1px dotted; PADDING-BOTTOM: 10px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.f11 {
+	FONT-SIZE: 1.1em
+}
+.f12 {
+	FONT-SIZE: 1.2em
+}
+.imgShift10 {
+	VERTICAL-ALIGN: -10%
+}
+.imgShift15 {
+	VERTICAL-ALIGN: -15%
+}
+.required {
+	COLOR: #bb4722
+}
+.reqInfoNote {
+	TEXT-ALIGN: right; MARGIN: 0px; COLOR: #bb4722; FONT-SIZE: 1.1em
+}
+.wFull {
+	WIDTH: 100%
+}
+.note {
+	MARGIN: 10px 0px 0px; COLOR: #666; CLEAR: both; FONT-SIZE: 11px
+}
+.pT2 {
+	PADDING-TOP: 2px
+}
+.pT3 {
+	PADDING-TOP: 3px
+}
+.pT4 {
+	PADDING-TOP: 4px
+}
+.pT5 {
+	PADDING-TOP: 5px
+}
+.pT8 {
+	PADDING-TOP: 8px
+}
+.pT10 {
+	PADDING-TOP: 10px
+}
+.pT15 {
+	PADDING-TOP: 15px
+}
+.pT20 {
+	PADDING-TOP: 20px
+}
+.pR3 {
+	PADDING-RIGHT: 3px
+}
+.pR5 {
+	PADDING-RIGHT: 5px
+}
+.pR10 {
+	PADDING-RIGHT: 10px
+}
+.pR20 {
+	PADDING-RIGHT: 20px
+}
+.pB3 {
+	PADDING-BOTTOM: 3px
+}
+.pB10 {
+	PADDING-BOTTOM: 10px
+}
+.pB20 {
+	PADDING-BOTTOM: 20px
+}
+.pL5 {
+	PADDING-LEFT: 5px
+}
+.pL10 {
+	PADDING-LEFT: 10px
+}
+.pL20 {
+	PADDING-LEFT: 20px
+}
+.mT1 {
+	MARGIN-TOP: 1px
+}
+.mT2 {
+	MARGIN-TOP: 2px
+}
+* + HTML .mT2 {
+	MARGIN-TOP: 10px
+}
+.mT3 {
+	MARGIN-TOP: 3px
+}
+.mT4 {
+	MARGIN-TOP: 4px
+}
+.mT5 {
+	MARGIN-TOP: 5px
+}
+.mT7 {
+	MARGIN-TOP: 7px
+}
+.mT10 {
+	MARGIN-TOP: 10px
+}
+.mT15 {
+	MARGIN-TOP: 15px
+}
+.mT5m {
+	MARGIN-TOP: -5px
+}
+.mT10m {
+	MARGIN-TOP: -10px
+}
+.mT20 {
+	MARGIN-TOP: 20px
+}
+.mT30 {
+	MARGIN-TOP: 30px
+}
+.mR3 {
+	MARGIN-RIGHT: 3px
+}
+.mR5 {
+	MARGIN-RIGHT: 5px
+}
+.mR10 {
+	MARGIN-RIGHT: 10px
+}
+.mR12 {
+	MARGIN-RIGHT: 12px
+}
+.mR15 {
+	MARGIN-RIGHT: 15px
+}
+.mR20 {
+	MARGIN-RIGHT: 20px
+}
+.mR25 {
+	MARGIN-RIGHT: 25px
+}
+.mR50 {
+	MARGIN-RIGHT: 50px
+}
+.mB5 {
+	MARGIN-BOTTOM: 5px
+}
+.mB10 {
+	MARGIN-BOTTOM: 10px
+}
+.mB15 {
+	MARGIN-BOTTOM: 15px
+}
+.mB20 {
+	MARGIN-BOTTOM: 20px
+}
+.mL5 {
+	MARGIN-LEFT: 5px
+}
+.mL10 {
+	MARGIN-LEFT: 10px
+}
+.mL20 {
+	MARGIN-LEFT: 20px
+}
+.mL25 {
+	MARGIN-LEFT: 25px
+}
+.m10 {
+	MARGIN: 10px
+}
+.w5 {
+	WIDTH: 5px
+}
+.w20 {
+	WIDTH: 20px
+}
+.w40 {
+	WIDTH: 40px
+}
+.w45 {
+	WIDTH: 45px
+}
+.w60 {
+	WIDTH: 60px
+}
+.w70 {
+	WIDTH: 70px
+}
+.w75 {
+	WIDTH: 75px
+}
+.w84 {
+	WIDTH: 84px
+}
+.w85 {
+	WIDTH: 85px
+}
+.w90 {
+	WIDTH: 90px
+}
+.w95 {
+	WIDTH: 95px
+}
+.w100 {
+	WIDTH: 100px
+}
+.w102 {
+	WIDTH: 102px
+}
+.w110 {
+	WIDTH: 110px
+}
+.w113 {
+	WIDTH: 113px
+}
+.w120 {
+	WIDTH: 120px
+}
+.w125 {
+	WIDTH: 125px
+}
+.w130 {
+	WIDTH: 130px
+}
+.w140 {
+	WIDTH: 140px
+}
+.w145 {
+	WIDTH: 145px
+}
+.w150 {
+	WIDTH: 150px
+}
+.w160 {
+	WIDTH: 160px
+}
+.w170 {
+	WIDTH: 170px
+}
+.w175 {
+	WIDTH: 175px
+}
+.w180 {
+	WIDTH: 182px
+}
+.w185 {
+	WIDTH: 185px
+}
+.w190 {
+	WIDTH: 190px
+}
+.w195 {
+	WIDTH: 195px
+}
+.w200 {
+	WIDTH: 200px
+}
+.w205 {
+	WIDTH: 205px
+}
+.w209 {
+	WIDTH: 209px
+}
+.w210 {
+	WIDTH: 210px
+}
+.w215 {
+	WIDTH: 215px
+}
+.w220 {
+	WIDTH: 220px
+}
+.w230 {
+	WIDTH: 230px
+}
+.w234 {
+	WIDTH: 234px
+}
+.w240 {
+	WIDTH: 240px
+}
+.w250 {
+	WIDTH: 250px
+}
+.w254 {
+	WIDTH: 254px
+}
+.w260 {
+	WIDTH: 260px
+}
+.w280 {
+	WIDTH: 280px
+}
+.w295 {
+	WIDTH: 295px; _width: 285px
+}
+.w300 {
+	WIDTH: 300px
+}
+.w306 {
+	WIDTH: 306px
+}
+.w330 {
+	WIDTH: 330px
+}
+.w340 {
+	WIDTH: 340px
+}
+.w350 {
+	WIDTH: 350px
+}
+.w360 {
+	WIDTH: 360px
+}
+.w365 {
+	WIDTH: 364px
+}
+.w395 {
+	WIDTH: 395px
+}
+.w420 {
+	WIDTH: 420px
+}
+.w449 {
+	WIDTH: 449px
+}
+.w490 {
+	WIDTH: 490px
+}
+.w460 {
+	WIDTH: 460px
+}
+.w480 {
+	WIDTH: 480px
+}
+.w500 {
+	WIDTH: 500px
+}
+.w508 {
+	WIDTH: 508px
+}
+.w515 {
+	WIDTH: 515px
+}
+.w518 {
+	WIDTH: 518px
+}
+.w520 {
+	WIDTH: 520px
+}
+.w538 {
+	WIDTH: 538px
+}
+.w546 {
+	WIDTH: 546px
+}
+.w568 {
+	WIDTH: 568px
+}
+.w580 {
+	WIDTH: 580px
+}
+.w605 {
+	WIDTH: 605px
+}
+.w640 {
+	WIDTH: 640px
+}
+.w670 {
+	WIDTH: 670px
+}
+.w690 {
+	WIDTH: 690px
+}
+.w700 {
+	WIDTH: 700px
+}
+.w710 {
+	WIDTH: 710px
+}
+.w730 {
+	WIDTH: 730px
+}
+.w735 {
+	WIDTH: 735px
+}
+.w720 {
+	WIDTH: 720px
+}
+.w745 {
+	WIDTH: 745px
+}
+.w770 {
+	WIDTH: 770px
+}
+.w815 {
+	WIDTH: 815px
+}
+.w970 {
+	WIDTH: 970px
+}
+.wFull {
+	WIDTH: 100%
+}
+.h5 {
+	HEIGHT: 5px
+}
+.h30 {
+	HEIGHT: 30px
+}
+.h35 {
+	HEIGHT: 35px
+}
+.h68 {
+	HEIGHT: 70px
+}
+.h70 {
+	HEIGHT: 70px
+}
+.h80 {
+	HEIGHT: 80px
+}
+.h100 {
+	HEIGHT: 100px
+}
+.h107 {
+	HEIGHT: 107px
+}
+.h108 {
+	HEIGHT: 108px
+}
+.h110 {
+	HEIGHT: 110px
+}
+.h120 {
+	HEIGHT: 120px
+}
+.h130 {
+	HEIGHT: 130px
+}
+.h140 {
+	HEIGHT: 140px
+}
+.h150 {
+	HEIGHT: 150px
+}
+.h168 {
+	HEIGHT: 168px; _height: 173px
+}
+.h256 {
+	HEIGHT: 196px; _height: 203px
+}
+.h200 {
+	HEIGHT: 200px
+}
+.h250 {
+	HEIGHT: 250px
+}
+.h287 {
+	HEIGHT: 287px
+}
+.h300 {
+	HEIGHT: 300px
+}
+.h305 {
+	HEIGHT: 305px
+}
+.h306 {
+	HEIGHT: 306px
+}
+.h320 {
+	HEIGHT: 320px
+}
+.h500 {
+	HEIGHT: 500px
+}
+.hFull {
+	HEIGHT: 100%
+}
+.txtArea {
+	LINE-HEIGHT: 1.6em; WIDTH: 100%; FONT-SIZE: 1.2em
+}
+SELECT.w250 {
+	WIDTH: 260px; HEIGHT: 22px
+}
+* + HTML SELECT.w250 {
+	WIDTH: 260px; HEIGHT: 22px
+}
+SELECT.w190 {
+	WIDTH: 200px; HEIGHT: 22px
+}
+* + HTML SELECT.w190 {
+	WIDTH: 196px; HEIGHT: 16px
+}
+SELECT.wMonth {
+	WIDTH: 90px
+}
+SELECT.wYear {
+	WIDTH: 65px
+}
+SELECT.wDay {
+	WIDTH: 45px
+}
+* + HTML INPUT.w449 {
+	WIDTH: 432px
+}
+* + HTML TEXTAREA.w449 {
+	WIDTH: 434px
+}
+TH.hiddenMenu {
+	PADDING-LEFT: 16px
+}
+.txtFieldCadr {
+	BORDER-BOTTOM: #969696 1px solid; BORDER-LEFT: #969696 1px solid; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/icon_calendar.jpg) no-repeat right 1px; HEIGHT: 18px; BORDER-TOP: #969696 1px solid; BORDER-RIGHT: #969696 1px solid
+}
+* + HTML .txtFieldCadr {
+	HEIGHT: 18px
+}
+INPUT.greyBtnSm {
+	PADDING-BOTTOM: 1px; MARGIN: 0px; PADDING-LEFT: 3px; PADDING-RIGHT: 3px; FONT-SIZE: 0.9em; PADDING-TOP: 1px
+}
+.formContent UL.basicBulletedList {
+	FONT-SIZE: inherit; FONT-WEIGHT: 700
+}
+.lTable {
+	VERTICAL-ALIGN: top
+}
+.lTable TD {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 0px; PADDING-RIGHT: 10px; PADDING-TOP: 3px
+}
+.gTable {
+	VERTICAL-ALIGN: top
+}
+.gTable TH {
+	PADDING-BOTTOM: 8px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_gTableTit.gif) repeat-x left bottom; COLOR: #444; FONT-SIZE: 1.1em; VERTICAL-ALIGN: top; BORDER-TOP: #fff 1px solid; FONT-WEIGHT: 700; PADDING-TOP: 8px
+}
+.gTable TH A {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 10px; COLOR: #444; PADDING-TOP: 0px
+}
+.gTable TH A:hover {
+	COLOR: #555; TEXT-DECORATION: none
+}
+.gTable TH A.down {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_awDownGrey.gif) no-repeat right 50%
+}
+.gTable TH A.up {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_awUpGrey.gif) no-repeat right 50%
+}
+.gTable TH.titleCol {
+	WIDTH: 300px
+}
+.gTable TH.checkCol {
+	PADDING-BOTTOM: 1px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; PADDING-TOP: 4px
+}
+.gTable TD.checkCol {
+	PADDING-BOTTOM: 1px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; PADDING-TOP: 4px
+}
+.gTable TD {
+	BORDER-BOTTOM: #dbdbdb 1px solid; PADDING-BOTTOM: 4px; LINE-HEIGHT: 1.2em; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: #fff; FONT-SIZE: 1.1em; PADDING-TOP: 4px
+}
+.gTable TD A {
+	TEXT-DECORATION: underline
+}
+.gTableIN TH {
+	PADDING-BOTTOM: 8px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_gTableTitIN.gif) repeat-x 50% bottom; COLOR: #444; FONT-SIZE: 1.1em; BORDER-TOP: #fff 1px solid; FONT-WEIGHT: 700; PADDING-TOP: 8px
+}
+.gTableIN TD {
+	PADDING-BOTTOM: 4px; LINE-HEIGHT: 1.2em; PADDING-LEFT: 20px; PADDING-RIGHT: 20px; FONT-SIZE: 1.2em; PADDING-TOP: 4px
+}
+.gTableIN TD.on {
+	PADDING-BOTTOM: 8px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px; FONT-WEIGHT: 700; PADDING-TOP: 8px
+}
+.hiddenBtn {
+	BORDER-BOTTOM: #fff 1px solid; BORDER-LEFT: #fff 1px solid; PADDING-BOTTOM: 5px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; DISPLAY: inline-block; WORD-WRAP: break-word; BORDER-TOP: #fff 1px solid; BORDER-RIGHT: #fff 1px solid; PADDING-TOP: 5px
+}
+.hiddenBtnOV {
+	BORDER-BOTTOM: #9b9b9b 1px solid; BORDER-LEFT: #d0d0d0 1px solid; PADDING-BOTTOM: 2px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_hiddenBtn.gif) repeat-x 50% top; BORDER-TOP: #d0d0d0 1px solid; BORDER-RIGHT: #9b9b9b 1px solid; PADDING-TOP: 2px
+}
+.hiddenBtnAw {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 10px; DISPLAY: inline-block; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_awDownGrey.gif) no-repeat right 50%; CURSOR: pointer; PADDING-TOP: 0px
+}
+.hiddenBtn:hover {
+	TEXT-DECORATION: none
+}
+.hiddenBtnOV:hover {
+	COLOR: #333; TEXT-DECORATION: none
+}
+.dropmenu_c {
+	POSITION: relative
+}
+.flyoutMenu {
+	Z-INDEX: 100; BORDER-BOTTOM: #bbb 1px solid; BORDER-LEFT: #bbb 1px solid; PADDING-BOTTOM: 3px; PADDING-LEFT: 3px; PADDING-RIGHT: 3px; BACKGROUND: #fff; VISIBILITY: hidden; FONT-SIZE: 12px; BORDER-TOP: #bbb 1px solid; BORDER-RIGHT: #bbb 1px solid; PADDING-TOP: 3px
+}
+.flyoutMenu UL.scrollable {
+	OVERFLOW-X: hidden; OVERFLOW-Y: scroll; HEIGHT: 100px
+}
+.flyoutMenu LI A {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 3px; PADDING-RIGHT: 3px; DISPLAY: block; COLOR: #000; PADDING-TOP: 2px
+}
+.flyoutMenu LI A:hover {
+	BACKGROUND: #fbee99; COLOR: #000; TEXT-DECORATION: none
+}
+.flyoutMenu LI A.on {
+	BACKGROUND: #fbee99; COLOR: #000; TEXT-DECORATION: none
+}
+.flyoutMenu LI .hMenu {
+	DISPLAY: block; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_awRGrey.gif) no-repeat right 50%
+}
+.flyoutMenu .divider {
+	MARGIN: 2px 0px; BORDER-TOP: #dbdbdb 1px solid
+}
+.hiddenMenu {
+	BORDER-BOTTOM: #fff 1px solid; BORDER-LEFT: #fff 1px solid; PADDING-BOTTOM: 2px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; DISPLAY: inline-block; BACKGROUND: none transparent scroll repeat 0% 0%; COLOR: #333; BORDER-TOP: #fff 1px solid; BORDER-RIGHT: #fff 1px solid; PADDING-TOP: 2px
+}
+.hiddenMenuOV {
+	BORDER-BOTTOM: #9b9b9b 1px solid; BORDER-LEFT: #d0d0d0 1px solid; PADDING-BOTTOM: 2px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; DISPLAY: inline-block; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_hiddenBtn.gif) repeat-x 50% top; BORDER-TOP: #d0d0d0 1px solid; BORDER-RIGHT: #9b9b9b 1px solid; PADDING-TOP: 2px
+}
+.hiddenMenuOV {
+	COLOR: #333
+}
+.hiddenMenuAw {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_awDownGrey.gif) no-repeat right 6px; COLOR: #555; CURSOR: pointer; FONT-WEIGHT: 700; PADDING-TOP: 0px
+}
+.FOmenu0 {
+	POSITION: absolute; TOP: -15px; LEFT: 0px
+}
+.FOmenu1 {
+	POSITION: absolute; WIDTH: 150px; TOP: -15px; LEFT: 0px
+}
+.FOmenu2 {
+	POSITION: absolute; WIDTH: 150px; TOP: 18px; LEFT: 0px
+}
+.FOmenu3 {
+	POSITION: absolute; WIDTH: 130px; TOP: 18px; RIGHT: 0px
+}
+.FOmenu4 {
+	POSITION: absolute; WHITE-SPACE: nowrap; TOP: 18px; LEFT: 0px
+}
+.FOmenu5 {
+	POSITION: absolute; WIDTH: 200px; TOP: 18px; RIGHT: 0px
+}
+.FOmenu6 {
+	POSITION: absolute; WIDTH: 130px; BOTTOM: 18px; RIGHT: 0px
+}
+.FOlayer {
+	POSITION: absolute; WIDTH: 150px; DISPLAY: block; TOP: 15px; LEFT: 0px
+}
+.viewOption {
+	MARGIN: 0px 0px 5px; COLOR: #555; FONT-SIZE: 1.1em
+}
+* + HTML .viewOption {
+	MARGIN: 0px 0px -5px
+}
+A.unLink {
+	DISPLAY: block; TEXT-DECORATION: underline
+}
+.viewOptionItem {
+	MARGIN: 0px 2px; DISPLAY: inline-block
+}
+.viewOptionItem .itemLabel {
+	PADDING-BOTTOM: 3px; MARGIN: 0px 1px 0px 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; DISPLAY: inline-block; PADDING-TOP: 3px
+}
+.viewMenu A:hover {
+	TEXT-DECORATION: none
+}
+.viewOption A:hover {
+	TEXT-DECORATION: none
+}
+.viewMenu {
+	DISPLAY: inline-block
+}
+.showMenu {
+	Z-INDEX: 200; POSITION: relative
+}
+.showMenu .flyoutMenu {
+	VISIBILITY: visible
+}
+.showMenu .hiddenMenuOV {
+	BORDER-BOTTOM: #929292 1px solid; BORDER-LEFT: #929292 1px solid; PADDING-BOTTOM: 2px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; DISPLAY: inline-block; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_activeBtn.gif) repeat-x 50% top; BORDER-TOP: #929292 1px solid; BORDER-RIGHT: #929292 1px solid; PADDING-TOP: 2px
+}
+.showMenu .hiddenMenuOV .hiddenMenuAw {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_awDownWhite.gif) no-repeat right 50%; COLOR: #fff; CURSOR: pointer; FONT-WEIGHT: 700; PADDING-TOP: 0px
+}
+.hiddenLayer {
+	POSITION: relative
+}
+#footer {
+	BACKGROUND-COLOR: #000; CLEAR: both
+}
+.footer_c {
+	LINE-HEIGHT: 1.5em; COLOR: #fff; FONT-SIZE: 1.1em
+}
+.footer_c A {
+	COLOR: #fff; TEXT-DECORATION: none
+}
+.footer_c A:hover {
+	COLOR: #fff; TEXT-DECORATION: underline
+}
+.footer_c SPAN {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; DISPLAY: inline-block; COLOR: #666; PADDING-TOP: 0px
+}
+.footnote {
+	HEIGHT: 20px
+}
+.footnote_c {
+	MARGIN: 0px auto; HEIGHT: 14px; COLOR: #fff; FONT-SIZE: 1.1em
+}
+.footnote A {
+	COLOR: #fff; TEXT-DECORATION: none
+}
+.footnote A:hover {
+	TEXT-DECORATION: underline
+}
+#footer785 {
+	PADDING-BOTTOM: 4px; BACKGROUND-COLOR: #000; MARGIN: 0px auto; PADDING-LEFT: 20px; WIDTH: 745px; PADDING-RIGHT: 20px; HEIGHT: 14px; COLOR: #fff; FONT-SIZE: 1.1em; PADDING-TOP: 2px
+}
+.pushPopup {
+	HEIGHT: 20px
+}
+#footer785 A {
+	COLOR: #fff; TEXT-DECORATION: none
+}
+#footer785 A:hover {
+	COLOR: #fff; TEXT-DECORATION: underline
+}
+.alertMsg {
+	BORDER-BOTTOM: #fdcb5e 1px solid; BORDER-LEFT: #fdcb5e 1px solid; PADDING-BOTTOM: 3px; MARGIN: 0px 0px 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: #fbee99; BORDER-TOP: #fdcb5e 1px solid; BORDER-RIGHT: #fdcb5e 1px solid; PADDING-TOP: 5px
+}
+.alertMsg .gTable {
+	MARGIN-TOP: 5px; MARGIN-LEFT: 54px; CLEAR: both; BORDER-TOP: #dadada 1px solid
+}
+.alertMsg UL.basicBulletedList LI {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bullet_sq.gif) no-repeat 1px 2px; PADDING-TOP: 0px
+}
+.alertMsg H3 {
+	MARGIN: 10px; FLOAT: left; COLOR: #333; FONT-WEIGHT: 700
+}
+.alertMsg H4 {
+	FONT-SIZE: 1.4em; FONT-WEIGHT: 700
+}
+.alertMsg H5 {
+	LINE-HEIGHT: 1.3em; MARGIN: 0px; COLOR: #3c7322; FONT-SIZE: 1.3em
+}
+.alertMsg P {
+	MARGIN: 5px; WIDTH: 90%; FLOAT: left; COLOR: #333; FONT-SIZE: 1.2em; _width: 70%
+}
+.alertMsg SPAN {
+	COLOR: #ccc
+}
+.alertMsg B.remark {
+	COLOR: #3c7322; FONT-SIZE: 1.2em
+}
+B.remark {
+	COLOR: #3c7322; FONT-SIZE: 1.2em
+}
+.alertMsg IMG {
+	FLOAT: left
+}
+.alertMsg INPUT {
+	MARGIN-TOP: -3px
+}
+.actionMsg_c {
+	PADDING-BOTTOM: 10px; MARGIN: 0px 0px 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: #fbee99; PADDING-TOP: 10px
+}
+.alertMsg_alert {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 20px; PADDING-RIGHT: 0px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/icon_alert.png) no-repeat 0px 1px; PADDING-TOP: 3px
+}
+.alertMsg_accept {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 20px; PADDING-RIGHT: 0px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/icon_accept.png) no-repeat 0px 1px; PADDING-TOP: 3px
+}
+.actionMsg_c .gTable {
+	MARGIN-TOP: 5px; BORDER-TOP: #dadada 1px solid
+}
+.actionMsg_c UL.basicBulletedList LI {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bullet_sq.gif) no-repeat 1px 2px; PADDING-TOP: 0px
+}
+.actionMsg_c H3 {
+	MARGIN: 10px; FLOAT: left; COLOR: #333; FONT-WEIGHT: 700
+}
+.actionMsg_c H4 {
+	FONT-SIZE: 1.4em; FONT-WEIGHT: 700
+}
+.actionMsg_c H5 {
+	LINE-HEIGHT: 1.3em; MARGIN: 0px; COLOR: #3c7322; FONT-SIZE: 1.3em
+}
+.actionMsg_c P {
+	MARGIN: 5px; FLOAT: left; COLOR: #333; FONT-SIZE: 1.2em
+}
+.actionMsg_c SPAN {
+	COLOR: #ccc
+}
+.actionMsg_c B.remark {
+	COLOR: #3c7322; FONT-SIZE: 1.2em
+}
+B.remark {
+	COLOR: #3c7322; FONT-SIZE: 1.2em
+}
+.actionMsg_c IMG {
+	FLOAT: left
+}
+.msgS IMG {
+	WIDTH: 30px; HEIGHT: 30px
+}
+.actionLayer {
+	BORDER-BOTTOM: #a1aab3 5px solid; BORDER-LEFT: #a1aab3 5px solid; WIDTH: 590px; BACKGROUND: #ededed; BORDER-TOP: #a1aab3 5px solid; BORDER-RIGHT: #a1aab3 5px solid
+}
+.actionLayer H2 {
+	POSITION: relative; PADDING-BOTTOM: 8px; MARGIN: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; COLOR: #555; PADDING-TOP: 8px
+}
+.actionLayer H2 A.closeBtn {
+	POSITION: absolute; WIDTH: 17px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/btn_close_layer.gif) no-repeat; HEIGHT: 17px; TOP: 9px; RIGHT: 5px
+}
+.actionLayer H2 A.closeBtn:hover {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/btn_close_layerON.gif) no-repeat
+}
+.actionLayer P.des {
+	PADDING-BOTTOM: 0px; LINE-HEIGHT: 1.4em; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 0px
+}
+.actionLayer H3 {
+	MARGIN: 0px 0px 5px; FONT-FAMILY: tahoma, arial, helvetica, clean, sans-serif; FONT-SIZE: 1.2em; FONT-WEIGHT: 700
+}
+.actionLayer H5 {
+	MARGIN: 0px; DISPLAY: block; COLOR: #555
+}
+.actionLayer P {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; MARGIN-BOTTOM: 5px; PADDING-TOP: 0px
+}
+.actionLayer SMALL {
+	MARGIN: 3px 0px 0px; DISPLAY: inline-block
+}
+.actionLayer .scrollBox {
+	OVERFLOW-Y: auto; HEIGHT: 207px
+}
+.actionLayer .scroll {
+	OVERFLOW-Y: auto
+}
+.actionLayer .scrollPad {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 0px
+}
+.actionLayer .nopad {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.actionLayer .pad {
+	PADDING-BOTTOM: 10px; PADDING-LEFT: 0px; PADDING-RIGHT: 10px; PADDING-TOP: 5px
+}
+.actionLayer .contentBody {
+	TEXT-ALIGN: left; MARGIN: 0px 10px; ZOOM: 1; BACKGROUND: #fff
+}
+.actionLayer .divider {
+	PADDING-BOTTOM: 10px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: #fff; BORDER-TOP: #d8d8d8 1px solid; PADDING-TOP: 10px
+}
+.actionLayer .dividerIN {
+	PADDING-BOTTOM: 5px; MARGIN-TOP: 10px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: #fff; BORDER-TOP: #d8d8d8 1px solid; PADDING-TOP: 5px
+}
+.actionLayer .divider2 {
+	PADDING-BOTTOM: 0px; MARGIN-TOP: 10px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: #fff; BORDER-TOP: #d8d8d8 1px solid; PADDING-TOP: 10px
+}
+.actionLayer .divider3 {
+	PADDING-BOTTOM: 0px; MARGIN: 5px 0px 0px 10px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: #fff; BORDER-TOP: #d8d8d8 1px solid; PADDING-TOP: 5px
+}
+.actionLayer .mdivider {
+	MARGIN: 0px 0px 10px; BORDER-TOP: #d8d8d8 1px solid
+}
+.actionLayer .formBtnSet {
+	TEXT-ALIGN: right; PADDING-BOTTOM: 5px; MARGIN: 0px; PADDING-LEFT: 5px; PADDING-RIGHT: 10px; BACKGROUND: #ededed; PADDING-TOP: 5px
+}
+.actionLayer .formBtnSetC {
+	TEXT-ALIGN: center; MARGIN: 0px -2px 10px 0px; FONT-SIZE: 1.2em
+}
+.actionLayer .gTable TH {
+	BORDER-BOTTOM: #ededed 1px solid; BACKGROUND: #fff
+}
+.actionLayer .gTable TD.checkCol {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; PADDING-TOP: 3px
+}
+.actionLayer .gTable TD {
+	BORDER-BOTTOM: medium none; BORDER-LEFT: medium none; PADDING-BOTTOM: 2px; LINE-HEIGHT: 1.4em; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; VERTICAL-ALIGN: top; BORDER-TOP: medium none; BORDER-RIGHT: medium none; PADDING-TOP: 2px
+}
+.actionLayer .form_c {
+	MARGIN: 0px 0px 0px 10px; WIDTH: auto
+}
+.actionLayer .formLabel {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; WIDTH: 20%; PADDING-RIGHT: 15px; PADDING-TOP: 8px
+}
+.actionLayer .formContent {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 0px; WIDTH: auto; PADDING-RIGHT: 0px; PADDING-TOP: 5px
+}
+.actionLayer .formContent TEXTAREA {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; WIDTH: 467px; PADDING-RIGHT: 0px; HEIGHT: 130px; PADDING-TOP: 0px
+}
+.actionLayer .formTips {
+	CLEAR: both
+}
+.actionLayer .formError {
+	CLEAR: both
+}
+.actionLayer .tarea {
+	FONT-SIZE: 1.2em
+}
+.actionLayer .tarea .borderBox {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.actionLayer .alertMsg {
+	PADDING-BOTTOM: 5px; LINE-HEIGHT: 1.2em; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; BACKGROUND: #fbee99; FONT-SIZE: 1.1em; PADDING-TOP: 5px
+}
+.actionLayer .actionMsg_c {
+	PADDING-BOTTOM: 1px; MARGIN: 10px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; PADDING-TOP: 3px
+}
+.actionLayer .actionMsg_c IMG {
+	WIDTH: 30px; FLOAT: left; HEIGHT: 30px
+}
+.actionLayer .actionMsg_c FIELDSET {
+	MARGIN: 0px 0px 5px 5px; FONT-SIZE: 1.2em
+}
+.actionLayer .borderBox {
+	MARGIN: 0px 10px
+}
+.actionLayer .reqInfoNote {
+	MARGIN: 0px 10px 0px 0px
+}
+.actionLayer .lTable {
+	VERTICAL-ALIGN: top
+}
+.actionLayer .lTable TD {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; FONT-SIZE: 1.2em; PADDING-TOP: 3px
+}
+#contentMap {
+	TEXT-ALIGN: center; MARGIN: 10px 10px 0px; WIDTH: 570px; BACKGROUND: #fff
+}
+#contentMap IMG {
+	WIDTH: 550px; HEIGHT: 320px
+}
+#contentMap H4 {
+	TEXT-ALIGN: center; PADDING-BOTTOM: 7px; MARGIN: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; COLOR: #3c7322; FONT-SIZE: 1.2em; FONT-WEIGHT: 700; PADDING-TOP: 7px
+}
+.actionLayerMini {
+	BORDER-BOTTOM: #dadada 1px solid; BORDER-LEFT: #dadada 1px solid; PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; WIDTH: 378px; PADDING-RIGHT: 10px; BACKGROUND: #ededed; BORDER-TOP: #dadada 1px solid; BORDER-RIGHT: #dadada 1px solid; PADDING-TOP: 10px
+}
+.actionLayerMini H5 {
+	MARGIN: 0px 0px 5px; FONT-SIZE: 1.4em; FONT-WEIGHT: 700
+}
+.actionLayerMini .alertMsg {
+	PADDING-BOTTOM: 5px; LINE-HEIGHT: 1.2em; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; BACKGROUND: #fbee99; FONT-SIZE: 1.1em; PADDING-TOP: 5px
+}
+.formContent INPUT {
+	FLOAT: left
+}
+.formContent SELECT {
+	FLOAT: left
+}
+.formContent LABEL {
+	FLOAT: left
+}
+.formContent DIV {
+	FLOAT: left
+}
+.formContent IMG {
+	FLOAT: left
+}
+.formContent .flowList {
+	FLOAT: left
+}
+.formContent LI {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.error404 {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_Err404.jpg) no-repeat right bottom
+}
+.error404_c {
+	TEXT-ALIGN: right; MARGIN: 0px auto; WIDTH: 970px; FONT: 1.1em Arial, Helvetica, sans-serif; COLOR: #000
+}
+.paging {
+	FLOAT: right; COLOR: #333; FONT-SIZE: 1.1em
+}
+.paging LI {
+	MARGIN: 0px 3px 0px 0px; BACKGROUND: #fff; FLOAT: left
+}
+.paging LI.on {
+	BORDER-BOTTOM: #666 1px solid; BORDER-LEFT: #666 1px solid; PADDING-BOTTOM: 2px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; BACKGROUND: #666; COLOR: #fff; BORDER-TOP: #666 1px solid; FONT-WEIGHT: 700; BORDER-RIGHT: #666 1px solid; PADDING-TOP: 2px
+}
+.paging A {
+	BORDER-BOTTOM: #bfbfbf 1px solid; BORDER-LEFT: #bfbfbf 1px solid; PADDING-BOTTOM: 2px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; DISPLAY: inline-block; BACKGROUND: #fff; COLOR: #333; BORDER-TOP: #bfbfbf 1px solid; BORDER-RIGHT: #bfbfbf 1px solid; PADDING-TOP: 2px
+}
+.paging .on A {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.paging A:hover {
+	BORDER-BOTTOM: #666 1px solid; BORDER-LEFT: #666 1px solid; BACKGROUND: #666; COLOR: #fff; BORDER-TOP: #666 1px solid; BORDER-RIGHT: #666 1px solid; TEXT-DECORATION: none
+}
+.paging A.imgLinkA {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 7px; PADDING-RIGHT: 8px; PADDING-TOP: 6px
+}
+.paging A.imgLinkB {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 6px; PADDING-RIGHT: 7px; PADDING-TOP: 6px
+}
+* + HTML .paging A.imgLinkA {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 7px; PADDING-RIGHT: 7px; PADDING-TOP: 2px
+}
+* + HTML .paging A.imgLinkB {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; PADDING-TOP: 2px
+}
+.paging A.imgLinkA:hover {
+	BORDER-BOTTOM: #666 1px solid; BORDER-LEFT: #666 1px solid; BACKGROUND: #666; BORDER-TOP: #666 1px solid; BORDER-RIGHT: #666 1px solid
+}
+.paging A.imgLinkB:hover {
+	BORDER-BOTTOM: #666 1px solid; BORDER-LEFT: #666 1px solid; BACKGROUND: #666; BORDER-TOP: #666 1px solid; BORDER-RIGHT: #666 1px solid
+}
+.paging A.blueLink:link {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: none transparent scroll repeat 0% 0%; COLOR: #043d8a; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TEXT-DECORATION: none; PADDING-TOP: 0px
+}
+.paging A.blueLink:visited {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: none transparent scroll repeat 0% 0%; COLOR: #043d8a; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TEXT-DECORATION: none; PADDING-TOP: 0px
+}
+.paging A.blueLink:hover {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: none transparent scroll repeat 0% 0%; COLOR: #043d8a; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TEXT-DECORATION: underline; PADDING-TOP: 0px
+}
+.paging A.blueLink:active {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: none transparent scroll repeat 0% 0%; COLOR: #043d8a; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TEXT-DECORATION: underline; PADDING-TOP: 0px
+}
+#content H1 {
+	FONT-FAMILY: tahoma, arial, helvetica, clean, sans-serif
+}
+#content H2 {
+	FONT-FAMILY: tahoma, arial, helvetica, clean, sans-serif
+}
+#content H3 {
+	FONT-FAMILY: tahoma, arial, helvetica, clean, sans-serif
+}
+#container H1 {
+	FONT-FAMILY: tahoma, arial, helvetica, clean, sans-serif
+}
+#container H2 {
+	FONT-FAMILY: tahoma, arial, helvetica, clean, sans-serif
+}
+#container H3 {
+	FONT-FAMILY: tahoma, arial, helvetica, clean, sans-serif
+}
+#content H1 {
+	MARGIN-TOP: 20px; FONT-SIZE: 2em
+}
+#content H2 {
+	FONT-SIZE: 2em; FONT-WEIGHT: 700
+}
+EM.tag {
+	TEXT-TRANSFORM: none; FONT-STYLE: italic; COLOR: #3c7322
+}
+#header {
+	MIN-WIDTH: 970px; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; WIDTH: auto !important; PADDING-RIGHT: 0px; BACKGROUND: #000; PADDING-TOP: 0px
+}
+#content {
+	PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 5px
+}
+#footer {
+	MIN-WIDTH: 970px; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; WIDTH: auto !important; PADDING-RIGHT: 0px; BACKGROUND: #000; PADDING-TOP: 0px
+}
+#mainContent {
+	FLOAT: left
+}
+.content_w970 {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 0px; WIDTH: 970px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.content_w745 {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; WIDTH: 745px; PADDING-RIGHT: 0px; FLOAT: left; PADDING-TOP: 0px
+}
+.bgw {
+	BACKGROUND: #fff
+}
+#container {
+	POSITION: relative; MARGIN: 0px auto; WIDTH: 785px
+}
+#header785 {
+	PADDING-BOTTOM: 0px; BACKGROUND-COLOR: #000; PADDING-LEFT: 20px; WIDTH: 745px; PADDING-RIGHT: 20px; HEIGHT: 40px; COLOR: #666; FONT-SIZE: 1.2em; OVERFLOW: hidden; PADDING-TOP: 0px
+}
+#mainContent785 {
+	PADDING-BOTTOM: 20px; BACKGROUND-COLOR: #fff; PADDING-LEFT: 20px; WIDTH: 745px; PADDING-RIGHT: 20px; PADDING-TOP: 20px
+}
+#masthead {
+	MARGIN: 0px 10px; HEIGHT: 40px
+}
+#masthead A {
+	COLOR: #fff; TEXT-DECORATION: underline
+}
+#masthead SPAN {
+	COLOR: grey
+}
+#masthead .region {
+	TEXT-TRANSFORM: uppercase; MARGIN: 5px 0px 0px 15px; FLOAT: left; COLOR: #fff; FONT-SIZE: 1.1em
+}
+#masthead .language {
+	MARGIN: 5px 0px 0px 10px; FLOAT: left; COLOR: #fff; FONT-SIZE: 1em
+}
+#masthead .region IMG {
+	MARGIN: 0px 5px 2px 0px
+}
+.spacer {
+	MARGIN-TOP: -1px; WIDTH: 970px; BACKGROUND: #000; HEIGHT: 1px
+}
+* + HTML .spacer {
+	MARGIN-TOP: -10px
+}
+.userInfo {
+	TEXT-ALIGN: right; MARGIN-TOP: 5px; WIDTH: 400px; FLOAT: right; COLOR: #fff; FONT-SIZE: 1.1em
+}
+.imgLog {
+	MARGIN: 10px 0px 0px 10px; FLOAT: right
+}
+#topNav {
+	MARGIN: 0px 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_rmsMenu.gif) repeat-x; BORDER-TOP: #858585 1px solid
+}
+#subNav {
+	PADDING-BOTTOM: 0px; MARGIN: 0px auto; PADDING-LEFT: 15px; PADDING-RIGHT: 0px; BACKGROUND: #51b322; HEIGHT: 20px; FONT-SIZE: 1.1em; PADDING-TOP: 0px
+}
+#subNav LI {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; DISPLAY: block; BACKGROUND: #51b322; FLOAT: left; COLOR: #000; FONT-WEIGHT: 700; PADDING-TOP: 3px
+}
+#subNav LI.divider {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; COLOR: #316718; PADDING-TOP: 3px
+}
+#subNav LI A {
+	DISPLAY: block; COLOR: #fff; FONT-WEIGHT: 400; TEXT-DECORATION: underline
+}
+.menuBtn {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 15px; PADDING-RIGHT: 15px; FLOAT: left; COLOR: #000; FONT-SIZE: 1.1em; CURSOR: pointer; FONT-WEIGHT: 700; PADDING-TOP: 3px
+}
+.menuBtn A {
+	COLOR: #fff
+}
+.menuBtnActive {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_rmsMenuActive.gif) repeat-x
+}
+.menuDrop A {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 15px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/icon_menu.gif) no-repeat right 55%; COLOR: #fff; PADDING-TOP: 0px
+}
+.menuDrop A:hover {
+	COLOR: #fff; TEXT-DECORATION: none
+}
+.menuDropActive {
+	POSITION: relative; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_rmsMenuOn.gif) repeat-x
+}
+.menuDropActive A {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 15px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/icon_menu.gif) no-repeat right 55%; COLOR: #9c3; PADDING-TOP: 0px
+}
+.menuDropActive A:hover {
+	COLOR: #9c3; TEXT-DECORATION: none
+}
+.subMenu {
+	Z-INDEX: 100; POSITION: absolute; TOP: 27px; FONT-WEIGHT: 400; LEFT: 0px
+}
+.subMenu LI {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 155px; PADDING-RIGHT: 0px; BACKGROUND: #1d1d1d; PADDING-TOP: 0px
+}
+.subMenu LI A {
+	BORDER-BOTTOM: #1d1d1d 1px solid; BORDER-LEFT: #1d1d1d 1px solid; PADDING-BOTTOM: 5px; PADDING-LEFT: 13px; WIDTH: 127px; PADDING-RIGHT: 13px; DISPLAY: inline-block; BACKGROUND: none transparent scroll repeat 0% 0%; COLOR: #fff; BORDER-TOP: #1d1d1d 1px solid; BORDER-RIGHT: #1d1d1d 1px solid; PADDING-TOP: 5px
+}
+.subMenu LI A:hover {
+	BORDER-BOTTOM: #0e0e0e 1px solid; BORDER-LEFT: #4d4d4d 1px solid; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_droplistON.png) 50% top; COLOR: #fff; BORDER-TOP: #4d4d4d 1px solid; BORDER-RIGHT: #0e0e0e 1px solid
+}
+#breadCrumb {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 25px; PADDING-RIGHT: 25px; FONT-SIZE: 1.1em; PADDING-TOP: 5px
+}
+.globalSearch {
+	MARGIN: 7px 0px; FLOAT: right; FONT-SIZE: 1.2em
+}
+* + HTML .globalSearch {
+	MARGIN: 7px 0px
+}
+.globalSearch INPUT:focus {
+	BORDER-BOTTOM: #5aa7d4 2px solid; BORDER-LEFT: #5aa7d4 2px solid; BORDER-TOP: #5aa7d4 2px solid; BORDER-RIGHT: #5aa7d4 2px solid
+}
+.globalSearch INPUT[type='text'] {
+	WIDTH: 215px
+}
+* + HTML .globalSearch INPUT[type='text'] {
+	WIDTH: 215px
+}
+.globalSearch SELECT {
+	MARGIN: 0px 0px 0px 3px; WIDTH: 105px
+}
+#sideBar {
+	BACKGROUND: none transparent scroll repeat 0% 0%; FLOAT: right; MARGIN-LEFT: 15px
+}
+.sideBar_w210 {
+	PADDING-BOTTOM: 30px; PADDING-LEFT: 0px; WIDTH: 210px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.sideBar_w300 {
+	PADDING-BOTTOM: 30px; PADDING-LEFT: 15px; WIDTH: 300px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.side_cusTemp DL DT {
+	BORDER-BOTTOM: #dedede 1px solid; BORDER-LEFT: #dedede 1px solid; PADDING-BOTTOM: 6px; PADDING-LEFT: 10px; WIDTH: 188px; PADDING-RIGHT: 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_sideTitCT.gif) repeat-x; HEIGHT: 16px; COLOR: #fff; FONT-SIZE: 1.4em; BORDER-TOP: #dedede 1px solid; FONT-WEIGHT: 700; BORDER-RIGHT: #dedede 1px solid; PADDING-TOP: 6px
+}
+.sideBarTit {
+	BORDER-BOTTOM: #dedede 1px solid; BORDER-LEFT: #dedede 1px solid; PADDING-BOTTOM: 6px; PADDING-LEFT: 10px; WIDTH: 188px; PADDING-RIGHT: 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_sideTitCT.gif) repeat-x; HEIGHT: 16px; COLOR: #fff; FONT-SIZE: 1.4em; BORDER-TOP: #dedede 1px solid; FONT-WEIGHT: 700; BORDER-RIGHT: #dedede 1px solid; PADDING-TOP: 6px
+}
+.side_cusTemp DL DT {
+	MARGIN-TOP: 10px
+}
+.side_cusTemp DL DD {
+	TEXT-ALIGN: left; MARGIN-TOP: 10px; WIDTH: 210px; FONT-SIZE: 1.2em
+}
+.side_cusTemp DL DD .imgBox {
+	BORDER-BOTTOM: #ccc 1px solid; BORDER-LEFT: #ccc 1px solid; MARGIN-BOTTOM: 2px; BACKGROUND: #fff; FLOAT: left; BORDER-TOP: #ccc 1px solid; BORDER-RIGHT: #ccc 1px solid
+}
+.side_cusTemp DL DD IMG {
+	BORDER-BOTTOM: #fff 1px solid; BORDER-LEFT: #fff 1px solid; BACKGROUND: #fff; BORDER-TOP: #fff 1px solid; BORDER-RIGHT: #fff 1px solid
+}
+UL.help {
+	PADDING-BOTTOM: 0px; MARGIN: 10px 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+UL.help LI {
+	PADDING-BOTTOM: 7px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; MARGIN-BOTTOM: 5px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_RMShelpTag.gif) no-repeat; FONT-SIZE: 1.4em; FONT-WEIGHT: 700; PADDING-TOP: 7px
+}
+UL.help LI A {
+	DISPLAY: block
+}
+.feedback {
+	PADDING-BOTTOM: 10px; MARGIN: 0px 0px 10px; PADDING-LEFT: 20px; WIDTH: 170px; PADDING-RIGHT: 20px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_feedback.jpg) #fff no-repeat; PADDING-TOP: 10px
+}
+.feedback H4 {
+	COLOR: #333; FONT-WEIGHT: 700
+}
+.footer {
+	HEIGHT: 65px
+}
+.push {
+	HEIGHT: 65px
+}
+.footer_c {
+	PADDING-BOTTOM: 6px; PADDING-LEFT: 15px; PADDING-RIGHT: 15px; HEIGHT: 33px; PADDING-TOP: 6px
+}
+.footnote {
+	BACKGROUND-COLOR: #306617
+}
+.footnote_c {
+	PADDING-BOTTOM: 4px; PADDING-LEFT: 15px; PADDING-RIGHT: 15px; PADDING-TOP: 2px
+}
+.menuList {
+	WIDTH: 360px
+}
+.menuList_c {
+	PADDING-BOTTOM: 30px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; FLOAT: left; PADDING-TOP: 0px
+}
+.menuList_c H4 {
+	COLOR: #3c7322; FONT-SIZE: 1.3em; FONT-WEIGHT: 700
+}
+.menuList_c UL.basicBulletedList {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 260px; PADDING-RIGHT: 0px; FONT-SIZE: 1.1em; PADDING-TOP: 0px
+}
+.menuList_c UL.basicBulletedList LI {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.menuList_c UL.basicBulletedList LI A {
+	COLOR: #000
+}
+.menuList_c UL.basicBulletedList LI A:hover {
+	TEXT-DECORATION: underline
+}
+UL.basicBulletedList {
+	LINE-HEIGHT: 1.3em; MARGIN-TOP: 10px; ZOOM: 1; FONT-SIZE: 1.2em
+}
+UL.basicBulletedList LI {
+	PADDING-BOTTOM: 5px; MARGIN: 0px; PADDING-LEFT: 10px; WIDTH: auto; PADDING-RIGHT: 0px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bullet_sq.gif) no-repeat 0px 2px; PADDING-TOP: 0px
+}
+UL.flowList {
+	MARGIN: 3px 0px 0px
+}
+* + HTML UL.flowList {
+	MARGIN: 8px 0px 0px
+}
+UL.flowList LI {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 20px; FLOAT: left; PADDING-TOP: 0px
+}
+UL.cirDlist LI {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 15px; PADDING-RIGHT: 0px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bullet_cirD.png) no-repeat 0px 2px; COLOR: #666; FONT-SIZE: 1.2em; FONT-WEIGHT: 700; PADDING-TOP: 0px
+}
+UL.arList LI {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 15px; PADDING-RIGHT: 0px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bullet_ar.gif) no-repeat 0px 4px; COLOR: #696969; FONT-SIZE: 1.2em; FONT-WEIGHT: 700; PADDING-TOP: 0px
+}
+A.expandCol {
+	PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; DISPLAY: block; PADDING-TOP: 10px
+}
+.manageBox {
+	BORDER-BOTTOM: #cecece 1px solid; BORDER-LEFT: #cecece 1px solid; VERTICAL-ALIGN: top; BORDER-TOP: #cecece 1px solid; BORDER-RIGHT: #cecece 1px solid
+}
+.manageBox .actTag {
+	FONT-SIZE: 1.4em; FONT-WEIGHT: 700
+}
+.manageBox .actTagOn {
+	FONT-SIZE: 1.4em; FONT-WEIGHT: 700
+}
+.manageBox .actTag A {
+	BORDER-BOTTOM: #fff 1px solid; BORDER-LEFT: #fff 1px solid; PADDING-BOTTOM: 8px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; DISPLAY: block; COLOR: #000; BORDER-TOP: #fff 1px solid; BORDER-RIGHT: #fff 1px solid; PADDING-TOP: 8px
+}
+.manageBox .actTag A:active {
+	BORDER-BOTTOM: #fff 1px solid; BORDER-LEFT: #fff 1px solid; PADDING-BOTTOM: 8px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; DISPLAY: block; COLOR: #000; BORDER-TOP: #fff 1px solid; BORDER-RIGHT: #fff 1px solid; PADDING-TOP: 8px
+}
+.manageBox .actTag A:visited {
+	BORDER-BOTTOM: #fff 1px solid; BORDER-LEFT: #fff 1px solid; PADDING-BOTTOM: 8px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; DISPLAY: block; COLOR: #000; BORDER-TOP: #fff 1px solid; BORDER-RIGHT: #fff 1px solid; PADDING-TOP: 8px
+}
+.manageBox .actTag A:hover {
+	BORDER-BOTTOM: #999 1px solid; BORDER-LEFT: #fff 1px solid; PADDING-BOTTOM: 8px; PADDING-LEFT: 10px; WIDTH: auto; PADDING-RIGHT: 10px; DISPLAY: block; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_process.gif) repeat-x left top; COLOR: #000; BORDER-TOP: #fff 1px solid; BORDER-RIGHT: #999 1px solid; TEXT-DECORATION: none; PADDING-TOP: 8px
+}
+.manageBox .actTagOn {
+	BORDER-BOTTOM: #999 1px solid; BORDER-LEFT: #fff 1px solid; PADDING-BOTTOM: 8px; PADDING-LEFT: 10px; WIDTH: auto; PADDING-RIGHT: 10px; DISPLAY: block; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_process.gif) repeat-x left top; COLOR: #000; BORDER-TOP: #fff 1px solid; BORDER-RIGHT: #999 1px solid; TEXT-DECORATION: none; PADDING-TOP: 8px
+}
+.manageBox .manageTag {
+	BORDER-BOTTOM: #cecece 1px solid; PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_manageTag.gif) #fff repeat-x left bottom; COLOR: #000; FONT-SIZE: 1.2em; PADDING-TOP: 5px
+}
+.brTop {
+	BORDER-TOP: #cecece 1px solid
+}
+.brBottom {
+	BORDER-BOTTOM: #cecece 1px solid
+}
+.manageBox .folderList LI {
+	DISPLAY: list-item; COLOR: #666; FONT-SIZE: 1.3em
+}
+.manageBox .folderList LI A {
+	PADDING-BOTTOM: 8px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; DISPLAY: block; PADDING-TOP: 8px
+}
+.manageBox .folderList LI A:visited {
+	PADDING-BOTTOM: 8px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; DISPLAY: block; PADDING-TOP: 8px
+}
+.manageBox .folderList LI A:hover {
+	PADDING-BOTTOM: 8px; BACKGROUND-COLOR: #edf5e4; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; DISPLAY: block; TEXT-DECORATION: none; PADDING-TOP: 8px
+}
+.manageBox .folderList LI A:active {
+	PADDING-BOTTOM: 8px; BACKGROUND-COLOR: #edf5e4; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; DISPLAY: block; TEXT-DECORATION: none; PADDING-TOP: 8px
+}
+.manageBox .folderList LI.folderOn {
+	PADDING-BOTTOM: 8px; BACKGROUND-COLOR: #edf5e4; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; DISPLAY: block; TEXT-DECORATION: none; PADDING-TOP: 8px
+}
+.manageBox .folderList LI.folderOn {
+	BORDER-BOTTOM: #ccc 1px solid; BORDER-LEFT: 0px; PADDING-BOTTOM: 7px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; COLOR: #060; BORDER-TOP: #fafff4 1px solid; FONT-WEIGHT: 700; BORDER-RIGHT: 0px; PADDING-TOP: 7px
+}
+.manageBox .showJob {
+	PADDING-BOTTOM: 10px; MARGIN: 0px 10px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; COLOR: #444; FONT-SIZE: 1.1em; BORDER-TOP: #ccc 1px dotted; PADDING-TOP: 10px
+}
+.manageBox UL.basicBulletedList B {
+	FONT-SIZE: 1.1em
+}
+.manageBox UL.basicBulletedList LI {
+	COLOR: #000; FONT-SIZE: 1.1em
+}
+.manageBox SMALL {
+	LINE-HEIGHT: 1.1em; FONT-SIZE: 0.9em
+}
+.manageBox whiteBox {
+	FONT-SIZE: 1.4em
+}
+.manageBox TD .formError {
+	WIDTH: 280px; MARGIN-LEFT: 0px; FONT-SIZE: 1em
+}
+.manageBox TD .formContent .formError {
+	MARGIN: -3px 0px 5px; WIDTH: 240px; FONT-SIZE: 0.88em
+}
+.manageBox TD .textDG {
+	FONT-SIZE: 0.9em
+}
+.manageBox TD .formBtnSet {
+	TEXT-ALIGN: right; MARGIN: 0px 10px 0px 0px; FLOAT: right
+}
+.resultTag .left {
+	MARGIN: 5px 5px 5px 10px
+}
+.resultTag .right {
+	MARGIN: 5px 10px 5px 5px; COLOR: #4d4d4d; FONT-SIZE: 0.9em; FONT-WEIGHT: 400
+}
+.resultTag .left A.sortingResult {
+	COLOR: #4d4d4d; TEXT-DECORATION: none
+}
+.resultTag .left A.sortingResult:hover {
+	COLOR: #4d4d4d; TEXT-DECORATION: underline
+}
+.resultTag .left A.sortingResult SPAN {
+	COLOR: #666; FONT-SIZE: 0.8em; FONT-WEIGHT: 400
+}
+.resultTag A.less {
+	FONT-SIZE: 0.9em; FONT-WEIGHT: 400
+}
+.resultTag A.sorting {
+	COLOR: #043d8a; TEXT-DECORATION: none
+}
+.resultTag A.less {
+	COLOR: #043d8a; TEXT-DECORATION: none
+}
+.resultTag A.sorting:hover {
+	COLOR: #043d8a; TEXT-DECORATION: underline
+}
+.resultTag A.less:hover {
+	COLOR: #043d8a; TEXT-DECORATION: underline
+}
+.boxTab {
+	POSITION: absolute; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 0.9em; VERTICAL-ALIGN: bottom; TOP: -27px; PADDING-TOP: 0px; LEFT: -1px
+}
+.tabBox .tabspace {
+	WIDTH: 5px
+}
+.tabOn {
+	BORDER-BOTTOM: #fff 1px solid; BACKGROUND: #fff
+}
+.tabOff {
+	BORDER-BOTTOM: #ccc 1px solid
+}
+.blankTab {
+	BORDER-BOTTOM: #ccc 1px solid
+}
+.tabOnhead {
+	BORDER-BOTTOM: #fff 1px solid; WIDTH: 5px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_boxTabOn01.gif) no-repeat
+}
+.tabOntail {
+	BORDER-BOTTOM: #fff 1px solid; WIDTH: 5px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_boxTabOn02.gif) no-repeat
+}
+.tabOffhead {
+	BORDER-BOTTOM: #ccc 1px solid; WIDTH: 5px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_boxTabOff01.gif) no-repeat
+}
+.tabOfftail {
+	BORDER-BOTTOM: #ccc 1px solid; WIDTH: 5px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_boxTabOff02.gif) no-repeat
+}
+.tabOffmain {
+	BORDER-BOTTOM: #ccc 1px solid; TEXT-ALIGN: center; PADDING-BOTTOM: 5px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; BACKGROUND: #e5e5e5; COLOR: #000; FONT-SIZE: 1.1em; BORDER-TOP: #ccc 1px solid; FONT-WEIGHT: 700; PADDING-TOP: 5px
+}
+.tabOffmain A {
+	DISPLAY: block; COLOR: #000; FONT-WEIGHT: 700
+}
+.tabOnmain {
+	BORDER-BOTTOM: #fff 1px solid; TEXT-ALIGN: center; PADDING-BOTTOM: 5px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; BACKGROUND: #fff; COLOR: #3c7322; FONT-SIZE: 1.1em; BORDER-TOP: #ccc 1px solid; FONT-WEIGHT: 700; PADDING-TOP: 5px
+}
+.tabOnmain A {
+	DISPLAY: block; COLOR: #3c7322; FONT-WEIGHT: 700
+}
+.tabOnmainTag {
+	BORDER-BOTTOM: #fff 1px solid; TEXT-ALIGN: left; PADDING-BOTTOM: 5px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; BACKGROUND: #fff; COLOR: #3c7322; FONT-SIZE: 1.5em; BORDER-TOP: #ccc 1px solid; FONT-WEIGHT: 700; PADDING-TOP: 5px
+}
+.tabOnmainTag A {
+	BORDER-BOTTOM: medium none; BORDER-LEFT: medium none; BACKGROUND: none transparent scroll repeat 0% 0%; COLOR: #3c7322; FONT-SIZE: 0.9em; BORDER-TOP: medium none; FONT-WEIGHT: 700; BORDER-RIGHT: medium none; TEXT-DECORATION: none; PADDING-TOP: 3px
+}
+.tabOnmainTag A:hover {
+	BORDER-BOTTOM: medium none; BORDER-LEFT: medium none; BACKGROUND: none transparent scroll repeat 0% 0%; COLOR: #3c7322; FONT-SIZE: 0.9em; BORDER-TOP: medium none; FONT-WEIGHT: 700; BORDER-RIGHT: medium none; TEXT-DECORATION: underline; PADDING-TOP: 3px
+}
+.tabspace {
+	BORDER-BOTTOM: #ccc 1px solid; WIDTH: 4px
+}
+.tabBox {
+	POSITION: relative; BORDER-LEFT: #ccc 1px solid; PADDING-BOTTOM: 5px; MARGIN-TOP: 40px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: #fff; HEIGHT: 16px; FONT-SIZE: 1.2em; BORDER-TOP: #ccc 1px solid; FONT-WEIGHT: 700; BORDER-RIGHT: #ccc 1px solid; PADDING-TOP: 5px
+}
+.navTab {
+	MARGIN: 0px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_tab.gif) repeat-x 0px 3px; HEIGHT: 35px; BORDER-TOP: #fff 3px solid
+}
+.navTab UL {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 1.1em; BORDER-TOP: #fff 3px solid; PADDING-TOP: 5px
+}
+.navTab LI {
+	TEXT-ALIGN: center; PADDING-BOTTOM: 5px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FLOAT: left; HEIGHT: 15px; BORDER-RIGHT: #e0e0e0 1px solid; PADDING-TOP: 5px
+}
+.navTab LI.brL {
+	BORDER-LEFT: #e0e0e0 1px solid
+}
+.navTab A {
+	PADDING-BOTTOM: 4px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 4px
+}
+.navTab A:hover {
+	BACKGROUND: #fff; BORDER-TOP: #e0e0e0 1px solid
+}
+.navTab LI.on {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: #fff; COLOR: #000; BORDER-TOP: #e0e0e0 1px solid; FONT-WEIGHT: 700; PADDING-TOP: 5px
+}
+.gForm {
+	ZOOM: 1
+}
+.gForm .formLabel {
+	WIDTH: 140px
+}
+.gForm TD {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 20px; PADDING-TOP: 0px
+}
+.formContent .flowList {
+	PADDING-BOTTOM: 10px; MARGIN-TOP: 3px
+}
+.formContent UL LI INPUT {
+	FLOAT: none
+}
+.formContent UL LI SELECT {
+	FLOAT: none
+}
+.formContent UL LI DIV {
+	FLOAT: none
+}
+.formContent UL LI IMG {
+	FLOAT: none
+}
+* + HTML .formContent .flowList {
+	PADDING-BOTTOM: 0px
+}
+.miniForm .formLabel {
+	TEXT-ALIGN: left; WIDTH: 60px
+}
+.miniForm2 .formLabel {
+	TEXT-ALIGN: left; WIDTH: 140px
+}
+.miniForm3 .formLabel {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 2px; PADDING-LEFT: 5px; WIDTH: 95px; PADDING-RIGHT: 0px; PADDING-TOP: 6px
+}
+* + HTML .miniForm3 .formLabel {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 2px; PADDING-LEFT: 5px; PADDING-RIGHT: 0px; PADDING-TOP: 3px
+}
+.miniForm3 .formSubLabel {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 0px; PADDING-LEFT: 5px; PADDING-RIGHT: 0px; PADDING-TOP: 5px
+}
+* + HTML .miniForm3 .formSubLabel {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 0px; PADDING-LEFT: 5px; PADDING-RIGHT: 0px; PADDING-TOP: 3px
+}
+.miniForm3 .formContent {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 8px; PADDING-LEFT: 5px; PADDING-RIGHT: 0px; PADDING-TOP: 3px
+}
+.miniForm3 .form_c .formError {
+	MARGIN: -10px 0px 6px 105px; FONT-SIZE: 1.1em
+}
+.miniForm3 .form_c .formTips {
+	MARGIN: -10px 0px 6px 105px; FONT-SIZE: 1.1em
+}
+.miniForm3 .form_c .formContent .formError {
+	MARGIN: -5px 0px 6px; WIDTH: 320px; FONT-SIZE: 0.9em
+}
+.miniForm3 .form_c .fontContent .formTips {
+	MARGIN: -5px 0px 6px; WIDTH: 320px; FONT-SIZE: 0.9em
+}
+.padForm {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 25px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.miniForm4 .formLabel {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; WIDTH: 95px; PADDING-RIGHT: 10px; PADDING-TOP: 8px
+}
+.miniForm4 .formContent {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 5px; PADDING-RIGHT: 0px; PADDING-TOP: 5px
+}
+.miniForm4 .formError {
+	MARGIN: 0px 0px 0px 110px; WIDTH: auto
+}
+.miniForm4 .formTips {
+	MARGIN: 0px 0px 0px 110px; WIDTH: auto
+}
+.process {
+	PADDING-BOTTOM: 4px; MARGIN: 10px 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_process.gif) repeat-x; HEIGHT: 30px; FONT-SIZE: 1.4em; FONT-WEIGHT: 700; PADDING-TOP: 4px
+}
+.process LI {
+	MARGIN: 0px 20px 0px 0px; DISPLAY: inline
+}
+.process LI.off {
+	COLOR: #666
+}
+.formDes {
+	COLOR: #333; FONT-WEIGHT: 700
+}
+.formTit {
+	PADDING-BOTTOM: 0px; MARGIN: 5px 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; BACKGROUND: #ededed; HEIGHT: 22px; CLEAR: both; PADDING-TOP: 8px
+}
+.formTit SMALL {
+	COLOR: #555
+}
+.formTit P {
+	MARGIN: 0px; COLOR: #000; FONT-SIZE: 1.2em; FONT-WEIGHT: 700
+}
+.formTit P.note {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 5px; COLOR: #666; FONT-SIZE: 1.1em; FONT-WEIGHT: 400; PADDING-TOP: 2px
+}
+.bgDivTit {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_w.jpg) #f9f9f9 repeat-y 145px 145px
+}
+.bgDivTit2 {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_w.jpg) #f8f8f8 repeat-y 119px 119px
+}
+.form_c {
+	BACKGROUND: none transparent scroll repeat 0% 0%
+}
+.formError {
+	POSITION: static; PADDING-BOTTOM: 2px; LINE-HEIGHT: 1.1em; PADDING-LEFT: 23px; WIDTH: 280px; PADDING-RIGHT: 0px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/icon_error.png) no-repeat 0px 3px; FLOAT: left; COLOR: #bb4722; FONT-SIZE: 1.1em; PADDING-TOP: 6px
+}
+.formTips {
+	POSITION: static; PADDING-BOTTOM: 0px; LINE-HEIGHT: 1.1em; MARGIN: -5px 0px 0px 10px; PADDING-LEFT: 10px; WIDTH: 280px; PADDING-RIGHT: 0px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/arrow_tips.gif) no-repeat 0px 13px; FLOAT: left; COLOR: #666; FONT-SIZE: 1.1em; PADDING-TOP: 11px
+}
+.formLabel {
+	TEXT-ALIGN: right; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 10px; FLOAT: left; COLOR: #555; FONT-SIZE: 1.2em; PADDING-TOP: 8px
+}
+.formLabel SPAN {
+	COLOR: #3c7322
+}
+.formSubLabel SPAN {
+	COLOR: #3c7322
+}
+.formSubLabel {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 10px; FLOAT: left; COLOR: #000; FONT-SIZE: 1.2em; PADDING-TOP: 8px
+}
+.formContent {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 5px; PADDING-RIGHT: 0px; ZOOM: 1; FLOAT: left; FONT-SIZE: 1.2em; PADDING-TOP: 5px
+}
+* + HTML .formContent {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 5px; PADDING-RIGHT: 0px; PADDING-TOP: 4px
+}
+.formContent LABEL {
+	MARGIN: 3px 5px 0px 0px; FLOAT: left; COLOR: #000
+}
+* + HTML .formContent LABEL {
+	MARGIN: 3px 5px 0px 0px
+}
+.formContent INPUT {
+	MARGIN-RIGHT: 5px
+}
+.formContent SELECT {
+	MARGIN-RIGHT: 5px
+}
+.formContent .formTips {
+	FONT-SIZE: 0.9em; LEFT: 0px
+}
+.formContent .formError {
+	FONT-SIZE: 0.9em; LEFT: 0px
+}
+.formContent P {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 100%; PADDING-TOP: 3px
+}
+.formContent2 P {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 100%; PADDING-TOP: 3px
+}
+.formContent P.textLGnoMargin {
+	MARGIN: 0px; COLOR: #666
+}
+.formContent .alertMsg_alert {
+	PADDING-BOTTOM: 3px; MARGIN: 0px; PADDING-LEFT: 20px; WIDTH: 710px; PADDING-RIGHT: 0px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/icon_alert.png) no-repeat 3px 3px; FONT-SIZE: 0.9em; PADDING-TOP: 3px
+}
+.formContent .formSubLabel {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 5px; PADDING-LEFT: 0px; PADDING-RIGHT: 10px; FLOAT: left; COLOR: #000; FONT-SIZE: 1em; PADDING-TOP: 1px
+}
+.formContent .desc {
+	PADDING-BOTTOM: 1px; PADDING-LEFT: 0px; PADDING-RIGHT: 5px; COLOR: #666; FONT-SIZE: 0.9em; PADDING-TOP: 2px
+}
+.formContent .desc SPAN {
+	COLOR: #000; FONT-WEIGHT: 700
+}
+.borderBox {
+	BORDER-BOTTOM: #dadada 1px solid; BORDER-LEFT: #dadada 1px solid; PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_gradient.gif) repeat-x 50% bottom; BORDER-TOP: #dadada 1px solid; BORDER-RIGHT: #dadada 1px solid; PADDING-TOP: 5px
+}
+.borderBox P {
+	ZOOM: 1
+}
+.borderBox .formLabel {
+	TEXT-ALIGN: left
+}
+.borderBox TD {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 0px; PADDING-RIGHT: 10px; FONT-SIZE: 1.2em; VERTICAL-ALIGN: top; PADDING-TOP: 2px
+}
+.uBox TD {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 0px; PADDING-RIGHT: 10px; FONT-SIZE: 1.2em; VERTICAL-ALIGN: top; PADDING-TOP: 2px
+}
+.gTabBox TD {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 0px; PADDING-RIGHT: 10px; FONT-SIZE: 1.2em; VERTICAL-ALIGN: top; PADDING-TOP: 2px
+}
+.greenBox TD {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 0px; PADDING-RIGHT: 10px; FONT-SIZE: 1.2em; VERTICAL-ALIGN: top; PADDING-TOP: 2px
+}
+.borderBoxTit A {
+	POSITION: relative; PADDING-BOTTOM: 0px; PADDING-LEFT: 15px; PADDING-RIGHT: 0px; FONT-SIZE: 1.6em; FONT-WEIGHT: 700; PADDING-TOP: 0px
+}
+.borderBox2 {
+	BORDER-BOTTOM: #dadada 1px solid; BORDER-LEFT: #dadada 1px solid; PADDING-BOTTOM: 10px; PADDING-LEFT: 8px; PADDING-RIGHT: 10px; BACKGROUND: #ededed; BORDER-TOP: #dadada 1px solid; BORDER-RIGHT: #dadada 1px solid; PADDING-TOP: 10px
+}
+.borderBoxGF {
+	BORDER-BOTTOM: #dadada 1px solid; BORDER-LEFT: #dadada 1px solid; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: #ededed; BORDER-TOP: #dadada 1px solid; BORDER-RIGHT: #dadada 1px solid; PADDING-TOP: 0px
+}
+.borderBox3 {
+	BORDER-BOTTOM: #dadada 1px solid; BORDER-LEFT: #dadada 1px solid; PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BORDER-TOP: #dadada 1px solid; BORDER-RIGHT: #dadada 1px solid; PADDING-TOP: 10px
+}
+.v6Addon {
+	PADDING-BOTTOM: 11px; PADDING-LEFT: 11px; PADDING-RIGHT: 11px; PADDING-TOP: 11px
+}
+.borderBox .formError {
+	MARGIN: -5px 0px 7px
+}
+.rsmBuilder {
+	POSITION: relative; PADDING-BOTTOM: 10px; MARGIN: 0px 0px 1px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; ZOOM: 1; BACKGROUND: #fff; OVERFLOW: hidden; PADDING-TOP: 10px
+}
+.rsmBuilderTitle {
+	POSITION: relative; WIDTH: 950px
+}
+.rsmBuilderTitle A {
+	PADDING-BOTTOM: 0px; MARGIN: 0px 0px 10px; PADDING-LEFT: 15px; PADDING-RIGHT: 0px; DISPLAY: block; FONT-SIZE: 1.4em; FONT-WEIGHT: 700; PADDING-TOP: 0px
+}
+.tOpen A {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/icon_blueArrowDown.gif) no-repeat 0px 50%
+}
+.tClose A {
+	MARGIN: 0px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/icon_blueArrowRight.gif) no-repeat 0px 50%
+}
+.rsmBuilderTitleGF {
+	POSITION: relative; PADDING-BOTTOM: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 0px
+}
+.rsmBuilderTitleGF A {
+	PADDING-BOTTOM: 0px; MARGIN: 10px 10px 10px 0px; PADDING-LEFT: 15px; PADDING-RIGHT: 0px; DISPLAY: block; FONT-SIZE: 1.4em; FONT-WEIGHT: 700; PADDING-TOP: 0px
+}
+.rsmBuilderTitleGF A {
+	PADDING-BOTTOM: 0px; MARGIN: 10px 10px 10px 0px; PADDING-LEFT: 15px; PADDING-RIGHT: 0px; DISPLAY: block; FONT-SIZE: 1.4em; FONT-WEIGHT: 700; PADDING-TOP: 0px
+}
+.tOpen A:hover {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/icon_blueArrowDownOn.gif) no-repeat 0px 50%; COLOR: #2d7fc3; TEXT-DECORATION: none
+}
+.tClose A:hover {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/icon_blueArrowRightOn.gif) no-repeat 0px 50%; COLOR: #2d7fc3; TEXT-DECORATION: none
+}
+.rsmBuilderB {
+	PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: #fff; PADDING-TOP: 10px
+}
+.rsmBuilderTitleB {
+	WIDTH: 725px
+}
+.rsmBuilderTitleB A {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.rsmBuilderTitleB H4 {
+	MARGIN: 0px 0px 0px 8px; DISPLAY: block; COLOR: #043d8a; FONT-SIZE: 1.4em; FONT-WEIGHT: 700
+}
+.tOpenB A:hover {
+	COLOR: #2d7fc3; TEXT-DECORATION: none
+}
+.rsmBuilderB .formLabel {
+	WIDTH: 120px
+}
+.rsmBuilderB .formContent {
+	WIDTH: 565px
+}
+UL.logoSelect {
+	TEXT-ALIGN: center; LIST-STYLE-TYPE: none; WIDTH: 100%; LIST-STYLE-IMAGE: none
+}
+UL.logoSelect LI {
+	TEXT-ALIGN: center; PADDING-BOTTOM: 10px; PADDING-LEFT: 0px; WIDTH: 104px; PADDING-RIGHT: 10px; BACKGROUND: #fff; FLOAT: left; PADDING-TOP: 0px
+}
+UL.logoSelect LI:hover {
+	TEXT-ALIGN: center; PADDING-BOTTOM: 10px; PADDING-LEFT: 0px; WIDTH: 104px; PADDING-RIGHT: 10px; BACKGROUND: #fff; FLOAT: left; PADDING-TOP: 0px
+}
+UL.logoSelect LI .imgBox {
+	BORDER-BOTTOM: #ccc 1px solid; BORDER-LEFT: #ccc 1px solid; MARGIN: 0px 0px 3px; BORDER-TOP: #ccc 1px solid; BORDER-RIGHT: #ccc 1px solid
+}
+UL.logoSelect LI .imgBg {
+	BORDER-BOTTOM: #fff 1px solid; BORDER-LEFT: #fff 1px solid; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; WIDTH: 100px; PADDING-RIGHT: 0px; BACKGROUND: #ededed; HEIGHT: 75px; BORDER-TOP: #fff 1px solid; BORDER-RIGHT: #fff 1px solid; PADDING-TOP: 0px
+}
+UL.logoSelect LI .imgBg H5 {
+	TEXT-ALIGN: center; MARGIN: 20px 5px
+}
+.rsmBuilder .formContent UL.logoSelect LI INPUT {
+	FLOAT: none
+}
+.formTab {
+	BORDER-BOTTOM: #fff 1px solid; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_formTab.gif) repeat-x 0px 7px; HEIGHT: 33px
+}
+.formTab UL {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; COLOR: #043d8a; FONT-SIZE: 0.9em; PADDING-TOP: 5px
+}
+.formTab LI {
+	TEXT-ALIGN: center; PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; WIDTH: auto; PADDING-RIGHT: 10px; BACKGROUND: none transparent scroll repeat 0% 0%; FLOAT: left; PADDING-TOP: 5px
+}
+.formTab LI.on {
+	BORDER-LEFT: #d9d9d9 1px solid; WIDTH: auto; BACKGROUND: #fff; FLOAT: left; COLOR: #000; BORDER-TOP: #d9d9d9 1px solid; FONT-WEIGHT: 700; BORDER-RIGHT: #d9d9d9 1px solid
+}
+.rmBox {
+	BORDER-BOTTOM: #e2e2e2 1px solid; BORDER-LEFT: #e2e2e2 1px solid; PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; WIDTH: 250px; PADDING-RIGHT: 10px; BACKGROUND: #f6faf2; FONT-SIZE: 0.9em; BORDER-TOP: #e2e2e2 1px solid; BORDER-RIGHT: #e2e2e2 1px solid; PADDING-TOP: 10px
+}
+.rmBox P {
+	PADDING-BOTTOM: 0px; MARGIN: 0px 0px 5px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; COLOR: #3c7322; PADDING-TOP: 0px
+}
+.rmBox TH {
+	BORDER-BOTTOM: #aeaeae 1px dotted; TEXT-ALIGN: left; PADDING-BOTTOM: 2px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; COLOR: #444; FONT-WEIGHT: 700; PADDING-TOP: 2px
+}
+.rmBox TABLE TD {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 2px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; COLOR: #000; FONT-SIZE: 1em; PADDING-TOP: 2px
+}
+.rmBox UL.basicBulletedList LI {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; FONT-WEIGHT: 400; PADDING-TOP: 0px
+}
+.rsmBuilder .formLabel {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 10px; WIDTH: 140px; PADDING-RIGHT: 10px; PADDING-TOP: 8px
+}
+.rsmBuilder .formContent DIV {
+	FLOAT: left
+}
+.rsmBuilder .formContent IMG {
+	FLOAT: left
+}
+.rsmBuilder .formContent .flowList {
+	FLOAT: left
+}
+.rsmBuilder .formContent LI INPUT {
+	FLOAT: none
+}
+.rsmBuilder .formContent LI SELECT {
+	FLOAT: none
+}
+.rsmBuilder .formContent LI DIV {
+	FLOAT: none
+}
+.rsmBuilder .formContent LI IMG {
+	FLOAT: none
+}
+.form_break {
+	TEXT-ALIGN: left; MARGIN: 0px 0px 0px 190px
+}
+.form_break .formError {
+	WIDTH: 500px; MARGIN-BOTTOM: 10px
+}
+.formRow .formError {
+	MARGIN: -5px 0px 0px; WIDTH: 420px
+}
+.rsmBuilder .close {
+	POSITION: absolute; TOP: 5px; RIGHT: 5px
+}
+.rsmBuilder .scrollBox {
+	BORDER-BOTTOM: #a5acb2 1px solid; BORDER-LEFT: #a5acb2 1px solid; PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BORDER-TOP: #a5acb2 1px solid; BORDER-RIGHT: #a5acb2 1px solid; PADDING-TOP: 10px
+}
+.closeB {
+	POSITION: absolute; TOP: 0px; RIGHT: 0px
+}
+.closeB A {
+	BACKGROUND: none transparent scroll repeat 0% 0%
+}
+.rsmBuilderGF {
+	PADDING-BOTTOM: 10px; MARGIN: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 10px
+}
+.formDesGF {
+	BORDER-BOTTOM: #e6e6e6 1px solid; PADDING-BOTTOM: 5px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; COLOR: #333; FONT-WEIGHT: 700; PADDING-TOP: 5px
+}
+.formDesGF2 {
+	BORDER-BOTTOM: #ededed 1px solid; PADDING-BOTTOM: 10px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; COLOR: #333; FONT-WEIGHT: 700; PADDING-TOP: 0px
+}
+.globalField {
+	BORDER-BOTTOM: #dadada 1px solid; PADDING-BOTTOM: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_globalField.gif) repeat-x 50% bottom; BORDER-TOP: #dadada 1px solid; PADDING-TOP: 0px
+}
+.globalField TABLE {
+	WIDTH: 100%
+}
+.globalField TD {
+	BORDER-BOTTOM: #dadada 1px dotted; PADDING-BOTTOM: 5px; LINE-HEIGHT: 1.3em; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; FONT-SIZE: 1.2em; PADDING-TOP: 5px
+}
+[type='text'].specialCtrl {
+	BORDER-BOTTOM: #b3b3b3 1px solid; BORDER-LEFT: #b3b3b3 1px solid; PADDING-BOTTOM: 2px; PADDING-LEFT: 1px; PADDING-RIGHT: 7px; BACKGROUND: #ffffd3; BORDER-TOP: #b3b3b3 1px solid; BORDER-RIGHT: #b3b3b3 1px solid; PADDING-TOP: 2px
+}
+.portrait {
+	MARGIN: 10px 0px 0px; WIDTH: 100px; FLOAT: right; HEIGHT: 135px
+}
+.sideReorder {
+	BORDER-BOTTOM: #dadada 1px solid; BORDER-LEFT: #dadada 1px solid; WIDTH: 208px; BORDER-TOP: #dadada 1px solid; BORDER-RIGHT: #dadada 1px solid
+}
+.sideReorder UL.basicBulletedList {
+	PADDING-BOTTOM: 10px; MARGIN: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 10px
+}
+.sideReorder UL.basicBulletedList LI {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bullet_sq.gif) no-repeat 0px 5px; CURSOR: pointer; PADDING-TOP: 3px
+}
+.sideReorder UL.basicBulletedList LI.on {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; BACKGROUND: #e2eeef; CURSOR: pointer; PADDING-TOP: 3px
+}
+.sideReorder UL.basicBulletedList LI:hover {
+	BACKGROUND: #e2eeef
+}
+.btnSet {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 5px; WIDTH: 200px; PADDING-RIGHT: 5px; BACKGROUND: #ededed; PADDING-TOP: 5px
+}
+.canSearchBox {
+	BORDER-BOTTOM: #b1c687 1px solid; POSITION: relative; MIN-WIDTH: 970px; PADDING-BOTTOM: 3px; PADDING-LEFT: 10px; WIDTH: auto !important; PADDING-RIGHT: 0px; BACKGROUND: #d2e6ad; HEIGHT: 63px; PADDING-TOP: 0px
+}
+.canSearchBox .borderL {
+	POSITION: absolute; TOP: 0px; LEFT: 0px
+}
+.canSearchBox .borderR {
+	POSITION: absolute; TOP: 0px; RIGHT: 0px
+}
+.canSearchBox .title {
+	PADDING-BOTTOM: 17px; MARGIN: 0px 15px 0px 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FLOAT: left; HEIGHT: 21px; COLOR: #3c7322; FONT-SIZE: 1.6em; VERTICAL-ALIGN: middle; FONT-WEIGHT: 700; PADDING-TOP: 20px
+}
+.canSearchBox .sBox_c {
+	FLOAT: left
+}
+.canSearchBox .sBox {
+	PADDING-BOTTOM: 0px; MARGIN: 0px 15px 0px 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FLOAT: left; PADDING-TOP: 5px
+}
+* + HTML .canSearchBox .sBox {
+	MARGIN: 0px 5px 5px 0px
+}
+.canSearchBox .sBox LABEL {
+	MARGIN: 0px 5px 0px 0px; COLOR: #000; FONT-SIZE: 1.1em; FONT-WEIGHT: 400
+}
+* + HTML .canSearchBox .sBox LABEL {
+	VERTICAL-ALIGN: 15%
+}
+* + HTML .canSearchBox .sBox .mT5 {
+	MARGIN-TOP: 3px
+}
+.canSearchBox .sBox INPUT[type='checkbox'] {
+	MARGIN: -1px 0px 0px
+}
+.canSearchBox A {
+	COLOR: #043d8a; TEXT-DECORATION: underline
+}
+.canSearchMore A {
+	COLOR: #043d8a; TEXT-DECORATION: underline
+}
+.canSearchMore_c {
+	PADDING-BOTTOM: 0px; LINE-HEIGHT: 1.6em; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_canSearchM.jpg) #b8cf8d no-repeat -27px top; HEIGHT: 21px; COLOR: #fff; FONT-SIZE: 1.2em; BORDER-TOP: #dce7c6 1px solid; FONT-WEIGHT: 700; PADDING-TOP: 0px
+}
+.canSearchMore_c A {
+	FONT-WEIGHT: 400; TEXT-DECORATION: none
+}
+.canSearchMore IMG {
+	MARGIN: 2px 2px 2px 3px
+}
+.resumeCol {
+	WIDTH: 300px; HEIGHT: 100%
+}
+.canSearchResult {
+	WIDTH: 100%; HEIGHT: 100%
+}
+.canSearchResult .actionBar {
+	BORDER-LEFT: #c9c7c9 1px solid; BORDER-TOP: #c9c7c9 1px solid
+}
+.resumeCol .resumeHeader {
+	BORDER-LEFT: #c9c7c9 1px solid; PADDING-BOTTOM: 5px; PADDING-LEFT: 5px; WIDTH: 290px; PADDING-RIGHT: 5px; BACKGROUND: #e6e6e6; FLOAT: right; HEIGHT: 24px; BORDER-TOP: #c9c7c9 1px solid; BORDER-RIGHT: #c9c7c9 1px solid; PADDING-TOP: 5px
+}
+.resumeCol .resumeHeader .canCode {
+	LINE-HEIGHT: 1.8em; COLOR: #000; FONT-SIZE: 1.4em; FONT-WEIGHT: 700; MARGIN-RIGHT: 5px
+}
+.resumeCol .resumeHeader .canCode IMG {
+	MARGIN-BOTTOM: 5px
+}
+.canSearchResult .resultList {
+	WIDTH: 100%; OVERFLOW: auto
+}
+.canSearchResult .resultList TABLE {
+	BORDER-LEFT: #c9c7c9 1px solid; BORDER-TOP: #c9c7c9 1px solid
+}
+.canSearchResult .resultList TABLE TR.fBold TD {
+	FONT-WEIGHT: 700
+}
+.canSearchResult .resultList TABLE TR.viewed TD {
+	COLOR: #666
+}
+.canSearchResult .resultList TABLE TR.viewed TD A {
+	COLOR: #666
+}
+.resumeCol .resumeViewer {
+	BORDER-BOTTOM: #c9c7c9 1px solid; BORDER-LEFT: #c9c7c9 1px solid; OVERFLOW-X: hidden; OVERFLOW-Y: auto; WIDTH: 300px; HEIGHT: 427px; BORDER-RIGHT: #c9c7c9 1px solid
+}
+#briefResume {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_brmHead.gif) #f4f4f4 repeat-x left -69px
+}
+.brm_c {
+	WIDTH: 282px
+}
+.brmHead {
+	BORDER-BOTTOM: #fff 1px solid; PADDING-BOTTOM: 0px; PADDING-LEFT: 8px; PADDING-RIGHT: 8px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_brmHead.gif) repeat-x 50% bottom; HEIGHT: 31px; PADDING-TOP: 0px
+}
+.brm_c TD {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 5px; FONT-SIZE: 1.1em; PADDING-TOP: 0px
+}
+.brm {
+	PADDING-BOTTOM: 8px; PADDING-LEFT: 8px; PADDING-RIGHT: 8px; BACKGROUND: #f4f4f4; PADDING-TOP: 0px
+}
+.rSum_c {
+	WIDTH: 150px; FLOAT: left
+}
+.rTit {
+	BORDER-BOTTOM: #ccc 1px dotted; PADDING-BOTTOM: 5px; TEXT-TRANSFORM: uppercase; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; MARGIN-BOTTOM: 5px; COLOR: #000; FONT-SIZE: 1.2em; FONT-WEIGHT: 700; PADDING-TOP: 5px
+}
+.rSum {
+	MARGIN-BOTTOM: 8px
+}
+.rSum DT {
+	COLOR: #666; FONT-SIZE: 1.1em; FONT-WEIGHT: 700
+}
+.rSum DD {
+	COLOR: #000; FONT-SIZE: 1.2em
+}
+.foto {
+	MARGIN: 5px 0px 0px 10px; WIDTH: 100px; FLOAT: right; HEIGHT: 130px; OVERFLOW: hidden
+}
+.workSum {
+	MARGIN-BOTTOM: 12px; COLOR: #000; FONT-SIZE: 1.2em
+}
+.workSum DT {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bullet_sq.gif) no-repeat 0px 2px; FONT-WEIGHT: 700; PADDING-TOP: 0px
+}
+.workSum DD {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.workSum DD.para {
+	PADDING-BOTTOM: 0px; LINE-HEIGHT: 1.4em; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.smallLink A {
+	PADDING-LEFT: 5px; FONT-SIZE: 0.9em; TEXT-DECORATION: underline
+}
+.resultBar {
+	MARGIN: 10px 0px 0px
+}
+.resultBar H2 {
+	MARGIN: 0px
+}
+.advSearch {
+	FLOAT: right
+}
+.advSearch INPUT[type='text'] {
+	BORDER-BOTTOM: #b3b3b3 1px solid; BORDER-LEFT: #b3b3b3 1px solid; PADDING-BOTTOM: 2px; MARGIN: 0px; PADDING-LEFT: 2px; WIDTH: 170px; PADDING-RIGHT: 2px; HEIGHT: 15px; FONT-SIZE: 1.1em; BORDER-TOP: #b3b3b3 1px solid; BORDER-RIGHT: #b3b3b3 1px solid; PADDING-TOP: 2px
+}
+.advSearch SMALL {
+	LINE-HEIGHT: 1em; MARGIN: 1px 0px 0px 5px; WIDTH: 55px; DISPLAY: inline-block; FONT-SIZE: 1em
+}
+.advSearch A {
+	TEXT-DECORATION: underline
+}
+.modeOption {
+	MARGIN: 10px 20px 0px 0px; FLOAT: left; COLOR: #333; FONT-SIZE: 1.1em; FONT-WEIGHT: 700
+}
+* + HTML .modeOption {
+	MARGIN-TOP: 10px
+}
+.modeOption FIELDSET {
+	FLOAT: left
+}
+.modeOption LABEL {
+	MARGIN: 0px 2px 0px 0px; FONT-WEIGHT: 400
+}
+.modeOption IMG {
+	MARGIN: 0px 5px 1px 0px; VERTICAL-ALIGN: middle
+}
+.modeOption A:link {
+	COLOR: #666; FONT-WEIGHT: 400; TEXT-DECORATION: none
+}
+.modeOption A:visited {
+	COLOR: #666; FONT-WEIGHT: 400; TEXT-DECORATION: none
+}
+.modeOption A:active {
+	COLOR: #333; TEXT-DECORATION: none
+}
+.modeOption A:hover {
+	COLOR: #333; TEXT-DECORATION: none
+}
+.rSearchJL {
+	Z-INDEX: 150; POSITION: relative; WIDTH: inherit; BACKGROUND: #bb4722; FLOAT: right; HEIGHT: 25px; MARGIN-LEFT: 10px; VERTICAL-ALIGN: top
+}
+.rSearchOn {
+	Z-INDEX: 150; POSITION: relative; WIDTH: inherit; BACKGROUND: #bb4722; FLOAT: right; HEIGHT: 25px; MARGIN-LEFT: 10px; VERTICAL-ALIGN: top
+}
+.rSearchJL IMG {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+.rSearchOn IMG {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+.rSearchJL A:hover {
+	TEXT-DECORATION: none
+}
+.rSearchJL A .btn {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 25px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_rSearchJL_dn.jpg) repeat-x right 50%; FLOAT: left; HEIGHT: 23px; COLOR: #fff; FONT-SIZE: 12px; TEXT-DECORATION: none; PADDING-TOP: 0px
+}
+.rSearchOn A .btn {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 25px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_rSearchJL_up.jpg) repeat-x right 50%; FLOAT: left; HEIGHT: 23px; COLOR: #fff; FONT-SIZE: 12px; TEXT-DECORATION: none; PADDING-TOP: 0px
+}
+.resultBar {
+	_border: 0
+}
+.rSearchOn .panel {
+	POSITION: absolute; WIDTH: 680px; FONT-FAMILY: tahoma, Arial, Helvetica, sans-serif; HEIGHT: auto; TOP: 23px; RIGHT: -4px
+}
+.rSearchOn .panel .sContent {
+	BORDER-BOTTOM: #cacbcb 1px solid; BORDER-LEFT: #cacbcb 1px solid; WIDTH: 670px; BACKGROUND: #e2e2e2; HEIGHT: auto; BORDER-TOP: #cacbcb 1px solid; BORDER-RIGHT: #cacbcb 1px solid
+}
+.rSearchOn .panel .sContent IFRAME {
+	WIDTH: 100%; HEIGHT: 450px
+}
+.rSearchOn .panel .lside {
+	LINE-HEIGHT: 0; WIDTH: 4px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/br_shallowL.png) repeat-y left top
+}
+.rSearchOn .panel .rside {
+	LINE-HEIGHT: 0; WIDTH: 4px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/br_shallowR.png) repeat-y left top
+}
+.rSearchOn .panel .lcorner {
+	LINE-HEIGHT: 0; WIDTH: 4px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/br_shallowBL.png) no-repeat left top; HEIGHT: 7px
+}
+.rSearchOn .panel .rcorner {
+	LINE-HEIGHT: 0; WIDTH: 4px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/br_shallowBR.png) no-repeat left top; HEIGHT: 7px
+}
+.rSearchOn .panel .bottom {
+	LINE-HEIGHT: 0; WIDTH: 342px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/br_shallowB.png) repeat-x left top; HEIGHT: 7px
+}
+.rSearchOn .panel .searchBar {
+	BORDER-BOTTOM: #cacaca 1px solid; PADDING-BOTTOM: 7px; PADDING-LEFT: 10px; WIDTH: 650px; PADDING-RIGHT: 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_searchBar_JL.jpg) repeat-x left bottom; HEIGHT: 22px; FONT-SIZE: 12px; PADDING-TOP: 7px
+}
+#framebody .searchBar {
+	BORDER-BOTTOM: #cacaca 1px solid; PADDING-BOTTOM: 7px; PADDING-LEFT: 10px; WIDTH: 650px; PADDING-RIGHT: 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_searchBar_JL.jpg) repeat-x left bottom; HEIGHT: 22px; FONT-SIZE: 12px; PADDING-TOP: 7px
+}
+.rSearchOn .panel .searchBar B {
+	MARGIN-TOP: 3px; FLOAT: left
+}
+#framebody .searchBar B {
+	MARGIN-TOP: 3px; FLOAT: left
+}
+.rSearchOn .panel .searchBar .sArea {
+	MARGIN-TOP: 0px; FLOAT: left
+}
+#framebody .searchBar .sArea {
+	MARGIN-TOP: 0px; FLOAT: left
+}
+.rSearchOn .panel .searchBar .sArea .flowList {
+	MARGIN-TOP: 2px; FLOAT: left
+}
+#framebody .searchBar .sArea .flowList {
+	MARGIN-TOP: 2px; FLOAT: left
+}
+.rSearchOn .panel .searchBar .sArea .flowList LI {
+	MARGIN: 0px
+}
+#framebody .searchBar .sArea .flowList LI {
+	MARGIN: 0px
+}
+.rSearchOn .panel .searchBar .sArea INPUT.sKey {
+	BORDER-BOTTOM: #969696 1px solid; BORDER-LEFT: #969696 1px solid; PADDING-BOTTOM: 3px; PADDING-LEFT: 3px; WIDTH: 210px; PADDING-RIGHT: 3px; FLOAT: left; HEIGHT: 13px; MARGIN-LEFT: 5px; FONT-SIZE: 9px; BORDER-TOP: #969696 1px solid; MARGIN-RIGHT: 10px; BORDER-RIGHT: #969696 1px solid; PADDING-TOP: 3px
+}
+#framebody .searchBar .sArea INPUT.sKey {
+	BORDER-BOTTOM: #969696 1px solid; BORDER-LEFT: #969696 1px solid; PADDING-BOTTOM: 3px; PADDING-LEFT: 3px; WIDTH: 210px; PADDING-RIGHT: 3px; FLOAT: left; HEIGHT: 13px; MARGIN-LEFT: 5px; FONT-SIZE: 9px; BORDER-TOP: #969696 1px solid; MARGIN-RIGHT: 10px; BORDER-RIGHT: #969696 1px solid; PADDING-TOP: 3px
+}
+.rSearchOn .panel .searchBar .sArea LABEL {
+	MARGIN: 0px 10px 0px 0px; COLOR: #000; FONT-SIZE: 9px
+}
+#framebody .searchBar .sArea LABEL {
+	MARGIN: 0px 10px 0px 0px; COLOR: #000; FONT-SIZE: 9px
+}
+* + HTML .rSearchOn .panel .searchBar .sArea LABEL {
+	VERTICAL-ALIGN: 10%
+}
+* + HTML #framebody .searchBar .sArea LABEL {
+	VERTICAL-ALIGN: 10%
+}
+.rSearchOn .panel .optionArea {
+	BACKGROUND: #f2f1eb; FONT-SIZE: 10px
+}
+#framebody .optionArea {
+	BACKGROUND: #f2f1eb; FONT-SIZE: 10px
+}
+.rSearchOn .panel .optionArea .oBar {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 20px; PADDING-RIGHT: 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_oBar_JL.jpg) #f8f8f8 repeat-x 50% bottom; HEIGHT: 26px; BORDER-TOP: #fff 1px solid; PADDING-TOP: 5px
+}
+#framebody .optionArea .oBar {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 20px; PADDING-RIGHT: 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_oBar_JL.jpg) #f8f8f8 repeat-x 50% bottom; HEIGHT: 26px; BORDER-TOP: #fff 1px solid; PADDING-TOP: 5px
+}
+.rSearchOn .panel .optionArea .w340 .oBar {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; MARGIN-LEFT: 10px; PADDING-TOP: 5px
+}
+#framebody .optionArea .w340 .oBar {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; MARGIN-LEFT: 10px; PADDING-TOP: 5px
+}
+.rSearchOn .panel .optionArea .oBar A:link {
+	BORDER-LEFT: #e0e0e0 1px solid; PADDING-BOTTOM: 5px; TEXT-TRANSFORM: uppercase; PADDING-LEFT: 8px; PADDING-RIGHT: 8px; COLOR: #2c7fc5; FONT-SIZE: 10px; VERTICAL-ALIGN: -7px; MARGIN-RIGHT: -4px; TEXT-DECORATION: none; PADDING-TOP: 8px
+}
+.rSearchOn .panel .optionArea .oBar A:visited {
+	BORDER-LEFT: #e0e0e0 1px solid; PADDING-BOTTOM: 5px; TEXT-TRANSFORM: uppercase; PADDING-LEFT: 8px; PADDING-RIGHT: 8px; COLOR: #2c7fc5; FONT-SIZE: 10px; VERTICAL-ALIGN: -7px; MARGIN-RIGHT: -4px; TEXT-DECORATION: none; PADDING-TOP: 8px
+}
+.rSearchOn .panel .optionArea .oBar .on {
+	BORDER-LEFT: #e0e0e0 1px solid; PADDING-BOTTOM: 5px; TEXT-TRANSFORM: uppercase; PADDING-LEFT: 8px; PADDING-RIGHT: 8px; COLOR: #2c7fc5; FONT-SIZE: 10px; VERTICAL-ALIGN: -7px; MARGIN-RIGHT: -4px; TEXT-DECORATION: none; PADDING-TOP: 8px
+}
+#framebody .optionArea .oBar A:link {
+	BORDER-LEFT: #e0e0e0 1px solid; PADDING-BOTTOM: 5px; TEXT-TRANSFORM: uppercase; PADDING-LEFT: 8px; PADDING-RIGHT: 8px; COLOR: #2c7fc5; FONT-SIZE: 10px; VERTICAL-ALIGN: -7px; MARGIN-RIGHT: -4px; TEXT-DECORATION: none; PADDING-TOP: 8px
+}
+#framebody .optionArea .oBar A:visited {
+	BORDER-LEFT: #e0e0e0 1px solid; PADDING-BOTTOM: 5px; TEXT-TRANSFORM: uppercase; PADDING-LEFT: 8px; PADDING-RIGHT: 8px; COLOR: #2c7fc5; FONT-SIZE: 10px; VERTICAL-ALIGN: -7px; MARGIN-RIGHT: -4px; TEXT-DECORATION: none; PADDING-TOP: 8px
+}
+#framebody .optionArea .oBar .on {
+	BORDER-LEFT: #e0e0e0 1px solid; PADDING-BOTTOM: 5px; TEXT-TRANSFORM: uppercase; PADDING-LEFT: 8px; PADDING-RIGHT: 8px; COLOR: #2c7fc5; FONT-SIZE: 10px; VERTICAL-ALIGN: -7px; MARGIN-RIGHT: -4px; TEXT-DECORATION: none; PADDING-TOP: 8px
+}
+* + HTML .rSearchOn .panel .optionArea .oBar A:link {
+	LINE-HEIGHT: 30px; VERTICAL-ALIGN: -9px
+}
+* + HTML .rSearchOn .panel .optionArea .oBar A:visited {
+	LINE-HEIGHT: 30px; VERTICAL-ALIGN: -9px
+}
+* + HTML .rSearchOn .panel .optionArea .oBar .on {
+	LINE-HEIGHT: 30px; VERTICAL-ALIGN: -9px
+}
+* + HTML #framebody .optionArea .oBar A:link {
+	LINE-HEIGHT: 30px; VERTICAL-ALIGN: -9px
+}
+* + HTML #framebody .optionArea .oBar A:visited {
+	LINE-HEIGHT: 30px; VERTICAL-ALIGN: -9px
+}
+* + HTML #framebody .optionArea .oBar .on {
+	LINE-HEIGHT: 30px; VERTICAL-ALIGN: -9px
+}
+.rSearchOn .panel .optionArea .oBar A#firstLink:link {
+	BORDER-LEFT: transparent 1px solid; MARGIN-RIGHT: -4px; TEXT-DECORATION: none
+}
+.rSearchOn .panel .optionArea .oBar A#firstLink:visited {
+	BORDER-LEFT: transparent 1px solid; MARGIN-RIGHT: -4px; TEXT-DECORATION: none
+}
+#framebody .optionArea .oBar A#firstLink:link {
+	BORDER-LEFT: transparent 1px solid; MARGIN-RIGHT: -4px; TEXT-DECORATION: none
+}
+#framebody .optionArea .oBar A#firstLink:visited {
+	BORDER-LEFT: transparent 1px solid; MARGIN-RIGHT: -4px; TEXT-DECORATION: none
+}
+.rSearchOn .panel .optionArea .oBar A:hover {
+	BORDER-BOTTOM: #fff 1px solid; BORDER-LEFT: #e0e0e0 1px solid; PADDING-BOTTOM: 5px; PADDING-LEFT: 8px; PADDING-RIGHT: 7px; BACKGROUND: #fff; COLOR: #333; BORDER-TOP: #e0e0e0 1px solid; MARGIN-RIGHT: -4px; BORDER-RIGHT: #e0e0e0 1px solid; TEXT-DECORATION: none; PADDING-TOP: 8px
+}
+.rSearchOn .panel .optionArea .oBar A:active {
+	BORDER-BOTTOM: #fff 1px solid; BORDER-LEFT: #e0e0e0 1px solid; PADDING-BOTTOM: 5px; PADDING-LEFT: 8px; PADDING-RIGHT: 7px; BACKGROUND: #fff; COLOR: #333; BORDER-TOP: #e0e0e0 1px solid; MARGIN-RIGHT: -4px; BORDER-RIGHT: #e0e0e0 1px solid; TEXT-DECORATION: none; PADDING-TOP: 8px
+}
+.rSearchOn .panel .optionArea .oBar A#firstLink:hover {
+	BORDER-BOTTOM: #fff 1px solid; BORDER-LEFT: #e0e0e0 1px solid; PADDING-BOTTOM: 5px; PADDING-LEFT: 8px; PADDING-RIGHT: 7px; BACKGROUND: #fff; COLOR: #333; BORDER-TOP: #e0e0e0 1px solid; MARGIN-RIGHT: -4px; BORDER-RIGHT: #e0e0e0 1px solid; TEXT-DECORATION: none; PADDING-TOP: 8px
+}
+.rSearchOn .panel .optionArea .oBar .on {
+	BORDER-BOTTOM: #fff 1px solid; BORDER-LEFT: #e0e0e0 1px solid; PADDING-BOTTOM: 5px; PADDING-LEFT: 8px; PADDING-RIGHT: 7px; BACKGROUND: #fff; COLOR: #333; BORDER-TOP: #e0e0e0 1px solid; MARGIN-RIGHT: -4px; BORDER-RIGHT: #e0e0e0 1px solid; TEXT-DECORATION: none; PADDING-TOP: 8px
+}
+#framebody .optionArea .oBar A:hover {
+	BORDER-BOTTOM: #fff 1px solid; BORDER-LEFT: #e0e0e0 1px solid; PADDING-BOTTOM: 5px; PADDING-LEFT: 8px; PADDING-RIGHT: 7px; BACKGROUND: #fff; COLOR: #333; BORDER-TOP: #e0e0e0 1px solid; MARGIN-RIGHT: -4px; BORDER-RIGHT: #e0e0e0 1px solid; TEXT-DECORATION: none; PADDING-TOP: 8px
+}
+#framebody .optionArea .oBar A:active {
+	BORDER-BOTTOM: #fff 1px solid; BORDER-LEFT: #e0e0e0 1px solid; PADDING-BOTTOM: 5px; PADDING-LEFT: 8px; PADDING-RIGHT: 7px; BACKGROUND: #fff; COLOR: #333; BORDER-TOP: #e0e0e0 1px solid; MARGIN-RIGHT: -4px; BORDER-RIGHT: #e0e0e0 1px solid; TEXT-DECORATION: none; PADDING-TOP: 8px
+}
+#framebody .optionArea .oBar A#firstLink:hover {
+	BORDER-BOTTOM: #fff 1px solid; BORDER-LEFT: #e0e0e0 1px solid; PADDING-BOTTOM: 5px; PADDING-LEFT: 8px; PADDING-RIGHT: 7px; BACKGROUND: #fff; COLOR: #333; BORDER-TOP: #e0e0e0 1px solid; MARGIN-RIGHT: -4px; BORDER-RIGHT: #e0e0e0 1px solid; TEXT-DECORATION: none; PADDING-TOP: 8px
+}
+#framebody .optionArea .oBar .on {
+	BORDER-BOTTOM: #fff 1px solid; BORDER-LEFT: #e0e0e0 1px solid; PADDING-BOTTOM: 5px; PADDING-LEFT: 8px; PADDING-RIGHT: 7px; BACKGROUND: #fff; COLOR: #333; BORDER-TOP: #e0e0e0 1px solid; MARGIN-RIGHT: -4px; BORDER-RIGHT: #e0e0e0 1px solid; TEXT-DECORATION: none; PADDING-TOP: 8px
+}
+.rSearchOn .panel .optionArea .oList {
+	BORDER-BOTTOM: #e0e0e0 1px dotted; BORDER-LEFT: #e0e0e0 1px solid; PADDING-BOTTOM: 5px; MARGIN: 0px 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: #fff; FONT-SIZE: 1.2em; BORDER-TOP: medium none; BORDER-RIGHT: #e0e0e0 1px solid; PADDING-TOP: 5px
+}
+#framebody .optionArea .oList {
+	BORDER-BOTTOM: #e0e0e0 1px dotted; BORDER-LEFT: #e0e0e0 1px solid; PADDING-BOTTOM: 5px; MARGIN: 0px 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: #fff; FONT-SIZE: 1.2em; BORDER-TOP: medium none; BORDER-RIGHT: #e0e0e0 1px solid; PADDING-TOP: 5px
+}
+#framebody .optionArea .w330 .oList {
+	MARGIN: 0px 0px 0px 10px
+}
+.rSearchOn .panel .optionArea .oList LI {
+	LINE-HEIGHT: 14px; MARGIN-BOTTOM: 2px
+}
+#framebody .optionArea .oList LI {
+	LINE-HEIGHT: 14px; MARGIN-BOTTOM: 2px
+}
+.rSearchOn .panel .optionArea .oList .JClist LI {
+	LINE-HEIGHT: 11px; MARGIN-BOTTOM: 5px; FONT-SIZE: 1em
+}
+#framebody .optionArea .oList .JClist LI {
+	LINE-HEIGHT: 11px; MARGIN-BOTTOM: 5px; FONT-SIZE: 1em
+}
+.rSearchOn .panel .optionArea .oList .JClist TD {
+	PADDING-BOTTOM: 0px; LINE-HEIGHT: 9px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 12px; VERTICAL-ALIGN: middle; PADDING-TOP: 0px
+}
+#framebody .optionArea .oList .JClist TD {
+	PADDING-BOTTOM: 0px; LINE-HEIGHT: 9px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 12px; VERTICAL-ALIGN: middle; PADDING-TOP: 0px
+}
+* + HTML .rSearchOn .panel .optionArea .oList .JClist TD INPUT {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+* + HTML #framebody .optionArea .oList .JClist TD INPUT {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+* + HTML .rSearchOn .panel .optionArea .oList .JClist TD {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+* + HTML #framebody .optionArea .oList .JClist TD {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.oList .innerSet {
+	PADDING-BOTTOM: 7px; PADDING-LEFT: 0px; WIDTH: 270px; PADDING-RIGHT: 0px; MARGIN-LEFT: 18px; PADDING-TOP: 3px
+}
+.oList .innerSet .flowList LABEL {
+	FONT-WEIGHT: 400
+}
+.oList .innerSet .flowList SPAN {
+	FONT-WEIGHT: 400
+}
+* + HTML .oList .innerSet INPUT {
+	MARGIN: 0px
+}
+.rSearchOn .panel .mL10 {
+	MARGIN-TOP: -2px; MARGIN-LEFT: 11px
+}
+#framebody .mL10 {
+	MARGIN-TOP: -2px; MARGIN-LEFT: 11px
+}
+.rSearchOn .panel .subOption {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_subOption_JL.jpg) #e2e2e2 repeat-x left top; FONT-SIZE: 10px
+}
+#framebody .subOption {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_subOption_JL.jpg) #e2e2e2 repeat-x left top; FONT-SIZE: 10px
+}
+.rSearchOn .panel .subOption CENTER {
+	MARGIN-TOP: 10px
+}
+#framebody .subOption CENTER {
+	MARGIN-TOP: 10px
+}
+.rSearchOn .panel .subOption SELECT {
+	MARGIN-LEFT: 3px
+}
+#framebody .subOption SELECT {
+	MARGIN-LEFT: 3px
+}
+.btmBar {
+	BORDER-BOTTOM: #e0e0e0 1px solid; BORDER-LEFT: #e0e0e0 1px solid; PADDING-BOTTOM: 0px; MARGIN: 0px 0px 5px 10px; PADDING-LEFT: 8px; PADDING-RIGHT: 8px; BACKGROUND: #fff; FONT-SIZE: 11px; BORDER-TOP: medium none; BORDER-RIGHT: #e0e0e0 1px solid; PADDING-TOP: 0px
+}
+.w340 .btmBar {
+	MARGIN: 0px 10px 5px
+}
+* + HTML .w340 .btmBar {
+	MARGIN: 0px 10px 5px; WIDTH: 302px
+}
+.btmBar .left {
+	COLOR: #666; PADDING-TOP: 3px
+}
+.btmBar .right {
+	PADDING-BOTTOM: 4px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 4px
+}
+.btmBar INPUT {
+	VERTICAL-ALIGN: -15%
+}
+.btmBar .flowList {
+	MARGIN-TOP: 0px; FONT-SIZE: 11px
+}
+* + HTML .btmBar .flowList {
+	MARGIN-TOP: 2px
+}
+.btmBar .flowList INPUT {
+	MARGIN-BOTTOM: 0px
+}
+.btmBar .flowList SPAN {
+	COLOR: #000; FONT-SIZE: 0.9em
+}
+.SubSection SPAN {
+	FONT-WEIGHT: 400
+}
+* + HTML #framebody .optionArea .oList .JClist LI.SubSection .mT18mulList {
+	MARGIN-TOP: -18px
+}
+.f09em .flowList SPAN {
+	FONT-SIZE: 0.9em
+}
+.actionBar {
+	PADDING-BOTTOM: 6px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: #c8d7bf; HEIGHT: 22px; PADDING-TOP: 6px
+}
+.actionBarImg {
+	Z-INDEX: 0; POSITION: absolute; WIDTH: 5px; HEIGHT: 34px
+}
+.actionBtnGroup {
+	BORDER-BOTTOM: #bbb 1px solid; BORDER-LEFT: #bbb 0px solid; MARGIN: 0px 5px 0px 0px; DISPLAY: inline-block; BACKGROUND: #fff; HEIGHT: 21px; BORDER-TOP: #bbb 1px solid; BORDER-RIGHT: #bbb 0px solid
+}
+.actionBtnItemOuter {
+	POSITION: relative; MARGIN: 0px; DISPLAY: inline-block; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_actionBtn.gif) repeat-x; HEIGHT: 21px
+}
+.actionBtnItemInner {
+	POSITION: relative; PADDING-BOTTOM: 3px; PADDING-LEFT: 8px; PADDING-RIGHT: 8px; DISPLAY: inline-block; WHITE-SPACE: nowrap; HEIGHT: 15px; COLOR: #515151; FONT-SIZE: 1.1em; CURSOR: pointer; FONT-WEIGHT: 700; PADDING-TOP: 3px
+}
+.aBM {
+	BORDER-LEFT: #fff 1px solid; MARGIN: 0px; BORDER-RIGHT: #bbb 1px solid
+}
+.aBL {
+	BORDER-BOTTOM: #bbb 0px solid; BORDER-LEFT: #bbb 1px solid; MARGIN: 0px 0px 0px -1px; BORDER-TOP: #bbb 0px solid; BORDER-RIGHT: #bbb 1px solid
+}
+.aBR {
+	BORDER-LEFT: #fff 1px solid; MARGIN: 0px -1px 0px 0px; BORDER-RIGHT: #bbb 1px solid
+}
+.aBS {
+	BORDER-BOTTOM: #bbb 0px solid; BORDER-LEFT: #bbb 1px solid; MARGIN: 0px -1px; BORDER-TOP: #bbb 0px solid; BORDER-RIGHT: #bbb 1px solid
+}
+.btnActive {
+	COLOR: #333
+}
+.btnON {
+	BORDER-BOTTOM: #939393 1px solid; BORDER-LEFT: #939393 1px solid; MARGIN: -1px 0px 1px; BORDER-TOP: #939393 1px solid; BORDER-RIGHT: #939393 1px solid
+}
+.btnONdrop {
+	BORDER-BOTTOM-COLOR: #939393; BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-COLOR: #939393; MARGIN: -1px 0px 1px; BORDER-TOP-WIDTH: 1px; BORDER-BOTTOM-WIDTH: 1px; BORDER-RIGHT-COLOR: #939393; BORDER-LEFT-COLOR: #939393; BORDER-LEFT-WIDTH: 0px
+}
+.btnONdrop .actionBtnItemOuter {
+	MARGIN: 0px -1px 0px 0px
+}
+.btnONdrop .aBS {
+	BORDER-BOTTOM-COLOR: #939393; BORDER-RIGHT-WIDTH: 1px; BORDER-TOP-COLOR: #939393; MARGIN: 0px 0px 0px -1px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-COLOR: #939393; BORDER-LEFT-COLOR: #939393; BORDER-LEFT-WIDTH: 1px
+}
+.wDrop {
+	PADDING-RIGHT: 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_awDownGrey.gif) no-repeat right 6px
+}
+.brWhite {
+	MARGIN: 0px; BORDER-RIGHT: #fff 1px solid
+}
+.dim {
+	COLOR: #828282; CURSOR: default
+}
+.dim .hiddenMenuAw {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_awDownLG.gif) no-repeat right 6px; COLOR: #828282; CURSOR: default
+}
+.actionBtnItemInnerM {
+	COLOR: #515151; FONT-SIZE: 1.1em; CURSOR: pointer; FONT-WEIGHT: 700
+}
+.actionBtnItemInnerM .hiddenMenuOV {
+	BORDER-BOTTOM-COLOR: #bbb; PADDING-BOTTOM: 3px; BORDER-RIGHT-WIDTH: 1px; BORDER-TOP-COLOR: #bbb; MARGIN: 0px -1px; PADDING-LEFT: 8px; PADDING-RIGHT: 8px; BACKGROUND: none transparent scroll repeat 0% 0%; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; HEIGHT: 15px; BORDER-RIGHT-COLOR: #bbb; BORDER-LEFT-COLOR: #bbb; BORDER-LEFT-WIDTH: 1px; PADDING-TOP: 3px
+}
+.showMenu .actionBtnItemInnerM .hiddenMenuOV {
+	BORDER-BOTTOM-COLOR: #bbb; PADDING-BOTTOM: 3px; BORDER-RIGHT-WIDTH: 1px; BORDER-TOP-COLOR: #bbb; MARGIN: 0px -1px; PADDING-LEFT: 8px; PADDING-RIGHT: 8px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_activeBtn.gif) repeat-x 50% top; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; HEIGHT: 15px; BORDER-RIGHT-COLOR: #bbb; BORDER-LEFT-COLOR: #bbb; BORDER-LEFT-WIDTH: 1px; PADDING-TOP: 3px
+}
+.showMenu .actionBtnItemInnerM .hiddenMenuOV .hiddenMenuAw {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_awDownWhite.gif) no-repeat right 6px
+}
+.actionBtnItemInnerM .flyoutMenu {
+	FONT-WEIGHT: 400
+}
+.actionBar .FOmenu2 {
+	TOP: 21px
+}
+.actionBar .FOmenu3 {
+	TOP: 21px
+}
+.noRrd {
+	TEXT-ALIGN: center; PADDING-BOTTOM: 200px; PADDING-LEFT: 200px; PADDING-RIGHT: 200px; FONT-SIZE: 1.2em; VERTICAL-ALIGN: middle; PADDING-TOP: 200px
+}
+.formBtnSetC {
+	TEXT-ALIGN: center; FONT-SIZE: 1.2em
+}
+.formBtnSet {
+	TEXT-ALIGN: right; FONT-SIZE: 1.2em
+}
+INPUT:focus {
+	BORDER-BOTTOM: #3c7322 2px solid; BORDER-LEFT: #3c7322 2px solid; BORDER-TOP: #3c7322 2px solid; BORDER-RIGHT: #3c7322 2px solid
+}
+INPUT[disabled].greyBtn {
+	COLOR: #fff
+}
+INPUT.blueUp {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/btn_bgWUp.gif) #fff no-repeat right 50%
+}
+INPUT.blueDown {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/btn_bgWDown.gif) #fff no-repeat right 50%
+}
+INPUT.greyDown {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/btn_bgGreyDown.gif) #ddd no-repeat right 50%
+}
+INPUT[disabled='disabled'].greyDown {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/btn_bgWhiteDown.gif) #ddd no-repeat right 50%; COLOR: #fff
+}
+INPUT.greenUp {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/btn_bgGreenUp.gif) #6d9659 no-repeat right 50%; COLOR: #fff
+}
+INPUT.dsb {
+	BORDER-BOTTOM: #7d7d7d 1px solid; BORDER-LEFT: #ccc 1px solid; MARGIN: 0px 1px; BACKGROUND: #ddd; COLOR: #999; BORDER-TOP: #ccc 1px solid; BORDER-RIGHT: #7d7d7d 1px solid
+}
+* + HTML INPUT.greyDown {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/btn_bgGreyDown.gif) #ddd no-repeat right 50%
+}
+INPUT.greyUp {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/btn_bgGreyUp.gif) #ddd no-repeat right 50%
+}
+INPUT.padSet {
+	TEXT-ALIGN: left; PADDING-LEFT: 10px; PADDING-RIGHT: 35px
+}
+* + HTML INPUT.padSet {
+	TEXT-ALIGN: left; PADDING-LEFT: 10px; PADDING-RIGHT: 0px
+}
+H3 .greyBtn {
+	FONT-SIZE: 0.8em
+}
+.jobListFuncBar {
+	PADDING-BOTTOM: 5px; LINE-HEIGHT: 1.45em; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; COLOR: #ccc; FONT-SIZE: 1.2em; PADDING-TOP: 5px
+}
+.jobListFuncBar LABEL {
+	COLOR: #000
+}
+.jobListFuncBar SPAN {
+	COLOR: #000
+}
+.br7top {
+	BORDER-TOP: #e0e0e0 7px solid
+}
+.br7bottom {
+	BORDER-BOTTOM: #d5d5d5 7px solid
+}
+.jobListFuncBar FIELDSET {
+	MARGIN: 0px 10px 0px 0px; FLOAT: left; COLOR: #000
+}
+.jobListFuncBar .on {
+	COLOR: #000; FONT-WEIGHT: 700
+}
+.jobListBtnBar {
+	MARGIN: 5px 0px; FLOAT: left
+}
+.jobListLegendBar {
+	PADDING-BOTTOM: 3px; MARGIN: 5px 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FLOAT: right; COLOR: #666; FONT-SIZE: 1.1em; PADDING-TOP: 3px
+}
+.paging {
+	MARGIN: 1px 0px 0px; FLOAT: right; COLOR: #333; FONT-SIZE: 1.1em
+}
+.paging LI {
+	MARGIN: 0px 3px 0px 0px; BACKGROUND: #fff; FLOAT: left
+}
+.paging LI.on {
+	BORDER-BOTTOM: #666 1px solid; BORDER-LEFT: #666 1px solid; PADDING-BOTTOM: 2px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; BACKGROUND: #666; COLOR: #fff; BORDER-TOP: #666 1px solid; FONT-WEIGHT: 700; BORDER-RIGHT: #666 1px solid; PADDING-TOP: 2px
+}
+.paging A {
+	BORDER-BOTTOM: #bfbfbf 1px solid; BORDER-LEFT: #bfbfbf 1px solid; PADDING-BOTTOM: 2px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; DISPLAY: inline-block; BACKGROUND: #fff; COLOR: #333; BORDER-TOP: #bfbfbf 1px solid; BORDER-RIGHT: #bfbfbf 1px solid; PADDING-TOP: 2px
+}
+.paging A:hover {
+	BORDER-BOTTOM: #666 1px solid; BORDER-LEFT: #666 1px solid; BACKGROUND: #666; COLOR: #fff; BORDER-TOP: #666 1px solid; BORDER-RIGHT: #666 1px solid; TEXT-DECORATION: none
+}
+.paging A.imgLinkA {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 7px; PADDING-RIGHT: 8px; PADDING-TOP: 6px
+}
+.paging A.imgLinkB {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 6px; PADDING-RIGHT: 7px; PADDING-TOP: 6px
+}
+* + HTML .paging A.imgLinkA {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 7px; PADDING-RIGHT: 7px; PADDING-TOP: 2px
+}
+* + HTML .paging A.imgLinkB {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; PADDING-TOP: 2px
+}
+.paging A.imgLinkA:hover {
+	BORDER-BOTTOM: #666 1px solid; BORDER-LEFT: #666 1px solid; BACKGROUND: #666; BORDER-TOP: #666 1px solid; BORDER-RIGHT: #666 1px solid
+}
+.paging A.imgLinkB:hover {
+	BORDER-BOTTOM: #666 1px solid; BORDER-LEFT: #666 1px solid; BACKGROUND: #666; BORDER-TOP: #666 1px solid; BORDER-RIGHT: #666 1px solid
+}
+.paging A.blueLink:link {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: none transparent scroll repeat 0% 0%; COLOR: #043d8a; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TEXT-DECORATION: none; PADDING-TOP: 0px
+}
+.paging A.blueLink:visited {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: none transparent scroll repeat 0% 0%; COLOR: #043d8a; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TEXT-DECORATION: none; PADDING-TOP: 0px
+}
+.paging A.blueLink:hover {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: none transparent scroll repeat 0% 0%; COLOR: #043d8a; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TEXT-DECORATION: underline; PADDING-TOP: 0px
+}
+.paging A.blueLink:active {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: none transparent scroll repeat 0% 0%; COLOR: #043d8a; BORDER-TOP: 0px; BORDER-RIGHT: 0px; TEXT-DECORATION: underline; PADDING-TOP: 0px
+}
+#listBtn {
+	POSITION: relative
+}
+.btnLayer {
+	BORDER-BOTTOM: #ccc 1px solid; POSITION: absolute; BORDER-LEFT: #ccc 1px solid; WIDTH: 160px; BACKGROUND: #fff; BORDER-TOP: #ccc 1px solid; BORDER-RIGHT: #ccc 1px solid
+}
+.btnDL {
+	TOP: 20px; LEFT: 3px
+}
+.btnUL {
+	BOTTOM: 17px; LEFT: 3px
+}
+* + HTML .btnDL {
+	TOP: 24px; RIGHT: 0px
+}
+* + HTML .btnUL {
+	BOTTOM: 22px; RIGHT: 0px
+}
+.btnLayer .scrollBox {
+	BORDER-BOTTOM: #ccc 1px solid; BACKGROUND: #edf5e6
+}
+.btnLayer P {
+	PADDING-BOTTOM: 5px; MARGIN: 0px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; FONT-SIZE: 1.1em; PADDING-TOP: 5px
+}
+.btnLayer UL {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: #edf5e6; VERTICAL-ALIGN: top; PADDING-TOP: 0px
+}
+.btnLayer LI {
+	PADDING-BOTTOM: 0px; LINE-HEIGHT: 1.2em; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: #edf5e6; FONT-SIZE: 1em; PADDING-TOP: 0px
+}
+.btnLayer LI A {
+	PADDING-BOTTOM: 5px; MARGIN: 0px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; DISPLAY: block; COLOR: #000; CURSOR: pointer; TEXT-DECORATION: none; PADDING-TOP: 5px
+}
+.btnLayer LI A:visited {
+	PADDING-BOTTOM: 5px; MARGIN: 0px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; DISPLAY: block; COLOR: #000; CURSOR: pointer; TEXT-DECORATION: none; PADDING-TOP: 5px
+}
+.btnLayer LI A:active {
+	PADDING-BOTTOM: 5px; MARGIN: 0px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; DISPLAY: block; COLOR: #000; CURSOR: pointer; TEXT-DECORATION: none; PADDING-TOP: 5px
+}
+.btnLayer LI A:hover {
+	PADDING-BOTTOM: 5px; MARGIN: 0px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; DISPLAY: block; BACKGROUND: #fff; COLOR: #3c7322; TEXT-DECORATION: none; PADDING-TOP: 5px
+}
+.btnLayer_panel {
+	POSITION: absolute; WIDTH: 880px; LEFT: 0px
+}
+.btnLayer_panel TD {
+	VERTICAL-ALIGN: top
+}
+.btnLayer_panel TD .formError {
+	MARGIN: 0px; WIDTH: 240px; LEFT: 0px
+}
+.btnLayer_panel TD .formTips {
+	MARGIN: 0px; WIDTH: 240px; LEFT: 0px
+}
+.brTop {
+	BORDER-TOP: #e5e5e5 1px solid
+}
+.brCell {
+	TEXT-ALIGN: right; PADDING-BOTTOM: 5px; MARGIN: 10px 0px 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 1.1em; BORDER-TOP: #acacac 1px dotted; PADDING-TOP: 5px
+}
+#container .brCell {
+	PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 10px
+}
+#container .SpecTit {
+	POSITION: relative; COLOR: #555; FONT-SIZE: 1.5em
+}
+.SpecTit SMALL {
+	FONT-SIZE: 0.8em
+}
+.brDBottom {
+	BORDER-BOTTOM: #b3b3b3 1px dotted
+}
+.greyBox {
+	PADDING-BOTTOM: 10px; LINE-HEIGHT: 1.4em; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: #dadada; FONT-SIZE: 1.2em; PADDING-TOP: 5px
+}
+.greyMiniBox {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; MARGIN-BOTTOM: 10px; BACKGROUND: #eaeaea; COLOR: #ccc; FONT-SIZE: 1.1em; PADDING-TOP: 3px; margi-bottom: 10px
+}
+.greyMiniBox SPAN {
+	COLOR: #000
+}
+.blueBox {
+	PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: #e3eef0; PADDING-TOP: 10px
+}
+.blueBox TD {
+	PADDING-BOTTOM: 0px; LINE-HEIGHT: 1.4em; PADDING-LEFT: 0px; PADDING-RIGHT: 10px; FONT-SIZE: 1.2em; PADDING-TOP: 0px
+}
+.yellowBox {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_yellowline.gif)
+}
+.yellowBox TD {
+	TEXT-ALIGN: center; COLOR: #444; VERTICAL-ALIGN: middle
+}
+.yellowBox TD .wBox {
+	PADDING-BOTTOM: 5px; LINE-HEIGHT: 1em; BACKGROUND-COLOR: #fff; MARGIN: 0px 5px 0px 0px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; FLOAT: left; COLOR: #bb4722; FONT-SIZE: 2em; PADDING-TOP: 5px
+}
+.yellowBox TD .noteBox {
+	PADDING-BOTTOM: 7px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FLOAT: right; FONT-SIZE: 1.1em; FONT-WEIGHT: 700; PADDING-TOP: 7px
+}
+.blueBox P {
+	LINE-HEIGHT: 1.3em; FONT-SIZE: 1.1em
+}
+.whiteBox {
+	PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: #fff; PADDING-TOP: 10px
+}
+.whiteBox P {
+	LINE-HEIGHT: 1.4em; FONT-SIZE: 1.2em
+}
+.uBox {
+	BORDER-BOTTOM: #ccc 1px solid; BORDER-LEFT: #ccc 1px solid; PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BORDER-TOP: 0px; MARGIN-RIGHT: 0px; BORDER-RIGHT: #ccc 1px solid; PADDING-TOP: 10px
+}
+.uBox LI {
+	FONT-SIZE: 1.2em
+}
+.rSearchJL {
+	LINE-HEIGHT: 2em; FONT-FAMILY: tahoma, Arial, Helvetia, sans-serif; MARGIN-BOTTOM: -3px; LETTER-SPACING: 0px; FONT-WEIGHT: 700
+}
+.rSearchOn {
+	LINE-HEIGHT: 2em; FONT-FAMILY: tahoma, Arial, Helvetia, sans-serif; MARGIN-BOTTOM: -3px; LETTER-SPACING: 0px; FONT-WEIGHT: 700
+}
+.rSearchOn .panel IFRAME {
+	HEIGHT: auto
+}
+.rSearchOn .panel IFRAME#attach {
+	HEIGHT: 78px; _height: 82px
+}
+.rSearchOn .panel IFRAME#general {
+	HEIGHT: 415px; _height: 433px
+}
+.rSearchOn .panel IFRAME#canSearch {
+	HEIGHT: 440px
+}
+* + HTML .rSearchOn .panel IFRAME#canSearch {
+	HEIGHT: 444px
+}
+.rSearchOn .searchOption {
+	POSITION: absolute; WIDTH: 138px; BACKGROUND: #bb4722; HEIGHT: auto; FONT-SIZE: 1.1em; TOP: 25px; RIGHT: 0px
+}
+.rSearchOn .searchOption A:link {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 5px; LINE-HEIGHT: 1.4em; PADDING-LEFT: 10px; WIDTH: inherit; PADDING-RIGHT: 5px; DISPLAY: block; COLOR: #fff; PADDING-TOP: 5px
+}
+.rSearchOn .searchOption A:visited {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 5px; LINE-HEIGHT: 1.4em; PADDING-LEFT: 10px; WIDTH: inherit; PADDING-RIGHT: 5px; DISPLAY: block; COLOR: #fff; PADDING-TOP: 5px
+}
+.rSearchOn .searchOption A:hover {
+	BORDER-BOTTOM: #843721 1px solid; TEXT-ALIGN: left; BORDER-LEFT: #c57c63 1px solid; PADDING-BOTTOM: 4px; LINE-HEIGHT: 1.4em; PADDING-LEFT: 9px; PADDING-RIGHT: 4px; DISPLAY: block; COLOR: #fff; BORDER-TOP: #bf6c51 1px solid; BORDER-RIGHT: #9b5e3f 1px solid; TEXT-DECORATION: none; PADDING-TOP: 4px
+}
+#framebody .optionHeader {
+	TEXT-ALIGN: right; PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; WIDTH: 650px; PADDING-RIGHT: 10px; BACKGROUND: #f2f1eb; PADDING-TOP: 5px
+}
+.subOption .flowList {
+	PADDING-LEFT: 5px
+}
+.subOption .flowList LI {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 5px; PADDING-TOP: 0px
+}
+.subOption .flowList LI LABEL {
+	COLOR: #000; FONT-SIZE: 0.9em
+}
+#framebody .optionArea .formLabel {
+	TEXT-ALIGN: left; WIDTH: 90px; FLOAT: left; COLOR: #000; FONT-SIZE: 0.9em; FONT-WEIGHT: 700; MARGIN-RIGHT: 10px
+}
+#framebody .optionArea .formContent {
+	WIDTH: 160px; FLOAT: left; FONT-SIZE: 0.9em; MARGIN-RIGHT: 5px
+}
+#framebody .optionArea .flowList {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+#framebody .optionArea .flowList LI {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 5px; PADDING-TOP: 0px
+}
+#framebody .optionArea .flowList LI LABEL {
+	COLOR: #000; FONT-SIZE: 0.9em
+}
+.loginArea {
+	MARGIN: 0px auto; WIDTH: 410px
+}
+.loginArea .form_c {
+	WIDTH: 380px
+}
+.loginArea .miniForm3 .form_c .formError {
+	POSITION: inherit; MARGIN: -3px 0px 0px; WIDTH: 250px; FONT-SIZE: 0.9em; LEFT: 0px
+}
+.loginArea .miniForm3 .form_c .formTips {
+	POSITION: inherit; MARGIN: -3px 0px 0px; WIDTH: 250px; FONT-SIZE: 0.9em; LEFT: 0px
+}
+.loginArea H4 {
+	MARGIN-BOTTOM: 15px; COLOR: #3c7322; FONT-WEIGHT: 700
+}
+.BrBox {
+	BORDER-BOTTOM: #dadada 1px solid; BORDER-LEFT: #dadada 1px solid; PADDING-BOTTOM: 15px; MARGIN-TOP: 20px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_rmsLoginArea.jpg) #fff repeat-x left bottom; BORDER-TOP: #dadada 1px solid; BORDER-RIGHT: #dadada 1px solid; PADDING-TOP: 15px
+}
+.BrBox H4 {
+	COLOR: #3c7322; FONT-SIZE: 1.5em; FONT-WEIGHT: 700
+}
+.BrBox UL.basicBulletedList {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 1.1em; PADDING-TOP: 0px
+}
+.BrBox UL.basicBulletedList A {
+	COLOR: #000
+}
+.BrBox .divider {
+	BORDER-BOTTOM: #acacac 1px dotted; PADDING-BOTTOM: 6px; MARGIN-BOTTOM: 10px
+}
+.loginArea UL.basicBulletedList {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 1.2em; PADDING-TOP: 0px
+}
+.actionBox {
+	BORDER-BOTTOM: #dedede 1px solid; BORDER-LEFT: #dedede 1px solid; BACKGROUND: #ededed; BORDER-TOP: #dedede 1px solid; BORDER-RIGHT: #dedede 1px solid
+}
+.actionBox .contentBody {
+	MARGIN: 0px
+}
+.actionTag {
+	LINE-HEIGHT: 1.4em; FONT-SIZE: 1.4em; BORDER-TOP: #fff 1px solid; FONT-WEIGHT: 700
+}
+.actionTagOn {
+	LINE-HEIGHT: 1.4em; FONT-SIZE: 1.4em; BORDER-TOP: #fff 1px solid; FONT-WEIGHT: 700
+}
+.resultTag {
+	LINE-HEIGHT: 1.4em; FONT-SIZE: 1.4em; BORDER-TOP: #fff 1px solid; FONT-WEIGHT: 700
+}
+.actionTag A {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 25px; PADDING-RIGHT: 5px; DISPLAY: block; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/icon_greyArrowRight.gif) no-repeat 12px 10px; COLOR: #333; PADDING-TOP: 5px
+}
+.actionTag A:hover {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/icon_greenArrowRight.gif) no-repeat 12px 10px; COLOR: #3c7322; TEXT-DECORATION: none
+}
+.actionTagOn A {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 25px; PADDING-RIGHT: 5px; DISPLAY: block; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/icon_greyArrowDown.gif) no-repeat 10px 11px; COLOR: #333; PADDING-TOP: 5px
+}
+.actionTagOn A:hover {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/icon_greenArrowDown.gif) no-repeat 10px 11px; COLOR: #3c7322; TEXT-DECORATION: none
+}
+UL.actionList {
+	PADDING-BOTTOM: 0px; LIST-STYLE-TYPE: none; MARGIN: 0px 10px 0px 0px; PADDING-LEFT: 0px; WIDTH: 355px; PADDING-RIGHT: 0px; FLOAT: left; VERTICAL-ALIGN: top; LIST-STYLE-IMAGE: none; PADDING-TOP: 0px
+}
+UL.actionList SPAN {
+	COLOR: #666
+}
+UL.actionList LI UL.basicBulletedList {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.miniList {
+	MARGIN: 0px 0px 5px; WIDTH: 305px
+}
+.miniList .scrollBox {
+	BORDER-BOTTOM: #ccc 1px solid; BORDER-LEFT: #ccc 1px solid; PADDING-BOTTOM: 0px; PADDING-LEFT: 3px; WIDTH: 300px; PADDING-RIGHT: 0px; HEIGHT: 40px; BORDER-TOP: #ccc 1px solid; BORDER-RIGHT: #ccc 1px solid; PADDING-TOP: 0px
+}
+.miniList .scrollBox TABLE {
+	MARGIN: 2px 0px 0px; WIDTH: 275px
+}
+.miniList .scrollBox TD {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 0.9em; VERTICAL-ALIGN: top; PADDING-TOP: 0px
+}
+* + HTML .miniList .scrollBox TD {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 1px
+}
+.miniList .scrollBox TD.col {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.miniList .scrollBox {
+	BACKGROUND: #fff
+}
+.gTables {
+	TEXT-ALIGN: left; COLOR: #000
+}
+.gTables TH {
+	BORDER-BOTTOM: #acacac 1px dotted; PADDING-BOTTOM: 4px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 1.1em; FONT-WEIGHT: 700; PADDING-TOP: 4px
+}
+.gTables TD {
+	PADDING-BOTTOM: 4px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 1.1em; PADDING-TOP: 4px
+}
+.contentBody .gTables TD {
+	PADDING-BOTTOM: 4px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 1.1em; PADDING-TOP: 4px
+}
+.gTables TD IMG {
+	MARGIN-RIGHT: 5px
+}
+.jobBreadCrumb .playNav {
+	TEXT-ALIGN: right; FLOAT: right
+}
+.jobBreadCrumb .mainNav {
+	FLOAT: left
+}
+.jobBreadCrumb {
+	PADDING-BOTTOM: 10px; LINE-HEIGHT: 1em; PADDING-LEFT: 20px; PADDING-RIGHT: 20px; COLOR: #666; FONT-SIZE: 1.1em; PADDING-TOP: 10px
+}
+.brTDot {
+	BORDER-TOP: #dadada 1px dotted
+}
+.brBDot {
+	BORDER-BOTTOM: #dadada 1px dotted
+}
+.content_post {
+	WIDTH: 575px; FLOAT: left
+}
+#jobContainer {
+	PADDING-BOTTOM: 10px; MARGIN: 0px auto; PADDING-LEFT: 10px; WIDTH: 555px; PADDING-RIGHT: 15px; BACKGROUND: #fff; PADDING-TOP: 10px
+}
+#jobContainer IFRAME {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; OVERFLOW-X: hidden; OVERFLOW-Y: scroll; WIDTH: 745px; HEIGHT: 600px; BORDER-TOP: 0px; BORDER-RIGHT: 0px
+}
+#jobContainer .staticInfo {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; COLOR: #555; FONT-SIZE: 1.1em; PADDING-TOP: 0px
+}
+#jobContainer .jobContent {
+	BORDER-BOTTOM: #5aa7d4 7px solid; BORDER-LEFT: #5aa7d4 1px solid; PADDING-BOTTOM: 15px; PADDING-LEFT: 47px; PADDING-RIGHT: 47px; BORDER-TOP: #5aa7d4 7px solid; BORDER-RIGHT: #5aa7d4 1px solid; PADDING-TOP: 0px
+}
+#jobContainer .jobLogo {
+	BORDER-BOTTOM: #ccc 1px solid; PADDING-BOTTOM: 30px; PADDING-LEFT: 0px; WIDTH: 460px; PADDING-RIGHT: 0px; OVERFLOW: hidden; PADDING-TOP: 30px
+}
+#jobContainer .coDesc {
+	MARGIN: 10px 0px
+}
+#jobContainer .jobDesc {
+	MARGIN: 10px 0px
+}
+#jobContainer UL {
+	PADDING-BOTTOM: 0px; MARGIN: 0px 0px 0px 10px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, arial, helvetica, clean, sans-serif; COLOR: #000; FONT-SIZE: 1.2em; PADDING-TOP: 0px
+}
+#jobContainer LI {
+	PADDING-BOTTOM: 5px; MARGIN: 0px 0px 0px 15px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; LIST-STYLE-IMAGE: url(http://content0.jobsdb.co.th/Content/images/Shared/bullet_cirJ.gif); PADDING-TOP: 0px
+}
+#jobContainer H1 {
+	TEXT-ALIGN: center; PADDING-BOTTOM: 5px; LINE-HEIGHT: 1.3em; MARGIN: 5px 0px; PADDING-LEFT: 10px; WIDTH: 470px; PADDING-RIGHT: 10px; BACKGROUND: #ececec; COLOR: #000; FONT-SIZE: 1.8em; PADDING-TOP: 5px
+}
+#jobContainer H2 {
+	TEXT-ALIGN: left; LINE-HEIGHT: 1.3em; MARGIN: 15px 0px 10px; COLOR: #333; FONT-SIZE: 1.8em
+}
+#jobContainer H3.coName {
+	LINE-HEIGHT: 1.3em; MARGIN: 10px 0px; FONT-SIZE: 1.5em
+}
+#jobContainer .printTit {
+	POSITION: absolute; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 10px; BACKGROUND: none transparent scroll repeat 0% 0%; TOP: -18px; PADDING-TOP: 0px; LEFT: 2px
+}
+#jobContainer .printTit H2 {
+	PADDING-BOTTOM: 0px; MARGIN: 0px 0px 0px -2px; PADDING-LEFT: 0px; PADDING-RIGHT: 10px; BACKGROUND: #fff; COLOR: #555; FONT-SIZE: 1.8em; PADDING-TOP: 0px
+}
+#jobContainer .printModule {
+	POSITION: relative; PADDING-BOTTOM: 0px; MARGIN: 30px 0px 20px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; COLOR: #bb4722; FONT-SIZE: 1.2em; BORDER-TOP: #e5e5e5 5px solid; FONT-WEIGHT: 700; PADDING-TOP: 20px
+}
+#jobContainer P {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 5px; LINE-HEIGHT: 1.3em; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, arial, helvetica, clean, sans-serif; FONT-SIZE: 1.2em; PADDING-TOP: 5px
+}
+#jobContainer A {
+	COLOR: #043d8a; TEXT-DECORATION: none
+}
+#jobContainer A:hover {
+	COLOR: #2d7fc3; TEXT-DECORATION: none
+}
+#jobContainer .jobSum {
+	TEXT-ALIGN: left; FONT-FAMILY: tahoma, arial, helvetica, clean, sans-serif
+}
+#jobContainer .jobSum TD {
+	BORDER-BOTTOM: #ebebeb 1px solid; PADDING-BOTTOM: 2px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; COLOR: #000; FONT-SIZE: 1.1em; VERTICAL-ALIGN: top; PADDING-TOP: 2px
+}
+#jobContainer .jobSum TD SPAN {
+	COLOR: #999; FONT-SIZE: 1em
+}
+#jobContainer .jobSum TD.label {
+	WIDTH: 120px; COLOR: #444; FONT-SIZE: 1.1em; FONT-WEIGHT: 700
+}
+#jobContainer .jobSum TD UL.jobBene {
+	PADDING-BOTTOM: 0px; LIST-STYLE-TYPE: none; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 380px; PADDING-RIGHT: 0px; LIST-STYLE-IMAGE: none; PADDING-TOP: 0px
+}
+#jobContainer .jobSum TD UL.jobBene LI {
+	PADDING-BOTTOM: 0px; LINE-HEIGHT: 1.3em; LIST-STYLE-TYPE: none; MARGIN: 1px 0px; PADDING-LEFT: 0px; WIDTH: 175px; PADDING-RIGHT: 10px; FLOAT: left; COLOR: #444; FONT-SIZE: 0.8em; FONT-WEIGHT: 700; LIST-STYLE-IMAGE: none; PADDING-TOP: 0px
+}
+#jobContainer .jobSum TD UL.jobBene LI IMG {
+	MARGIN: 0px 5px 0px 0px; VERTICAL-ALIGN: middle
+}
+#jobContainer .jobSum TD UL.jobCatList {
+	PADDING-BOTTOM: 0px; LIST-STYLE-TYPE: none; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 370px; PADDING-RIGHT: 0px; LIST-STYLE-IMAGE: none; PADDING-TOP: 0px
+}
+#jobContainer .jobSum TD UL.jobCatList LI {
+	PADDING-BOTTOM: 0px; LINE-HEIGHT: 1.3em; LIST-STYLE-TYPE: none; MARGIN: 1px 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 0.85em; VERTICAL-ALIGN: top; LIST-STYLE-IMAGE: none; PADDING-TOP: 0px
+}
+#jobContainer .jobSum TD UL.jobCatList LI .listLabel {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 2px; PADDING-LEFT: 0px; PADDING-RIGHT: 5px; FLOAT: left; PADDING-TOP: 2px
+}
+#content .listLabel {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 2px; PADDING-LEFT: 0px; PADDING-RIGHT: 5px; FLOAT: left; PADDING-TOP: 2px
+}
+#jobContainer .btnArea {
+	TEXT-ALIGN: center; PADDING-BOTTOM: 10px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_btnArea.gif) repeat-x; PADDING-TOP: 10px
+}
+#jobContainer .jobKey {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 0px; LINE-HEIGHT: 1.3em; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; FONT-FAMILY: tahoma, arial, helvetica, clean, sans-serif; FONT-SIZE: 1.1em; PADDING-TOP: 20px
+}
+#jobContainer .jobNote {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 0px; LINE-HEIGHT: 1.3em; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; FONT-FAMILY: tahoma, arial, helvetica, clean, sans-serif; FONT-SIZE: 1.1em; PADDING-TOP: 20px
+}
+#jobContainer .jobKey {
+	COLOR: #bfbfbf
+}
+#jobContainer .jobKey SPAN {
+	COLOR: #000
+}
+#jobContainer .jobNote {
+	COLOR: #000
+}
+.batchView {
+	PADDING-BOTTOM: 10px; BACKGROUND-COLOR: #f7f7f7; MARGIN-TOP: 10px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 10px
+}
+.batchViewCheck {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 10px; WIDTH: 82px; PADDING-RIGHT: 0px; FLOAT: left; PADDING-TOP: 25px
+}
+.batchViewJobAd {
+	BACKGROUND-COLOR: #fff; WIDTH: 785px; FLOAT: left
+}
+.backToTop {
+	TEXT-ALIGN: right; PADDING-BOTTOM: 0px; BACKGROUND-COLOR: #fff; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; HEIGHT: 40px; FONT-SIZE: 1.1em; BORDER-TOP: #acacac 1px dotted; PADDING-TOP: 10px
+}
+TABLE.rsmBuilder {
+	MARGIN: 0px 0px 10px; WIDTH: 100%
+}
+TABLE.rsmBuilder .tableTitle TD {
+	BORDER-BOTTOM: medium none; BORDER-LEFT: medium none; TEXT-TRANSFORM: uppercase; BACKGROUND: #ededed; LETTER-SPACING: 0.1em; FONT-SIZE: 1.2em; BORDER-TOP: medium none; BORDER-RIGHT: medium none
+}
+TABLE.rsmBuilder TH {
+	BORDER-BOTTOM: #dcdcdc 1px dotted; PADDING-BOTTOM: 3px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; COLOR: #555; FONT-SIZE: 1.2em; VERTICAL-ALIGN: top; PADDING-TOP: 15px
+}
+TABLE.rsmBuilder TD {
+	BORDER-BOTTOM: #dcdcdc 1px dotted; PADDING-BOTTOM: 3px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; FONT-SIZE: 1.2em; VERTICAL-ALIGN: top; PADDING-TOP: 3px
+}
+TABLE.rsmBuilder TD.label {
+	COLOR: #555; FONT-SIZE: 1.1em
+}
+TABLE.rsmBuilder TD.candidate {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: tahoma, Georgia; COLOR: #333; FONT-SIZE: 2.8em; BORDER-TOP: 0px; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+TABLE.rsmBuilder TD.personalInfo {
+	BORDER-BOTTOM: medium none; TEXT-ALIGN: right; BORDER-LEFT: medium none; PADDING-BOTTOM: 0px; LINE-HEIGHT: 1.4em; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; FONT-SIZE: 1.1em; BORDER-TOP: medium none; BORDER-RIGHT: medium none; PADDING-TOP: 0px
+}
+TABLE.rsmBuilder TD.photo {
+	TEXT-ALIGN: right; PADDING-BOTTOM: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; PADDING-TOP: 10px
+}
+TABLE.rsmBuilder TD.paragraph {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; PADDING-TOP: 10px
+}
+TABLE.rsmBuilder P {
+	FONT-SIZE: 1em
+}
+TABLE.rsmBuilder TD.workInfo {
+	PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 10px
+}
+TABLE.rsmBuilder TD.workPeriod {
+	TEXT-ALIGN: right; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 10px; FONT-WEIGHT: 700; PADDING-TOP: 10px
+}
+TABLE.rsmBuilder TD.cert {
+	TEXT-ALIGN: right; PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; PADDING-TOP: 10px
+}
+TABLE.rsmBuilder IMG.cert {
+	BORDER-BOTTOM: #dcdcdc 1px solid; BORDER-LEFT: #dcdcdc 1px solid; PADDING-BOTTOM: 1px; PADDING-LEFT: 1px; PADDING-RIGHT: 1px; BORDER-TOP: #dcdcdc 1px solid; BORDER-RIGHT: #dcdcdc 1px solid; PADDING-TOP: 1px
+}
+TABLE.rsmBuilder TD.mask {
+	BORDER-BOTTOM: #fff 1px solid; PADDING-BOTTOM: 0px; PADDING-LEFT: 30px; PADDING-RIGHT: 0px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/mask_name.gif) repeat-y; COLOR: #fff; FONT-SIZE: 12pt; FONT-WEIGHT: 700; PADDING-TOP: 13px
+}
+TABLE.rsmBuilder TD.maskCandidate {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; FONT-FAMILY: tahoma, Georgia; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/mask_candidate.gif) no-repeat; COLOR: #fff; BORDER-TOP: 0px; FONT-WEIGHT: 700; BORDER-RIGHT: 0px
+}
+TABLE.rsmBuilder H5 {
+	FONT-SIZE: 120%; FONT-WEIGHT: 700
+}
+TABLE.rsmBuilder UL {
+	MARGIN: 10px 0px 0px -2px; FONT-SIZE: 100%
+}
+TABLE.rsmBuilder UL LI {
+	LIST-STYLE-POSITION: inside; PADDING-BOTTOM: 0px; LIST-STYLE-TYPE: disc; PADDING-LEFT: 5px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+TABLE.rsmBuilder OL {
+	MARGIN: 10px 0px 0px -20px; FONT-SIZE: 100%
+}
+TABLE.rsmBuilder SUB {
+	VERTICAL-ALIGN: sub
+}
+TABLE.rsmBuilder SUP {
+	VERTICAL-ALIGN: super
+}
+IMG.footerLogo {
+	MARGIN: 20px 0px 0px; FLOAT: right
+}
+.borderBox2 .gTable {
+	WIDTH: 100%; BACKGROUND: #fff; BORDER-TOP: medium none
+}
+.borderBox2 .gTable {
+	BACKGROUND: #fff
+}
+.borderBox2 .gTable TD {
+	PADDING-BOTTOM: 5px; LINE-HEIGHT: 1.3em; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; FONT-SIZE: 1.2em; PADDING-TOP: 5px
+}
+* + HTML .borderBox2 .gTable TD.w200 {
+	WIDTH: 200px
+}
+* + HTML.borderBox2 .gTable TD.w5 {
+	WIDTH: 5px
+}
+.borderBox2 .gTable TD.w520 {
+	WIDTH: 500px
+}
+.borderBox2 .gTable TD.alTop {
+	BORDER-BOTTOM: #dcdcdc 1px dotted; PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; FONT-SIZE: 1.2em; VERTICAL-ALIGN: top; PADDING-TOP: 5px
+}
+.borderBox2 .gTable .tableTitle TD {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: #fff; COLOR: #444; FONT-SIZE: 1.1em; FONT-WEIGHT: 700; PADDING-TOP: 5px
+}
+.borderBox2 .gTable .tableTitle2 TD {
+	BORDER-BOTTOM: #ededed 1px solid; PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: #fff; COLOR: #444; FONT-SIZE: 1.2em; FONT-WEIGHT: 700; PADDING-TOP: 5px
+}
+.tableTitle2 {
+	BORDER-BOTTOM: #ededed 1px solid; PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: #fff; COLOR: #444; FONT-SIZE: 1.2em; FONT-WEIGHT: 700; PADDING-TOP: 5px
+}
+.contentWrap20 .gTable {
+	BACKGROUND: none transparent scroll repeat 0% 0%; BORDER-TOP: #dadada 1px solid
+}
+.manageBox .gTable {
+	BACKGROUND: none transparent scroll repeat 0% 0%; BORDER-TOP: #dadada 1px solid
+}
+.contentWrap20 .gTable TH {
+	BORDER-BOTTOM: #dedede 1px solid; PADDING-BOTTOM: 5px; LINE-HEIGHT: 1.2em; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_gTableTit.gif) #eaeaea repeat-x left bottom; HEIGHT: 18px; COLOR: #444; FONT-SIZE: 1.1em; FONT-WEIGHT: 700; PADDING-TOP: 5px
+}
+.manageBox .gTable TH {
+	BORDER-BOTTOM: #dedede 1px solid; PADDING-BOTTOM: 5px; LINE-HEIGHT: 1.2em; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_gTableTit.gif) #eaeaea repeat-x left bottom; HEIGHT: 18px; COLOR: #444; FONT-SIZE: 1.1em; FONT-WEIGHT: 700; PADDING-TOP: 5px
+}
+.contentWrap20 .gTable TR.br TD {
+	BORDER-BOTTOM: #aeaeae 1px dotted
+}
+.manageBox .gTable TR.br TD {
+	BORDER-BOTTOM: #aeaeae 1px dotted
+}
+.contentWrap20 .gTable TD {
+	BORDER-BOTTOM: medium none; BORDER-LEFT: medium none; PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; FONT-SIZE: 1.1em; BORDER-TOP: medium none; BORDER-RIGHT: medium none; PADDING-TOP: 5px
+}
+.manageBox .gTable TD {
+	BORDER-BOTTOM: medium none; BORDER-LEFT: medium none; PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; FONT-SIZE: 1.1em; BORDER-TOP: medium none; BORDER-RIGHT: medium none; PADDING-TOP: 5px
+}
+.contentWrap20 .gTable TD A B {
+	FONT-SIZE: 1.1em; FONT-WEIGHT: 700
+}
+.manageBox .gTable TD A B {
+	FONT-SIZE: 1.1em; FONT-WEIGHT: 700
+}
+.contentWrap20 .gTable TH.checkCol {
+	PADDING-BOTTOM: 1px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; PADDING-TOP: 3px
+}
+.contentWrap20 .gTable TD.checkCol {
+	PADDING-BOTTOM: 1px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; PADDING-TOP: 3px
+}
+.manageBox .gTable TH.checkCol {
+	PADDING-BOTTOM: 1px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; PADDING-TOP: 3px
+}
+.manageBox .gTable TD.checkCol {
+	PADDING-BOTTOM: 1px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; PADDING-TOP: 3px
+}
+.contentWrap20 .gTable .remarks {
+	COLOR: #666
+}
+.manageBox .gTable .remarks {
+	COLOR: #666
+}
+.sortableCol A {
+	COLOR: #444
+}
+.sortableCol A:hover {
+	COLOR: #043d8a
+}
+.sortA A {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 15px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/icon_blueArrowUp2.gif) no-repeat right 6px; PADDING-TOP: 0px
+}
+.sortA A:hover {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/icon_blueArrowUp2On.gif) no-repeat right 6px; PADDING-TOP: 0px
+}
+.sortD A {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 15px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/icon_blueArrowDown2.gif) no-repeat right 6px; PADDING-TOP: 0px
+}
+.sortD A:hover {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/icon_blueArrowDown2On.gif) no-repeat right 6px; PADDING-TOP: 0px
+}
+.gTable TR.on TD {
+	BACKGROUND: #fbee99
+}
+.gTable TD A.can:link {
+	FONT-WEIGHT: 700
+}
+.gTable TR.unRead TD {
+	FONT-WEIGHT: 700
+}
+.gTable TD A.can:visited {
+	FONT-WEIGHT: 400
+}
+.gTable .on .hiddenBtn {
+	BORDER-BOTTOM: #fbee99 1px solid; BORDER-LEFT: #fbee99 1px solid; BORDER-TOP: #fbee99 1px solid; BORDER-RIGHT: #fbee99 1px solid
+}
+.gTable .on .hiddenMenu {
+	BORDER-BOTTOM: #fbee99 1px solid; BORDER-LEFT: #fbee99 1px solid; BORDER-TOP: #fbee99 1px solid; BORDER-RIGHT: #fbee99 1px solid
+}
+.jobNote {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; WIDTH: 140px; PADDING-RIGHT: 10px; BACKGROUND: #e3ebdf; VERTICAL-ALIGN: top; PADDING-TOP: 5px
+}
+.jobNote P {
+	MARGIN: 0px; COLOR: #3c7322; FONT-SIZE: 1.2em; FONT-WEIGHT: 700
+}
+.LHpanel {
+	BORDER-BOTTOM: #c8d7bf 1px solid; BORDER-LEFT: #c8d7bf 1px solid; WIDTH: 160px; VERTICAL-ALIGN: top; BORDER-TOP: #c8d7bf 1px solid; BORDER-RIGHT: #c8d7bf 1px solid
+}
+.LHpanel .scrollBox {
+	OVERFLOW-X: hidden; OVERFLOW-Y: auto; WIDTH: 160px; BACKGROUND: #fff
+}
+.LHpanel .mainTit {
+	BORDER-BOTTOM: #c8d7bf 1px solid; PADDING-BOTTOM: 9px; PADDING-LEFT: 10px; WIDTH: 140px; PADDING-RIGHT: 10px; DISPLAY: inline-block; WORD-WRAP: break-word; COLOR: #333; FONT-SIZE: 1.2em; CURSOR: pointer; FONT-WEIGHT: 700; TEXT-DECORATION: none; PADDING-TOP: 9px
+}
+.LHpanel .mainTit:hover {
+	BACKGROUND: #fbee99
+}
+.LHpanel .divider {
+	BORDER-BOTTOM: #c8d7bf 2px dotted; MARGIN: 0px 0px 10px
+}
+.LHpanel UL {
+	PADDING-BOTTOM: 0px; MARGIN: 5px 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 1.2em; PADDING-TOP: 0px
+}
+.LHpanel LI {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 20px; WIDTH: 123px; PADDING-RIGHT: 0px; DISPLAY: block; WORD-WRAP: break-word; COLOR: #333; OVERFLOW: hidden; CURSOR: pointer; TEXT-DECORATION: none; PADDING-TOP: 2px
+}
+.LHpanel LI SPAN {
+	COLOR: #777
+}
+.LHpanel LI.tit {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 20px; PADDING-RIGHT: 0px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/arrow_grn_right.gif) no-repeat 10px 4px; COLOR: #3c7322; CURSOR: default; PADDING-TOP: 0px
+}
+.LHpanel LI.tit:hover {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/arrow_grn_right.gif) no-repeat 10px 4px
+}
+.LHpanel UL LI:hover {
+	BACKGROUND: #fbee99
+}
+.LHpanel .on {
+	BACKGROUND: #fbee99
+}
+.RHpanel {
+	VERTICAL-ALIGN: top
+}
+.RHpanel .gTable {
+	BORDER-LEFT: #dbdbdb 1px solid; BORDER-RIGHT: #dbdbdb 1px solid
+}
+.RHpanel .resultBar {
+	MARGIN-TOP: 0px
+}
+.RHpanel .gTable .candidate P {
+	MARGIN: 0px; DISPLAY: block; FONT-SIZE: 1.2em; FONT-WEIGHT: 700
+}
+.RHpanel .gTable .candidate A {
+	TEXT-DECORATION: underline
+}
+.RHpanel .gTable .candidate IMG {
+	MARGIN: 0px 0px 0px 5px
+}
+.RHpanel .gTable .comment {
+	PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; COLOR: #666; FONT-SIZE: 1.1em; PADDING-TOP: 10px
+}
+.RHpanel .gTable .noBr TD {
+	BORDER-BOTTOM: medium none
+}
+.RHpanel .gTable A.hiddenBtnOV {
+	TEXT-DECORATION: none
+}
+.RHpanel .gTable A.hiddenBtn {
+	TEXT-DECORATION: none
+}
+.legend {
+	MARGIN: 10px 0px 0px; DISPLAY: block
+}
+.legend LI {
+	MARGIN: 0px 10px 0px 0px; DISPLAY: inline; FONT-SIZE: 1.1em
+}
+.legend IMG {
+	MARGIN: 0px 5px 0px 0px
+}
+.handler {
+	WIDTH: 10px; VERTICAL-ALIGN: middle; CURSOR: pointer
+}
+.handler IMG {
+	Z-INDEX: 100; POSITION: relative; RIGHT: -1px
+}
+.gTable TD .hiddenMenu {
+	BORDER-BOTTOM: #fff 1px solid; BORDER-LEFT: #fff 1px solid; PADDING-BOTTOM: 2px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; BACKGROUND: none transparent scroll repeat 0% 0%; COLOR: #333; BORDER-TOP: #fff 1px solid; BORDER-RIGHT: #fff 1px solid; TEXT-DECORATION: none; PADDING-TOP: 2px
+}
+.gTable TD .hiddenMenu:hover {
+	TEXT-DECORATION: none
+}
+.gTable TD .hiddenMenuOV {
+	BORDER-BOTTOM: #9b9b9b 1px solid; BORDER-LEFT: #d0d0d0 1px solid; PADDING-BOTTOM: 2px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_hiddenBtn.gif) repeat-x 50% top; BORDER-TOP: #d0d0d0 1px solid; BORDER-RIGHT: #9b9b9b 1px solid; TEXT-DECORATION: none; PADDING-TOP: 2px
+}
+.gTable TD .showMenu .hiddenMenuOV {
+	BORDER-BOTTOM-COLOR: #bbb; PADDING-BOTTOM: 3px; BORDER-RIGHT-WIDTH: 1px; BORDER-TOP-COLOR: #bbb; MARGIN: 0px -1px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_activeBtn.gif) repeat-x 50% top; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; HEIGHT: 15px; BORDER-RIGHT-COLOR: #bbb; BORDER-LEFT-COLOR: #bbb; BORDER-LEFT-WIDTH: 1px; PADDING-TOP: 3px
+}
+.gTable TD .showMenu .hiddenMenuAw {
+	BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_awDownWhite.gif) no-repeat right 6px
+}
+.gTable TD .flyoutMenu A {
+	TEXT-DECORATION: none
+}
+.gTable TR.nBg:hover {
+	BACKGROUND: none transparent scroll repeat 0% 0%
+}
+.gTable TD.action {
+	COLOR: #ccc
+}
+.f12 TD {
+	PADDING-BOTTOM: 8px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; FONT-SIZE: 1.2em; PADDING-TOP: 8px
+}
+.padTable TD {
+	VERTICAL-ALIGN: top
+}
+.padTable TD .formError {
+	FONT-SIZE: 0.9em; LEFT: 0px
+}
+.padTable TD .formTips {
+	FONT-SIZE: 0.9em; LEFT: 0px
+}
+.ex_a {
+	MARGIN: 0px 0px 10px; WIDTH: 970px
+}
+* + HTML .ex_a {
+	MARGIN: 0px 0px 10px
+}
+.ex_a TD {
+	BORDER-BOTTOM: #d6d6d6 1px solid; BORDER-LEFT: #d6d6d6 1px solid; BACKGROUND: #f7f7f7; VERTICAL-ALIGN: top
+}
+.ex_a TH {
+	BORDER-LEFT: #d6d6d6 1px solid; WIDTH: 215px; VERTICAL-ALIGN: top
+}
+.ex_a TH.titleCol {
+	BORDER-LEFT: #f1f1f1 1px solid; WIDTH: 200px; BACKGROUND: #edf5e4; BORDER-RIGHT: #ccc 1px solid
+}
+.ex_a TD.titleCol {
+	BORDER-LEFT: 0px; BACKGROUND: #edf5e4; BORDER-TOP: #fff 1px solid; BORDER-RIGHT: #ccc 1px solid
+}
+.ex_a TR.bottom TD.titleCol {
+	BACKGROUND: #edf5e4; BORDER-TOP: #fff 1px solid; BORDER-RIGHT: #ccc 1px solid
+}
+.ex_a TR.bottom TD {
+	BORDER-BOTTOM: 0px; BACKGROUND: #ebebeb; COLOR: #3c7322; BORDER-TOP: 0px; FONT-WEIGHT: 700
+}
+.ex_a TR.bottom TD.totalTit {
+	TEXT-ALIGN: right; COLOR: #444
+}
+.ex_a TR.bottom TD.totalTit SPAN {
+	COLOR: #3c7322
+}
+.ex_a TR.bottomScroll TD {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.ex_a TR.bottomScroll TD.rolling {
+	BORDER-RIGHT: medium none
+}
+* + HTML .ex_a TD SELECT {
+	HEIGHT: auto
+}
+.ex_a EM {
+	TEXT-TRANSFORM: none; FONT-STYLE: italic; COLOR: #000
+}
+.ex_a TD LI {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.imgPreview {
+	BORDER-BOTTOM: #ccc 1px solid; TEXT-ALIGN: center; BORDER-LEFT: #ccc 1px solid; PADDING-BOTTOM: 1px; MARGIN: 3px 0px; PADDING-LEFT: 1px; WIDTH: 100px; PADDING-RIGHT: 1px; BACKGROUND: #fff; HEIGHT: 80px; BORDER-TOP: #ccc 1px solid; BORDER-RIGHT: #ccc 1px solid; PADDING-TOP: 1px
+}
+TH.imgPreviewTit {
+	HEIGHT: 119px
+}
+* + HTML TH.imgPreviewTit {
+	HEIGHT: 103px
+}
+.gTabBox {
+	BORDER-BOTTOM: #ccc 1px solid; BORDER-LEFT: #ccc 1px solid; PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_gradient.gif) repeat-x 50% bottom; BORDER-TOP: medium none; BORDER-RIGHT: #ccc 1px solid; PADDING-TOP: 10px
+}
+.BMcontainer {
+	POSITION: absolute; TEXT-ALIGN: right; TOP: -3px; RIGHT: 0px
+}
+.greenBM {
+	PADDING-BOTTOM: 0px; MARGIN: -13px 0px 0px; PADDING-LEFT: 10px; WIDTH: 179px; PADDING-RIGHT: 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_greenBM.gif) #fff no-repeat left bottom; FLOAT: right; COLOR: #444; BORDER-TOP: #a1be93 3px solid; PADDING-TOP: 10px
+}
+.gBrBox {
+	BORDER-BOTTOM: #d9e5b8 1px solid; BORDER-LEFT: #d9e5b8 1px solid; PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: #f3fae1; BORDER-TOP: #d9e5b8 1px solid; BORDER-RIGHT: #d9e5b8 1px solid; PADDING-TOP: 10px
+}
+.gBrBox LI {
+	FONT-SIZE: 1.2em
+}
+.greenBox {
+	PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: #e1ebd3; PADDING-TOP: 10px
+}
+.greenBox INPUT.greyBtn {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 0.9em; PADDING-TOP: 0px
+}
+.greenBox .formBtnSetC {
+	MARGIN: 10px 0px 0px
+}
+#mainContent785 .scrollBox .gTable {
+	BACKGROUND: #fff; BORDER-TOP: medium none
+}
+#mainContent785 .scrollBox .gTable TD {
+	FONT-SIZE: 1.1em
+}
+.dashBox {
+	BORDER-BOTTOM: #ccc 1px dotted; PADDING-BOTTOM: 5px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP: #ccc 1px dotted; PADDING-TOP: 5px
+}
+.dashBox TD {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 0px; PADDING-RIGHT: 20px; FONT-SIZE: 1.2em; PADDING-TOP: 2px
+}
+.cBoard TD {
+	PADDING-BOTTOM: 10px; LINE-HEIGHT: 1.3em; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; FONT-SIZE: 1.2em; BORDER-TOP: #ccc 1px dotted; PADDING-TOP: 10px
+}
+.actionLayer H1 {
+	FONT-FAMILY: tahoma, arial, helvetica, clean, sans-serif
+}
+.actionLayer H2 {
+	FONT-FAMILY: tahoma, arial, helvetica, clean, sans-serif
+}
+.actionLayer H3 {
+	FONT-FAMILY: tahoma,  arial, helvetica, clean, sans-serif
+}
+.actionLayer H2 {
+	FONT-WEIGHT: 700
+}
+.actionLayer H4.note {
+	TEXT-ALIGN: center; PADDING-BOTTOM: 7px; MARGIN: 0px; PADDING-LEFT: 7px; PADDING-RIGHT: 7px; BACKGROUND: #fff; COLOR: #3c7322; PADDING-TOP: 7px
+}
+.actionLayer P.textAlignR {
+	MARGIN: 0px
+}
+.actionLayer TD .formError {
+	MARGIN: -6px 0px 0px; WIDTH: auto
+}
+.actionLayer TD .formTips {
+	MARGIN: -6px 0px 0px; WIDTH: auto
+}
+.actionLayer .contentBody2 {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 10px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: #fff; BORDER-TOP: #ededed 1px solid; PADDING-TOP: 10px
+}
+.actionLayer .JApromoBox {
+	MARGIN: 0px
+}
+.actionLayer .bgw .gTable {
+	BORDER-TOP: 0px
+}
+.actionLayer .bgw .gTable TH {
+	BACKGROUND: #fff
+}
+.actionLayer .gTable TD.txt12 {
+	FONT-SIZE: 1.2em
+}
+* + HTML .actionLayer .gTable TD.txt12 {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 5px; PADDING-RIGHT: 0px; PADDING-TOP: 5px
+}
+.actionLayer .gTable TR.sharp TH {
+	COLOR: #000; FONT-SIZE: 1.2em
+}
+.actionLayer .gTable TR.minSharp TH {
+	COLOR: #444
+}
+.txtArea {
+	LINE-HEIGHT: 1.6em; WIDTH: 100%; FONT-SIZE: 1.2em
+}
+.actionLayer .scrollBox {
+	BACKGROUND: #fff
+}
+.actionLayer .scrollBox TABLE.gTable TD.txt11 {
+	PADDING-BOTTOM: 4px; LINE-HEIGHT: 1.2em; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; FONT-SIZE: 1.1em; PADDING-TOP: 4px
+}
+.actionLayer .scrollBox .gTable TD LI {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 18px; PADDING-RIGHT: 0px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/icon_folder.gif) no-repeat 0px 2px; PADDING-TOP: 0px
+}
+.actionLayer .scrollBox TD .formError {
+	MARGIN: 0px 0px 10px; WIDTH: 95%; FONT-SIZE: 0.9em
+}
+.actionLayer .scrollBox .contentBody2 TD .formError {
+	FONT-SIZE: 1em
+}
+.actionLayer .miniForm2 .formLabel {
+	WIDTH: 25%
+}
+.actionLayer UL.flowList {
+	MARGIN: 0px
+}
+.actionLayer .gForm UL.flowList {
+	PADDING-BOTTOM: 0px; MARGIN: 5px 0px 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FLOAT: left; FONT-SIZE: 0.9em; PADDING-TOP: 0px
+}
+.actionLayer .gForm SMALL {
+	MARGIN-TOP: 3px; FLOAT: left
+}
+.actionLayer .miniForm3 .form_c .formError {
+	MARGIN: -5px 0px 0px; WIDTH: 220px
+}
+.actionLayer .gForm .formError {
+	MARGIN: 5px 0px 7px
+}
+* + HTML .actionLayer .gForm .formError {
+	MARGIN: -2px 0px 7px
+}
+.actionLayer .form_c .left .formError {
+	MARGIN: -10px 0px 7px 5px
+}
+.actionLayer .form_c .formContent .scrollBox {
+	BORDER-BOTTOM: #a5acb2 1px solid; BORDER-LEFT: #a5acb2 1px solid; PADDING-BOTTOM: 5px; PADDING-LEFT: 5px; WIDTH: 240px; PADDING-RIGHT: 5px; BACKGROUND: #edf5e4; HEIGHT: 50px; BORDER-TOP: #a5acb2 1px solid; BORDER-RIGHT: #a5acb2 1px solid; PADDING-TOP: 5px
+}
+.contentBody {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 10px; MARGIN: 0px 0px 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; ZOOM: 1; BACKGROUND: #fff; PADDING-TOP: 10px
+}
+.contentBody2 {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 10px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: #fff; BORDER-TOP: #ededed 1px solid; PADDING-TOP: 10px
+}
+.contentBody3 {
+	BORDER-BOTTOM: #ededed 1px solid; TEXT-ALIGN: left; PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; ZOOM: 1; BACKGROUND: #fff; PADDING-TOP: 10px
+}
+.contentBody3 UL.basicBulletedList {
+	MARGIN: 8px 0px 0px
+}
+.contentBody3 UL.basicBulletedList LI {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.scrollBox {
+	OVERFLOW-Y: auto
+}
+.scrollBox {
+	BACKGROUND: #edf5e4
+}
+.actionLayer TR.on {
+	BACKGROUND: #edf5e4
+}
+.gTablePad5 TD {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 0px; PADDING-RIGHT: 5px; PADDING-TOP: 0px
+}
+SMALL.smallText {
+	MARGIN: 3px 0px 0px; DISPLAY: block
+}
+.JClist LI {
+	MARGIN: 0px 0px 5px; FONT-SIZE: 1.2em; FONT-WEIGHT: 700
+}
+.JClist TABLE {
+	WIDTH: 95%
+}
+.JClist A {
+	COLOR: #000
+}
+.JClist A:hover {
+	COLOR: #043d8a
+}
+.JClist TD {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 90%; FONT-WEIGHT: 400; PADDING-TOP: 0px
+}
+* + HTML .JClist TD {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+LI.JClistSubcat {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 33px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.gTable H5 {
+	MARGIN: 2px 0px 0px; DISPLAY: inline; FONT-WEIGHT: 400
+}
+.detailJL {
+	MARGIN: 5px 0px 0px
+}
+.detailJL P {
+	LINE-HEIGHT: 1.4em; MARGIN: 0px; WIDTH: 530px; COLOR: #666; FONT-SIZE: 100%
+}
+.detailJLdate {
+	TEXT-ALIGN: right; FLOAT: right; COLOR: #666
+}
+.detailJLbenefit {
+	TEXT-ALIGN: right; WIDTH: 115px; FLOAT: right
+}
+.detailJLbenefit IMG {
+	MARGIN: 3px 0px 0px 3px
+}
+.JApromoBox {
+	BORDER-BOTTOM: #dadada 1px solid; BORDER-LEFT: #dadada 1px solid; PADDING-BOTTOM: 2px; MARGIN: 0px 0px 10px; PADDING-LEFT: 2px; PADDING-RIGHT: 2px; BACKGROUND: #fff; BORDER-TOP: #dadada 1px solid; BORDER-RIGHT: #dadada 1px solid; PADDING-TOP: 2px
+}
+.JApromoBox .carrier {
+	PADDING-BOTTOM: 10px; PADDING-LEFT: 80px; PADDING-RIGHT: 10px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_JApromoBox.gif) no-repeat; PADDING-TOP: 10px
+}
+.JApromoBox H3 {
+	COLOR: #3c7322; FONT-SIZE: 1.2em; FONT-WEIGHT: 700
+}
+.JApromoBox FIELDSET {
+	FONT-SIZE: 1.2em
+}
+.JApromoBox .formLabel {
+	TEXT-ALIGN: left; WIDTH: 130px
+}
+.JApromoBox UL {
+	MARGIN: 3px 0px 0px
+}
+.JApromoBox LI {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 1.2em; PADDING-TOP: 0px
+}
+.JApromoBox .formError {
+	MARGIN: -10px 0px 10px; WIDTH: auto; FLOAT: none
+}
+.JApromoBox .formTips {
+	MARGIN: -10px 0px 10px; WIDTH: auto; FLOAT: none
+}
+.extract {
+	WIDTH: 99%; HEIGHT: 365px; FONT-SIZE: 1.2em
+}
+#JDBLoading {
+	BORDER-BOTTOM: #dadada 1px solid; TEXT-ALIGN: center; BORDER-LEFT: #dadada 1px solid; PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; WIDTH: 378px; PADDING-RIGHT: 10px; FONT: 700 1.6em Georgia, "Times New Roman", Times, serif; BACKGROUND: #ededed; COLOR: #555; BORDER-TOP: #dadada 1px solid; BORDER-RIGHT: #dadada 1px solid; PADDING-TOP: 10px
+}
+#JDBLoadingMini {
+	BORDER-BOTTOM: 0px; TEXT-ALIGN: center; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT: 400 1.1em Georgia, "Times New Roman", Times, serif; COLOR: #555; BORDER-TOP: 0px; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+#JDBLoading CENTER {
+	PADDING-BOTTOM: 20px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: #fff; PADDING-TOP: 20px; font-stretch: narrower
+}
+#JDBLoadingMini CENTER {
+	PADDING-BOTTOM: 20px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: #fff; PADDING-TOP: 20px; font-stretch: narrower
+}
+#JDBLoading IMG {
+	VERTICAL-ALIGN: middle; MARGIN-RIGHT: 10px
+}
+#JDBLoadingMini IMG {
+	VERTICAL-ALIGN: middle; MARGIN-RIGHT: 10px
+}
+#JDBLoadingMini IMG {
+	WIDTH: 20px; HEIGHT: 20px
+}
+.content_w720 {
+	MARGIN-TOP: 15px; WIDTH: 720px; FLOAT: left
+}
+.sideBar_w220 {
+	MARGIN: 15px 30px 0px 0px; WIDTH: 220px; FLOAT: left
+}
+.sideBarModuleTit P {
+	PADDING-BOTTOM: 0px; TEXT-TRANSFORM: uppercase; MARGIN: 0px 0px 0px -15px; PADDING-LEFT: 0px; PADDING-RIGHT: 10px; BACKGROUND: #fff; LETTER-SPACING: 0.1em; FONT-SIZE: 1.1em; PADDING-TOP: 0px
+}
+.faqMenu {
+	PADDING-BOTTOM: 0px; MARGIN: 0px 0px 30px -15px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 1.2em; BORDER-RIGHT: #e6e6e6 1px solid; PADDING-TOP: 10px
+}
+.faqMenu A {
+	BORDER-BOTTOM: #e6e6e6 1px solid; PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; DISPLAY: block; PADDING-TOP: 5px
+}
+.faqMenu .faqOn {
+	BORDER-BOTTOM: #e6e6e6 1px solid; PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; DISPLAY: block; COLOR: #000; FONT-WEIGHT: 700; PADDING-TOP: 5px
+}
+.faqBox {
+	WIDTH: 720px; MARGIN-BOTTOM: 30px; BACKGROUND: #e6e6e6
+}
+.faqBox .cell_a {
+	BORDER-BOTTOM: #fff 1px solid; BORDER-LEFT: #fff 1px solid; PADDING-BOTTOM: 30px; MARGIN: 0px 0px 1px; PADDING-LEFT: 30px; WIDTH: 298px; PADDING-RIGHT: 30px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_promobox.gif) #fff repeat-x left bottom; FLOAT: left; HEIGHT: 140px; BORDER-TOP: #fff 1px solid; BORDER-RIGHT: #fff 1px solid; PADDING-TOP: 0px
+}
+.faqBox H3 {
+	COLOR: #bb4722
+}
+.faqAns H3 {
+	COLOR: #bb4722
+}
+.faqBox .cell {
+	BORDER-BOTTOM: #fff 1px solid; BORDER-LEFT: #fff 1px solid; PADDING-BOTTOM: 30px; MARGIN: 0px 0px 1px 1px; PADDING-LEFT: 30px; WIDTH: 297px; PADDING-RIGHT: 30px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_promobox.gif) #fff repeat-x left bottom; FLOAT: left; HEIGHT: 140px; BORDER-TOP: #fff 1px solid; BORDER-RIGHT: #fff 1px solid; PADDING-TOP: 0px
+}
+.faqTour {
+	WIDTH: 720px
+}
+.faqTour LI {
+	TEXT-ALIGN: center; MARGIN: 0px 35px 10px 10px; FLOAT: left; FONT-SIZE: 1.2em
+}
+.faqTour LI .videoBox {
+	BORDER-BOTTOM: #ccc 1px solid; BORDER-LEFT: #ccc 1px solid; PADDING-BOTTOM: 1px; PADDING-LEFT: 1px; WIDTH: 190px; PADDING-RIGHT: 1px; BACKGROUND: #fff; HEIGHT: 140px; BORDER-TOP: #ccc 1px solid; BORDER-RIGHT: #ccc 1px solid; PADDING-TOP: 1px
+}
+.faqAns {
+	BORDER-BOTTOM: #b0b0b0 1px dotted; PADDING-BOTTOM: 10px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 10px
+}
+.faqAns .right A {
+	COLOR: #666; FONT-SIZE: 1.1em; TEXT-DECORATION: none
+}
+.faqAns .right A:hover {
+	COLOR: #666; TEXT-DECORATION: underline
+}
+.faqAns OL {
+	PADDING-BOTTOM: 0px; LINE-HEIGHT: 1.4em; LIST-STYLE-TYPE: decimal; MARGIN: 0px 0px 0px 15px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 1.2em; PADDING-TOP: 0px
+}
+* + HTML .faqAns OL {
+	MARGIN: 0px 0px 0px 22px
+}
+.promoBox {
+	PADDING-BOTTOM: 10px; MARGIN: 10px 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_promobox.gif) repeat-x 50% bottom; PADDING-TOP: 0px
+}
+.promoBox_c {
+	WIDTH: 234px; FLOAT: left
+}
+.promoBox UL.basicBulletedList {
+	LINE-HEIGHT: 1.2em; MARGIN: 10px 0px 0px 5px
+}
+.promoBox UL.basicBulletedList LI {
+	PADDING-BOTTOM: 5px; MARGIN: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.promoBox P {
+	MARGIN: 10px 0px 0px 5px
+}
+.sideBarModule {
+	POSITION: relative; MARGIN: 10px 0px 30px 15px; BORDER-TOP: #e5e5e5 5px solid
+}
+.sideBarModuleTit {
+	POSITION: absolute; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 10px; BACKGROUND: none transparent scroll repeat 0% 0%; TOP: -12px; PADDING-TOP: 0px; LEFT: 0px
+}
+.indexLogin {
+	BORDER-BOTTOM: #dadada 1px solid; BORDER-LEFT: #dadada 1px solid; PADDING-BOTTOM: 1px; MARGIN: 0px; PADDING-LEFT: 1px; WIDTH: 196px; PADDING-RIGHT: 1px; FLOAT: left; BORDER-TOP: #dadada 1px solid; BORDER-RIGHT: #dadada 1px solid; PADDING-TOP: 1px
+}
+.indexLogin .formTips {
+	MARGIN: -5px 0px 0px; WIDTH: auto; FLOAT: none
+}
+.indexLogin .formError {
+	MARGIN: -5px 0px 0px; WIDTH: auto; FLOAT: none
+}
+.indexLogin_c {
+	PADDING-BOTTOM: 6px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; ZOOM: 1; BACKGROUND: url(http://content0.jobsdb.co.th/Content/images/Shared/bg_indexLogin.gif) repeat-x; PADDING-TOP: 8px
+}
+.indexLogin_c INPUT.txtfield {
+	WIDTH: 166px; FONT-SIZE: 1.2em
+}
+.indexLogin_c SELECT {
+	WIDTH: 176px; FONT-SIZE: 1.2em
+}
+.indexLogin_c .smallText {
+	MARGIN: 5px 0px; COLOR: #000; FONT-SIZE: 1.1em
+}
+.indexLogin_c H4 {
+	MARGIN: -10px 0px 0px; FONT-FAMILY: tahoma, Georgia, "Times New Roman"; COLOR: #555; FONT-WEIGHT: 400
+}
+.indexLogin_c UL {
+	MARGIN: 10px 0px 0px
+}
+.indexLogin_c LI {
+	BORDER-BOTTOM: #dadada 1px solid; PADDING-BOTTOM: 4px; MARGIN: 4px 0px 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-SIZE: 1.1em; PADDING-TOP: 0px
+}
+.actionMsg_c FIELDSET SPAN {
+	COLOR: #555
+}

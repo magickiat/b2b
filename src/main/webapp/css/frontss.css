@@ -1,0 +1,350 @@
+
+
+.bg {
+	background-color: #E9E9E9;
+}
+
+body,table,tr,td {
+	font-family: "tahoma","verdana",  MS Sans Serif;
+	font-size: 11px;
+	color: #595959;
+	text-decoration: none;
+}
+textarea{
+	font-family: "tahoma","verdana",  MS Sans Serif;
+}
+.box {
+	border: 1px #CCCCCC solid;
+	font-family: "tahoma","verdana",  "MS Sans Serif";
+	font-size: 10px;
+	color: #009933;;
+	font-weight: bolder;
+	width: 60px;
+	cursor: hand;
+	cursor: pointer;
+	z-index: -1;
+}
+
+.boxhome {
+	border: 1px inset;
+	font-family: "tahoma","verdana",  MS Sans Serif;
+	font-size: 9px;
+	color: #595959;
+	width: 50px;
+}
+
+a:link {
+	text-decoration: none;
+	color: #333333;
+}
+
+a:visited {
+	text-decoration: none;
+	color: #333333;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #ff7100;
+}
+
+a.menu:hover {
+	font-family: "tahoma","verdana",  MS Sans Serif;
+	font-size: 11px;
+	color: #595959;
+	text-decoration: none;
+}
+
+a.related {
+	font-family: "tahoma","verdana",  MS Sans Serif;
+	font-size: 11px;
+	color: #FFFFFF;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a.related:hover {
+	font-family: "tahoma","verdana",  MS Sans Serif;
+	font-size: 11px;
+	color: #FFFFFF;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.homemenu {;
+	font-weight: bolder
+}
+
+.h_login {
+	background-image: url(../images/home_login_bg.jpg);
+	background-color: #052E5C;
+	background-repeat: no-repeat;
+	background-position: top;
+}
+
+.h1 {
+	font-family: "tahoma","verdana",  "MS Sans Serif";
+	font-size: 11px;
+	color: #36444F;
+	font-weight: bolder;
+	text-decoration: none;
+}
+
+.h2 {
+	font-family: "tahoma","verdana",  "MS Sans Serif";
+	font-size: 11px;
+	color: #333333;
+	font-weight: bolder;
+	text-decoration: blink;
+}
+
+.table {
+	border: none;
+	font-family: "tahoma","verdana",  "MS Sans Serif";
+	font-size: 9px;
+	color: #595959;;
+	font-weight: bolder
+}
+
+.boxnumber {
+	cursor: hand;
+	border: 1px #CCCCCC ridge;
+	font-family: "tahoma","verdana",  "MS Sans Serif";
+	font-size: 12px;
+	color: #FF6600;
+	font-weight: bolder;
+}
+
+.boxnumber-index {
+	cursor: hand;
+	border: 3px #CCCCCC ridge;
+	font-family: "tahoma","verdana",  "MS Sans Serif";
+	font-size: 12px;
+	color: #FF6600;
+	font-weight: bolder;
+}
+
+.h2W {
+	font-family: "tahoma","verdana",  "MS Sans Serif";
+	font-size: 11px;
+	color: #FFFFFF;
+	font-weight: bolder;
+	text-decoration: none;
+}
+
+.menuheader {
+	font-family: "tahoma","verdana",  "MS Sans Serif";
+	font-size: 11px;
+	color: #333333;
+	font-weight: bolder;
+	text-decoration: blink;
+}
+
+.homemenuW {;
+	font-weight: bolder;
+	color: #FFFFFF
+}
+
+.listbox {
+	border: 2px #CCCCCC solid;
+	font-family: "tahoma","verdana",  "MS Sans Serif";
+	font-size: 12px;
+	color: #666666;;
+	font-weight: normal
+}
+
+.box_unread {
+	border: 1px #ff7100 solid;
+	font-family: "tahoma","verdana",  "MS Sans Serif";
+	font-size: 10px;
+	color: #ff7100;;
+	font-weight: bolder
+}
+
+.barseeker2 {
+	font-family: "tahoma","verdana",  "MS Sans Serif";
+	font-size: 10px;
+	color: #9b9b9b;
+	font-weight: bolder;
+	text-decoration: none;
+}
+
+.text_thai {
+	font-family: Tahoma;
+	font-size: 13px;
+	color: #36444F;
+	font-weight: normal;
+	text-decoration: none;
+}
+
+.h1_ore {
+	font-family: "tahoma","verdana",  "MS Sans Serif";
+	font-size: 11px;
+	color: ff7100;
+	font-weight: bolder;
+	text-decoration: none;
+}
+
+iframe {
+	overflow-x: hidden;
+}
+
+#blanket {
+	background-color:#111;
+	opacity: 0.65;
+	filter: alpha(opacity = 65);
+	position:absolute;
+	z-index: 9001; /*ooveeerrrr nine thoussaaaannnd*/
+	top:0px;
+	left:0px;
+}
+
+.dragTool {
+	position:absolute;
+	background-color:#eeeeee;
+	width: 400px;
+	height: 405px;
+	border-top: 0px solid red;
+	border-left: 0px solid red;
+	overflow-x: hidden; 
+	overflow-y: hidden;
+	z-index: 9002; /*ooveeerrrr nine thoussaaaannnd*/
+}
+
+.dragToolIframe {
+	width: 400px;
+	height: 405px;
+	overflow-x: hidden; 
+	overflow-y: hidden;
+}
+
+.dragToolTable {
+	width: 400px;
+	height: 100%;
+	cellspacing: 5px;
+	cellpadding: 0px;
+}
+
+.dragTool2 {
+	position:absolute;
+	background-color:#eeeeee;
+	width: 800px;
+	height: 500px;
+	border-top: 0px solid red;
+	border-left: 0px solid red;
+	       		  
+	z-index: 9002; /*ooveeerrrr nine thoussaaaannnd*/
+}
+/*
+img.headImage{
+	max-width: 720;
+	width: expression(this.width > 720 ? "720px" : this.width);
+}
+
+img.newsImage{
+	max-width: 400;
+	width: expression(this.width > 400 ? "400px" : this.width);
+}
+
+#headImage{
+	max-width: 720;
+	width: expression(this.width > 720 ? "720px" : this.width);
+}
+
+#headImageManager{
+	max-width: 400;
+	width: expression(this.width > 400 ? "400px" : this.width);
+}
+
+#newsImage{
+	max-width: 400;
+	width: expression(this.width > 400 ? "400px" : this.width);
+}
+*/
+div.skillList{
+	width:	  320px;
+	height:	  280px;
+	overflow-x: hidden; 
+	overflow-y: auto;
+	border:	  2px;	
+	position: relative;
+	top: 10px;
+	scrollbar-face-color: #f1d0a4;
+	scrollbar-shadow-color: #f1d0a4;
+	scrollbar-highlight-color: #f8e6cb;
+	scrollbar-3dlight-color: #ffffff;
+	scrollbar-darkshadow-color: #E4E4E4;
+	scrollbar-track-color: #fbeede;
+	scrollbar-arrow-color: #6c4b14; 
+}
+
+div.skillChioce{
+	width:	  280px;
+	height:	  255px;
+	overflow-x: hidden; 
+	overflow-y: auto;
+	border:	  2px;	
+	position: relative;
+	top: 0px;
+	scrollbar-face-color: #cccccc;
+	scrollbar-shadow-color: #f3f3f3;
+	scrollbar-highlight-color: #f5f5f2;
+	scrollbar-3dlight-color: #f5f5f2;
+	scrollbar-darkshadow-color: #f2f2f2;
+	scrollbar-track-color: #f5f5f5;
+	scrollbar-arrow-color: #020202; 
+}
+
+input.box-skill {
+	border: 1px #CCCCCC solid;
+	font-family: "tahoma","verdana",  "MS Sans Serif";
+	font-size: 10px;
+	color: #000000;
+	background: #ffffff;
+	/*font-weight: bolder;*/
+	/* width: 60px; */
+	cursor: hand;
+	cursor: pointer;
+	z-index: -1;
+}
+
+input.box-skill-selected {
+	border: 1px #CCCCCC solid;
+	font-family: "tahoma","verdana",  "MS Sans Serif";
+	font-size: 10px;
+	color: #000000;
+	background: #cccccc;
+	/*font-weight: bolder;*/
+	/* width: 60px; */
+	cursor: hand;
+	cursor: pointer;
+	z-index: -1;
+}
+
+.input-box-drag {
+	font-family: tahoma, ms sans serif;
+	font-size: 12px;
+	color: #333333;
+	text-align: left;
+	font-weight: normal;
+	text-indent: 0px;
+	background-color: #ffffff;
+}
+
+.input-box-drag-clicked {
+	font-family: tahoma, ms sans serif;
+	font-size: 12px;
+	color: #FFFFFF;
+	text-align: left;
+	font-weight: normal;
+	text-indent: 0px;
+	background-color: #FF6600;
+}
+
+.skillHeader {
+	font-family: "tahoma","verdana",  "MS Sans Serif";
+	font-size: 13px;
+	color: #FFFFFF;
+	font-weight: bolder;
+	text-decoration: none;
+}

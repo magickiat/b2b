@@ -1,0 +1,21 @@
+/*------------------POPUPS------------------------*/
+.topicstyle{
+	
+	font-color:#FFFFFF;
+
+}
+.toptbstyle{
+	 border:0.5;
+	 background:#C1E0FF;
+}
+.replytbstyle{
+	 border:0.5;
+	 background:#E1F0FF;
+}
+
+.alink{text-decoration: none;
+	color: ff7100;
+}
+.alink:hover{text-decoration: none;
+	color: ff7100;
+}

@@ -1,0 +1,194 @@
+body {
+	text-align: center;
+	background-color: #ebe6d8;
+	margin: 0px;
+    padding: 0px;
+}
+
+.heading {
+	width: 1000px;
+	text-align: center;
+	margin:auto;
+	line-height: 0px;
+}
+
+.container {
+	width: 1001px;	
+	background-color: #ffffff;
+	    /* Centering for IE6+ in strict mode,
+          Firefox, and other modern browsers */
+        margin: auto;
+        /* Don't center every line of text -
+          we inherited this setting from body */
+        text-align: left;
+        
+}
+
+.banner {
+	float: right;
+	top: 10px;
+	width: 804px;
+	line-height: 0px;
+}
+	
+.left { /*total 194px-pad24px=170px*/
+	float: left;
+	padding: 0px 12px 0px 12px;
+	background-color: #ffffff;
+	width: 170px;
+    word-wrap: break-word;
+}
+
+.middle {
+	top: 10px;
+	border-right: solid 2px #dfdfdf;
+	border-left: solid 2px #dfdfdf;
+	margin-left: 194px;
+	margin-right: 272px;
+	padding: 0px 5px 0px 5px;
+	width: 520px;
+    word-wrap: break-word;
+	background-color: #ffffff;
+}
+
+.right { /*total 267px-padding8px = 259px */
+	float: right;
+	margin-top: 0px;
+	padding: 0px 2px 0px 6px;
+	background-color: #ffffff;
+	width: 264px;
+    word-wrap: break-word;
+}
+
+.leftbook { /*total 194px-pad24px=170px*/
+	float: left;
+	padding: 0px 12px 0px 12px;
+	background-color: #ffffff;
+	width: 170px;
+    word-wrap: break-word;
+}
+
+.middlebook {
+	top: 10px;
+	margin-left: 194px;
+	/*margin-right: 200px;
+	*/border-left: solid 2px #dfdfdf;
+	border-right: solid 2px #dfdfdf;
+	padding: 0px 10px 0px 10px;
+	width: 582px;
+    word-wrap: break-word;
+	background-color: #ffffff;
+}
+.mainbook {
+	top: 10px;
+	margin-left: 194px;
+	
+	border-left: solid 2px #dfdfdf;
+	padding: 0px 10px 0px 10px;
+	width: 734px;
+    word-wrap: break-word;
+	background-color: #ffffff;
+}
+.rightbook { /*total 200px-padding16px = 184px */
+	float: right;
+	padding: 0px 8px 0px 7px;
+	background-color: #ffffff;
+	width: 180px;
+    word-wrap: break-word;
+}
+
+.right_tbl {
+	width: 243px;
+	padding: 0px 8px 10px 5px;
+}
+.contentBook{
+	top: 10px;
+	margin-left: 194px;
+	/*margin-right: 200px;*/
+	border-left: solid 2px #dfdfdf;
+	/*border-right: solid 2px #dfdfdf;
+	*/padding: 0px 10px 0px 10px;
+	width: 763px;
+    word-wrap: break-word;
+	background-color: #ffffff;
+}
+
+.mainbargain {
+	margin-left: 0px;
+	/*margin-right: 200px;
+	*/border-right: solid 2px #dfdfdf;
+	padding: 0px 55px 0px 55px;
+	width: 688px;
+    word-wrap: break-word;
+	background-color: #ffffff;
+}
+.mainshopping {
+	margin-left: 50px;
+	/*margin-right: 200px;
+	*/border-right: solid 2px #dfdfdf;
+	padding: 0px 50px 0px 0px;
+	width: 698px;
+    word-wrap: break-word;
+	background-color: #ffffff;
+}
+
+.maincustservices {
+	margin-left: 80px;
+	/*margin-right: 200px;
+	*/border-right: solid 2px #dfdfdf;
+	padding: 0px 50px 0px 0px;
+	width: 668px;
+    word-wrap: break-word;
+	background-color: #ffffff;
+}
+
+.mainaboutus {
+	margin-left: 50px;
+	padding: 0px 100px 0px 0px;
+	width: 850px;
+    word-wrap: break-word;
+	background-color: #ffffff;
+}
+
+.divaboutus {
+	margin-left: 110px;
+	padding-left: 0px;
+	border-left: solid 2px #dfdfdf;
+}
+
+.divaboutus img {
+	padding: 0px 20px 0px 0px;
+}
+.maindiv {
+	margin-left: 70px;
+	margin-right: 100px;
+	width: 830px;
+    word-wrap: break-word;
+	background-color: #ffffff;
+}
+
+.rightbargain { /*total 200px-padding16px = 184px */
+	float: right;
+	padding: 0px 8px 0px 12px;
+	background-color: #ffffff;
+	width: 180px;
+    word-wrap: break-word;
+}
+.right_grey_tbl {
+	width: 243px;
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+}
+
+.right_grey_tbl_solid {
+	padding: 0px 0px 0px 5px;
+	/*border-right: solid 1px #9b9893;*/
+}
+
+.footer {
+	width: 1000px;
+	padding-top: 0px;
+	text-align: center;
+	margin:auto;
+	clear: both;
+}

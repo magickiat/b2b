@@ -1,0 +1,291 @@
+body {
+	font:76%/1.7 Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	color: #404040;
+	text-decoration: none;
+}
+
+a{
+	COLOR: #404040;
+	text-decoration: none;
+}
+
+a:hover{
+	COLOR: #101010;
+	text-decoration: none;
+}
+
+p {
+
+}
+
+h2 {
+	font-size: 15px;
+}
+
+h3 {
+	font-size: 13px;
+	margin-top: -1px;
+	margin-bottom: 10px;
+}
+
+h4 {
+	font-size: 12px;
+	font-weight:normal;
+}
+
+li { 
+margin-left: -27px; 
+line-height: 15px; 
+padding: 0em; 
+} 
+
+ul {
+	margin-bottom: -15px;
+}
+.subbargain_tbl tr td{
+	padding: 0px 20px 10px 0px;
+}
+
+
+/* For standards browsers */
+input[type="text"]:focus {
+  border: 1px solid #bcb3a8;
+}
+
+/* For Internet Explorer */
+input.focus {
+  border: 1px solid #bcb3a8;
+}
+
+.max_margin_bottom {
+	margin-bottom:-22px;
+}
+
+.min_margin_bottom {
+	margin-bottom: -13px;
+}
+
+.plus_margin_bottom {
+	margin-bottom: 10px;
+}
+
+.max_plus_margin_bottom {
+	margin-bottom: 20px;
+}
+
+.max_margin_top {
+	margin-top:-5px;
+}
+.tx_red {
+	color: #903c2a;
+}
+.tx_darkBrown {
+	color: #402405;
+}
+
+.tx_brown {
+	color: #723d11;
+}
+
+.tx_lightbrown {
+	color: #897f6e;
+}
+
+.tx_black {
+	/*color: #100e0f;*/
+	color: #2c2c2c;
+}
+
+.tx_grey {
+	color: #8e8e8e;
+}
+
+.tx_red {
+	color: #962712;
+}
+
+.tx_bold {
+	font-weight:bold;
+}
+
+.tx_big {
+	font-size: 100%/2.5;
+}
+
+.tx_dark_brown_med_bold_dash {
+	font-size: 13px;
+	color: #6b513c;
+	font-weight:bold;
+	border-bottom: 1px dashed #dddddd;
+	margin: -2px 0px 5px 5px;
+	padding: 0px 0px 5px 5px;
+}
+
+.tx_dark_brown_sm_bold {
+	font-size: 11px;
+	color: #402405;
+	font-weight:bold;
+}
+
+.tx_dark_brown_sm {
+	font-size: 11px;
+	color: #402405;
+}
+
+.tx_small {
+	font-size: 11px;
+}
+
+.tx_smallest {
+	font-size: 10px;
+	font-style:normal;
+	font-weight:normal;
+}
+
+.line_height {
+	line-height: 15px;
+}
+
+.box_brown {
+	border: 1px solid #bcb3a8;
+	color: #7a7a7a;
+	padding-left: 7px;
+}
+.input-box-disabled{
+	border: 1px solid #bcb3a8;
+	color: #333333;
+	padding-left: 7px;
+}
+.input-box-disabled2{
+	border: 1px solid #bcb3a8;
+	color: #333333;
+	padding-left: 7px;
+	disable:disabled;
+}
+.box_white {
+	border-width: 0px;
+	color: #7a7a7a;
+	padding-left: 7px;
+}
+
+/* For standards browsers */
+.box_white[type="text"]:focus {
+  border-width: 0px;
+}
+
+/* For Internet Explorer */
+.box_white.focus {
+  border-width: 0px;
+}
+#bargain a img{
+ border-width: 0px;
+ 
+}
+.bottom_dot_line{
+  border-bottom: dotted 1px #b3b3b3;
+}
+.pagenumber{
+	width:22px;
+	background:#FFFFFF;
+	cursor: hand;
+	border: 1px gray solid;
+	font-family: "tahoma","verdana",  "MS Sans Serif";
+	font-size: 11px;
+	color: #663300;
+	font-weight: bolder;
+	text-align: center;
+	
+}
+.pagecurrent{
+	width:22px;
+	background:#663300;
+	cursor: hand;
+	border: 1px gray solid;
+	font-family: "tahoma","verdana",  "MS Sans Serif";
+	font-size: 11px;
+	color: #FFFFFF;
+	font-weight: bolder;
+	text-align: center;
+}
+
+.register_tbl {
+	margin-left:52px;
+	padding: 0px 40px 20px 50px;
+	border-bottom: 1px solid #f0f0f0;
+}
+
+.regisform_tbl {
+	padding: 0px 10px 0px 20px;
+}
+
+.regisform_tbl tr td{
+	padding: 5px 40px 5px 0px;
+}
+
+
+.number_header {
+	font-size: 20px;
+	font-family: Arial, Helvetica, sans-serif, Tahoma, Verdana, Geneva,;
+	font-weight:100;
+}
+
+.brown_tbl{
+	text-align:center;
+	background-color:#FFFFFF;
+	vertical-align:top;
+	margin: 0px 0px 0px 0px;
+}
+
+.brown_tbl thead tr {
+	background-color:#dfd3c7;
+	color: #723d11;
+}
+
+.h3_margin {
+	font-size: 13px;
+	font-weight:bold;
+	margin: 0px 0px -20px 5px;
+}
+
+.shippingmethod_tbl {
+	text-align:center;
+	background-color:#FFFFFF;
+	vertical-align:top;
+	margin: 0px 0px 0px 0px;
+}
+
+.shippingmethod_tbl thead tr {
+	background-color:#dfd3c7;
+	color: #723d11;
+}
+.shippingmethod_tbl tbody tr td {
+	padding-left: 50px;
+}
+
+.underline {
+	border-bottom: 1px solid #404040;
+}
+.td-date {
+	adding: 0px 0px 0px 0px;
+}
+
+.bookdetail_tbl {
+	padding: 20px 50px 0px 50px;
+}
+
+.li_decimal { 
+margin-left: 0px; 
+line-height:20px;
+padding: 0em; 
+} 
+
+.ul_decimal {
+	margin-bottom: auto;
+	list-style-type:decimal;
+}
+
+.li_bullet { 
+margin-left: 0px; 
+line-height:20px;
+padding: 0em; 
+} 
