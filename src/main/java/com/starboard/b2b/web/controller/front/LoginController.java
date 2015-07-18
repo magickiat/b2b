@@ -1,4 +1,4 @@
-package com.starboard.b2b.web.controller;
+package com.starboard.b2b.web.controller.front;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class IndexController {
+public class LoginController {
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	String front(Model model) {
+	@RequestMapping(value = "/front", method = RequestMethod.GET)
+	String form(Model model) {
 		model.addAttribute("msg", "World");
-		return "redirect: /front";
+		return "pages-front/index";
 	}
 }
