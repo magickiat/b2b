@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -36,7 +37,7 @@ public class User implements Serializable {
 	private String enable;
 
 	@OneToMany(cascade = { CascadeType.ALL })
-	private Set<Role> roles = new HashSet<>();
+	private Set<Role> role = new HashSet<>();
 
 	public User() {
 	}
