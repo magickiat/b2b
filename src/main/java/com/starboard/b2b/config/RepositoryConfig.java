@@ -13,11 +13,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateExceptionTranslator;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @EnableTransactionManagement
@@ -44,14 +46,27 @@ public class RepositoryConfig {
 		return sessionFactory;
 	}
 
+//	@Bean
+//	public DataSource dataSource() {
+//		DriverManagerDataSource ds = new DriverManagerDataSource();
+//        ds.setDriverClassName(env.getProperty("jdbc.driver.class_name"));
+//        ds.setUrl(env.getProperty("hibernate.hikari.dataSource.url"));
+//        ds.setUsername(env.getProperty("hibernate.hikari.dataSource.user"));
+//        ds.setPassword(env.getProperty("hibernate.hikari.dataSource.password"));
+//        return ds;
+//	}
+	
 	@Bean
-	public DataSource dataSource() {
-		DriverManagerDataSource ds = new DriverManagerDataSource();
-        ds.setDriverClassName(env.getProperty("jdbc.driver.class_name"));
-        ds.setUrl(env.getProperty("hibernate.hikari.dataSource.url"));
-        ds.setUsername(env.getProperty("hibernate.hikari.dataSource.user"));
-        ds.setPassword(env.getProperty("hibernate.hikari.dataSource.password"));
-        return ds;
+	public DataSource dataSource(){
+		HikariConfig config = new HikariConfig();
+		config.setJdbcUrl("jdbc:mysql://localhost:3306/stb");
+		config.setUsername(env.getProperty("hibernate.hikari.dataSource.user"));
+		config.setPassword(env.getProperty("hibernate.hikari.dataSource.password"));
+		config.addDataSourceProperty("cachePrepStmts", env.getProperty("hibernate.hikari.dataSource.cachePrepStmts"));
+		config.addDataSourceProperty("prepStmtCacheSize", env.getProperty("hibernate.hikari.dataSource.prepStmtCacheSize"));
+		config.addDataSourceProperty("prepStmtCacheSqlLimit", env.getProperty("hibernate.hikari.dataSource.prepStmtCacheSqlLimit"));
+
+		return new HikariDataSource(config);
 	}
 
 	// @Bean
