@@ -10,23 +10,31 @@
 <%@include file="/WEB-INF/views/include/common_css.jspf"%>
 </head>
 <body>
-<div>env = ${ evnData }</div>
-	<div>Active Profile = ${ evnData['spring.profiles.active'] }</div>
+	<div class="container">
+		<div>
+			<h2>
+				<small>Active Profile =</small> ${ evnData['spring.profiles.active'] }
+			</h2>
+		</div>
 
-	<hr />
-	<div>
-		<table>
-			<thead>
-				<tr>
-					<th>User</th>
-				</tr>
-			</thead>
-			<c:forEach items="${evnData['users']}" var="user">
-				<tr>
-					<td>${user.name }
-				</tr>
-			</c:forEach>
-		</table>
+		<hr />
+		<div>
+			<table class="table table-bordered table-hover ">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>User</th>
+					</tr>
+				</thead>
+				<c:forEach items="${evnData['users']}" var="user">
+					<tr>
+						<td>${user.id }</td>
+						<td>${user.name }
+					</tr>
+				</c:forEach>
+			</table>
+		</div>
+
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 </body>

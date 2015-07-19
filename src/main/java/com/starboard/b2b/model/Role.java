@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -13,9 +14,13 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "role")
-public class Role extends BaseModel implements Serializable {
+public class Role implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Id
+	private String id;
+	
 	@Column
 	private String name;
 	@Column
@@ -52,5 +57,13 @@ public class Role extends BaseModel implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 }

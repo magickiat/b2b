@@ -17,10 +17,11 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 @ComponentScan(basePackages = "com.starboard.b2b.web")
 public class WebConfig extends WebMvcConfigurerAdapter {
-	
+
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/").setCachePeriod(31556926);
+		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
+				.setCachePeriod(31556926);
 	}
 
 	@Override
@@ -42,6 +43,5 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	public MultipartResolver multipartResolver() {
 		return new StandardServletMultipartResolver();
 	}
-	
-	
+
 }

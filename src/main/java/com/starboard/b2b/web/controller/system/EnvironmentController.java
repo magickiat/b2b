@@ -13,7 +13,7 @@ public class EnvironmentController {
 
 	private EnvironmentService environmentService;
 	
-	@RequestMapping(name = "/system/env", method = RequestMethod.GET)
+	@RequestMapping(value = "/system/env", method = RequestMethod.GET)
 	String info(Model model){
 		model.addAttribute("evnData", environmentService.getEnvironment());
 		return "system/env";

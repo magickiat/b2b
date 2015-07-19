@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -17,17 +18,22 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "user")
-public class User extends BaseModel implements Serializable {
+public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Id
+	private String id;
+	
 	@Column
 	private String name;
+
 	@Column
 	private String password;
 	@Column
 	private String email;
-	
-	private boolean enable;
+
+	private String enable;
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	private Set<Role> roles = new HashSet<>();
@@ -74,12 +80,21 @@ public class User extends BaseModel implements Serializable {
 		this.email = email;
 	}
 
-	public boolean isEnable() {
+	public String getEnable() {
 		return enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(String enable) {
 		this.enable = enable;
 	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 
 }

@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class IndexController {
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	String front(Model model) {
-		model.addAttribute("msg", "World");
-		return "redirect: /front";
-	}
+//	@RequestMapping(value = "/", method = RequestMethod.GET)
+//	String front(Model model) {
+//		model.addAttribute("msg", "World");
+//		return "redirect: /front";
+//	}
 }
