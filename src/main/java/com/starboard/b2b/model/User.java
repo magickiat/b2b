@@ -26,7 +26,8 @@ public class User extends BaseModel implements Serializable {
 	private String password;
 	@Column
 	private String email;
-	private String enable;
+	
+	private boolean enable;
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	private Set<Role> roles = new HashSet<>();
@@ -73,11 +74,11 @@ public class User extends BaseModel implements Serializable {
 		this.email = email;
 	}
 
-	public String getEnable() {
+	public boolean isEnable() {
 		return enable;
 	}
 
-	public void setEnable(String enable) {
+	public void setEnable(boolean enable) {
 		this.enable = enable;
 	}
 
