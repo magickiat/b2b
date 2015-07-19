@@ -13,13 +13,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateExceptionTranslator;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @EnableTransactionManagement
@@ -48,21 +46,33 @@ public class RepositoryConfig {
 
 	@Bean
 	public DataSource dataSource() {
-		HikariConfig config = new HikariConfig();
-//		config.setDataSourceClassName(env.getProperty("hibernate.hikari.dataSourceClassName"));
-		config.setJdbcUrl(env.getProperty("hibernate.hikari.dataSource.url"));
-		config.setUsername(env.getProperty("hibernate.hikari.dataSource.user"));
-		config.setPassword(env.getProperty("hibernate.hikari.dataSource.password"));
-
-		config.addDataSourceProperty("cachePrepStmts", env.getProperty("hibernate.hikari.dataSource.cachePrepStmts"));
-		config.addDataSourceProperty("prepStmtCacheSize",
-				env.getProperty("hibernate.hikari.dataSource.prepStmtCacheSize"));
-		config.addDataSourceProperty("prepStmtCacheSqlLimit",
-				env.getProperty("hibernate.hikari.dataSource.prepStmtCacheSqlLimit"));
-		config.addDataSourceProperty("providerClass", env.getProperty("hibernate.connection.provider_class"));
-
-		return new HikariDataSource(config);
+		DriverManagerDataSource ds = new DriverManagerDataSource();
+        ds.setDriverClassName(env.getProperty("jdbc.driver.class_name"));
+        ds.setUrl(env.getProperty("hibernate.hikari.dataSource.url"));
+        ds.setUsername(env.getProperty("hibernate.hikari.dataSource.user"));
+        ds.setPassword(env.getProperty("hibernate.hikari.dataSource.password"));
+        return ds;
 	}
+
+	// @Bean
+	// public DataSource dataSource() {
+	// HikariConfig config = new HikariConfig();
+	//// config.setDataSourceClassName(env.getProperty("hibernate.hikari.dataSourceClassName"));
+	// config.setJdbcUrl(env.getProperty("hibernate.hikari.dataSource.url"));
+	// config.setUsername(env.getProperty("hibernate.hikari.dataSource.user"));
+	// config.setPassword(env.getProperty("hibernate.hikari.dataSource.password"));
+	//
+	// config.addDataSourceProperty("cachePrepStmts",
+	// env.getProperty("hibernate.hikari.dataSource.cachePrepStmts"));
+	// config.addDataSourceProperty("prepStmtCacheSize",
+	// env.getProperty("hibernate.hikari.dataSource.prepStmtCacheSize"));
+	// config.addDataSourceProperty("prepStmtCacheSqlLimit",
+	// env.getProperty("hibernate.hikari.dataSource.prepStmtCacheSqlLimit"));
+	// config.addDataSourceProperty("providerClass",
+	// env.getProperty("hibernate.connection.provider_class"));
+	//
+	// return new HikariDataSource(config);
+	// }
 
 	private Properties hibernateProperties() {
 		final Properties properties = new Properties();
@@ -70,7 +80,8 @@ public class RepositoryConfig {
 		properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
 		properties.put("hibernate.format_sql", env.getProperty("hibernate.format_sql"));
 		properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
-//		properties.put("hibernate.connection.provider_class", env.getProperty("hibernate.connection.provider_class"));
+		// properties.put("hibernate.connection.provider_class",
+		// env.getProperty("hibernate.connection.provider_class"));
 
 		return properties;
 	}
