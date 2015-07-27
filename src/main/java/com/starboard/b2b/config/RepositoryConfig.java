@@ -46,7 +46,7 @@ public class RepositoryConfig {
 	@Bean
 	public DataSource dataSource() {
 		HikariConfig config = new HikariConfig();
-		
+		config.setDriverClassName(env.getProperty("jdbc.driver.class_name"));
 		config.setJdbcUrl(env.getProperty("hibernate.hikari.dataSource.url"));
 		config.setUsername(env.getProperty("hibernate.hikari.dataSource.user"));
 		config.setPassword(env.getProperty("hibernate.hikari.dataSource.password"));
