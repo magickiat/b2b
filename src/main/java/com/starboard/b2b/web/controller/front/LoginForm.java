@@ -1,7 +1,12 @@
 package com.starboard.b2b.web.controller.front;
 
+import org.apache.bval.constraints.NotEmpty;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 public class LoginForm {
+	@NotEmpty
 	private String username;
+	@NotEmpty
 	private String password;
 	private boolean rememberMe;
 
@@ -30,5 +35,10 @@ public class LoginForm {
 
 	public void setRememberMe(boolean rememberMe) {
 		this.rememberMe = rememberMe;
+	}
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
 	}
 }

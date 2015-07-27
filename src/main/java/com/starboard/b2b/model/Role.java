@@ -1,8 +1,6 @@
 
 package com.starboard.b2b.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,20 +9,17 @@ import javax.persistence.Table;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @Table(name = "role")
-public class Role implements Serializable {
+public class Role implements GrantedAuthority {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
+	@Column(length = 20)
 	private String id;
-	
-	@Column
-	private String name;
-	@Column
-	private String description;
 
 	public Role() {
 	}
@@ -43,20 +38,9 @@ public class Role implements Serializable {
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
+	@Override
+	public String getAuthority() {
+		return id;
 	}
 
 	public String getId() {
@@ -66,4 +50,5 @@ public class Role implements Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
+
 }

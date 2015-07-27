@@ -2,8 +2,8 @@ package com.starboard.b2b.dao;
 
 import java.util.List;
 
-import org.apache.commons.lang.NotImplementedException;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,11 +17,6 @@ public class UserDaoImpl implements UserDao {
 	public UserDaoImpl() {
 	}
 
-	@Override
-	public User findByUsername(String username) {
-		throw new NotImplementedException();
-	}
-
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
@@ -31,6 +26,22 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<User> list() {
 		return sessionFactory.getCurrentSession().createCriteria(User.class).list();
+	}
+
+	@Override
+	public User findById(String id) {
+		return (User) sessionFactory.getCurrentSession().get(User.class, id);
+	}
+
+	@Override
+	public User findByUsername(String username) {
+		return (User) sessionFactory.getCurrentSession().createCriteria(User.class)
+				.add(Restrictions.eq("username", username)).uniqueResult();
+	}
+
+	@Override
+	public void add(User user) {
+		sessionFactory.getCurrentSession().save(user);
 	}
 
 }

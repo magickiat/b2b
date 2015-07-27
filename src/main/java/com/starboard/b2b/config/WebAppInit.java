@@ -9,11 +9,12 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 public class WebAppInit extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-//	private static final Logger log = LoggerFactory.getLogger(WebAppInit.class);
+	// private static final Logger log =
+	// LoggerFactory.getLogger(WebAppInit.class);
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class<?>[] { RootConfig.class, RepositoryConfig.class, ServiceConfig.class };
+		return new Class<?>[] { RootConfig.class, RepositoryConfig.class, ServiceConfig.class, SecurityConfig.class };
 	}
 
 	@Override

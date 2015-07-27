@@ -1,40 +1,42 @@
 
 package com.starboard.b2b.model;
 
-import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "user")
-public class User implements Serializable {
+public class User extends BaseModel implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
-	
-	@Id
-	private String id;
-	
-	@Column
+
+	@Column(length = 100)
 	private String name;
 
-	@Column
+	@Column(length = 32)
+	private String username;
+
+	@Column(length = 32)
 	private String password;
-	@Column
+
+	@Column(length = 100)
 	private String email;
 
-	private String enable;
+	@Column
+	private boolean enabled;
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	private Set<Role> role = new HashSet<>();
@@ -81,21 +83,53 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public String getEnable() {
-		return enable;
+	public Set<Role> getRole() {
+		return role;
 	}
 
-	public void setEnable(String enable) {
-		this.enable = enable;
+	public void setRole(Set<Role> role) {
+		this.role = role;
 	}
 
-	public String getId() {
-		return id;
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return role;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	@Override
+	public String getUsername() {
+		return username;
 	}
 
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 
 }
