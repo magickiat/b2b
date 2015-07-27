@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.UserService;
-import com.starboard.b2b.web.controller.front.LoginForm;
+import com.starboard.b2b.web.controller.frontend.LoginForm;
 
 @Controller
 @RequestMapping("/backend")
