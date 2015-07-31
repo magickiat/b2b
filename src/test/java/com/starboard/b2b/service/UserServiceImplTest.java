@@ -40,5 +40,5 @@ public class UserServiceImplTest {
 		assertNotNull(user);
 		assertEquals(form.getUsername(), user.getUsername());
 	}
-
+	
 }

@@ -1,4 +1,4 @@
-package com.starboard.b2b.web.controller.frontend;
+package com.starboard.b2b.web.controller.login;
 
 import org.apache.bval.constraints.NotEmpty;
 import org.apache.commons.lang.builder.ToStringBuilder;

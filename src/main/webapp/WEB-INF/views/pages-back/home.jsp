@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div class="container">
-		<h2>Helcome Home</h2>
+		<h2>Helcome Admin Home</h2>
 
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>

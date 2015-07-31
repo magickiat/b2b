@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.UserService;
-import com.starboard.b2b.web.controller.frontend.LoginForm;
+import com.starboard.b2b.web.controller.login.LoginForm;
 
 @Controller
 @RequestMapping("/backend")
@@ -23,13 +23,13 @@ public class BackendLoginController {
 
 	private UserService userService;
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	String form(Model model) {
 		model.addAttribute("loginForm", new LoginForm());
-		return "pages-back/login";
+		return "pages-back/home";
 	}
 
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	String submit(@Validate @ModelAttribute LoginForm form, BindingResult binding) {
 		log.info("POST " + form);
 		if (binding.hasErrors()) {

@@ -29,7 +29,7 @@ public class User extends BaseModel implements UserDetails {
 	@Column(length = 32)
 	private String username;
 
-	@Column(length = 32)
+	@Column(length = 60)
 	private String password;
 
 	@Column(length = 100)
@@ -37,6 +37,15 @@ public class User extends BaseModel implements UserDetails {
 
 	@Column
 	private boolean enabled;
+
+	@Column(name = "account_non_expired", nullable = false)
+	private boolean accountNonExpired;
+
+	@Column(name = "account_non_locked", nullable = false)
+	private boolean accountNonLocked;
+
+	@Column(name = "credentials_non_expired", nullable = false)
+	private boolean credentialsNonExpired;
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	private Set<Role> role = new HashSet<>();
@@ -103,20 +112,17 @@ public class User extends BaseModel implements UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
+		return accountNonExpired;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return false;
+		return accountNonLocked;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
+		return credentialsNonExpired;
 	}
 
 	@Override
@@ -130,6 +136,18 @@ public class User extends BaseModel implements UserDetails {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public void setAccountNonExpired(boolean accountNonExpired) {
+		this.accountNonExpired = accountNonExpired;
+	}
+
+	public void setAccountNonLocked(boolean accountNonLocked) {
+		this.accountNonLocked = accountNonLocked;
+	}
+
+	public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+		this.credentialsNonExpired = credentialsNonExpired;
 	}
 
 }
