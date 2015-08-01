@@ -12,7 +12,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.7</java.version>
 		<springframework.version>4.1.7.RELEASE</springframework.version>
-		<springframework-security.version>4.0.1.RELEASE</springframework-security.version>
+		<springframework-security.version>4.0.2.RELEASE</springframework-security.version>
 
 	</properties>
 
@@ -52,6 +52,13 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>${springframework-security.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<version>${springframework-security.version}</version>
+		</dependency>
+
+
 
 
 		<dependency>
@@ -103,7 +110,7 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- Misc -->
 		<dependency>
 			<groupId>commons-io</groupId>

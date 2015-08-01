@@ -1,11 +1,11 @@
 package com.starboard.b2b.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -24,7 +24,6 @@ import com.starboard.b2b.web.form.user.UserRegisterForm;
 		SecurityConfig.class })
 @WebAppConfiguration
 @EnableTransactionManagement
-@ActiveProfiles("test")
 public class UserServiceImplTest {
 
 	@Autowired
@@ -34,6 +33,7 @@ public class UserServiceImplTest {
 	public void testAdd_whenStart_mustOneUser() {
 		UserRegisterForm form = new UserRegisterForm();
 		form.setUsername("magicalcyber");
+		form.setPassword("password");
 		userService.add(form);
 		
 		User user = userService.findByUsername(form.getUsername());

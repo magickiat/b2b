@@ -1,8 +1,12 @@
 package com.starboard.b2b.web.form.user;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class UserRegisterForm {
 	private String username;
 	private String password;
+	private Set<String> roles = new HashSet<>();
 
 	public String getUsername() {
 		return username;
@@ -18,5 +22,13 @@ public class UserRegisterForm {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Set<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<String> roles) {
+		this.roles = roles;
 	}
 }

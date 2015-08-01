@@ -1,6 +1,8 @@
 package com.starboard.b2b.service;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
@@ -10,7 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.starboard.b2b.dao.RoleDao;
 import com.starboard.b2b.dao.UserDao;
+import com.starboard.b2b.model.Role;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.web.form.user.UserRegisterForm;
 
@@ -21,6 +25,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private RoleDao roleDao;
 
 	@Autowired
 	private PasswordEncoder encoder;
@@ -46,6 +53,13 @@ public class UserServiceImpl implements UserService {
 				user.setAccountNonExpired(true);
 				user.setAccountNonLocked(true);
 				user.setCredentialsNonExpired(true);
+				
+				Set<Role> roles = new HashSet<>();
+				for(String id : form.getRoles()){
+					roles.add(roleDao.getRole(id));
+				}
+				user.setRole(roles);
+				
 				userDao.add(user);
 			} catch (IllegalAccessException | InvocationTargetException e) {
 				log.error("Couldn't copy property to bean", e);

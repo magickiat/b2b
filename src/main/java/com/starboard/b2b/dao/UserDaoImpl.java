@@ -11,15 +11,10 @@ import com.starboard.b2b.model.User;
 
 @Repository
 public class UserDaoImpl implements UserDao {
-
+	@Autowired
 	private SessionFactory sessionFactory;
 
 	public UserDaoImpl() {
-	}
-
-	@Autowired
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
 	}
 
 	@SuppressWarnings("unchecked")

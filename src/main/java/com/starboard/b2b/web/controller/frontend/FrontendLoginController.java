@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class FrontendLoginController {
 
-	@RequestMapping(value = "/front", method = RequestMethod.GET)
+	@RequestMapping(value = "/frontend", method = RequestMethod.GET)
 	String form(Model model) {
 		return "pages-front/index";
 	}
