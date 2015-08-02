@@ -6,12 +6,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Environment</title>
+<title>Backend</title>
 <%@include file="/WEB-INF/views/include/common_css.jspf"%>
 </head>
 <body>
 	<div class="container">
-		<h2>Helcome Admin Home</h2>
+		<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
+
+		<h2>Welcome Admin Home</h2>
 
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
