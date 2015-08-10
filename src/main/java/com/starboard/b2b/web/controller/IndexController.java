@@ -11,6 +11,6 @@ public class IndexController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	String front(Model model) {
 		model.addAttribute("msg", "World");
-		return "redirect: /front";
+		return "redirect: /frontend";
 	}
 }

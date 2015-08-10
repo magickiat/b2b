@@ -1,9 +1,10 @@
 package com.starboard.b2b.service;
 
-import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 public interface SecurityService {
 
 	void addRole(String roleId);
+	List<String> listRole();
 
 }

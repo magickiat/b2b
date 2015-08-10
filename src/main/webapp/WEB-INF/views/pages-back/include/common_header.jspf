@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@page session="true"%>
@@ -8,6 +9,17 @@
 
 <div id="header_img" align="left">
 	<img alt="Header" src="${ backendHeaderImage }">
+</div>
+
+<div class="container-fluid">
+<div class="row">
+	<sec:authorize access="isAuthenticated()">
+		<sec:authentication var="user" property="principal" />
+		<p class="navbar-text navbar-right">
+			Welcome: <a href="#" class="navbar-link">${user.name}</a>
+		</p>
+	</sec:authorize>
+	</div>
 </div>
 <nav class="navbar navbar-default">
 	<div class="container-fluid">
@@ -24,14 +36,13 @@
 			<li role="presentation"><a href="#">Admin</a></li>
 			<li role="presentation"><a href="#">Event</a></li>
 			<li role="presentation"><a href="#">Contact us</a></li>
-			<li role="presentation"><a href="#">Logout</a></li>
+			<li role="presentation"><a href="#"> <form:form
+						servletRelativeAction="/logout" method="post">
+						<input type="submit" value="Logout" />
+					</form:form>
+			</a></li>
 		</ul>
 
-		<sec:authorize access="isAuthenticated()">
-			<sec:authentication var="user" property="principal" />
-			<p class="navbar-text navbar-right">
-				Welcome: <a href="#" class="navbar-link">${user.name}</a>
-			</p>
-		</sec:authorize>
+
 	</div>
 </nav>

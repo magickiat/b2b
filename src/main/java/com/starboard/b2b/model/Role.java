@@ -18,14 +18,14 @@ public class Role implements GrantedAuthority {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(length = 20)
-	private String id;
+	@Column(name = "role_id", length = 20)
+	private String roleId;
 
 	public Role() {
 	}
 
-	public Role(String id) {
-		this.id = id;
+	public Role(String roleId) {
+		this.roleId = roleId;
 	}
 
 	public String toString() {
@@ -44,15 +44,15 @@ public class Role implements GrantedAuthority {
 
 	@Override
 	public String getAuthority() {
-		return id;
+		return roleId;
 	}
 
-	public String getId() {
-		return id;
+	public String getRoleId() {
+		return roleId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
 	}
 
 }

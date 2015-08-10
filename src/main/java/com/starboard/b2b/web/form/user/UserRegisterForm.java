@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class UserRegisterForm {
+	private String name;
 	private String username;
 	private String password;
 	private Set<String> roles = new HashSet<>();
@@ -30,5 +31,13 @@ public class UserRegisterForm {
 
 	public void setRoles(Set<String> roles) {
 		this.roles = roles;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

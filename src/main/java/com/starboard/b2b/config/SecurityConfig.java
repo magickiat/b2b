@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @ComponentScan("com.starboard.b2b.config")
@@ -36,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/login/**", "/gen_user/**").permitAll().antMatchers("/backend/**")
 				.hasRole("ADMIN").antMatchers("/frontend/**").hasAnyRole("USER", "ADMIN").anyRequest().authenticated()
 				.and().formLogin().loginPage("/login").failureUrl("/login?error").and().logout()
-				.logoutSuccessUrl("/login");
+				.logoutSuccessUrl("/login").and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
 		;
 	}
 
@@ -44,10 +45,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
-	// @Bean
-	// public Md5PasswordEncoder passwordEncoder() throws Exception {
-	// return new Md5PasswordEncoder();
-	// }
 
 }

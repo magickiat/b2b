@@ -7,13 +7,21 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Environment</title>
+<title>Generate User</title>
 <%@include file="/WEB-INF/views/include/common_css.jspf"%>
 </head>
 <body>
 	<div class="container">
 		<form:form servletRelativeAction="/gen_user" class="form-horizontal"
 			commandName="registerForm" method="post">
+
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="name">Name:</label>
+				<div class="col-sm-10">
+					<form:input path="name" class="form-control"
+						placeholder="Enter Name" />
+				</div>
+			</div>
 
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="username">Username:</label>
@@ -27,6 +35,14 @@
 				<div class="col-sm-10">
 					<form:password class="form-control" path="password"
 						placeholder="Enter password" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="control-label col-sm-2"> User role:</label>
+				<div class="col-sm-10">
+					<form:checkboxes element="span class='checkbox-inline'"
+						items="${ roles }" path="roles" />
 				</div>
 			</div>
 

@@ -1,5 +1,7 @@
 package com.starboard.b2b.dao;
 
+import java.util.List;
+
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,5 +22,11 @@ public class RoleDaoImpl implements RoleDao {
 	@Override
 	public Role getRole(String id) {
 		return (Role) sessionFactory.getCurrentSession().get(Role.class, id);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Role> list() {
+		return sessionFactory.getCurrentSession().createCriteria(Role.class).list();
 	}
 }
