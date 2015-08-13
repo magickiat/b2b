@@ -28,10 +28,12 @@ public class ConfigServiceImpl implements ConfigService {
 	}
 
 	private void loadConfig() {
+		log.info("Loading config...");
 		List<AppConfig> allConfig = appConfigDao.getAllConfig();
 		for (AppConfig appConfig : allConfig) {
 			config.put(appConfig.getKey(), appConfig.getValue());
 		}
+		log.info(String.format("%d loaded config", config.size()));
 	}
 
 	@Transactional(readOnly = true)
