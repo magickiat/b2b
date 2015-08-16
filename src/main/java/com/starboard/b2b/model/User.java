@@ -2,7 +2,6 @@
 package com.starboard.b2b.model;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,9 +9,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -23,28 +21,26 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "user")
-public class User implements UserDetails {
+public class User extends BaseModel implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue
-	@Column(name = "user_id")
-	protected Integer userId;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	protected Customer customer;
 
-	@Column(length = 100)
+	@Column(length = 100, nullable = false)
 	private String name;
 
-	@Column(length = 32)
+	@Column(length = 32, nullable = false)
 	private String username;
 
-	@Column(length = 60)
+	@Column(length = 60, nullable = false)
 	private String password;
 
 	@Column(length = 100)
 	private String email;
 
-	@Column
+	@Column(nullable = false)
 	private boolean enabled;
 
 	@Column(name = "account_non_expired", nullable = false)
@@ -58,12 +54,6 @@ public class User implements UserDetails {
 
 	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	private Set<Role> role = new HashSet<>();
-
-	@Column(name = "created_date")
-	private Date createdDate;
-
-	@Column(name = "updated_date")
-	private Date updatedDate;
 
 	public User() {
 	}
@@ -165,28 +155,12 @@ public class User implements UserDetails {
 		this.credentialsNonExpired = credentialsNonExpired;
 	}
 
-	public Integer getUserId() {
-		return userId;
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public Date getUpdatedDate() {
-		return updatedDate;
-	}
-
-	public void setUpdatedDate(Date updatedDate) {
-		this.updatedDate = updatedDate;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 }
