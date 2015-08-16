@@ -24,7 +24,7 @@ public class SecurityUserDetailService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		log.info("loadUserByUsername: " + username);
 		User user = userDao.findByUsername(username);
-		log.info("user: " + user);
+		log.debug("user: " + user);
 		if (user == null) {
 			throw new UsernameNotFoundException(username);
 		}

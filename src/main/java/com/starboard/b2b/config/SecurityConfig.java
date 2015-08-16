@@ -19,6 +19,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	private static final String ROLE_USER = "USER";
+	private static final String ROLE_ADMIN = "ADMIN";
 	@Autowired
 	private UserDetailsService userDetailsService;
 
@@ -35,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/login/**", "/gen_user/**").permitAll().antMatchers("/backend/**")
-				.hasRole("ADMIN").antMatchers("/frontend/**").hasAnyRole("USER", "ADMIN").anyRequest().authenticated()
+				.hasRole(ROLE_ADMIN).antMatchers("/frontend/**").hasAnyRole(ROLE_USER, ROLE_ADMIN).anyRequest().authenticated()
 				.and().formLogin().loginPage("/login").failureUrl("/login?error").and().logout()
 				.logoutSuccessUrl("/login").and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
 		;

@@ -3,6 +3,7 @@ package com.starboard.b2b.service;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dao.UserDao;
 import com.starboard.b2b.model.Role;
 import com.starboard.b2b.model.User;
@@ -67,6 +69,12 @@ public class UserServiceImpl implements UserService {
 			}
 
 		}
+	}
+
+	@Override
+	@Transactional
+	public List<User> list(Page page) {
+		return userDao.list(page);
 	}
 
 }

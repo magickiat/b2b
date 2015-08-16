@@ -25,6 +25,18 @@ import org.springframework.web.context.WebApplicationContext;
 @WebAppConfiguration
 public class SecurityConfigTest {
 
+	private static final String FRONTEND = "/frontend";
+
+	private static final String BACKEND = "/backend";
+
+	private static final String ADMIN_NAME = "admin";
+
+	private static final String USER_NAME = "user";
+
+	private static final String ROLE_USER = "USER";
+
+	private static final String ROLE_ADMIN = "ADMIN";
+
 	@Autowired
 	private FilterChainProxy springSecurityFilterChain;
 
@@ -40,22 +52,22 @@ public class SecurityConfigTest {
 
 	@Test
 	public void accessAdminPage_withoutRoleAdmin_mustForbidden() throws Exception {
-		mvc.perform(get("/backend")).andExpect(unauthenticated());
-		mvc.perform(get("/backend").with(user("user").password("password").roles("USER")).with(csrf()))
+		mvc.perform(get(BACKEND)).andExpect(unauthenticated());
+		mvc.perform(get(BACKEND).with(user(USER_NAME).password("password").roles(ROLE_USER)).with(csrf()))
 				.andExpect(status().isForbidden());
 	}
 
 	@Test
 	public void accessAdminPage_withRoleAdmin_MustAuthenticated() throws Exception {
-		mvc.perform(get("/backend").with(user("admin").password("admin").roles("ADMIN")).with(csrf()))
+		mvc.perform(get(BACKEND).with(user(ADMIN_NAME).password(ADMIN_NAME).roles(ROLE_ADMIN)).with(csrf()))
 				.andExpect(status().isOk());
 	}
 
 	@Test
 	public void accessFrontend_withRoleUser_MustOk() throws Exception {
-		mvc.perform(get("/frontend").with(user("user").password("password").roles("USER")).with(csrf()))
+		mvc.perform(get(FRONTEND).with(user(USER_NAME).password("password").roles(ROLE_USER)).with(csrf()))
 				.andExpect(status().isOk());
-		mvc.perform(get("/frontend").with(user("admin").password("password").roles("ADMIN", "USER")).with(csrf()))
+		mvc.perform(get(FRONTEND).with(user(ADMIN_NAME).password("password").roles(ROLE_ADMIN, ROLE_USER)).with(csrf()))
 				.andExpect(status().isOk());
 	}
 
