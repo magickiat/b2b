@@ -16,6 +16,13 @@
 		<div class="row">
 			<h2>Create Order</h2>
 		</div>
+		
+		
+		<div class="row">
+		<sec:authentication var="user" property="principal" />
+		
+		${ user.customer }
+		</div>
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 </body>

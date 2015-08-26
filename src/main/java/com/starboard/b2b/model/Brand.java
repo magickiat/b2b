@@ -1,10 +1,19 @@
 package com.starboard.b2b.model;
 
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "brand")
@@ -12,10 +21,8 @@ public class Brand extends BaseModel {
 	@Column(length = 255, nullable = false)
 	private String name;
 
-	@Column(name = "is_common_brand", nullable = false)
-	private boolean commonBrand;
-	
-	private List<Brand> subBrand;
+	@Column(length = 255)
+	private String logo;
 
 	public String getName() {
 		return name;
@@ -25,11 +32,25 @@ public class Brand extends BaseModel {
 		this.name = name;
 	}
 
-	public boolean isCommonBrand() {
-		return commonBrand;
+	public String getLogo() {
+		return logo;
 	}
 
-	public void setCommonBrand(boolean commonBrand) {
-		this.commonBrand = commonBrand;
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return EqualsBuilder.reflectionEquals(this, obj);
+	}
+
+	@Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
 	}
 }
