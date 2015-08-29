@@ -1,14 +1,7 @@
 package com.starboard.b2b.model;
 
-import java.util.Set;
-import java.util.TreeSet;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -23,6 +16,9 @@ public class Brand extends BaseModel {
 
 	@Column(length = 255)
 	private String logo;
+	
+	@Column(name = "common_brand", nullable = false)
+	private boolean commonBrand;
 
 	public String getName() {
 		return name;

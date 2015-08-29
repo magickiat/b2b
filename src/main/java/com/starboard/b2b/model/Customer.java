@@ -25,8 +25,14 @@ public class Customer extends BaseModel {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<User> users = new TreeSet<>();
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Brand> brands = new TreeSet<>();
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<Address> addresses = new TreeSet<>();
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<Contact> contacts = new TreeSet<>();
 
 	public String getName() {
 		return name;
@@ -58,6 +64,30 @@ public class Customer extends BaseModel {
 
 	public void setUsers(Set<User> users) {
 		this.users = users;
+	}
+
+	public Set<Brand> getBrands() {
+		return brands;
+	}
+
+	public void setBrands(Set<Brand> brands) {
+		this.brands = brands;
+	}
+
+	public Set<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(Set<Address> addresses) {
+		this.addresses = addresses;
+	}
+
+	public Set<Contact> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(Set<Contact> contacts) {
+		this.contacts = contacts;
 	}
 
 }
