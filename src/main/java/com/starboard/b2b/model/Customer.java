@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -19,8 +20,8 @@ public class Customer extends BaseModel {
 	@Column(length = 20, nullable = false)
 	private String code;
 
-	@Column(length = 100, nullable = false)
-	private String country;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Country country;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<User> users = new TreeSet<>();
@@ -48,14 +49,6 @@ public class Customer extends BaseModel {
 
 	public void setCode(String code) {
 		this.code = code;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
 	}
 
 	public Set<User> getUsers() {
