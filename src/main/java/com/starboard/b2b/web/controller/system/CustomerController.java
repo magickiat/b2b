@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.SecurityService;
 import com.starboard.b2b.service.UserService;
+import com.starboard.b2b.web.form.customer.CustomerForm;
 import com.starboard.b2b.web.form.user.UserRegisterForm;
 
 @Controller
@@ -20,7 +22,8 @@ public class CustomerController {
 
 	@Autowired
 	private UserService userService;
-
+	@Autowired
+	private CustomerService customerService;
 	@Autowired
 	private SecurityService securityService;
 
@@ -30,13 +33,13 @@ public class CustomerController {
 
 		model.addAttribute("roles", securityService.listRole());
 		model.addAttribute("registerForm", new UserRegisterForm());
-		return "system/gen_user";
+		return "system/gen_customer";
 	}
 
 	@RequestMapping(value = "/gen_customer", method = RequestMethod.POST)
-	String submit(@ModelAttribute UserRegisterForm registerForm, BindingResult binding) {
+	String submit(@ModelAttribute CustomerForm customerForm, BindingResult binding) {
 		log.info("/gen_customer POST");
-		userService.add(registerForm);
-		return "redirect:/gen_user";
+		customerService.add(customerForm);
+		return "redirect:/gen_customer";
 	}
 }
