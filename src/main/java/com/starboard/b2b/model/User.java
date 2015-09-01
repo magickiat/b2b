@@ -25,7 +25,7 @@ public class User extends BaseModel implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = true)
 	protected Customer customer;
 
 	@Column(length = 100, nullable = false)
