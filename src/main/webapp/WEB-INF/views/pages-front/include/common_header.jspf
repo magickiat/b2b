@@ -14,12 +14,14 @@
 			<li role="presentation"><a href="<c:url value="/frontend/user/index" />">Profile</a></li>
 			<li role="presentation"><a href="#">Accounting</a></li>
 			<li role="presentation"><a href="#">Contact us</a></li>
-			<li role="presentation"><a href="#">
-				<form:form
-					servletRelativeAction="/logout" method="post">
-					<input type="submit" value="Logout" />
-				</form:form></a>
-			</li>
+			<sec:authorize access="isAuthenticated()">
+				<li role="presentation"><a href="#">
+					<form:form
+						servletRelativeAction="/logout" method="post">
+						<input type="submit" value="Logout" />
+					</form:form></a>
+				</li>
+			</sec:authorize>
 		</ul>
 </nav>
 </div>
