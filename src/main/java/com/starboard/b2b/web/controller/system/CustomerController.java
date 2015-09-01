@@ -32,7 +32,7 @@ public class CustomerController {
 		log.info("/gen_customer GET");
 
 		model.addAttribute("roles", securityService.listRole());
-		model.addAttribute("registerForm", new UserRegisterForm());
+		model.addAttribute("customerForm", new CustomerForm());
 		return "system/gen_customer";
 	}
 
