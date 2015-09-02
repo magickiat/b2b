@@ -14,7 +14,14 @@
 		<%@include
 			file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 		<div class="row">
-			<h2>Customer</h2>
+			<div class="col-sm-11">
+				<h2>Customer</h2>
+			</div>
+			<div class="col-sm-1">
+				<form:form servletRelativeAction="/backend/customer/create" method="get">
+					<input type="submit" value="Add Customer" class="btn btn-default"/>
+				</form:form>
+			</div>
 		</div>
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
