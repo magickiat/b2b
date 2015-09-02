@@ -23,6 +23,7 @@ public class BackendCustomerController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	String search(Model model) {
+		model.addAttribute("customers",customerService.list());
 		return "pages-back/customer/search";
 	}
 	

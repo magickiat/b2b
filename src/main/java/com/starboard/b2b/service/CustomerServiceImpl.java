@@ -34,12 +34,10 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Transactional(readOnly = true)
 	public List<Customer> list() {
-		// TODO Auto-generated method stub
-		return null;
+		return  customerDao.list();
 	}
 
-	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<Customer> list(Page page) {
 		return customerDao.list(page);
 	}

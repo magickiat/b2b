@@ -23,6 +23,24 @@
 				</form:form>
 			</div>
 		</div>
+		<div class="row">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Code</th>
+						<th>Name</th>
+					</tr>
+				</thead>
+				<tbody>
+				<c:forEach items="${customers }" var="customer">
+				<tr><td>${customer.code }</td><td>${customer.name }</td></tr>
+				</c:forEach>
+				</tbody>
+			</table>
+			
+			
+			
+		</div>
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 </body>
