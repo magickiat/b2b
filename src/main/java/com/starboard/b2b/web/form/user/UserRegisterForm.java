@@ -7,6 +7,7 @@ public class UserRegisterForm {
 	private String name;
 	private String username;
 	private String password;
+	private String cusId;
 	private Set<String> roles = new HashSet<>();
 
 	public String getUsername() {
@@ -40,4 +41,13 @@ public class UserRegisterForm {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public String getCusId() {
+		return cusId;
+	}
+
+	public void setCusId(String cusId) {
+		this.cusId = cusId;
+	}
+	
 }

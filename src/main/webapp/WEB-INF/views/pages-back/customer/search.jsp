@@ -8,6 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Backend</title>
 <%@include file="/WEB-INF/views/include/common_css.jspf"%>
+<c:set var="url" value="${pageContext.request.contextPath}"/>
 </head>
 <body>
 	<div class="container">
@@ -33,7 +34,7 @@
 				</thead>
 				<tbody>
 					<c:forEach items="${customers }" var="customer">
-						<tr style="cursor: pointer;" onclick="alert('hello');">
+						<tr style="cursor: pointer;" onclick="javascript:createUser('${customer.id }');">
 							<td>${customer.code }</td>
 							<td>${customer.name }</td>
 						</tr>
@@ -46,5 +47,6 @@
 		</div>
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
+	<script type="text/javascript" language="javascript" src="${url}/scripts/js_back_end/customer/search.js"></script>
 </body>
 </html>

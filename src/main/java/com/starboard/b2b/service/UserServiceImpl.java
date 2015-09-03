@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dao.UserDao;
+import com.starboard.b2b.model.Customer;
 import com.starboard.b2b.model.Role;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.web.form.user.UserRegisterForm;
@@ -63,6 +64,11 @@ public class UserServiceImpl implements UserService {
 				}
 				user.setRole(roles);
 
+				if(form.getCusId()!=null){
+					Customer customer = new Customer();
+					customer.setId(Integer.valueOf(form.getCusId()));
+					user.setCustomer(customer);
+				}
 				userDao.add(user);
 			} catch (IllegalAccessException | InvocationTargetException e) {
 				log.error("Couldn't copy property to bean", e);
