@@ -3,46 +3,55 @@
 <%@taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@page session="true"%>
-
 <c:url var="backendHeaderImage"
 	value="/images/pages-back/images/header.jpg" />
 
-<div id="header_img" align="left">
-	<img alt="Header" src="${ backendHeaderImage }">
+<div class="row">
+	<div class="col-sm-12">
+		<img alt="Header" src="${ backendHeaderImage }">
+	</div>
 </div>
 
-<div class="container-fluid">
 <div class="row">
-	<sec:authorize access="isAuthenticated()">
-		<sec:authentication var="user" property="principal" />
-		<p class="navbar-text navbar-right">
-			Welcome: <a href="#" class="navbar-link">${user.name}</a>
-		</p>
-	</sec:authorize>
+
+	<div class="col-sm-12">
+		<div class="pull-right">
+			<sec:authorize access="isAuthenticated()">
+				<sec:authentication var="user" property="principal" />
+
+
+				<form:form servletRelativeAction="/logout" method="post">
+Welcome: ${user.name}
+					<input type="submit" class="btn btn-danger" value="Logout" />
+				</form:form>
+
+			</sec:authorize>
+		</div>
 	</div>
+
 </div>
 <nav class="navbar navbar-default">
-	<div class="container-fluid">
-
-
-		<ul class="nav navbar-nav">
-			<li role="presentation" class="active"><a href="#">Order</a></li>
-			<li role="presentation"><a href="#">Product</a></li>
-			<li role="presentation"><a href='<c:url value="/backend/customer/" />'>Customer</a></li>
-			<li role="presentation"><a href="#">My Information</a></li>
-			<li role="presentation"><a href="#">User</a></li>
-			<li role="presentation"><a href="#">Role</a></li>
-			<li role="presentation"><a href="#">Download Management</a></li>
-			<li role="presentation"><a href="#">Admin</a></li>
-			<li role="presentation"><a href="#">Event</a></li>
-			<li role="presentation"><a href="#">Contact us</a></li>
-			<li role="presentation"><a href="#"> <form:form
-						servletRelativeAction="/logout" method="post">
-						<input type="submit" value="Logout" />
-					</form:form>
-			</a></li>
-		</ul>
-
-
-	</div>
+	<ul class="nav navbar-nav">
+		<li role="presentation"><a href="#">Order</a></li>
+		<li role="presentation"><a href="#">Product</a></li>
+		<li role="presentation"><a
+			href='<c:url value="/backend/customer/" />'>Customer</a></li>
+		<li role="presentation"><a href="#">My Information</a></li>
+		<li role="presentation"><a href="#">User</a></li>
+		<li role="presentation"><a href="#">Role</a></li>
+		<li role="presentation"><a href="#">Download Management</a></li>
+		<li role="presentation"><a href="#">Admin</a></li>
+		<li role="presentation"><a href="#">Event</a></li>
+		<li role="presentation"><a href="#">Contact us</a></li>
+	</ul>
 </nav>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('ul.nav > li').click(function(e) {
+			alert('asdf');
+			e.preventDefault();
+			$('ul.nav > li').removeClass('active');
+			$(this).addClass('active');
+		});
+	});
+</script>
