@@ -32,7 +32,7 @@ Welcome: ${user.name}
 </div>
 <nav class="navbar navbar-default">
 	<ul class="nav navbar-nav">
-		<li role="presentation"><a href="#">Order</a></li>
+		<li role="presentation"><a href='<c:url value="/backend/order/" />'>Order</a></li>
 		<li role="presentation"><a href="#">Product</a></li>
 		<li role="presentation"><a
 			href='<c:url value="/backend/customer/" />'>Customer</a></li>
@@ -45,13 +45,3 @@ Welcome: ${user.name}
 		<li role="presentation"><a href="#">Contact us</a></li>
 	</ul>
 </nav>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('ul.nav > li').click(function(e) {
-			alert('asdf');
-			e.preventDefault();
-			$('ul.nav > li').removeClass('active');
-			$(this).addClass('active');
-		});
-	});
-</script>
