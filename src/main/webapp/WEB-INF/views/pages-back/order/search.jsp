@@ -18,5 +18,10 @@
 		</div>
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		
+	});
+	</script>
 </body>
 </html>

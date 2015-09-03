@@ -32,7 +32,7 @@ Welcome: ${user.name}
 </div>
 <nav class="navbar navbar-default">
 	<ul class="nav navbar-nav">
-		<li role="presentation"><a href='<c:url value="/backend/order/" />'>Order</a></li>
+		<li role="presentation" class="active"><a href='<c:url value="/backend/order/" />'>Order</a></li>
 		<li role="presentation"><a href="#">Product</a></li>
 		<li role="presentation"><a
 			href='<c:url value="/backend/customer/" />'>Customer</a></li>
