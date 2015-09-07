@@ -39,15 +39,16 @@
 					<form:password class="form-control" path="password"
 						placeholder="Enter password" />
 				</div>
+				<form:hidden path="roles" value="ROLE_USER"/>
 			</div>
 
-			<div class="form-group">
+			<%-- <div class="form-group">
 				<label class="control-label col-sm-2"> User role:</label>
 				<div class="col-sm-10">
 					<form:checkboxes element="span class='checkbox-inline'"
 						items="${ roles }" path="roles" />
 				</div>
-			</div>
+			</div> --%>
 
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">

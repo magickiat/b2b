@@ -41,6 +41,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Transactional(readOnly = true)
+	public List<User> findUserByCusId(int cusId) {
+		User user = new User();
+		Customer cus = new Customer();
+		cus.setId(cusId);
+		user.setCustomer(cus);
+		return userDao.findByCusId(user);
+	}
+	
+	@Transactional(readOnly = true)
 	public User findByUsername(String username) {
 		return userDao.findByUsername(username);
 	}

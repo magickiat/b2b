@@ -11,7 +11,9 @@ public interface UserService {
 	List<User> list(Page page);
 
 	User findUserById(String id);
-
+	
+	List<User> findUserByCusId(int cusId);
+	
 	User findByUsername(String username);
 
 	void add(UserRegisterForm user);

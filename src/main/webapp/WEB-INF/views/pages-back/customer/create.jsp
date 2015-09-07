@@ -20,22 +20,21 @@
 	
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="code">Code:</label>
-					<div class="col-sm-10">
+					<div class="col-sm-4">
 						<form:input path="code" class="form-control"
 							placeholder="Enter Code" />
 					</div>
-				</div>
-	
-				<div class="form-group">
 					<label class="control-label col-sm-2" for="name">Name:</label>
-					<div class="col-sm-10">
+					<div class="col-sm-4">
 						<form:input path="name" class="form-control"
 							placeholder="Enter Name" />
 					</div>
 				</div>
 	
 				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
+					<div class="col-sm-11">
+					</div>
+					<div class="col-sm-1">
 						<button type="submit" class="btn btn-default">Submit</button>
 					</div>
 				</div>
