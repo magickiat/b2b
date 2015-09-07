@@ -17,4 +17,6 @@ public interface UserDao {
 	List<User> list(Page page);
 	
 	void add(User user);
+	
+	void update(User user);
 }

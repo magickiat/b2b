@@ -11,7 +11,7 @@
 			<li role="presentation"><a href='<c:url value="/frontend/order/create" />'>Create Order</a></li>
 			<li role="presentation"><a href="<c:url value="/frontend/order/summary" />">Order Summary</a></li>
 			<li role="presentation"><a href="<c:url value="/frontend/download/index" />">Download</a></li>
-			<li role="presentation"><a href="<c:url value="/frontend/user/index" />">Profile</a></li>
+			<li role="presentation"><a href="<c:url value="/frontend/user/view" />">Profile</a></li>
 			<li role="presentation"><a href="#">Accounting</a></li>
 			<li role="presentation"><a href="#">Contact us</a></li>
 			<sec:authorize access="isAuthenticated()">

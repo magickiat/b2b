@@ -10,6 +10,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,8 @@ import com.starboard.b2b.dao.UserDao;
 import com.starboard.b2b.model.Customer;
 import com.starboard.b2b.model.Role;
 import com.starboard.b2b.model.User;
+import com.starboard.b2b.security.MD5;
+import com.starboard.b2b.web.form.user.UserForm;
 import com.starboard.b2b.web.form.user.UserRegisterForm;
 
 @Service
@@ -90,6 +93,15 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public List<User> list(Page page) {
 		return userDao.list(page);
+	}
+
+	@Override
+	@Transactional
+	public void update(UserForm userForm) {
+		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		user.setPassword(new MD5().encode(userForm.getPassword()));
+		user.setEmail(userForm.getEmail());
+		userDao.update(user);
 	}
 
 }
