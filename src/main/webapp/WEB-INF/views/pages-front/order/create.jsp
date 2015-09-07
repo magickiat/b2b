@@ -21,7 +21,7 @@
 		<div class="row">
 		<sec:authentication var="user" property="principal" />
 		
-		${ user.customer }
+		${ user.customer.name }
 		</div>
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
