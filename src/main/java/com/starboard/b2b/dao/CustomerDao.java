@@ -15,5 +15,7 @@ public interface CustomerDao {
 	List<Customer> list(Page page);
 	
 	void add(Customer customer);
+	
+	void update(Customer customer);
 
 }

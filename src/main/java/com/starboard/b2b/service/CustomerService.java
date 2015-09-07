@@ -16,4 +16,6 @@ public interface CustomerService {
 	List<Customer> list(Page page);
 	
 	void add(CustomerForm customer);
+	
+	void update(CustomerForm customer);
 }

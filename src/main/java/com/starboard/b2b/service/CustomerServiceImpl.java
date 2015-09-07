@@ -8,12 +8,14 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dao.CustomerDao;
 import com.starboard.b2b.model.Customer;
+import com.starboard.b2b.model.User;
 import com.starboard.b2b.web.form.customer.CustomerForm;
 
 @Service
@@ -55,6 +57,21 @@ public class CustomerServiceImpl implements CustomerService{
 				log.error("Couldn't copy property to bean", e);
 			}
 
+		}
+		
+	}
+	
+	@Transactional
+	public void update(CustomerForm customerForm) {
+		Customer customer = findById(customerForm.getId());
+		if (customer!=null) {
+			//TODO Update base model updateUser
+			//User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			customer.setCode(customerForm.getCode());
+			customer.setName(customerForm.getName());
+			//customer.setCreatedDate(new Date());
+			customer.setUpdatedDate(new Date());
+//			customerDao.update(customer);
 		}
 		
 	}

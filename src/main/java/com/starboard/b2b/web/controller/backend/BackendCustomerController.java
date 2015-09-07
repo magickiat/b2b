@@ -39,26 +39,33 @@ public class BackendCustomerController {
 	
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	String form(Model model) {
+		log.info("/create GET");
 		model.addAttribute("customerForm", new CustomerForm());
 		return "pages-back/customer/create";
 	}
 	
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	String submit(@ModelAttribute CustomerForm customerForm,Model model, BindingResult binding) {
-		log.info("/gen_customer POST");
+		log.info("/create POST");
 		customerService.add(customerForm);
 		return search(model);
 	}
 	
-	@RequestMapping(value = "edit", method = RequestMethod.GET)
-	String edit(@RequestParam(value = "id", required = false) int id ,Model model) {
+	@RequestMapping(value = "update", method = RequestMethod.GET)
+	String update(@RequestParam(value = "id", required = false) int id ,Model model) {
+		log.info("/update GET");
 		Customer cus = customerService.findById(id);
 		List<User> users = new ArrayList<User>();
-		//System.out.println("########################"+cus.getUsers().size());
 		users = userService.findUserByCusId(id);
 		model.addAttribute("customerForm", cus);
-		System.out.println("@@@@@@@@@@@@@@@@@"+users.size());
 		model.addAttribute("users", users);
 		return "pages-back/customer/edit";
+	}
+	
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	String update(@ModelAttribute CustomerForm customerForm,Model model, BindingResult binding) {
+		log.info("/update POST");
+		customerService.update(customerForm);
+		return update(customerForm.getId(),model);
 	}
 }

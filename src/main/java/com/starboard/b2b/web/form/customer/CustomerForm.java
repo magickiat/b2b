@@ -12,6 +12,7 @@ import com.starboard.b2b.web.form.user.UserRegisterForm;
 public class CustomerForm {
 	//TODO register customer form
 	//private List<KeyValueBean> countries = new ArrayList<>();
+	private int id;
 	private String name;
 	private String code;
 	private CountryForm country;
@@ -60,6 +61,12 @@ public class CustomerForm {
 	}
 	public void setContacts(Set<ContactForm> contacts) {
 		this.contacts = contacts;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 }

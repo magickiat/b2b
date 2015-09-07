@@ -44,5 +44,10 @@ public class CustomerDaoImpl implements CustomerDao{
 		sessionFactory.getCurrentSession().save(customer);
 		
 	}
-
+	
+	@Override
+	public void update(Customer customer) {
+		sessionFactory.getCurrentSession().update(customer);
+		
+	}
 }
