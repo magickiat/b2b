@@ -7,6 +7,8 @@ public class UserRegisterForm {
 	private String name;
 	private String username;
 	private String password;
+	private String confirmPassword;
+	private String email;
 	private String cusId;
 	private Set<String> roles = new HashSet<>();
 
@@ -48,6 +50,22 @@ public class UserRegisterForm {
 
 	public void setCusId(String cusId) {
 		this.cusId = cusId;
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 }

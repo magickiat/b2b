@@ -15,7 +15,7 @@
 	<%@include
 			file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 		<div class="row">
-			<form:form servletRelativeAction="/backend/user/create" class="form-horizontal"
+			<form:form servletRelativeAction="/backend/customer/createuser" class="form-horizontal"
 			commandName="registerForm" method="post" onsubmit="return validateForm()">
 			<form:hidden path="cusId"/>
 			<form:hidden path="roles" value="ROLE_USER"/>
@@ -70,6 +70,6 @@
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 	<script type="text/javascript"
-		src='<c:url value="/scripts/js_back_end/user/create.js" />'></script>
+		src='<c:url value="/scripts/js_back_end/customer/createCustomerUser.js" />'></script>
 </body>
 </html>

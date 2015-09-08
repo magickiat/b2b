@@ -19,6 +19,7 @@ import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.UserService;
 import com.starboard.b2b.web.form.customer.CustomerForm;
+import com.starboard.b2b.web.form.user.UserRegisterForm;
 
 @Controller
 @RequestMapping("/backend/customer")
@@ -67,5 +68,20 @@ public class BackendCustomerController {
 		log.info("/update POST");
 		customerService.update(customerForm);
 		return update(customerForm.getId(),model);
+	}
+	
+	@RequestMapping(value = "/createuser",method = RequestMethod.GET)
+	String createuser(@RequestParam(value = "id", required = false) String id ,Model model) {
+		UserRegisterForm form = new UserRegisterForm();
+		form.setCusId(id);
+		model.addAttribute("registerForm", form);
+		return "pages-back/customer/createCustomerUser";
+	}
+	
+	@RequestMapping(value = "/createuser", method = RequestMethod.POST)
+	String createuser(@ModelAttribute UserRegisterForm registerForm,Model model, BindingResult binding) {
+		log.info("/gen_user POST");
+		userService.add(registerForm);
+		return update(Integer.parseInt(registerForm.getCusId()),model);
 	}
 }

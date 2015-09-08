@@ -58,7 +58,7 @@
 						<th>Confirm Password</th>
 						<th>Active</th>
 						<th>Staff</th>
-						<th>Active Timle</th>
+						<th>Active Time</th>
 						<th>Function</th>
 					</tr>
 				</thead>
@@ -67,20 +67,16 @@
 						<tr style="cursor: pointer;"
 							onclick="javascript:createUser('${user.id }');">
 							<td>${user.name }</td>
-							<td>${user.name }</td>
-							<td>${user.name }</td>
-							<td>${user.name }</td>
-							<td>${user.name }</td>
-							<td>${user.name }</td>
-							<td>${user.name }</td>
+							<td>${user.password }</td>
+							<td>${user.password }</td>
+							<td>${user.enabled }</td>
+							<td></td>
+							<td>${user.createdDate }</td>
+							<td></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
-		</div>
-		
-		<div class="row">
-		
 		</div>
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
