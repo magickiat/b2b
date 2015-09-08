@@ -18,6 +18,7 @@
 		<div class="row">
 			<img alt="step 1" src='<c:url value="/images/pages-front/icon/step1.png" />' width="100%">
 		</div>
+		
 		<div class="row">
 			<img alt="logo"
 				src='<c:url value="/upload/brand/logo/starboard.png" />'>
