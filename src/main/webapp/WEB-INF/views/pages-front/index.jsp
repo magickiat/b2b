@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Index</title>
+<title>Starboard</title>
 <%@include file="/WEB-INF/views/include/common_css.jspf"%>
 <link type="text/css" href="<c:url value="/css/pages-front/index.css"/>" rel="stylesheet"></link>
 </head>

@@ -15,6 +15,8 @@
 			file="/WEB-INF/views/pages-front/include/common_header.jspf"%>
 		<div class="row">
 			<h2>Order</h2>
+			<img alt="logo"
+				src='<c:url value="/upload/brand/logo/starboard.png" />'>
 		</div>
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>

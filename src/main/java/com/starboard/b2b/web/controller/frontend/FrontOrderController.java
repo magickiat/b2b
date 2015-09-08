@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/frontend/order")
 public class FrontOrderController {
 
+	@RequestMapping(value = "index", method = RequestMethod.GET)
+	String index(Model model) {
+		return "pages-front/order/index";
+	}
+
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	String createOrderForm(Model model) {
 		return "pages-front/order/create";

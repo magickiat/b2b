@@ -1,5 +1,7 @@
 package com.starboard.b2b.config;
 
+import java.io.File;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +26,39 @@ import com.starboard.b2b.service.ConfigService;
 @EnableWebMvc
 @ComponentScan(basePackages = "com.starboard.b2b")
 public class WebConfig extends WebMvcConfigurerAdapter {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(WebConfig.class);
 
 	@Autowired
 	private ConfigService configService;
-	
+
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		// Upload folder
+		registry.addResourceHandler("/upload/**").addResourceLocations("file:" + getUploadPath());
+
+		// WebJars
 		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
 				.setCachePeriod(31556926);
+	}
+
+	private String getUploadPath() {
 		String uploadPath = configService.getString("upload_path");
+		if (uploadPath == null) {
+			throw new RuntimeException("upload path is required.");
+		}
+		if (!uploadPath.endsWith("/") | !uploadPath.endsWith("\\")) {
+			uploadPath += "/";
+		}
+
+		File uploadFolder = new File(uploadPath);
+		if (!uploadFolder.exists() | !uploadFolder.isDirectory()) {
+			log.info("Creating upload folder");
+			uploadFolder.mkdirs();
+		}
+
 		log.info("uploadPath: " + uploadPath);
+		return uploadPath;
 	}
 
 	@Override
@@ -49,7 +72,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		viewResolver.setViewClass(JstlView.class);
 		viewResolver.setPrefix("/WEB-INF/views/");
 		viewResolver.setSuffix(".jsp");
-
 		return viewResolver;
 	}
 
@@ -61,10 +83,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
 		configurer.favorPathExtension(true).ignoreAcceptHeader(true).useJaf(false)
-				.defaultContentType(MediaType.TEXT_HTML)
-				.mediaType("html", MediaType.TEXT_HTML)
-				.mediaType("xml", MediaType.APPLICATION_XML)
-				.mediaType("json", MediaType.APPLICATION_JSON);
+				.defaultContentType(MediaType.TEXT_HTML).mediaType("html", MediaType.TEXT_HTML)
+				.mediaType("xml", MediaType.APPLICATION_XML).mediaType("json", MediaType.APPLICATION_JSON);
 	}
 
 }

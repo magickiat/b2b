@@ -5,32 +5,33 @@
 <%@page session="true"%>
 
 <div class="row">
-<nav class="navbar navbar-default">
+	<nav class="navbar navbar-default">
 		<ul class="nav navbar-nav">
-			<li role="presentation" class="active"><a href='<c:url value="/" />'>Home</a></li>
-			<li role="presentation"><a href='<c:url value="/frontend/order/create" />'>Create Order</a></li>
-			<li role="presentation"><a href="<c:url value="/frontend/order/summary" />">Order Summary</a></li>
-			<li role="presentation"><a href="<c:url value="/frontend/download/index" />">Download</a></li>
-			<li role="presentation"><a href="<c:url value="/frontend/user/view" />">Profile</a></li>
+			<li role="presentation" class="active"><a
+				href='<c:url value="/" />'>Home</a></li>
+			<li role="presentation"><a
+				href='<c:url value="/frontend/order/index" />'>Create Order</a></li>
+			<li role="presentation"><a
+				href="<c:url value="/frontend/order/summary" />">Order Summary</a></li>
+			<li role="presentation"><a
+				href="<c:url value="/frontend/download/index" />">Download</a></li>
+			<li role="presentation"><a
+				href="<c:url value="/frontend/user/view" />">Profile</a></li>
 			<li role="presentation"><a href="#">Accounting</a></li>
 			<li role="presentation"><a href="#">Contact us</a></li>
 			<sec:authorize access="isAuthenticated()">
-				<li role="presentation"><a href="#">
-					<form:form
+				<li role="presentation"><form:form
 						servletRelativeAction="/logout" method="post">
-						<input type="submit" value="Logout" />
-					</form:form></a>
-				</li>
+						<input type="submit" class="btn btn-danger navbar-btn"
+							value="Logout" />
+					</form:form></li>
 			</sec:authorize>
 		</ul>
-</nav>
-</div>
-
-<div class="row">
+	</nav>
 	<sec:authorize access="isAuthenticated()">
 		<sec:authentication var="user" property="principal" />
-		<p>
-			Welcome: <a href="#" class="navbar-link">${user.name}</a>
-		</p>
+		<div class="well">
+			<h4>Welcome: ${user.name}</h4>
+		</div>
 	</sec:authorize>
 </div>
