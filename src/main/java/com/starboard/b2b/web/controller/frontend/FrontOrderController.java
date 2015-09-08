@@ -11,7 +11,7 @@ public class FrontOrderController {
 
 	@RequestMapping(value = "index", method = RequestMethod.GET)
 	String index(Model model) {
-		return "pages-front/order/index";
+		return "pages-front/order/step1_brand";
 	}
 
 	@RequestMapping(value = "create", method = RequestMethod.GET)
