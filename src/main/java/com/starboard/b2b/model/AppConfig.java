@@ -11,33 +11,17 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 @Entity
 @Table(name = "app_config")
 public class AppConfig extends BaseModel {
-	@Column(length = 50, nullable = false)
-	private String key;
-	@Column(length = 500, nullable = false)
-	private String value;
+	@Column(length = 50, nullable = false, name = "config_key")
+	private String configKey;
+	@Column(length = 500, nullable = false, name = "config_value")
+	private String configValue;
 
 	public AppConfig() {
 	}
 
-	public AppConfig(String key, String value) {
-		this.key = key;
-		this.value = value;
-	}
-
-	public String getKey() {
-		return key;
-	}
-
-	public void setKey(String key) {
-		this.key = key;
-	}
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
+	public AppConfig(String configKey, String configValue) {
+		this.configKey = configKey;
+		this.configValue = configValue;
 	}
 
 	public String toString() {
@@ -52,6 +36,22 @@ public class AppConfig extends BaseModel {
 	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);
+	}
+
+	public String getConfigKey() {
+		return configKey;
+	}
+
+	public void setConfigKey(String configKey) {
+		this.configKey = configKey;
+	}
+
+	public String getConfigValue() {
+		return configValue;
+	}
+
+	public void setConfigValue(String configValue) {
+		this.configValue = configValue;
 	}
 
 }

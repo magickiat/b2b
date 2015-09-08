@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.model.AppConfig;
 
@@ -15,6 +16,7 @@ public class AppConfigDaoImpl implements AppConfigDao {
 	private SessionFactory sessionFactory;
 
 	@SuppressWarnings("unchecked")
+	@Transactional(readOnly = true)
 	public List<AppConfig> getAllConfig() {
 		return sessionFactory.getCurrentSession().createCriteria(AppConfig.class).list();
 	}

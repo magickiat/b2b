@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,17 +28,17 @@ public class ConfigServiceImpl implements ConfigService {
 
 	public ConfigServiceImpl() {
 	}
-
+	
+	@PostConstruct
 	private void loadConfig() {
 		log.info("Loading config...");
 		List<AppConfig> allConfig = appConfigDao.getAllConfig();
 		for (AppConfig appConfig : allConfig) {
-			config.put(appConfig.getKey(), appConfig.getValue());
+			config.put(appConfig.getConfigKey(), appConfig.getConfigValue());
 		}
 		log.info(String.format("%d loaded config", config.size()));
 	}
 
-	@Transactional(readOnly = true)
 	public void reloadConfig() {
 		config.clear();
 		loadConfig();

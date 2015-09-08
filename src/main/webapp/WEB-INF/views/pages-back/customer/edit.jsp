@@ -45,7 +45,7 @@
 			<div class="form-group" style="background-color: blue;">
 				<label class="control-label col-sm-11">Login Account</label>
 				<div class="col-sm-1">
-						<button type="buuton" class="btn btn-default" onclick="javascript:createUser('${customer.id }');">Add</button>
+						<button type="button" class="btn btn-default" onclick="javascript:createUser('${customer.id }');">Add</button>
 				</div>
 			</div>
 		</div>
@@ -77,6 +77,10 @@
 					</c:forEach>
 				</tbody>
 			</table>
+		</div>
+		
+		<div class="row">
+		
 		</div>
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>

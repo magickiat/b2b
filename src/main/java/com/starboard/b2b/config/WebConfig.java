@@ -1,5 +1,8 @@
 package com.starboard.b2b.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,15 +18,24 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import com.starboard.b2b.service.ConfigService;
+
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.starboard.b2b")
 public class WebConfig extends WebMvcConfigurerAdapter {
+	
+	private static final Logger log = LoggerFactory.getLogger(WebConfig.class);
 
+	@Autowired
+	private ConfigService configService;
+	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
 				.setCachePeriod(31556926);
+		String uploadPath = configService.getString("upload_path");
+		log.info("uploadPath: " + uploadPath);
 	}
 
 	@Override
