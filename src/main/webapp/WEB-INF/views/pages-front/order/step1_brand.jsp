@@ -24,7 +24,14 @@
 		<div class="row">&nbsp;</div>
 		<c:choose>
 			<c:when test="${empty user.customer }">
-				<div class="row">Not found any brand for this customer.</div>
+				<div class="row">
+					<h3>Not found Customer.</h3>
+				</div>
+			</c:when>
+			<c:when test="${empty user.customer.brands }">
+				<div class="row">
+					<h3>Not found any brand for this customer.</h3>
+				</div>
 			</c:when>
 			<c:otherwise>
 				<c:forEach items="${ user.customer.brands }" var="brand">

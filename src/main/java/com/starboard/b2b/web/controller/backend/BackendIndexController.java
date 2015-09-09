@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/backend/")
+@RequestMapping("/backend")
 public class BackendIndexController {
 
 	@RequestMapping(method = RequestMethod.GET)
