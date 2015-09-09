@@ -33,11 +33,14 @@ public class UserDaoImpl implements UserDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> findByCusId(User user) {
-//		Customer cust = (Customer)sessionFactory.getCurrentSession().load(Customer.class, user.getCustomer().getId());
-//		user.setCustomer(cust);
-		return sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("customer", user.getCustomer())).list();
+		// Customer cust =
+		// (Customer)sessionFactory.getCurrentSession().load(Customer.class,
+		// user.getCustomer().getId());
+		// user.setCustomer(cust);
+		return sessionFactory.getCurrentSession().createCriteria(User.class)
+				.add(Restrictions.eq("customer", user.getCustomer())).list();
 	}
-	
+
 	@Override
 	public User findByUsername(String username) {
 		return (User) sessionFactory.getCurrentSession().createCriteria(User.class)
@@ -46,8 +49,11 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void add(User user) {
-		Customer cust = (Customer)sessionFactory.getCurrentSession().load(Customer.class, user.getCustomer().getId());
-		user.setCustomer(cust);
+		if (user.getCustomer() != null) {
+			Customer cust = (Customer) sessionFactory.getCurrentSession().load(Customer.class,
+					user.getCustomer().getId());
+			user.setCustomer(cust);
+		}
 		sessionFactory.getCurrentSession().save(user);
 	}
 
