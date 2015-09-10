@@ -22,23 +22,25 @@
 		</div>
 
 		<div class="row">&nbsp;</div>
-		<c:choose>
-			<c:when test="${empty user.customer }">
-				<div class="row">
+		<div class="row">
+			<c:choose>
+				<c:when test="${empty user.customer }">
 					<h3>Not found Customer.</h3>
-				</div>
-			</c:when>
-			<c:when test="${empty user.customer.brands }">
-				<div class="row">
+				</c:when>
+				<c:when test="${empty user.customer.brands }">
+
 					<h3>Not found any brand for this customer.</h3>
-				</div>
-			</c:when>
-			<c:otherwise>
-				<c:forEach items="${ user.customer.brands }" var="brand">
-					<div>${ brand }</div>
-				</c:forEach>
-			</c:otherwise>
-		</c:choose>
+				</c:when>
+				<c:otherwise>
+					<c:forEach items="${ user.customer.brands }" var="brand">
+						<div class="col-md-4" style="margin-top: 30px;">
+							<img alt="${ brand.name }"
+								src='<c:url value="${ brand.logo }" />'>
+						</div>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
+		</div>
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 </body>
