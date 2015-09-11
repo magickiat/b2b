@@ -10,3 +10,13 @@
 	
 <link type="text/css" href="${bootstrap}" rel="stylesheet" />
 <link type="text/css" href="${jquery_ui_css}" rel="stylesheet" />
+
+<style>
+<!--
+label {
+    font-weight: normal !important;
+}
+
+
+-->
+</style>

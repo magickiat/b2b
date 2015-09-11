@@ -32,13 +32,9 @@ public class UserDaoImpl implements UserDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<User> findByCusId(User user) {
-		// Customer cust =
-		// (Customer)sessionFactory.getCurrentSession().load(Customer.class,
-		// user.getCustomer().getId());
-		// user.setCustomer(cust);
-		return sessionFactory.getCurrentSession().createCriteria(User.class)
-				.add(Restrictions.eq("customer", user.getCustomer())).list();
+	public List<User> findByCustId(Integer id) {
+		return sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("customer.id", id))
+				.list();
 	}
 
 	@Override

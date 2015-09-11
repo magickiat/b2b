@@ -49,4 +49,12 @@ public class Brand extends BaseModel {
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
+
+	public boolean isCommonBrand() {
+		return commonBrand;
+	}
+
+	public void setCommonBrand(boolean commonBrand) {
+		this.commonBrand = commonBrand;
+	}
 }

@@ -32,9 +32,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDao userDao;
 
-//	@Autowired
-//	private RoleDao roleDao;
-	
 	@Autowired
 	private PasswordEncoder encoder;
 	
@@ -44,12 +41,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<User> findUserByCusId(int cusId) {
-		User user = new User();
-		Customer cus = new Customer();
-		cus.setId(cusId);
-		user.setCustomer(cus);
-		return userDao.findByCusId(user);
+	public List<User> findUserByCustId(Integer custId) {
+		return userDao.findByCustId(custId);
 	}
 	
 	@Transactional(readOnly = true)

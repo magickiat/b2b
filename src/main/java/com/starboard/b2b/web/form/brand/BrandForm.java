@@ -1,27 +1,31 @@
 package com.starboard.b2b.web.form.brand;
 
+import java.util.List;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class BrandForm {
-	private String name;
-	private String logo;
-	private boolean commonBrand;
-	public String getName() {
-		return name;
+	private Integer custId;
+	private List<Integer> selectedBrand;
+
+	public Integer getCustId() {
+		return custId;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public void setCustId(Integer custId) {
+		this.custId = custId;
 	}
-	public String getLogo() {
-		return logo;
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
 	}
-	public void setLogo(String logo) {
-		this.logo = logo;
+
+	public List<Integer> getSelectedBrand() {
+		return selectedBrand;
 	}
-	public boolean isCommonBrand() {
-		return commonBrand;
+
+	public void setSelectedBrand(List<Integer> selectedBrand) {
+		this.selectedBrand = selectedBrand;
 	}
-	public void setCommonBrand(boolean commonBrand) {
-		this.commonBrand = commonBrand;
-	}
-	
 }

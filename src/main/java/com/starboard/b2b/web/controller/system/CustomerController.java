@@ -37,7 +37,7 @@ public class CustomerController {
 	}
 
 	@RequestMapping(value = "/gen_customer", method = RequestMethod.POST)
-	String submit(@ModelAttribute CustomerForm customerForm, BindingResult binding) {
+	String submit(@ModelAttribute CustomerForm customerForm, BindingResult binding) throws Exception {
 		log.info("/gen_customer POST");
 		customerService.add(customerForm);
 		return "redirect:/gen_customer";

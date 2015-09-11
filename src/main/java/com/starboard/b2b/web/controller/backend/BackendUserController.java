@@ -27,7 +27,7 @@ public class BackendUserController {
 	private UserService userService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	String search(@RequestParam(value = "id", required = false) String id ,Model model) {
+	String search(@RequestParam(value = "id", required = false) Integer id ,Model model) {
 		model.addAttribute("roles", securityService.listRole());
 		UserRegisterForm form = new UserRegisterForm();
 		form.setCusId(id);

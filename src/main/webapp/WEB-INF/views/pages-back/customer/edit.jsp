@@ -12,12 +12,11 @@
 </head>
 <body>
 	<div class="container">
-	<%@include
-			file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
+		<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 		<div class="row">
-			<form:form servletRelativeAction="/backend/customer/update" class="form-horizontal"
-				commandName="customerForm" method="post">
-	
+			<form:form servletRelativeAction="/backend/customer/update"
+				class="form-horizontal" commandName="customerForm" method="post">
+
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="code">Code:</label>
 					<div class="col-sm-4">
@@ -29,23 +28,25 @@
 						<form:input path="name" class="form-control"
 							placeholder="Enter Name" />
 					</div>
-					<form:hidden path="id" id="cusId"/>
+					<form:hidden path="id" id="cusId" />
 				</div>
 				<div class="form-group">
-					<div class="col-sm-11">
-					</div>
+					<div class="col-sm-11"></div>
 					<div class="col-sm-1">
 						<button type="submit" class="btn btn-default">Save</button>
 					</div>
 				</div>
 			</form:form>
-			<hr>
 		</div>
+
+		<hr />
+
 		<div class="row">
 			<div class="form-group" style="background-color: blue;">
 				<label class="control-label col-sm-11">Login Account</label>
 				<div class="col-sm-1">
-						<button type="button" class="btn btn-default" onclick="javascript:createUser('${customer.id }');">Add</button>
+					<button type="button" class="btn btn-default"
+						onclick="javascript:createUser('${customerForm.id}');">Add</button>
 				</div>
 			</div>
 		</div>
@@ -78,6 +79,43 @@
 				</tbody>
 			</table>
 		</div>
+
+		<hr />
+
+		<div class="row">
+			<div class="col-sm-10">
+				<b>Product Brand</b>
+			</div>
+			<div class="col-sm-2">
+				<form:form servletRelativeAction="/backend/customer/add_brand"
+					method="get">
+					<input type="hidden" name="id" value="${customerForm.id}" />
+					<input type="submit" value="Add Product Brand"
+						class="btn btn-default pull-right" />
+				</form:form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<table class="table table-hover" id="list_user">
+					<thead>
+						<tr>
+							<th>No</th>
+							<th>Password</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${ selectedBrand }" var="brand" varStatus="no">
+							<tr>
+								<td>${no.index + 1}</td>
+								<td>${brand.name }</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 	<script type="text/javascript"

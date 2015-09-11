@@ -9,7 +9,7 @@ public class UserRegisterForm {
 	private String password;
 	private String confirmPassword;
 	private String email;
-	private String cusId;
+	private Integer cusId;
 	private Set<String> roles = new HashSet<>();
 
 	public String getUsername() {
@@ -44,14 +44,6 @@ public class UserRegisterForm {
 		this.name = name;
 	}
 
-	public String getCusId() {
-		return cusId;
-	}
-
-	public void setCusId(String cusId) {
-		this.cusId = cusId;
-	}
-
 	public String getConfirmPassword() {
 		return confirmPassword;
 	}
@@ -66,6 +58,14 @@ public class UserRegisterForm {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Integer getCusId() {
+		return cusId;
+	}
+
+	public void setCusId(Integer cusId) {
+		this.cusId = cusId;
 	}
 	
 }

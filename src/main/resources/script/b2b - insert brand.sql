@@ -1,12 +1,12 @@
 insert into 
-     brand(name, created_date) 
+     brand(name, logo, created_date) 
 values
-('STARBOARD SURF', curdate()),
-('DRAKE',curdate()),
-('SEVERNE',curdate()),
-('AIRUSH', curdate()),
-('STARBOARD SUP APPAREL', curdate()),
-('STARBOARD', curdate()),
-('STARBOARD APPAREL', curdate()),
-('STARBOARD SUP', curdate()),
-('NON BRAND', curdate());
+('STARBOARD SURF', null, curdate()),
+('DRAKE',null, curdate()),
+('SEVERNE','/upload/brand/logo/severne.png', curdate()),
+('AIRUSH', '/upload/brand/logo/airush.png', curdate()),
+('STARBOARD SUP APPAREL', null, curdate()),
+('STARBOARD','/upload/brand/logo/starboard.png', curdate()),
+('STARBOARD APPAREL', null, curdate()),
+('STARBOARD SUP', null, curdate()),
+('NON BRAND', null, curdate());

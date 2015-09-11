@@ -34,8 +34,9 @@
 				<c:otherwise>
 					<c:forEach items="${ user.customer.brands }" var="brand">
 						<div class="col-md-4" style="margin-top: 30px;">
-							<img alt="${ brand.name }"
+							<a href="#"> <img alt="${ brand.name }"
 								src='<c:url value="${ brand.logo }" />'>
+							</a>
 						</div>
 					</c:forEach>
 				</c:otherwise>
