@@ -4,19 +4,19 @@ import java.util.List;
 import java.util.Set;
 
 import com.starboard.b2b.common.Page;
-import com.starboard.b2b.model.Brand;
-import com.starboard.b2b.model.Customer;
+import com.starboard.b2b.dto.BrandDTO;
+import com.starboard.b2b.dto.CustomerDTO;
 import com.starboard.b2b.web.form.brand.BrandForm;
 import com.starboard.b2b.web.form.customer.CustomerForm;
 
 public interface CustomerService {
-	Customer findById(int id);
+	CustomerDTO findById(int id);
 
-	Customer findByName(String name) throws Exception;
+	CustomerDTO findByName(String name) throws Exception;
 
-	List<Customer> list() throws Exception;
+	List<CustomerDTO> list() throws Exception;
 
-	List<Customer> list(Page page) throws Exception;
+	List<CustomerDTO> list(Page page) throws Exception;
 
 	void add(CustomerForm customer) throws Exception;
 
@@ -24,7 +24,7 @@ public interface CustomerService {
 
 	void addBrand(BrandForm brand) throws Exception;
 
-	Set<Brand> getSelectedBrand(Integer custId) throws Exception;
+	Set<BrandDTO> getSelectedBrand(Integer custId) throws Exception;
 
 	List<Integer> getSelectedBrandId(Integer custId) throws Exception;
 }

@@ -1,5 +1,7 @@
 package com.starboard.b2b.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -10,7 +12,9 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "brand")
-public class Brand extends BaseModel {
+public class Brand extends BaseModel implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Column(length = 255, nullable = false)
 	private String name;
 

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.starboard.b2b.model.Customer;
+import com.starboard.b2b.dto.CustomerDTO;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.BrandService;
 import com.starboard.b2b.service.CustomerService;
@@ -60,7 +60,7 @@ public class BackendCustomerController {
 	@RequestMapping(value = "update", method = RequestMethod.GET)
 	String update(@RequestParam(value = "id", required = false) Integer id, Model model) throws Exception {
 		log.info("/update GET");
-		Customer cust = customerService.findById(id);
+		CustomerDTO cust = customerService.findById(id);
 		List<User> users = new ArrayList<User>();
 		if (cust != null) {
 			users = userService.findUserByCustId(id);
@@ -68,7 +68,7 @@ public class BackendCustomerController {
 		
 		model.addAttribute("customerForm", cust);
 		model.addAttribute("users", users);
-		model.addAttribute("selectedBrand", customerService.getSelectedBrand(cust.getId()));
+		model.addAttribute("selectedBrand", customerService.getSelectedBrand(id));
 		return "pages-back/customer/edit";
 	}
 

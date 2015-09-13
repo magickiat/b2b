@@ -1,6 +1,8 @@
 
 package com.starboard.b2b.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,7 +15,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @Table(name = "role")
-public class Role implements GrantedAuthority {
+public class Role implements GrantedAuthority, Serializable {
 
 	private static final long serialVersionUID = 1L;
 

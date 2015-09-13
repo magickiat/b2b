@@ -2,15 +2,18 @@
 package com.starboard.b2b.dto;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-public class UserDTO extends BaseDTO {
+import com.starboard.b2b.model.Role;
+import com.starboard.b2b.model.User;
 
-	private CustomerDTO customer;
+public class UserDTO extends BaseDTO {
 	private String name;
 	private String username;
 	private String password;
@@ -19,9 +22,31 @@ public class UserDTO extends BaseDTO {
 	private boolean accountNonExpired;
 	private boolean accountNonLocked;
 	private boolean credentialsNonExpired;
+	private CustomerDTO customer;
 	private Set<RoleDTO> role = new HashSet<>();
 
 	public UserDTO() {
+	}
+
+	public UserDTO(User user) {
+		super(user);
+		this.name = user.getName();
+		this.username = user.getUsername();
+		this.password = user.getPassword();
+		this.email = user.getEmail();
+		this.enabled = user.isEnabled();
+		this.accountNonExpired = user.isAccountNonExpired();
+		this.accountNonLocked = user.isAccountNonLocked();
+		this.customer = new CustomerDTO(user.getCustomer());
+		
+		TreeSet<RoleDTO> roleList = new TreeSet<>();
+		Iterator<Role> iterator = user.getRole().iterator();
+		while (iterator.hasNext()) {
+			Role role = (Role) iterator.next();
+			roleList.add(new RoleDTO(role));
+		}
+		this.role = roleList;
+		
 	}
 
 	@Override

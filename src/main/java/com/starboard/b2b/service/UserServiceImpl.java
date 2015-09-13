@@ -1,12 +1,9 @@
 package com.starboard.b2b.service;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +18,8 @@ import com.starboard.b2b.model.Customer;
 import com.starboard.b2b.model.Role;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.security.MD5;
+import com.starboard.b2b.util.DateTimeUtil;
+import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.user.UserForm;
 import com.starboard.b2b.web.form.user.UserRegisterForm;
 
@@ -34,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private PasswordEncoder encoder;
-	
+
 	@Transactional(readOnly = true)
 	public User findUserById(String id) {
 		return userDao.findById(id);
@@ -44,7 +43,7 @@ public class UserServiceImpl implements UserService {
 	public List<User> findUserByCustId(Integer custId) {
 		return userDao.findByCustId(custId);
 	}
-	
+
 	@Transactional(readOnly = true)
 	public User findByUsername(String username) {
 		return userDao.findByUsername(username);
@@ -54,30 +53,29 @@ public class UserServiceImpl implements UserService {
 	public void add(UserRegisterForm form) {
 		if (findByUsername(form.getUsername()) == null) {
 			User user = new User();
-			try {
-				BeanUtils.copyProperties(user, form);
-				user.setPassword(encoder.encode(form.getPassword()));
-				user.setEnabled(true);
-				user.setAccountNonExpired(true);
-				user.setAccountNonLocked(true);
-				user.setCredentialsNonExpired(true);
-				user.setCreatedDate(new Date());
+			user.setName(form.getName());
+			user.setUsername(form.getUsername());
+			user.setPassword(encoder.encode(form.getPassword()));
+			user.setEnabled(true);
+			user.setAccountNonExpired(true);
+			user.setAccountNonLocked(true);
+			user.setCredentialsNonExpired(true);
+			user.setCreatedBy(UserUtil.getCurrentUsername());
+			user.setCreatedDate(DateTimeUtil.getCurrentDate());
 
-				Set<Role> roles = new HashSet<>();
-				for (String id : form.getRoles()) {
-					roles.add(new Role(id));
-				}
-				user.setRole(roles);
-
-				if(form.getCusId()!=null){
-					Customer customer = new Customer();
-					customer.setId(Integer.valueOf(form.getCusId()));
-					user.setCustomer(customer);
-				}
-				userDao.add(user);
-			} catch (IllegalAccessException | InvocationTargetException e) {
-				log.error("Couldn't copy property to bean", e);
+			Set<Role> roles = new HashSet<>();
+			for (String id : form.getRoles()) {
+				roles.add(new Role(id));
 			}
+			user.setRole(roles);
+
+			if (form.getCusId() != null) {
+				Customer customer = new Customer();
+				customer.setId(Integer.valueOf(form.getCusId()));
+				user.setCustomer(customer);
+			}
+			userDao.add(user);
+		} else {
 
 		}
 	}
@@ -91,7 +89,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void update(UserForm userForm) {
-		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		user.setPassword(new MD5().encode(userForm.getPassword()));
 		user.setEmail(userForm.getEmail());
 		userDao.update(user);

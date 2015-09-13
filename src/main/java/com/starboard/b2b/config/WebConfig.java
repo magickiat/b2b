@@ -45,7 +45,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	private String getUploadPath() {
 		String uploadPath = configService.getString("upload_path");
 		if (uploadPath == null) {
-			throw new RuntimeException("upload path is required.");
+			throw new RuntimeException("Not found configuration upload_path");
 		}
 		if (!uploadPath.endsWith("/") | !uploadPath.endsWith("\\")) {
 			uploadPath += "/";

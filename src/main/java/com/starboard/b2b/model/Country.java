@@ -1,5 +1,7 @@
 package com.starboard.b2b.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,12 +13,14 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "country")
-public class Country {
+public class Country extends BaseModel implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@Column(length = 50, nullable = false)
+	@Column(length = 100, nullable = false)
 	private Integer countryCode;
 
-	@Column(length = 50, nullable = false)
+	@Column(length = 100, nullable = false)
 	private String countryName;
 
 	public Integer getCountryCode() {
@@ -34,11 +38,11 @@ public class Country {
 	public void setCountryName(String countryName) {
 		this.countryName = countryName;
 	}
-	
+
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		return EqualsBuilder.reflectionEquals(this, obj);
@@ -48,6 +52,5 @@ public class Country {
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
-
 
 }

@@ -1,5 +1,6 @@
 package com.starboard.b2b.model;
 
+import java.io.Serializable;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -17,24 +18,29 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "customer")
-public class Customer extends BaseModel {
+public class Customer extends BaseModel implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Column(length = 255, nullable = false)
 	private String name;
 
 	@Column(length = 20, nullable = false)
 	private String code;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Country country;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Brand> brands = new TreeSet<>();
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Address> addresses = new TreeSet<>();
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Contact> contacts = new TreeSet<>();
+
+	public Customer() {
+	}
 
 	public String getName() {
 		return name;

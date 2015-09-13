@@ -1,5 +1,7 @@
 package com.starboard.b2b.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -10,7 +12,9 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "app_config")
-public class AppConfig extends BaseModel {
+public class AppConfig extends BaseModel implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Column(length = 50, nullable = false, name = "config_key")
 	private String configKey;
 	@Column(length = 500, nullable = false, name = "config_value")
