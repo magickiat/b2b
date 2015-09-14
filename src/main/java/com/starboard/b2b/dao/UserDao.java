@@ -5,7 +5,7 @@ import java.util.List;
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.model.User;
 
-public interface UserDao {
+public interface UserDao extends BaseDao {
 	User findById(String id);
 	
 	List<User> findByCustId(Integer id);

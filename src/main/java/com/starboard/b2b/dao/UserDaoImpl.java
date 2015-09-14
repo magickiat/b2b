@@ -3,6 +3,7 @@ package com.starboard.b2b.dao;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -63,6 +64,14 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void update(User user) {
 		sessionFactory.getCurrentSession().update(user);
+	}
+
+	@Override
+	public boolean exist(String identifierKey, Object identifierValue) {
+		Number result = (Number) sessionFactory.getCurrentSession().createCriteria(User.class)
+				.add(Restrictions.eq(identifierKey, identifierValue)).setProjection(Projections.rowCount())
+				.uniqueResult();
+		return result.longValue() > 0;
 	}
 
 }

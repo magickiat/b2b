@@ -95,4 +95,10 @@ public class UserServiceImpl implements UserService {
 		userDao.update(user);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public boolean isExistUsername(String username) {
+		return userDao.exist("username", username);
+	}
+
 }

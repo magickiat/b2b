@@ -136,10 +136,16 @@ public class BackendCustomerController {
 			throws Exception {
 		log.info("/gen_user POST");
 		if (!binding.hasErrors()) {
-			userService.add(registerForm);
-		}
+			if (!userService.isExistUsername(registerForm.getUsername())) {
+				userService.add(registerForm);
+				return update(registerForm.getCusId(), model);
+			} else {
+				model.addAttribute("errorMsg", "Exist username: " + registerForm.getUsername());
+			}
 
-		return update(registerForm.getCusId(), model);
+		}
+		model.addAttribute("registerForm", registerForm);
+		return "pages-back/customer/createCustomerUser";
 	}
 
 	@RequestMapping(value = "/add_brand", method = RequestMethod.GET)
