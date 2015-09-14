@@ -1,7 +1,7 @@
 package com.starboard.b2b.web.controller.login;
 
-import org.apache.bval.constraints.NotEmpty;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class LoginForm {
 	@NotEmpty

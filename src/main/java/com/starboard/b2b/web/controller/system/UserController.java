@@ -1,5 +1,7 @@
 package com.starboard.b2b.web.controller.system;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +31,22 @@ public class UserController {
 		log.info("/gen_user GET");
 
 		model.addAttribute("roles", securityService.listRole());
-		model.addAttribute("registerForm", new UserRegisterForm());
+		if (!model.containsAttribute("registerForm")) {
+			model.addAttribute("registerForm", new UserRegisterForm());
+		}
 		return "system/gen_user";
 	}
 
 	@RequestMapping(value = "/gen_user", method = RequestMethod.POST)
-	String submit(@ModelAttribute UserRegisterForm registerForm, BindingResult binding) {
+	String submit(@ModelAttribute("registerForm") @Valid UserRegisterForm registerForm, BindingResult binding,
+			Model model) {
 		log.info("/gen_user POST");
-		userService.add(registerForm);
-		return "redirect:/gen_user";
+		if (binding.hasErrors()) {
+			model.addAttribute("registerForm", registerForm);
+		} else {
+			userService.add(registerForm);
+		}
+		model.addAttribute("roles", securityService.listRole());
+		return "system/gen_user";
 	}
 }

@@ -13,10 +13,11 @@
 <body>
 	<div class="container">
 		<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
+
 		<div class="row">
 			<form:form servletRelativeAction="/backend/customer/update"
 				class="form-horizontal" commandName="customerForm" method="post">
-
+				<form:errors path="*" cssClass="text-danger" element="div" />
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="code">Code:</label>
 					<div class="col-sm-4">

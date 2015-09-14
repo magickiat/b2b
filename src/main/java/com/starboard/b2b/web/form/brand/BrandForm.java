@@ -2,7 +2,7 @@ package com.starboard.b2b.web.form.brand;
 
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class BrandForm {
 	private Integer custId;

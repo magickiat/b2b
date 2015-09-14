@@ -21,11 +21,13 @@ import com.starboard.b2b.model.Customer;
 import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.brand.BrandForm;
+import com.starboard.b2b.web.form.customer.CreateCustomerForm;
 import com.starboard.b2b.web.form.customer.CustomerForm;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
-//	private static final Logger log = LoggerFactory.getLogger(CustomerServiceImpl.class);
+	// private static final Logger log =
+	// LoggerFactory.getLogger(CustomerServiceImpl.class);
 	@Autowired
 	private CustomerDao customerDao;
 
@@ -34,12 +36,14 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Transactional(readOnly = true)
 	public CustomerDTO findById(int id) {
-		return new CustomerDTO(customerDao.findById(id));
+		Customer customer = customerDao.findById(id);
+		return customer == null ? null : new CustomerDTO(customer);
 	}
 
 	@Transactional(readOnly = true)
 	public CustomerDTO findByName(String name) {
-		return new CustomerDTO(customerDao.findByName(name));
+		Customer customer = customerDao.findByName(name);
+		return customer == null ? null : new CustomerDTO(customer);
 	}
 
 	@Transactional(readOnly = true)
@@ -53,7 +57,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Transactional
-	public void add(CustomerForm form) throws Exception {
+	public void add(CreateCustomerForm form) throws Exception {
 		Customer customer = new Customer();
 		customer.setCode(form.getCode());
 		customer.setName(form.getName());
@@ -87,10 +91,12 @@ public class CustomerServiceImpl implements CustomerService {
 	public List<Integer> getSelectedBrandId(Integer custId) throws Exception {
 		ArrayList<Integer> brandList = new ArrayList<>();
 		Customer customer = customerDao.findById(custId);
-		Iterator<Brand> iterator = customer.getBrands().iterator();
-		while (iterator.hasNext()) {
-			Brand brand = (Brand) iterator.next();
-			brandList.add(brand.getId());
+		if (customer != null && customer.getBrands() != null) {
+			Iterator<Brand> iterator = customer.getBrands().iterator();
+			while (iterator.hasNext()) {
+				Brand brand = (Brand) iterator.next();
+				brandList.add(brand.getId());
+			}
 		}
 		return brandList;
 	}
@@ -101,24 +107,42 @@ public class CustomerServiceImpl implements CustomerService {
 		Customer customer = customerDao.findById(custId);
 		if (customer != null) {
 			return copyBrandToDTO(customer.getBrands());
+		} else {
+			return null;
 		}
-		return null;
+
 	}
 
 	private Set<BrandDTO> copyBrandToDTO(Set<Brand> brands) {
 		Set<BrandDTO> list = new HashSet<>();
-		for (Brand brand : brands) {
-			list.add(new BrandDTO(brand));
+		if (brands != null && brands.size() > 0) {
+			for (Brand brand : brands) {
+				list.add(new BrandDTO(brand));
+			}
 		}
-
 		return list;
 	}
 
 	private List<CustomerDTO> copyCustomerToDTO(List<Customer> list) {
 		ArrayList<CustomerDTO> custList = new ArrayList<>();
-		for (Customer customer : list) {
-			custList.add(new CustomerDTO(customer));
+		if (list != null && list.size() > 0) {
+			for (Customer customer : list) {
+				custList.add(new CustomerDTO(customer));
+			}
 		}
 		return custList;
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public boolean isExistCustomerCode(String code) {
+		return customerDao.exist("code", code);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public boolean isExistCustomerName(String name) {
+		return customerDao.exist("name", name);
+	}
+
 }

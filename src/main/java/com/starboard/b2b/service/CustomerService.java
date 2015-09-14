@@ -7,6 +7,7 @@ import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dto.BrandDTO;
 import com.starboard.b2b.dto.CustomerDTO;
 import com.starboard.b2b.web.form.brand.BrandForm;
+import com.starboard.b2b.web.form.customer.CreateCustomerForm;
 import com.starboard.b2b.web.form.customer.CustomerForm;
 
 public interface CustomerService {
@@ -18,7 +19,7 @@ public interface CustomerService {
 
 	List<CustomerDTO> list(Page page) throws Exception;
 
-	void add(CustomerForm customer) throws Exception;
+	void add(CreateCustomerForm customer) throws Exception;
 
 	void update(CustomerForm customer) throws Exception;
 
@@ -27,4 +28,8 @@ public interface CustomerService {
 	Set<BrandDTO> getSelectedBrand(Integer custId) throws Exception;
 
 	List<Integer> getSelectedBrandId(Integer custId) throws Exception;
+
+	boolean isExistCustomerCode(String code);
+
+	boolean isExistCustomerName(String name);
 }

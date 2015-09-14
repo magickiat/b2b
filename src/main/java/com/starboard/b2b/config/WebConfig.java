@@ -5,10 +5,14 @@ import java.io.File;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.MediaType;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
@@ -86,5 +90,18 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 				.defaultContentType(MediaType.TEXT_HTML).mediaType("html", MediaType.TEXT_HTML)
 				.mediaType("xml", MediaType.APPLICATION_XML).mediaType("json", MediaType.APPLICATION_JSON);
 	}
+
+	@Override
+	public Validator getValidator() {
+		return new LocalValidatorFactoryBean();
+	}
+	
+	@Bean  
+    public MessageSource messageSource() {  
+        ResourceBundleMessageSource source = new ResourceBundleMessageSource();  
+        source.setBasename("classpath:messages");  
+        source.setUseCodeAsDefaultMessage(true);  
+        return source;  
+    }  
 
 }

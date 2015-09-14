@@ -14,7 +14,7 @@
 	<div class="container">
 		<form:form servletRelativeAction="/gen_user" class="form-horizontal"
 			commandName="registerForm" method="post">
-
+			<form:errors path="*" cssClass="error"></form:errors>
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="name">Name:</label>
 				<div class="col-sm-10">

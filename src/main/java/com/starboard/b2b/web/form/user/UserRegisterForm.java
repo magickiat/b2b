@@ -3,9 +3,14 @@ package com.starboard.b2b.web.form.user;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class UserRegisterForm {
+	@NotEmpty(message = "Name is required")
 	private String name;
+	@NotEmpty(message = "Username is required")
 	private String username;
+	@NotEmpty(message = "Password is required")
 	private String password;
 	private String confirmPassword;
 	private String email;
@@ -67,5 +72,5 @@ public class UserRegisterForm {
 	public void setCusId(Integer cusId) {
 		this.cusId = cusId;
 	}
-	
+
 }

@@ -6,10 +6,8 @@ import java.util.TreeSet;
 import com.starboard.b2b.model.Customer;
 
 public class CustomerDTO extends BaseDTO {
-
 	private String name;
 	private String code;
-	private CountryDTO country;
 	private Set<BrandDTO> brands = new TreeSet<>();
 	private Set<AddressDTO> addresses = new TreeSet<>();
 	private Set<ContactDTO> contacts = new TreeSet<>();
@@ -37,14 +35,6 @@ public class CustomerDTO extends BaseDTO {
 
 	public void setCode(String code) {
 		this.code = code;
-	}
-
-	public CountryDTO getCountry() {
-		return country;
-	}
-
-	public void setCountry(CountryDTO country) {
-		this.country = country;
 	}
 
 	public Set<BrandDTO> getBrands() {

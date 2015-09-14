@@ -3,17 +3,19 @@ package com.starboard.b2b.web.form.customer;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.starboard.b2b.web.form.address.AddressForm;
 import com.starboard.b2b.web.form.brand.BrandForm;
 import com.starboard.b2b.web.form.contact.ContactForm;
-import com.starboard.b2b.web.form.country.CountryForm;
 import com.starboard.b2b.web.form.user.UserRegisterForm;
 
 public class CustomerForm {
 	private int id;
+	@NotEmpty(message = "Name is required")
 	private String name;
+	@NotEmpty(message = "Code is required")
 	private String code;
-	private CountryForm country;
 	private Set<UserRegisterForm> user = new TreeSet<>();
 	private Set<BrandForm> brand = new TreeSet<>();
 	private Set<AddressForm> addresses = new TreeSet<>();
@@ -33,14 +35,6 @@ public class CustomerForm {
 
 	public void setCode(String code) {
 		this.code = code;
-	}
-
-	public CountryForm getCountry() {
-		return country;
-	}
-
-	public void setCountry(CountryForm country) {
-		this.country = country;
 	}
 
 	public Set<UserRegisterForm> getUser() {

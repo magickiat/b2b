@@ -3,6 +3,8 @@ package com.starboard.b2b.web.controller.backend;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import com.starboard.b2b.service.BrandService;
 import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.UserService;
 import com.starboard.b2b.web.form.brand.BrandForm;
+import com.starboard.b2b.web.form.customer.CreateCustomerForm;
 import com.starboard.b2b.web.form.customer.CustomerForm;
 import com.starboard.b2b.web.form.user.UserRegisterForm;
 
@@ -44,16 +47,38 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "create", method = RequestMethod.GET)
-	String form(Model model) {
+	String createCustForm(Model model) {
 		log.info("/create GET");
-		model.addAttribute("customerForm", new CustomerForm());
+		model.addAttribute("customerForm", new CreateCustomerForm());
 		return "pages-back/customer/create";
 	}
 
 	@RequestMapping(value = "create", method = RequestMethod.POST)
-	String submit(@ModelAttribute CustomerForm customerForm, Model model, BindingResult binding) throws Exception {
+	String createCustomerSubmit(@ModelAttribute("customerForm") @Valid CreateCustomerForm customerForm,
+			BindingResult binding, Model model) throws Exception {
 		log.info("/create POST");
-		customerService.add(customerForm);
+		log.warn("binding error: " + binding.hasErrors());
+		model.addAttribute("customerForm", customerForm);
+
+		if (binding.hasErrors()) {
+			return "pages-back/customer/create";
+		}
+
+		String errorMsg = null;
+		if (customerService.isExistCustomerName(customerForm.getName())) {
+			errorMsg = "Exist customer name: " + customerForm.getName();
+		} else if (customerService.isExistCustomerCode(customerForm.getCode())) {
+			errorMsg = "Exist customer code: " + customerForm.getCode();
+		} else {
+			customerService.add(customerForm);
+		}
+
+		if (errorMsg != null) {
+			log.warn(errorMsg);
+			model.addAttribute("errorMsg", errorMsg);
+			return "pages-back/customer/create";
+		}
+
 		return search(model);
 	}
 
@@ -65,7 +90,7 @@ public class BackendCustomerController {
 		if (cust != null) {
 			users = userService.findUserByCustId(id);
 		}
-		
+
 		model.addAttribute("customerForm", cust);
 		model.addAttribute("users", users);
 		model.addAttribute("selectedBrand", customerService.getSelectedBrand(id));
@@ -73,9 +98,27 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	String update(@ModelAttribute CustomerForm customerForm, Model model, BindingResult binding) throws Exception {
+	String update(@ModelAttribute @Valid CustomerForm customerForm, BindingResult binding, Model model)
+			throws Exception {
 		log.info("/update POST");
-		customerService.update(customerForm);
+
+		if (!binding.hasErrors()) {
+			String errorMsg = null;
+			if (customerService.isExistCustomerName(customerForm.getName())) {
+				errorMsg = "Exist customer name: " + customerForm.getName();
+			} else if (customerService.isExistCustomerCode(customerForm.getCode())) {
+				errorMsg = "Exist customer code: " + customerForm.getCode();
+			} else {
+				customerService.update(customerForm);
+			}
+
+			if (errorMsg != null) {
+				log.warn(errorMsg);
+				model.addAttribute("errorMsg", errorMsg);
+			}
+
+		}
+
 		return update(customerForm.getId(), model);
 	}
 
@@ -89,10 +132,13 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "/createuser", method = RequestMethod.POST)
-	String createuser(@ModelAttribute UserRegisterForm registerForm, Model model, BindingResult binding)
+	String createuser(@ModelAttribute @Valid UserRegisterForm registerForm, BindingResult binding, Model model)
 			throws Exception {
 		log.info("/gen_user POST");
-		userService.add(registerForm);
+		if (!binding.hasErrors()) {
+			userService.add(registerForm);
+		}
+
 		return update(registerForm.getCusId(), model);
 	}
 
@@ -112,7 +158,7 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "/add_brand", method = RequestMethod.POST)
-	String addBrandSubmit(@ModelAttribute BrandForm brandForm, Model model, BindingResult binding) throws Exception {
+	String addBrandSubmit(@ModelAttribute BrandForm brandForm, Model model) throws Exception {
 		log.info("/add_brand POST");
 		log.info("Selected brand id: " + brandForm);
 		customerService.addBrand(brandForm);
