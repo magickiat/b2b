@@ -5,7 +5,6 @@ import com.starboard.b2b.model.Brand;
 public class BrandDTO extends BaseDTO {
 	private String name;
 	private String logo;
-	private boolean commonBrand;
 	
 	public BrandDTO() {
 	}
@@ -14,7 +13,6 @@ public class BrandDTO extends BaseDTO {
 		super(brand);
 		this.name = brand.getName();
 		this.logo = brand.getLogo();
-		this.commonBrand = brand.isCommonBrand();
 	}
 	
 	public String getName() {
@@ -33,11 +31,4 @@ public class BrandDTO extends BaseDTO {
 		this.logo = logo;
 	}
 
-	public boolean isCommonBrand() {
-		return commonBrand;
-	}
-
-	public void setCommonBrand(boolean commonBrand) {
-		this.commonBrand = commonBrand;
-	}
 }

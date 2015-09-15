@@ -1,5 +1,5 @@
 insert into 
-     brand(name, logo, created_by, created_date) 
+     b2b.brand(name, logo, created_by, created_date) 
 values
 ('STARBOARD SURF', null, 'B2B', curdate()),
 ('DRAKE',null, 'B2B', curdate()),

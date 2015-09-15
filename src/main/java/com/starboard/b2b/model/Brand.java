@@ -20,9 +20,6 @@ public class Brand extends BaseModel implements Serializable {
 
 	@Column(length = 255)
 	private String logo;
-	
-	@Column(name = "common_brand", nullable = false)
-	private boolean commonBrand;
 
 	public String getName() {
 		return name;
@@ -54,11 +51,4 @@ public class Brand extends BaseModel implements Serializable {
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
-	public boolean isCommonBrand() {
-		return commonBrand;
-	}
-
-	public void setCommonBrand(boolean commonBrand) {
-		this.commonBrand = commonBrand;
-	}
 }
