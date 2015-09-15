@@ -18,8 +18,9 @@ public class Product extends BaseModel {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Brand brand;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Image image;
+	private String pictureBig;
+	private String pictureMedium;
+	private String pictureSmall;
 
 	public String getCode() {
 		return code;
@@ -43,6 +44,30 @@ public class Product extends BaseModel {
 
 	public void setBrand(Brand brand) {
 		this.brand = brand;
+	}
+
+	public String getPictureBig() {
+		return pictureBig;
+	}
+
+	public void setPictureBig(String pictureBig) {
+		this.pictureBig = pictureBig;
+	}
+
+	public String getPictureMedium() {
+		return pictureMedium;
+	}
+
+	public void setPictureMedium(String pictureMedium) {
+		this.pictureMedium = pictureMedium;
+	}
+
+	public String getPictureSmall() {
+		return pictureSmall;
+	}
+
+	public void setPictureSmall(String pictureSmall) {
+		this.pictureSmall = pictureSmall;
 	}
 
 }
