@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/frontend/order")
 public class FrontOrderController {
+	
+	
 
 	@RequestMapping(value = "index", method = RequestMethod.GET)
 	String step1(Model model) {
