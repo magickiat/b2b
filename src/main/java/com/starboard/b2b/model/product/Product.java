@@ -4,7 +4,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.starboard.b2b.model.BaseModel;
@@ -16,7 +15,7 @@ public class Product extends BaseModel {
 	private String code;
 	private String name;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Brand brand;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
