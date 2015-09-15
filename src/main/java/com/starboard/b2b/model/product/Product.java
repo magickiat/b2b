@@ -1,6 +1,7 @@
 package com.starboard.b2b.model.product;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -18,9 +19,17 @@ public class Product extends BaseModel {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Brand brand;
 
+	@Column(name = "picture_big")
 	private String pictureBig;
+
+	@Column(name = "picture_medium")
 	private String pictureMedium;
-	private String pictureSmall;
+
+	@Column(name = "picture_small_horizontal")
+	private String pictureSmallHorizontal;
+
+	@Column(name = "picture_small_vertical")
+	private String pictureSmallVertical;
 
 	public String getCode() {
 		return code;
@@ -62,12 +71,20 @@ public class Product extends BaseModel {
 		this.pictureMedium = pictureMedium;
 	}
 
-	public String getPictureSmall() {
-		return pictureSmall;
+	public String getPictureSmallHorizontal() {
+		return pictureSmallHorizontal;
 	}
 
-	public void setPictureSmall(String pictureSmall) {
-		this.pictureSmall = pictureSmall;
+	public void setPictureSmallHorizontal(String pictureSmallHorizontal) {
+		this.pictureSmallHorizontal = pictureSmallHorizontal;
+	}
+
+	public String getPictureSmallVertical() {
+		return pictureSmallVertical;
+	}
+
+	public void setPictureSmallVertical(String pictureSmallVertical) {
+		this.pictureSmallVertical = pictureSmallVertical;
 	}
 
 }
