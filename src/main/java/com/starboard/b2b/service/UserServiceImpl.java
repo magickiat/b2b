@@ -51,33 +51,29 @@ public class UserServiceImpl implements UserService {
 
 	@Transactional
 	public void add(UserRegisterForm form) {
-		if (findByUsername(form.getUsername()) == null) {
-			User user = new User();
-			user.setName(form.getName());
-			user.setUsername(form.getUsername());
-			user.setPassword(encoder.encode(form.getPassword()));
-			user.setEnabled(true);
-			user.setAccountNonExpired(true);
-			user.setAccountNonLocked(true);
-			user.setCredentialsNonExpired(true);
-			user.setCreatedBy(UserUtil.getCurrentUsername());
-			user.setCreatedDate(DateTimeUtil.getCurrentDate());
+		User user = new User();
+		user.setName(form.getName());
+		user.setUsername(form.getUsername());
+		user.setPassword(encoder.encode(form.getPassword()));
+		user.setEnabled(true);
+		user.setAccountNonExpired(true);
+		user.setAccountNonLocked(true);
+		user.setCredentialsNonExpired(true);
+		user.setCreatedBy(UserUtil.getCurrentUsername());
+		user.setCreatedDate(DateTimeUtil.getCurrentDate());
 
-			Set<Role> roles = new HashSet<>();
-			for (String id : form.getRoles()) {
-				roles.add(new Role(id));
-			}
-			user.setRole(roles);
-
-			if (form.getCusId() != null) {
-				Customer customer = new Customer();
-				customer.setId(Integer.valueOf(form.getCusId()));
-				user.setCustomer(customer);
-			}
-			userDao.add(user);
-		} else {
-
+		Set<Role> roles = new HashSet<>();
+		for (String id : form.getRoles()) {
+			roles.add(new Role(id));
 		}
+		user.setRole(roles);
+
+		if (form.getCusId() != null) {
+			Customer customer = new Customer();
+			customer.setId(Integer.valueOf(form.getCusId()));
+			user.setCustomer(customer);
+		}
+		userDao.add(user);
 	}
 
 	@Override

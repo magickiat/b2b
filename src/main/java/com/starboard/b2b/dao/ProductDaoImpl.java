@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.model.product.Product;
 
-public class ProductDaoImpl {
+public class ProductDaoImpl implements ProductDao {
 	@Autowired
 	private SessionFactory sf;
 

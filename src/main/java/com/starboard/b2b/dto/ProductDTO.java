@@ -1,39 +1,29 @@
-package com.starboard.b2b.model.product;
+package com.starboard.b2b.dto;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import com.starboard.b2b.model.product.Product;
 
-import com.starboard.b2b.model.BaseModel;
-import com.starboard.b2b.model.Brand;
-
-@Entity
-@Table(name = "product")
-public class Product extends BaseModel {
-	
-	@Column(length = 50)
+public class ProductDTO extends BaseDTO {
 	private String code;
-	
-	@Column(length = 100)
 	private String name;
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Brand brand;
-
-	@Column(name = "picture_big", length = 255)
+	private BrandDTO brand;
 	private String pictureBig;
-
-	@Column(name = "picture_medium", length = 255)
 	private String pictureMedium;
-
-	@Column(name = "picture_small_horizontal", length = 255)
 	private String pictureSmallHorizontal;
-
-	@Column(name = "picture_small_vertical", length = 255)
 	private String pictureSmallVertical;
+
+	public ProductDTO() {
+	}
+
+	public ProductDTO(Product product) {
+		super(product);
+		this.code = product.getCode();
+		this.name = product.getName();
+		this.brand = new BrandDTO(product.getBrand());
+		this.pictureBig = product.getPictureBig();
+		this.pictureMedium = product.getPictureMedium();
+		this.pictureSmallHorizontal = product.getPictureSmallHorizontal();
+		this.pictureSmallVertical = product.getPictureSmallVertical();
+	}
 
 	public String getCode() {
 		return code;
@@ -49,14 +39,6 @@ public class Product extends BaseModel {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Brand getBrand() {
-		return brand;
-	}
-
-	public void setBrand(Brand brand) {
-		this.brand = brand;
 	}
 
 	public String getPictureBig() {
@@ -91,4 +73,11 @@ public class Product extends BaseModel {
 		this.pictureSmallVertical = pictureSmallVertical;
 	}
 
+	public BrandDTO getBrand() {
+		return brand;
+	}
+
+	public void setBrand(BrandDTO brand) {
+		this.brand = brand;
+	}
 }

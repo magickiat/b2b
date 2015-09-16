@@ -123,7 +123,7 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "/createuser", method = RequestMethod.GET)
-	String createuser(@RequestParam(value = "id", required = true) Integer id, Model model) {
+	String createUser(@RequestParam(value = "id", required = true) Integer id, Model model) {
 		log.info("/createuser GET");
 		UserRegisterForm form = new UserRegisterForm();
 		form.setCusId(id);
@@ -132,7 +132,7 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "/createuser", method = RequestMethod.POST)
-	String createuser(@ModelAttribute @Valid UserRegisterForm registerForm, BindingResult binding, Model model)
+	String createUser(@ModelAttribute @Valid UserRegisterForm registerForm, BindingResult binding, Model model)
 			throws Exception {
 		log.info("/gen_user POST");
 		if (!binding.hasErrors()) {

@@ -3,12 +3,15 @@ package com.starboard.b2b.model;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public class BaseModel {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected Integer id;
 
 	@Column(name = "created_by", nullable = false, length = 50)

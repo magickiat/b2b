@@ -24,24 +24,20 @@
 		<div class="row">&nbsp;</div>
 		<div class="row">
 			<c:choose>
-				<c:when test="${empty brandId }">
-					<h3>Not found Brand.</h3>
+				<c:when test="${empty products }">
+					<h3>Not found any product.</h3>
 				</c:when>
 
 				<c:otherwise>
-					<!-- Quick Order -->
-					<div class="col-md-2" style="margin-top: 30px;">
-						<a href="#"> <img alt="Quick Order"
-							src='<c:url value="/images/pages-front/icon/quick_order.png" />' />
-						</a>
-					</div>
+					<c:forEach items="${ products }" var="product">
+						<!-- Product -->
+						<div class="col-md-2" style="margin-top: 30px;">
+							<a href="#"> <img alt="${ products.name }"
+								src='<c:url value="${ products.pictureSmallVertical }" />' />
+							</a>
+						</div>
 
-					<!-- Upload Order -->
-					<div class="col-md-2" style="margin-top: 30px;">
-						<a href="#"> <img alt="Upload Order"
-							src='<c:url value="/images/pages-front/icon/upload_order.png" />' />
-						</a>
-					</div>
+					</c:forEach>
 				</c:otherwise>
 			</c:choose>
 		</div>

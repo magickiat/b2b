@@ -28,7 +28,7 @@ public class FrontUserController {
 		
 		UserForm userForm = new UserForm();
 		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		userForm.setId(user.getId());
+		userForm.setId(user.getUsername());
 		userForm.setUsername(user.getUsername());
 		userForm.setPassword(user.getPassword());
 		userForm.setEmail(user.getEmail());

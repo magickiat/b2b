@@ -10,7 +10,11 @@ public class BrandDTO extends BaseDTO {
 	}
 
 	public BrandDTO(Brand brand) {
-		super(brand);
+		this.id = brand.getId();
+		this.createdBy = brand.getCreatedBy();
+		this.createdDate = brand.getCreatedDate();
+		this.updatedBy = brand.getUpdatedBy();
+		this.updatedDate = brand.getUpdatedDate();
 		this.name = brand.getName();
 		this.logo = brand.getLogo();
 	}

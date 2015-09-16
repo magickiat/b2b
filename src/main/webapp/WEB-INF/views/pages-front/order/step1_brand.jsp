@@ -33,16 +33,18 @@
 				</c:when>
 				<c:otherwise>
 					<c:forEach items="${ user.customer.brands }" var="brand">
+					
+						<!-- Brand Logo -->
 						<div class="col-md-4" style="margin-top: 30px;">
-							<a href='<c:url value="/" />'> 
+							<a href='<c:url value="/frontend/order/step2?brand_id=${ brand.id }" />'> 
 								<c:url var="logo" value="${ brand.logo }" /> 
 								<c:if test="${ empty brand.logo }">
 									<c:url var="logo" value="/images/b2b/brand/default_image.jpg" />
 								</c:if> 
-								
 								<img alt="${ brand.name }" class="brand_logo" src="${ logo }">
 							</a>
 						</div>
+						
 					</c:forEach>
 				</c:otherwise>
 			</c:choose>
