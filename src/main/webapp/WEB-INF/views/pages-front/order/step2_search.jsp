@@ -31,12 +31,12 @@
 				<c:otherwise>
 					<c:forEach items="${ products }" var="product">
 						<!-- Product -->
-						<div class="col-md-2" style="margin-top: 30px;">
-							<a href="#"> <img alt="${ products.name }"
-								src='<c:url value="${ products.pictureSmallVertical }" />' />
+						<div class="col-md-2 product">
+							<a href="#"> <img alt="${ product.name }"
+								src='<c:url value="${ product.pictureMedium }" />' /> <span
+								style="text-align: center;">${ product.model.name }</span>
 							</a>
 						</div>
-
 					</c:forEach>
 				</c:otherwise>
 			</c:choose>

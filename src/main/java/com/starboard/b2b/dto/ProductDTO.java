@@ -6,6 +6,7 @@ public class ProductDTO extends BaseDTO {
 	private String code;
 	private String name;
 	private BrandDTO brand;
+	private ModelDTO model;
 	private String pictureBig;
 	private String pictureMedium;
 	private String pictureSmallHorizontal;
@@ -19,6 +20,7 @@ public class ProductDTO extends BaseDTO {
 		this.code = product.getCode();
 		this.name = product.getName();
 		this.brand = new BrandDTO(product.getBrand());
+		this.model = new ModelDTO(product.getModel());
 		this.pictureBig = product.getPictureBig();
 		this.pictureMedium = product.getPictureMedium();
 		this.pictureSmallHorizontal = product.getPictureSmallHorizontal();
@@ -79,5 +81,13 @@ public class ProductDTO extends BaseDTO {
 
 	public void setBrand(BrandDTO brand) {
 		this.brand = brand;
+	}
+
+	public ModelDTO getModel() {
+		return model;
+	}
+
+	public void setModel(ModelDTO model) {
+		this.model = model;
 	}
 }

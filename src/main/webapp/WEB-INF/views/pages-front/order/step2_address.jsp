@@ -31,7 +31,7 @@
 				<c:otherwise>
 					<!-- Quick Order -->
 					<div class="col-md-2" style="margin-top: 30px;">
-						<a href="#"> <img alt="Quick Order"
+						<a href='<c:url value="/frontend/order/step2_search?brand_id=${ brandId }" />'> <img alt="Quick Order"
 							src='<c:url value="/images/pages-front/icon/quick_order.png" />' />
 						</a>
 					</div>

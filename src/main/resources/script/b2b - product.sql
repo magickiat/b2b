@@ -1,3 +1,5 @@
+truncate table b2b.product;
+
 /*
 -- Query: SELECT 
 	p.product_id as id
