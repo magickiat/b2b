@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -14,9 +17,13 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 @Table(name = "app_config")
 public class AppConfig extends BaseModel implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
+	
 	@Column(length = 50, nullable = false, name = "config_key")
 	private String configKey;
+	
 	@Column(length = 500, nullable = false, name = "config_value")
 	private String configValue;
 

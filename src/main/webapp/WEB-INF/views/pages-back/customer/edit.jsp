@@ -16,8 +16,8 @@
 
 		<div class="row">
 			<form:form servletRelativeAction="/backend/customer/update"
-				class="form-horizontal" commandName="customerForm" method="post">
-				<form:errors path="*" cssClass="text-danger" element="div" />
+				class="form-horizontal" modelAttribute="customerForm" method="post">
+				<form:errors path="*" cssClass="alert alert-danger" element="div" />
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="code">Code:</label>
 					<div class="col-sm-4">
@@ -29,7 +29,7 @@
 						<form:input path="name" class="form-control"
 							placeholder="Enter Name" />
 					</div>
-					<form:hidden path="id" id="cusId" />
+					<form:hidden path="custId" />
 				</div>
 				<div class="form-group">
 					<div class="col-sm-11"></div>
@@ -47,7 +47,7 @@
 				<label class="control-label col-sm-11">Login Account</label>
 				<div class="col-sm-1">
 					<button type="button" class="btn btn-default"
-						onclick="javascript:createUser('${customerForm.id}');">Add</button>
+						onclick="javascript:createUser('${customerForm.custId}');">Add</button>
 				</div>
 			</div>
 		</div>
@@ -90,7 +90,7 @@
 			<div class="col-sm-2">
 				<form:form servletRelativeAction="/backend/customer/add_brand"
 					method="get">
-					<input type="hidden" name="id" value="${customerForm.id}" />
+					<input type="hidden" name="id" value="${customerForm.custId}" />
 					<input type="submit" value="Add Product Brand"
 						class="btn btn-default pull-right" />
 				</form:form>

@@ -70,7 +70,7 @@ public class ConfigServiceImpl implements ConfigService {
 		}
 
 		AppConfig config = new AppConfig(key, value);
-		config.setCreatedDate(new Date());
+		config.setTimeCreate(new Date());
 		Integer id = appConfigDao.add(config);
 		log.info("config id: " + id);
 	}

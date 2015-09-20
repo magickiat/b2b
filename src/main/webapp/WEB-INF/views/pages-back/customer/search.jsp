@@ -35,7 +35,7 @@
 				<tbody>
 					<c:forEach items="${customers }" var="customer">
 						<tr style="cursor: pointer;"
-							onclick="javascript:createUser('${customer.id }');">
+							onclick="javascript:createUser('${customer.custId }');">
 							<td>${customer.code }</td>
 							<td>${customer.name }</td>
 						</tr>

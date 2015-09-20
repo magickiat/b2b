@@ -1,8 +1,8 @@
-INSERT INTO app_config (id, config_key, config_value, created_by, created_date)
+INSERT INTO app_config (id, config_key, config_value, user_create, time_create)
 VALUES (1, 'upload_path', '/Users/magicalcyber/Pictures/b2b_upload', 'B2B', curdate());
 
 INSERT INTO
-  brand (id, name, logo, created_by, created_date)
+  brand (id, name, logo, user_create, time_create)
 VALUES
   (70, 'STARBOARD SURF', NULL, 'B2B', curdate()),
   (50, 'DRAKE', NULL, 'B2B', curdate()),

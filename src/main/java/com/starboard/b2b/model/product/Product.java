@@ -1,12 +1,16 @@
 package com.starboard.b2b.model.product;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "product")
 public class Product {
 
+	@Id
+	@Column(name = "product_id")
 	private long productId;
 	private long productTypeId;
 	private long productCatalogId;

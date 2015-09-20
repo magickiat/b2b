@@ -62,18 +62,18 @@ public class CustomerServiceImpl implements CustomerService {
 		Customer customer = new Customer();
 		customer.setCode(form.getCode());
 		customer.setName(form.getName());
-		customer.setCreatedBy(UserUtil.getCurrentUsername());
-		customer.setCreatedDate(new Date());
+		customer.setUserCreate(UserUtil.getCurrentUsername());
+		customer.setTimeCreate(new Date());
 		customerDao.add(customer);
 	}
 
 	@Transactional
 	public void update(CustomerForm customerForm) throws Exception {
-		Customer customer = customerDao.findById(customerForm.getId());
+		Customer customer = customerDao.findById(customerForm.getCustId());
 		customer.setCode(customerForm.getCode());
 		customer.setName(customerForm.getName());
-		customer.setUpdatedDate(DateTimeUtil.getCurrentDate());
-		customer.setUpdatedBy(UserUtil.getCurrentUser().getName());
+		customer.setTimeUpdate(DateTimeUtil.getCurrentDate());
+		customer.setUserUpdate(UserUtil.getCurrentUser().getName());
 	}
 
 	@Override

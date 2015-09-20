@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.starboard.b2b.dto.CustomerDTO;
 import com.starboard.b2b.model.User;
@@ -85,6 +86,7 @@ public class BackendCustomerController {
 	@RequestMapping(value = "update", method = RequestMethod.GET)
 	String update(@RequestParam(value = "id", required = false) Integer id, Model model) throws Exception {
 		log.info("/update GET");
+		log.info("id = " + id);
 		CustomerDTO cust = customerService.findById(id);
 		List<User> users = new ArrayList<User>();
 		if (cust != null) {
@@ -98,10 +100,10 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	String update(@ModelAttribute @Valid CustomerForm customerForm, BindingResult binding, Model model)
+	String update(@ModelAttribute @Valid CustomerForm customerForm, BindingResult binding, RedirectAttributes redirectAttributes,Model model)
 			throws Exception {
 		log.info("/update POST");
-
+		log.info("customer id: " + customerForm.getCustId());
 		if (!binding.hasErrors()) {
 			String errorMsg = null;
 			if (customerService.isExistCustomerName(customerForm.getName())) {
@@ -115,11 +117,15 @@ public class BackendCustomerController {
 			if (errorMsg != null) {
 				log.warn(errorMsg);
 				model.addAttribute("errorMsg", errorMsg);
+				
+				redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.customerForm", binding);
+		        redirectAttributes.addFlashAttribute("customerForm", customerForm);
+		        return "redirect:update?id=" +customerForm.getCustId();
 			}
 
 		}
 
-		return update(customerForm.getId(), model);
+		return update(customerForm.getCustId(), model);
 	}
 
 	@RequestMapping(value = "/createuser", method = RequestMethod.GET)

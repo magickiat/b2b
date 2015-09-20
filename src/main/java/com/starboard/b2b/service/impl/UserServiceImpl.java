@@ -60,8 +60,8 @@ public class UserServiceImpl implements UserService {
 		user.setAccountNonExpired(true);
 		user.setAccountNonLocked(true);
 		user.setCredentialsNonExpired(true);
-		user.setCreatedBy(UserUtil.getCurrentUsername());
-		user.setCreatedDate(DateTimeUtil.getCurrentDate());
+		user.setUserCreate(UserUtil.getCurrentUsername());
+		user.setTimeCreate(DateTimeUtil.getCurrentDate());
 
 		Set<Role> roles = new HashSet<>();
 		for (String id : form.getRoles()) {
@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
 
 		if (form.getCusId() != null) {
 			Customer customer = new Customer();
-			customer.setId(Integer.valueOf(form.getCusId()));
+			customer.setCustId(form.getCusId());
 			user.setCustomer(customer);
 		}
 		userDao.add(user);

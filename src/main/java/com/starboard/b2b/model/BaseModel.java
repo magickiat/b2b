@@ -3,70 +3,51 @@ package com.starboard.b2b.model;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public class BaseModel {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	protected Integer id;
+	@Column(name = "user_create", length = 32)
+	protected String userCreate;
 
-	@Column(name = "created_by", nullable = false, length = 50)
-	protected String createdBy;
+	@Column(name = "user_update", length = 32)
+	protected String userUpdate;
 
-	@Column(name = "created_date", nullable = false)
-	protected Date createdDate;
+	@Column(name = "time_create")
+	protected Date timeCreate;
 
-	@Column(name = "updated_by", length = 50)
-	protected String updatedBy;
+	@Column(name = "time_update")
+	protected Date timeUpdate;
 
-	@Column(name = "updated_date")
-	protected Date updatedDate;
-
-	public BaseModel() {
+	public String getUserCreate() {
+		return userCreate;
 	}
 
-	public Integer getId() {
-		return id;
+	public void setUserCreate(String userCreate) {
+		this.userCreate = userCreate;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public String getUserUpdate() {
+		return userUpdate;
 	}
 
-	public String getCreatedBy() {
-		return createdBy;
+	public void setUserUpdate(String userUpdate) {
+		this.userUpdate = userUpdate;
 	}
 
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
+	public Date getTimeCreate() {
+		return timeCreate;
 	}
 
-	public Date getCreatedDate() {
-		return createdDate;
+	public void setTimeCreate(Date timeCreate) {
+		this.timeCreate = timeCreate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
+	public Date getTimeUpdate() {
+		return timeUpdate;
 	}
 
-	public String getUpdatedBy() {
-		return updatedBy;
+	public void setTimeUpdate(Date timeUpdate) {
+		this.timeUpdate = timeUpdate;
 	}
-
-	public void setUpdatedBy(String updatedBy) {
-		this.updatedBy = updatedBy;
-	}
-
-	public Date getUpdatedDate() {
-		return updatedDate;
-	}
-
-	public void setUpdatedDate(Date updatedDate) {
-		this.updatedDate = updatedDate;
-	}
-
 }

@@ -48,7 +48,7 @@ public class UserDaoImpl implements UserDao {
 	public void add(User user) {
 		if (user.getCustomer() != null) {
 			Customer cust = (Customer) sessionFactory.getCurrentSession().load(Customer.class,
-					user.getCustomer().getId());
+					user.getCustomer().getCustId());
 			user.setCustomer(cust);
 		}
 		sessionFactory.getCurrentSession().save(user);
