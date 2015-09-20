@@ -1,6 +1,7 @@
 
 package com.starboard.b2b.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -9,11 +10,12 @@ import javax.persistence.Table;
 @Table(name = "product_so_category")
 public class ProductSoCategory extends BaseModel {
 	@Id
+	@Column(name = "so_category")
 	private String soCategory;
+	@Column(name = "site")
 	private String site;
+	@Column(name = "warehouse")
 	private String warehouse;
-	private String saleOrderCat;
-	private String email;
 
 	public String getSoCategory() {
 		return soCategory;
@@ -37,22 +39,6 @@ public class ProductSoCategory extends BaseModel {
 
 	public void setWarehouse(String warehouse) {
 		this.warehouse = warehouse;
-	}
-
-	public String getSaleOrderCat() {
-		return saleOrderCat;
-	}
-
-	public void setSaleOrderCat(String saleOrderCat) {
-		this.saleOrderCat = saleOrderCat;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 }

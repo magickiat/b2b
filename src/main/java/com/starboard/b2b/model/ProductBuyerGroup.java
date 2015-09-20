@@ -1,6 +1,7 @@
 
 package com.starboard.b2b.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -9,9 +10,16 @@ import javax.persistence.Table;
 @Table(name = "product_buyer_group")
 public class ProductBuyerGroup extends BaseModel {
 	@Id
+	@Column(name = "product_buyer_group_id")
 	private String productBuyerGroupId;
+	
+	@Column(name = "product_buyer_group_name")
 	private String productBuyerGroupName;
+	
+	@Column(name = "description")
 	private String description;
+	
+	@Column(name = "seq")
 	private int seq;
 
 	public String getProductBuyerGroupId() {

@@ -1,6 +1,7 @@
 
 package com.starboard.b2b.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -9,12 +10,16 @@ import javax.persistence.Table;
 @Table(name = "product_price")
 public class ProductPrice extends BaseModel {
 	@Id
+	@Column(name = "product_code")
 	private String productCode;
+	@Column(name = "product_price_group_id")
 	private String productPriceGroupId;
+	@Column(name = "product_currency")
 	private String productCurrency;
+	@Column(name = "amount")
 	private java.math.BigDecimal amount;
+	@Column(name = "product_unit_id")
 	private String productUnitId;
-	private double msrePrice;
 
 	public String getProductCode() {
 		return productCode;
@@ -54,14 +59,6 @@ public class ProductPrice extends BaseModel {
 
 	public void setProductUnitId(String productUnitId) {
 		this.productUnitId = productUnitId;
-	}
-
-	public double getMsrePrice() {
-		return msrePrice;
-	}
-
-	public void setMsrePrice(double msrePrice) {
-		this.msrePrice = msrePrice;
 	}
 
 }

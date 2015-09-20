@@ -1,6 +1,7 @@
 
 package com.starboard.b2b.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -9,13 +10,20 @@ import javax.persistence.Table;
 @Table(name = "product_stock_snapshot")
 public class ProductStockSnapshot extends BaseModel {
 	@Id
+	@Column(name = "product_stock_snapshot_id")
 	private long productStockSnapshotId;
+	@Column(name = "product_code")
 	private String productCode;
+	@Column(name = "cust_code")
 	private String custCode;
+	@Column(name = "amount")
 	private java.math.BigDecimal amount;
+	@Column(name = "as_of")
 	private java.util.Date asOf;
-	private java.math.BigDecimal ontransit;
-	private java.math.BigDecimal onorder;
+	@Column(name = "ontransit")
+	private java.math.BigDecimal onTransit;
+	@Column(name = "onorder")
+	private java.math.BigDecimal onOrder;
 
 	public long getProductStockSnapshotId() {
 		return productStockSnapshotId;
@@ -57,20 +65,20 @@ public class ProductStockSnapshot extends BaseModel {
 		this.asOf = asOf;
 	}
 
-	public java.math.BigDecimal getOntransit() {
-		return ontransit;
+	public java.math.BigDecimal getOnTransit() {
+		return onTransit;
 	}
 
-	public void setOntransit(java.math.BigDecimal ontransit) {
-		this.ontransit = ontransit;
+	public void setOnTransit(java.math.BigDecimal onTransit) {
+		this.onTransit = onTransit;
 	}
 
-	public java.math.BigDecimal getOnorder() {
-		return onorder;
+	public java.math.BigDecimal getOnOrder() {
+		return onOrder;
 	}
 
-	public void setOnorder(java.math.BigDecimal onorder) {
-		this.onorder = onorder;
+	public void setOnOrder(java.math.BigDecimal onOrder) {
+		this.onOrder = onOrder;
 	}
 
 }

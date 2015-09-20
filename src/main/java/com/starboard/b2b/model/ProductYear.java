@@ -1,6 +1,7 @@
 
 package com.starboard.b2b.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -9,8 +10,11 @@ import javax.persistence.Table;
 @Table(name = "product_year")
 public class ProductYear extends BaseModel {
 	@Id
+	@Column(name = "product_year_id")
 	private String productYearId;
+	@Column(name = "product_year_name")
 	private String productYearName;
+	@Column(name = "description")
 	private String description;
 
 	public String getProductYearId() {

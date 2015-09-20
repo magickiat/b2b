@@ -1,6 +1,7 @@
 
 package com.starboard.b2b.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -9,9 +10,16 @@ import javax.persistence.Table;
 @Table(name = "product_cat")
 public class ProductCat extends BaseModel {
 	@Id
+	@Column(name = "product_cat_id")
 	private long productCatId;
+
+	@Column(name = "product_cat_name")
 	private String productCatName;
+
+	@Column(name = "product_cat_parent_id")
 	private long productCatParentId;
+
+	@Column(name = "product_cat_description")
 	private String productCatDescription;
 
 	public long getProductCatId() {
