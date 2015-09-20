@@ -1,4 +1,4 @@
-package com.starboard.b2b.service;
+package com.starboard.b2b.service.impl;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.dao.BrandDao;
 import com.starboard.b2b.model.Brand;
+import com.starboard.b2b.service.BrandService;
 
 @Service
 public class BrandServiceImpl implements BrandService {

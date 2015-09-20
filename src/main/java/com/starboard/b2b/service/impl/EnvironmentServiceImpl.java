@@ -1,4 +1,4 @@
-package com.starboard.b2b.service;
+package com.starboard.b2b.service.impl;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.dao.UserDao;
+import com.starboard.b2b.service.EnvironmentService;
 
 @Service
 public class EnvironmentServiceImpl implements EnvironmentService {

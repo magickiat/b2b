@@ -1,4 +1,4 @@
-package com.starboard.b2b.service;
+package com.starboard.b2b.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,7 @@ import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dao.ProductDao;
 import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.model.product.Product;
+import com.starboard.b2b.service.ProductService;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -24,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
 		ArrayList<ProductDTO> products = new ArrayList<>();
 		List<Product> list = productDao.list(brandId);
 		for (Product product : list) {
-			products.add(new ProductDTO(product));
+//			products.add(new ProductDTO(product));
 		}
 		return products;
 	}

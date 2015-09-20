@@ -1,4 +1,4 @@
-package com.starboard.b2b.service;
+package com.starboard.b2b.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +18,7 @@ import com.starboard.b2b.dto.BrandDTO;
 import com.starboard.b2b.dto.CustomerDTO;
 import com.starboard.b2b.model.Brand;
 import com.starboard.b2b.model.Customer;
+import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.brand.BrandForm;

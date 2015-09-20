@@ -1,4 +1,4 @@
-package com.starboard.b2b.service;
+package com.starboard.b2b.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.dao.RoleDao;
 import com.starboard.b2b.model.Role;
+import com.starboard.b2b.service.SecurityService;
 
 @Service
 public class SecurityServiceImpl implements SecurityService {

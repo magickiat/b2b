@@ -1,4 +1,4 @@
-package com.starboard.b2b.service;
+package com.starboard.b2b.service.impl;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.dao.AppConfigDao;
 import com.starboard.b2b.model.AppConfig;
+import com.starboard.b2b.service.ConfigService;
 
 @Service
 public class ConfigServiceImpl implements ConfigService {

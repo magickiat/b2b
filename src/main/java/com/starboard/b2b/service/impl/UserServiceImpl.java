@@ -1,4 +1,4 @@
-package com.starboard.b2b.service;
+package com.starboard.b2b.service.impl;
 
 import java.util.HashSet;
 import java.util.List;
@@ -18,6 +18,7 @@ import com.starboard.b2b.model.Customer;
 import com.starboard.b2b.model.Role;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.security.MD5;
+import com.starboard.b2b.service.UserService;
 import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.user.UserForm;
