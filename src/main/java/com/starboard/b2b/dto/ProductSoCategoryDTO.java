@@ -1,14 +1,8 @@
 
-package com.starboard.b2b.model;
+package com.starboard.b2b.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class ProductSoCategoryDTO {
 
-@Entity
-@Table(name = "product_so_category")
-public class ProductSoCategory extends BaseModel {
-	@Id
 	private String soCategory;
 	private String site;
 	private String warehouse;

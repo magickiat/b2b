@@ -13,52 +13,94 @@ public class Product extends BaseModel {
 	@Id
 	@Column(name = "product_id")
 	private long productId;
-
+	@Column(name = "product_type_id")
 	private long productTypeId;
+	@Column(name = "product_catalog_id")
 	private long productCatalogId;
+	@Column(name = "product_group_id")
 	private long productGroupId;
+	@Column(name = "product_code")
 	private String productCode;
+	@Column(name = "product_name_th")
 	private String productNameTh;
+	@Column(name = "product_name_en")
 	private String productNameEn;
+	@Column(name = "product_price")
 	private java.math.BigDecimal productPrice;
+	@Column(name = "product_discount")
 	private java.math.BigDecimal productDiscount;
+	@Column(name = "product_total_price")
 	private java.math.BigDecimal productTotalPrice;
+	@Column(name = "product_currency")
 	private String productCurrency;
+	@Column(name = "product_band")
 	private String productBand;
+	@Column(name = "product_quantity")
 	private long productQuantity;
+	@Column(name = "product_weight")
 	private java.math.BigDecimal productWeight;
+	@Column(name = "product_preintro")
 	private String productPreintro;
+	@Column(name = "product_intro")
 	private int productIntro;
+	@Column(name = "product_detail")
 	private String productDetail;
+	@Column(name = "product_summarize")
 	private String productSummarize;
+	@Column(name = "product_link")
 	private String productLink;
-	private long productStatus;
-	private long productStock;
-	private String productItemGroupId;
-	private String vendor;
-	private String productItemTypeId;
-	private String productSubcategoryId;
-	private String searchName;
-	private String productTechnologyId;
-	private String productDesign;
-	private String supCatG;
-	private java.math.BigDecimal productWidth;
-	private String productLength;
-	private String supGroup;
-	private String productBuyerGroupId;
-	private String productCategoryId;
-	private String productModelId;
-	private String productYearId;
-	private String productUnitId;
-	private java.math.BigDecimal sortBy;
-	private String isActive;
-	private String company;
-	private String soCategory;
-
-	private String productPictureSmallHorizontal;
-	private String productPictureSmallVertical;
+	@Column(name = "product_picture_medium")
 	private String productPictureMedium;
+	@Column(name = "product_picture_big")
 	private String productPictureBig;
+	@Column(name = "product_status")
+	private long productStatus;
+	@Column(name = "product_stock")
+	private long productStock;
+	@Column(name = "product_item_group_id")
+	private String productItemGroupId;
+	@Column(name = "vendor")
+	private String vendor;
+	@Column(name = "product_item_type_id")
+	private String productItemTypeId;
+	@Column(name = "product_subcategory_id")
+	private String productSubcategoryId;
+	@Column(name = "search_name")
+	private String searchName;
+	@Column(name = "product_technology_id")
+	private String productTechnologyId;
+	@Column(name = "product_design")
+	private String productDesign;
+	@Column(name = "sup_cat_g")
+	private String supCatG;
+	@Column(name = "product_width")
+	private java.math.BigDecimal productWidth;
+	@Column(name = "product_length")
+	private String productLength;
+	@Column(name = "sup_group")
+	private String supGroup;
+	@Column(name = "product_buyer_group_id")
+	private String productBuyerGroupId;
+	@Column(name = "product_category_id")
+	private String productCategoryId;
+	@Column(name = "product_model_id")
+	private String productModelId;
+	@Column(name = "product_year_id")
+	private String productYearId;
+	@Column(name = "product_unit_id")
+	private String productUnitId;
+	@Column(name = "sort_by")
+	private java.math.BigDecimal sortBy;
+	@Column(name = "is_active")
+	private String isActive;
+	@Column(name = "company")
+	private String company;
+	@Column(name = "so_category")
+	private String soCategory;
+	@Column(name = "product_picture_small_horizontal")
+	private String productPictureSmallHorizontal;
+	@Column(name = "product_picture_small_vertical")
+	private String productPictureSmallVertical;
 
 	public long getProductId() {
 		return productId;

@@ -1,9 +1,9 @@
 
-package com.starboard.b2b.model;
+package com.starboard.b2b.dto;
 
 import java.util.Date;
 
-public class ProductCalendar extends BaseModel {
+public class ProductCalendarDTO {
 
 	private int idCalendar;
 	private String descriptions;

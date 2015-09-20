@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dao.ProductDao;
 import com.starboard.b2b.dto.ProductDTO;
-import com.starboard.b2b.model.product.Product;
+import com.starboard.b2b.model.Product;
 import com.starboard.b2b.service.ProductService;
 
 @Service

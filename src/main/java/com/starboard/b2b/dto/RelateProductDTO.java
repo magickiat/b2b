@@ -1,14 +1,8 @@
 
-package com.starboard.b2b.model;
+package com.starboard.b2b.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class RelateProductDTO {
 
-@Entity
-@Table(name = "relate_product")
-public class RelateProduct extends BaseModel {
-	@Id
 	private long productId;
 	private long relateProductId;
 

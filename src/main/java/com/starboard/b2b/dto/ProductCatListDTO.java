@@ -1,14 +1,8 @@
 
-package com.starboard.b2b.model;
+package com.starboard.b2b.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class ProductCatListDTO {
 
-@Entity
-@Table(name = "product_cat_list")
-public class ProductCatList {
-	@Id
 	private long productId;
 	private long productCatId;
 

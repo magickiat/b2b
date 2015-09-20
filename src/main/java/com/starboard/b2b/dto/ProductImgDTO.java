@@ -1,14 +1,8 @@
 
-package com.starboard.b2b.model;
+package com.starboard.b2b.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class ProductImgDTO {
 
-@Entity
-@Table(name = "product_img")
-public class ProductImg extends BaseModel {
-	@Id
 	private long productImgId;
 	private String productCode;
 	private String imgPath;

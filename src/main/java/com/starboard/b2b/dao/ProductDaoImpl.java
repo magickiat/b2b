@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.model.Brand;
-import com.starboard.b2b.model.product.Product;
+import com.starboard.b2b.model.Product;
 
 @Repository
 public class ProductDaoImpl implements ProductDao {

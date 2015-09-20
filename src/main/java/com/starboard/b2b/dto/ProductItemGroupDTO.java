@@ -1,14 +1,8 @@
 
-package com.starboard.b2b.model;
+package com.starboard.b2b.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class ProductItemGroupDTO  {
 
-@Entity
-@Table(name = "product_item_group")
-public class ProductItemGroup extends BaseModel {
-	@Id
 	private String productItemGroupId;
 	private String productItemGroupName;
 	private String description;

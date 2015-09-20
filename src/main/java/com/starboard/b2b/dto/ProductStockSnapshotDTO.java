@@ -1,14 +1,8 @@
 
-package com.starboard.b2b.model;
+package com.starboard.b2b.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class ProductStockSnapshotDTO {
 
-@Entity
-@Table(name = "product_stock_snapshot")
-public class ProductStockSnapshot extends BaseModel {
-	@Id
 	private long productStockSnapshotId;
 	private String productCode;
 	private String custCode;

@@ -3,7 +3,7 @@ package com.starboard.b2b.dao;
 import java.util.List;
 
 import com.starboard.b2b.common.Page;
-import com.starboard.b2b.model.product.Product;
+import com.starboard.b2b.model.Product;
 
 public interface ProductDao {
 
