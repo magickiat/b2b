@@ -87,10 +87,15 @@ public class BackendCustomerController {
 	String update(@RequestParam(value = "id", required = false) Integer id, Model model) throws Exception {
 		log.info("/update GET");
 		log.info("id = " + id);
-		CustomerDTO cust = customerService.findById(id);
+		
+		CustomerDTO cust = new CustomerDTO();
 		List<User> users = new ArrayList<User>();
-		if (cust != null) {
-			users = userService.findUserByCustId(id);
+		if (!model.containsAttribute("customerForm")) {
+			cust = customerService.findById(id);
+
+			if (cust != null) {
+				users = userService.findUserByCustId(id);
+			}
 		}
 
 		model.addAttribute("customerForm", cust);
@@ -100,31 +105,15 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	String update(@ModelAttribute @Valid CustomerForm customerForm, BindingResult binding, RedirectAttributes redirectAttributes,Model model)
-			throws Exception {
+	String update(@ModelAttribute @Valid CustomerForm customerForm, BindingResult binding, RedirectAttributes attr,
+			Model model) throws Exception {
 		log.info("/update POST");
 		log.info("customer id: " + customerForm.getCustId());
-		if (!binding.hasErrors()) {
-			String errorMsg = null;
-			if (customerService.isExistCustomerName(customerForm.getName())) {
-				errorMsg = "Exist customer name: " + customerForm.getName();
-			} else if (customerService.isExistCustomerCode(customerForm.getCode())) {
-				errorMsg = "Exist customer code: " + customerForm.getCode();
-			} else {
-				customerService.update(customerForm);
-			}
-
-			if (errorMsg != null) {
-				log.warn(errorMsg);
-				model.addAttribute("errorMsg", errorMsg);
-				
-				redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.customerForm", binding);
-		        redirectAttributes.addFlashAttribute("customerForm", customerForm);
-		        return "redirect:update?id=" +customerForm.getCustId();
-			}
-
+		if (binding.hasErrors()) {
+			attr.addFlashAttribute("msg", "Hello");
+			return "redirect:update?id=" + customerForm.getCustId();
 		}
-
+		customerService.update(customerForm);
 		return update(customerForm.getCustId(), model);
 	}
 

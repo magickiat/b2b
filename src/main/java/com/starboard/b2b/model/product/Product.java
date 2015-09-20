@@ -3,6 +3,8 @@ package com.starboard.b2b.model.product;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -12,15 +14,27 @@ public class Product {
 	@Id
 	@Column(name = "product_id")
 	private long productId;
-	private long productTypeId;
-	private long productCatalogId;
-	private long productGroupId;
+
+	@OneToOne(optional = false)
+	@JoinColumn(name = "product_type_id")
+	private ProductType productType;
+
+	@OneToOne(optional = false)
+	@JoinColumn(name = "product_category_id")
+	private ProductCategory productCategory;
+
+	@OneToOne(optional = false)
+	@JoinColumn(name = "product_group_id")
+	private ProductGroup productGroup;
+
 	private String productCode;
 	private String productNameTh;
 	private String productNameEn;
+
 	private java.math.BigDecimal productPrice;
 	private java.math.BigDecimal productDiscount;
 	private java.math.BigDecimal productTotalPrice;
+
 	private String productCurrency;
 	private String productBand;
 	private long productQuantity;
@@ -30,8 +44,7 @@ public class Product {
 	private String productDetail;
 	private String productSummarize;
 	private String productLink;
-	private String productPictureMedium;
-	private String productPictureBig;
+
 	private long productStatus;
 	private long productStock;
 	private String productItemGroupId;
@@ -54,404 +67,10 @@ public class Product {
 	private String isActive;
 	private String company;
 	private String soCategory;
+
+	private String productPictureMedium;
+	private String productPictureBig;
 	private String productPictureSmallHorizontal;
 	private String productPictureSmallVertical;
-	private String userCreate;
-	private String userUpdate;
-	private java.util.Date timeCreate;
-	private java.util.Date timeUpdate;
-
-	public long getProductId() {
-		return productId;
-	}
-
-	public void setProductId(long productId) {
-		this.productId = productId;
-	}
-
-	public long getProductTypeId() {
-		return productTypeId;
-	}
-
-	public void setProductTypeId(long productTypeId) {
-		this.productTypeId = productTypeId;
-	}
-
-	public long getProductCatalogId() {
-		return productCatalogId;
-	}
-
-	public void setProductCatalogId(long productCatalogId) {
-		this.productCatalogId = productCatalogId;
-	}
-
-	public long getProductGroupId() {
-		return productGroupId;
-	}
-
-	public void setProductGroupId(long productGroupId) {
-		this.productGroupId = productGroupId;
-	}
-
-	public String getProductCode() {
-		return productCode;
-	}
-
-	public void setProductCode(String productCode) {
-		this.productCode = productCode;
-	}
-
-	public String getProductNameTh() {
-		return productNameTh;
-	}
-
-	public void setProductNameTh(String productNameTh) {
-		this.productNameTh = productNameTh;
-	}
-
-	public String getProductNameEn() {
-		return productNameEn;
-	}
-
-	public void setProductNameEn(String productNameEn) {
-		this.productNameEn = productNameEn;
-	}
-
-	public java.math.BigDecimal getProductPrice() {
-		return productPrice;
-	}
-
-	public void setProductPrice(java.math.BigDecimal productPrice) {
-		this.productPrice = productPrice;
-	}
-
-	public java.math.BigDecimal getProductDiscount() {
-		return productDiscount;
-	}
-
-	public void setProductDiscount(java.math.BigDecimal productDiscount) {
-		this.productDiscount = productDiscount;
-	}
-
-	public java.math.BigDecimal getProductTotalPrice() {
-		return productTotalPrice;
-	}
-
-	public void setProductTotalPrice(java.math.BigDecimal productTotalPrice) {
-		this.productTotalPrice = productTotalPrice;
-	}
-
-	public String getProductCurrency() {
-		return productCurrency;
-	}
-
-	public void setProductCurrency(String productCurrency) {
-		this.productCurrency = productCurrency;
-	}
-
-	public String getProductBand() {
-		return productBand;
-	}
-
-	public void setProductBand(String productBand) {
-		this.productBand = productBand;
-	}
-
-	public long getProductQuantity() {
-		return productQuantity;
-	}
-
-	public void setProductQuantity(long productQuantity) {
-		this.productQuantity = productQuantity;
-	}
-
-	public java.math.BigDecimal getProductWeight() {
-		return productWeight;
-	}
-
-	public void setProductWeight(java.math.BigDecimal productWeight) {
-		this.productWeight = productWeight;
-	}
-
-	public String getProductPreintro() {
-		return productPreintro;
-	}
-
-	public void setProductPreintro(String productPreintro) {
-		this.productPreintro = productPreintro;
-	}
-
-	public int getProductIntro() {
-		return productIntro;
-	}
-
-	public void setProductIntro(int productIntro) {
-		this.productIntro = productIntro;
-	}
-
-	public String getProductDetail() {
-		return productDetail;
-	}
-
-	public void setProductDetail(String productDetail) {
-		this.productDetail = productDetail;
-	}
-
-	public String getProductSummarize() {
-		return productSummarize;
-	}
-
-	public void setProductSummarize(String productSummarize) {
-		this.productSummarize = productSummarize;
-	}
-
-	public String getProductLink() {
-		return productLink;
-	}
-
-	public void setProductLink(String productLink) {
-		this.productLink = productLink;
-	}
-
-	public String getProductPictureMedium() {
-		return productPictureMedium;
-	}
-
-	public void setProductPictureMedium(String productPictureMedium) {
-		this.productPictureMedium = productPictureMedium;
-	}
-
-	public String getProductPictureBig() {
-		return productPictureBig;
-	}
-
-	public void setProductPictureBig(String productPictureBig) {
-		this.productPictureBig = productPictureBig;
-	}
-
-	public long getProductStatus() {
-		return productStatus;
-	}
-
-	public void setProductStatus(long productStatus) {
-		this.productStatus = productStatus;
-	}
-
-	public long getProductStock() {
-		return productStock;
-	}
-
-	public void setProductStock(long productStock) {
-		this.productStock = productStock;
-	}
-
-	public String getProductItemGroupId() {
-		return productItemGroupId;
-	}
-
-	public void setProductItemGroupId(String productItemGroupId) {
-		this.productItemGroupId = productItemGroupId;
-	}
-
-	public String getVendor() {
-		return vendor;
-	}
-
-	public void setVendor(String vendor) {
-		this.vendor = vendor;
-	}
-
-	public String getProductItemTypeId() {
-		return productItemTypeId;
-	}
-
-	public void setProductItemTypeId(String productItemTypeId) {
-		this.productItemTypeId = productItemTypeId;
-	}
-
-	public String getProductSubcategoryId() {
-		return productSubcategoryId;
-	}
-
-	public void setProductSubcategoryId(String productSubcategoryId) {
-		this.productSubcategoryId = productSubcategoryId;
-	}
-
-	public String getSearchName() {
-		return searchName;
-	}
-
-	public void setSearchName(String searchName) {
-		this.searchName = searchName;
-	}
-
-	public String getProductTechnologyId() {
-		return productTechnologyId;
-	}
-
-	public void setProductTechnologyId(String productTechnologyId) {
-		this.productTechnologyId = productTechnologyId;
-	}
-
-	public String getProductDesign() {
-		return productDesign;
-	}
-
-	public void setProductDesign(String productDesign) {
-		this.productDesign = productDesign;
-	}
-
-	public String getSupCatG() {
-		return supCatG;
-	}
-
-	public void setSupCatG(String supCatG) {
-		this.supCatG = supCatG;
-	}
-
-	public java.math.BigDecimal getProductWidth() {
-		return productWidth;
-	}
-
-	public void setProductWidth(java.math.BigDecimal productWidth) {
-		this.productWidth = productWidth;
-	}
-
-	public String getProductLength() {
-		return productLength;
-	}
-
-	public void setProductLength(String productLength) {
-		this.productLength = productLength;
-	}
-
-	public String getSupGroup() {
-		return supGroup;
-	}
-
-	public void setSupGroup(String supGroup) {
-		this.supGroup = supGroup;
-	}
-
-	public String getProductBuyerGroupId() {
-		return productBuyerGroupId;
-	}
-
-	public void setProductBuyerGroupId(String productBuyerGroupId) {
-		this.productBuyerGroupId = productBuyerGroupId;
-	}
-
-	public String getProductCategoryId() {
-		return productCategoryId;
-	}
-
-	public void setProductCategoryId(String productCategoryId) {
-		this.productCategoryId = productCategoryId;
-	}
-
-	public String getProductModelId() {
-		return productModelId;
-	}
-
-	public void setProductModelId(String productModelId) {
-		this.productModelId = productModelId;
-	}
-
-	public String getProductYearId() {
-		return productYearId;
-	}
-
-	public void setProductYearId(String productYearId) {
-		this.productYearId = productYearId;
-	}
-
-	public String getProductUnitId() {
-		return productUnitId;
-	}
-
-	public void setProductUnitId(String productUnitId) {
-		this.productUnitId = productUnitId;
-	}
-
-	public java.math.BigDecimal getSortBy() {
-		return sortBy;
-	}
-
-	public void setSortBy(java.math.BigDecimal sortBy) {
-		this.sortBy = sortBy;
-	}
-
-	public String getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(String isActive) {
-		this.isActive = isActive;
-	}
-
-	public String getCompany() {
-		return company;
-	}
-
-	public void setCompany(String company) {
-		this.company = company;
-	}
-
-	public String getSoCategory() {
-		return soCategory;
-	}
-
-	public void setSoCategory(String soCategory) {
-		this.soCategory = soCategory;
-	}
-
-	public String getProductPictureSmallHorizontal() {
-		return productPictureSmallHorizontal;
-	}
-
-	public void setProductPictureSmallHorizontal(String productPictureSmallHorizontal) {
-		this.productPictureSmallHorizontal = productPictureSmallHorizontal;
-	}
-
-	public String getProductPictureSmallVertical() {
-		return productPictureSmallVertical;
-	}
-
-	public void setProductPictureSmallVertical(String productPictureSmallVertical) {
-		this.productPictureSmallVertical = productPictureSmallVertical;
-	}
-
-	public String getUserCreate() {
-		return userCreate;
-	}
-
-	public void setUserCreate(String userCreate) {
-		this.userCreate = userCreate;
-	}
-
-	public String getUserUpdate() {
-		return userUpdate;
-	}
-
-	public void setUserUpdate(String userUpdate) {
-		this.userUpdate = userUpdate;
-	}
-
-	public java.util.Date getTimeCreate() {
-		return timeCreate;
-	}
-
-	public void setTimeCreate(java.util.Date timeCreate) {
-		this.timeCreate = timeCreate;
-	}
-
-	public java.util.Date getTimeUpdate() {
-		return timeUpdate;
-	}
-
-	public void setTimeUpdate(java.util.Date timeUpdate) {
-		this.timeUpdate = timeUpdate;
-	}
-
 
 }

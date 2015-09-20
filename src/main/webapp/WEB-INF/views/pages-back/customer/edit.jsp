@@ -18,6 +18,7 @@
 			<form:form servletRelativeAction="/backend/customer/update"
 				class="form-horizontal" modelAttribute="customerForm" method="post">
 				<form:errors path="*" cssClass="alert alert-danger" element="div" />
+				<div>${msg }</div>
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="code">Code:</label>
 					<div class="col-sm-4">
