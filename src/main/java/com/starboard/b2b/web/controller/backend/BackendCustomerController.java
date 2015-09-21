@@ -65,37 +65,21 @@ public class BackendCustomerController {
 			return "pages-back/customer/create";
 		}
 
-		String errorMsg = null;
-		if (customerService.isExistCustomerName(customerForm.getName())) {
-			errorMsg = "Exist customer name: " + customerForm.getName();
-		} else if (customerService.isExistCustomerCode(customerForm.getCode())) {
-			errorMsg = "Exist customer code: " + customerForm.getCode();
-		} else {
-			customerService.add(customerForm);
-		}
-
-		if (errorMsg != null) {
-			log.warn(errorMsg);
-			model.addAttribute("errorMsg", errorMsg);
-			return "pages-back/customer/create";
-		}
-
+		customerService.add(customerForm);
 		return search(model);
 	}
 
 	@RequestMapping(value = "update", method = RequestMethod.GET)
-	String update(@RequestParam(value = "id", required = false) Integer id, Model model) throws Exception {
+	String update(@RequestParam(value = "id", required = true) Integer id, Model model) throws Exception {
 		log.info("/update GET");
 		log.info("id = " + id);
-		
+
 		CustomerDTO cust = new CustomerDTO();
 		List<User> users = new ArrayList<User>();
-		if (!model.containsAttribute("customerForm")) {
-			cust = customerService.findById(id);
+		cust = customerService.findById(id);
 
-			if (cust != null) {
-				users = userService.findUserByCustId(id);
-			}
+		if (cust != null) {
+			users = userService.findUserByCustId(id);
 		}
 
 		model.addAttribute("customerForm", cust);
@@ -118,10 +102,10 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "/createuser", method = RequestMethod.GET)
-	String createUser(@RequestParam(value = "id", required = true) Integer id, Model model) {
+	String createUser(@RequestParam(value = "custId", required = true) Integer custId, Model model) {
 		log.info("/createuser GET");
 		UserRegisterForm form = new UserRegisterForm();
-		form.setCusId(id);
+		form.setCusId(custId);
 		model.addAttribute("registerForm", form);
 		return "pages-back/customer/createCustomerUser";
 	}

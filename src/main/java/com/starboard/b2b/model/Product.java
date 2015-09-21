@@ -31,8 +31,6 @@ public class Product extends BaseModel {
 	private java.math.BigDecimal productDiscount;
 	@Column(name = "product_total_price")
 	private java.math.BigDecimal productTotalPrice;
-	@Column(name = "product_currency")
-	private String productCurrency;
 	@Column(name = "product_band")
 	private String productBand;
 	@Column(name = "product_quantity")
@@ -180,14 +178,6 @@ public class Product extends BaseModel {
 
 	public void setProductTotalPrice(java.math.BigDecimal productTotalPrice) {
 		this.productTotalPrice = productTotalPrice;
-	}
-
-	public String getProductCurrency() {
-		return productCurrency;
-	}
-
-	public void setProductCurrency(String productCurrency) {
-		this.productCurrency = productCurrency;
 	}
 
 	public String getProductBand() {

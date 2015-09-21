@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,8 +29,7 @@ import com.starboard.b2b.web.form.customer.CustomerForm;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
-	// private static final Logger log =
-	// LoggerFactory.getLogger(CustomerServiceImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(CustomerServiceImpl.class);
 	@Autowired
 	private CustomerDao customerDao;
 
@@ -137,6 +138,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional(readOnly = true)
 	public boolean isExistCustomerCode(String code) {
+		log.info("isExistCustomerCode");
 		return customerDao.exist("code", code);
 	}
 

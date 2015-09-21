@@ -47,8 +47,11 @@
 			<div class="form-group" style="background-color: blue;">
 				<label class="control-label col-sm-11">Login Account</label>
 				<div class="col-sm-1">
-					<button type="button" class="btn btn-default"
-						onclick="javascript:createUser('${customerForm.custId}');">Add</button>
+					<form:form servletRelativeAction="/backend/customer/createuser"
+						class="form-horizontal" modelAttribute="customerForm" method="get">
+						<form:hidden path="custId" />
+						<button type="submit" class="btn btn-default">Add</button>
+					</form:form>
 				</div>
 			</div>
 		</div>
@@ -74,7 +77,7 @@
 							<td>${user.password }</td>
 							<td>${user.enabled }</td>
 							<td></td>
-							<td>${user.createdDate }</td>
+							<td>${user.timeCreate }</td>
 							<td></td>
 						</tr>
 					</c:forEach>

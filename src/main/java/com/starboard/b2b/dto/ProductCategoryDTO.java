@@ -1,7 +1,7 @@
 
 package com.starboard.b2b.dto;
 
-public class ProductCategoryDTO  {
+public class ProductCategoryDTO extends BaseDTO  {
 
 	private String productCategoryId;
 	private String productCategoryName;

@@ -20,7 +20,16 @@
 				src='<c:url value="/images/pages-front/icon/step1.png" />'
 				width="100%">
 		</div>
-
+		<div class="row">
+			<form:form modelAttribute="searchProductForm"
+				servletRelativeAction="/frontend/order/step2_search" method="POST">
+				<form:select path="selectedBrand">
+					<form:option value="NONE" label="ALL BRAND" />
+					<form:options items="${productCategory}"
+						itemLabel="productCategoryName" itemValue="productCategoryId" />
+				</form:select>
+			</form:form>
+		</div>
 		<div class="row">&nbsp;</div>
 		<div class="row">
 			<c:choose>

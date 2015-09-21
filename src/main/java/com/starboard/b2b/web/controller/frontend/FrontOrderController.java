@@ -1,5 +1,7 @@
 package com.starboard.b2b.web.controller.frontend;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.starboard.b2b.service.ProductService;
+import com.starboard.b2b.web.form.product.SearchProductForm;
 
 @Controller
 @RequestMapping("/frontend/order")
@@ -36,10 +39,15 @@ public class FrontOrderController {
 	String step2SearchProduct(@RequestParam("brand_id") Integer brandId, Model model) throws Exception {
 		log.info("step2_search GET");
 		log.info("Brand id: " + brandId);
-		model.addAttribute("products", productService.list(brandId));
+		
+		//TODO set search condition
+		model.addAttribute("productCategory", productService.findAllProductCategory());
+	    model.addAttribute("searchProductForm", new SearchProductForm());
 		model.addAttribute("brandId", brandId);
 		return "pages-front/order/step2_search";
 	}
+	
+	
 
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	String createOrderForm(Model model) {

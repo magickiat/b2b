@@ -17,9 +17,8 @@
 			<form:form servletRelativeAction="/backend/customer/create"
 				class="form-horizontal" modelAttribute="customerForm" method="post">
 				<div class="row">
-					<div class="col-sm-2">&nbsp;</div>
-					<div class="col-sm-10">
-						<form:errors path="*" cssClass="text-danger" element="div" />
+					<div class="col-sm-12">
+						<form:errors path="*" cssClass="alert alert-danger" element="div" />
 					</div>
 				</div>
 

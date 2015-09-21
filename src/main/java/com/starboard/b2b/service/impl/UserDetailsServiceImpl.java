@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 
 //		return new SecurityUserDetail(user);
-		return null;
+		return user;
 	}
 
 	@Autowired

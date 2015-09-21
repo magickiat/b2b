@@ -3,14 +3,6 @@
 <%@taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@page session="true"%>
-<c:url var="backendHeaderImage"
-	value="/images/pages-back/images/header.jpg" />
-
-<div class="row">
-	<div class="col-sm-12">
-		<img alt="Header" src="${ backendHeaderImage }">
-	</div>
-</div>
 
 <div class="row">
 

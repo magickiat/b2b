@@ -15,10 +15,9 @@
 		<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 		<div class="row">
 			<form:form servletRelativeAction="/backend/customer/createuser"
-				class="form-horizontal" commandName="registerForm" method="post"
-				onsubmit="return validateForm()">
+				class="form-horizontal" modelAttribute="registerForm" method="post">
 
-				<form:errors path="*" cssClass="text-danger" element="div" />
+				<form:errors path="*" cssClass="alert alert-danger" element="div" />
 
 				<form:hidden path="cusId" />
 				<form:hidden path="roles" value="ROLE_USER" />
@@ -56,13 +55,6 @@
 							placeholder="Enter password" />
 					</div>
 				</div>
-				<%-- <div class="form-group">
-				<label class="control-label col-sm-2"> User role:</label>
-				<div class="col-sm-10">
-					<form:checkboxes element="span class='checkbox-inline'"
-						items="${ roles }" path="roles" />
-				</div>
-			</div> --%>
 
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
@@ -72,6 +64,7 @@
 			</form:form>
 		</div>
 	</div>
+
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 	<script type="text/javascript"
 		src='<c:url value="/scripts/js_back_end/customer/createCustomerUser.js" />'></script>
