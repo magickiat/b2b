@@ -21,6 +21,8 @@ import com.starboard.b2b.dto.ProductTechnologyDTO;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.ProductYearDTO;
 import com.starboard.b2b.model.ProductCategory;
+import com.starboard.b2b.model.ProductModel;
+import com.starboard.b2b.model.ProductYear;
 import com.starboard.b2b.service.ProductService;
 
 @Service
@@ -60,15 +62,27 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public List<ProductModelDTO> findAllProductModel() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		List<ProductModelDTO> result = new ArrayList<>();
+		List<ProductModel> productModels = productModelDao.findAll();
+		for (ProductModel productModel : productModels) {
+			ProductModelDTO dto = new ProductModelDTO();
+			BeanUtils.copyProperties(productModel, dto);
+			result.add(dto);
+		}
+		return result;
 	}
 
 	@Override
 	@Transactional
 	public List<ProductYearDTO> findAllProductYear() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		List<ProductYearDTO> result = new ArrayList<>();
+		List<ProductYear> productYears = productYearDao.findAll();
+		for (ProductYear productYear : productYears) {
+			ProductYearDTO dto = new ProductYearDTO();
+			BeanUtils.copyProperties(productYear, dto);
+			result.add(dto);
+		}
+		return result;
 	}
 
 	@Override

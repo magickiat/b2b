@@ -20,17 +20,71 @@
 				src='<c:url value="/images/pages-front/icon/step1.png" />'
 				width="100%">
 		</div>
+		<div class="row">&nbsp;</div>
+
+
+		<!-- Search condition -->
 		<div class="row">
 			<form:form modelAttribute="searchProductForm"
 				servletRelativeAction="/frontend/order/step2_search" method="POST">
-				<form:select path="selectedBrand">
-					<form:option value="NONE" label="ALL BRAND" />
-					<form:options items="${productCategory}"
-						itemLabel="productCategoryName" itemValue="productCategoryId" />
-				</form:select>
+				<div class="row">
+					<div class="col-md-3">&nbsp;</div>
+					<div class="col-md-2">
+						<form:select path="selectedBrand" cssClass="form-control"
+							multiple="false">
+							<form:option value="NONE" label="ALL BRAND" />
+							<form:options items="${productCategory}"
+								itemLabel="productCategoryName" itemValue="productCategoryId" />
+						</form:select>
+					</div>
+
+					<div class="col-md-2">
+						<form:select path="selectedCategory" cssClass="form-control"
+							multiple="false">
+							<form:option value="NONE" label="ALL CATEGORY" />
+							<form:options items="${productCategory}"
+								itemLabel="productCategoryName" itemValue="productCategoryId" />
+						</form:select>
+					</div>
+
+					<div class="col-md-2">
+						<form:select path="selectedModel" cssClass="form-control"
+							multiple="false">
+							<form:option value="NONE" label="ALL MODEL" />
+							<form:options items="${productModel}"
+								itemLabel="productModelName" itemValue="productModelId" />
+						</form:select>
+					</div>
+
+					<div class="col-md-3">&nbsp;</div>
+
+				</div>
+
+				<div class="row">&nbsp;</div>
+
+				<div class="row">
+					<div class="col-md-3">&nbsp;</div>
+					<div class="col-md-2">
+						<form:select path="selectedYear" cssClass="form-control"
+							multiple="false">
+							<form:option value="NONE" label="ALL YEAR" />
+							<form:options items="${productYear}" itemLabel="productYearName"
+								itemValue="productYearId" />
+						</form:select>
+					</div>
+
+					<div class="col-md-2"></div>
+
+					<div class="col-md-2"></div>
+
+					<div class="col-md-3">&nbsp;</div>
+
+				</div>
 			</form:form>
 		</div>
 		<div class="row">&nbsp;</div>
+
+		<!-- Show table -->
 		<div class="row">
 			<c:choose>
 				<c:when test="${empty products }">
