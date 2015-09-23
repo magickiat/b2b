@@ -22,6 +22,7 @@ import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.ProductYearDTO;
 import com.starboard.b2b.model.ProductCategory;
 import com.starboard.b2b.model.ProductModel;
+import com.starboard.b2b.model.ProductTechnology;
 import com.starboard.b2b.model.ProductYear;
 import com.starboard.b2b.service.ProductService;
 
@@ -49,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public List<ProductCategoryDTO> findAllProductCategory() throws Exception {
-		List<ProductCategoryDTO> result = new ArrayList<>();
+		ArrayList<ProductCategoryDTO> result = new ArrayList<>();
 		List<ProductCategory> list = productCategoryDao.findAll();
 		for (ProductCategory data : list) {
 			ProductCategoryDTO dto = new ProductCategoryDTO();
@@ -88,8 +89,14 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public List<ProductTechnologyDTO> findAllProductTechnology() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		List<ProductTechnologyDTO> result = new ArrayList<>();
+		List<ProductTechnology> technologies = productTechnologyDao.findAll();
+		for (ProductTechnology productTechnology : technologies) {
+			ProductTechnologyDTO dto = new ProductTechnologyDTO();
+			BeanUtils.copyProperties(productTechnology, dto);
+			result.add(dto);
+		}
+		return result;
 	}
 
 	@Override

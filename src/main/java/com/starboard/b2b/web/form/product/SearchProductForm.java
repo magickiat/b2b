@@ -4,6 +4,7 @@ import java.util.List;
 
 public class SearchProductForm {
 	private String searchCondition;
+	private String showType;
 	private List<String> selectedBrand;
 	private List<String> selectedCategory;
 	private List<String> selectedModel;
@@ -56,5 +57,13 @@ public class SearchProductForm {
 
 	public void setSelectedTechnology(List<String> selectedTechnology) {
 		this.selectedTechnology = selectedTechnology;
+	}
+
+	public String getShowType() {
+		return showType;
+	}
+
+	public void setShowType(String showType) {
+		this.showType = showType;
 	}
 }

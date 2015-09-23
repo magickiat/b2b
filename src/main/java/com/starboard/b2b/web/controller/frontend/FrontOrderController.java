@@ -38,11 +38,31 @@ public class FrontOrderController {
 		log.info("step2_search GET");
 		log.info("Brand id: " + brandId);
 		
-		//TODO set search condition
-		model.addAttribute("productCategory", productService.findAllProductCategory());
-		model.addAttribute("productModel", productService.findAllProductModel());
-		model.addAttribute("productYear", productService.findAllProductYear());
-	    model.addAttribute("searchProductForm", new SearchProductForm());
+		
+		if(!model.containsAttribute("searchProductForm")){
+			model.addAttribute("searchProductForm", new SearchProductForm());
+		}
+		
+		//TODO set product brand search criteria
+		
+		//set search condition
+		if(!model.containsAttribute("productCategory")){
+			model.addAttribute("productCategory", productService.findAllProductCategory());
+		}
+		
+		if(!model.containsAttribute("productModel")){
+			model.addAttribute("productModel", productService.findAllProductModel());	
+		}
+		
+		if(!model.containsAttribute("productYear")){
+			model.addAttribute("productYear", productService.findAllProductYear());
+		}
+		
+		if(!model.containsAttribute("productTechnology")){
+			model.addAttribute("productTechnology", productService.findAllProductTechnology());
+		}
+		
+	    
 		model.addAttribute("brandId", brandId);
 		return "pages-front/order/step2_search";
 	}

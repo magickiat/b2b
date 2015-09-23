@@ -27,13 +27,15 @@
 		<div class="row">
 			<form:form modelAttribute="searchProductForm"
 				servletRelativeAction="/frontend/order/step2_search" method="POST">
+
+				<!-- ROW 1 -->
 				<div class="row">
 					<div class="col-md-3">&nbsp;</div>
 					<div class="col-md-2">
 						<form:select path="selectedBrand" cssClass="form-control"
 							multiple="false">
 							<form:option value="NONE" label="ALL BRAND" />
-							<form:options items="${productCategory}"
+							<form:options items="${productBrand}"
 								itemLabel="productCategoryName" itemValue="productCategoryId" />
 						</form:select>
 					</div>
@@ -56,12 +58,15 @@
 						</form:select>
 					</div>
 
-					<div class="col-md-3">&nbsp;</div>
+					<div class="col-md-3">
+						<button type="submit" class="btn btn-success">Submit</button>
+					</div>
 
 				</div>
 
 				<div class="row">&nbsp;</div>
 
+				<!-- ROW 2 -->
 				<div class="row">
 					<div class="col-md-3">&nbsp;</div>
 					<div class="col-md-2">
@@ -73,11 +78,24 @@
 						</form:select>
 					</div>
 
-					<div class="col-md-2"></div>
+					<div class="col-md-2">
+						<form:select path="selectedTechnology" cssClass="form-control"
+							multiple="false">
+							<form:option value="NONE" label="ALL TECHNOLOGY" />
+							<form:options items="${productTechnology}"
+								itemLabel="productTechnologyName"
+								itemValue="productTechnologyId" />
+						</form:select>
+					</div>
 
 					<div class="col-md-2"></div>
 
-					<div class="col-md-3">&nbsp;</div>
+					<div class="col-md-3">
+						<label class="radio-inline"> <form:radiobutton
+								path="showType" value="image" />Images
+						</label> <label class="radio-inline"><form:radiobutton
+								path="showType" value="list" />List</label>
+					</div>
 
 				</div>
 			</form:form>
