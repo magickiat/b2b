@@ -13,7 +13,7 @@ public interface UserService {
 
 	User findUserById(String id);
 	
-	List<User> findUserByCustId(Integer cusId);
+	List<User> findUserByCustId(Long cusId);
 	
 	User findByUsername(String username);
 

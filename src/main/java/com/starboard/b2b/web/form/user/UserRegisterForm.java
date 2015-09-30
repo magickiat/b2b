@@ -14,7 +14,7 @@ public class UserRegisterForm {
 	private String password;
 	private String confirmPassword;
 	private String email;
-	private Integer cusId;
+	private Long cusId;
 	private Set<String> roles = new HashSet<>();
 
 	public String getUsername() {
@@ -65,12 +65,13 @@ public class UserRegisterForm {
 		this.email = email;
 	}
 
-	public Integer getCusId() {
+	public Long getCusId() {
 		return cusId;
 	}
 
-	public void setCusId(Integer cusId) {
+	public void setCusId(Long cusId) {
 		this.cusId = cusId;
 	}
+
 
 }

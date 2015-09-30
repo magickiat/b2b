@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<User> findUserByCustId(Integer custId) {
+	public List<User> findUserByCustId(Long custId) {
 		return userDao.findByCustId(custId);
 	}
 

@@ -8,7 +8,7 @@ import com.starboard.b2b.model.User;
 public interface UserDao extends BaseDao {
 	User findById(String id);
 	
-	List<User> findByCustId(Integer id);
+	List<User> findByCustId(Long id);
 
 	User findByUsername(String username);
 

@@ -17,7 +17,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public Customer findById(int id) {
+	public Customer findById(Long id) {
 		return (Customer) sessionFactory.getCurrentSession().get(Customer.class, id);
 	}
 

@@ -31,7 +31,7 @@ public class BrandDaoImpl implements BrandDao {
 	}
 
 	@Override
-	public void addSelectedBrand(Integer custId, List<Integer> selectedBrand) {
+	public void addSelectedBrand(Long custId, List<Integer> selectedBrand) {
 		Session session = sessionFactory.getCurrentSession();
 
 		Customer customer = (Customer) session.get(Customer.class, custId);

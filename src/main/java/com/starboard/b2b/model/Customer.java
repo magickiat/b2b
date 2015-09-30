@@ -27,16 +27,13 @@ public class Customer extends BaseModel implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "cust_id")
-	private Integer custId;
+	private Long custId;
 
 	@Column(length = 255, nullable = false)
 	private String name;
 
 	@Column(length = 20, nullable = false)
 	private String code;
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Country country;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Brand> brands = new TreeSet<>();
@@ -90,18 +87,6 @@ public class Customer extends BaseModel implements Serializable {
 		this.contacts = contacts;
 	}
 
-	public Country getCountry() {
-		return country;
-	}
-
-	public void setCountry(Country country) {
-		this.country = country;
-	}
-
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		return EqualsBuilder.reflectionEquals(this, obj);
@@ -112,11 +97,12 @@ public class Customer extends BaseModel implements Serializable {
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
-	public Integer getCustId() {
+	public Long getCustId() {
 		return custId;
 	}
 
-	public void setCustId(Integer custId) {
+	public void setCustId(Long custId) {
 		this.custId = custId;
 	}
+
 }

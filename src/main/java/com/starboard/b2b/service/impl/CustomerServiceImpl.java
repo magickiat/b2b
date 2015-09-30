@@ -37,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
 	private BrandDao brandDao;
 
 	@Transactional(readOnly = true)
-	public CustomerDTO findById(int id) {
+	public CustomerDTO findById(Long id) {
 		Customer customer = customerDao.findById(id);
 		return customer == null ? null : new CustomerDTO(customer);
 	}
@@ -90,7 +90,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Integer> getSelectedBrandId(Integer custId) throws Exception {
+	public List<Integer> getSelectedBrandId(Long custId) throws Exception {
 		ArrayList<Integer> brandList = new ArrayList<>();
 		Customer customer = customerDao.findById(custId);
 		if (customer != null && customer.getBrands() != null) {
@@ -105,7 +105,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Set<BrandDTO> getSelectedBrand(Integer custId) throws Exception {
+	public Set<BrandDTO> getSelectedBrand(Long custId) throws Exception {
 		Customer customer = customerDao.findById(custId);
 		if (customer != null) {
 			return copyBrandToDTO(customer.getBrands());

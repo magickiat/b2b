@@ -10,6 +10,6 @@ public interface BrandDao {
 
 	List<Brand> list();
 
-	void addSelectedBrand(Integer custId, List<Integer> selectedBrand);
+	void addSelectedBrand(Long custId, List<Integer> selectedBrand);
 
 }

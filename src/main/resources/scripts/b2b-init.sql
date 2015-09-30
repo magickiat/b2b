@@ -1,6 +1,3 @@
-INSERT INTO app_config (id, config_key, config_value, user_create, time_create)
-VALUES (1, 'upload_path', '/Users/magicalcyber/Pictures/b2b_upload', 'B2B', curdate());
-
 INSERT INTO
   brand (id, name, logo, user_create, time_create)
 VALUES

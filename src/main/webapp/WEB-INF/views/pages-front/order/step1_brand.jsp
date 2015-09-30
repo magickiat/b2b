@@ -24,7 +24,7 @@
 		<div class="row">&nbsp;</div>
 		<div class="row">
 			<c:choose>
-				<c:when test="${empty user.customer }">
+				<c:when test="${empty brandGroupList }">
 					<h3>Not found Customer.</h3>
 				</c:when>
 				<c:when test="${empty user.customer.brands }">
@@ -32,19 +32,39 @@
 					<h3>Not found any brand for this customer.</h3>
 				</c:when>
 				<c:otherwise>
-					<c:forEach items="${ user.customer.brands }" var="brand">
-					
+					<c:forEach items="${ brandGroupList }" var="brand">
+
 						<!-- Brand Logo -->
 						<div class="col-md-4" style="margin-top: 30px;">
-							<a href='<c:url value="/frontend/order/step2?brand_id=${ brand.id }" />'> 
-								<c:url var="logo" value="${ brand.logo }" /> 
-								<c:if test="${ empty brand.logo }">
-									<c:url var="logo" value="/images/b2b/brand/default_image.jpg" />
-								</c:if> 
-								<img alt="${ brand.name }" class="brand_logo" src="${ logo }">
+							<a
+								href='<c:url value="/frontend/order/step2?brand_id=${ brand.id }" />'>
+								<c:choose>
+									<c:when test="${brand.brandGroupId == 30}">
+										<img
+											src="${pageContext.request.contextPath}/pages-front/images/icon/airush.png"
+											id="airushicon">
+									</c:when>
+									<c:when test="${brand.brandGroupId == 20}">
+										<img
+											src="${pageContext.request.contextPath}/pages-front/images/icon/starboard.png"
+											id="starboardicon">
+									</c:when>
+									<c:when test="${brand.brandGroupId == 40}">
+										<img
+											src="${pageContext.request.contextPath}/pages-front/images/icon/severne.png"
+											id="severneicon">
+									</c:when>
+
+									<c:when test="${brand.brandGroupId == 10}">
+										<img
+											src="${pageContext.request.contextPath}/pages-front/images/icon/starboard.png"
+											id="starboardicon">
+									</c:when>
+								</c:choose>
+
 							</a>
 						</div>
-						
+
 					</c:forEach>
 				</c:otherwise>
 			</c:choose>

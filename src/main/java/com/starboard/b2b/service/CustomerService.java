@@ -11,7 +11,7 @@ import com.starboard.b2b.web.form.customer.CreateCustomerForm;
 import com.starboard.b2b.web.form.customer.CustomerForm;
 
 public interface CustomerService {
-	CustomerDTO findById(int id);
+	CustomerDTO findById(Long id);
 
 	CustomerDTO findByName(String name) throws Exception;
 
@@ -25,9 +25,9 @@ public interface CustomerService {
 
 	void addBrand(BrandForm brand) throws Exception;
 
-	Set<BrandDTO> getSelectedBrand(Integer custId) throws Exception;
+	Set<BrandDTO> getSelectedBrand(Long custId) throws Exception;
 
-	List<Integer> getSelectedBrandId(Integer custId) throws Exception;
+	List<Integer> getSelectedBrandId(Long custId) throws Exception;
 
 	boolean isExistCustomerCode(String code);
 

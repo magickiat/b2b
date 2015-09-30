@@ -5,16 +5,9 @@ import java.util.List;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class BrandForm {
-	private Integer custId;
+	private Long custId;
 	private List<Integer> selectedBrand;
 
-	public Integer getCustId() {
-		return custId;
-	}
-
-	public void setCustId(Integer custId) {
-		this.custId = custId;
-	}
 
 	@Override
 	public String toString() {
@@ -27,5 +20,13 @@ public class BrandForm {
 
 	public void setSelectedBrand(List<Integer> selectedBrand) {
 		this.selectedBrand = selectedBrand;
+	}
+
+	public Long getCustId() {
+		return custId;
+	}
+
+	public void setCustId(Long custId) {
+		this.custId = custId;
 	}
 }

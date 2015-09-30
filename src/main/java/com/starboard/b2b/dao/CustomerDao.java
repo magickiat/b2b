@@ -6,7 +6,7 @@ import com.starboard.b2b.common.Page;
 import com.starboard.b2b.model.Customer;
 
 public interface CustomerDao extends BaseDao {
-	Customer findById(int id);
+	Customer findById(Long id);
 
 	Customer findByName(String name);
 

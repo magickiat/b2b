@@ -1,14 +1,12 @@
 package com.starboard.b2b.config;
 
-import java.io.File;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.validation.Validator;
@@ -24,45 +22,23 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-import com.starboard.b2b.service.ConfigService;
-
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.starboard.b2b")
+@PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-	private static final Logger log = LoggerFactory.getLogger(WebConfig.class);
-
-	@Autowired
-	private ConfigService configService;
-
+	@Value("${upload.path}")
+	private String uploadPath;
+	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		// Upload folder
-		registry.addResourceHandler("/upload/**").addResourceLocations("file:" + getUploadPath());
+		registry.addResourceHandler("/upload/**").addResourceLocations("file:" + uploadPath);
 
 		// WebJars
 		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
 				.setCachePeriod(31556926);
-	}
-
-	private String getUploadPath() {
-		String uploadPath = configService.getString("upload_path");
-		if (uploadPath == null) {
-			throw new RuntimeException("Not found configuration upload_path");
-		}
-		if (!uploadPath.endsWith("/") | !uploadPath.endsWith("\\")) {
-			uploadPath += "/";
-		}
-
-		File uploadFolder = new File(uploadPath);
-		if (!uploadFolder.exists() | !uploadFolder.isDirectory()) {
-			log.info("Creating upload folder");
-			uploadFolder.mkdirs();
-		}
-
-		log.info("uploadPath: " + uploadPath);
-		return uploadPath;
 	}
 
 	@Override
@@ -104,4 +80,13 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         return source;  
     }  
 
+	/*
+	 * PropertySourcesPlaceHolderConfigurer Bean only required for @Value("{}")
+	 * annotations. Remove this bean if you are not using @Value annotations for
+	 * injecting properties.
+	 */
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+		return new PropertySourcesPlaceholderConfigurer();
+	}
 }

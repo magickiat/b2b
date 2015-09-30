@@ -1,5 +1,7 @@
 package com.starboard.b2b.web.controller.frontend;
 
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.starboard.b2b.dto.ProductBrandGroupDTO;
+import com.starboard.b2b.service.BrandService;
 import com.starboard.b2b.service.ProductService;
+import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.product.SearchProductForm;
 
 @Controller
@@ -21,8 +26,14 @@ public class FrontOrderController {
 	@Autowired
 	private ProductService productService;
 
+	@Autowired
+	private BrandService brandService;
+
 	@RequestMapping(value = "index", method = RequestMethod.GET)
 	String step1(Model model) {
+		Set<ProductBrandGroupDTO> brandGroupList = brandService
+				.getBrandGroupList(UserUtil.getCurrentUser().getCustomer().getCustId());
+		model.addAttribute("brandGroupList", brandGroupList);
 		return "pages-front/order/step1_brand";
 	}
 
@@ -37,37 +48,33 @@ public class FrontOrderController {
 	String step2SearchProduct(@RequestParam("brand_id") Integer brandId, Model model) throws Exception {
 		log.info("step2_search GET");
 		log.info("Brand id: " + brandId);
-		
-		
-		if(!model.containsAttribute("searchProductForm")){
+
+		if (!model.containsAttribute("searchProductForm")) {
 			model.addAttribute("searchProductForm", new SearchProductForm());
 		}
-		
-		//TODO set product brand search criteria
-		
-		//set search condition
-		if(!model.containsAttribute("productCategory")){
+
+		// TODO set product brand search criteria
+
+		// set search condition
+		if (!model.containsAttribute("productCategory")) {
 			model.addAttribute("productCategory", productService.findAllProductCategory());
 		}
-		
-		if(!model.containsAttribute("productModel")){
-			model.addAttribute("productModel", productService.findAllProductModel());	
+
+		if (!model.containsAttribute("productModel")) {
+			model.addAttribute("productModel", productService.findAllProductModel());
 		}
-		
-		if(!model.containsAttribute("productYear")){
+
+		if (!model.containsAttribute("productYear")) {
 			model.addAttribute("productYear", productService.findAllProductYear());
 		}
-		
-		if(!model.containsAttribute("productTechnology")){
+
+		if (!model.containsAttribute("productTechnology")) {
 			model.addAttribute("productTechnology", productService.findAllProductTechnology());
 		}
-		
-	    
+
 		model.addAttribute("brandId", brandId);
 		return "pages-front/order/step2_search";
 	}
-	
-	
 
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	String createOrderForm(Model model) {

@@ -11,7 +11,7 @@ import com.starboard.b2b.web.form.contact.ContactForm;
 import com.starboard.b2b.web.form.user.UserRegisterForm;
 
 public class CustomerForm {
-	private int custId;
+	private Long custId;
 	@NotEmpty(message = "Name is required")
 	private String name;
 	@NotEmpty(message = "Code is required")
@@ -69,11 +69,11 @@ public class CustomerForm {
 		this.addresses = addresses;
 	}
 
-	public int getCustId() {
+	public Long getCustId() {
 		return custId;
 	}
 
-	public void setCustId(int custId) {
+	public void setCustId(Long custId) {
 		this.custId = custId;
 	}
 

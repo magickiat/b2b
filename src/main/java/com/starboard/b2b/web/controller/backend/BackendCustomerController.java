@@ -70,7 +70,7 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "update", method = RequestMethod.GET)
-	String update(@RequestParam(value = "id", required = true) Integer id, Model model) throws Exception {
+	String update(@RequestParam(value = "id", required = true) Long id, Model model) throws Exception {
 		log.info("/update GET");
 		log.info("id = " + id);
 
@@ -102,7 +102,7 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "/createuser", method = RequestMethod.GET)
-	String createUser(@RequestParam(value = "custId", required = true) Integer custId, Model model) {
+	String createUser(@RequestParam(value = "custId", required = true) Long custId, Model model) {
 		log.info("/createuser GET");
 		UserRegisterForm form = new UserRegisterForm();
 		form.setCusId(custId);
@@ -128,7 +128,7 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "/add_brand", method = RequestMethod.GET)
-	String addBrandForm(@RequestParam(value = "id", required = true) Integer id, Model model) throws Exception {
+	String addBrandForm(@RequestParam(value = "id", required = true) Long id, Model model) throws Exception {
 		log.info("/add_brand GET");
 
 		log.info("Customer ID: " + id);
