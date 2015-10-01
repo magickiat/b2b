@@ -1,5 +1,7 @@
 package com.starboard.b2b.dao;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
@@ -23,12 +25,18 @@ public class CustDaoImpl implements CustDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public SearchCustResult listCust(SearchCustRequest req) {
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Cust.class);
+		log.info("search request: " + req);
 
 		SearchCustResult result = new SearchCustResult();
-		result.setResult(criteria.setFirstResult(req.getFirstResult()).setMaxResults(req.getSize()).list());
-		result.setTotal((long) criteria.setProjection(Projections.rowCount()).uniqueResult());
-		
+
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Cust.class);
+		List list = criteria.setFirstResult(req.getFirstResult()).setMaxResults(req.getPageSize()).list();
+
+		Object totalRecord = sessionFactory.getCurrentSession().createCriteria(Cust.class)
+				.setProjection(Projections.rowCount()).uniqueResult();
+		result.setResult(list);
+		result.setTotal((long) totalRecord);
+
 		log.info("Total" + result.getTotal());
 		return result;
 	}

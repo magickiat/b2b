@@ -8,7 +8,7 @@ public class SearchCustRequest {
 
 	public SearchCustRequest(Integer page, int size) {
 		setPage(page);
-		setSize(size);
+		setPageSize(size);
 	}
 
 	public int getPage() {
@@ -22,11 +22,11 @@ public class SearchCustRequest {
 		this.page = page;
 	}
 
-	public int getSize() {
+	public int getPageSize() {
 		return size;
 	}
 
-	public void setSize(int size) {
+	public void setPageSize(int size) {
 		if (size < 0) {
 			size = 0;
 		}
@@ -35,7 +35,7 @@ public class SearchCustRequest {
 
 	public int getFirstResult() {
 		int begin = page < 1 ? 1 : page;
-		return (begin - 1) * getSize();
+		return (begin - 1) * getPageSize();
 	}
 	
 	@Override

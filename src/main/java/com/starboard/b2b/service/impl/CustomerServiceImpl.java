@@ -175,7 +175,9 @@ public class CustomerServiceImpl implements CustomerService {
 			result.add(dto);
 		}
 		Page<CustDTO> page = new Page<>();
+		page.setCurrent(req.getPage());
 		page.setResult(result);
+		page.setPageSize(req.getPageSize());
 		page.setTotal(searchResult.getTotal());
 		return page;
 	}

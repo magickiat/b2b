@@ -51,7 +51,7 @@ public class BackendCustomerController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	String search(@RequestParam(value = "page", required = false) Integer page, Model model) throws Exception {
-		model.addAttribute("page", customerService.listCust(page));
+		model.addAttribute("resultPage", customerService.listCust(page));
 		return "pages-back/customer/search";
 	}
 
