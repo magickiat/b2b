@@ -20,8 +20,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.starboard.b2b.dto.CustomerDTO;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.BrandService;
+import com.starboard.b2b.service.ConfigService;
 import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.UserService;
+import com.starboard.b2b.util.PagingUtil;
 import com.starboard.b2b.web.form.brand.BrandForm;
 import com.starboard.b2b.web.form.customer.CreateCustomerForm;
 import com.starboard.b2b.web.form.customer.CustomerForm;
@@ -33,6 +35,12 @@ public class BackendCustomerController {
 	private static final Logger log = LoggerFactory.getLogger(BackendCustomerController.class);
 
 	@Autowired
+	private ConfigService configService;
+	
+	@Autowired
+	private PagingUtil pagingUtil;
+	
+	@Autowired
 	private CustomerService customerService;
 
 	@Autowired
@@ -42,8 +50,8 @@ public class BackendCustomerController {
 	private UserService userService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	String search(Model model) throws Exception {
-		model.addAttribute("customers", customerService.list());
+	String search(@RequestParam(value = "page", required = false) Integer page, Model model) throws Exception {
+		model.addAttribute("page", customerService.listCust(page));
 		return "pages-back/customer/search";
 	}
 
@@ -66,7 +74,7 @@ public class BackendCustomerController {
 		}
 
 		customerService.add(customerForm);
-		return search(model);
+		return search(0, model);
 	}
 
 	@RequestMapping(value = "update", method = RequestMethod.GET)

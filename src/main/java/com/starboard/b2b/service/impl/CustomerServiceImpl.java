@@ -9,18 +9,26 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.common.Page;
+import com.starboard.b2b.common.Pagination;
+import com.starboard.b2b.common.SearchCustRequest;
+import com.starboard.b2b.common.SearchCustResult;
 import com.starboard.b2b.dao.BrandDao;
+import com.starboard.b2b.dao.CustDao;
 import com.starboard.b2b.dao.CustomerDao;
 import com.starboard.b2b.dto.BrandDTO;
+import com.starboard.b2b.dto.CustDTO;
 import com.starboard.b2b.dto.CustomerDTO;
 import com.starboard.b2b.model.Brand;
+import com.starboard.b2b.model.Cust;
 import com.starboard.b2b.model.Customer;
 import com.starboard.b2b.service.CustomerService;
+import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.brand.BrandForm;
@@ -32,6 +40,12 @@ public class CustomerServiceImpl implements CustomerService {
 	private static final Logger log = LoggerFactory.getLogger(CustomerServiceImpl.class);
 	@Autowired
 	private CustomerDao customerDao;
+
+	@Autowired
+	private ApplicationConfig applicationConfig;
+
+	@Autowired
+	private CustDao custDao;
 
 	@Autowired
 	private BrandDao brandDao;
@@ -54,7 +68,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<CustomerDTO> list(Page page) {
+	public List<CustomerDTO> list(Pagination page) {
 		return copyCustomerToDTO(customerDao.list(page));
 	}
 
@@ -146,6 +160,24 @@ public class CustomerServiceImpl implements CustomerService {
 	@Transactional(readOnly = true)
 	public boolean isExistCustomerName(String name) {
 		return customerDao.exist("name", name);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<CustDTO> listCust(Integer pageIndex) {
+		SearchCustRequest req = new SearchCustRequest(pageIndex, applicationConfig.getPageSize());
+		log.info(req.toString());
+		SearchCustResult searchResult = custDao.listCust(req);
+		List<CustDTO> result = new ArrayList<>();
+		for (Cust cust : searchResult.getResult()) {
+			CustDTO dto = new CustDTO();
+			BeanUtils.copyProperties(cust, dto);
+			result.add(dto);
+		}
+		Page<CustDTO> page = new Page<>();
+		page.setResult(result);
+		page.setTotal(searchResult.getTotal());
+		return page;
 	}
 
 }

@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.starboard.b2b.common.Page;
+import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.dao.UserDao;
 import com.starboard.b2b.model.Customer;
 import com.starboard.b2b.model.Role;
@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public List<User> list(Page page) {
+	public List<User> list(Pagination page) {
 		return userDao.list(page);
 	}
 

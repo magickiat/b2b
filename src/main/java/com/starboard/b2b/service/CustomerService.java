@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Set;
 
 import com.starboard.b2b.common.Page;
+import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.dto.BrandDTO;
+import com.starboard.b2b.dto.CustDTO;
 import com.starboard.b2b.dto.CustomerDTO;
 import com.starboard.b2b.web.form.brand.BrandForm;
 import com.starboard.b2b.web.form.customer.CreateCustomerForm;
@@ -16,8 +18,10 @@ public interface CustomerService {
 	CustomerDTO findByName(String name) throws Exception;
 
 	List<CustomerDTO> list() throws Exception;
+	
+	Page<CustDTO> listCust(Integer page);
 
-	List<CustomerDTO> list(Page page) throws Exception;
+	List<CustomerDTO> list(Pagination page) throws Exception;
 
 	void add(CreateCustomerForm customer) throws Exception;
 

@@ -33,16 +33,21 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${customers }" var="customer">
+					<c:forEach items="${page.result }" var="customer">
 						<tr style="cursor: pointer;"
 							onclick="javascript:createUser('${customer.custId }');">
-							<td>${customer.code }</td>
-							<td>${customer.name }</td>
+							<td>${customer.custCode }</td>
+							<td>${customer.nameEn }</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 		</div>
+
+		<div class="row pull-right">
+			<%@include file="/WEB-INF/views/include/paging.jspf"%>
+		</div>
+
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 	<script type="text/javascript"

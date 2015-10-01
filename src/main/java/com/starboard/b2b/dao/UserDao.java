@@ -2,7 +2,7 @@ package com.starboard.b2b.dao;
 
 import java.util.List;
 
-import com.starboard.b2b.common.Page;
+import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.model.User;
 
 public interface UserDao extends BaseDao {
@@ -14,7 +14,7 @@ public interface UserDao extends BaseDao {
 
 	List<User> list();
 	
-	List<User> list(Page page);
+	List<User> list(Pagination page);
 	
 	void add(User user);
 	

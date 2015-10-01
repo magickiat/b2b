@@ -71,14 +71,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	public Validator getValidator() {
 		return new LocalValidatorFactoryBean();
 	}
-	
-	@Bean  
-    public MessageSource messageSource() {  
-        ResourceBundleMessageSource source = new ResourceBundleMessageSource();  
-        source.setBasename("classpath:messages");  
-        source.setUseCodeAsDefaultMessage(true);  
-        return source;  
-    }  
+//	
+//	@Bean  
+//    public MessageSource messageSource() {  
+//        ResourceBundleMessageSource source = new ResourceBundleMessageSource();  
+//        source.setBasename("classpath:messages");  
+//        source.setUseCodeAsDefaultMessage(true);  
+//        return source;  
+//    }  
 
 	/*
 	 * PropertySourcesPlaceHolderConfigurer Bean only required for @Value("{}")

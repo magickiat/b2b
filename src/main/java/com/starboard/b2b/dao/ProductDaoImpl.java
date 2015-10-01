@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.starboard.b2b.common.Page;
+import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.model.Brand;
 import com.starboard.b2b.model.Product;
 
@@ -38,7 +38,7 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly = true)
-	public List<Product> list(Page page) {
+	public List<Product> list(Pagination page) {
 		Criteria criteria = sf.getCurrentSession().createCriteria(Product.class);
 		criteria.setFirstResult(page.getFirstResult());
 		criteria.setMaxResults(page.getSize());

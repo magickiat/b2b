@@ -1,15 +1,19 @@
 package com.starboard.b2b.common;
 
-public class Page {
+import java.util.List;
+
+public class Page<T> {
 	private int current;
-	private int size;
+	private long total;
+	private List<T> result;
 
 	public Page() {
 	}
 
-	public Page(int current, int size) {
+	public Page(int current, long total, List<T> result) {
 		this.current = current;
-		this.size = size;
+		this.total = total;
+		this.result = result;
 	}
 
 	public int getCurrent() {
@@ -20,16 +24,19 @@ public class Page {
 		this.current = current;
 	}
 
-	public int getSize() {
-		return size;
+	public long getTotal() {
+		return total;
 	}
 
-	public void setSize(int size) {
-		this.size = size;
+	public void setTotal(long total) {
+		this.total = total;
 	}
 
-	public int getFirstResult() {
-		int begin = getCurrent() < 1 ? 1 : getCurrent();
-		return (begin - 1) * getSize();
+	public List<?> getResult() {
+		return result;
+	}
+
+	public void setResult(List<T> result) {
+		this.result = result;
 	}
 }

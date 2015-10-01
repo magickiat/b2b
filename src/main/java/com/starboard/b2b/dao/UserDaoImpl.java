@@ -8,7 +8,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.starboard.b2b.common.Page;
+import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.model.Customer;
 import com.starboard.b2b.model.User;
 
@@ -56,7 +56,7 @@ public class UserDaoImpl implements UserDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<User> list(Page page) {
+	public List<User> list(Pagination page) {
 		return sessionFactory.getCurrentSession().createCriteria(User.class).setFirstResult(page.getFirstResult())
 				.setMaxResults(page.getSize()).list();
 	}

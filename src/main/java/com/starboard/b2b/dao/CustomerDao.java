@@ -2,7 +2,7 @@ package com.starboard.b2b.dao;
 
 import java.util.List;
 
-import com.starboard.b2b.common.Page;
+import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.model.Customer;
 
 public interface CustomerDao extends BaseDao {
@@ -12,7 +12,7 @@ public interface CustomerDao extends BaseDao {
 
 	List<Customer> list();
 
-	List<Customer> list(Page page);
+	List<Customer> list(Pagination page);
 
 	void add(Customer customer);
 

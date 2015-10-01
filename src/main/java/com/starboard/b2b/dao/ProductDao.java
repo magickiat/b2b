@@ -2,7 +2,7 @@ package com.starboard.b2b.dao;
 
 import java.util.List;
 
-import com.starboard.b2b.common.Page;
+import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.model.Product;
 
 public interface ProductDao {
@@ -11,6 +11,6 @@ public interface ProductDao {
 
 	List<Product> list(Integer brandId);
 
-	List<Product> list(Page page);
+	List<Product> list(Pagination page);
 
 }
