@@ -37,7 +37,7 @@ public class CustDaoImpl implements CustDao {
 		result.setResult(list);
 		result.setTotal((long) totalRecord);
 
-		log.info("Total" + result.getTotal());
+		log.info("Total " + result.getTotal());
 		return result;
 	}
 
