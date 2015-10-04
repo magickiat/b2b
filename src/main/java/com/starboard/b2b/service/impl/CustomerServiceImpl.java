@@ -182,4 +182,13 @@ public class CustomerServiceImpl implements CustomerService {
 		return page;
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public CustDTO findCustById(Long custId) {
+		Cust cust = custDao.findById(custId);
+		CustDTO dto = new CustDTO();
+		BeanUtils.copyProperties(cust, dto);
+		return dto;
+	}
+
 }

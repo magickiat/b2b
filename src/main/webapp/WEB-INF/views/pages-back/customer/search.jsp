@@ -35,8 +35,10 @@
 					</thead>
 					<tbody>
 						<c:forEach items="${resultPage.result }" var="customer">
+							<c:url var="createUserUrl"
+								value="/backend/customer/update?id=${ customer.custId }" />
 							<tr style="cursor: pointer;"
-								onclick="javascript:createUser('${customer.custId }');">
+								onclick="javascript:window.location.href = '${createUserUrl}'">
 								<td>${customer.custCode }</td>
 								<td>${customer.nameEn }</td>
 							</tr>

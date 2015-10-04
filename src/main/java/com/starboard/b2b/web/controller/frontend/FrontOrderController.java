@@ -1,6 +1,6 @@
 package com.starboard.b2b.web.controller.frontend;
 
-import java.util.Set;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +31,7 @@ public class FrontOrderController {
 
 	@RequestMapping(value = "index", method = RequestMethod.GET)
 	String step1(Model model) {
-		Set<ProductBrandGroupDTO> brandGroupList = brandService
+		List<ProductBrandGroupDTO> brandGroupList = brandService
 				.getBrandGroupList(UserUtil.getCurrentUser().getCustomer().getCustId());
 		model.addAttribute("brandGroupList", brandGroupList);
 		return "pages-front/order/step1_brand";

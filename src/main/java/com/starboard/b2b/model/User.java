@@ -32,7 +32,7 @@ public class User extends BaseModel implements UserDetails {
 	private Integer id;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = true)
-	private Customer customer;
+	private Cust customer;
 
 	@Column(length = 100, nullable = false)
 	private String name;
@@ -156,11 +156,11 @@ public class User extends BaseModel implements UserDetails {
 		this.credentialsNonExpired = credentialsNonExpired;
 	}
 
-	public Customer getCustomer() {
+	public Cust getCustomer() {
 		return customer;
 	}
 
-	public void setCustomer(Customer customer) {
+	public void setCustomer(Cust customer) {
 		this.customer = customer;
 	}
 

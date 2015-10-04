@@ -22,12 +22,12 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="code">Code:</label>
 					<div class="col-sm-4">
-						<form:input path="code" class="form-control"
+						<form:input path="custCode" class="form-control"
 							placeholder="Enter Code" />
 					</div>
 					<label class="control-label col-sm-2" for="name">Name:</label>
 					<div class="col-sm-4">
-						<form:input path="name" class="form-control"
+						<form:input path="nameEn" class="form-control"
 							placeholder="Enter Name" />
 					</div>
 					<form:hidden path="custId" />

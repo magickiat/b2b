@@ -1,5 +1,7 @@
 package com.starboard.b2b.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -28,12 +30,15 @@ import org.springframework.web.servlet.view.JstlView;
 @PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
+	private final Logger log = LoggerFactory.getLogger(getClass());
+
 	@Value("${upload.path}")
 	private String uploadPath;
-	
+
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		// Upload folder
+		log.info("upload path: " + uploadPath);
 		registry.addResourceHandler("/upload/**").addResourceLocations("file:" + uploadPath);
 
 		// WebJars
@@ -71,14 +76,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	public Validator getValidator() {
 		return new LocalValidatorFactoryBean();
 	}
-//	
-//	@Bean  
-//    public MessageSource messageSource() {  
-//        ResourceBundleMessageSource source = new ResourceBundleMessageSource();  
-//        source.setBasename("classpath:messages");  
-//        source.setUseCodeAsDefaultMessage(true);  
-//        return source;  
-//    }  
+	//
+	// @Bean
+	// public MessageSource messageSource() {
+	// ResourceBundleMessageSource source = new ResourceBundleMessageSource();
+	// source.setBasename("classpath:messages");
+	// source.setUseCodeAsDefaultMessage(true);
+	// return source;
+	// }
 
 	/*
 	 * PropertySourcesPlaceHolderConfigurer Bean only required for @Value("{}")

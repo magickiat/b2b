@@ -18,7 +18,7 @@ public interface CustomerService {
 	CustomerDTO findByName(String name) throws Exception;
 
 	List<CustomerDTO> list() throws Exception;
-	
+
 	Page<CustDTO> listCust(Integer page);
 
 	List<CustomerDTO> list(Pagination page) throws Exception;
@@ -36,4 +36,6 @@ public interface CustomerService {
 	boolean isExistCustomerCode(String code);
 
 	boolean isExistCustomerName(String name);
+
+	CustDTO findCustById(Long custId);
 }

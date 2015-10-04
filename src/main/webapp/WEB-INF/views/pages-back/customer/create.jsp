@@ -22,7 +22,7 @@
 					</div>
 				</div>
 
-				<div class="form-group">
+				<div class="form-group row">
 					<label class="control-label col-sm-2" for="code">Code:</label>
 					<div class="col-sm-4">
 						<form:input path="code" class="form-control"
@@ -35,7 +35,7 @@
 					</div>
 				</div>
 
-				<div class="form-group">
+				<div class="form-group row">
 					<div class="col-sm-11"></div>
 					<div class="col-sm-1">
 						<button type="submit" class="btn btn-default">Submit</button>

@@ -25,10 +25,6 @@
 		<div class="row">
 			<c:choose>
 				<c:when test="${empty brandGroupList }">
-					<h3>Not found Customer.</h3>
-				</c:when>
-				<c:when test="${empty user.customer.brands }">
-
 					<h3>Not found any brand for this customer.</h3>
 				</c:when>
 				<c:otherwise>
@@ -37,27 +33,26 @@
 						<!-- Brand Logo -->
 						<div class="col-md-4" style="margin-top: 30px;">
 							<a
-								href='<c:url value="/frontend/order/step2?brand_id=${ brand.id }" />'>
+								href='<c:url value="/frontend/order/step2?brand_id=${ brand.brandGroupId }" />'>
 								<c:choose>
 									<c:when test="${brand.brandGroupId == 30}">
 										<img
-											src="${pageContext.request.contextPath}/pages-front/images/icon/airush.png"
+											src='<c:url value="/images/pages-front/icon/airush.png" />'
 											id="airushicon">
 									</c:when>
 									<c:when test="${brand.brandGroupId == 20}">
 										<img
-											src="${pageContext.request.contextPath}/pages-front/images/icon/starboard.png"
-											id="starboardicon">
+											src='<c:url value="/images/pages-front/icon/starboard.png" />'>
 									</c:when>
 									<c:when test="${brand.brandGroupId == 40}">
 										<img
-											src="${pageContext.request.contextPath}/pages-front/images/icon/severne.png"
+											src='<c:url value="/images/pages-front/icon/severne.png" />'
 											id="severneicon">
 									</c:when>
 
 									<c:when test="${brand.brandGroupId == 10}">
 										<img
-											src="${pageContext.request.contextPath}/pages-front/images/icon/starboard.png"
+											src='<c:url value="/images/pages-front/icon/starboard.png" />'
 											id="starboardicon">
 									</c:when>
 								</c:choose>

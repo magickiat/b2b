@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.starboard.b2b.dto.CustDTO;
 import com.starboard.b2b.dto.CustomerDTO;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.BrandService;
@@ -36,10 +37,10 @@ public class BackendCustomerController {
 
 	@Autowired
 	private ConfigService configService;
-	
+
 	@Autowired
 	private PagingUtil pagingUtil;
-	
+
 	@Autowired
 	private CustomerService customerService;
 
@@ -82,15 +83,15 @@ public class BackendCustomerController {
 		log.info("/update GET");
 		log.info("id = " + id);
 
-		CustomerDTO cust = new CustomerDTO();
+		CustDTO custDto = new CustDTO();
 		List<User> users = new ArrayList<User>();
-		cust = customerService.findById(id);
+		custDto = customerService.findCustById(id);
 
-		if (cust != null) {
+		if (custDto != null) {
 			users = userService.findUserByCustId(id);
 		}
 
-		model.addAttribute("customerForm", cust);
+		model.addAttribute("customerForm", custDto);
 		model.addAttribute("users", users);
 		model.addAttribute("selectedBrand", customerService.getSelectedBrand(id));
 		return "pages-back/customer/edit";

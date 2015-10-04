@@ -9,6 +9,7 @@ import java.util.TreeSet;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.springframework.beans.BeanUtils;
 
 import com.starboard.b2b.model.Role;
 import com.starboard.b2b.model.User;
@@ -22,7 +23,7 @@ public class UserDTO extends BaseDTO {
 	private boolean accountNonExpired;
 	private boolean accountNonLocked;
 	private boolean credentialsNonExpired;
-	private CustomerDTO customer;
+	private CustDTO customer;
 	private Set<RoleDTO> role = new HashSet<>();
 
 	public UserDTO() {
@@ -37,8 +38,9 @@ public class UserDTO extends BaseDTO {
 		this.enabled = user.isEnabled();
 		this.accountNonExpired = user.isAccountNonExpired();
 		this.accountNonLocked = user.isAccountNonLocked();
-		this.customer = new CustomerDTO(user.getCustomer());
-		
+		this.customer = new CustDTO();
+		BeanUtils.copyProperties(user.getCustomer(), this.customer);
+
 		TreeSet<RoleDTO> roleList = new TreeSet<>();
 		Iterator<Role> iterator = user.getRole().iterator();
 		while (iterator.hasNext()) {
@@ -46,7 +48,7 @@ public class UserDTO extends BaseDTO {
 			roleList.add(new RoleDTO(role));
 		}
 		this.role = roleList;
-		
+
 	}
 
 	@Override
@@ -96,11 +98,11 @@ public class UserDTO extends BaseDTO {
 		this.role = role;
 	}
 
-	public CustomerDTO getCustomer() {
+	public CustDTO getCustomer() {
 		return customer;
 	}
 
-	public void setCustomer(CustomerDTO customer) {
+	public void setCustomer(CustDTO customer) {
 		this.customer = customer;
 	}
 

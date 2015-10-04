@@ -1,10 +1,10 @@
 package com.starboard.b2b.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
-import org.springframework.beans.BeanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +20,7 @@ import com.starboard.b2b.service.BrandService;
 
 @Service
 public class BrandServiceImpl implements BrandService {
+	private static final Logger log = LoggerFactory.getLogger(BrandServiceImpl.class);
 
 	@Autowired
 	private BrandDao brandDao;
@@ -42,19 +43,23 @@ public class BrandServiceImpl implements BrandService {
 	}
 
 	@Override
-	public Set<ProductBrandGroupDTO> getBrandGroupList(Long custId) {
-		Set<ProductBrandGroupDTO> result = new TreeSet<>();
+	public List<ProductBrandGroupDTO> getBrandGroupList(Long custId) {
+		List<ProductBrandGroupDTO> result = new ArrayList<>();
 		List<CustBrandGroup> custBrandGroupList = custBrandGroupDAO.findByCustId(custId);
+		log.info("custBrandGroupList size: " + (custBrandGroupList == null ? 0 : custBrandGroupList.size()));
 		for (CustBrandGroup custBrandGroup : custBrandGroupList) {
 			List<ProductBrandGroup> brandList = productBrandGroupDAO
 					.findByProductTypeId(custBrandGroup.getId().getBrandGroupId());
+			log.info("brandList size: " + (brandList == null ? 0 : brandList.size()));
+
 			for (ProductBrandGroup brandGroup : brandList) {
 				ProductBrandGroupDTO brandGroupDTO = new ProductBrandGroupDTO();
-				BeanUtils.copyProperties(brandGroupDTO, brandGroup);
+				brandGroupDTO.setBrandGroupId(brandGroup.getId().getBrandGroupId());
+				brandGroupDTO.setProductTypeId(brandGroup.getId().getProductTypeId());
 				result.add(brandGroupDTO);
 			}
 		}
-		return null;
+		return result;
 	}
 
 }

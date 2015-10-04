@@ -22,7 +22,7 @@ public class CustDaoImpl implements CustDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public SearchCustResult listCust(SearchCustRequest req) {
 		log.info("search request: " + req);
@@ -39,6 +39,11 @@ public class CustDaoImpl implements CustDao {
 
 		log.info("Total " + result.getTotal());
 		return result;
+	}
+
+	@Override
+	public Cust findById(Long custId) {
+		return (Cust) sessionFactory.getCurrentSession().get(Cust.class, custId);
 	}
 
 }

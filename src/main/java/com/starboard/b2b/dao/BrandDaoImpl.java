@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.starboard.b2b.model.Brand;
+import com.starboard.b2b.model.Cust;
 import com.starboard.b2b.model.Customer;
 
 @Repository
@@ -34,9 +35,8 @@ public class BrandDaoImpl implements BrandDao {
 	public void addSelectedBrand(Long custId, List<Integer> selectedBrand) {
 		Session session = sessionFactory.getCurrentSession();
 
-		Customer customer = (Customer) session.get(Customer.class, custId);
 		for (Integer brandId : selectedBrand) {
-			customer.getBrands().add((Brand) session.load(Brand.class, brandId));
+			//TODO insert to cust_brand_group
 		}
 	}
 }

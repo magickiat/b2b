@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.dao.UserDao;
-import com.starboard.b2b.model.Customer;
+import com.starboard.b2b.model.Cust;
 import com.starboard.b2b.model.Role;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.security.MD5;
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
 		user.setRole(roles);
 
 		if (form.getCusId() != null) {
-			Customer customer = new Customer();
+			Cust customer = new Cust();
 			customer.setCustId(form.getCusId());
 			user.setCustomer(customer);
 		}

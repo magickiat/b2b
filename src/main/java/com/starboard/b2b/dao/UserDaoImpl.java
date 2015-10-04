@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.starboard.b2b.common.Pagination;
-import com.starboard.b2b.model.Customer;
+import com.starboard.b2b.model.Cust;
 import com.starboard.b2b.model.User;
 
 @Repository
@@ -47,7 +47,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void add(User user) {
 		if (user.getCustomer() != null) {
-			Customer cust = (Customer) sessionFactory.getCurrentSession().load(Customer.class,
+			Cust cust = (Cust) sessionFactory.getCurrentSession().load(Cust.class,
 					user.getCustomer().getCustId());
 			user.setCustomer(cust);
 		}
