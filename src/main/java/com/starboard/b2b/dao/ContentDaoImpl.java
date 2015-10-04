@@ -21,4 +21,9 @@ public class ContentDaoImpl implements ContentDao {
         return sessionFactory.getCurrentSession().createCriteria(Content.class).list();
     }
 
+    @Override
+    public void add(Content content) {
+        sessionFactory.getCurrentSession().save(content);
+    }
+
 }

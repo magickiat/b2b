@@ -11,4 +11,6 @@ public interface ContentDao {
 
     List list();
 
+    void add(Content content);
+
 }
