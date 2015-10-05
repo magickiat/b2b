@@ -35,7 +35,7 @@ import com.starboard.b2b.web.form.brand.BrandForm;
 import com.starboard.b2b.web.form.customer.CreateCustomerForm;
 import com.starboard.b2b.web.form.customer.CustomerForm;
 
-@Service
+@Service("customerService")
 public class CustomerServiceImpl implements CustomerService {
 	private static final Logger log = LoggerFactory.getLogger(CustomerServiceImpl.class);
 	@Autowired

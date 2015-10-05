@@ -18,7 +18,7 @@ import com.starboard.b2b.model.CustBrandGroup;
 import com.starboard.b2b.model.ProductBrandGroup;
 import com.starboard.b2b.service.BrandService;
 
-@Service
+@Service("brandService")
 public class BrandServiceImpl implements BrandService {
 	private static final Logger log = LoggerFactory.getLogger(BrandServiceImpl.class);
 

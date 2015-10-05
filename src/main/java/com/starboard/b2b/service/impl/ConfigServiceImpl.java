@@ -17,7 +17,7 @@ import com.starboard.b2b.dao.AppConfigDao;
 import com.starboard.b2b.model.AppConfig;
 import com.starboard.b2b.service.ConfigService;
 
-@Service
+@Service("configService")
 public class ConfigServiceImpl implements ConfigService {
 	
 	private static final Logger log = LoggerFactory.getLogger(ConfigServiceImpl.class);

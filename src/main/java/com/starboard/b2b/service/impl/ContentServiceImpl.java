@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by Ken on 9/29/2015.
  */
-@Service
+@Service("contentService")
 @Transactional
 public class ContentServiceImpl implements ContentService {
 

@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.starboard.b2b.dao.UserDao;
 import com.starboard.b2b.service.EnvironmentService;
 
-@Service
+@Service("environmentService")
 public class EnvironmentServiceImpl implements EnvironmentService {
 
 	private static final Logger log = LoggerFactory.getLogger(EnvironmentServiceImpl.class);

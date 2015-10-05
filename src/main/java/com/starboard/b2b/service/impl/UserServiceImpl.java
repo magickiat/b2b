@@ -24,7 +24,7 @@ import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.user.UserForm;
 import com.starboard.b2b.web.form.user.UserRegisterForm;
 
-@Service
+@Service("userService")
 public class UserServiceImpl implements UserService {
 
 	private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
