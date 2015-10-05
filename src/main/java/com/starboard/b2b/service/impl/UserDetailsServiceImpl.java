@@ -1,9 +1,6 @@
 package com.starboard.b2b.service.impl;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.starboard.b2b.dao.UserDao;
 import com.starboard.b2b.model.User;
 
-@Service
+@Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	private UserDao userDao;
