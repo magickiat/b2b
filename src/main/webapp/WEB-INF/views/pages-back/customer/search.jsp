@@ -48,60 +48,9 @@
 			</div>
 		</div>
 
-		<div class="row pull-right">
-			<div class="col-sm-12">
-				<c:choose>
-					<c:when test="${!empty resultPage.total and resultPage.total > 0}">
-						<c:url var="firstUrl" value="/backend/customer?page=1" />
-						<c:url var="lastUrl"
-							value="/backend/customer?page=${resultPage.totalPage}" />
-						<c:url var="prevUrl"
-							value="/backend/customer?page=${resultPage.current - 1}" />
-						<c:url var="nextUrl"
-							value="/backend/customer?page=${resultPage.current + 1}" />
-
-						<ul class="pagination">
-							<!-- Previous 5 page -->
-							<c:choose>
-								<c:when test="${resultPage.current == 1}">
-									<li class="disabled"><a href="#">&lt;&lt;</a></li>
-									<li class="disabled"><a href="#">&lt;</a></li>
-								</c:when>
-								<c:otherwise>
-									<li><a href="${firstUrl}">&lt;&lt;</a></li>
-									<li><a href="${prevUrl}">&lt;</a></li>
-								</c:otherwise>
-							</c:choose>
-
-							<c:forEach var="i" begin="${resultPage.beginPage }"
-								end="${ resultPage.endPage }">
-								<li
-									<c:if test="${ i == resultPage.current }">class="active"</c:if>><a
-									href='<c:url value="/backend/customer?page=${ i }" />'>${ i }</a></li>
-
-							</c:forEach>
-
-							<c:choose>
-								<c:when test="${resultPage.current == resultPage.totalPage}">
-									<li class="disabled"><a href="#">&gt;</a></li>
-									<li class="disabled"><a href="#">&gt;&gt;</a></li>
-								</c:when>
-								<c:otherwise>
-									<li><a href="${nextUrl}">&gt;</a></li>
-									<li><a href="${lastUrl}">&gt;&gt;</a></li>
-								</c:otherwise>
-							</c:choose>
-
-						</ul>
-
-					</c:when>
-					<c:otherwise>
-						<h3>Not found data</h3>
-					</c:otherwise>
-				</c:choose>
-			</div>
-
-		</div>
+		<!-- Base URL for pagination -->
+		<c:set var="baseUrl" value="/backend/customer" />
+		<%@include file="/WEB-INF/views/include/paging.jspf" %>
 
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>

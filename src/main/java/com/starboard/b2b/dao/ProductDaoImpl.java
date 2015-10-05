@@ -51,7 +51,7 @@ public class ProductDaoImpl implements ProductDao {
 
 		StringBuffer sbQuery = new StringBuffer(
 				"SELECT new com.starboard.b2b.dto.search.SearchProductModelDTO(p.productId, p.productCode, p.productPictureMedium, p.productModelId, m.productModelName) ");
-		StringBuffer sbTotal = new StringBuffer("select count(1) ");
+		StringBuffer sbTotal = new StringBuffer("select count(distinct p.productModelId ) ");
 
 		// common query
 		StringBuffer sb = new StringBuffer();
@@ -77,14 +77,17 @@ public class ProductDaoImpl implements ProductDao {
 			if (StringUtils.isNotEmpty(req.getCondition().getSelectedYear())) {
 				sb.append("and p.productYearId = :productYearId ");
 			}
+			
+			if(StringUtils.isNotEmpty(req.getCondition().getSelectedTechnology())){
+				sb.append("and p.productTechnologyId = :productTechnologyId ");
+			}
 		}
 
 		// Set common query
-		sbTotal.append(sb);
-		
+		sb.append("GROUP BY p.productModelId ");
+
 		sbQuery.append(sb);
-		sbQuery.append("GROUP BY p.productModelId ");
-		
+		sbTotal.append(sb);
 
 		// create query and set parameter
 		Query queryTotal = sf.getCurrentSession().createQuery(sbTotal.toString());
@@ -110,13 +113,18 @@ public class ProductDaoImpl implements ProductDao {
 				query.setString("productYearId", req.getCondition().getSelectedYear());
 				queryTotal.setString("productYearId", req.getCondition().getSelectedYear());
 			}
+			
+			if(StringUtils.isNotEmpty(req.getCondition().getSelectedTechnology())){
+				query.setString("productTechnologyId", req.getCondition().getSelectedTechnology());
+				queryTotal.setString("productTechnologyId", req.getCondition().getSelectedTechnology());
+			}
 		}
 		// query
 		Object total = queryTotal.uniqueResult();
 		List list = query.setFirstResult(req.getFirstResult()).setMaxResults(req.getPageSize()).list();
-
+		log.info("List size: " + (list != null ? list.size() : 0));
 		SearchResult<SearchProductModelDTO> result = new SearchResult<>();
-		result.setTotal((long) total);
+		result.setTotal(total == null ? 0 : (long) total);
 		result.setResult(list);
 
 		log.info("Total " + result.getTotal());

@@ -164,6 +164,7 @@ public class ProductServiceImpl implements ProductService {
 		log.info("form: " + form);
 		CommonSearchRequest<SearchProductForm> req = new CommonSearchRequest<>(form.getPage(),
 				applicationConfig.getPageSize());
+		req.setCondition(form);
 
 		SearchResult<SearchProductModelDTO> result = productDao.search(req);
 

@@ -55,14 +55,22 @@ public class FrontOrderController {
 
 		// set search condition
 		SearchProductForm form = null;
-			form = new SearchProductForm();
-			form.setShowType("image");
-			form.setPage(1);
-			form.setBrandId(brandId);
-			model.addAttribute("searchProductForm", form);
+		form = new SearchProductForm();
+		form.setShowType("image");
+		form.setPage(1);
+		form.setBrandId(brandId);
+		model.addAttribute("searchProductForm", form);
+
+		return step2SearchAction(form, model);
+	}
+
+	@RequestMapping(value = "step2/search_action", method = RequestMethod.GET)
+	String step2SearchAction(@ModelAttribute SearchProductForm form, Model model) {
+		log.info("search condition: " + form.toString());
+		model.addAttribute("searchProductForm", form);
 
 		if (!model.containsAttribute("produtType")) {
-			model.addAttribute("produtType", productService.findAllProductType(brandId));
+			model.addAttribute("produtType", productService.findAllProductType(form.getBrandId()));
 		}
 
 		if (!model.containsAttribute("productBuyerGroup")) {
@@ -85,15 +93,6 @@ public class FrontOrderController {
 		model.addAttribute("resultPage", resultPage);
 
 		return "pages-front/order/step2_search";
-	}
-
-	@RequestMapping(value = "step2/search_action", method = RequestMethod.GET)
-	String step2SearchAction(@ModelAttribute SearchProductForm searchProductForm, Model model) {
-		log.info("search condition: " + searchProductForm.toString());
-		model.addAttribute("searchProductForm", searchProductForm);
-		Page<SearchProductModelDTO> resultPage = productService.searchProduct(searchProductForm);
-		model.addAttribute("resultPage", resultPage);
-		return step2SearchProduct(searchProductForm.getBrandId(), model);
 	}
 
 	@RequestMapping(value = "create", method = RequestMethod.GET)

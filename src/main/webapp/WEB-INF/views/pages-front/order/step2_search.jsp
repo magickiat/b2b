@@ -11,6 +11,9 @@
 </head>
 <body>
 	<div class="container">
+
+		<c:set var="baseUrl" value="/frontend/order/step2/search_action" />
+
 		<%@include
 			file="/WEB-INF/views/pages-front/include/common_header.jspf"%>
 
@@ -34,31 +37,37 @@
 				<div class="row">
 					<div class="col-md-3">&nbsp;</div>
 					<div class="col-md-2">
-						<form:select path="selectedBrand" cssClass="form-control"
-							multiple="false">
-							<form:option value="NONE" label="ALL BRAND" />
-							<form:options items="${produtType}" itemLabel="productTypeName"
-								itemValue="productTypeId" />
-						</form:select>
+						<div class="form-group">
+							<form:select path="selectedBrand" cssClass="form-control"
+								multiple="false">
+								<form:option value="" label="ALL BRAND" />
+								<form:options items="${produtType}" itemLabel="productTypeName"
+									itemValue="productTypeId" />
+							</form:select>
+						</div>
 					</div>
 
 					<div class="col-md-2">
-						<form:select path="selectedBuyerGroup" cssClass="form-control"
-							multiple="false">
-							<form:option value="NONE" label="ALL CATEGORY" />
-							<form:options items="${productBuyerGroup}"
-								itemLabel="productBuyerGroupName"
-								itemValue="productBuyerGroupId" />
-						</form:select>
+						<div class="form-group">
+							<form:select path="selectedBuyerGroup" cssClass="form-control"
+								multiple="false">
+								<form:option value="" label="ALL CATEGORY" />
+								<form:options items="${productBuyerGroup}"
+									itemLabel="productBuyerGroupName"
+									itemValue="productBuyerGroupId" />
+							</form:select>
+						</div>
 					</div>
 
 					<div class="col-md-2">
-						<form:select path="selectedModel" cssClass="form-control"
-							multiple="false">
-							<form:option value="NONE" label="ALL MODEL" />
-							<form:options items="${productModel}"
-								itemLabel="productModelName" itemValue="productModelId" />
-						</form:select>
+						<div class="form-group">
+							<form:select path="selectedModel" cssClass="form-control"
+								multiple="false">
+								<form:option value="" label="ALL MODEL" />
+								<form:options items="${productModel}"
+									itemLabel="productModelName" itemValue="productModelId" />
+							</form:select>
+						</div>
 					</div>
 
 					<div class="col-md-3">
@@ -73,31 +82,37 @@
 				<div class="row">
 					<div class="col-md-3">&nbsp;</div>
 					<div class="col-md-2">
-						<form:select path="selectedYear" cssClass="form-control"
-							multiple="false">
-							<form:option value="NONE" label="ALL YEAR" />
-							<form:options items="${productYear}" itemLabel="productYearName"
-								itemValue="productYearId" />
-						</form:select>
+						<div class="form-group">
+							<form:select path="selectedYear" cssClass="form-control"
+								multiple="false">
+								<form:option value="" label="ALL YEAR" />
+								<form:options items="${productYear}" itemLabel="productYearName"
+									itemValue="productYearId" />
+							</form:select>
+						</div>
 					</div>
 
 					<div class="col-md-2">
-						<form:select path="selectedTechnology" cssClass="form-control"
-							multiple="false">
-							<form:option value="NONE" label="ALL TECHNOLOGY" />
-							<form:options items="${productTechnology}"
-								itemLabel="productTechnologyName"
-								itemValue="productTechnologyId" />
-						</form:select>
+						<div class="form-group">
+							<form:select path="selectedTechnology" cssClass="form-control"
+								multiple="false">
+								<form:option value="" label="ALL TECHNOLOGY" />
+								<form:options items="${productTechnology}"
+									itemLabel="productTechnologyName"
+									itemValue="productTechnologyId" />
+							</form:select>
+						</div>
 					</div>
 
 					<div class="col-md-2"></div>
 
 					<div class="col-md-3">
-						<label class="radio-inline"> <form:radiobutton
-								path="showType" value="image" />Images
-						</label> <label class="radio-inline"><form:radiobutton
-								path="showType" value="list" />List</label>
+						<div class="form-group">
+							<label class="radio-inline"> <form:radiobutton
+									path="showType" value="image" />Images
+							</label> <label class="radio-inline"><form:radiobutton
+									path="showType" value="list" />List</label>
+						</div>
 					</div>
 
 				</div>
@@ -105,6 +120,62 @@
 		</div>
 		<div class="row">&nbsp;</div>
 
+		<div class="row">
+
+			<!-- Paging -->
+			<div class="row pull-right">
+				<div class="col-sm-12">
+					<c:choose>
+						<c:when test="${!empty resultPage.total and resultPage.total > 0}">
+							<c:url var="firstUrl" value="${baseUrl}?page=1" />
+							<c:url var="lastUrl"
+								value="${baseUrl}?page=${resultPage.totalPage}" />
+							<c:url var="prevUrl"
+								value="${baseUrl}?page=${resultPage.current - 1}" />
+							<c:url var="nextUrl"
+								value="${baseUrl}?page=${resultPage.current + 1}" />
+
+							<ul class="pagination">
+								<!-- Previous 5 page -->
+								<c:choose>
+									<c:when test="${resultPage.current == 1}">
+										<li class="disabled"><a href="#">&lt;&lt;</a></li>
+										<li class="disabled"><a href="#">&lt;</a></li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="${firstUrl}">&lt;&lt;</a></li>
+										<li><a href="${prevUrl}">&lt;</a></li>
+									</c:otherwise>
+								</c:choose>
+
+								<c:forEach var="i" begin="${resultPage.beginPage }"
+									end="${ resultPage.endPage }">
+									<li
+										<c:if test="${ i == resultPage.current }">class="active"</c:if>><a
+										href='<c:url value="${baseUrl}?page=${ i }" />'>${ i }</a></li>
+
+								</c:forEach>
+
+								<c:choose>
+									<c:when test="${resultPage.current == resultPage.totalPage}">
+										<li class="disabled"><a href="#">&gt;</a></li>
+										<li class="disabled"><a href="#">&gt;&gt;</a></li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="${nextUrl}">&gt;</a></li>
+										<li><a href="${lastUrl}">&gt;&gt;</a></li>
+									</c:otherwise>
+								</c:choose>
+
+							</ul>
+
+						</c:when>
+
+					</c:choose>
+				</div>
+
+			</div>
+		</div>
 		<!-- Show table -->
 		<div class="row">
 			<c:choose>
@@ -126,8 +197,9 @@
 						<c:url var="productUrl" value="${ imageUrl }" />
 						<!-- Product -->
 						<div class="col-md-2 product">
-							<a href="#"> <img class="product-img" alt="${ product.productModelName }"
-								src="${ productUrl }" /> <span style="text-align: center;">${ product.productModelName }</span>
+							<a href="#"> <img class="product-img"
+								alt="${ product.productModelName }" src="${ productUrl }" /> <span
+								style="text-align: center;">${ product.productModelName }</span>
 							</a>
 						</div>
 					</c:forEach>
@@ -135,6 +207,61 @@
 			</c:choose>
 		</div>
 	</div>
+
+	<div class="row">
+
+		<!-- Paging -->
+		<div class="row pull-right">
+			<div class="col-sm-12">
+				<c:choose>
+					<c:when test="${!empty resultPage.total and resultPage.total > 0}">
+						<c:url var="firstUrl" value="${baseUrl}?page=1" />
+						<c:url var="lastUrl"
+							value="${baseUrl}?page=${resultPage.totalPage}" />
+						<c:url var="prevUrl"
+							value="${baseUrl}?page=${resultPage.current - 1}" />
+						<c:url var="nextUrl"
+							value="${baseUrl}?page=${resultPage.current + 1}" />
+
+						<ul class="pagination">
+							<!-- Previous 5 page -->
+							<c:choose>
+								<c:when test="${resultPage.current == 1}">
+									<li class="disabled"><a href="#">&lt;&lt;</a></li>
+									<li class="disabled"><a href="#">&lt;</a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a href="${firstUrl}">&lt;&lt;</a></li>
+									<li><a href="${prevUrl}">&lt;</a></li>
+								</c:otherwise>
+							</c:choose>
+
+							<c:forEach var="i" begin="${resultPage.beginPage }"
+								end="${ resultPage.endPage }">
+								<li
+									<c:if test="${ i == resultPage.current }">class="active"</c:if>><a
+									href='<c:url value="${baseUrl}?page=${ i }" />'>${ i }</a></li>
+
+							</c:forEach>
+
+							<c:choose>
+								<c:when test="${resultPage.current == resultPage.totalPage}">
+									<li class="disabled"><a href="#">&gt;</a></li>
+									<li class="disabled"><a href="#">&gt;&gt;</a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a href="${nextUrl}">&gt;</a></li>
+									<li><a href="${lastUrl}">&gt;&gt;</a></li>
+								</c:otherwise>
+							</c:choose>
+						</ul>
+					</c:when>
+				</c:choose>
+			</div>
+
+		</div>
+	</div>
+
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 </body>
 </html>
