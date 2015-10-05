@@ -161,6 +161,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Page<SearchProductModelDTO> searchProduct(SearchProductForm form) {
+		log.info("form: " + form);
 		CommonSearchRequest<SearchProductForm> req = new CommonSearchRequest<>(form.getPage(),
 				applicationConfig.getPageSize());
 

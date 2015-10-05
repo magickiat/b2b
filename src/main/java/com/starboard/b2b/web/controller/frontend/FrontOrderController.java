@@ -55,13 +55,11 @@ public class FrontOrderController {
 
 		// set search condition
 		SearchProductForm form = null;
-		if (!model.containsAttribute("searchProductForm")) {
 			form = new SearchProductForm();
 			form.setShowType("image");
 			form.setPage(1);
 			form.setBrandId(brandId);
 			model.addAttribute("searchProductForm", form);
-		}
 
 		if (!model.containsAttribute("produtType")) {
 			model.addAttribute("produtType", productService.findAllProductType(brandId));
