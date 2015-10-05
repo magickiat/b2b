@@ -1,61 +1,48 @@
 package com.starboard.b2b.web.form.product;
 
-import java.util.List;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class SearchProductForm {
-	private String searchCondition;
+	private int page;
+	private long brandId;
+
+	private String keyword;
 	private String showType;
-	private List<String> selectedBrand;
-	private List<String> selectedCategory;
-	private List<String> selectedModel;
-	private List<String> selectedYear;
-	private List<String> selectedTechnology;
+	private String selectedBrand;
+	private String selectedBuyerGroup;
+	private String selectedModel;
+	private String selectedYear;
+	private String selectedTechnology;
 
-	public String getSearchCondition() {
-		return searchCondition;
-	}
-
-	public void setSearchCondition(String searchCondition) {
-		this.searchCondition = searchCondition;
-	}
-
-	public List<String> getSelectedBrand() {
+	public String getSelectedBrand() {
 		return selectedBrand;
 	}
 
-	public void setSelectedBrand(List<String> selectedBrand) {
+	public void setSelectedBrand(String selectedBrand) {
 		this.selectedBrand = selectedBrand;
 	}
 
-	public List<String> getSelectedCategory() {
-		return selectedCategory;
-	}
-
-	public void setSelectedCategory(List<String> selectedCategory) {
-		this.selectedCategory = selectedCategory;
-	}
-
-	public List<String> getSelectedModel() {
+	public String getSelectedModel() {
 		return selectedModel;
 	}
 
-	public void setSelectedModel(List<String> selectedModel) {
+	public void setSelectedModel(String selectedModel) {
 		this.selectedModel = selectedModel;
 	}
 
-	public List<String> getSelectedYear() {
+	public String getSelectedYear() {
 		return selectedYear;
 	}
 
-	public void setSelectedYear(List<String> selectedYear) {
+	public void setSelectedYear(String selectedYear) {
 		this.selectedYear = selectedYear;
 	}
 
-	public List<String> getSelectedTechnology() {
+	public String getSelectedTechnology() {
 		return selectedTechnology;
 	}
 
-	public void setSelectedTechnology(List<String> selectedTechnology) {
+	public void setSelectedTechnology(String selectedTechnology) {
 		this.selectedTechnology = selectedTechnology;
 	}
 
@@ -65,5 +52,42 @@ public class SearchProductForm {
 
 	public void setShowType(String showType) {
 		this.showType = showType;
+	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
+
+	public long getBrandId() {
+		return brandId;
+	}
+
+	public void setBrandId(long brandId) {
+		this.brandId = brandId;
+	}
+
+	public String getSelectedBuyerGroup() {
+		return selectedBuyerGroup;
+	}
+
+	public void setSelectedBuyerGroup(String selectedBuyerGroup) {
+		this.selectedBuyerGroup = selectedBuyerGroup;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
 	}
 }

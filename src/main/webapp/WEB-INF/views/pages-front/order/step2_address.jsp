@@ -17,7 +17,7 @@
 
 		<div class="row">
 			<img alt="step 1"
-				src='<c:url value="/images/pages-front/icon/step1.png" />'
+				src='<c:url value="/images/pages-front/icon/step2.png" />'
 				width="100%">
 		</div>
 
@@ -31,7 +31,7 @@
 				<c:otherwise>
 					<!-- Quick Order -->
 					<div class="col-md-2" style="margin-top: 30px;">
-						<a href='<c:url value="/frontend/order/step2_search?brand_id=${ brandId }" />'> <img alt="Quick Order"
+						<a href='<c:url value="/frontend/order/step2/search?brand_id=${ brandId }" />'> <img alt="Quick Order"
 							src='<c:url value="/images/pages-front/icon/quick_order.png" />' />
 						</a>
 					</div>

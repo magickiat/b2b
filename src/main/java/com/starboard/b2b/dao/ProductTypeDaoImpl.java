@@ -2,8 +2,8 @@ package com.starboard.b2b.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -23,8 +23,12 @@ public class ProductTypeDaoImpl implements ProductTypeDao {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<ProductType> findByProductBrandGroupId(Integer brandGroupId) {
-		return sf.getCurrentSession().createCriteria(ProductType.class)
-				.add(Restrictions.eq("brandGroupId", brandGroupId)).list();
+	public List<ProductType> findByProductBrandGroupId(Long brandGroupId) {
+		Query query = sf.getCurrentSession().createQuery(
+				"select new com.starboard.b2b.model.ProductType(a.productTypeId, a.productTypeName, a.productTypeParentId, a.productTypeDescription, a.userCreate, a.userUpdate, a.timeCreate, a.timeUpdate)  "
+				+ " from ProductType as a, ProductBrandGroup b where a.productTypeId = b.id.productTypeId and b.id.brandGroupId = :brandGroupId");
+		
+		return query.setLong("brandGroupId", brandGroupId).list();
+
 	}
 }

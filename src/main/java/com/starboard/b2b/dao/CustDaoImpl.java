@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.starboard.b2b.common.SearchCustRequest;
-import com.starboard.b2b.common.SearchCustResult;
+import com.starboard.b2b.dto.search.SearchCustRequest;
+import com.starboard.b2b.dto.search.SearchCustResult;
 import com.starboard.b2b.model.Cust;
 
 @Repository("custDao")

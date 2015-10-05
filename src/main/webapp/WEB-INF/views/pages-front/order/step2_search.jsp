@@ -17,7 +17,7 @@
 
 		<div class="row">
 			<img alt="step 1"
-				src='<c:url value="/images/pages-front/icon/step1.png" />'
+				src='<c:url value="/images/pages-front/icon/step2.png" />'
 				width="100%">
 		</div>
 		<div class="row">&nbsp;</div>
@@ -26,8 +26,10 @@
 		<!-- Search condition -->
 		<div class="row">
 			<form:form modelAttribute="searchProductForm"
-				servletRelativeAction="/frontend/order/step2_search" method="POST">
+				servletRelativeAction="/frontend/order/step2/search_action"
+				method="get">
 
+				<form:hidden path="brandId" />
 				<!-- ROW 1 -->
 				<div class="row">
 					<div class="col-md-3">&nbsp;</div>
@@ -35,17 +37,18 @@
 						<form:select path="selectedBrand" cssClass="form-control"
 							multiple="false">
 							<form:option value="NONE" label="ALL BRAND" />
-							<form:options items="${productBrand}"
-								itemLabel="productCategoryName" itemValue="productCategoryId" />
+							<form:options items="${produtType}" itemLabel="productTypeName"
+								itemValue="productTypeId" />
 						</form:select>
 					</div>
 
 					<div class="col-md-2">
-						<form:select path="selectedCategory" cssClass="form-control"
+						<form:select path="selectedBuyerGroup" cssClass="form-control"
 							multiple="false">
 							<form:option value="NONE" label="ALL CATEGORY" />
-							<form:options items="${productCategory}"
-								itemLabel="productCategoryName" itemValue="productCategoryId" />
+							<form:options items="${productBuyerGroup}"
+								itemLabel="productBuyerGroupName"
+								itemValue="productBuyerGroupId" />
 						</form:select>
 					</div>
 
@@ -105,17 +108,26 @@
 		<!-- Show table -->
 		<div class="row">
 			<c:choose>
-				<c:when test="${empty products }">
+				<c:when test="${empty resultPage.result }">
 					<h3>Not found any product.</h3>
 				</c:when>
 
 				<c:otherwise>
-					<c:forEach items="${ products }" var="product">
+					<c:forEach items="${ resultPage.result }" var="product">
+
+						<c:choose>
+							<c:when test="${empty product.productPictureMedium }">
+								<c:set var="imageUrl" value="/images/b2b/default_image.jpg" />
+							</c:when>
+							<c:otherwise>
+								<c:set var="imageUrl" value="${ product.productPictureMedium }" />
+							</c:otherwise>
+						</c:choose>
+						<c:url var="productUrl" value="${ imageUrl }" />
 						<!-- Product -->
 						<div class="col-md-2 product">
-							<a href="#"> <img alt="${ product.name }"
-								src='<c:url value="${ product.pictureMedium }" />' /> <span
-								style="text-align: center;">${ product.model.name }</span>
+							<a href="#"> <img class="product-img" alt="${ product.productModelName }"
+								src="${ productUrl }" /> <span style="text-align: center;">${ product.productModelName }</span>
 							</a>
 						</div>
 					</c:forEach>

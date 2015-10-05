@@ -1,4 +1,4 @@
-package com.starboard.b2b.common;
+package com.starboard.b2b.dto.search;
 
 import java.util.List;
 

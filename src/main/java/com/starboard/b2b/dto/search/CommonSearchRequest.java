@@ -1,12 +1,11 @@
-package com.starboard.b2b.common;
+package com.starboard.b2b.dto.search;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-
-public class SearchCustRequest {
+public class CommonSearchRequest<T> {
 	private int page;
 	private int size;
+	private T condition;
 
-	public SearchCustRequest(Integer page, int size) {
+	public CommonSearchRequest(Integer page, int size) {
 		setPage(page);
 		setPageSize(size);
 	}
@@ -37,9 +36,13 @@ public class SearchCustRequest {
 		int begin = page < 1 ? 1 : page;
 		return (begin - 1) * getPageSize();
 	}
-	
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
+
+	public T getCondition() {
+		return condition;
 	}
+
+	public void setCondition(T condition) {
+		this.condition = condition;
+	}
+
 }

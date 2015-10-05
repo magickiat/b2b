@@ -16,14 +16,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.common.Pagination;
-import com.starboard.b2b.common.SearchCustRequest;
-import com.starboard.b2b.common.SearchCustResult;
 import com.starboard.b2b.dao.BrandDao;
 import com.starboard.b2b.dao.CustDao;
 import com.starboard.b2b.dao.CustomerDao;
 import com.starboard.b2b.dto.BrandDTO;
 import com.starboard.b2b.dto.CustDTO;
 import com.starboard.b2b.dto.CustomerDTO;
+import com.starboard.b2b.dto.search.SearchCustRequest;
+import com.starboard.b2b.dto.search.SearchCustResult;
 import com.starboard.b2b.model.Brand;
 import com.starboard.b2b.model.Cust;
 import com.starboard.b2b.model.Customer;

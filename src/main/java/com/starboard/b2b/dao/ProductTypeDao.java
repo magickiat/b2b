@@ -8,6 +8,6 @@ public interface ProductTypeDao {
 
 	List<ProductType> findAll();
 
-	List<ProductType> findByProductBrandGroupId(Integer brandGroupId);
+	List<ProductType> findByProductBrandGroupId(Long brandGroupId);
 
 }

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.starboard.b2b.dto.CustDTO;
-import com.starboard.b2b.dto.CustomerDTO;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.BrandService;
 import com.starboard.b2b.service.ConfigService;
