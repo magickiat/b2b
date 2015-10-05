@@ -29,7 +29,7 @@ label {
 .product {
 	text-align: center;
 	border: solid 1px black;
-	margin: 30px;
+	margin: 20px;
 	border: solid 1px black;
 }
 
@@ -40,7 +40,9 @@ label {
 }
 
 .product-img {
-	width: 175px;
+	width: 150px;
+	height: 300px;
+	text-align: center;
 }
 -->
 </style>
