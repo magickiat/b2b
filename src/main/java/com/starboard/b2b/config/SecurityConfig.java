@@ -42,7 +42,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.hasAnyRole(ROLE_USER, ROLE_ADMIN).anyRequest().authenticated().and().formLogin().loginPage("/login")
 				.defaultSuccessUrl("/frontend").failureUrl("/login?error").and().logout().logoutSuccessUrl("/login")
 				.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
-		;
 	}
 
 	@Bean
