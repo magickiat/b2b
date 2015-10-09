@@ -63,7 +63,10 @@ public class ProductDaoImpl implements ProductDao {
 
 		if (req.getCondition() != null) {
 			if (StringUtils.isNotEmpty(req.getCondition().getSelectedBrand())) {
-				sb.append("and p.productCategoryId = :productCategoryId ");
+				sb.append("and p.productTypeId = :productTypeId ");
+			} else {
+				sb.append(
+						"and p.productTypeId in (select a.productTypeId from ProductType as a , ProductBrandGroup b where a.productTypeId = b.id.productTypeId and b.id.brandGroupId = :productTypeId) ");
 			}
 
 			if (StringUtils.isNotEmpty(req.getCondition().getSelectedBuyerGroup())) {
@@ -77,27 +80,25 @@ public class ProductDaoImpl implements ProductDao {
 			if (StringUtils.isNotEmpty(req.getCondition().getSelectedYear())) {
 				sb.append("and p.productYearId = :productYearId ");
 			}
-			
-			if(StringUtils.isNotEmpty(req.getCondition().getSelectedTechnology())){
+
+			if (StringUtils.isNotEmpty(req.getCondition().getSelectedTechnology())) {
 				sb.append("and p.productTechnologyId = :productTechnologyId ");
 			}
 		}
 
 		// Set common query
-		sb.append("GROUP BY p.productModelId ");
-
-		sbQuery.append(sb);
 		sbTotal.append(sb);
+
+		sb.append("GROUP BY p.productModelId ");
+		sbQuery.append(sb);
 
 		// create query and set parameter
 		Query queryTotal = sf.getCurrentSession().createQuery(sbTotal.toString());
 		Query query = sf.getCurrentSession().createQuery(sbQuery.toString());
 
 		if (req.getCondition() != null) {
-			if (StringUtils.isNotEmpty(req.getCondition().getSelectedBrand())) {
-				query.setString("productCategoryId", req.getCondition().getSelectedBrand());
-				queryTotal.setString("productCategoryId", req.getCondition().getSelectedBrand());
-			}
+			query.setInteger("productTypeId", (int) req.getCondition().getBrandId());
+			queryTotal.setInteger("productTypeId", (int) req.getCondition().getBrandId());
 
 			if (StringUtils.isNotEmpty(req.getCondition().getSelectedBuyerGroup())) {
 				query.setString("productBuyerGroupId", req.getCondition().getSelectedBuyerGroup());
@@ -113,20 +114,24 @@ public class ProductDaoImpl implements ProductDao {
 				query.setString("productYearId", req.getCondition().getSelectedYear());
 				queryTotal.setString("productYearId", req.getCondition().getSelectedYear());
 			}
-			
-			if(StringUtils.isNotEmpty(req.getCondition().getSelectedTechnology())){
+
+			if (StringUtils.isNotEmpty(req.getCondition().getSelectedTechnology())) {
 				query.setString("productTechnologyId", req.getCondition().getSelectedTechnology());
 				queryTotal.setString("productTechnologyId", req.getCondition().getSelectedTechnology());
 			}
 		}
 		// query
 		Object total = queryTotal.uniqueResult();
+		log.info("req.getPage() = " + req.getPage());
+		log.info("req.getPageSize() = " + req.getPageSize());
 		List list = query.setFirstResult(req.getFirstResult()).setMaxResults(req.getPageSize()).list();
-		log.info("List size: " + (list != null ? list.size() : 0));
+
 		SearchResult<SearchProductModelDTO> result = new SearchResult<>();
 		result.setTotal(total == null ? 0 : (long) total);
 		result.setResult(list);
 
+		log.info("req page: " + req.getPage());
+		log.info("List size: " + (list != null ? list.size() : 0));
 		log.info("Total " + result.getTotal());
 		return result;
 	}

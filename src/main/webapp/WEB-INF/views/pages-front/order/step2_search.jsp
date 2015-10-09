@@ -12,8 +12,6 @@
 <body>
 	<div class="container">
 
-		<c:set var="baseUrl" value="/frontend/order/step2/search_action" />
-
 		<%@include
 			file="/WEB-INF/views/pages-front/include/common_header.jspf"%>
 
@@ -28,11 +26,13 @@
 
 		<!-- Search condition -->
 		<div class="row">
-			<form:form modelAttribute="searchProductForm"
-				servletRelativeAction="/frontend/order/step2/search_action"
-				method="get">
+			<form:form id="searchProductModelForm"
+				modelAttribute="searchProductForm"
+				servletRelativeAction="/frontend/order/step2/searchaction"
+				method="post">
 
 				<form:hidden path="brandId" />
+				<form:hidden path="page" />
 				<!-- ROW 1 -->
 				<div class="row">
 					<div class="col-md-3">&nbsp;</div>
@@ -41,7 +41,7 @@
 							<form:select path="selectedBrand" cssClass="form-control"
 								multiple="false">
 								<form:option value="" label="ALL BRAND" />
-								<form:options items="${produtType}" itemLabel="productTypeName"
+								<form:options items="${productType}" itemLabel="productTypeName"
 									itemValue="productTypeId" />
 							</form:select>
 						</div>
@@ -71,7 +71,7 @@
 					</div>
 
 					<div class="col-md-3">
-						<button type="submit" class="btn btn-success">Submit</button>
+						<button type="button" class="btn btn-success" onclick="searchPage(1)">Submit</button>
 					</div>
 
 				</div>
@@ -127,13 +127,13 @@
 				<div class="col-sm-12">
 					<c:choose>
 						<c:when test="${!empty resultPage.total and resultPage.total > 0}">
-							<c:url var="firstUrl" value="${baseUrl}?page=1" />
+							<c:url var="firstUrl" value="searchPage('1')" />
 							<c:url var="lastUrl"
-								value="${baseUrl}?page=${resultPage.totalPage}" />
+								value="searchPage('${resultPage.totalPage}')" />
 							<c:url var="prevUrl"
-								value="${baseUrl}?page=${resultPage.current - 1}" />
+								value="searchPage('${resultPage.current - 1}')" />
 							<c:url var="nextUrl"
-								value="${baseUrl}?page=${resultPage.current + 1}" />
+								value="searchPage('${resultPage.current + 1}')" />
 
 							<ul class="pagination">
 								<!-- Previous 5 page -->
@@ -143,8 +143,8 @@
 										<li class="disabled"><a href="#">&lt;</a></li>
 									</c:when>
 									<c:otherwise>
-										<li><a href="${firstUrl}">&lt;&lt;</a></li>
-										<li><a href="${prevUrl}">&lt;</a></li>
+										<li><a href="#" onclick="${firstUrl}">&lt;&lt;</a></li>
+										<li><a href="#" onclick="${prevUrl}">&lt;</a></li>
 									</c:otherwise>
 								</c:choose>
 
@@ -152,7 +152,7 @@
 									end="${ resultPage.endPage }">
 									<li
 										<c:if test="${ i == resultPage.current }">class="active"</c:if>><a
-										href='<c:url value="${baseUrl}?page=${ i }" />'>${ i }</a></li>
+										href="#" onclick="searchPage('${ i }')">${ i }</a></li>
 
 								</c:forEach>
 
@@ -162,8 +162,8 @@
 										<li class="disabled"><a href="#">&gt;&gt;</a></li>
 									</c:when>
 									<c:otherwise>
-										<li><a href="${nextUrl}">&gt;</a></li>
-										<li><a href="${lastUrl}">&gt;&gt;</a></li>
+										<li><a href="#" onclick="${nextUrl}">&gt;</a></li>
+										<li><a href="#" onclick="${lastUrl}">&gt;&gt;</a></li>
 									</c:otherwise>
 								</c:choose>
 
@@ -208,60 +208,17 @@
 		</div>
 	</div>
 
-	<div class="row">
 
-		<!-- Paging -->
-		<div class="row pull-right">
-			<div class="col-sm-12">
-				<c:choose>
-					<c:when test="${!empty resultPage.total and resultPage.total > 0}">
-						<c:url var="firstUrl" value="${baseUrl}?page=1" />
-						<c:url var="lastUrl"
-							value="${baseUrl}?page=${resultPage.totalPage}" />
-						<c:url var="prevUrl"
-							value="${baseUrl}?page=${resultPage.current - 1}" />
-						<c:url var="nextUrl"
-							value="${baseUrl}?page=${resultPage.current + 1}" />
 
-						<ul class="pagination">
-							<!-- Previous 5 page -->
-							<c:choose>
-								<c:when test="${resultPage.current == 1}">
-									<li class="disabled"><a href="#">&lt;&lt;</a></li>
-									<li class="disabled"><a href="#">&lt;</a></li>
-								</c:when>
-								<c:otherwise>
-									<li><a href="${firstUrl}">&lt;&lt;</a></li>
-									<li><a href="${prevUrl}">&lt;</a></li>
-								</c:otherwise>
-							</c:choose>
-
-							<c:forEach var="i" begin="${resultPage.beginPage }"
-								end="${ resultPage.endPage }">
-								<li
-									<c:if test="${ i == resultPage.current }">class="active"</c:if>><a
-									href='<c:url value="${baseUrl}?page=${ i }" />'>${ i }</a></li>
-
-							</c:forEach>
-
-							<c:choose>
-								<c:when test="${resultPage.current == resultPage.totalPage}">
-									<li class="disabled"><a href="#">&gt;</a></li>
-									<li class="disabled"><a href="#">&gt;&gt;</a></li>
-								</c:when>
-								<c:otherwise>
-									<li><a href="${nextUrl}">&gt;</a></li>
-									<li><a href="${lastUrl}">&gt;&gt;</a></li>
-								</c:otherwise>
-							</c:choose>
-						</ul>
-					</c:when>
-				</c:choose>
-			</div>
-
-		</div>
-	</div>
 
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
+
+	<script type="text/javascript">
+		function searchPage(page) {
+			$('#page').val(page);
+			$('#searchProductModelForm').submit();
+		}
+	</script>
+
 </body>
 </html>
