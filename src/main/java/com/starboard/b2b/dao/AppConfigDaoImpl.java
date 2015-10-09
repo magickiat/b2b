@@ -3,6 +3,7 @@ package com.starboard.b2b.dao;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,5 +24,10 @@ public class AppConfigDaoImpl implements AppConfigDao {
 	
 	public Integer add(AppConfig config){
 		return (Integer)sessionFactory.getCurrentSession().save(config);
+	}
+
+	@Override
+	public String getConfig(String key) {
+		return (String)sessionFactory.getCurrentSession().createCriteria(AppConfig.class).add(Restrictions.eq("configKey", key)).uniqueResult();
 	}
 }

@@ -40,7 +40,7 @@ label {
 }
 
 .product-img {
-	width: 150px;
+	width: 144px;
 	height: 300px;
 	text-align: center;
 }
