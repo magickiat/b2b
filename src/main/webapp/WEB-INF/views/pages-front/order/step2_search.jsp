@@ -35,7 +35,7 @@
 				<form:hidden path="page" />
 				<!-- ROW 1 -->
 				<div class="row">
-					<div class="col-md-3">&nbsp;</div>
+					<div class="col-md-3">SEARCH: <form:input path="keyword" /> </div>
 					<div class="col-md-2">
 						<div class="form-group">
 							<form:select path="selectedBrand" cssClass="form-control"
