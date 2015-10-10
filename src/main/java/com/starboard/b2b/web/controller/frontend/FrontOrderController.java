@@ -2,6 +2,7 @@ package com.starboard.b2b.web.controller.frontend;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
+import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.service.BrandService;
 import com.starboard.b2b.service.ProductService;
@@ -21,6 +23,7 @@ import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.product.SearchProductForm;
 
 @Controller
+@RequestMapping("/frontend/order/")
 public class FrontOrderController {
 
 	private static final Logger log = LoggerFactory.getLogger(FrontOrderController.class);
@@ -31,7 +34,7 @@ public class FrontOrderController {
 	@Autowired
 	private BrandService brandService;
 
-	@RequestMapping(value = "/frontend/order/index", method = RequestMethod.GET)
+	@RequestMapping(value = "index", method = RequestMethod.GET)
 	String step1(Model model) {
 		List<ProductBrandGroupDTO> brandGroupList = brandService
 				.getBrandGroupList(UserUtil.getCurrentUser().getCustomer().getCustId());
@@ -39,14 +42,14 @@ public class FrontOrderController {
 		return "pages-front/order/step1_brand";
 	}
 
-	@RequestMapping(value = "/frontend/order/step2/index", method = RequestMethod.GET)
+	@RequestMapping(value = "step2/index", method = RequestMethod.GET)
 	String step2ChooseAddress(@RequestParam("brand_id") Long brandId, Model model) {
 		log.info("Brand id: " + brandId);
 		model.addAttribute("brandId", brandId);
 		return "pages-front/order/step2_address";
 	}
 
-	@RequestMapping(value = "/frontend/order/step2/search", method = RequestMethod.GET)
+	@RequestMapping(value = "step2/search", method = RequestMethod.GET)
 	String step2SearchProduct(@RequestParam("brand_id") Long brandId, Model model) {
 		log.info("step2_search GET");
 		log.info("Brand id: " + brandId);
@@ -57,28 +60,52 @@ public class FrontOrderController {
 		form.setPage(1);
 		form.setBrandId(brandId);
 		model.addAttribute("searchProductForm", form);
-		
+
 		setSearchCondition(form, model);
-		
+
 		Page<SearchProductModelDTO> resultPage = productService.searchProduct(form);
 		model.addAttribute("resultPage", resultPage);
-		
 
 		return "pages-front/order/step2_search";
 	}
 
-	@RequestMapping(value = "/frontend/order/step2/searchaction", method = RequestMethod.GET)
+	@RequestMapping(value = "step2/search-action", method = RequestMethod.GET)
 	String step2SearchAction(@ModelAttribute SearchProductForm form, Model model) {
 		log.info("search condition: " + form.toString());
-		
+
 		setSearchCondition(form, model);
 		Page<SearchProductModelDTO> resultPage = productService.searchProduct(form);
 		model.addAttribute("resultPage", resultPage);
 
 		return "pages-front/order/step2_search";
 	}
-	
-//	String step2ModelDetail
+
+	@RequestMapping(value = "step2/view", method = RequestMethod.GET)
+	String step2ModelDetail(String modelId, Model model) {
+		log.info("GET step2/view");
+		log.info("modelId = " + modelId);
+
+		if (StringUtils.isEmpty(modelId)) {
+			model.addAttribute("errorMsg", "Not found product model");
+		} else {
+			
+			model.addAttribute("productCategoryList", productService.findAllProductCategory());
+			model.addAttribute("productModelList", productService.findAllProductModel());
+			model.addAttribute("productYearList", productService.findAllProductYear());
+			model.addAttribute("productTechnologyList", productService.findAllProductTechnology());
+
+			List<ProductSearchResult> productListAll = productService.findProductModel(modelId);
+			
+			model.addAttribute("productListAll", productListAll);
+//			model.addAttribute("productImagesList", productImagesList);
+//			model.addAttribute("checkWithNose", Integer.valueOf(productListPre1.size()));
+//			model.addAttribute("header1", productModelgetHeader.getHeaderText1());
+//			model.addAttribute("header2", productModelgetHeader.getHeaderText2());
+//			
+		}
+
+		return "pages-front/order/step2_view_model";
+	}
 
 	private void setSearchCondition(SearchProductForm form, Model model) {
 		model.addAttribute("productType", productService.findAllProductType(form.getBrandId()));

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.search.CommonSearchRequest;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.dto.search.SearchResult;
@@ -137,17 +138,33 @@ public class ProductDaoImpl implements ProductDao {
 		}
 		// query
 		Object total = queryTotal.uniqueResult();
-		log.info("req.getPage() = " + req.getPage());
-		log.info("req.getPageSize() = " + req.getPageSize());
 		List list = query.setFirstResult(req.getFirstResult()).setMaxResults(req.getPageSize()).list();
 
 		SearchResult<SearchProductModelDTO> result = new SearchResult<>();
 		result.setTotal(total == null ? 0 : (long) total);
 		result.setResult(list);
 
-		log.info("req page: " + req.getPage());
 		log.info("List size: " + (list != null ? list.size() : 0));
 		log.info("Total " + result.getTotal());
 		return result;
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public List<ProductSearchResult> findProductModel(String modelId) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(
+				" select new com.starboard.b2b.dto.ProductSearchResult(p.productId,p.productTypeId,p.productCatalogId,p.productGroupId,p.productCode,p.productNameTh,p.productNameEn,p.productPrice,p.productDiscount,p.productTotalPrice,p.productBand,p.productQuantity,p.productWeight,p.productPreintro,p.productIntro,p.productDetail,p.productSummarize,p.productLink,p.productPictureMedium,p.productPictureBig,p.productStatus,p.productStock,p.productItemGroupId,p.vendor,p.productItemTypeId,p.productSubcategoryId,p.searchName,p.productTechnologyId,p.productDesign,p.supCatG,p.productWidth,p.productLength,p.supGroup,p.productBuyerGroupId,p.productCategoryId,p.productModelId,p.productYearId,p.productUnitId,p.sortBy,p.isActive,p.company,p.soCategory,p.productPictureSmallHorizontal,p.productPictureSmallVertical,p.userCreate,p.userUpdate,p.timeCreate,p.timeUpdate, t.productTypeName)");
+		sb.append(" from ProductType t, Product p");
+		sb.append(" where t.productTypeId = p.productTypeId");
+		sb.append(" and p.productModelId = :modelId");
+		sb.append(" AND p.productPreintro IN (0 , 1)");
+		sb.append(" ORDER BY p.productTechnologyId , p.productIntro ASC");
+
+		List list = sf.getCurrentSession().createQuery(sb.toString()).setString("modelId", modelId).list();
+
+		log.info("result size: " + (list == null ? 0 : list.size()));
+
+		return list;
 	}
 }

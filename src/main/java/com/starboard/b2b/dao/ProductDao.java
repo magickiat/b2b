@@ -2,6 +2,7 @@ package com.starboard.b2b.dao;
 
 import java.util.List;
 
+import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.search.CommonSearchRequest;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.dto.search.SearchResult;
@@ -15,5 +16,7 @@ public interface ProductDao {
 	List<Product> list(Integer brandId);
 
 	SearchResult<SearchProductModelDTO> search(CommonSearchRequest<SearchProductForm> req);
+
+	List<ProductSearchResult> findProductModel(String modelId);
 
 }

@@ -28,7 +28,7 @@
 		<div class="row">
 			<form:form id="searchProductModelForm"
 				modelAttribute="searchProductForm"
-				servletRelativeAction="/frontend/order/step2/searchaction"
+				servletRelativeAction="/frontend/order/step2/search-action"
 				method="get">
 
 				<form:hidden path="brandId" />
@@ -198,7 +198,7 @@
 						<c:url var="productUrl" value="${ imageUrl }" />
 						<!-- Product -->
 						<div class="col-md-2 product">
-							<a href="#"> <img class="product-img"
+							<a href='<c:url value="/frontend/order/step2/view?modelId=${ product.productModelId }" />'> <img class="product-img"
 								alt="${ product.productModelName }" src="${ productUrl }" /> <span
 								style="text-align: center;">${ product.productModelName }</span>
 							</a>

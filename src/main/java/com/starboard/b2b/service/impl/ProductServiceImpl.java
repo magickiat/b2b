@@ -3,7 +3,6 @@ package com.starboard.b2b.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -22,6 +21,7 @@ import com.starboard.b2b.dao.ProductYearDao;
 import com.starboard.b2b.dto.ProductBuyerGroupDTO;
 import com.starboard.b2b.dto.ProductCategoryDTO;
 import com.starboard.b2b.dto.ProductModelDTO;
+import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.ProductTechnologyDTO;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.ProductYearDTO;
@@ -177,5 +177,11 @@ public class ProductServiceImpl implements ProductService {
 		page.setTotal(result.getTotal());
 		page.setResult(result.getResult());
 		return page;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<ProductSearchResult> findProductModel(String modelId) {
+		return  productDao.findProductModel(modelId);
 	}
 }

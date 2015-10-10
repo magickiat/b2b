@@ -1,6 +1,8 @@
 
 package com.starboard.b2b.dto;
 
+import java.math.BigDecimal;
+
 public class ProductPriceDTO {
 
 	private String productCode;
@@ -9,6 +11,19 @@ public class ProductPriceDTO {
 	private java.math.BigDecimal amount;
 	private String productUnitId;
 	private double msrePrice;
+	
+	public ProductPriceDTO() {
+	}
+
+	public ProductPriceDTO(String productCode, String productPriceGroupId, String productCurrency, BigDecimal amount,
+			String productUnitId, double msrePrice) {
+		this.productCode = productCode;
+		this.productPriceGroupId = productPriceGroupId;
+		this.productCurrency = productCurrency;
+		this.amount = amount;
+		this.productUnitId = productUnitId;
+		this.msrePrice = msrePrice;
+	}
 
 	public String getProductCode() {
 		return productCode;
