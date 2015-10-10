@@ -29,7 +29,7 @@
 			<form:form id="searchProductModelForm"
 				modelAttribute="searchProductForm"
 				servletRelativeAction="/frontend/order/step2/searchaction"
-				method="post">
+				method="get">
 
 				<form:hidden path="brandId" />
 				<form:hidden path="page" />
@@ -72,6 +72,7 @@
 
 					<div class="col-md-3">
 						<button type="button" class="btn btn-success" onclick="searchPage(1)">Submit</button>
+						<button type="button" class="btn" onclick="resetSearch()">Reset</button>
 					</div>
 
 				</div>
@@ -217,6 +218,10 @@
 		function searchPage(page) {
 			$('#page').val(page);
 			$('#searchProductModelForm').submit();
+		}
+		
+		function resetSearch(){
+			window.open('<c:url value="/frontend/order/step2/search" />?brand_id=${searchProductForm.brandId}', '_self');
 		}
 	</script>
 

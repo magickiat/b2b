@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
-import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.service.BrandService;
 import com.starboard.b2b.service.ProductService;
@@ -68,7 +67,7 @@ public class FrontOrderController {
 		return "pages-front/order/step2_search";
 	}
 
-	@RequestMapping(value = "/frontend/order/step2/searchaction", method = RequestMethod.POST)
+	@RequestMapping(value = "/frontend/order/step2/searchaction", method = RequestMethod.GET)
 	String step2SearchAction(@ModelAttribute SearchProductForm form, Model model) {
 		log.info("search condition: " + form.toString());
 		
@@ -78,6 +77,8 @@ public class FrontOrderController {
 
 		return "pages-front/order/step2_search";
 	}
+	
+//	String step2ModelDetail
 
 	private void setSearchCondition(SearchProductForm form, Model model) {
 		model.addAttribute("productType", productService.findAllProductType(form.getBrandId()));
