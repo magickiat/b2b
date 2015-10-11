@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.common.Pagination;
+import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.BrandDTO;
 import com.starboard.b2b.dto.CustDTO;
 import com.starboard.b2b.dto.CustomerDTO;
@@ -15,27 +16,29 @@ import com.starboard.b2b.web.form.customer.CustomerForm;
 public interface CustomerService {
 	CustomerDTO findById(Long id);
 
-	CustomerDTO findByName(String name) throws Exception;
+	CustomerDTO findByName(String name);
 
-	List<CustomerDTO> list() throws Exception;
+	List<CustomerDTO> list();
 
 	Page<CustDTO> listCust(Integer page);
 
-	List<CustomerDTO> list(Pagination page) throws Exception;
+	List<CustomerDTO> list(Pagination page);
 
-	void add(CreateCustomerForm customer) throws Exception;
+	void add(CreateCustomerForm customer);
 
-	void update(CustomerForm customer) throws Exception;
+	void update(CustomerForm customer);
 
-	void addBrand(BrandForm brand) throws Exception;
+	void addBrand(BrandForm brand);
 
-	Set<BrandDTO> getSelectedBrand(Long custId) throws Exception;
+	Set<BrandDTO> getSelectedBrand(Long custId);
 
-	List<Integer> getSelectedBrandId(Long custId) throws Exception;
+	List<Integer> getSelectedBrandId(Long custId);
 
 	boolean isExistCustomerCode(String code);
 
 	boolean isExistCustomerName(String name);
 
 	CustDTO findCustById(Long custId);
+	
+	List<AddressDTO> findAddress(Long custId, Long addressType);
 }

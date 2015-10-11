@@ -19,6 +19,7 @@ import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.dao.BrandDao;
 import com.starboard.b2b.dao.CustDao;
 import com.starboard.b2b.dao.CustomerDao;
+import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.BrandDTO;
 import com.starboard.b2b.dto.CustDTO;
 import com.starboard.b2b.dto.CustomerDTO;
@@ -73,7 +74,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Transactional
-	public void add(CreateCustomerForm form) throws Exception {
+	public void add(CreateCustomerForm form) {
 		Customer customer = new Customer();
 		customer.setCode(form.getCode());
 		customer.setName(form.getName());
@@ -83,7 +84,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Transactional
-	public void update(CustomerForm customerForm) throws Exception {
+	public void update(CustomerForm customerForm) {
 		Customer customer = customerDao.findById(customerForm.getCustId());
 		customer.setCode(customerForm.getCode());
 		customer.setName(customerForm.getName());
@@ -93,7 +94,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	@Transactional
-	public void addBrand(BrandForm form) throws Exception {
+	public void addBrand(BrandForm form) {
 		Customer customer = customerDao.findById(form.getCustId());
 		if (form.getSelectedBrand() == null || form.getSelectedBrand().size() == 0) {
 			customer.setBrands(null);
@@ -104,7 +105,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Integer> getSelectedBrandId(Long custId) throws Exception {
+	public List<Integer> getSelectedBrandId(Long custId) {
 		ArrayList<Integer> brandList = new ArrayList<>();
 		Customer customer = customerDao.findById(custId);
 		if (customer != null && customer.getBrands() != null) {
@@ -119,7 +120,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Set<BrandDTO> getSelectedBrand(Long custId) throws Exception {
+	public Set<BrandDTO> getSelectedBrand(Long custId) {
 		Customer customer = customerDao.findById(custId);
 		if (customer != null) {
 			return copyBrandToDTO(customer.getBrands());
@@ -189,6 +190,12 @@ public class CustomerServiceImpl implements CustomerService {
 		CustDTO dto = new CustDTO();
 		BeanUtils.copyProperties(cust, dto);
 		return dto;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<AddressDTO> findAddress(Long custId, Long addressType) {
+		return custDao.findAddress(custId, addressType);
 	}
 
 }

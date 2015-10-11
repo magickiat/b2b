@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.starboard.b2b.common.Page;
+import com.starboard.b2b.config.AddressConstant;
+import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
 import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.service.BrandService;
+import com.starboard.b2b.service.CountryService;
+import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.product.SearchProductForm;
@@ -30,6 +34,12 @@ public class FrontOrderController {
 
 	@Autowired
 	private ProductService productService;
+
+	@Autowired
+	private CustomerService customerService;
+
+	@Autowired
+	private CountryService countryService;
 
 	@Autowired
 	private BrandService brandService;
@@ -45,6 +55,22 @@ public class FrontOrderController {
 	@RequestMapping(value = "step2/index", method = RequestMethod.GET)
 	String step2ChooseAddress(@RequestParam("brand_id") Long brandId, Model model) {
 		log.info("Brand id: " + brandId);
+		List<AddressDTO> invoiceToAddress = customerService
+				.findAddress(UserUtil.getCurrentUser().getCustomer().getCustId(), AddressConstant.TYPE_INVOICE_TO);
+
+		/**
+		 * Get first invoice address only
+		 */
+		AddressDTO invoiceTo = null;
+		if (invoiceToAddress != null && !invoiceToAddress.isEmpty()) {
+			invoiceTo = invoiceToAddress.get(0);
+		}
+
+		model.addAttribute("invoiceToAddress", invoiceTo);
+
+		// model.addAttribute("dispatch"); // TODO get dispatch address
+		
+		model.addAttribute("countryList", countryService.findAll());
 		model.addAttribute("brandId", brandId);
 		return "pages-front/order/step2_address";
 	}
@@ -88,20 +114,23 @@ public class FrontOrderController {
 		if (StringUtils.isEmpty(modelId)) {
 			model.addAttribute("errorMsg", "Not found product model");
 		} else {
-			
+
 			model.addAttribute("productCategoryList", productService.findAllProductCategory());
 			model.addAttribute("productModelList", productService.findAllProductModel());
 			model.addAttribute("productYearList", productService.findAllProductYear());
 			model.addAttribute("productTechnologyList", productService.findAllProductTechnology());
 
 			List<ProductSearchResult> productListAll = productService.findProductModel(modelId);
-			
+
 			model.addAttribute("productListAll", productListAll);
-//			model.addAttribute("productImagesList", productImagesList);
-//			model.addAttribute("checkWithNose", Integer.valueOf(productListPre1.size()));
-//			model.addAttribute("header1", productModelgetHeader.getHeaderText1());
-//			model.addAttribute("header2", productModelgetHeader.getHeaderText2());
-//			
+			// model.addAttribute("productImagesList", productImagesList);
+			// model.addAttribute("checkWithNose",
+			// Integer.valueOf(productListPre1.size()));
+			// model.addAttribute("header1",
+			// productModelgetHeader.getHeaderText1());
+			// model.addAttribute("header2",
+			// productModelgetHeader.getHeaderText2());
+			//
 		}
 
 		return "pages-front/order/step2_view_model";

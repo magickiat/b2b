@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.starboard.b2b.model.Product;
 import com.starboard.b2b.model.ProductType;
+import com.starboard.b2b.util.StringUtil;
 
 public class ProductSearchResult {
 
@@ -133,6 +134,14 @@ public class ProductSearchResult {
 
 	public void setProductType(ProductType productType) {
 		this.productType = productType;
+	}
+
+	public String getKeyName() {
+		if (product == null) {
+			return "";
+		}
+
+		return StringUtil.removeSpecialChar(product.getProductTechnologyId());
 	}
 
 }
