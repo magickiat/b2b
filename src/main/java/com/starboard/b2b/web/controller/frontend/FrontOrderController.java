@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.common.Page;
-import com.starboard.b2b.config.AddressConstant;
 import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
 import com.starboard.b2b.dto.ProductSearchResult;
@@ -69,7 +69,7 @@ public class FrontOrderController {
 		model.addAttribute("invoiceToAddress", invoiceTo);
 
 		// model.addAttribute("dispatch"); // TODO get dispatch address
-		
+
 		model.addAttribute("countryList", countryService.findAll());
 		model.addAttribute("brandId", brandId);
 		return "pages-front/order/step2_address";

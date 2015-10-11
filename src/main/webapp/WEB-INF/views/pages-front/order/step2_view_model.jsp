@@ -23,18 +23,28 @@
 
 		<div class="row">&nbsp;</div>
 		<div class="row">
-			<div class="col-sm-8">
+			<div class="col-sm-8 text-center">
 				<%-- Product Model Picture --%>
-				<%@include file="step2/view_image.jspf" %>
-				
+				<%@include file="step2/view_image.jspf"%>
+
 			</div>
-			<div class="col-sm-4"><%-- Technology --%>
-			<%@include file="step2/technology.jspf" %>
+			<div class="col-sm-4">
+				<%-- Technology --%>
+				<%@include file="step2/technology.jspf"%>
 			</div>
 		</div>
 
 		<div class="row">Add multiple</div>
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
+	<script
+		src='<c:url value="/scripts/zoom/jquery.elevateZoom-3.0.8.min.js" />'></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#zoomImg').elevateZoom({
+				scrollZoom : true
+			});
+		});
+	</script>
 </body>
 </html>

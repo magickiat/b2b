@@ -181,7 +181,13 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional(readOnly = true)
+	public List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection) {
+		return productDao.findProductModel(modelId, withnoseProtection);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
 	public List<ProductSearchResult> findProductModel(String modelId) {
-		return  productDao.findProductModel(modelId);
+		return productDao.findProductModel(modelId);
 	}
 }

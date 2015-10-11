@@ -1,4 +1,4 @@
-package com.starboard.b2b.config;
+package com.starboard.b2b.common;
 
 public interface AddressConstant {
 

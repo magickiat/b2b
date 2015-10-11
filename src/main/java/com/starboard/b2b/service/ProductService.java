@@ -30,7 +30,8 @@ public interface ProductService {
 
 	Page<SearchProductModelDTO> searchProduct(SearchProductForm searchProductForm);
 
+	List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection);
+
 	List<ProductSearchResult> findProductModel(String modelId);
-	
-	
+
 }

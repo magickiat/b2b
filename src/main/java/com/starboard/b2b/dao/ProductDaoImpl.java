@@ -151,6 +151,25 @@ public class ProductDaoImpl implements ProductDao {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
+	public List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(
+				" select new com.starboard.b2b.dto.ProductSearchResult(p.productId,p.productTypeId,p.productCatalogId,p.productGroupId,p.productCode,p.productNameTh,p.productNameEn,p.productPrice,p.productDiscount,p.productTotalPrice,p.productBand,p.productQuantity,p.productWeight,p.productPreintro,p.productIntro,p.productDetail,p.productSummarize,p.productLink,p.productPictureMedium,p.productPictureBig,p.productStatus,p.productStock,p.productItemGroupId,p.vendor,p.productItemTypeId,p.productSubcategoryId,p.searchName,p.productTechnologyId,p.productDesign,p.supCatG,p.productWidth,p.productLength,p.supGroup,p.productBuyerGroupId,p.productCategoryId,p.productModelId,p.productYearId,p.productUnitId,p.sortBy,p.isActive,p.company,p.soCategory,p.productPictureSmallHorizontal,p.productPictureSmallVertical,p.userCreate,p.userUpdate,p.timeCreate,p.timeUpdate, t.productTypeName)");
+		sb.append(" from ProductType t, Product p");
+		sb.append(" where t.productTypeId = p.productTypeId");
+		sb.append(" and p.productModelId = :modelId");
+		sb.append(" AND p.productPreintro = :withnose");
+		sb.append(" ORDER BY p.productTechnologyId , p.productIntro ASC");
+
+		List list = sf.getCurrentSession().createQuery(sb.toString()).setString("modelId", modelId)
+				.setString("withnose", withnoseProtection).list();
+
+		log.info("result size: " + (list == null ? 0 : list.size()));
+
+		return list;
+	}
+
+	@Override
 	public List<ProductSearchResult> findProductModel(String modelId) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(
@@ -158,7 +177,6 @@ public class ProductDaoImpl implements ProductDao {
 		sb.append(" from ProductType t, Product p");
 		sb.append(" where t.productTypeId = p.productTypeId");
 		sb.append(" and p.productModelId = :modelId");
-		sb.append(" AND p.productPreintro IN (0 , 1)");
 		sb.append(" ORDER BY p.productTechnologyId , p.productIntro ASC");
 
 		List list = sf.getCurrentSession().createQuery(sb.toString()).setString("modelId", modelId).list();
