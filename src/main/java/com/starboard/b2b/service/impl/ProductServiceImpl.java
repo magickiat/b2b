@@ -20,15 +20,14 @@ import com.starboard.b2b.dao.ProductTypeDao;
 import com.starboard.b2b.dao.ProductYearDao;
 import com.starboard.b2b.dto.ProductBuyerGroupDTO;
 import com.starboard.b2b.dto.ProductCategoryDTO;
-import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ProductModelDTO;
+import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.ProductTechnologyDTO;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.ProductYearDTO;
 import com.starboard.b2b.dto.search.CommonSearchRequest;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.dto.search.SearchResult;
-import com.starboard.b2b.model.Product;
 import com.starboard.b2b.model.ProductBuyerGroup;
 import com.starboard.b2b.model.ProductCategory;
 import com.starboard.b2b.model.ProductModel;
@@ -39,7 +38,7 @@ import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.web.form.product.SearchProductForm;
 
-@Service
+@Service("productService")
 public class ProductServiceImpl implements ProductService {
 
 	private static final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
@@ -138,6 +137,8 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public List<ProductTypeDTO> findAllProductType(Long brandGroupId) {
+		log.info("findAllProductType brandGroupId: " + brandGroupId);
+
 		List<ProductTypeDTO> result = new ArrayList<>();
 
 		List<ProductType> productTypeList = null;
@@ -164,15 +165,29 @@ public class ProductServiceImpl implements ProductService {
 		log.info("form: " + form);
 		CommonSearchRequest<SearchProductForm> req = new CommonSearchRequest<>(form.getPage(),
 				applicationConfig.getPageSize());
+		req.setCondition(form);
 
 		SearchResult<SearchProductModelDTO> result = productDao.search(req);
 
 		// create result page object
 		Page<SearchProductModelDTO> page = new Page<>();
-		page.setCurrent(req.getPage());
+		page.setCurrent(form.getPage());
+		log.info("current page: " + page.getCurrent());
 		page.setPageSize(req.getPageSize());
 		page.setTotal(result.getTotal());
 		page.setResult(result.getResult());
 		return page;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection) {
+		return productDao.findProductModel(modelId, withnoseProtection);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<ProductSearchResult> findProductModel(String modelId) {
+		return productDao.findProductModel(modelId);
 	}
 }

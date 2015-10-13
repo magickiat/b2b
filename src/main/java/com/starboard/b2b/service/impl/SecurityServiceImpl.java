@@ -11,7 +11,7 @@ import com.starboard.b2b.dao.RoleDao;
 import com.starboard.b2b.model.Role;
 import com.starboard.b2b.service.SecurityService;
 
-@Service
+@Service("securityService")
 public class SecurityServiceImpl implements SecurityService {
 	@Autowired
 	private RoleDao roleDao;

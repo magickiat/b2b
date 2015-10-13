@@ -8,6 +8,8 @@ public interface AppConfigDao {
 
 	List<AppConfig> getAllConfig();
 	
+	String getConfig(String key);
+	
 	Integer add(AppConfig config);
 
 }

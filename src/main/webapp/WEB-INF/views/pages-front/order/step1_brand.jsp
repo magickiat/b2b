@@ -33,7 +33,7 @@
 						<!-- Brand Logo -->
 						<div class="col-md-4" style="margin-top: 30px;">
 							<a
-								href='<c:url value="/frontend/order/step2?brand_id=${ brand.brandGroupId }" />'>
+								href='<c:url value="/frontend/order/step2/index?brand_id=${ brand.brandGroupId }" />'>
 								<c:choose>
 									<c:when test="${brand.brandGroupId == 30}">
 										<img

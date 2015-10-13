@@ -17,9 +17,9 @@ import com.starboard.b2b.dao.AppConfigDao;
 import com.starboard.b2b.model.AppConfig;
 import com.starboard.b2b.service.ConfigService;
 
-@Service
+@Service("configService")
 public class ConfigServiceImpl implements ConfigService {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ConfigServiceImpl.class);
 
 	@Autowired
@@ -29,7 +29,7 @@ public class ConfigServiceImpl implements ConfigService {
 
 	public ConfigServiceImpl() {
 	}
-	
+
 	@PostConstruct
 	private void loadConfig() {
 		log.info("Loading config...");
@@ -54,7 +54,13 @@ public class ConfigServiceImpl implements ConfigService {
 	public Integer getInt(String key) {
 		Integer value = null;
 		String temp = config.get(key);
-		if (temp != null) {
+		if (temp == null) {
+			temp = appConfigDao.getConfig(key);
+			if(temp != null){
+				config.put(key, temp);
+				value = Integer.valueOf(temp);
+			}
+		} else {
 			value = Integer.valueOf(temp);
 		}
 		return value;

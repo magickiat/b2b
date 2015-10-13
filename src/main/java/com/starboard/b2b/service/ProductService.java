@@ -6,6 +6,7 @@ import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dto.ProductBuyerGroupDTO;
 import com.starboard.b2b.dto.ProductCategoryDTO;
 import com.starboard.b2b.dto.ProductModelDTO;
+import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.ProductTechnologyDTO;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.ProductYearDTO;
@@ -28,4 +29,9 @@ public interface ProductService {
 	List<ProductBuyerGroupDTO> findAllProductBuyerGroup();
 
 	Page<SearchProductModelDTO> searchProduct(SearchProductForm searchProductForm);
+
+	List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection);
+
+	List<ProductSearchResult> findProductModel(String modelId);
+
 }

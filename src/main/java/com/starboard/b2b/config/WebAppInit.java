@@ -7,6 +7,8 @@ import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.multipart.support.MultipartFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import com.starboard.b2b.security.SecurityUserDetailService;
+
 public class WebAppInit extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	// private static final Logger log =
@@ -14,7 +16,7 @@ public class WebAppInit extends AbstractAnnotationConfigDispatcherServletInitial
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class<?>[] { RootConfig.class, RepositoryConfig.class, ServiceConfig.class, SecurityConfig.class };
+		return new Class<?>[] { RootConfig.class, RepositoryConfig.class, ServiceConfig.class, SecurityUserDetailService.class, SecurityConfig.class };
 	}
 
 	@Override

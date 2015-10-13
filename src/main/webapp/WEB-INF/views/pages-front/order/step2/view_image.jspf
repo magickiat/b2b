@@ -1,0 +1,21 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page session="true"%>
+
+
+<c:forEach var="row" items="${ productListAll }" varStatus="rowNum">
+	<%-- Declare product variable --%>
+	<c:set var="product" value="${ row.product }" />
+	<div
+		class="${ row.keyName }${ product.productLength}_${rowNum.index} text-center"
+		style='<c:if test="${rowNum.index > 0}">display: none;</c:if>'>
+		<h3>${ product.productNameEn }</h3>
+	</div>
+
+
+	<c:if test="${ rowNum.index == 0 }">
+		<c:set var="imageUrl" value="/images/b2b/default_image.jpg" />
+		<img id="zoomImg" class="product" src='<c:url value="${ imageUrl }" />'
+			data-zoom-image='<c:url value="${ imageUrl }" />'
+			style="width: 475px;"></img>
+	</c:if>
+</c:forEach>

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.search.SearchCustRequest;
 import com.starboard.b2b.dto.search.SearchCustResult;
 import com.starboard.b2b.model.Cust;
@@ -44,6 +45,22 @@ public class CustDaoImpl implements CustDao {
 	@Override
 	public Cust findById(Long custId) {
 		return (Cust) sessionFactory.getCurrentSession().get(Cust.class, custId);
+	}
+
+	/**
+	 * Get a address when have more than one
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AddressDTO> findAddress(Long custId, Long addressType) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(
+				"select new com.starboard.b2b.dto.AddressDTO(a.addrId,a.custId,a.custCode,a.contactId,a.address,a.subDistrict,a.district,a.province,a.regionCountryId,a.postCode,a.tel1,a.tel2,a.fax,a.email,a.transType,a.transTel,a.type,a.userCreate,a.userUpdate,a.timeCreate,a.timeUpdate) ");
+		sb.append(" from Addr a where a.custId = :custId and a.type = :type order by a.addrId asc");
+
+		return (List<AddressDTO>) sessionFactory.getCurrentSession().createQuery(sb.toString())
+				.setLong("custId", custId).setLong("type", addressType).list();
+
 	}
 
 }
