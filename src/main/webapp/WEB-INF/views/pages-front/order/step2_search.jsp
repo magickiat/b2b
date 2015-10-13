@@ -131,9 +131,7 @@
 		</div>
 
 		<%-- List product model --%>
-		<div class="row">
 			<%@include file="step2/list_product.jspf"%>
-		</div>
 
 
 		<%-- Lower Paging --%>

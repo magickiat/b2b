@@ -1,12 +1,16 @@
 package com.starboard.b2b.service.impl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,9 +43,13 @@ import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.web.form.product.SearchProductForm;
 
 @Service("productService")
+@PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
 public class ProductServiceImpl implements ProductService {
 
 	private static final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
+
+	@Value("${upload.path}")
+	private String uploadPath;
 
 	@Autowired
 	private ApplicationConfig applicationConfig;
@@ -167,7 +175,28 @@ public class ProductServiceImpl implements ProductService {
 				applicationConfig.getPageSize());
 		req.setCondition(form);
 
+		// Find product model
 		SearchResult<SearchProductModelDTO> result = productDao.search(req);
+
+		// Validate has image exist
+		List<SearchProductModelDTO> resultList = result.getResult();
+		log.info("resultList size: " + (resultList == null? 0: resultList.size()));
+		
+		for (SearchProductModelDTO dto : resultList) {
+			log.info("" + dto.getProductModelName());
+			if (StringUtils.isNotEmpty(dto.getProductPictureMedium())) {
+				String filename = dto.getProductPictureMedium();
+				if (filename.startsWith("/upload/")) {
+					filename = filename.substring("/upload/".length());
+				}
+
+				// When not found, set null to use default image
+				File img = new File(uploadPath, filename);
+				if (!img.exists()) {
+					dto.setProductPictureMedium(null);
+				}
+			}
+		}
 
 		// create result page object
 		Page<SearchProductModelDTO> page = new Page<>();

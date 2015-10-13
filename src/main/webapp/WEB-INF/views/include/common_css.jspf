@@ -26,13 +26,6 @@ label {
 	height: 256px;
 }
 
-.product {
-	text-align: center;
-	border: solid 1px black;
-	margin: 20px;
-	border: solid 1px black;
-}
-
 .bottom-align-text {
 	position: absolute;
 	bottom: 0;
@@ -40,9 +33,11 @@ label {
 }
 
 .product-img {
-	/* width: 144px;
-	height: 300px; */
+	width: 256px;
+	height: 256px;
 	text-align: center;
+	border: solid 1px black;
+	margin: 5px;
 }
 
 .product-img-default {

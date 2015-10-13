@@ -1,5 +1,5 @@
 package com.starboard.b2b.model;
-// Generated Sep 26, 2015 11:05:02 PM by Hibernate Tools 4.3.1
+// Generated Oct 12, 2015 10:55:07 PM by Hibernate Tools 4.3.1.Final
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -26,16 +26,18 @@ public class ProductPrice implements java.io.Serializable {
 	private String userUpdate;
 	private Date timeCreate;
 	private Date timeUpdate;
+	private float msrePrice;
 
 	public ProductPrice() {
 	}
 
-	public ProductPrice(ProductPriceId id) {
+	public ProductPrice(ProductPriceId id, float msrePrice) {
 		this.id = id;
+		this.msrePrice = msrePrice;
 	}
 
 	public ProductPrice(ProductPriceId id, BigDecimal amount, String productUnitId, String userCreate,
-			String userUpdate, Date timeCreate, Date timeUpdate) {
+			String userUpdate, Date timeCreate, Date timeUpdate, float msrePrice) {
 		this.id = id;
 		this.amount = amount;
 		this.productUnitId = productUnitId;
@@ -43,6 +45,7 @@ public class ProductPrice implements java.io.Serializable {
 		this.userUpdate = userUpdate;
 		this.timeCreate = timeCreate;
 		this.timeUpdate = timeUpdate;
+		this.msrePrice = msrePrice;
 	}
 
 	@EmbeddedId
@@ -113,6 +116,15 @@ public class ProductPrice implements java.io.Serializable {
 
 	public void setTimeUpdate(Date timeUpdate) {
 		this.timeUpdate = timeUpdate;
+	}
+
+	@Column(name = "msre_price", nullable = false, precision = 12, scale = 0)
+	public float getMsrePrice() {
+		return this.msrePrice;
+	}
+
+	public void setMsrePrice(float msrePrice) {
+		this.msrePrice = msrePrice;
 	}
 
 }
