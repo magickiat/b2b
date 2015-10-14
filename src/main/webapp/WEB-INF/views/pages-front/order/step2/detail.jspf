@@ -5,7 +5,9 @@
 
 <div class="row">
 
+	<%-- TECHNOLOGY --%>
 	<%-- No Withnose product --%>
+	<c:set var="productSize" value="${ productListNoWithnose.size() }"></c:set>
 	<c:forEach var="row" items="${ productListNoWithnose }"
 		varStatus="rowNum">
 
@@ -14,14 +16,24 @@
 
 		<c:choose>
 			<c:when test="${ rowNum.index == 0 }">
-				<span>${ product.productTechnologyId }</span>
+				<div class="col-sm-3">
+
+					<%-- Image --%>
+					<%-- Text --%>
+					${ product.productTechnologyId }
+
+				</div>
 
 				<%-- For validate new Technology image --%>
 				<c:set var="technologybefore" value="${product.productTechnologyId}" />
 			</c:when>
 			<c:otherwise>
 				<c:if test="${ product.productTechnologyId ne technologybefore }">
-					<span>${ product.productTechnologyId }</span>
+					<div class="col-sm-3">
+						<%-- Image --%>
+						<%-- Text --%>
+						${ product.productTechnologyId }
+					</div>
 				</c:if>
 
 				<%-- For validate new Technology image --%>
@@ -29,4 +41,7 @@
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
+	
+	
+	
 </div>
