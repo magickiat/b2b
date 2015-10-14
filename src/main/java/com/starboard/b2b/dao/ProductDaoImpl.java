@@ -89,7 +89,7 @@ public class ProductDaoImpl implements ProductDao {
 
 			if (StringUtils.isNotEmpty(condition.getKeyword())) {
 				sb.append("and (");
-				sb.append("   p.productModelId 	like :keyword ");
+				sb.append("   m.productModelName 	like :keyword ");
 				sb.append("or p.productNameEn 	like :keyword ");
 				sb.append("or p.productLength 	like :keyword ");
 				sb.append("or p.productBand 	like :keyword ");
