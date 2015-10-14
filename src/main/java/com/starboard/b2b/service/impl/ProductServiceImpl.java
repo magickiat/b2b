@@ -91,14 +91,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public List<ProductModelDTO> findAllProductModel() {
-		List<ProductModelDTO> result = new ArrayList<>();
-		List<ProductModel> productModels = productModelDao.findAll();
-		for (ProductModel productModel : productModels) {
-			ProductModelDTO dto = new ProductModelDTO();
-			BeanUtils.copyProperties(productModel, dto);
-			result.add(dto);
-		}
-		return result;
+		return productModelDao.findAll();
 	}
 
 	@Override
@@ -183,7 +176,7 @@ public class ProductServiceImpl implements ProductService {
 		log.info("resultList size: " + (resultList == null? 0: resultList.size()));
 		
 		for (SearchProductModelDTO dto : resultList) {
-			log.info("" + dto.getProductModelName());
+//			log.info("" + dto.getProductModelName());
 			if (StringUtils.isNotEmpty(dto.getProductPictureMedium())) {
 				String filename = dto.getProductPictureMedium();
 				if (filename.startsWith("/upload/")) {

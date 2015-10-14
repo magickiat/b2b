@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.common.Page;
+import com.starboard.b2b.common.WithnoseConstant;
 import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
 import com.starboard.b2b.dto.ProductSearchResult;
@@ -122,6 +123,10 @@ public class FrontOrderController {
 			model.addAttribute("productTechnologyList", productService.findAllProductTechnology());
 
 			List<ProductSearchResult> productListAll = productService.findProductModel(modelId);
+			List<ProductSearchResult> productListNoWithnose = productService.findProductModel(modelId,
+					WithnoseConstant.NO_WITHNOSE_PROTECTION);
+			List<ProductSearchResult> productListWithnose = productService.findProductModel(modelId,
+					WithnoseConstant.WITHNOSE_PROTECTION);
 
 			model.addAttribute("productListAll", productListAll);
 			// model.addAttribute("productImagesList", productImagesList);
