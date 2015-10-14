@@ -128,10 +128,14 @@ public class FrontOrderController {
 			List<ProductSearchResult> productListWithnose = productService.findProductModel(modelId,
 					WithnoseConstant.WITHNOSE_PROTECTION);
 			
-			for (ProductSearchResult productSearchResult : productListWithnose) {
-				log.info("productSearchResult product: " + productSearchResult.getProduct().getProductNameEn());
+			// Find product has withnose 
+			if(!productListNoWithnose.isEmpty()){
+				ProductSearchResult result = productListNoWithnose.get(0);
+				result.getProduct().getProductBuyerGroupId();
+				model.addAttribute("hasWithnoseBoard");
 			}
-
+			
+			
 			model.addAttribute("productListNoWithnose", productListNoWithnose);
 			model.addAttribute("productListWithnose", productListWithnose);
 //			model.addAttribute("productListAll", productListAll);

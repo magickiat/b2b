@@ -1,6 +1,7 @@
 package com.starboard.b2b.dao;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,16 +15,12 @@ import com.starboard.b2b.config.WebConfig;
 import com.starboard.b2b.dto.search.CommonSearchRequest;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.dto.search.SearchResult;
-import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.web.form.product.SearchProductForm;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = WebConfig.class, loader = AnnotationConfigWebContextLoader.class)
 public class ProductDaoImplTest {
-
-	@Autowired
-	private ApplicationConfig applicationConfig;
 
 	@Autowired
 	private ProductDao productDao;

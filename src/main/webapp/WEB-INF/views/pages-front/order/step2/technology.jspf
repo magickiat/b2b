@@ -1,12 +1,32 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page session="true"%>
 <h4>TECHNOLOGY</h4>
-<c:forEach var="row" items="${ productListAll }" varStatus="rowNum">
-	<%-- Declare product variable --%>
-	<c:set var="product" value="${ row.product }" />
-	<div
-		class="${ row.keyName }${ product.productLength}_${rowNum.index} text-center"
-		style='<c:if test="${rowNum.index > 0}">display: none;</c:if>'>
-		<div>${ product.productTechnologyId }</div>
-	</div>
-</c:forEach>
+
+
+<div class="row">
+
+	<%-- No Withnose product --%>
+	<c:forEach var="row" items="${ productListNoWithnose }"
+		varStatus="rowNum">
+
+		<%-- Declare product variable --%>
+		<c:set var="product" value="${ row.product }" />
+
+		<c:choose>
+			<c:when test="${ rowNum.index == 0 }">
+				<span>${ product.productTechnologyId }</span>
+
+				<%-- For validate new Technology image --%>
+				<c:set var="technologybefore" value="${product.productTechnologyId}" />
+			</c:when>
+			<c:otherwise>
+				<c:if test="${ product.productTechnologyId ne technologybefore }">
+					<span>${ product.productTechnologyId }</span>
+				</c:if>
+
+				<%-- For validate new Technology image --%>
+				<c:set var="technologybefore" value="${product.productTechnologyId}" />
+			</c:otherwise>
+		</c:choose>
+	</c:forEach>
+</div>
