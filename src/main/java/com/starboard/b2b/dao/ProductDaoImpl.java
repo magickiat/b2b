@@ -108,8 +108,16 @@ public class ProductDaoImpl implements ProductDao {
 		Query query = sf.getCurrentSession().createQuery(sbQuery.toString());
 
 		if (condition != null) {
-			query.setLong("brandGroupId", condition.getBrandId());
-			queryTotal.setLong("brandGroupId", condition.getBrandId());
+			
+			if(StringUtils.isNotEmpty(condition.getSelectedBrand())){
+				query.setString("productTypeId", condition.getSelectedBrand());
+				queryTotal.setString("productTypeId", condition.getSelectedBrand());
+			}else{
+				query.setLong("brandGroupId", condition.getBrandId());
+				queryTotal.setLong("brandGroupId", condition.getBrandId());
+			}
+			
+			
 			
 			if (StringUtils.isNotEmpty(condition.getSelectedBuyerGroup())) {
 				query.setString("productBuyerGroupId", condition.getSelectedBuyerGroup());

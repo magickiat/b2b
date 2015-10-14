@@ -7,6 +7,6 @@
 	<div
 		class="${ row.keyName }${ product.productLength}_${rowNum.index} text-center"
 		style='<c:if test="${rowNum.index > 0}">display: none;</c:if>'>
-		<h3>${ product.productNameEn }</h3>
+		<div>${ product.productTechnologyId }</div>
 	</div>
 </c:forEach>

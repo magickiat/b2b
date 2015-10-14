@@ -30,7 +30,7 @@
 			</div>
 			<div class="col-sm-4">
 				<%-- Technology --%>
-				<%@include file="step2/technology.jspf"%>
+				<%-- <%@include file="step2/technology.jspf"%> --%>
 			</div>
 		</div>
 

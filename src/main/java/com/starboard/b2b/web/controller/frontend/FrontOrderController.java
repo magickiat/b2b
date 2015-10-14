@@ -1,5 +1,6 @@
 package com.starboard.b2b.web.controller.frontend;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -122,13 +123,18 @@ public class FrontOrderController {
 			model.addAttribute("productYearList", productService.findAllProductYear());
 			model.addAttribute("productTechnologyList", productService.findAllProductTechnology());
 
-			List<ProductSearchResult> productListAll = productService.findProductModel(modelId);
 			List<ProductSearchResult> productListNoWithnose = productService.findProductModel(modelId,
 					WithnoseConstant.NO_WITHNOSE_PROTECTION);
 			List<ProductSearchResult> productListWithnose = productService.findProductModel(modelId,
 					WithnoseConstant.WITHNOSE_PROTECTION);
+			
+			for (ProductSearchResult productSearchResult : productListWithnose) {
+				log.info("productSearchResult product: " + productSearchResult.getProduct().getProductNameEn());
+			}
 
-			model.addAttribute("productListAll", productListAll);
+			model.addAttribute("productListNoWithnose", productListNoWithnose);
+			model.addAttribute("productListWithnose", productListWithnose);
+//			model.addAttribute("productListAll", productListAll);
 			// model.addAttribute("productImagesList", productImagesList);
 			// model.addAttribute("checkWithNose",
 			// Integer.valueOf(productListPre1.size()));
