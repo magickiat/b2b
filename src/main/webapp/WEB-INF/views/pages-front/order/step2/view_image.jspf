@@ -17,6 +17,9 @@
 	<%-- Image --%>
 	<c:if test="${ rowNum.index == 0 }">
 		<c:set var="imageUrl" value="/images/b2b/default_image.jpg" />
+		<c:if test="${ not empty product.productPictureBig }">
+			<c:set var="imageUrl" value="${ product.productPictureBig }" />
+		</c:if>
 		<img id="zoomImg" class="product"
 			src='<c:url value="${ imageUrl }" />'
 			data-zoom-image='<c:url value="${ imageUrl }" />'
@@ -37,6 +40,9 @@
 
 	<c:if test="${ rowNum.index == 0 }">
 		<c:set var="imageUrl" value="/images/b2b/default_image.jpg" />
+		<c:if test="${ not empty product.productPictureBig }">
+			<c:set var="imageUrl" value="${ product.productPictureBig }" />
+		</c:if>
 		<img id="zoomImg" class="product"
 			src='<c:url value="${ imageUrl }" />'
 			data-zoom-image='<c:url value="${ imageUrl }" />'

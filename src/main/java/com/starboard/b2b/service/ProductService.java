@@ -37,4 +37,7 @@ public interface ProductService {
 
 	HashMap<String, ProductSearchResult> findProductLength(List<ProductSearchResult> productListNoWithnose);
 
+	HashMap<String, List<ProductSearchResult>> groupProductByTechnology(
+			List<ProductSearchResult> productListNoWithnose);
+
 }

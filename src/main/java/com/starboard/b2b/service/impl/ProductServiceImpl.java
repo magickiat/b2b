@@ -35,7 +35,6 @@ import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.ProductBuyerGroup;
 import com.starboard.b2b.model.ProductCategory;
-import com.starboard.b2b.model.ProductModel;
 import com.starboard.b2b.model.ProductTechnology;
 import com.starboard.b2b.model.ProductType;
 import com.starboard.b2b.model.ProductYear;
@@ -174,10 +173,10 @@ public class ProductServiceImpl implements ProductService {
 
 		// Validate has image exist
 		List<SearchProductModelDTO> resultList = result.getResult();
-		log.info("resultList size: " + (resultList == null? 0: resultList.size()));
-		
+		log.info("resultList size: " + (resultList == null ? 0 : resultList.size()));
+
 		for (SearchProductModelDTO dto : resultList) {
-//			log.info("" + dto.getProductModelName());
+			// log.info("" + dto.getProductModelName());
 			if (StringUtils.isNotEmpty(dto.getProductPictureMedium())) {
 				String filename = dto.getProductPictureMedium();
 				if (filename.startsWith("/upload/")) {
@@ -205,7 +204,14 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection) {
-		return productDao.findProductModel(modelId, withnoseProtection);
+		List<ProductSearchResult> result = productDao.findProductModel(modelId, withnoseProtection);
+		for (ProductSearchResult product : result) {
+			File img = new File(uploadPath, product.getProduct().getProductPictureBig());
+			if (!img.exists()) {
+				product.getProduct().setProductPictureBig(null);
+			}
+		}
+		return result;
 	}
 
 	@Override
@@ -219,4 +225,23 @@ public class ProductServiceImpl implements ProductService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public HashMap<String, List<ProductSearchResult>> groupProductByTechnology(List<ProductSearchResult> products) {
+
+		HashMap<String, List<ProductSearchResult>> technologies = new HashMap<>();
+		if (products != null && !products.isEmpty()) {
+			for (ProductSearchResult product : products) {
+				List<ProductSearchResult> listProductTech = technologies
+						.get(product.getProduct().getProductTechnologyId());
+				if (listProductTech == null) {
+					listProductTech = new ArrayList<>();
+					technologies.put(product.getProduct().getProductTechnologyId(), listProductTech);
+				}
+				listProductTech.add(product);
+			}
+		}
+		return technologies;
+	}
+
 }

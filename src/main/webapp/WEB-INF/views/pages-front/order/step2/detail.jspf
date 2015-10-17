@@ -7,94 +7,42 @@
 	<h3>TECHNOLOGY</h3>
 	<%-- TECHNOLOGY --%>
 	<%-- No Withnose product --%>
-	<div id="noWithNoseProduct">
-		<c:forEach var="row" items="${ productListNoWithnose }"
-			varStatus="rowNum">
+	<div id="noWithnoseTech">
+		<c:forEach var="row" items="${ noWithnoseTech }">
 
 			<%-- Declare product variable --%>
-			<c:set var="product" value="${ row.product }" />
+			<c:set var="product" value="${ row.value[0].product }" />
+			<div class="col-sm-3">
+				<%-- Image --%>
+				<div class="tech-img">
+					<img
+						src='<c:url value="/upload/product_image/Technology/${ modelId }/${ stringUtil.removeSpecialChar(product.productTechnologyId) }.jpg" />' />
+				</div>
+				<%-- Text --%>
+				<div class="text-center">${ product.productTechnologyId }</div>
+			</div>
 
-			<c:choose>
-				<c:when test="${ rowNum.index == 0 }">
-					<div class="col-sm-3">
-						<%-- Image --%>
-						<div class="tech-img">
-							<img
-								src='<c:url value="/upload/product_image/Technology/${ modelId }/${ stringUtil.removeSpecialChar(product.productTechnologyId) }.jpg" />' />
-						</div>
-						<%-- Text --%>
-						<div class="">${ product.productTechnologyId }</div>
-					</div>
-
-					<%-- For validate new Technology image --%>
-					<c:set var="technologybefore"
-						value="${product.productTechnologyId}" />
-				</c:when>
-				<c:otherwise>
-					<c:if test="${ product.productTechnologyId ne technologybefore }">
-						<div class="col-sm-3">
-							<%-- Image --%>
-							<div class="tech-img">
-								<img
-									src='<c:url value="/upload/product_image/Technology/${ modelId }/${ stringUtil.removeSpecialChar(product.productTechnologyId) }.jpg" />' />
-							</div>
-							<%-- Text --%>
-							${ product.productTechnologyId }
-						</div>
-					</c:if>
-
-					<%-- For validate new Technology image --%>
-					<c:set var="technologybefore"
-						value="${product.productTechnologyId}" />
-				</c:otherwise>
-			</c:choose>
 		</c:forEach>
 	</div>
 
 
-	<%-- Withnose product --%>
-	<c:if test="${ not empty productListWithnose }">
-		<div id="withNoseProduct" style="display: none;">
-			<c:forEach var="row" items="${ productListWithnose }"
-				varStatus="rowNum">
+	<%-- Withnose product (Hide for show "no withnose" first --%>
+	<c:if test="${ not empty withnoseTech }">
+		<div id="withnoseTech" style="display: none;">
+			<c:forEach var="row" items="${ withnoseTech }">
 
 				<%-- Declare product variable --%>
-				<c:set var="product" value="${ row.product }" />
+				<c:set var="product" value="${ row.value[0].product }" />
+				<div class="col-sm-3">
+					<%-- Image --%>
+					<div class="tech-img">
+						<img
+							src='<c:url value="/upload/product_image/Technology/${ modelId }/${ stringUtil.removeSpecialChar(product.productTechnologyId) }.jpg" />' />
+					</div>
+					<%-- Text --%>
+					<div class="text-center">${ product.productTechnologyId }</div>
+				</div>
 
-				<c:choose>
-					<c:when test="${ rowNum.index == 0 }">
-						<div class="col-sm-3">
-							<%-- Image --%>
-							<div class="tech-img">
-								<img
-									src='<c:url value="/upload/product_image/Technology/${ modelId }/${ stringUtil.removeSpecialChar(product.productTechnologyId) }.jpg" />' />
-							</div>
-							<%-- Text --%>
-							<div class="">${ product.productTechnologyId }</div>
-						</div>
-
-						<%-- For validate new Technology image --%>
-						<c:set var="technologybefore"
-							value="${product.productTechnologyId}" />
-					</c:when>
-					<c:otherwise>
-						<c:if test="${ product.productTechnologyId ne technologybefore }">
-							<div class="col-sm-3">
-								<%-- Image --%>
-								<div class="tech-img">
-									<img
-										src='<c:url value="/upload/product_image/Technology/${ modelId }/${ stringUtil.removeSpecialChar(product.productTechnologyId) }.jpg" />' />
-								</div>
-								<%-- Text --%>
-								${ product.productTechnologyId }
-							</div>
-						</c:if>
-
-						<%-- For validate new Technology image --%>
-						<c:set var="technologybefore"
-							value="${product.productTechnologyId}" />
-					</c:otherwise>
-				</c:choose>
 			</c:forEach>
 		</div>
 	</c:if>
@@ -108,5 +56,5 @@
 
 <div class="row">
 	<h3>SIZE</h3>
-	
+
 </div>

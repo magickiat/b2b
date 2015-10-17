@@ -1,6 +1,7 @@
 package com.starboard.b2b.web.controller.frontend;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -113,38 +114,39 @@ public class FrontOrderController {
 	String step2ModelDetail(String modelId, Model model) {
 		log.info("GET step2/view");
 		log.info("modelId = " + modelId);
-		
+
 		model.addAttribute("modelId", modelId);
 
 		if (StringUtils.isEmpty(modelId)) {
 			model.addAttribute("errorMsg", "Not found product model " + modelId);
 		} else {
 
-			model.addAttribute("productCategoryList", productService.findAllProductCategory());
-			model.addAttribute("productModelList", productService.findAllProductModel());
-			model.addAttribute("productYearList", productService.findAllProductYear());
-			model.addAttribute("productTechnologyList", productService.findAllProductTechnology());
-
 			List<ProductSearchResult> productListNoWithnose = productService.findProductModel(modelId,
 					WithnoseConstant.NO_WITHNOSE_PROTECTION);
 			List<ProductSearchResult> productListWithnose = productService.findProductModel(modelId,
 					WithnoseConstant.WITHNOSE_PROTECTION);
-			
-			// Find product has withnose 
-			if(!productListNoWithnose.isEmpty()){
+
+			model.addAttribute("productListNoWithnose", productListNoWithnose);
+			model.addAttribute("productListWithnose", productListWithnose);
+
+			// Find product has withnose
+			if (!productListNoWithnose.isEmpty()) {
 				ProductSearchResult result = productListNoWithnose.get(0);
 				result.getProduct().getProductBuyerGroupId();
 				model.addAttribute("hasWithnoseBoard");
 			}
-			
-			
-			//TODO find product size (productLength)
+
+			// TODO find product size (productLength)
 			model.addAttribute("productListNoWithnose", productService.findProductLength(productListNoWithnose));
 			model.addAttribute("productListWithnose", productService.findProductLength(productListNoWithnose));
-			
-			
-			model.addAttribute("productListNoWithnose", productListNoWithnose);
-			model.addAttribute("productListWithnose", productListWithnose);
+
+			HashMap<String, List<ProductSearchResult>> noWithnoseTech = productService
+					.groupProductByTechnology(productListNoWithnose);
+			HashMap<String, List<ProductSearchResult>> withnoseTech = productService
+					.groupProductByTechnology(productListWithnose);
+			model.addAttribute("noWithnoseTech", noWithnoseTech);
+			model.addAttribute("withnoseTech", withnoseTech);
+
 			// model.addAttribute("productImagesList", productImagesList);
 			// model.addAttribute("checkWithNose",
 			// Integer.valueOf(productListPre1.size()));
