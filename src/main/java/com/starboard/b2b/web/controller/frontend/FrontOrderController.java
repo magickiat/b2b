@@ -29,6 +29,7 @@ import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.product.SearchProductForm;
+import com.starboard.b2b.web.form.product.ViewProductModelForm;
 
 @Controller
 @RequestMapping("/frontend/order/")
@@ -137,8 +138,8 @@ public class FrontOrderController {
 			}
 
 			// TODO find product size (productLength)
-			model.addAttribute("productListNoWithnose", productService.findProductLength(productListNoWithnose));
-			model.addAttribute("productListWithnose", productService.findProductLength(productListNoWithnose));
+			model.addAttribute("productListNoWithnoseLength", productService.findProductLength(productListNoWithnose));
+			model.addAttribute("productListWithnoseLength", productService.findProductLength(productListWithnose));
 
 			HashMap<String, List<ProductSearchResult>> noWithnoseTech = productService
 					.groupProductByTechnology(productListNoWithnose);
@@ -146,6 +147,12 @@ public class FrontOrderController {
 					.groupProductByTechnology(productListWithnose);
 			model.addAttribute("noWithnoseTech", noWithnoseTech);
 			model.addAttribute("withnoseTech", withnoseTech);
+			
+			
+			
+			ViewProductModelForm form = productService.getProductDetail(productListNoWithnose, productListWithnose);
+			
+			
 
 			// model.addAttribute("productImagesList", productImagesList);
 			// model.addAttribute("checkWithNose",

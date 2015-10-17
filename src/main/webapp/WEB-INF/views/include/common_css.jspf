@@ -51,5 +51,9 @@ label {
 	height: 256px;
 	text-align: center;
 }
+
+.product-model-detail{
+border: solid 1px black;
+}
 -->
 </style>

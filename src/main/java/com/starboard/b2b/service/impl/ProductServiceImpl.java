@@ -41,6 +41,7 @@ import com.starboard.b2b.model.ProductYear;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.web.form.product.SearchProductForm;
+import com.starboard.b2b.web.form.product.ViewProductModelForm;
 
 @Service("productService")
 @PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
@@ -205,8 +206,21 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional(readOnly = true)
 	public List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection) {
 		List<ProductSearchResult> result = productDao.findProductModel(modelId, withnoseProtection);
+		
+		// Set null when not found img in upload path (When img is null, show default in view)
 		for (ProductSearchResult product : result) {
-			File img = new File(uploadPath, product.getProduct().getProductPictureBig());
+			String imgPath = product.getProduct().getProductPictureBig();
+			if(imgPath == null){
+				continue;
+			}
+			
+			if(imgPath.startsWith("/upload/")){
+				imgPath = imgPath.substring(7);
+			}
+			
+			log.info("imgPath = " + imgPath);
+			
+			File img = new File(uploadPath, imgPath);
 			if (!img.exists()) {
 				product.getProduct().setProductPictureBig(null);
 			}
@@ -222,8 +236,14 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public HashMap<String, ProductSearchResult> findProductLength(List<ProductSearchResult> productListNoWithnose) {
-		// TODO Auto-generated method stub
-		return null;
+		HashMap<String, ProductSearchResult> lengthGroup = new HashMap<>();
+
+		for (ProductSearchResult productSearchResult : productListNoWithnose) {
+			String productLength = productSearchResult.getProduct().getProductLength();
+			lengthGroup.put(productLength, productSearchResult);
+		}
+
+		return lengthGroup;
 	}
 
 	@Override
@@ -242,6 +262,18 @@ public class ProductServiceImpl implements ProductService {
 			}
 		}
 		return technologies;
+	}
+
+	@Override
+	public ViewProductModelForm getProductDetail(List<ProductSearchResult> productListNoWithnose,
+			List<ProductSearchResult> productListWithnose) {
+
+		HashMap<String, List<ProductSearchResult>> technologies = new HashMap<>();
+
+		for (ProductSearchResult productSearchResult : productListWithnose) {
+
+		}
+		return null;
 	}
 
 }
