@@ -23,14 +23,14 @@
 
 		<div class="row">&nbsp;</div>
 		<div class="row">
-			<div class="col-sm-8 text-center">
+			<div class="col-sm-8 text-center product-model-detail">
 				<%-- Product Model Picture --%>
 				<%@include file="step2/view_image.jspf"%>
 
 			</div>
 			<div class="col-sm-4">
 				<%-- Technology --%>
-				<%@include file="step2/technology.jspf"%>
+				<%@include file="step2/detail.jspf"%>
 			</div>
 		</div>
 

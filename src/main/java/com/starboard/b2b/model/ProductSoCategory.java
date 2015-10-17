@@ -1,5 +1,5 @@
 package com.starboard.b2b.model;
-// Generated Sep 26, 2015 11:05:02 PM by Hibernate Tools 4.3.1
+// Generated Oct 12, 2015 10:55:07 PM by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -19,6 +19,8 @@ public class ProductSoCategory implements java.io.Serializable {
 	private String soCategory;
 	private String site;
 	private String warehouse;
+	private String saleOrderCat;
+	private String email;
 	private String userCreate;
 	private String userUpdate;
 	private Date timeCreate;
@@ -27,17 +29,20 @@ public class ProductSoCategory implements java.io.Serializable {
 	public ProductSoCategory() {
 	}
 
-	public ProductSoCategory(String soCategory, String site, String warehouse) {
+	public ProductSoCategory(String soCategory, String site, String warehouse, String saleOrderCat) {
 		this.soCategory = soCategory;
 		this.site = site;
 		this.warehouse = warehouse;
+		this.saleOrderCat = saleOrderCat;
 	}
 
-	public ProductSoCategory(String soCategory, String site, String warehouse, String userCreate, String userUpdate,
-			Date timeCreate, Date timeUpdate) {
+	public ProductSoCategory(String soCategory, String site, String warehouse, String saleOrderCat, String email,
+			String userCreate, String userUpdate, Date timeCreate, Date timeUpdate) {
 		this.soCategory = soCategory;
 		this.site = site;
 		this.warehouse = warehouse;
+		this.saleOrderCat = saleOrderCat;
+		this.email = email;
 		this.userCreate = userCreate;
 		this.userUpdate = userUpdate;
 		this.timeCreate = timeCreate;
@@ -71,6 +76,24 @@ public class ProductSoCategory implements java.io.Serializable {
 
 	public void setWarehouse(String warehouse) {
 		this.warehouse = warehouse;
+	}
+
+	@Column(name = "sale_order_cat", nullable = false, length = 32)
+	public String getSaleOrderCat() {
+		return this.saleOrderCat;
+	}
+
+	public void setSaleOrderCat(String saleOrderCat) {
+		this.saleOrderCat = saleOrderCat;
+	}
+
+	@Column(name = "email")
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Column(name = "user_create", length = 32)

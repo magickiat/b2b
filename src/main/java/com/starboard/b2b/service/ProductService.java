@@ -1,5 +1,6 @@
 package com.starboard.b2b.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.starboard.b2b.common.Page;
@@ -12,6 +13,7 @@ import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.ProductYearDTO;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.web.form.product.SearchProductForm;
+import com.starboard.b2b.web.form.product.ViewProductModelForm;
 
 public interface ProductService {
 
@@ -33,5 +35,13 @@ public interface ProductService {
 	List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection);
 
 	List<ProductSearchResult> findProductModel(String modelId);
+
+	HashMap<String, ProductSearchResult> findProductLength(List<ProductSearchResult> productListNoWithnose);
+
+	HashMap<String, List<ProductSearchResult>> groupProductByTechnology(
+			List<ProductSearchResult> productListNoWithnose);
+
+	ViewProductModelForm getProductDetail(List<ProductSearchResult> productListNoWithnose,
+			List<ProductSearchResult> productListWithnose);
 
 }

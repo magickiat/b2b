@@ -1,5 +1,7 @@
 package com.starboard.b2b.web.controller.frontend;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -12,9 +14,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.common.Page;
+import com.starboard.b2b.common.WithnoseConstant;
 import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
 import com.starboard.b2b.dto.ProductSearchResult;
@@ -25,6 +29,7 @@ import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.product.SearchProductForm;
+import com.starboard.b2b.web.form.product.ViewProductModelForm;
 
 @Controller
 @RequestMapping("/frontend/order/")
@@ -111,18 +116,44 @@ public class FrontOrderController {
 		log.info("GET step2/view");
 		log.info("modelId = " + modelId);
 
+		model.addAttribute("modelId", modelId);
+
 		if (StringUtils.isEmpty(modelId)) {
-			model.addAttribute("errorMsg", "Not found product model");
+			model.addAttribute("errorMsg", "Not found product model " + modelId);
 		} else {
 
-			model.addAttribute("productCategoryList", productService.findAllProductCategory());
-			model.addAttribute("productModelList", productService.findAllProductModel());
-			model.addAttribute("productYearList", productService.findAllProductYear());
-			model.addAttribute("productTechnologyList", productService.findAllProductTechnology());
+			List<ProductSearchResult> productListNoWithnose = productService.findProductModel(modelId,
+					WithnoseConstant.NO_WITHNOSE_PROTECTION);
+			List<ProductSearchResult> productListWithnose = productService.findProductModel(modelId,
+					WithnoseConstant.WITHNOSE_PROTECTION);
 
-			List<ProductSearchResult> productListAll = productService.findProductModel(modelId);
+			model.addAttribute("productListNoWithnose", productListNoWithnose);
+			model.addAttribute("productListWithnose", productListWithnose);
 
-			model.addAttribute("productListAll", productListAll);
+			// Find product has withnose
+			if (!productListNoWithnose.isEmpty()) {
+				ProductSearchResult result = productListNoWithnose.get(0);
+				result.getProduct().getProductBuyerGroupId();
+				model.addAttribute("hasWithnoseBoard");
+			}
+
+			// TODO find product size (productLength)
+			model.addAttribute("productListNoWithnoseLength", productService.findProductLength(productListNoWithnose));
+			model.addAttribute("productListWithnoseLength", productService.findProductLength(productListWithnose));
+
+			HashMap<String, List<ProductSearchResult>> noWithnoseTech = productService
+					.groupProductByTechnology(productListNoWithnose);
+			HashMap<String, List<ProductSearchResult>> withnoseTech = productService
+					.groupProductByTechnology(productListWithnose);
+			model.addAttribute("noWithnoseTech", noWithnoseTech);
+			model.addAttribute("withnoseTech", withnoseTech);
+			
+			
+			
+			ViewProductModelForm form = productService.getProductDetail(productListNoWithnose, productListWithnose);
+			
+			
+
 			// model.addAttribute("productImagesList", productImagesList);
 			// model.addAttribute("checkWithNose",
 			// Integer.valueOf(productListPre1.size()));

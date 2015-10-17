@@ -10,6 +10,19 @@ public class ProductModelDTO {
 	private String headerText1;
 	private String headerText2;
 
+	public ProductModelDTO() {
+	}
+
+	public ProductModelDTO(String productModelId, String productModelName, String description, String image,
+			String headerText1, String headerText2) {
+		this.productModelId = productModelId;
+		this.productModelName = productModelName;
+		this.description = description;
+		this.image = image;
+		this.headerText1 = headerText1;
+		this.headerText2 = headerText2;
+	}
+
 	public String getProductModelId() {
 		return productModelId;
 	}

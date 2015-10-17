@@ -1,5 +1,5 @@
 package com.starboard.b2b.model;
-// Generated Sep 26, 2015 11:05:02 PM by Hibernate Tools 4.3.1
+// Generated Oct 12, 2015 10:55:07 PM by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -23,16 +23,22 @@ public class ProductModel implements java.io.Serializable {
 	private String userUpdate;
 	private Date timeCreate;
 	private Date timeUpdate;
+	private String image;
+	private String headerText1;
+	private String headerText2;
 
 	public ProductModel() {
 	}
 
-	public ProductModel(String productModelId) {
+	public ProductModel(String productModelId, String image, String headerText1, String headerText2) {
 		this.productModelId = productModelId;
+		this.image = image;
+		this.headerText1 = headerText1;
+		this.headerText2 = headerText2;
 	}
 
 	public ProductModel(String productModelId, String productModelName, String description, String userCreate,
-			String userUpdate, Date timeCreate, Date timeUpdate) {
+			String userUpdate, Date timeCreate, Date timeUpdate, String image, String headerText1, String headerText2) {
 		this.productModelId = productModelId;
 		this.productModelName = productModelName;
 		this.description = description;
@@ -40,6 +46,9 @@ public class ProductModel implements java.io.Serializable {
 		this.userUpdate = userUpdate;
 		this.timeCreate = timeCreate;
 		this.timeUpdate = timeUpdate;
+		this.image = image;
+		this.headerText1 = headerText1;
+		this.headerText2 = headerText2;
 	}
 
 	@Id
@@ -107,6 +116,33 @@ public class ProductModel implements java.io.Serializable {
 
 	public void setTimeUpdate(Date timeUpdate) {
 		this.timeUpdate = timeUpdate;
+	}
+
+	@Column(name = "image", nullable = false)
+	public String getImage() {
+		return this.image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	@Column(name = "header_text1", nullable = false, length = 100)
+	public String getHeaderText1() {
+		return this.headerText1;
+	}
+
+	public void setHeaderText1(String headerText1) {
+		this.headerText1 = headerText1;
+	}
+
+	@Column(name = "header_text2", nullable = false, length = 100)
+	public String getHeaderText2() {
+		return this.headerText2;
+	}
+
+	public void setHeaderText2(String headerText2) {
+		this.headerText2 = headerText2;
 	}
 
 }

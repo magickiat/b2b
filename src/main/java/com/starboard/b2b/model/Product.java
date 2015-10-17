@@ -1,5 +1,5 @@
 package com.starboard.b2b.model;
-// Generated Sep 26, 2015 11:05:02 PM by Hibernate Tools 4.3.1
+// Generated Oct 12, 2015 10:55:07 PM by Hibernate Tools 4.3.1.Final
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -27,11 +27,12 @@ public class Product implements java.io.Serializable {
 	private BigDecimal productPrice;
 	private BigDecimal productDiscount;
 	private BigDecimal productTotalPrice;
+	private String productCurrency;
 	private String productBand;
 	private Long productQuantity;
 	private BigDecimal productWeight;
 	private String productPreintro;
-	private String productIntro;
+	private Integer productIntro;
 	private String productDetail;
 	private String productSummarize;
 	private String productLink;
@@ -47,8 +48,8 @@ public class Product implements java.io.Serializable {
 	private String productTechnologyId;
 	private String productDesign;
 	private String supCatG;
-	private Long productWidth;
-	private Long productLength;
+	private BigDecimal productWidth;
+	private String productLength;
 	private String supGroup;
 	private String productBuyerGroupId;
 	private String productCategoryId;
@@ -75,12 +76,12 @@ public class Product implements java.io.Serializable {
 
 	public Product(long productId, Long productTypeId, Long productCatalogId, Long productGroupId, String productCode,
 			String productNameTh, String productNameEn, BigDecimal productPrice, BigDecimal productDiscount,
-			BigDecimal productTotalPrice, String productBand, Long productQuantity, BigDecimal productWeight,
-			String productPreintro, String productIntro, String productDetail, String productSummarize,
-			String productLink, String productPictureMedium, String productPictureBig, Long productStatus,
-			Long productStock, String productItemGroupId, String vendor, String productItemTypeId,
+			BigDecimal productTotalPrice, String productCurrency, String productBand, Long productQuantity,
+			BigDecimal productWeight, String productPreintro, Integer productIntro, String productDetail,
+			String productSummarize, String productLink, String productPictureMedium, String productPictureBig,
+			Long productStatus, Long productStock, String productItemGroupId, String vendor, String productItemTypeId,
 			String productSubcategoryId, String searchName, String productTechnologyId, String productDesign,
-			String supCatG, Long productWidth, Long productLength, String supGroup, String productBuyerGroupId,
+			String supCatG, BigDecimal productWidth, String productLength, String supGroup, String productBuyerGroupId,
 			String productCategoryId, String productModelId, String productYearId, String productUnitId,
 			BigDecimal sortBy, String isActive, String company, String soCategory, String productPictureSmallHorizontal,
 			String productPictureSmallVertical, String userCreate, String userUpdate, Date timeCreate,
@@ -95,6 +96,7 @@ public class Product implements java.io.Serializable {
 		this.productPrice = productPrice;
 		this.productDiscount = productDiscount;
 		this.productTotalPrice = productTotalPrice;
+		this.productCurrency = productCurrency;
 		this.productBand = productBand;
 		this.productQuantity = productQuantity;
 		this.productWeight = productWeight;
@@ -227,6 +229,15 @@ public class Product implements java.io.Serializable {
 		this.productTotalPrice = productTotalPrice;
 	}
 
+	@Column(name = "product_currency", length = 3)
+	public String getProductCurrency() {
+		return this.productCurrency;
+	}
+
+	public void setProductCurrency(String productCurrency) {
+		this.productCurrency = productCurrency;
+	}
+
 	@Column(name = "product_band", length = 100)
 	public String getProductBand() {
 		return this.productBand;
@@ -263,12 +274,12 @@ public class Product implements java.io.Serializable {
 		this.productPreintro = productPreintro;
 	}
 
-	@Column(name = "product_intro", length = 1024)
-	public String getProductIntro() {
+	@Column(name = "product_intro")
+	public Integer getProductIntro() {
 		return this.productIntro;
 	}
 
-	public void setProductIntro(String productIntro) {
+	public void setProductIntro(Integer productIntro) {
 		this.productIntro = productIntro;
 	}
 
@@ -407,21 +418,21 @@ public class Product implements java.io.Serializable {
 		this.supCatG = supCatG;
 	}
 
-	@Column(name = "product_width", precision = 10, scale = 0)
-	public Long getProductWidth() {
+	@Column(name = "product_width", precision = 10)
+	public BigDecimal getProductWidth() {
 		return this.productWidth;
 	}
 
-	public void setProductWidth(Long productWidth) {
+	public void setProductWidth(BigDecimal productWidth) {
 		this.productWidth = productWidth;
 	}
 
-	@Column(name = "product_length", precision = 10, scale = 0)
-	public Long getProductLength() {
+	@Column(name = "product_length", length = 11)
+	public String getProductLength() {
 		return this.productLength;
 	}
 
-	public void setProductLength(Long productLength) {
+	public void setProductLength(String productLength) {
 		this.productLength = productLength;
 	}
 

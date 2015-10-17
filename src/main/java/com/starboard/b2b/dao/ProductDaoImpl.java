@@ -68,7 +68,7 @@ public class ProductDaoImpl implements ProductDao {
 				sb.append("and p.productTypeId = :productTypeId ");
 			} else {
 				sb.append(
-						"and p.productTypeId in (select a.productTypeId from ProductType as a , ProductBrandGroup b where a.productTypeId = b.id.productTypeId and b.id.brandGroupId = :productTypeId) ");
+						"and p.productTypeId in (select a.productTypeId from ProductType as a , ProductBrandGroup b where a.productTypeId = b.id.productTypeId and b.id.brandGroupId = :brandGroupId) ");
 			}
 
 			if (StringUtils.isNotEmpty(condition.getSelectedBuyerGroup())) {
@@ -89,7 +89,7 @@ public class ProductDaoImpl implements ProductDao {
 
 			if (StringUtils.isNotEmpty(condition.getKeyword())) {
 				sb.append("and (");
-				sb.append("   p.productModelId 	like :keyword ");
+				sb.append("   m.productModelName 	like :keyword ");
 				sb.append("or p.productNameEn 	like :keyword ");
 				sb.append("or p.productLength 	like :keyword ");
 				sb.append("or p.productBand 	like :keyword ");
@@ -108,9 +108,17 @@ public class ProductDaoImpl implements ProductDao {
 		Query query = sf.getCurrentSession().createQuery(sbQuery.toString());
 
 		if (condition != null) {
-			query.setInteger("productTypeId", (int) condition.getBrandId());
-			queryTotal.setInteger("productTypeId", (int) condition.getBrandId());
-
+			
+			if(StringUtils.isNotEmpty(condition.getSelectedBrand())){
+				query.setString("productTypeId", condition.getSelectedBrand());
+				queryTotal.setString("productTypeId", condition.getSelectedBrand());
+			}else{
+				query.setLong("brandGroupId", condition.getBrandId());
+				queryTotal.setLong("brandGroupId", condition.getBrandId());
+			}
+			
+			
+			
 			if (StringUtils.isNotEmpty(condition.getSelectedBuyerGroup())) {
 				query.setString("productBuyerGroupId", condition.getSelectedBuyerGroup());
 				queryTotal.setString("productBuyerGroupId", condition.getSelectedBuyerGroup());

@@ -26,7 +26,7 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-12">
-				<table class="table table-hover" id="list_customer">
+				<table class="table table-hover table-striped" id="list_customer">
 					<thead>
 						<tr>
 							<th>Code</th>

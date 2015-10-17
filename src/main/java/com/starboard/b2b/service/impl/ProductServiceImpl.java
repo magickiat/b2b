@@ -1,12 +1,17 @@
 package com.starboard.b2b.service.impl;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,18 +35,22 @@ import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.ProductBuyerGroup;
 import com.starboard.b2b.model.ProductCategory;
-import com.starboard.b2b.model.ProductModel;
 import com.starboard.b2b.model.ProductTechnology;
 import com.starboard.b2b.model.ProductType;
 import com.starboard.b2b.model.ProductYear;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.web.form.product.SearchProductForm;
+import com.starboard.b2b.web.form.product.ViewProductModelForm;
 
 @Service("productService")
+@PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
 public class ProductServiceImpl implements ProductService {
 
 	private static final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
+
+	@Value("${upload.path}")
+	private String uploadPath;
 
 	@Autowired
 	private ApplicationConfig applicationConfig;
@@ -83,14 +92,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public List<ProductModelDTO> findAllProductModel() {
-		List<ProductModelDTO> result = new ArrayList<>();
-		List<ProductModel> productModels = productModelDao.findAll();
-		for (ProductModel productModel : productModels) {
-			ProductModelDTO dto = new ProductModelDTO();
-			BeanUtils.copyProperties(productModel, dto);
-			result.add(dto);
-		}
-		return result;
+		return productModelDao.findAll();
 	}
 
 	@Override
@@ -167,7 +169,28 @@ public class ProductServiceImpl implements ProductService {
 				applicationConfig.getPageSize());
 		req.setCondition(form);
 
+		// Find product model
 		SearchResult<SearchProductModelDTO> result = productDao.search(req);
+
+		// Validate has image exist
+		List<SearchProductModelDTO> resultList = result.getResult();
+		log.info("resultList size: " + (resultList == null ? 0 : resultList.size()));
+
+		for (SearchProductModelDTO dto : resultList) {
+			// log.info("" + dto.getProductModelName());
+			if (StringUtils.isNotEmpty(dto.getProductPictureMedium())) {
+				String filename = dto.getProductPictureMedium();
+				if (filename.startsWith("/upload/")) {
+					filename = filename.substring("/upload/".length());
+				}
+
+				// When not found, set null to use default image
+				File img = new File(uploadPath, filename);
+				if (!img.exists()) {
+					dto.setProductPictureMedium(null);
+				}
+			}
+		}
 
 		// create result page object
 		Page<SearchProductModelDTO> page = new Page<>();
@@ -182,7 +205,27 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection) {
-		return productDao.findProductModel(modelId, withnoseProtection);
+		List<ProductSearchResult> result = productDao.findProductModel(modelId, withnoseProtection);
+		
+		// Set null when not found img in upload path (When img is null, show default in view)
+		for (ProductSearchResult product : result) {
+			String imgPath = product.getProduct().getProductPictureBig();
+			if(imgPath == null){
+				continue;
+			}
+			
+			if(imgPath.startsWith("/upload/")){
+				imgPath = imgPath.substring(7);
+			}
+			
+			log.info("imgPath = " + imgPath);
+			
+			File img = new File(uploadPath, imgPath);
+			if (!img.exists()) {
+				product.getProduct().setProductPictureBig(null);
+			}
+		}
+		return result;
 	}
 
 	@Override
@@ -190,4 +233,47 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductSearchResult> findProductModel(String modelId) {
 		return productDao.findProductModel(modelId);
 	}
+
+	@Override
+	public HashMap<String, ProductSearchResult> findProductLength(List<ProductSearchResult> productListNoWithnose) {
+		HashMap<String, ProductSearchResult> lengthGroup = new HashMap<>();
+
+		for (ProductSearchResult productSearchResult : productListNoWithnose) {
+			String productLength = productSearchResult.getProduct().getProductLength();
+			lengthGroup.put(productLength, productSearchResult);
+		}
+
+		return lengthGroup;
+	}
+
+	@Override
+	public HashMap<String, List<ProductSearchResult>> groupProductByTechnology(List<ProductSearchResult> products) {
+
+		HashMap<String, List<ProductSearchResult>> technologies = new HashMap<>();
+		if (products != null && !products.isEmpty()) {
+			for (ProductSearchResult product : products) {
+				List<ProductSearchResult> listProductTech = technologies
+						.get(product.getProduct().getProductTechnologyId());
+				if (listProductTech == null) {
+					listProductTech = new ArrayList<>();
+					technologies.put(product.getProduct().getProductTechnologyId(), listProductTech);
+				}
+				listProductTech.add(product);
+			}
+		}
+		return technologies;
+	}
+
+	@Override
+	public ViewProductModelForm getProductDetail(List<ProductSearchResult> productListNoWithnose,
+			List<ProductSearchResult> productListWithnose) {
+
+		HashMap<String, List<ProductSearchResult>> technologies = new HashMap<>();
+
+		for (ProductSearchResult productSearchResult : productListWithnose) {
+
+		}
+		return null;
+	}
+
 }

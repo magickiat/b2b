@@ -1,5 +1,5 @@
 package com.starboard.b2b.model;
-// Generated Sep 26, 2015 11:05:02 PM by Hibernate Tools 4.3.1
+// Generated Oct 12, 2015 10:55:07 PM by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -19,6 +19,7 @@ public class ProductBuyerGroup implements java.io.Serializable {
 	private String productBuyerGroupId;
 	private String productBuyerGroupName;
 	private String description;
+	private int seq;
 	private String userCreate;
 	private String userUpdate;
 	private Date timeCreate;
@@ -27,15 +28,17 @@ public class ProductBuyerGroup implements java.io.Serializable {
 	public ProductBuyerGroup() {
 	}
 
-	public ProductBuyerGroup(String productBuyerGroupId) {
+	public ProductBuyerGroup(String productBuyerGroupId, int seq) {
 		this.productBuyerGroupId = productBuyerGroupId;
+		this.seq = seq;
 	}
 
-	public ProductBuyerGroup(String productBuyerGroupId, String productBuyerGroupName, String description,
+	public ProductBuyerGroup(String productBuyerGroupId, String productBuyerGroupName, String description, int seq,
 			String userCreate, String userUpdate, Date timeCreate, Date timeUpdate) {
 		this.productBuyerGroupId = productBuyerGroupId;
 		this.productBuyerGroupName = productBuyerGroupName;
 		this.description = description;
+		this.seq = seq;
 		this.userCreate = userCreate;
 		this.userUpdate = userUpdate;
 		this.timeCreate = timeCreate;
@@ -69,6 +72,15 @@ public class ProductBuyerGroup implements java.io.Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Column(name = "seq", nullable = false)
+	public int getSeq() {
+		return this.seq;
+	}
+
+	public void setSeq(int seq) {
+		this.seq = seq;
 	}
 
 	@Column(name = "user_create", length = 32)

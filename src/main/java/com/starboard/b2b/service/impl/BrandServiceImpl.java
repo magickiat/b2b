@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.dao.BrandDao;
 import com.starboard.b2b.dao.CustBrandGroupDAO;
+import com.starboard.b2b.dao.CustDao;
 import com.starboard.b2b.dao.ProductBrandGroupDAO;
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
 import com.starboard.b2b.model.Brand;
@@ -30,6 +31,9 @@ public class BrandServiceImpl implements BrandService {
 	@Autowired
 	private ProductBrandGroupDAO productBrandGroupDAO;
 
+	@Autowired
+	private CustDao custDao;
+
 	@Override
 	@Transactional(readOnly = true)
 	public List<Brand> list(Long companyId) {
@@ -43,23 +47,30 @@ public class BrandServiceImpl implements BrandService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<ProductBrandGroupDTO> getBrandGroupList(Long custId) {
-		List<ProductBrandGroupDTO> result = new ArrayList<>();
-		List<CustBrandGroup> custBrandGroupList = custBrandGroupDAO.findByCustId(custId);
-		log.info("custBrandGroupList size: " + (custBrandGroupList == null ? 0 : custBrandGroupList.size()));
-		for (CustBrandGroup custBrandGroup : custBrandGroupList) {
-			List<ProductBrandGroup> brandList = productBrandGroupDAO
-					.findByProductTypeId(custBrandGroup.getId().getBrandGroupId());
-			log.info("brandList size: " + (brandList == null ? 0 : brandList.size()));
+		// List<ProductBrandGroupDTO> result = new ArrayList<>();
 
-			for (ProductBrandGroup brandGroup : brandList) {
-				ProductBrandGroupDTO brandGroupDTO = new ProductBrandGroupDTO();
-				brandGroupDTO.setBrandGroupId(brandGroup.getId().getBrandGroupId());
-				brandGroupDTO.setProductTypeId(brandGroup.getId().getProductTypeId());
-				result.add(brandGroupDTO);
-			}
-		}
-		return result;
+		// List<CustBrandGroup> custBrandGroupList =
+		// custBrandGroupDAO.findByCustId(custId);
+		// log.info("custBrandGroupList size: " + (custBrandGroupList == null ?
+		// 0 : custBrandGroupList.size()));
+		// for (CustBrandGroup custBrandGroup : custBrandGroupList) {
+		// List<ProductBrandGroup> brandList = productBrandGroupDAO
+		// .findByProductTypeId(custBrandGroup.getId().getBrandGroupId());
+		// log.info("brandList size: " + (brandList == null ? 0 :
+		// brandList.size()));
+		//
+		// for (ProductBrandGroup brandGroup : brandList) {
+		// ProductBrandGroupDTO brandGroupDTO = new ProductBrandGroupDTO();
+		// brandGroupDTO.setBrandGroupId(brandGroup.getId().getBrandGroupId());
+		// brandGroupDTO.setProductTypeId(brandGroup.getId().getProductTypeId());
+		// result.add(brandGroupDTO);
+		// }
+		// }
+		// return result;
+
+		return custDao.findProductBrandGroup(custId);
 	}
 
 }

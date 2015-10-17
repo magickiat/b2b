@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.starboard.b2b.dto.AddressDTO;
+import com.starboard.b2b.dto.ProductBrandGroupDTO;
 import com.starboard.b2b.dto.search.SearchCustRequest;
 import com.starboard.b2b.dto.search.SearchCustResult;
 import com.starboard.b2b.model.Cust;
@@ -61,6 +62,17 @@ public class CustDaoImpl implements CustDao {
 		return (List<AddressDTO>) sessionFactory.getCurrentSession().createQuery(sb.toString())
 				.setLong("custId", custId).setLong("type", addressType).list();
 
+	}
+
+	@Override
+	public List<ProductBrandGroupDTO> findProductBrandGroup(Long custId) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" from ProductBrandGroup b");
+		sb.append(" where b.id.brandGroupId in");
+		sb.append(" (select distinct c.id.brandGroupId from CustBrandGroup c where c.id.custId = :custId)");
+		sb.append(" group by b.id.brandGroupId");
+		
+		return sessionFactory.getCurrentSession().createQuery(sb.toString()).setLong("custId", custId).list();
 	}
 
 }
