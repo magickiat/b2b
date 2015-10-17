@@ -2,6 +2,7 @@ package com.starboard.b2b.service.impl;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -211,5 +212,11 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional(readOnly = true)
 	public List<ProductSearchResult> findProductModel(String modelId) {
 		return productDao.findProductModel(modelId);
+	}
+
+	@Override
+	public HashMap<String, ProductSearchResult> findProductLength(List<ProductSearchResult> productListNoWithnose) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

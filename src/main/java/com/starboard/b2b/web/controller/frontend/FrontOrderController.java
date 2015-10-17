@@ -113,9 +113,11 @@ public class FrontOrderController {
 	String step2ModelDetail(String modelId, Model model) {
 		log.info("GET step2/view");
 		log.info("modelId = " + modelId);
+		
+		model.addAttribute("modelId", modelId);
 
 		if (StringUtils.isEmpty(modelId)) {
-			model.addAttribute("errorMsg", "Not found product model");
+			model.addAttribute("errorMsg", "Not found product model " + modelId);
 		} else {
 
 			model.addAttribute("productCategoryList", productService.findAllProductCategory());
@@ -136,9 +138,13 @@ public class FrontOrderController {
 			}
 			
 			
+			//TODO find product size (productLength)
+			model.addAttribute("productListNoWithnose", productService.findProductLength(productListNoWithnose));
+			model.addAttribute("productListWithnose", productService.findProductLength(productListNoWithnose));
+			
+			
 			model.addAttribute("productListNoWithnose", productListNoWithnose);
 			model.addAttribute("productListWithnose", productListWithnose);
-//			model.addAttribute("productListAll", productListAll);
 			// model.addAttribute("productImagesList", productImagesList);
 			// model.addAttribute("checkWithNose",
 			// Integer.valueOf(productListPre1.size()));

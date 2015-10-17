@@ -1,5 +1,6 @@
 package com.starboard.b2b.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.starboard.b2b.common.Page;
@@ -33,5 +34,7 @@ public interface ProductService {
 	List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection);
 
 	List<ProductSearchResult> findProductModel(String modelId);
+
+	HashMap<String, ProductSearchResult> findProductLength(List<ProductSearchResult> productListNoWithnose);
 
 }
