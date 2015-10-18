@@ -1,0 +1,33 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page session="true"%>
+
+<h3>SIZE</h3>
+<%-- Loop All Tech --%>
+<c:forEach var="rowAllTech" items="${ allTech }"
+	varStatus="rowNumAllTech">
+	<div class="withnose${ rowNumAllTech.index }"
+		<c:if test="${ rowNumTech.index  > 0}">style="display:none;"</c:if>>
+		<c:forEach var="rowTech" items="${ rowAllTech }"
+			varStatus="rowNumTech">
+			<div
+				class="withnose${ rowNumAllTech.index }_tech withnose${ rowNumAllTech.index }_${stringUtil.removeSpecialChar(rowTech.key)}"
+				<c:if test="${ rowNumTech.index  > 0}">style="display:none;"</c:if>>
+				<c:forEach var="p" items="${rowTech.value}"
+					varStatus="rowNumProduct">
+					<c:set var="currentSize" value="btn-primary" />
+					<c:if test="${ rowNumProduct.index == 0 }">
+						<c:set var="currentSize" value="btn-success" />
+						<input type="hidden"
+							id="withnose${ rowNumAllTech.index }_${stringUtil.removeSpecialChar(rowTech.key)}"
+							value="${stringUtil.removeSpecialChar(p.product.productLength)}" />
+					</c:if>
+					<button type="button"
+						class="btn product-size ${ currentSize } ${stringUtil.removeSpecialChar(p.product.productLength)} btn-product-size"
+						onclick="changeCurrentSize('${stringUtil.removeSpecialChar(p.product.productLength)}', this)">
+						<c:out value="${ p.product.productLength }"></c:out>
+					</button>
+				</c:forEach>
+			</div>
+		</c:forEach>
+	</div>
+</c:forEach>

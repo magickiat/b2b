@@ -60,9 +60,11 @@ div.menu-link {
 	border: solid 1px black;
 }
 
-.product_size {
+.product-size {
 	margin: 2px;
 	min-width: 70px;
 }
+
+
 -->
 </style>

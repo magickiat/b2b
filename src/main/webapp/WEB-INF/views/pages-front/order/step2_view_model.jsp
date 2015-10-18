@@ -13,6 +13,7 @@
 
 	<%-- Use when change technology  --%>
 	<input type="hidden" id="withnoseFlag" value="0" />
+	<input type="hidden" id="productSize" value="" />
 
 
 	<div class="container">
@@ -36,7 +37,10 @@
 			</div>
 			<div class="col-sm-4">
 				<%-- Technology --%>
-				<%@include file="step2/detail.jspf"%>
+				<div class="row"><%@include file="step2/technology.jspf"%></div>
+
+				<%-- SIZE (Product length) --%>
+				<div class="row"><%@include file="step2/size.jspf"%></div>
 			</div>
 		</div>
 
@@ -59,7 +63,9 @@
 			disableAllWithnoseTechnology(techId);
 			var withnoseFlag = $('#withnoseFlag').val();
 			$('.withnose' + withnoseFlag + '_' + techId).show();
-			$(".product").elevateZoom({scrollZoom : true});
+			$(".product").elevateZoom({
+				scrollZoom : true
+			});
 		}
 
 		function disableAllWithnoseTechnology(techId) {
@@ -67,10 +73,16 @@
 
 			$('.withnose0_tech').hide();
 			$('.withnose1_tech').hide();
-			
+
 			//Clear zoom
 			$(".zoomContainer").remove();
 			$(".zoomLens").remove();
+		}
+
+		function changeCurrentSize(currentSize, currentButton) {
+			console.log('currentSize = ' + currentSize);
+			$('.btn-product-size').removeClass('btn-success').addClass('btn-primary');
+			$(currentButton).addClass('btn-success');
 		}
 	</script>
 </body>
