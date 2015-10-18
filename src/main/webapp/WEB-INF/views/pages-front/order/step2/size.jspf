@@ -1,33 +1,35 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page session="true"%>
 
-<h3>SIZE</h3>
-<%-- Loop All Tech --%>
-<c:forEach var="rowAllTech" items="${ allTech }"
-	varStatus="rowNumAllTech">
-	<div class="withnose${ rowNumAllTech.index }"
-		<c:if test="${ rowNumTech.index  > 0}">style="display:none;"</c:if>>
-		<c:forEach var="rowTech" items="${ rowAllTech }"
-			varStatus="rowNumTech">
-			<div
-				class="withnose${ rowNumAllTech.index }-tech withnose${ rowNumAllTech.index }-${stringUtil.removeSpecialChar(rowTech.key)}"
-				<c:if test="${ rowNumTech.index  > 0}">style="display:none;"</c:if>>
-				<c:forEach var="p" items="${rowTech.value}"
-					varStatus="rowNumProduct">
+<div class="col-sm-12">
+	<h3>SIZE</h3>
+	<%-- Loop All Tech --%>
+	<c:forEach var="rowAllTech" items="${ allTech }"
+		varStatus="rowNumAllTech">
+		<div class="withnose${ rowNumAllTech.index }"
+			<c:if test="${ rowNumTech.index  > 0}">style="display:none;"</c:if>>
+			<c:forEach var="rowTech" items="${ rowAllTech }"
+				varStatus="rowNumTech">
+				<div
+					class="withnose${ rowNumAllTech.index }-tech withnose${ rowNumAllTech.index }-${stringUtil.removeSpecialChar(rowTech.key)}"
+					<c:if test="${ rowNumTech.index  > 0}">style="display:none;"</c:if>>
+					<c:forEach var="p" items="${rowTech.value}"
+						varStatus="rowNumProduct">
 
-					<c:set var="currentSizeActive" value="btn-primary" />
+						<c:set var="currentSizeActive" value="btn-primary" />
 
-					<c:if test="${ rowNumProduct.index == 0 }">
-						<c:set var="currentSizeActive" value="btn-success" />
-					</c:if>
+						<c:if test="${ rowNumProduct.index == 0 }">
+							<c:set var="currentSizeActive" value="btn-success" />
+						</c:if>
 
-					<button type="button"
-						class="btn product-size ${ currentSizeActive } btn-product-size size${rowNumProduct.index}"
-						onclick="changeCurrentSize('${stringUtil.removeSpecialChar(p.product.productId)}', this)">
-						<c:out value="${ p.product.productLength }"></c:out>
-					</button>
-				</c:forEach>
-			</div>
-		</c:forEach>
-	</div>
-</c:forEach>
+						<button type="button" id="btn-${modelId}-size${rowNumProduct.index}"
+							class="btn product-size ${ currentSizeActive } btn-product-size size${rowNumProduct.index}"
+							onclick="changeCurrentSize('${stringUtil.removeSpecialChar(p.product.productId)}', this)">
+							<c:out value="${ p.product.productLength }"></c:out>
+						</button>
+					</c:forEach>
+				</div>
+			</c:forEach>
+		</div>
+	</c:forEach>
+</div>

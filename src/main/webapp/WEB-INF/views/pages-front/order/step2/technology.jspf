@@ -1,37 +1,37 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@page session="true"%>
+<div class="col-sm-12">
+	<%-- Loop All Tech --%>
+	<h3>TECHNOLOGY</h3>
+	<c:forEach var="rowAllTech" items="${ allTech }"
+		varStatus="rowNumAllTech">
 
-<%-- Loop All Tech --%>
-<h3>TECHNOLOGY</h3>
-<c:forEach var="rowAllTech" items="${ allTech }"
-	varStatus="rowNumAllTech">
+		<div class="withnose${ rowNumAllTech.index }">
+			<c:forEach var="rowTech" items="${ rowAllTech }"
+				varStatus="rowNumTech">
 
-	<div class="withnose${ rowNumAllTech.index }">
-		<c:forEach var="rowTech" items="${ rowAllTech }"
-			varStatus="rowNumTech">
+				<%-- Set current technology --%>
+				<c:if test="${rowNumTech.index == 0 }">
+					<input type="hidden" id="currentTechId" value="${ rowTech.key }" />
+				</c:if>
 
-			<%-- Set current technology --%>
-			<c:if test="${rowNumTech.index == 0 }">
-				<input type="hidden" id="currentTechId" value="${ rowTech.key }" />
-			</c:if>
-
-			<div class="menu-link"
-				onclick="changeProductTechnology('${stringUtil.removeSpecialChar(rowTech.key)}')">
-				<c:url var="imgTechUrl"
-					value="/upload/product_image/Technology/${ modelId }/${ rowTech.key }.jpg" />
-				<div class="col-sm-3">
-					<%-- Image --%>
-					<div class="tech-img">
-						<img src="${ imgTechUrl }" />
-					</div>
-					<%-- Text --%>
-					<div class="text-center">
-						<c:out value="${ rowTech.key }"></c:out>
+				<div class="menu-link"
+					onclick="changeProductTechnology('${stringUtil.removeSpecialChar(rowTech.key)}', ${ rowTech.value[0].product.productId })">
+					<c:url var="imgTechUrl"
+						value="/upload/product_image/Technology/${ modelId }/${ rowTech.key }.jpg" />
+					<div class="col-sm-3">
+						<%-- Image --%>
+						<div class="tech-img">
+							<img src="${ imgTechUrl }" />
+						</div>
+						<%-- Text --%>
+						<div class="text-center">
+							<c:out value="${ rowTech.key }"></c:out>
+						</div>
 					</div>
 				</div>
-			</div>
-		</c:forEach>
-	</div>
-</c:forEach>
-
+			</c:forEach>
+		</div>
+	</c:forEach>
+</div>

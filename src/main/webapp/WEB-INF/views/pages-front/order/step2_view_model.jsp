@@ -39,6 +39,9 @@
 
 				<%-- SIZE (Product length) --%>
 				<div class="row"><%@include file="step2/size.jspf"%></div>
+
+				<%-- Withnose board --%>
+				<div class="row"><%@include file="step2/withnose_board.jspf"%></div>
 			</div>
 		</div>
 
@@ -55,12 +58,13 @@
 				scrollZoom : true
 			});
 
+			showLogCurrentProduct();
 		});
 
-		function changeProductTechnology(techId) {
-			console.log('Technology id: ' + techId);
+		function changeProductTechnology(techId, productId) {
 
 			$('#currentTechId').val(techId);
+			$('#currentProduct').val(productId);
 
 			//Hide all
 			disableAllWithnoseTechnology(techId);
@@ -77,6 +81,8 @@
 			$(".product").elevateZoom({
 				scrollZoom : true
 			});
+
+			showLogCurrentProduct();
 		}
 
 		function disableAllWithnoseTechnology(techId) {
@@ -91,6 +97,8 @@
 		}
 
 		function changeCurrentSize(productId, currentButton) {
+			console.log('changeCurrentSize');
+
 			resetActiveProductSize();
 
 			$('#currentProduct').val(productId);
@@ -105,11 +113,18 @@
 
 			var showItemKey = itemKey + '-' + productId;
 			$('.' + showItemKey).show();
+
+			showLogCurrentProduct();
 		}
 
 		function resetActiveProductSize() {
 			$('.btn-product-size').removeClass('btn-success').addClass(
 					'btn-primary');
+		}
+
+		function showLogCurrentProduct() {
+			console.log(' [currentProduct = ' + $('#currentProduct').val()
+					+ ']\t[currentTechId = ' + $('#currentTechId').val() + ']');
 		}
 	</script>
 </body>
