@@ -71,10 +71,14 @@
 
 			//show only techId
 			var withnoseFlag = $('#withnoseFlag').val();
-			$('.withnose' + withnoseFlag + '-' + techId).show();
+			var techIdKey = '.withnose' + withnoseFlag + '-' + techId;
+			$(techIdKey).show();
 
-			// Set active product size first index
-			resetActiveProductSize();
+			// Show first product of tech id
+			var productKey = techIdKey + '-item-' + productId;
+			$(productKey).show();
+
+			// Set default product size to first index
 			$('.size0').removeClass('btn-primary').addClass('btn-success');
 
 			//Enable zoom
