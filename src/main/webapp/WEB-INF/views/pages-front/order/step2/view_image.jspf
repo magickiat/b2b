@@ -2,50 +2,57 @@
 <%@page session="true"%>
 
 <%-- No Withnose product --%>
-<c:forEach var="row" items="${ productListNoWithnose }"
-	varStatus="rowNum">
-	<%-- Declare product variable --%>
-	<c:set var="product" value="${ row.product }" />
+<div id="noWithnoseProduct">
+	<c:forEach var="row" items="${ productListNoWithnose }"
+		varStatus="rowNum">
+		<%-- Declare product variable --%>
+		<c:set var="product" value="${ row.product }" />
 
-	<%-- Header Text --%>
-	<div
-		class="${ row.keyName }${ product.productLength}_${rowNum.index} text-center"
-		style='<c:if test="${rowNum.index > 0}">display: none;</c:if>'>
-		<h3>${ product.productNameEn }</h3>
-	</div>
+		<%-- Header Text --%>
+		<div
+			class="${ row.keyName }${ product.productLength}_${rowNum.index} text-center"
+			style='<c:if test="${rowNum.index > 0}">display: none;</c:if>'>
+			<h3>${ product.productNameEn }</h3>
+		</div>
 
-	<%-- Image --%>
-	<c:if test="${ rowNum.index == 0 }">
-		<c:set var="imageUrl" value="/images/b2b/default_image.jpg" />
-		<c:if test="${ not empty product.productPictureBig }">
-			<c:set var="imageUrl" value="${ product.productPictureBig }" />
+		<%-- Image --%>
+		<c:if test="${ rowNum.index == 0 }">
+			<c:set var="imageUrl" value="/images/b2b/default_image.jpg" />
+			<c:if test="${ not empty product.productPictureBig }">
+				<c:set var="imageUrl" value="${ product.productPictureBig }" />
+			</c:if>
+			<img id="zoomImg" class="product"
+				src='<c:url value="${ imageUrl }" />'
+				data-zoom-image='<c:url value="${ imageUrl }" />'
+				style="width: 475px;"></img>
 		</c:if>
-		<img id="zoomImg" class="product"
-			src='<c:url value="${ imageUrl }" />'
-			data-zoom-image='<c:url value="${ imageUrl }" />'
-			style="width: 475px;"></img>
-	</c:if>
-</c:forEach>
+	</c:forEach>
+</div>
 
-<%-- Withnose Product --%>
-<c:forEach var="row" items="${ productListWithnose }" varStatus="rowNum">
-	<%-- Declare product variable --%>
-	<c:set var="product" value="${ row.product }" />
-	<div
-		class="${ row.keyName }${ product.productLength}_${rowNum.index} text-center"
-		style='display: none;'>
-		<h3>${ product.productNameEn }</h3>
-	</div>
+<div id="withnoseProduct" style="display: none;">
+	<%-- Withnose Product --%>
+	<c:forEach var="row" items="${ productListWithnose }"
+		varStatus="rowNum">
+		<%-- Declare product variable --%>
+		<c:set var="product" value="${ row.product }" />
 
+		<%-- Header Text --%>
+		<div
+			class="${ row.keyName }${ product.productLength}_${rowNum.index} text-center"
+			style='<c:if test="${rowNum.index > 0}">display: none;</c:if>'>
+			<h3>${ product.productNameEn }</h3>
+		</div>
 
-	<c:if test="${ rowNum.index == 0 }">
-		<c:set var="imageUrl" value="/images/b2b/default_image.jpg" />
-		<c:if test="${ not empty product.productPictureBig }">
-			<c:set var="imageUrl" value="${ product.productPictureBig }" />
+		<%-- Image --%>
+		<c:if test="${ rowNum.index == 0 }">
+			<c:set var="imageUrl" value="/images/b2b/default_image.jpg" />
+			<c:if test="${ not empty product.productPictureBig }">
+				<c:set var="imageUrl" value="${ product.productPictureBig }" />
+			</c:if>
+			<img id="zoomImg" class="product"
+				src='<c:url value="${ imageUrl }" />'
+				data-zoom-image='<c:url value="${ imageUrl }" />'
+				style="width: 475px;"></img>
 		</c:if>
-		<img id="zoomImg" class="product"
-			src='<c:url value="${ imageUrl }" />'
-			data-zoom-image='<c:url value="${ imageUrl }" />'
-			style="width: 475px; display: none;"></img>
-	</c:if>
-</c:forEach>
+	</c:forEach>
+</div>

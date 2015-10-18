@@ -23,7 +23,7 @@
 
 		<div class="row">&nbsp;</div>
 		<div class="row">
-			<div class="col-sm-8 text-center product-model-detail">
+			<div class="col-sm-8 text-center">
 				<%-- Product Model Picture --%>
 				<%@include file="step2/view_image.jspf"%>
 
@@ -43,6 +43,29 @@
 		$(document).ready(function() {
 			$('#zoomImg').elevateZoom({
 				scrollZoom : true
+			});
+
+			$('[name=withnose]').change(function() {
+				var selected = $('[name=withnose]:checked').val();
+				if (selected == "1") {
+					$("#noWithnoseTech").hide();
+					$("#noWithnoseProduct").hide();
+					$("#noWithnoseSize").hide();
+
+					$("#withnoseTech").show();
+					$("#withnoseProduct").show();
+					$("#withnoseSize").show();
+
+				} else {
+					$("#noWithnoseTech").show();
+					$("#noWithnoseProduct").show();
+					$("#noWithnoseSize").show();
+
+					$("#withnoseTech").hide();
+					$("#withnoseProduct").hide();
+					$("#withnoseSize").hide();
+				}
+
 			});
 		});
 	</script>

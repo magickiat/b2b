@@ -52,8 +52,13 @@ label {
 	text-align: center;
 }
 
-.product-model-detail{
-border: solid 1px black;
+.product-model-detail {
+	border: solid 1px black;
+}
+
+.product_size {
+	margin: 2px;
+	min-width: 70px;
 }
 -->
 </style>

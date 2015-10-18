@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@page session="true"%>
 
 
@@ -54,7 +55,7 @@
 <%-- SPACE --%>
 <div class="row">&nbsp;</div>
 
-
+<%-- SIZE --%>
 <div class="row product-model-detail">
 	<h3>SIZE</h3>
 	<div id="noWithnoseSize">
@@ -63,27 +64,47 @@
 			varStatus="rowNum">
 			<%-- Declare product variable --%>
 			<c:set var="product" value="${ row.value.product }" />
-
-			<%-- Header Text --%>
-			<div id="${ row.key }_${rowNum.index}" class="text-center col-sm-2">
-				<button type="button" class="btn btn-primary" data-toggle="button">
-					<c:out value="${ product.productLength }" />
-				</button>
-			</div>
+			<button type="button" class="btn btn-primary product_size">
+				<c:out value="${ product.productLength }" />
+			</button>
 		</c:forEach>
 	</div>
 
 	<div id="withnoseSize">
 		<%-- No Withnose product --%>
-		<c:forEach var="row" items="${ productListWithnoseLength }"
-			varStatus="rowNum">
-			<%-- Declare product variable --%>
-			<c:set var="product" value="${ row.value.product }" />
-
-			<%-- Header Text --%>
-			<button type="button" class="btn btn-primary" data-toggle="button">
+		<div class="row">
+			<c:forEach var="row" items="${ productListWithnoseLength }"
+				varStatus="rowNum">
+				<%-- Declare product variable --%>
+				<c:set var="product" value="${ row.value.product }" />
+				<button type="button" class="btn btn-primary product_size">
 					<c:out value="${ product.productLength }" />
 				</button>
-		</c:forEach>
+			</c:forEach>
+		</div>
+	</div>
+</div>
+
+
+<%-- SPACE --%>
+<div class="row">&nbsp;</div>
+
+<%-- Withnose Board --%>
+<div class="row">
+	<div class="col-sm-12">
+		<c:if test="${ hasWithnoseBoard }">
+			<h3>Withnose board</h3>
+			<input type="radio" id="noWithnose" name="withnose" value="0"
+				checked="checked" />
+			<label for="noWithnose">No</label>
+			<input type="radio" name="withnose" value="1" />
+			<label for="withnose">Yes</label>
+		</c:if>
+	</div>
+	<div class="col-sm-12">
+	<div>
+	PRICE:
+	</div>
+	
 	</div>
 </div>
