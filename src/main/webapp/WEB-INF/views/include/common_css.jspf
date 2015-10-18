@@ -21,6 +21,10 @@ label {
 	font-weight: normal !important;
 }
 
+div.menu-link {
+	cursor: pointer;
+}
+
 .brand_logo {
 	width: 256px;
 	height: 256px;

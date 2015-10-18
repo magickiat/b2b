@@ -10,6 +10,11 @@
 <%@include file="/WEB-INF/views/include/common_css.jspf"%>
 </head>
 <body>
+
+	<%-- Use when change technology  --%>
+	<input type="hidden" id="withnoseFlag" value="0" />
+
+
 	<div class="container">
 		<%@include
 			file="/WEB-INF/views/pages-front/include/common_header.jspf"%>
@@ -22,6 +27,7 @@
 		</div>
 
 		<div class="row">&nbsp;</div>
+
 		<div class="row">
 			<div class="col-sm-8 text-center">
 				<%-- Product Model Picture --%>
@@ -45,7 +51,7 @@
 				scrollZoom : true
 			});
 
-			$('[name=withnose]').change(function() {
+			/* $('[name=withnose]').change(function() {
 				var selected = $('[name=withnose]:checked').val();
 				if (selected == "1") {
 					$("#noWithnoseTech").hide();
@@ -66,8 +72,24 @@
 					$("#withnoseSize").hide();
 				}
 
-			});
+			}); */
 		});
+
+		function changeProductTechnology(techId) {
+			console.log('Technology id: ' + techId);
+
+			disableAllWithnoseTechnology(techId);
+			var withnoseFlag = $('#withnoseFlag').val();
+			$('.withnose' + withnoseFlag + '_' + techId).show();
+
+		}
+
+		function disableAllWithnoseTechnology(techId) {
+			console.log('disable all withnose div.');
+
+			$('.withnose0_tech').hide();
+			$('.withnose1_tech').hide();
+		}
 	</script>
 </body>
 </html>

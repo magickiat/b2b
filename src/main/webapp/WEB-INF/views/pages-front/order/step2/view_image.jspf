@@ -8,7 +8,7 @@
 		<c:forEach var="rowTech" items="${ rowAllTech }"
 			varStatus="rowNumTech">
 			<div
-				class="withnose${ rowNumAllTech.index }_${stringUtil.removeSpecialChar(rowTech.key)}"
+				class="withnose${ rowNumAllTech.index }_tech withnose${ rowNumAllTech.index }_${stringUtil.removeSpecialChar(rowTech.key)}"
 				<c:if test="${ rowNumTech.index  > 0}">style="display:none;"</c:if>>
 				<c:forEach var="p" items="${rowTech.value}"
 					varStatus="rowNumProduct">
