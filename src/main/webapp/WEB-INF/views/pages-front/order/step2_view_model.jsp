@@ -13,9 +13,6 @@
 
 	<%-- Use when change technology  --%>
 	<input type="hidden" id="withnoseFlag" value="0" />
-	<input type="hidden" id="currentTechId" value="" />
-	<input type="hidden" id="currentProductSize" value="" />
-
 
 	<div class="container">
 		<%@include
@@ -50,6 +47,8 @@
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 	<script
 		src='<c:url value="/scripts/zoom/jquery.elevateZoom-3.0.8.min.js" />'></script>
+
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#zoomImg').elevateZoom({
@@ -61,12 +60,14 @@
 		function changeProductTechnology(techId) {
 			console.log('Technology id: ' + techId);
 
+			$('#currentTechId').val(techId);
+
 			//Hide all
 			disableAllWithnoseTechnology(techId);
 
 			//show only techId
 			var withnoseFlag = $('#withnoseFlag').val();
-			$('.withnose' + withnoseFlag + '_' + techId).show();
+			$('.withnose' + withnoseFlag + '-' + techId).show();
 
 			// Set active product size first index
 			resetActiveProductSize();
@@ -80,21 +81,30 @@
 
 		function disableAllWithnoseTechnology(techId) {
 			resetActiveProductSize();
-			
-			$('.withnose0_tech').hide();
-			$('.withnose1_tech').hide();
+
+			$('.withnose0-tech').hide();
+			$('.withnose1-tech').hide();
 
 			//Clear zoom
 			$(".zoomContainer").remove();
 			$(".zoomLens").remove();
 		}
 
-		function changeCurrentSize(productCode, currentButton) {
+		function changeCurrentSize(productId, currentButton) {
 			resetActiveProductSize();
+
+			$('#currentProduct').val(productId);
 			$(currentButton).removeClass('btn-primary').addClass('btn-success');
 
-			var withnoseFlag = $('#withnoseFlag').val();
 			var currentTechId = $('#currentTechId').val();
+			var withnoseFlag = $('#withnoseFlag').val();
+			var currentWithnoseKey = 'withnose' + withnoseFlag;
+
+			var itemKey = currentWithnoseKey + '-' + currentTechId + '-item';
+			$('.' + itemKey).hide();
+
+			var showItemKey = itemKey + '-' + productId;
+			$('.' + showItemKey).show();
 		}
 
 		function resetActiveProductSize() {

@@ -10,7 +10,7 @@
 		<c:forEach var="rowTech" items="${ rowAllTech }"
 			varStatus="rowNumTech">
 			<div
-				class="withnose${ rowNumAllTech.index }_tech withnose${ rowNumAllTech.index }_${stringUtil.removeSpecialChar(rowTech.key)}"
+				class="withnose${ rowNumAllTech.index }-tech withnose${ rowNumAllTech.index }-${stringUtil.removeSpecialChar(rowTech.key)}"
 				<c:if test="${ rowNumTech.index  > 0}">style="display:none;"</c:if>>
 				<c:forEach var="p" items="${rowTech.value}"
 					varStatus="rowNumProduct">
@@ -23,7 +23,7 @@
 
 					<button type="button"
 						class="btn product-size ${ currentSizeActive } btn-product-size size${rowNumProduct.index}"
-						onclick="changeCurrentSize('${stringUtil.removeSpecialChar(p.product.productCode)}', this)">
+						onclick="changeCurrentSize('${stringUtil.removeSpecialChar(p.product.productId)}', this)">
 						<c:out value="${ p.product.productLength }"></c:out>
 					</button>
 				</c:forEach>

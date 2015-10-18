@@ -4,16 +4,24 @@
 <%-- Loop All Tech --%>
 <c:forEach var="rowAllTech" items="${ allTech }"
 	varStatus="rowNumAllTech">
-	<div class="withnose${ rowNumAllTech.index }" <c:if test="${ rowNumTech.index  > 0}">style="display:none;"</c:if>>
+	<div class="withnose${ rowNumAllTech.index }"
+		<c:if test="${ rowNumTech.index  > 0}">style="display:none;"</c:if>>
 		<c:forEach var="rowTech" items="${ rowAllTech }"
 			varStatus="rowNumTech">
 			<div
-				class="withnose${ rowNumAllTech.index }_tech withnose${ rowNumAllTech.index }_${stringUtil.removeSpecialChar(rowTech.key)}"
+				class="withnose${ rowNumAllTech.index }-tech withnose${ rowNumAllTech.index }-${stringUtil.removeSpecialChar(rowTech.key)}"
 				<c:if test="${ rowNumTech.index  > 0}">style="display:none;"</c:if>>
 				<c:forEach var="p" items="${rowTech.value}"
 					varStatus="rowNumProduct">
+
+					<%-- Set first current product --%>
+					<c:if test="${ rowNumTech.index == 0 &&  rowNumProduct.index == 0}">
+						<input type="hidden" id="currentProduct"
+							value="${p.product.productId }" />
+					</c:if>
+
 					<div
-						class="withnose${ rowNumAllTech.index }_${stringUtil.removeSpecialChar(rowTech.key)}_${ stringUtil.removeSpecialChar(p.product.productCode)}"
+						class="withnose${ rowNumAllTech.index }-${stringUtil.removeSpecialChar(rowTech.key)}-item withnose${ rowNumAllTech.index }-${stringUtil.removeSpecialChar(rowTech.key)}-item-${ stringUtil.removeSpecialChar(p.product.productId)}"
 						<c:if test="${ rowNumProduct.index  > 0}">style="display:none;"</c:if>>
 						<h3>
 							<c:out value="${ p.product.productNameEn }"></c:out>
