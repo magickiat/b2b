@@ -13,7 +13,8 @@
 
 	<%-- Use when change technology  --%>
 	<input type="hidden" id="withnoseFlag" value="0" />
-	<input type="hidden" id="productSize" value="" />
+	<input type="hidden" id="currentTechId" value="" />
+	<input type="hidden" id="currentProductSize" value="" />
 
 
 	<div class="container">
@@ -60,17 +61,26 @@
 		function changeProductTechnology(techId) {
 			console.log('Technology id: ' + techId);
 
+			//Hide all
 			disableAllWithnoseTechnology(techId);
+
+			//show only techId
 			var withnoseFlag = $('#withnoseFlag').val();
 			$('.withnose' + withnoseFlag + '_' + techId).show();
+
+			// Set active product size first index
+			resetActiveProductSize();
+			$('.size0').removeClass('btn-primary').addClass('btn-success');
+
+			//Enable zoom
 			$(".product").elevateZoom({
 				scrollZoom : true
 			});
 		}
 
 		function disableAllWithnoseTechnology(techId) {
-			console.log('disable all withnose div.');
-
+			resetActiveProductSize();
+			
 			$('.withnose0_tech').hide();
 			$('.withnose1_tech').hide();
 
@@ -79,10 +89,17 @@
 			$(".zoomLens").remove();
 		}
 
-		function changeCurrentSize(currentSize, currentButton) {
-			console.log('currentSize = ' + currentSize);
-			$('.btn-product-size').removeClass('btn-success').addClass('btn-primary');
-			$(currentButton).addClass('btn-success');
+		function changeCurrentSize(productCode, currentButton) {
+			resetActiveProductSize();
+			$(currentButton).removeClass('btn-primary').addClass('btn-success');
+
+			var withnoseFlag = $('#withnoseFlag').val();
+			var currentTechId = $('#currentTechId').val();
+		}
+
+		function resetActiveProductSize() {
+			$('.btn-product-size').removeClass('btn-success').addClass(
+					'btn-primary');
 		}
 	</script>
 </body>
