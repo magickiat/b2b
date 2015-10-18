@@ -51,28 +51,6 @@
 				scrollZoom : true
 			});
 
-			/* $('[name=withnose]').change(function() {
-				var selected = $('[name=withnose]:checked').val();
-				if (selected == "1") {
-					$("#noWithnoseTech").hide();
-					$("#noWithnoseProduct").hide();
-					$("#noWithnoseSize").hide();
-
-					$("#withnoseTech").show();
-					$("#withnoseProduct").show();
-					$("#withnoseSize").show();
-
-				} else {
-					$("#noWithnoseTech").show();
-					$("#noWithnoseProduct").show();
-					$("#noWithnoseSize").show();
-
-					$("#withnoseTech").hide();
-					$("#withnoseProduct").hide();
-					$("#withnoseSize").hide();
-				}
-
-			}); */
 		});
 
 		function changeProductTechnology(techId) {
@@ -81,7 +59,7 @@
 			disableAllWithnoseTechnology(techId);
 			var withnoseFlag = $('#withnoseFlag').val();
 			$('.withnose' + withnoseFlag + '_' + techId).show();
-
+			$(".product").elevateZoom({scrollZoom : true});
 		}
 
 		function disableAllWithnoseTechnology(techId) {
@@ -89,6 +67,10 @@
 
 			$('.withnose0_tech').hide();
 			$('.withnose1_tech').hide();
+			
+			//Clear zoom
+			$(".zoomContainer").remove();
+			$(".zoomLens").remove();
 		}
 	</script>
 </body>
