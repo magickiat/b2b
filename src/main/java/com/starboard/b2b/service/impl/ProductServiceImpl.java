@@ -20,12 +20,14 @@ import com.starboard.b2b.dao.ProductBuyerGroupDao;
 import com.starboard.b2b.dao.ProductCategoryDao;
 import com.starboard.b2b.dao.ProductDao;
 import com.starboard.b2b.dao.ProductModelDao;
+import com.starboard.b2b.dao.ProductPriceDao;
 import com.starboard.b2b.dao.ProductTechnologyDao;
 import com.starboard.b2b.dao.ProductTypeDao;
 import com.starboard.b2b.dao.ProductYearDao;
 import com.starboard.b2b.dto.ProductBuyerGroupDTO;
 import com.starboard.b2b.dto.ProductCategoryDTO;
 import com.starboard.b2b.dto.ProductModelDTO;
+import com.starboard.b2b.dto.ProductPriceDTO;
 import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.ProductTechnologyDTO;
 import com.starboard.b2b.dto.ProductTypeDTO;
@@ -41,7 +43,6 @@ import com.starboard.b2b.model.ProductYear;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.web.form.product.SearchProductForm;
-import com.starboard.b2b.web.form.product.ViewProductModelForm;
 
 @Service("productService")
 @PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
@@ -75,6 +76,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductBuyerGroupDao productBuyerGroupDao;
+
+	@Autowired
+	private ProductPriceDao productPriceDao;
 
 	@Override
 	@Transactional
@@ -206,20 +210,21 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional(readOnly = true)
 	public List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection) {
 		List<ProductSearchResult> result = productDao.findProductModel(modelId, withnoseProtection);
-		
-		// Set null when not found img in upload path (When img is null, show default in view)
+
+		// Set null when not found img in upload path (When img is null, show
+		// default in view)
 		for (ProductSearchResult product : result) {
 			String imgPath = product.getProduct().getProductPictureBig();
-			if(imgPath == null){
+			if (imgPath == null) {
 				continue;
 			}
-			
-			if(imgPath.startsWith("/upload/")){
+
+			if (imgPath.startsWith("/upload/")) {
 				imgPath = imgPath.substring(7);
 			}
-			
+
 			log.info("imgPath = " + imgPath);
-			
+
 			File img = new File(uploadPath, imgPath);
 			if (!img.exists()) {
 				product.getProduct().setProductPictureBig(null);
@@ -235,6 +240,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public HashMap<String, ProductSearchResult> findProductLength(List<ProductSearchResult> productListNoWithnose) {
 		HashMap<String, ProductSearchResult> lengthGroup = new HashMap<>();
 
@@ -247,6 +253,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public HashMap<String, List<ProductSearchResult>> groupProductByTechnology(List<ProductSearchResult> products) {
 
 		HashMap<String, List<ProductSearchResult>> technologies = new HashMap<>();
@@ -265,15 +272,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public ViewProductModelForm getProductDetail(List<ProductSearchResult> productListNoWithnose,
-			List<ProductSearchResult> productListWithnose) {
-
-		HashMap<String, List<ProductSearchResult>> technologies = new HashMap<>();
-
-		for (ProductSearchResult productSearchResult : productListWithnose) {
-
+	@Transactional(readOnly = true)
+	public void findProductPrice(List<ProductSearchResult> productListNoWithnose, String productBuyerGroupId,
+			String currency) {
+		for (ProductSearchResult result : productListNoWithnose) {
+			ProductPriceDTO price = productPriceDao.findProductPrice(result.getProduct().getProductCode(), productBuyerGroupId, currency);
+			result.setPrice(price);
 		}
-		return null;
 	}
 
 }

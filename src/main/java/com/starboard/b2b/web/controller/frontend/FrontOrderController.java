@@ -122,20 +122,26 @@ public class FrontOrderController {
 			model.addAttribute("errorMsg", "Not found product model " + modelId);
 		} else {
 
+			String productBuyerGroupId = null;
+
+			// Find product model
 			List<ProductSearchResult> productListNoWithnose = productService.findProductModel(modelId,
 					WithnoseConstant.NO_WITHNOSE_PROTECTION);
 			List<ProductSearchResult> productListWithnose = productService.findProductModel(modelId,
 					WithnoseConstant.WITHNOSE_PROTECTION);
 
-			model.addAttribute("productListNoWithnose", productListNoWithnose);
-			model.addAttribute("productListWithnose", productListWithnose);
-
-			// Find product has withnose
+			// Find product buyer group from no Withnose product
 			if (!productListNoWithnose.isEmpty()) {
 				ProductSearchResult result = productListNoWithnose.get(0);
-				result.getProduct().getProductBuyerGroupId();
-				model.addAttribute("hasWithnoseBoard");
+				productBuyerGroupId = result.getProduct().getProductBuyerGroupId();
+				log.info("productBuyerGroupId: " + productBuyerGroupId);
+				model.addAttribute("hasWithnoseBoard", "WB".equalsIgnoreCase(productBuyerGroupId));
 			}
+			String currency = UserUtil.getCurrentUser().getCustomer().getCurrency();
+			productService.findProductPrice(productListNoWithnose, productBuyerGroupId, currency);
+
+			model.addAttribute("productListNoWithnose", productListNoWithnose);
+			model.addAttribute("productListWithnose", productListWithnose);
 
 			// TODO find product size (productLength)
 			model.addAttribute("productListNoWithnoseLength", productService.findProductLength(productListNoWithnose));
@@ -145,14 +151,14 @@ public class FrontOrderController {
 					.groupProductByTechnology(productListNoWithnose);
 			HashMap<String, List<ProductSearchResult>> withnoseTech = productService
 					.groupProductByTechnology(productListWithnose);
-			model.addAttribute("noWithnoseTech", noWithnoseTech);
-			model.addAttribute("withnoseTech", withnoseTech);
 			
+			ArrayList<HashMap<String, List<ProductSearchResult>>> allTech = new ArrayList<>();
+			allTech.add(noWithnoseTech);
+			allTech.add(withnoseTech);
+			model.addAttribute("allTech", allTech);
 			
-			
-			ViewProductModelForm form = productService.getProductDetail(productListNoWithnose, productListWithnose);
-			
-			
+//			model.addAttribute("noWithnoseTech", noWithnoseTech);
+//			model.addAttribute("withnoseTech", withnoseTech);
 
 			// model.addAttribute("productImagesList", productImagesList);
 			// model.addAttribute("checkWithNose",

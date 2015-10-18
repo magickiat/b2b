@@ -21,6 +21,10 @@ label {
 	font-weight: normal !important;
 }
 
+div.menu-link {
+	cursor: pointer;
+}
+
 .brand_logo {
 	width: 256px;
 	height: 256px;
@@ -52,8 +56,15 @@ label {
 	text-align: center;
 }
 
-.product-model-detail{
-border: solid 1px black;
+.product-model-detail {
+	border: solid 1px black;
 }
+
+.product-size {
+	margin: 2px;
+	min-width: 70px;
+}
+
+
 -->
 </style>

@@ -1,51 +1,43 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page session="true"%>
 
-<%-- No Withnose product --%>
-<c:forEach var="row" items="${ productListNoWithnose }"
-	varStatus="rowNum">
-	<%-- Declare product variable --%>
-	<c:set var="product" value="${ row.product }" />
+<%-- Loop All Tech --%>
+<c:forEach var="rowAllTech" items="${ allTech }"
+	varStatus="rowNumAllTech">
+	<div class="withnose${ rowNumAllTech.index }"
+		<c:if test="${ rowNumTech.index  > 0}">style="display:none;"</c:if>>
+		<c:forEach var="rowTech" items="${ rowAllTech }"
+			varStatus="rowNumTech">
+			<div
+				class="withnose${ rowNumAllTech.index }-tech withnose${ rowNumAllTech.index }-${stringUtil.removeSpecialChar(rowTech.key)}"
+				<c:if test="${ rowNumTech.index  > 0}">style="display:none;"</c:if>>
+				<c:forEach var="p" items="${rowTech.value}"
+					varStatus="rowNumProduct">
 
-	<%-- Header Text --%>
-	<div
-		class="${ row.keyName }${ product.productLength}_${rowNum.index} text-center"
-		style='<c:if test="${rowNum.index > 0}">display: none;</c:if>'>
-		<h3>${ product.productNameEn }</h3>
+					<%-- Set first current product --%>
+					<c:if test="${ rowNumTech.index == 0 &&  rowNumProduct.index == 0}">
+						<input type="hidden" id="currentProduct"
+							value="${p.product.productId }" />
+					</c:if>
+
+					<div
+						class="withnose${ rowNumAllTech.index }-${stringUtil.removeSpecialChar(rowTech.key)}-item withnose${ rowNumAllTech.index }-${stringUtil.removeSpecialChar(rowTech.key)}-item-${ stringUtil.removeSpecialChar(p.product.productId)}"
+						<c:if test="${ rowNumProduct.index  > 0}">style="display:none;"</c:if>>
+						<h3>
+							<c:out value="${ p.product.productNameEn }"></c:out>
+						</h3>
+
+						<c:set var="imageUrl" value="/images/b2b/default_image.jpg" />
+						<c:if test="${ not empty p.product.productPictureBig }">
+							<c:set var="imageUrl" value="${ p.product.productPictureBig }" />
+						</c:if>
+						<img id="zoomImg" class="product"
+							src='<c:url value="${ imageUrl }" />'
+							data-zoom-image='<c:url value="${ imageUrl }" />'
+							style="width: 475px;"></img>
+					</div>
+				</c:forEach>
+			</div>
+		</c:forEach>
 	</div>
-
-	<%-- Image --%>
-	<c:if test="${ rowNum.index == 0 }">
-		<c:set var="imageUrl" value="/images/b2b/default_image.jpg" />
-		<c:if test="${ not empty product.productPictureBig }">
-			<c:set var="imageUrl" value="${ product.productPictureBig }" />
-		</c:if>
-		<img id="zoomImg" class="product"
-			src='<c:url value="${ imageUrl }" />'
-			data-zoom-image='<c:url value="${ imageUrl }" />'
-			style="width: 475px;"></img>
-	</c:if>
-</c:forEach>
-
-<%-- Withnose Product --%>
-<c:forEach var="row" items="${ productListWithnose }" varStatus="rowNum">
-	<%-- Declare product variable --%>
-	<c:set var="product" value="${ row.product }" />
-	<div
-		class="${ row.keyName }${ product.productLength}_${rowNum.index} text-center"
-		style='display: none;'>
-		<h3>${ product.productNameEn }</h3>
-	</div>
-
-
-	<c:if test="${ rowNum.index == 0 }">
-		<c:set var="imageUrl" value="/images/b2b/default_image.jpg" />
-		<c:if test="${ not empty product.productPictureBig }">
-			<c:set var="imageUrl" value="${ product.productPictureBig }" />
-		</c:if>
-		<img id="zoomImg" class="product"
-			src='<c:url value="${ imageUrl }" />'
-			data-zoom-image='<c:url value="${ imageUrl }" />'
-			style="width: 475px; display: none;"></img>
-	</c:if>
 </c:forEach>
