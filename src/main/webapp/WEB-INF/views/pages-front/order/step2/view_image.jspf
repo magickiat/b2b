@@ -4,7 +4,7 @@
 <%-- Loop All Tech --%>
 <c:forEach var="rowAllTech" items="${ allTech }"
 	varStatus="rowNumAllTech">
-	<div class="withnose${ rowNumAllTech.index }" style="">
+	<div class="withnose${ rowNumAllTech.index }" <c:if test="${ rowNumTech.index  > 0}">style="display:none;"</c:if>>
 		<c:forEach var="rowTech" items="${ rowAllTech }"
 			varStatus="rowNumTech">
 			<div
