@@ -10,7 +10,7 @@
 	background-image:
 		url(data:image/gif;base64,R0lGODlhAgACAIAAAB4dGf///yH5BAEAAAEALAAAAAACAAIAAAICRF4AOw==)
 		;
-	_background-image: url("dot_for_ie.gif"); *
+	/*_background-image: url("dot_for_ie.gif"); */
 	background-image: url("dot_for_ie.gif");
 }
 

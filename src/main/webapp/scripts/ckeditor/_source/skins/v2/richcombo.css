@@ -12,8 +12,8 @@
 
 .cke_skin_v2 .cke_browser_ie .cke_rcombo
 {
-	#float: none;
-	#display: inline;
+/*	#float: none;
+	#display: inline;*/
 }
 
 .cke_skin_v2 .cke_rtl .cke_rcombo
@@ -23,7 +23,7 @@
 
 .cke_skin_v2 .cke_browser_ie .cke_rcombo
 {
-	#float: none;
+	/*#float: none;*/
 }
 
 .cke_skin_v2 .cke_rcombopanel
