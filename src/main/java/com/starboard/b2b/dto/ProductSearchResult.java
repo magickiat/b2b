@@ -20,7 +20,7 @@ public class ProductSearchResult {
 	public ProductSearchResult() {
 	}
 
-	public ProductSearchResult(long productId, Long productTypeId, Long productCatalogId, Long productGroupId,
+	public ProductSearchResult(String productCurrency, long productId, Long productTypeId, Long productCatalogId, Long productGroupId,
 			String productCode, String productNameTh, String productNameEn, BigDecimal productPrice,
 			BigDecimal productDiscount, BigDecimal productTotalPrice, String productBand, Long productQuantity,
 			BigDecimal productWeight, String productPreintro, Integer productIntro, String productDetail,
@@ -35,7 +35,8 @@ public class ProductSearchResult {
 
 		product = new Product();
 		productType = new ProductType();
-
+		
+		product.setProductCurrency(productCurrency);
 		product.setProductId(productId);
 		product.setProductTypeId(productTypeId);
 		product.setProductCatalogId(productCatalogId);

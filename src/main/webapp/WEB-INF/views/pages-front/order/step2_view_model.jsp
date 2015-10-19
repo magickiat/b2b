@@ -28,20 +28,20 @@
 		<div class="row">&nbsp;</div>
 
 		<div class="row">
-			<div class="col-sm-8 text-center">
+			<div class="col-sm-8 text-center product-img-big-view">
 				<%-- Product Model Picture --%>
 				<%@include file="step2/view_image.jspf"%>
 
 			</div>
 			<div class="col-sm-4">
 				<%-- Technology --%>
-				<div class="row"><%@include file="step2/technology.jspf"%></div>
+				<div class="row product-img-big-view"><%@include file="step2/technology.jspf"%></div>
 
 				<%-- SIZE (Product length) --%>
-				<div class="row"><%@include file="step2/size.jspf"%></div>
+				<div class="row product-img-big-view"><%@include file="step2/size.jspf"%></div>
 
 				<%-- Withnose board --%>
-				<div class="row"><%@include file="step2/withnose_board.jspf"%></div>
+				<div class="row product-img-big-view"><%@include file="step2/withnose_board.jspf"%></div>
 			</div>
 		</div>
 
@@ -71,10 +71,14 @@
 
 			//show only techId
 			var withnoseFlag = $('#withnoseFlag').val();
-			$('.withnose' + withnoseFlag + '-' + techId).show();
+			var techIdKey = '.withnose' + withnoseFlag + '-' + techId;
+			$(techIdKey).show();
 
-			// Set active product size first index
-			resetActiveProductSize();
+			// Show first product of tech id
+			var productKey = techIdKey + '-item-' + productId;
+			$(productKey).show();
+
+			// Set default product size to first index
 			$('.size0').removeClass('btn-primary').addClass('btn-success');
 
 			//Enable zoom
