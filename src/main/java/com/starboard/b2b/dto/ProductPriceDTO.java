@@ -3,6 +3,8 @@ package com.starboard.b2b.dto;
 
 import java.math.BigDecimal;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 public class ProductPriceDTO {
 
 	private String productCode;
@@ -71,6 +73,11 @@ public class ProductPriceDTO {
 
 	public void setMsrePrice(float msrePrice) {
 		this.msrePrice = msrePrice;
+	}
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
 	}
 
 }

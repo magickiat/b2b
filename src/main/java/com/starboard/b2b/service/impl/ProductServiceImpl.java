@@ -277,6 +277,7 @@ public class ProductServiceImpl implements ProductService {
 			String currency) {
 		for (ProductSearchResult result : productListNoWithnose) {
 			ProductPriceDTO price = productPriceDao.findProductPrice(result.getProduct().getProductCode(), productBuyerGroupId, currency);
+			log.info("prict: " + price);
 			result.setPrice(price);
 		}
 	}
