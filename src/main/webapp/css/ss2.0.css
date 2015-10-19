@@ -106,7 +106,7 @@ p.page-break-in {
 a.topmenu-list:link {
 	/*font-family: tahoma, tahoma;*/
 	font-size: 11px;
-	font-weight: normail;
+	font-weight: normal;
 	height: 20px;
 	color: #333333;
 	vertical-align: top;
@@ -221,7 +221,8 @@ a.topmenu-list:active {
 	/*font-family: tahoma, tahoma;*/
 	font-size: 11px;
 	background-color: #EFEFEF;
-	font-color: #669999 text-transform :   capitalize;
+	color: #669999;
+        text-transform: capitalize;
 	font-weight: bold;
 	color: #003333;
 }
@@ -230,7 +231,8 @@ a.topmenu-list:active {
 	/*font-family: tahoma, tahoma;*/
 	font-size: 11px;
 	background-color: #EFEFEF;
-	font-color: #669999 text-transform :   capitalize;
+	color: #669999;
+        text-transform: capitalize;
 	font-weight: bold;
 	color: #003333;
 }
@@ -239,7 +241,8 @@ a.topmenu-list:active {
 	/*font-family: tahoma, tahoma;*/
 	font-size: 14px;
 	background-color: #FFFFCC;
-	font-color: #669999 text-transform :   capitalize;
+	color: #669999;
+        text-transform: capitalize;
 	font-weight: bold;
 	color: #003333;
 }
@@ -248,7 +251,8 @@ a.topmenu-list:active {
 	/*font-family: tahoma, tahoma;*/
 	font-size: 20px;
 	background-color: #EFEFEF;
-	or: #669999 text-transform :   capitalize;
+	color: #669999;
+        text-transform: capitalize;
 	font-weight: bold;
 	color: #003333;
 }

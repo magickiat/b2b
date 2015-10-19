@@ -5,7 +5,7 @@
 .product-name {
 	float: left;
 	width: 100%;
-	height:"150px";
+	height: 150px;
 }
 
 .product-image {
@@ -141,6 +141,6 @@ z-index: 10;
 
 #dialogbox > div > #dialogboxbody{ background:#fff; padding:20px; color:#000000; }
 
-#dialogbox > div > #dialogboxfoot{ background: #fff padding:10px; text-align: center; }
+#dialogbox > div > #dialogboxfoot{ background: #fff; padding:10px; text-align: center; }
 
 /*-------------------------------------------------------------------FILM CUSTOM MESSAGE BOX */

@@ -1,895 +1,895 @@
 BODY {
-	FONT: 12spx/16px Arial, Helvetica, Tahoma; COLOR: #333333
+    font: 12px/16px Arial, Helvetica, Tahoma; color: #333333
 }
 TD {
-	FONT: 12px/16px Arial, Helvetica, Tahoma; COLOR: #333333
+    font: 12px/16px Arial, Helvetica, Tahoma; color: #333333
 }
 TH {
-	FONT: 12px/16px Arial, Helvetica, Tahoma; COLOR: #333333
+    font: 12px/16px Arial, Helvetica, Tahoma; color: #333333
 }
 DIV {
-	FONT: 12px/16px Arial, Helvetica, Tahoma; COLOR: #333333
+    font: 12px/16px Arial, Helvetica, Tahoma; color: #333333
 }
 P {
-	FONT: 12px/16px Tahoma, Arial, Helvetica, Tahoma; COLOR: #333333
+    font: 12px/16px Tahoma, Arial, Helvetica, Tahoma; color: #333333
 }
 LABEL {
-	FONT: 12px/16px Arial, Helvetica, Tahoma; COLOR: #333333
+    font: 12px/16px Arial, Helvetica, Tahoma; color: #333333
 }
 INPUT {
-	FONT: 12px/16px Arial, Helvetica, Tahoma; COLOR: #333333
+    font: 12px/16px Arial, Helvetica, Tahoma; color: #333333
 }
 INPUT {
-	COLOR: #333333; LINE-HEIGHT: 12px
+    color: #333333; line-height: 12px
 }
 SELECT {
-	COLOR: #333333; LINE-HEIGHT: 12px
+    color: #333333; line-height: 12px
 }
 A {
-	COLOR: #0000FF
+    color: #0000FF
 }
 A:visited {
-	COLOR: #0000FF
+    color: #0000FF
 }
 A:hover {
-	COLOR: #CAE001
+    color: #CAE001
 }
 A {
-	TEXT-DECORATION: underline
+    text-decoration: underline
 }
 A:hover {
-	TEXT-DECORATION: none
+    text-decoration: none
 }
 FIELDSET {
-	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px
+    padding-right: 5px; padding-left: 5px; padding-bottom: 5px; padding-top: 5px
 }
 H6 {
-	FONT: bold 12px Arial, Helvetica, Tahoma
+    font: bold 12px Arial, Helvetica, Tahoma
 }
 
 H3 {
-	FONT: bold 14px Tahoma, Helvetica, Tahoma; COLOR: #747533;
+    font: bold 14px Tahoma, Helvetica, Tahoma; color: #747533;
 }
 
 .article-decor {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 12px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 12px; padding-top: 0px
 }
 #contact_text {
-	MARGIN: 0px 0px 5px; OVERFLOW: auto; WIDTH: 90%; HEIGHT: auto
+    margin: 0px 0px 5px; overflow: auto; width: 90%; height: auto
 }
 .article_separator {
-	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; FONT-SIZE: 1px; PADDING-BOTTOM: 15px; MARGIN: 15px 0px 0px; LINE-HEIGHT: 1px; PADDING-TOP: 0px; HEIGHT: 1px
+    padding-right: 0px; display: block; padding-left: 0px; font-size: 1px; padding-bottom: 15px; margin: 15px 0px 0px; line-height: 1px; padding-top: 0px; height: 1px
 }
 .column_separator {
-	PADDING-RIGHT: 0px! important; PADDING-LEFT: 12px! important; PADDING-BOTTOM: 0px! important; PADDING-TOP: 0px! important
+    padding-right: 0px! important; padding-left: 12px! important; padding-bottom: 0px! important; padding-top: 0px! important
 }
 .article_column {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; padding-top: 0px
 }
 .article_indent H3 {
-	OVERFLOW: hidden
+    overflow: hidden
 }
 .article_indent H3 IMG {
-	FLOAT: left; MARGIN: 0px 3px 0px 0px
+    float: left; margin: 0px 3px 0px 0px
 }
 .container UL {
-	MARGIN: 0px 0px 0px 10px; LIST-STYLE-TYPE: none
+    margin: 0px 0px 0px 10px; list-style-type: none
 }
 .container UL LI {
-	PADDING-LEFT: 10px! important; BACKGROUND: url(../images/list-marker2.gif) no-repeat left 6px
+    padding-left: 10px! important; background: url(../images/list-marker2.gif) no-repeat left 6px
 }
 .contentdescription IMG {
-	MARGIN: 0px 20px 0px 0px
+    margin: 0px 20px 0px 0px
 }
 .contentpaneopen IMG {
-	MARGIN: 0px 15px 0px 0px
+    margin: 0px 15px 0px 0px
 }
 .contentheading {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 10px; FONT: bold 25px/27px Tahoma, Geneva, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #000; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 10px; font: bold 25px/27px Tahoma, Geneva, Tahoma; text-transform: uppercase; color: #000; padding-top: 0px
 }
 .componentheading {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 10px; FONT: bold 25px/27px Tahoma, Geneva, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #000; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 10px; font: bold 25px/27px Tahoma, Geneva, Tahoma; text-transform: uppercase; color: #000; padding-top: 0px
 }
 TD.contentheading {
-	FONT: 23px/27px Tahoma, Geneva, Tahoma; COLOR: #000
+    font: 23px/27px Tahoma, Geneva, Tahoma; color: #000
 }
 .componentheading {
-	MARGIN: 0px 0px 2px
+    margin: 0px 0px 2px
 }
 .contentpaneopen P {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 10px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 10px; padding-top: 0px
 }
 .buttonheading {
-	PADDING-RIGHT: 5px; PADDING-LEFT: 0px; PADDING-BOTTOM: 6px; PADDING-TOP: 5px
+    padding-right: 5px; padding-left: 0px; padding-bottom: 6px; padding-top: 5px
 }
 .buttonheading IMG {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px 4px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; margin: 0px 4px; padding-top: 0px
 }
 SPAN.contentheading {
-	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; FONT-WEIGHT: normal; PADDING-BOTTOM: 15px; MARGIN: 0px 0px 15px; PADDING-TOP: 15px
+    padding-right: 0px; display: block; padding-left: 0px; font-weight: normal; padding-bottom: 15px; margin: 0px 0px 15px; padding-top: 15px
 }
 .iteminfo {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 6px; MARGIN: 0px 0px 15px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 6px; margin: 0px 0px 15px; padding-top: 0px
 }
 .modifydate {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 11px; PADDING-BOTTOM: 10px; COLOR: #7a7a7a; PADDING-TOP: 10px; TEXT-DECORATION: none! important
+    padding-right: 0px; padding-left: 0px; font-size: 11px; padding-bottom: 10px; color: #7a7a7a; padding-top: 10px; text-decoration: none! important
 }
 .createdby {
-	DISPLAY: block; TEXT-TRANSFORM: none; COLOR: #7a7a7a
+    display: block; text-transform: none; color: #7a7a7a
 }
 .createdate {
-	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; FONT-SIZE: 11px; PADDING-BOTTOM: 15px; MARGIN: 0px; COLOR: #7a7a7a; LINE-HEIGHT: 11px; PADDING-TOP: 0px
+    padding-right: 0px; display: block; padding-left: 0px; font-size: 11px; padding-bottom: 15px; margin: 0px; color: #7a7a7a; line-height: 11px; padding-top: 0px
 }
 DIV.small {
-	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; FONT-WEIGHT: normal; FONT-SIZE: 11px; PADDING-BOTTOM: 7px; MARGIN: 0px; COLOR: #7a7a7a; LINE-HEIGHT: 11px; PADDING-TOP: 0px; WHITE-SPACE: nowrap
+    padding-right: 0px; display: block; padding-left: 0px; font-weight: normal; font-size: 11px; padding-bottom: 7px; margin: 0px; color: #7a7a7a; line-height: 11px; padding-top: 0px; white-space: nowrap
 }
 .button {
-	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; BACKGROUND: url(../images/button04.gif) repeat-x left top; PADDING-BOTTOM: 5px; MARGIN: 0px; FONT: bold 11px/11px Tahoma, Geneva, Tahoma; VERTICAL-ALIGN: top; WIDTH: 63px; COLOR: #fff; BORDER-TOP-STYLE: none; PADDING-TOP: 3px; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; TEXT-ALIGN: center; TEXT-DECORATION: none; BORDER-BOTTOM-STYLE: none
+    padding-right: 0px; display: block; padding-left: 0px; background: url(../images/button04.gif) repeat-x left top; padding-bottom: 5px; margin: 0px; font: bold 11px/11px Tahoma, Geneva, Tahoma; vertical-align: top; width: 63px; color: #fff; border-top-style: none; padding-top: 3px; border-right-style: none; border-left-style: none; text-align: center; text-decoration: none; border-bottom-style: none
 }
 .module .button {
-	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; BACKGROUND: url(../images/button04.gif) repeat-x left top; PADDING-BOTTOM: 5px; MARGIN: 0px; FONT: bold 11px/11px Tahoma, Geneva, Tahoma; VERTICAL-ALIGN: top; WIDTH: 63px; COLOR: #fff; BORDER-TOP-STYLE: none; PADDING-TOP: 3px; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; TEXT-ALIGN: center; TEXT-DECORATION: none; BORDER-BOTTOM-STYLE: none
+    padding-right: 0px; display: block; padding-left: 0px; background: url(../images/button04.gif) repeat-x left top; padding-bottom: 5px; margin: 0px; font: bold 11px/11px Tahoma, Geneva, Tahoma; vertical-align: top; width: 63px; color: #fff; border-top-style: none; padding-top: 3px; border-right-style: none; border-left-style: none; text-align: center; text-decoration: none; border-bottom-style: none
 }
 .validate {
-	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; BACKGROUND: url(../images/button04.gif) repeat-x left top; PADDING-BOTTOM: 5px; MARGIN: 0px; FONT: bold 11px/11px Tahoma, Geneva, Tahoma; VERTICAL-ALIGN: top; WIDTH: 63px; COLOR: #fff; BORDER-TOP-STYLE: none; PADDING-TOP: 3px; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; TEXT-ALIGN: center; TEXT-DECORATION: none; BORDER-BOTTOM-STYLE: none
+    padding-right: 0px; display: block; padding-left: 0px; background: url(../images/button04.gif) repeat-x left top; padding-bottom: 5px; margin: 0px; font: bold 11px/11px Tahoma, Geneva, Tahoma; vertical-align: top; width: 63px; color: #fff; border-top-style: none; padding-top: 3px; border-right-style: none; border-left-style: none; text-align: center; text-decoration: none; border-bottom-style: none
 }
 .readmore A {
-	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; BACKGROUND: url(../images/button04.gif) repeat-x left top; PADDING-BOTTOM: 5px; MARGIN: 0px; FONT: bold 11px/11px Tahoma, Geneva, Tahoma; VERTICAL-ALIGN: top; WIDTH: 63px; COLOR: #fff; BORDER-TOP-STYLE: none; PADDING-TOP: 3px; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; TEXT-ALIGN: center; TEXT-DECORATION: none; BORDER-BOTTOM-STYLE: none
+    padding-right: 0px; display: block; padding-left: 0px; background: url(../images/button04.gif) repeat-x left top; padding-bottom: 5px; margin: 0px; font: bold 11px/11px Tahoma, Geneva, Tahoma; vertical-align: top; width: 63px; color: #fff; border-top-style: none; padding-top: 3px; border-right-style: none; border-left-style: none; text-align: center; text-decoration: none; border-bottom-style: none
 }
 * HTML .container INPUT.button {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; HEIGHT: 23px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; padding-top: 0px; height: 23px
 }
 * + HTML .container INPUT.button {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; HEIGHT: 23px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; padding-top: 0px; height: 23px
 }
 .readmore A {
-	PADDING-RIGHT: 25px; PADDING-LEFT: 8px; BACKGROUND: none transparent scroll repeat 0% 0%; PADDING-BOTTOM: 6px; WIDTH: auto; COLOR: #000; PADDING-TOP: 5px; WHITE-SPACE: nowrap; HEIGHT: auto
+    padding-right: 25px; padding-left: 8px; background: none transparent scroll repeat 0% 0%; padding-bottom: 6px; width: auto; color: #000; padding-top: 5px; white-space: nowrap; height: auto
 }
 DIV.blank A {
-	PADDING-RIGHT: 25px; PADDING-LEFT: 8px; BACKGROUND: none transparent scroll repeat 0% 0%; PADDING-BOTTOM: 6px; WIDTH: auto; COLOR: #000; PADDING-TOP: 5px; WHITE-SPACE: nowrap; HEIGHT: auto
+    padding-right: 25px; padding-left: 8px; background: none transparent scroll repeat 0% 0%; padding-bottom: 6px; width: auto; color: #000; padding-top: 5px; white-space: nowrap; height: auto
 }
 DIV.blank A {
-	PADDING-RIGHT: 7px; PADDING-LEFT: 7px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+    padding-right: 7px; padding-left: 7px; padding-bottom: 0px; padding-top: 0px
 }
 * HTML .button {
-	DISPLAY: block
+    display: block
 }
 * HTML .validate {
-	DISPLAY: block
+    display: block
 }
 .button2-left {
-	FLOAT: left; MARGIN-RIGHT: 5px
+    float: left; margin-right: 5px
 }
 .button2-left {
-	DISPLAY: inline
+    display: inline
 }
 .image {
-	DISPLAY: inline
+    display: inline
 }
 .button2-left A:hover {
-	BACKGROUND: #d10054; COLOR: #fff
+    background: #d10054; color: #fff
 }
 .readmore A:hover {
-	BACKGROUND: #d10054; COLOR: #fff
+    background: #d10054; color: #fff
 }
 DIV.blank A:hover {
-	BACKGROUND: #d10054; COLOR: #fff
+    background: #d10054; color: #fff
 }
 .readmore A {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: left; PADDING-BOTTOM: 0px; MARGIN: 0px 1px 0px 0px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; float: left; padding-bottom: 0px; margin: 0px 1px 0px 0px; padding-top: 0px
 }
 DIV.blank A {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: left; PADDING-BOTTOM: 0px; MARGIN: 0px 1px 0px 0px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; float: left; padding-bottom: 0px; margin: 0px 1px 0px 0px; padding-top: 0px
 }
 #editor-xtd-buttons {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: left; PADDING-BOTTOM: 5px; OVERFLOW: hidden; WIDTH: 300px; PADDING-TOP: 5px
+    padding-right: 0px; padding-left: 0px; float: left; padding-bottom: 5px; overflow: hidden; width: 300px; padding-top: 5px
 }
 #editor-xtd-buttons .readmore {
-	DISPLAY: inline
+    display: inline
 }
 .nobutton .button {
-	BACKGROUND: none transparent scroll repeat 0% 0%; TEXT-TRANSFORM: none; WIDTH: 100%; COLOR: #333; LINE-HEIGHT: 16px; TEXT-ALIGN: left
+    background: none transparent scroll repeat 0% 0%; text-transform: none; width: 100%; color: #333; line-height: 16px; text-align: left
 }
 .nobutton .button:hover {
-	COLOR: #333; TEXT-DECORATION: underline
+    color: #333; text-decoration: underline
 }
 .toolbar .button {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BACKGROUND: none transparent scroll repeat 0% 0%; PADDING-BOTTOM: 0px; WIDTH: auto; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; background: none transparent scroll repeat 0% 0%; padding-bottom: 0px; width: auto; padding-top: 0px
 }
 DIV.readmore {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; OVERFLOW: hidden; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; margin: 0px; overflow: hidden; padding-top: 0px
 }
 DIV A.readon {
-	PADDING-RIGHT: 0px; DISPLAY: inline-block; PADDING-LEFT: 0px; PADDING-BOTTOM: 5px; FONT: 12px/12px Arial, Helvetica, Tahoma; WIDTH: 95px; COLOR: #da1544; PADDING-TOP: 5px; TEXT-ALIGN: center
+    padding-right: 0px; display: inline-block; padding-left: 0px; padding-bottom: 5px; font: 12px/12px Arial, Helvetica, Tahoma; width: 95px; color: #da1544; padding-top: 5px; text-align: center
 }
 A.readon:hover {
-	BACKGROUND: #fff; TEXT-DECORATION: none
+    background: #fff; text-decoration: none
 }
 A.readon:visited {
-	COLOR: #000
+    color: #000
 }
 .blog_more {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 10px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 10px; padding-top: 0px
 }
 .blog_more H2 {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 12px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; font-size: 12px; padding-bottom: 0px; padding-top: 0px
 }
 .blog_more UL {
-	MARGIN: 10px 0px 0px 15px
+    margin: 10px 0px 0px 15px
 }
 .blog_more A {
-	TEXT-DECORATION: underline
+    text-decoration: underline
 }
 .blog_more A:hover {
-	TEXT-DECORATION: none
+    text-decoration: none
 }
 .pagenav {
-	FONT-WEIGHT: normal; FONT-SIZE: 12px
+    font-weight: normal; font-size: 12px
 }
 A.pagenav {
-	PADDING-RIGHT: 2px; PADDING-LEFT: 2px; FONT-WEIGHT: normal; PADDING-BOTTOM: 0px; MARGIN: 0px 2px 0px 0px; PADDING-TOP: 0px; TEXT-DECORATION: none
+    padding-right: 2px; padding-left: 2px; font-weight: normal; padding-bottom: 0px; margin: 0px 2px 0px 0px; padding-top: 0px; text-decoration: none
 }
 A.pagenav:hover {
-	TEXT-DECORATION: underline
+    text-decoration: underline
 }
 A.pagenav:visited {
-	TEXT-DECORATION: none
+    text-decoration: none
 }
 .pagination_nav {
-	PADDING-RIGHT: 20px; PADDING-LEFT: 27px; FONT-SIZE: 12px; PADDING-BOTTOM: 0px; PADDING-TOP: 10px
+    padding-right: 20px; padding-left: 27px; font-size: 12px; padding-bottom: 0px; padding-top: 10px
 }
 .pagination_nav DIV {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 5px; padding-top: 5px
 }
 .pagination {
-	MARGIN-TOP: 10px
+    margin-top: 10px
 }
 .pagination LI {
-	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; BACKGROUND: none transparent scroll repeat 0% 0%; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+    padding-right: 5px; padding-left: 5px; background: none transparent scroll repeat 0% 0%; padding-bottom: 0px; padding-top: 0px
 }
 .pagination_result {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; LINE-HEIGHT: 16px; PADDING-TOP: 5px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; line-height: 16px; padding-top: 5px
 }
 .pagination SPAN {
-	PADDING-RIGHT: 10px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+    padding-right: 10px; padding-left: 0px; padding-bottom: 0px; padding-top: 0px
 }
 .pagination STRONG SPAN {
-	PADDING-RIGHT: 6px; PADDING-LEFT: 6px; FONT-WEIGHT: normal; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+    padding-right: 6px; padding-left: 6px; font-weight: normal; padding-bottom: 0px; padding-top: 0px
 }
 .searchArea {
-	BORDER-RIGHT: #c2b1b5 1px solid; PADDING-RIGHT: 10px; BORDER-TOP: #c2b1b5 1px solid; PADDING-LEFT: 10px; PADDING-BOTTOM: 10px; BORDER-LEFT: #c2b1b5 1px solid; PADDING-TOP: 10px; BORDER-BOTTOM: #c2b1b5 1px solid
+    border-right: #c2b1b5 1px solid; padding-right: 10px; border-top: #c2b1b5 1px solid; padding-left: 10px; padding-bottom: 10px; border-left: #c2b1b5 1px solid; padding-top: 10px; border-bottom: #c2b1b5 1px solid
 }
 .searchArea .inputbox {
-	BORDER-RIGHT: #ccc 1px solid; PADDING-RIGHT: 0px; BORDER-TOP: #ccc 1px solid; PADDING-LEFT: 0px; BACKGROUND: #fff; PADDING-BOTTOM: 4px; BORDER-LEFT: #ccc 1px solid; PADDING-TOP: 4px; BORDER-BOTTOM: #ccc 1px solid
+    border-right: #ccc 1px solid; padding-right: 0px; border-top: #ccc 1px solid; padding-left: 0px; background: #fff; padding-bottom: 4px; border-left: #ccc 1px solid; padding-top: 4px; border-bottom: #ccc 1px solid
 }
 .searchArea SELECT.inputbox {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; padding-top: 0px
 }
 .sectiontableentry0 TD {
-	
+
 }
 TR.sectiontableentry1 TD {
-	PADDING-BOTTOM: 5px; PADDING-TOP: 5px; BORDER-BOTTOM: #ccc 1px solid; TEXT-ALIGN: left
+    padding-bottom: 5px; padding-top: 5px; border-bottom: #ccc 1px solid; text-align: left
 }
 TR.sectiontableentry0 TD {
-	PADDING-BOTTOM: 5px; PADDING-TOP: 5px; BORDER-BOTTOM: #ccc 1px solid; TEXT-ALIGN: left
+    padding-bottom: 5px; padding-top: 5px; border-bottom: #ccc 1px solid; text-align: left
 }
 TR.sectiontableentry2 TD {
-	PADDING-BOTTOM: 5px; PADDING-TOP: 5px; BORDER-BOTTOM: #ccc 1px solid; TEXT-ALIGN: left
+    padding-bottom: 5px; padding-top: 5px; border-bottom: #ccc 1px solid; text-align: left
 }
 #right TR.sectiontableentry1 TD {
-	BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+    border-top-style: none; border-right-style: none; border-left-style: none; border-bottom-style: none
 }
 #left TR.sectiontableentry1 TD {
-	BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+    border-top-style: none; border-right-style: none; border-left-style: none; border-bottom-style: none
 }
 #left TR.sectiontableentry2 TD {
-	BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+    border-top-style: none; border-right-style: none; border-left-style: none; border-bottom-style: none
 }
 .var1 {
-	PADDING-RIGHT: 5px! important; PADDING-LEFT: 5px! important; PADDING-BOTTOM: 5px! important; MARGIN: 5px 0px; PADDING-TOP: 5px! important
+    padding-right: 5px! important; padding-left: 5px! important; padding-bottom: 5px! important; margin: 5px 0px; padding-top: 5px! important
 }
 .var2 {
-	PADDING-RIGHT: 5px! important; PADDING-LEFT: 5px! important; BACKGROUND: #f6f6f6; PADDING-BOTTOM: 5px! important; MARGIN: 5px 0px; PADDING-TOP: 5px! important
+    padding-right: 5px! important; padding-left: 5px! important; background: #f6f6f6; padding-bottom: 5px! important; margin: 5px 0px; padding-top: 5px! important
 }
 .results {
-	PADDING-RIGHT: 20px; PADDING-LEFT: 20px; PADDING-BOTTOM: 15px; PADDING-TOP: 0px
+    padding-right: 20px; padding-left: 20px; padding-bottom: 15px; padding-top: 0px
 }
 .results OL LI {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 10px; PADDING-TOP: 0px; TEXT-ALIGN: justify
+    padding-right: 0px; padding-left: 0px; padding-bottom: 10px; padding-top: 0px; text-align: justify
 }
 .searchintro {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 20px; PADDING-BOTTOM: 10px; PADDING-TOP: 10px
+    padding-right: 0px; padding-left: 20px; padding-bottom: 10px; padding-top: 10px
 }
 .searchintro B {
-	COLOR: #d04020
+    color: #d04020
 }
 .searchintro STRONG {
-	COLOR: #d04020
+    color: #d04020
 }
 .sectiontableheader {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: bold; BACKGROUND: #eee; PADDING-BOTTOM: 5px; COLOR: #87666e; PADDING-TOP: 5px
+    padding-right: 0px; padding-left: 0px; font-weight: bold; background: #eee; padding-bottom: 5px; color: #87666e; padding-top: 5px
 }
 .sectiontableheader TH {
-	PADDING-RIGHT: 5px; BORDER-TOP: #d8ced1 1px solid; PADDING-LEFT: 5px; FONT-WEIGHT: bold; PADDING-BOTTOM: 5px; COLOR: #87666e; PADDING-TOP: 5px; BORDER-BOTTOM: #d8ced1 1px solid
+    padding-right: 5px; border-top: #d8ced1 1px solid; padding-left: 5px; font-weight: bold; padding-bottom: 5px; color: #87666e; padding-top: 5px; border-bottom: #d8ced1 1px solid
 }
 .cartTable TD {
-	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; BORDER-BOTTOM: #d8ced1 1px solid
+    padding-right: 5px; padding-left: 5px; padding-bottom: 5px; padding-top: 5px; border-bottom: #d8ced1 1px solid
 }
 .archiveBlock .button {
-	DISPLAY: inline-block; MARGIN: 0px 0px 0px 5px
+    display: inline-block; margin: 0px 0px 0px 5px
 }
 UL#archive-list H4 A {
-	FONT-SIZE: 12px; TEXT-TRANSFORM: none
+    font-size: 12px; text-transform: none
 }
 DL.poll {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 20px; PADDING-TOP: 10px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 20px; padding-top: 10px
 }
 #poll H3 {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 120%; PADDING-BOTTOM: 10px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; font-size: 120%; padding-bottom: 10px; padding-top: 0px
 }
 DL.poll DT {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: bold; PADDING-BOTTOM: 0px; PADDING-TOP: 7px
+    padding-right: 0px; padding-left: 0px; font-weight: bold; padding-bottom: 0px; padding-top: 7px
 }
 .poll .question {
-	PADDING-RIGHT: 10px; PADDING-LEFT: 0px; FONT-WEIGHT: bold; FONT-SIZE: 12px; PADDING-BOTTOM: 10px; COLOR: #7a7a7a; PADDING-TOP: 0px
+    padding-right: 10px; padding-left: 0px; font-weight: bold; font-size: 12px; padding-bottom: 10px; color: #7a7a7a; padding-top: 0px
 }
 .poll .poll-body {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; padding-top: 0px
 }
 .poll-body LABEL {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 12px; PADDING-BOTTOM: 0px; COLOR: #575757; LINE-HEIGHT: 14px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; font-size: 12px; padding-bottom: 0px; color: #575757; line-height: 14px; padding-top: 0px
 }
 .poll .buttons {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 10px; PADDING-TOP: 10px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 10px; padding-top: 10px
 }
 .poll .button {
-	PADDING-RIGHT: 0px; DISPLAY: inline; PADDING-LEFT: 0px; FONT-WEIGHT: bold; FONT-SIZE: 11px; BACKGROUND: url(../images/login-button.gif) repeat-x left top; PADDING-BOTTOM: 4px; MARGIN: 8px 0px 0px; WIDTH: 55px; CURSOR: pointer; COLOR: #fff; BORDER-TOP-STYLE: none; LINE-HEIGHT: 15px; PADDING-TOP: 2px; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; TEXT-ALIGN: center; BORDER-BOTTOM-STYLE: none
+    padding-right: 0px; display: inline; padding-left: 0px; font-weight: bold; font-size: 11px; background: url(../images/login-button.gif) repeat-x left top; padding-bottom: 4px; margin: 8px 0px 0px; width: 55px; cursor: pointer; color: #fff; border-top-style: none; line-height: 15px; padding-top: 2px; border-right-style: none; border-left-style: none; text-align: center; border-bottom-style: none
 }
 .module .button {
-	PADDING-RIGHT: 4px; DISPLAY: inline; PADDING-LEFT: 4px; FONT-WEIGHT: bold; FONT-SIZE: 11px; BACKGROUND: url(../images/login-button.gif) repeat-x left top; PADDING-BOTTOM: 4px; MARGIN: 8px 0px 0px; CURSOR: pointer; COLOR: #fff; BORDER-TOP-STYLE: none; LINE-HEIGHT: 15px; PADDING-TOP: 2px; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; TEXT-ALIGN: center; BORDER-BOTTOM-STYLE: none
+    padding-right: 4px; display: inline; padding-left: 4px; font-weight: bold; font-size: 11px; background: url(../images/login-button.gif) repeat-x left top; padding-bottom: 4px; margin: 8px 0px 0px; cursor: pointer; color: #fff; border-top-style: none; line-height: 15px; padding-top: 2px; border-right-style: none; border-left-style: none; text-align: center; border-bottom-style: none
 }
 .poll .result {
-	
+
 }
 .poll .section {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 5px; OVERFLOW: hidden; WIDTH: 100%; COLOR: #fff; PADDING-TOP: 5px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 5px; overflow: hidden; width: 100%; color: #fff; padding-top: 5px
 }
 .poll .section2 {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BACKGROUND: #151515; PADDING-BOTTOM: 5px; OVERFLOW: hidden; WIDTH: 100%; COLOR: #575757; PADDING-TOP: 5px
+    padding-right: 0px; padding-left: 0px; background: #151515; padding-bottom: 5px; overflow: hidden; width: 100%; color: #575757; padding-top: 5px
 }
 .poll .section2 LABEL {
-	COLOR: #575757
+    color: #575757
 }
 .poll .radio {
-	FLOAT: left; WIDTH: 20px
+    float: left; width: 20px
 }
 .poll .radio INPUT {
-	DISPLAY: block; VERTICAL-ALIGN: middle; WIDTH: 16px; HEIGHT: 16px
+    display: block; vertical-align: middle; width: 16px; height: 16px
 }
 .poll .var {
-	MARGIN: 0px 0px 0px 20px; TEXT-ALIGN: left
+    margin: 0px 0px 0px 20px; text-align: left
 }
 .display {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 10px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 10px; padding-top: 0px
 }
 .display SELECT {
-	BORDER-RIGHT: #46462f 1px solid; BORDER-TOP: #46462f 1px solid; BORDER-LEFT: #46462f 1px solid; WIDTH: 100px; BORDER-BOTTOM: #46462f 1px solid
+    border-right: #46462f 1px solid; border-top: #46462f 1px solid; border-left: #46462f 1px solid; width: 100px; border-bottom: #46462f 1px solid
 }
 .sectiontableentry1 DIV {
-	FONT-SIZE: 17px; COLOR: #000
+    font-size: 17px; color: #000
 }
 .sectiontableentry0 DIV {
-	FONT-SIZE: 17px; COLOR: #000
+    font-size: 17px; color: #000
 }
 .product-Old-Price {
-	COLOR: #000
+    color: #000
 }
 .sectiontableentry1 .productPrice {
-	COLOR: #f91919
+    color: #f91919
 }
 .td_1 {
-	WIDTH: 5%; TEXT-ALIGN: center
+    width: 5%; text-align: center
 }
 .td_2 {
-	WIDTH: 5%; TEXT-ALIGN: center
+    width: 5%; text-align: center
 }
 .td_3 {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 10px; PADDING-BOTTOM: 0px; WIDTH: 90%; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 10px; padding-bottom: 0px; width: 90%; padding-top: 0px
 }
 .pollstableborder .question {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 85px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 85px; padding-bottom: 0px; padding-top: 0px
 }
 DL.contentpane DT {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 20px; PADDING-TOP: 10px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 20px; padding-top: 10px
 }
 DL.contentpane DD {
-	OVERFLOW: hidden; WIDTH: 100%
+    overflow: hidden; width: 100%
 }
 DL.contentpane DIV {
-	VERTICAL-ALIGN: middle
+    vertical-align: middle
 }
 DL.contentpane .description {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; VERTICAL-ALIGN: middle; WIDTH: 110px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; vertical-align: middle; width: 110px; padding-top: 0px
 }
 DL.contentpane .input-field {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; VERTICAL-ALIGN: middle; WIDTH: 160px; PADDING-TOP: 2px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; vertical-align: middle; width: 160px; padding-top: 2px
 }
 DL.contentpane .button-field {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; VERTICAL-ALIGN: middle; WIDTH: 140px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; vertical-align: middle; width: 140px; padding-top: 0px
 }
 .module-search {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 9px; PADDING-BOTTOM: 0px; OVERFLOW: hidden; PADDING-TOP: 9px
+    padding-right: 0px; padding-left: 9px; padding-bottom: 0px; overflow: hidden; padding-top: 9px
 }
 .search {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 10px; PADDING-BOTTOM: 0px; PADDING-TOP: 15px
+    padding-right: 0px; padding-left: 10px; padding-bottom: 0px; padding-top: 15px
 }
 .search-input {
-	FLOAT: left
+    float: left
 }
 .search-right H3 {
-	
+
 }
 .search-button {
-	FLOAT: left
+    float: left
 }
 .search .inputbox {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 4px; FONT-SIZE: 11px; BACKGROUND: #1b1c1d; FLOAT: left; PADDING-BOTTOM: 2px; MARGIN: 0px 3px 0px 0px; VERTICAL-ALIGN: top; TEXT-TRANSFORM: uppercase; WIDTH: 157px; COLOR: #616161; BORDER-TOP-STYLE: none; LINE-HEIGHT: 14px; PADDING-TOP: 2px; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+    padding-right: 0px; padding-left: 4px; font-size: 11px; background: #1b1c1d; float: left; padding-bottom: 2px; margin: 0px 3px 0px 0px; vertical-align: top; text-transform: uppercase; width: 157px; color: #616161; border-top-style: none; line-height: 14px; padding-top: 2px; border-right-style: none; border-left-style: none; border-bottom-style: none
 }
 .search .button {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: bold; FONT-SIZE: 11px; BACKGROUND: url(../images/login-button.gif) repeat-x left top; FLOAT: left; PADDING-BOTTOM: 3px; WIDTH: 54px; COLOR: #fff; PADDING-TOP: 2px; FONT-FAMILY: Tahoma, Geneva, Tahoma; TEXT-ALIGN: center
+    padding-right: 0px; padding-left: 0px; font-weight: bold; font-size: 11px; background: url(../images/login-button.gif) repeat-x left top; float: left; padding-bottom: 3px; width: 54px; color: #fff; padding-top: 2px; font-family: Tahoma, Geneva, Tahoma; text-align: center
 }
 .search_result {
-	PADDING-RIGHT: 20px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+    padding-right: 20px; padding-left: 0px; padding-bottom: 0px; padding-top: 0px
 }
 .search_result H3 {
-	FONT-SIZE: 14px; COLOR: #808080
+    font-size: 14px; color: #808080
 }
 .highlight {
-	FONT-WEIGHT: bold; COLOR: #d04020
+    font-weight: bold; color: #d04020
 }
 .adminform TD {
-	BORDER-RIGHT: #808080 1px solid; PADDING-RIGHT: 0px; BORDER-TOP: #808080 1px solid; PADDING-LEFT: 0px; PADDING-BOTTOM: 2px; BORDER-LEFT: #808080 1px solid; PADDING-TOP: 0px; BORDER-BOTTOM: #808080 1px solid
+    border-right: #808080 1px solid; padding-right: 0px; border-top: #808080 1px solid; padding-left: 0px; padding-bottom: 2px; border-left: #808080 1px solid; padding-top: 0px; border-bottom: #808080 1px solid
 }
 .button1 {
-	BACKGROUND: url(../images/button.gif) no-repeat left top
+    background: url(../images/button.gif) no-repeat left top
 }
 .container2 {
-	OVERFLOW: hidden; WIDTH: 100%
+    overflow: hidden; width: 100%
 }
 .error {
-	MARGIN: 0px 0px 10px
+    margin: 0px 0px 10px
 }
 #system-message DT.error {
-	DISPLAY: none
+    display: none
 }
 DT.message {
-	DISPLAY: none
+    display: none
 }
 .error DD UL {
-	PADDING-RIGHT: 0px; BORDER-TOP: #670606 3px solid; PADDING-LEFT: 5px; BACKGROUND: #ce0303; PADDING-BOTTOM: 5px; MARGIN: 0px; COLOR: #fff; PADDING-TOP: 5px; BORDER-BOTTOM: #670606 3px solid
+    padding-right: 0px; border-top: #670606 3px solid; padding-left: 5px; background: #ce0303; padding-bottom: 5px; margin: 0px; color: #fff; padding-top: 5px; border-bottom: #670606 3px solid
 }
 .error DD UL LI {
-	BACKGROUND: none transparent scroll repeat 0% 0%; MARGIN: 0px 0px 0px 20px; COLOR: #fff! important
+    background: none transparent scroll repeat 0% 0%; margin: 0px 0px 0px 20px; color: #fff! important
 }
 .module {
-	MARGIN: 0px 0px 10px; WIDTH: 100%
+    margin: 0px 0px 10px; width: 100%
 }
 .module .boxIndent {
-	PADDING-RIGHT: 25px! important; PADDING-LEFT: 29px! important; BACKGROUND: url(../images/module-tail.gif) repeat-x left top; PADDING-BOTTOM: 15px! important; OVERFLOW: hidden; PADDING-TOP: 20px! important
+    padding-right: 25px! important; padding-left: 29px! important; background: url(../images/module-tail.gif) repeat-x left top; padding-bottom: 15px! important; overflow: hidden; padding-top: 20px! important
 }
 .module H3 {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 11px; BACKGROUND: url(../images/module-title-tail.gif) repeat-x left top; MARGIN-BOTTOM: 2px; PADDING-BOTTOM: 11px; FONT: bold 11px/11px Tahoma, Geneva, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #606061; PADDING-TOP: 8px
+    padding-right: 0px; padding-left: 11px; background: url(../images/module-title-tail.gif) repeat-x left top; margin-bottom: 2px; padding-bottom: 11px; font: bold 11px/11px Tahoma, Geneva, Tahoma; text-transform: uppercase; color: #606061; padding-top: 8px
 }
 .module DIV {
-	FONT: 12px/16px Arial, Helvetica, Tahoma; COLOR: #575757
+    font: 12px/16px Arial, Helvetica, Tahoma; color: #575757
 }
 .module TD {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; FONT: 12px/16px Arial, Helvetica, Tahoma; COLOR: #7a7a7a; PADDING-TOP: 0px; TEXT-ALIGN: left
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; font: 12px/16px Arial, Helvetica, Tahoma; color: #7a7a7a; padding-top: 0px; text-align: left
 }
 .module P {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; FONT: 12px/16px Arial, Helvetica, Tahoma; COLOR: #7a7a7a; PADDING-TOP: 0px; TEXT-ALIGN: left
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; font: 12px/16px Arial, Helvetica, Tahoma; color: #7a7a7a; padding-top: 0px; text-align: left
 }
 .module P {
-	FONT: 12px/16px Arial, Helvetica, Tahoma
+    font: 12px/16px Arial, Helvetica, Tahoma
 }
 .module UL {
-	MARGIN: 0px; LIST-STYLE-TYPE: none
+    margin: 0px; list-style-type: none
 }
 .module UL LI {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 12px; PADDING-BOTTOM: 6px; MARGIN: 0px; COLOR: #383c3c; LINE-HEIGHT: 16px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; font-size: 12px; padding-bottom: 6px; margin: 0px; color: #383c3c; line-height: 16px; padding-top: 0px
 }
 .module LI A {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; FONT-SIZE: 12px; PADDING-BOTTOM: 0px; MARGIN: 0px; COLOR: #7a7a7a; PADDING-TOP: 0px; TEXT-DECORATION: underline
+    padding-right: 0px; padding-left: 0px; font-weight: normal; font-size: 12px; padding-bottom: 0px; margin: 0px; color: #7a7a7a; padding-top: 0px; text-decoration: underline
 }
 .module LI A:visited {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; FONT-SIZE: 12px; PADDING-BOTTOM: 0px; MARGIN: 0px; COLOR: #7a7a7a; PADDING-TOP: 0px; TEXT-DECORATION: underline
+    padding-right: 0px; padding-left: 0px; font-weight: normal; font-size: 12px; padding-bottom: 0px; margin: 0px; color: #7a7a7a; padding-top: 0px; text-decoration: underline
 }
 .module LI A:hover {
-	COLOR: #7a7a7a; TEXT-DECORATION: none! important
+    color: #7a7a7a; text-decoration: none! important
 }
 .count {
-	TEXT-DECORATION: underline
+    text-decoration: underline
 }
 .module A {
-	COLOR: #eb005e; TEXT-DECORATION: underline
+    color: #eb005e; text-decoration: underline
 }
 .module A:hover {
-	COLOR: #d9dbdd; TEXT-DECORATION: none! important
+    color: #d9dbdd; text-decoration: none! important
 }
 .module {
-	MARGIN: 0px 0px 10px; WIDTH: 100%
+    margin: 0px 0px 10px; width: 100%
 }
 .module .boxIndent {
-	PADDING-RIGHT: 25px! important; PADDING-LEFT: 29px! important; BACKGROUND: url(../images/module-tail.gif) repeat-x left top; PADDING-BOTTOM: 15px! important; OVERFLOW: hidden; PADDING-TOP: 20px! important
+    padding-right: 25px! important; padding-left: 29px! important; background: url(../images/module-tail.gif) repeat-x left top; padding-bottom: 15px! important; overflow: hidden; padding-top: 20px! important
 }
 .module H3 {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 11px; BACKGROUND: url(../images/module-title-tail.gif) repeat-x left top; MARGIN-BOTTOM: 2px; PADDING-BOTTOM: 11px; FONT: bold 11px/11px Tahoma, Geneva, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #606061; PADDING-TOP: 8px
+    padding-right: 0px; padding-left: 11px; background: url(../images/module-title-tail.gif) repeat-x left top; margin-bottom: 2px; padding-bottom: 11px; font: bold 11px/11px Tahoma, Geneva, Tahoma; text-transform: uppercase; color: #606061; padding-top: 8px
 }
 .module_text H3 {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 11px; BACKGROUND: url(../images/module-title-tail.gif) repeat-x left top; MARGIN-BOTTOM: 2px; PADDING-BOTTOM: 11px; FONT: bold 11px/11px Tahoma, Geneva, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #606061; PADDING-TOP: 8px
+    padding-right: 0px; padding-left: 11px; background: url(../images/module-title-tail.gif) repeat-x left top; margin-bottom: 2px; padding-bottom: 11px; font: bold 11px/11px Tahoma, Geneva, Tahoma; text-transform: uppercase; color: #606061; padding-top: 8px
 }
 .module_text DIV {
-	FONT: 12px/16px Arial, Helvetica, Tahoma; COLOR: #575757
+    font: 12px/16px Arial, Helvetica, Tahoma; color: #575757
 }
 .module_text .boxIndent {
-	PADDING-RIGHT: 25px! important; PADDING-LEFT: 29px! important; BACKGROUND: url(../images/module-tail.gif) repeat-x left top; PADDING-BOTTOM: 15px! important; OVERFLOW: hidden; PADDING-TOP: 20px! important
+    padding-right: 25px! important; padding-left: 29px! important; background: url(../images/module-tail.gif) repeat-x left top; padding-bottom: 15px! important; overflow: hidden; padding-top: 20px! important
 }
 .module-latest {
-	BACKGROUND: #fff; MARGIN: 0px; WIDTH: 100%
+    background: #fff; margin: 0px; width: 100%
 }
 .module-latest .boxIndent {
-	PADDING-RIGHT: 15px! important; PADDING-LEFT: 20px! important; PADDING-BOTTOM: 11px! important; OVERFLOW: hidden; PADDING-TOP: 10px! important
+    padding-right: 15px! important; padding-left: 20px! important; padding-bottom: 11px! important; overflow: hidden; padding-top: 10px! important
 }
 .module-latest H3 {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 21px; PADDING-BOTTOM: 11px; MARGIN: 0px; FONT: 23px/27px Tahoma, Geneva, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #f91919; PADDING-TOP: 26px
+    padding-right: 0px; padding-left: 21px; padding-bottom: 11px; margin: 0px; font: 23px/27px Tahoma, Geneva, Tahoma; text-transform: uppercase; color: #f91919; padding-top: 26px
 }
 .module_menu {
-	MARGIN-BOTTOM: 10px; PADDING-BOTTOM: 20px; WIDTH: 100%
+    margin-bottom: 10px; padding-bottom: 20px; width: 100%
 }
 .module_menu .boxIndent {
-	PADDING-RIGHT: 31px! important; PADDING-LEFT: 29px! important; BACKGROUND: url(../images/module-tail.gif) repeat-x left top; PADDING-BOTTOM: 15px! important; OVERFLOW: hidden; PADDING-TOP: 15px! important
+    padding-right: 31px! important; padding-left: 29px! important; background: url(../images/module-tail.gif) repeat-x left top; padding-bottom: 15px! important; overflow: hidden; padding-top: 15px! important
 }
 .module_menu H3 {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 11px; BACKGROUND: url(../images/module-title-tail.gif) repeat-x left top; MARGIN-BOTTOM: 2px; PADDING-BOTTOM: 11px; FONT: bold 11px/11px Tahoma, Geneva, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #606061; PADDING-TOP: 8px
+    padding-right: 0px; padding-left: 11px; background: url(../images/module-title-tail.gif) repeat-x left top; margin-bottom: 2px; padding-bottom: 11px; font: bold 11px/11px Tahoma, Geneva, Tahoma; text-transform: uppercase; color: #606061; padding-top: 8px
 }
 .module_menu UL {
-	MARGIN: 0px; LIST-STYLE-TYPE: none
+    margin: 0px; list-style-type: none
 }
 .module_menu LI {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; LINE-HEIGHT: 14px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; line-height: 14px; padding-top: 0px
 }
 .module_menu LI UL {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; padding-top: 0px
 }
 A.mainlevel {
-	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 10px; BACKGROUND: url(../images/list-marker.gif) no-repeat left 15px; PADDING-BOTTOM: 5px; FONT: 10px/10px Arial, Helvetica, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #575757; PADDING-TOP: 12px; TEXT-DECORATION: none
+    padding-right: 0px; display: block; padding-left: 10px; background: url(../images/list-marker.gif) no-repeat left 15px; padding-bottom: 5px; font: 10px/10px Arial, Helvetica, Tahoma; text-transform: uppercase; color: #575757; padding-top: 12px; text-decoration: none
 }
 A.sublevel {
-	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 10px; BACKGROUND: url(../images/list-marker.gif) no-repeat left 15px; PADDING-BOTTOM: 5px; FONT: 10px/10px Arial, Helvetica, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #575757; PADDING-TOP: 12px; TEXT-DECORATION: none
+    padding-right: 0px; display: block; padding-left: 10px; background: url(../images/list-marker.gif) no-repeat left 15px; padding-bottom: 5px; font: 10px/10px Arial, Helvetica, Tahoma; text-transform: uppercase; color: #575757; padding-top: 12px; text-decoration: none
 }
 A.mainlevel:visited {
-	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 10px; BACKGROUND: url(../images/list-marker.gif) no-repeat left 15px; PADDING-BOTTOM: 5px; FONT: 10px/10px Arial, Helvetica, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #575757; PADDING-TOP: 12px; TEXT-DECORATION: none
+    padding-right: 0px; display: block; padding-left: 10px; background: url(../images/list-marker.gif) no-repeat left 15px; padding-bottom: 5px; font: 10px/10px Arial, Helvetica, Tahoma; text-transform: uppercase; color: #575757; padding-top: 12px; text-decoration: none
 }
 A.sublevel:visited {
-	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 10px; BACKGROUND: url(../images/list-marker.gif) no-repeat left 15px; PADDING-BOTTOM: 5px; FONT: 10px/10px Arial, Helvetica, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #575757; PADDING-TOP: 12px; TEXT-DECORATION: none
+    padding-right: 0px; display: block; padding-left: 10px; background: url(../images/list-marker.gif) no-repeat left 15px; padding-bottom: 5px; font: 10px/10px Arial, Helvetica, Tahoma; text-transform: uppercase; color: #575757; padding-top: 12px; text-decoration: none
 }
 A.sublevel {
-	BACKGROUND: url(../images/list-marker.gif) no-repeat 10px 15px
+    background: url(../images/list-marker.gif) no-repeat 10px 15px
 }
 .module_menu LI {
-	DISPLAY: block; PADDING-LEFT: 10px; BACKGROUND: url(../images/list-marker3.gif) no-repeat left 15px; FONT: 10px/10px Arial, Helvetica, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #575757; TEXT-DECORATION: none
+    display: block; padding-left: 10px; background: url(../images/list-marker3.gif) no-repeat left 15px; font: 10px/10px Arial, Helvetica, Tahoma; text-transform: uppercase; color: #575757; text-decoration: none
 }
 .module_menu LI A {
-	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; BACKGROUND: url(../images/list-divider.gif) repeat-x left bottom; PADDING-BOTTOM: 5px; FONT: 10px/10px Arial, Helvetica, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #575757; PADDING-TOP: 12px; TEXT-DECORATION: none
+    padding-right: 0px; display: block; padding-left: 0px; background: url(../images/list-divider.gif) repeat-x left bottom; padding-bottom: 5px; font: 10px/10px Arial, Helvetica, Tahoma; text-transform: uppercase; color: #575757; padding-top: 12px; text-decoration: none
 }
 .module_menu LI A:visited {
-	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; BACKGROUND: url(../images/list-divider.gif) repeat-x left bottom; PADDING-BOTTOM: 5px; FONT: 10px/10px Arial, Helvetica, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #575757; PADDING-TOP: 12px; TEXT-DECORATION: none
+    padding-right: 0px; display: block; padding-left: 0px; background: url(../images/list-divider.gif) repeat-x left bottom; padding-bottom: 5px; font: 10px/10px Arial, Helvetica, Tahoma; text-transform: uppercase; color: #575757; padding-top: 12px; text-decoration: none
 }
 .module_menu LI A SPAN {
-	
+
 }
 .module_menu LI A:hover {
-	COLOR: #d9dbdd; TEXT-DECORATION: none
+    color: #d9dbdd; text-decoration: none
 }
 A.mainlevel:hover {
-	COLOR: #d9dbdd; TEXT-DECORATION: none
+    color: #d9dbdd; text-decoration: none
 }
 A.sublevel:hover {
-	COLOR: #d9dbdd; TEXT-DECORATION: none
+    color: #d9dbdd; text-decoration: none
 }
 .module_menu LI A:hover SPAN {
-	
+
 }
 .module_menu LI.active A {
-	COLOR: #d9dbdd; FONT-STYLE: normal; TEXT-DECORATION: none
+    color: #d9dbdd; font-style: normal; text-decoration: none
 }
 UL.menu-nav {
-	background-color:#CAE001; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 2px; MARGIN: 0px -1px 0px 0px; WIDTH: 900px; PADDING-TOP: 0px; LIST-STYLE-TYPE: none
+    background-color:#CAE001; padding-right: 0px; padding-left: 0px; padding-bottom: 2px; margin: 0px -1px 0px 0px; width: 900px; padding-top: 0px; list-style-type: none
 }
 UL.menu-nav LI {
-	background-color:#CAE001; FLOAT: left; WIDTH: 128px; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+    background-color:#CAE001; float: left; width: 128px; border-top-style: none; border-right-style: none; border-left-style: none; border-bottom-style: none
 }
 UL.menu-nav LI.active {
-	background-color:#CAE001; FLOAT: left; WIDTH: 151px; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+    background-color:#CAE001; float: left; width: 151px; border-top-style: none; border-right-style: none; border-left-style: none; border-bottom-style: none
 }
 UL.menu-nav LI A {
-	background-color#:CAE001; BORDER-RIGHT: #747533 1px solid; PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; PADDING-BOTTOM: 6px; MARGIN: 0px; FONT: bold 11px/12px Tahoma, Geneva, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #676768; PADDING-TOP: 17px; TEXT-ALIGN: center; TEXT-DECORATION: none
+    background-color: #CAE001; border-right: #747533 1px solid; padding-right: 0px; display: block; padding-left: 0px; padding-bottom: 6px; margin: 0px; font: bold 11px/12px Tahoma, Geneva, Tahoma; text-transform: uppercase; color: #676768; padding-top: 17px; text-align: center; text-decoration: none
 }
 UL.menu-nav LI A:visited {
-	background-color:#CAE001; BORDER-RIGHT: #747533 1px solid; PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; PADDING-BOTTOM: 6px; MARGIN: 0px; FONT: bold 11px/12px Tahoma, Geneva, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #676768; PADDING-TOP: 17px; TEXT-ALIGN: center; TEXT-DECORATION: none
+    background-color:#CAE001; border-right: #747533 1px solid; padding-right: 0px; display: block; padding-left: 0px; padding-bottom: 6px; margin: 0px; font: bold 11px/12px Tahoma, Geneva, Tahoma; text-transform: uppercase; color: #676768; padding-top: 17px; text-align: center; text-decoration: none
 }
 UL.menu-nav LI A:hover {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BACKGROUND: url(../images/menu-tail-active.gif) repeat-x left top; PADDING-BOTTOM: 9px; COLOR: #ffffff; PADDING-TOP: 15px; TEXT-DECORATION: none! important
+    padding-right: 0px; padding-left: 0px; background: url(../images/menu-tail-active.gif) repeat-x left top; padding-bottom: 9px; color: #ffffff; padding-top: 15px; text-decoration: none! important
 }
 UL.menu-nav LI.active A {
-	PADDING-RIGHT: 0px! important; PADDING-LEFT: 0px! important; BACKGROUND: url(../images/menu-tail-active.gif) repeat-x left top; PADDING-BOTTOM: 12px! important; COLOR: #ffffff! important; PADDING-TOP: 9px! important; TEXT-DECORATION: none! important
+    padding-right: 0px! important; padding-left: 0px! important; background: url(../images/menu-tail-active.gif) repeat-x left top; padding-bottom: 12px! important; color: #ffffff! important; padding-top: 9px! important; text-decoration: none! important
 }
 
 #footer UL.menu-nav {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: right; PADDING-BOTTOM: 0px; OVERFLOW: hidden; WIDTH: 550px; PADDING-TOP: 18px; TEXT-ALIGN: right
+    padding-right: 0px; padding-left: 0px; float: right; padding-bottom: 0px; overflow: hidden; width: 550px; padding-top: 18px; text-align: right
 }
 #footer UL.menu-nav LI {
-	BORDER-RIGHT: #575757 1px solid; PADDING-RIGHT: 11px; DISPLAY: inline; PADDING-LEFT: 11px; FLOAT: none; PADDING-BOTTOM: 0px; MARGIN: 0px -1px 0px 0px; PADDING-TOP: 0px
+    border-right: #575757 1px solid; padding-right: 11px; display: inline; padding-left: 11px; float: none; padding-bottom: 0px; margin: 0px -1px 0px 0px; padding-top: 0px
 }
 #footer UL.menu-nav LI A {
-	PADDING-RIGHT: 5px; DISPLAY: inline; PADDING-LEFT: 6px; FONT-WEIGHT: normal; BACKGROUND: none transparent scroll repeat 0% 0%; PADDING-BOTTOM: 0px; MARGIN: 0px; TEXT-TRANSFORM: none; COLOR: #575757! important; BORDER-TOP-STYLE: none; PADDING-TOP: 0px; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+    padding-right: 5px; display: inline; padding-left: 6px; font-weight: normal; background: none transparent scroll repeat 0% 0%; padding-bottom: 0px; margin: 0px; text-transform: none; color: #575757! important; border-top-style: none; padding-top: 0px; border-right-style: none; border-left-style: none; border-bottom-style: none
 }
 #footer UL.menu-nav LI A:visited {
-	PADDING-RIGHT: 5px; DISPLAY: inline; PADDING-LEFT: 6px; FONT-WEIGHT: normal; BACKGROUND: none transparent scroll repeat 0% 0%; PADDING-BOTTOM: 0px; MARGIN: 0px; TEXT-TRANSFORM: none; COLOR: #575757! important; BORDER-TOP-STYLE: none; PADDING-TOP: 0px; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+    padding-right: 5px; display: inline; padding-left: 6px; font-weight: normal; background: none transparent scroll repeat 0% 0%; padding-bottom: 0px; margin: 0px; text-transform: none; color: #575757! important; border-top-style: none; padding-top: 0px; border-right-style: none; border-left-style: none; border-bottom-style: none
 }
 #footer UL.menu-nav LI A:hover {
-	BACKGROUND: none transparent scroll repeat 0% 0%; COLOR: #fff! important
+    background: none transparent scroll repeat 0% 0%; color: #fff! important
 }
 #footer UL.menu-nav .active A SPAN {
-	BACKGROUND: none transparent scroll repeat 0% 0%; COLOR: #fff! important
+    background: none transparent scroll repeat 0% 0%; color: #fff! important
 }
 
 .module-login {
-	MARGIN-BOTTOM: 15px
+    margin-bottom: 15px
 }
 .module-login .moduleTopBg {
-	WIDTH: 100%
+    width: 100%
 }
 .module-login .sec {
-	WIDTH: 100%
+    width: 100%
 }
 .module-login .boxIndent {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 28px; PADDING-BOTTOM: 16px; PADDING-TOP: 10px
+    padding-right: 0px; padding-left: 28px; padding-bottom: 16px; padding-top: 10px
 }
 .module-login H3 {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 18px; PADDING-BOTTOM: 0px; FONT: 18px/18px Arial, Helvetica, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #45121d; PADDING-TOP: 14px
+    padding-right: 0px; padding-left: 18px; padding-bottom: 0px; font: 18px/18px Arial, Helvetica, Tahoma; text-transform: uppercase; color: #45121d; padding-top: 14px
 }
 #form-login {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 15px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 15px; padding-bottom: 0px; padding-top: 0px
 }
 #form-login-remember {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 18px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; padding-top: 18px
 }
 #form-login-remember A {
-	FONT-SIZE: 10px; TEXT-TRANSFORM: uppercase; COLOR: #fff
+    font-size: 10px; text-transform: uppercase; color: #fff
 }
 #form-login-remember STRONG {
-	FONT-SIZE: 10px; COLOR: #575757
+    font-size: 10px; color: #575757
 }
 .module-login LABEL {
-	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; FONT-WEIGHT: normal; FONT-SIZE: 12px; PADDING-BOTTOM: 6px; WIDTH: 100%; COLOR: #fff; LINE-HEIGHT: 12px; PADDING-TOP: 0px
+    padding-right: 0px; display: block; padding-left: 0px; font-weight: normal; font-size: 12px; padding-bottom: 6px; width: 100%; color: #fff; line-height: 12px; padding-top: 0px
 }
 LABEL.remember {
-	DISPLAY: inline; FONT-SIZE: 10px! important; TEXT-TRANSFORM: uppercase; COLOR: #575757! important; TEXT-DECORATION: underline
+    display: inline; font-size: 10px! important; text-transform: uppercase; color: #575757! important; text-decoration: underline
 }
 .module-login P {
-	FONT-SIZE: 12px; COLOR: #6b6b6b
+    font-size: 12px; color: #6b6b6b
 }
 .module-login DIV {
-	FONT-SIZE: 12px; COLOR: #6b6b6b
+    font-size: 12px; color: #6b6b6b
 }
 LABEL.remember {
-	FONT-SIZE: 12px; COLOR: #6b6b6b
+    font-size: 12px; color: #6b6b6b
 }
 #mod_login_username {
-	BORDER-RIGHT: #3b3b3b 1px solid; PADDING-RIGHT: 0px; BORDER-TOP: #3b3b3b 1px solid; PADDING-LEFT: 0px; BACKGROUND: #1b1c1d; PADDING-BOTTOM: 2px; MARGIN: 0px 0px 10px; TEXT-TRANSFORM: none; BORDER-LEFT: #3b3b3b 1px solid; WIDTH: 149px; COLOR: #fff; PADDING-TOP: 1px; BORDER-BOTTOM: #3b3b3b 1px solid
+    border-right: #3b3b3b 1px solid; padding-right: 0px; border-top: #3b3b3b 1px solid; padding-left: 0px; background: #1b1c1d; padding-bottom: 2px; margin: 0px 0px 10px; text-transform: none; border-left: #3b3b3b 1px solid; width: 149px; color: #fff; padding-top: 1px; border-bottom: #3b3b3b 1px solid
 }
 #mod_login_password {
-	BORDER-RIGHT: #3b3b3b 1px solid; PADDING-RIGHT: 0px; BORDER-TOP: #3b3b3b 1px solid; PADDING-LEFT: 0px; BACKGROUND: #1b1c1d; PADDING-BOTTOM: 2px; MARGIN: 0px 0px 10px; TEXT-TRANSFORM: none; BORDER-LEFT: #3b3b3b 1px solid; WIDTH: 149px; COLOR: #fff; PADDING-TOP: 1px; BORDER-BOTTOM: #3b3b3b 1px solid
+    border-right: #3b3b3b 1px solid; padding-right: 0px; border-top: #3b3b3b 1px solid; padding-left: 0px; background: #1b1c1d; padding-bottom: 2px; margin: 0px 0px 10px; text-transform: none; border-left: #3b3b3b 1px solid; width: 149px; color: #fff; padding-top: 1px; border-bottom: #3b3b3b 1px solid
 }
 .module-login A {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; FONT: 11px/12px Arial, Helvetica, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #da1544; PADDING-TOP: 0px; TEXT-DECORATION: underline
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; font: 11px/12px Arial, Helvetica, Tahoma; text-transform: uppercase; color: #da1544; padding-top: 0px; text-decoration: underline
 }
 .module-login A:hover {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; FONT: 11px/12px Arial, Helvetica, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #da1544; PADDING-TOP: 0px; TEXT-DECORATION: underline
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; font: 11px/12px Arial, Helvetica, Tahoma; text-transform: uppercase; color: #da1544; padding-top: 0px; text-decoration: underline
 }
 .module-login A:visited {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; FONT: 11px/12px Arial, Helvetica, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #da1544; PADDING-TOP: 0px; TEXT-DECORATION: underline
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; font: 11px/12px Arial, Helvetica, Tahoma; text-transform: uppercase; color: #da1544; padding-top: 0px; text-decoration: underline
 }
 .module-login A.reg {
-	COLOR: #ffea00
+    color: #ffea00
 }
 .module-login A:hover {
-	TEXT-DECORATION: none
+    text-decoration: none
 }
 .module-login .inputbox {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 2px; PADDING-BOTTOM: 3px; MARGIN: 2px 0px; FONT: 11px Arial, Helvetica, Tahoma; VERTICAL-ALIGN: top; TEXT-TRANSFORM: uppercase; WIDTH: 207px; COLOR: #a09b96; BORDER-TOP-STYLE: none; PADDING-TOP: 3px; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+    padding-right: 0px; padding-left: 2px; padding-bottom: 3px; margin: 2px 0px; font: 11px Arial, Helvetica, Tahoma; vertical-align: top; text-transform: uppercase; width: 207px; color: #a09b96; border-top-style: none; padding-top: 3px; border-right-style: none; border-left-style: none; border-bottom-style: none
 }
 #modlgn_username {
-	FLOAT: left
+    float: left
 }
 #modlgn_passwd {
-	FLOAT: left
+    float: left
 }
 .module .username {
-	FONT: 11px/12px Arial, Helvetica, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #fff! important
+    font: 11px/12px Arial, Helvetica, Tahoma; text-transform: uppercase; color: #fff! important
 }
 .module .password {
-	FONT: 11px/12px Arial, Helvetica, Tahoma; TEXT-TRANSFORM: uppercase; COLOR: #fff! important
+    font: 11px/12px Arial, Helvetica, Tahoma; text-transform: uppercase; color: #fff! important
 }
 .module .button-login {
-	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; BACKGROUND: url(../images/login-button.gif) repeat-x 0px 0px; PADDING-BOTTOM: 4px; MARGIN: 0px; FONT: bold 11px/14px Arial, Helvetica, Tahoma; WIDTH: 42px; COLOR: #fff; BORDER-TOP-STYLE: none; PADDING-TOP: 3px; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; TEXT-ALIGN: center; BORDER-BOTTOM-STYLE: none
+    padding-right: 0px; display: block; padding-left: 0px; background: url(../images/login-button.gif) repeat-x 0px 0px; padding-bottom: 4px; margin: 0px; font: bold 11px/14px Arial, Helvetica, Tahoma; width: 42px; color: #fff; border-top-style: none; padding-top: 3px; border-right-style: none; border-left-style: none; text-align: center; border-bottom-style: none
 }
 .remember {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 4px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; padding-top: 4px
 }
 INPUT.checkbox {
-	DISPLAY: block; FLOAT: left; MARGIN: 0px 5px 0px 0px; VERTICAL-ALIGN: middle; WIDTH: 12px; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; HEIGHT: 12px; BORDER-BOTTOM-STYLE: none
+    display: block; float: left; margin: 0px 5px 0px 0px; vertical-align: middle; width: 12px; border-top-style: none; border-right-style: none; border-left-style: none; height: 12px; border-bottom-style: none
 }
 .username {
-	MARGIN: 0px 5px 0px 0px
+    margin: 0px 5px 0px 0px
 }
 .password {
-	MARGIN: 0px 16px 0px 0px
+    margin: 0px 16px 0px 0px
 }
 #inputs {
-	FLOAT: left; WIDTH: 190px
+    float: left; width: 190px
 }
 #left LABEL {
-	COLOR: #575757
+    color: #575757
 }
 #body {
-	BACKGROUND: #333333
+    background: #333333
 }
 .main {
-	OVERFLOW: hidden; WIDTH: 905px
+    overflow: hidden; width: 905px
 }
 #header {
-	BACKGROUND: url(../images/header-bg.gif) repeat-x 0px 0px; HEIGHT: 179px
+    background: url(../images/header-bg.gif) repeat-x 0px 0px; height: 179px
 }
 #top {
-	OVERFLOW: hidden; WIDTH: 100%; HEIGHT: 108px
+    overflow: hidden; width: 100%; height: 108px
 }
 #logo {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: left; PADDING-BOTTOM: 30px; PADDING-TOP: 50px
+    padding-right: 0px; padding-left: 0px; float: left; padding-bottom: 30px; padding-top: 50px
 }
 #bot {
-	BACKGROUND: url(../images/header-tail2.gif) repeat-x 50% top; OVERFLOW: hidden; WIDTH: 100%; HEIGHT: 50px
+    background: url(../images/header-tail2.gif) repeat-x 50% top; overflow: hidden; width: 100%; height: 50px
 }
 #martInfo {
-	PADDING-RIGHT: 13px; PADDING-LEFT: 0px; FLOAT: right; PADDING-BOTTOM: 0px; WIDTH: 230px; PADDING-TOP: 26px
+    padding-right: 13px; padding-left: 0px; float: right; padding-bottom: 0px; width: 230px; padding-top: 26px
 }
 #martInfo2 {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: right; PADDING-BOTTOM: 0px; WIDTH: 197px; PADDING-TOP: 37px; TEXT-ALIGN: left
+    padding-right: 0px; padding-left: 0px; float: right; padding-bottom: 0px; width: 197px; padding-top: 37px; text-align: left
 }
 * HTML #martInfo2 {
-	WIDTH: 202px
+    width: 202px
 }
 * + HTML #martInfo2 {
-	WIDTH: 202px
+    width: 202px
 }
 #search {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: right; PADDING-BOTTOM: 0px; WIDTH: 228px; PADDING-TOP: 10px; TEXT-ALIGN: right
+    padding-right: 0px; padding-left: 0px; float: right; padding-bottom: 0px; width: 228px; padding-top: 10px; text-align: right
 }
 #martInfo2 INPUT {
-	DISPLAY: inline; FONT-SIZE: 11px; VERTICAL-ALIGN: middle
+    display: inline; font-size: 11px; vertical-align: middle
 }
 #martInfo2 SELECT {
-	DISPLAY: inline; FONT-SIZE: 11px; VERTICAL-ALIGN: middle
+    display: inline; font-size: 11px; vertical-align: middle
 }
 #martInfo2 H3 {
-	DISPLAY: inline; FONT-SIZE: 11px; VERTICAL-ALIGN: middle
+    display: inline; font-size: 11px; vertical-align: middle
 }
 #martInfo2 FORM {
-	DISPLAY: inline; FONT-SIZE: 11px; VERTICAL-ALIGN: middle
+    display: inline; font-size: 11px; vertical-align: middle
 }
 #martInfo2 H3 {
-	FONT-WEIGHT: normal; FONT-SIZE: 11px; COLOR: #d9dbdd
+    font-weight: normal; font-size: 11px; color: #d9dbdd
 }
 #martInfo2 .button {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: bold; FONT-SIZE: 11px; BACKGROUND: url(../images/login-button.gif) repeat-x left top; PADDING-BOTTOM: 2px; WIDTH: 54px; COLOR: #fff; PADDING-TOP: 2px; FONT-FAMILY: Tahoma, Geneva, Tahoma; TEXT-ALIGN: center
+    padding-right: 0px; padding-left: 0px; font-weight: bold; font-size: 11px; background: url(../images/login-button.gif) repeat-x left top; padding-bottom: 2px; width: 54px; color: #fff; padding-top: 2px; font-family: Tahoma, Geneva, Tahoma; text-align: center
 }
 #martInfo2 SELECT {
-	BACKGROUND: #1b1c1d; WIDTH: 81px; COLOR: #616161; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+    background: #1b1c1d; width: 81px; color: #616161; border-top-style: none; border-right-style: none; border-left-style: none; border-bottom-style: none
 }
 #martInfo .vmCartModule {
-	FLOAT: left; COLOR: #575757! important
+    float: left; color: #575757! important
 }
 #martInfo .vmCartModule A {
-	COLOR: #575757
+    color: #575757
 }
 #topmenu {
-	BACKGROUND: OVERFLOW: hidden; WIDTH: 100%; HEIGHT: 40px
+    overflow: hidden; width: 100%; height: 40px
 }
 #header #banner {
-	BACKGROUND: HEIGHT: 352px
+    height: 352px
 }
 #header #banner P {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 93px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; padding-top: 93px
 }
 #banners {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 26px; OVERFLOW: hidden; WIDTH: 100%; PADDING-TOP: 16px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 26px; overflow: hidden; width: 100%; padding-top: 16px
 }
 #banners P {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; padding-top: 0px
 }
 #banners IMG {
-	MARGIN: 0px 24px 0px 0px
+    margin: 0px 24px 0px 0px
 }
 .bannergroup {
-	BORDER-BOTTOM: #000 2px solid
+    border-bottom: #000 2px solid
 }
 #left .bannergroup {
-	BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+    border-top-style: none; border-right-style: none; border-left-style: none; border-bottom-style: none
 }
 .banneritem {
-	BORDER-RIGHT: #272729 5px solid; BORDER-TOP: #272729 1px solid; BORDER-LEFT: #272729 1px solid; BORDER-BOTTOM: #272729 1px solid
+    border-right: #272729 5px solid; border-top: #272729 1px solid; border-left: #272729 1px solid; border-bottom: #272729 1px solid
 }
 #left .banneritem {
-	BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+    border-top-style: none; border-right-style: none; border-left-style: none; border-bottom-style: none
 }
 #wrapper {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 7px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 7px; padding-top: 0px
 }
 #wrapper .width {
-	OVERFLOW: hidden
+    overflow: hidden
 }
 #left {
-	FLOAT: left; WIDTH: 207px; MARGIN-RIGHT: 2px
+    float: left; width: 207px; margin-right: 2px
 }
 * HTML #left {
-	MARGIN-RIGHT: -1px
+    margin-right: -1px
 }
 #left .space {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; padding-top: 0px
 }
 .container {
-	BACKGROUND: #fff; OVERFLOW: hidden; HEIGHT: 1%
+    background: #fff; overflow: hidden; height: 1%
 }
 #right {
-	FLOAT: right; BORDER-LEFT: #000 3px solid; WIDTH: 239px
+    float: right; border-left: #000 3px solid; width: 239px
 }
 * HTML #right {
-	MARGIN-LEFT: -3px
+    margin-left: -3px
 }
 #right .space {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; padding-top: 0px
 }
 #footer {
-	BACKGROUND: url(../images/footer-tail.gif) repeat-x 0px 0px; HEIGHT: 109px
+    background: url(../images/footer-tail.gif) repeat-x 0px 0px; height: 109px
 }
 #footer .space {
-	PADDING-RIGHT: 20px; PADDING-LEFT: 30px; FONT-SIZE: 11px; PADDING-BOTTOM: 35px; COLOR: #575757; LINE-HEIGHT: 18px; PADDING-TOP: 5px
+    padding-right: 20px; padding-left: 30px; font-size: 11px; padding-bottom: 35px; color: #575757; line-height: 18px; padding-top: 5px
 }
 #footer .space .footer-text SPAN {
-	COLOR: #fff
+    color: #fff
 }
 #footer .space .footer-text {
-	FONT-SIZE: 11px; WIDTH: 200px; COLOR: #575757; LINE-HEIGHT: 18px
+    font-size: 11px; width: 200px; color: #575757; line-height: 18px
 }
 #martInfo .button {
-	WIDTH: 52px
+    width: 52px
 }
 #martInfo H3 {
-	PADDING-RIGHT: 3px; DISPLAY: block; FLOAT: left; FONT: 11px Tahoma, Geneva, Tahoma; TEXT-TRANSFORM: uppercase; WIDTH: 85px; COLOR: #fff
+    padding-right: 3px; display: block; float: left; font: 11px Tahoma, Geneva, Tahoma; text-transform: uppercase; width: 85px; color: #fff
 }
 #martInfo .moduletable {
-	TEXT-ALIGN: right
+    text-align: right
 }
 .null {
-	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+    padding-right: 0px; padding-left: 0px; padding-bottom: 0px; margin: 0px; padding-top: 0px
 }
 .clr {
-	FONT-SIZE: 0px; LINE-HEIGHT: 0px
+    font-size: 0px; line-height: 0px
 }
 .right {
-	FLOAT: right! important
+    float: right! important
 }
 .container-indent {
-	PADDING-RIGHT: 20px; PADDING-LEFT: 20px; PADDING-BOTTOM: 20px; PADDING-TOP: 10px
+    padding-right: 20px; padding-left: 20px; padding-bottom: 20px; padding-top: 10px
 }

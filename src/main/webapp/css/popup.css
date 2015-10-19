@@ -38,9 +38,9 @@ img.btn_close {
 	margin: 5px 0;
 }
 /*--Making IE6 Understand Fixed Positioning--*/
-*html #fade {
+* html #fade {
 	position: absolute;
 }
-*html .popup_block {
+* html .popup_block {
 	position: absolute;
 }
