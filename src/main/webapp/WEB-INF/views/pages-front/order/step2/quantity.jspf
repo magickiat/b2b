@@ -1,0 +1,11 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page session="true"%>
+
+<div class="col-sm-12">&nbsp;</div>
+<div class="col-sm-6">Quantity</div>
+
+<div class="col-sm-6">
+	<input type="text" id="quantity" name="quantity" class="form-control"
+		value="0" />
+</div>
+<div class="col-sm-12">&nbsp;</div>

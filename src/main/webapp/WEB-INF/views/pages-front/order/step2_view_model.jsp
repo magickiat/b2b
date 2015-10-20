@@ -42,6 +42,12 @@
 
 				<%-- Withnose board --%>
 				<div class="row product-img-big-view"><%@include file="step2/withnose_board.jspf"%></div>
+				
+				<%-- Quantity --%>
+				<div class="row product-img-big-view"><%@include file="step2/quantity.jspf"%></div>
+				
+				<%-- Button --%>
+				<div class="row product-img-big-view"><%@include file="step2/button.jspf"%></div>
 			</div>
 		</div>
 

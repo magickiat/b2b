@@ -85,6 +85,9 @@ public class FrontOrderController {
 		log.info("step2_search GET");
 		log.info("Brand id: " + brandId);
 
+		// Show shopping cart
+		model.addAttribute("showShoppingCart", "true");
+
 		// set search condition
 		SearchProductForm form = new SearchProductForm();
 		form.setShowType("image");
@@ -103,6 +106,9 @@ public class FrontOrderController {
 	@RequestMapping(value = "step2/search-action", method = RequestMethod.GET)
 	String step2SearchAction(@ModelAttribute SearchProductForm form, Model model) {
 		log.info("search condition: " + form.toString());
+
+		// Show shopping cart
+		model.addAttribute("showShoppingCart", "true");
 
 		setSearchCondition(form, model);
 		Page<SearchProductModelDTO> resultPage = productService.searchProduct(form);
@@ -151,14 +157,14 @@ public class FrontOrderController {
 					.groupProductByTechnology(productListNoWithnose);
 			HashMap<String, List<ProductSearchResult>> withnoseTech = productService
 					.groupProductByTechnology(productListWithnose);
-			
+
 			ArrayList<HashMap<String, List<ProductSearchResult>>> allTech = new ArrayList<>();
 			allTech.add(noWithnoseTech);
 			allTech.add(withnoseTech);
 			model.addAttribute("allTech", allTech);
-			
-//			model.addAttribute("noWithnoseTech", noWithnoseTech);
-//			model.addAttribute("withnoseTech", withnoseTech);
+
+			// model.addAttribute("noWithnoseTech", noWithnoseTech);
+			// model.addAttribute("withnoseTech", withnoseTech);
 
 			// model.addAttribute("productImagesList", productImagesList);
 			// model.addAttribute("checkWithNose",

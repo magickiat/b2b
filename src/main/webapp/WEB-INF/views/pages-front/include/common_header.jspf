@@ -4,7 +4,8 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@page session="true"%>
 
-<jsp:useBean id="stringUtil" class="com.starboard.b2b.util.StringUtil" scope="request"></jsp:useBean>
+<jsp:useBean id="stringUtil" class="com.starboard.b2b.util.StringUtil"
+	scope="request"></jsp:useBean>
 
 <div class="row">
 	<nav class="navbar">
@@ -30,10 +31,27 @@
 			</sec:authorize>
 		</ul>
 	</nav>
-	<sec:authorize access="isAuthenticated()">
-		<sec:authentication var="user" property="principal" />
-		<div class="well">
-			<strong>Welcome: ${user.name}</strong>
-		</div>
-	</sec:authorize>
 </div>
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication var="user" property="principal" />
+
+	<div class="row well">
+		<div class="col-sm-1">
+			<p class="text-right">
+				<strong>Welcome:</strong>
+			</p>
+		</div>
+
+		<div class="col-sm-8">
+			<p class="text-left">
+				<strong>${user.name}</strong>
+			</p>
+		</div>
+		<div class="col-sm-3">
+			<c:if test="${ not empty showShoppingCart }">
+				<img alt=""
+					src='<c:url value="/images/pages-front/icon/ico_cart.png" />' />
+			</c:if>
+		</div>
+	</div>
+</sec:authorize>
