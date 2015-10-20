@@ -2,7 +2,7 @@
 <%@page session="true"%>
 
 <div class="col-sm-6">
-	<input type="button" class="btn btn-primary" value="PREVIOUS" />
+	<input type="button" id="btn-previous" class="btn btn-primary" value="PREVIOUS" />
 </div>
 
 <div class="col-sm-6">

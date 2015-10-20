@@ -68,6 +68,12 @@
 			$('.zoomImg').elevateZoom({
 				scrollZoom : true
 			});
+			
+			$('#btn-previous').click(
+				function(){
+					window.history.back();
+				}		
+			);
 
 			showLogCurrentProduct();
 		});
@@ -142,9 +148,8 @@
 
 		function addToCart() {
 			console.log('begin animate');
-			$('.zoomImg').animate({
-				left : 0
-			}, 'slow');
+			//TODO add animation to shopping cart
+			//TODO save product code to shopping cart with quantity 
 		}
 
 		function clearzoom() {
