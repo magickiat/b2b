@@ -6,7 +6,7 @@
 </div>
 
 <div class="col-sm-6">
-	<input type="button" class="btn btn-success" value="ADD TO CART" />
+	<input type="button" class="btn btn-success" value="ADD TO CART" onclick="addToCart()" />
 </div>
 <div class="col-sm-12">&nbsp;</div>
 <div class="col-sm-6">&nbsp;</div>

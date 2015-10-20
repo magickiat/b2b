@@ -35,19 +35,24 @@
 			</div>
 			<div class="col-sm-4">
 				<%-- Technology --%>
-				<div class="row product-img-big-view"><%@include file="step2/technology.jspf"%></div>
+				<div class="row product-img-big-view"><%@include
+						file="step2/technology.jspf"%></div>
 
 				<%-- SIZE (Product length) --%>
-				<div class="row product-img-big-view"><%@include file="step2/size.jspf"%></div>
+				<div class="row product-img-big-view"><%@include
+						file="step2/size.jspf"%></div>
 
 				<%-- Withnose board --%>
-				<div class="row product-img-big-view"><%@include file="step2/withnose_board.jspf"%></div>
-				
+				<div class="row product-img-big-view"><%@include
+						file="step2/withnose_board.jspf"%></div>
+
 				<%-- Quantity --%>
-				<div class="row product-img-big-view"><%@include file="step2/quantity.jspf"%></div>
-				
+				<div class="row product-img-big-view"><%@include
+						file="step2/quantity.jspf"%></div>
+
 				<%-- Button --%>
-				<div class="row product-img-big-view"><%@include file="step2/button.jspf"%></div>
+				<div class="row product-img-big-view"><%@include
+						file="step2/button.jspf"%></div>
 			</div>
 		</div>
 
@@ -60,7 +65,7 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('#zoomImg').elevateZoom({
+			$('.zoomImg').elevateZoom({
 				scrollZoom : true
 			});
 
@@ -92,6 +97,7 @@
 				scrollZoom : true
 			});
 
+			clearzoom();
 			showLogCurrentProduct();
 		}
 
@@ -100,10 +106,6 @@
 
 			$('.withnose0-tech').hide();
 			$('.withnose1-tech').hide();
-
-			//Clear zoom
-			$(".zoomContainer").remove();
-			$(".zoomLens").remove();
 		}
 
 		function changeCurrentSize(productId, currentButton) {
@@ -124,6 +126,7 @@
 			var showItemKey = itemKey + '-' + productId;
 			$('.' + showItemKey).show();
 
+			clearzoom();
 			showLogCurrentProduct();
 		}
 
@@ -135,6 +138,22 @@
 		function showLogCurrentProduct() {
 			console.log(' [currentProduct = ' + $('#currentProduct').val()
 					+ ']\t[currentTechId = ' + $('#currentTechId').val() + ']');
+		}
+
+		function addToCart() {
+			console.log('begin animate');
+			$('.zoomImg').animate({
+				left : 0
+			}, 'slow');
+		}
+
+		function clearzoom() {
+			$(".zoomContainer").remove();
+			$(".zoomLens").remove();
+
+			$('.zoomImg').elevateZoom({
+				scrollZoom : true
+			});
 		}
 	</script>
 </body>
