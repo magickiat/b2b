@@ -11,19 +11,19 @@ import com.starboard.b2b.service.ConfigService;
 @Component
 public class ApplicationConfig {
 
-	@Autowired
-	private ConfigService configService;
+    @Autowired
+    private ConfigService configService;
 
-	WeakHashMap<String, Object> cache = new WeakHashMap<>();
+    WeakHashMap<String, Object> cache = new WeakHashMap<>();
 
-	public int getPageSize() {
-		Integer size = (Integer) cache.get(B2BConstant.KEY_PAGE_SIZE);
-		if (size == null) {
-			size = configService.getInt(B2BConstant.KEY_PAGE_SIZE);
-			if (size == null || size == 0) {
-				size = 20; // default size
-			}
-		}
-		return size;
-	}
+    public int getPageSize() {
+        Integer size = (Integer) cache.get(B2BConstant.KEY_PAGE_SIZE);
+        if (size == null) {
+            size = configService.getInt(B2BConstant.KEY_PAGE_SIZE);
+            if (size == null || size == 0) {
+                size = 20; // default size
+            }
+        }
+        return size;
+    }
 }

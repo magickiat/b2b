@@ -9,19 +9,20 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import com.starboard.b2b.model.User;
 
 public class UserUtil {
-	private static final Logger log = LoggerFactory.getLogger(UserUtil.class);
-	
-	public static User getCurrentUser() {
-		return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	}
-	
-	public static String getCurrentUsername(){
-		Authentication user = SecurityContextHolder.getContext().getAuthentication();
-		if(user instanceof AnonymousAuthenticationToken){
-			return "";
-		}else{
-			return ((User) user.getPrincipal()).getUsername();
-		}
-	}
-	
+
+    private static final Logger log = LoggerFactory.getLogger(UserUtil.class);
+
+    public static User getCurrentUser() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
+    public static String getCurrentUsername() {
+        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+        if (user instanceof AnonymousAuthenticationToken) {
+            return "";
+        } else {
+            return ((User) user.getPrincipal()).getUsername();
+        }
+    }
+
 }

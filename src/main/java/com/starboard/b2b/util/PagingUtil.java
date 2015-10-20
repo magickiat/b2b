@@ -10,14 +10,14 @@ import com.starboard.b2b.service.ConfigService;
 @Component
 public class PagingUtil {
 
-	@Autowired
-	private ConfigService configService;
+    @Autowired
+    private ConfigService configService;
 
-	public Pagination getDefault() {
-		Integer size = configService.getInt(B2BConstant.KEY_PAGE_SIZE);
-		if (size == null || size.intValue() <= 0) {
-			size = 25;
-		}
-		return new Pagination(0, size, 0);
-	}
+    public Pagination getDefault() {
+        Integer size = configService.getInt(B2BConstant.KEY_PAGE_SIZE);
+        if (size == null || size <= 0) {
+            size = 25;
+        }
+        return new Pagination(0, size, 0);
+    }
 }
