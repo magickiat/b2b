@@ -122,6 +122,9 @@ public class FrontOrderController {
 		log.info("GET step2/view");
 		log.info("modelId = " + modelId);
 
+		// Show shopping cart
+		model.addAttribute("showShoppingCart", "true");
+
 		model.addAttribute("modelId", modelId);
 
 		if (StringUtils.isEmpty(modelId)) {
