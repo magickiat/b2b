@@ -21,7 +21,7 @@
 	<c:forEach var="rowAllTech" items="${ allTech }"
 		varStatus="rowNumAllTech">
 		<div class="withnose${ rowNumAllTech.index }"
-			<c:if test="${ rowNumTech.index  > 0}">style="display:none;"</c:if>>
+			<c:if test="${ rowNumAllTech.index  > 0}">style="display:none;"</c:if>>
 			<c:forEach var="rowTech" items="${ rowAllTech }"
 				varStatus="rowNumTech">
 				<div
@@ -31,6 +31,8 @@
 						varStatus="rowNumProduct">
 						<div class="product-price"
 							<c:if test="${ rowNumProduct.index  > 0}">style="display:none;"</c:if>>
+
+							<%-- PRICE --%>
 							<div class="col-sm-3">
 								<h4>PRICE:</h4>
 							</div>
@@ -40,11 +42,17 @@
 										<h4>TBA</h4>
 									</c:when>
 									<c:otherwise>
+										<%-- 										<fmt:formatNumber pattern="#,###.00" maxFractionDigits="2" --%>
+										<%-- 											maxIntegerDigits="12" value="${ p.price.amount }" --%>
+										<%-- 											minFractionDigits="2" minIntegerDigits="1"> --%>
 
+										<%-- 										</fmt:formatNumber> --%>
+										<%-- 										${ p.product.productCurrency } --%>
 									</c:otherwise>
 								</c:choose>
 							</div>
 
+							<%-- MSRP --%>
 							<div class="col-sm-3" style="color: #6e1a1a;">
 								<h4>MSRP:</h4>
 							</div>
@@ -54,7 +62,12 @@
 										<h4>TBA</h4>
 									</c:when>
 									<c:otherwise>
+										<%-- 										<fmt:formatNumber pattern="#,###.00" maxFractionDigits="2" --%>
+										<%-- 											maxIntegerDigits="12" value="${ p.price.amount }" --%>
+										<%-- 											minFractionDigits="2" minIntegerDigits="1"> --%>
 
+										<%-- 										</fmt:formatNumber> --%>
+										<%-- 										${ p.product.productCurrency } --%>
 									</c:otherwise>
 								</c:choose>
 							</div>

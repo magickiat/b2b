@@ -8,7 +8,7 @@
 
 	<c:otherwise>
 
-		<table>
+		<table class="table-image">
 			<c:forEach items="${ resultPage.result }" var="product"
 				varStatus="rowNum">
 

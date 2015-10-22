@@ -5,7 +5,7 @@
 <c:forEach var="rowAllTech" items="${ allTech }"
 	varStatus="rowNumAllTech">
 	<div class="withnose${ rowNumAllTech.index }"
-		<c:if test="${ rowNumTech.index  > 0}">style="display:none;"</c:if>>
+		<c:if test="${ rowNumAllTech.index  > 0}">style="display:none;"</c:if>>
 		<c:forEach var="rowTech" items="${ rowAllTech }"
 			varStatus="rowNumTech">
 			<div
@@ -20,6 +20,16 @@
 							value="${p.product.productId }" />
 					</c:if>
 
+					<c:if test="${rowNumProduct.index == 0 }">
+						<input type="hidden"
+							id="firstSearchProduct-withnose${ rowNumAllTech.index }"
+							value="${p.product.productId }" />
+
+						<input type="hidden"
+							id="firstSearchTech-withnose${ rowNumAllTech.index }"
+							value="${stringUtil.removeSpecialChar(rowTech.key)}" />
+					</c:if>
+
 					<div
 						class="withnose${ rowNumAllTech.index }-${stringUtil.removeSpecialChar(rowTech.key)}-item withnose${ rowNumAllTech.index }-${stringUtil.removeSpecialChar(rowTech.key)}-item-${ stringUtil.removeSpecialChar(p.product.productId)}"
 						<c:if test="${ rowNumProduct.index  > 0}">style="display:none;"</c:if>>
@@ -31,8 +41,7 @@
 						<c:if test="${ not empty p.product.productPictureBig }">
 							<c:set var="imageUrl" value="${ p.product.productPictureBig }" />
 						</c:if>
-						<img class="product zoomImg"
-							src='<c:url value="${ imageUrl }" />'
+						<img class="product zoomImg" src='<c:url value="${ imageUrl }" />'
 							data-zoom-image='<c:url value="${ imageUrl }" />'
 							style="width: 475px;"></img>
 					</div>

@@ -8,6 +8,16 @@ public class ProductBuyerGroupDTO {
 	private String description;
 	private int seq;
 
+	public ProductBuyerGroupDTO() {
+	}
+
+	public ProductBuyerGroupDTO(String productBuyerGroupId, String productBuyerGroupName, String description, int seq) {
+		this.productBuyerGroupId = productBuyerGroupId;
+		this.productBuyerGroupName = productBuyerGroupName;
+		this.description = description;
+		this.seq = seq;
+	}
+
 	public String getProductBuyerGroupId() {
 		return productBuyerGroupId;
 	}

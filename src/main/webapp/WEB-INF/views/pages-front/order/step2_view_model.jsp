@@ -65,17 +65,41 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
+
+			showLogCurrentProduct();
+
 			$('.zoomImg').elevateZoom({
 				scrollZoom : true
 			});
-			
-			$('#btn-previous').click(
-				function(){
-					window.history.back();
-				}		
-			);
 
-			showLogCurrentProduct();
+			$('#btn-previous').click(function() {
+				window.history.back();
+			});
+
+			$('input[type=radio][name=withnose]').change(function() {
+				console.log('withnose = ' + this.value);
+
+				if (this.value == 0) {
+					$('.withnose0').show();
+					$('.withnose1').hide();
+				} else if (this.value == 1) {
+					$('.withnose0').hide();
+					$('.withnose1').show();
+				} else {
+					console.log('not support this value: ' + this.value);
+				}
+
+				// Reset to first product
+				$('#withnoseFlag').val(this.value);
+
+				var product = $('#firstSearchProduct-withnose' + this.value).val();
+				var techId = $('#currentTechId').val();
+				/* var firstTech = $('#firstSearchTech-withnose' + this.value).val(); */
+
+				changeProductTechnology(techId, product);
+
+			});
+
 		});
 
 		function changeProductTechnology(techId, productId) {

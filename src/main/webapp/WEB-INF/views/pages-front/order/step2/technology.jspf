@@ -7,7 +7,8 @@
 	<c:forEach var="rowAllTech" items="${ allTech }"
 		varStatus="rowNumAllTech">
 
-		<div class="withnose${ rowNumAllTech.index }">
+		<div class="withnose${ rowNumAllTech.index }"
+			<c:if test="${ rowNumAllTech.index  > 0}">style="display:none;"</c:if>>
 			<c:forEach var="rowTech" items="${ rowAllTech }"
 				varStatus="rowNumTech">
 
