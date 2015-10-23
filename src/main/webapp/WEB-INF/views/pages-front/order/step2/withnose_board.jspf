@@ -29,7 +29,7 @@
 					<c:if test="${ rowNumTech.index  > 0}">style="display:none;"</c:if>>
 					<c:forEach var="p" items="${rowTech.value}"
 						varStatus="rowNumProduct">
-						<div class="product-price"
+						<div class="product-price product-price-${ p.product.productId }"
 							<c:if test="${ rowNumProduct.index  > 0}">style="display:none;"</c:if>>
 
 							<%-- PRICE --%>
@@ -53,10 +53,10 @@
 							</div>
 
 							<%-- MSRP --%>
-							<div class="col-sm-3" style="color: #6e1a1a;">
+							<div class="col-sm-3 price-msrp">
 								<h4>MSRP:</h4>
 							</div>
-							<div class="col-sm-3" style="color: #6e1a1a;">
+							<div class="col-sm-3 price-msrp">
 								<c:choose>
 									<c:when test="${ empty p.price }">
 										<h4>TBA</h4>

@@ -126,6 +126,8 @@
 			$(".product").elevateZoom({
 				scrollZoom : true
 			});
+			
+			showPrice(productId);
 
 			clearzoom();
 			showLogCurrentProduct();
@@ -150,14 +152,23 @@
 			var withnoseFlag = $('#withnoseFlag').val();
 			var currentWithnoseKey = 'withnose' + withnoseFlag;
 
+			// Hide all product
 			var itemKey = currentWithnoseKey + '-' + currentTechId + '-item';
 			$('.' + itemKey).hide();
 
+			// Set current product to show
 			var showItemKey = itemKey + '-' + productId;
 			$('.' + showItemKey).show();
 
+			showPrice(productId);
+			
 			clearzoom();
 			showLogCurrentProduct();
+		}
+		
+		function showPrice(productId){
+			$('.product-price').hide();
+			$('.product-price-' + productId).show();
 		}
 
 		function resetActiveProductSize() {
