@@ -6,6 +6,7 @@ import java.util.List;
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dto.ProductBuyerGroupDTO;
 import com.starboard.b2b.dto.ProductCategoryDTO;
+import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ProductModelDTO;
 import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.ProductTechnologyDTO;
@@ -41,5 +42,9 @@ public interface ProductService {
 			List<ProductSearchResult> productListNoWithnose);
 
 	void findProductPrice(List<ProductSearchResult> productListNoWithnose, String productBuyerGroupId, String currency);
+
+	String findProductUnit(long productId);
+	
+	ProductDTO findById(Long productId);
 
 }

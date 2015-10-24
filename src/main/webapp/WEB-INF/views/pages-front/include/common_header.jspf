@@ -32,6 +32,8 @@
 		</ul>
 	</nav>
 </div>
+
+<%-- Welcome bar --%>
 <sec:authorize access="isAuthenticated()">
 	<sec:authentication var="user" property="principal" />
 
@@ -47,10 +49,36 @@
 				<strong>${user.name}</strong>
 			</p>
 		</div>
+
+		<%-- Shopping cart --%>
 		<div class="col-sm-3">
+			<input type="hidden" id="totalQuantity" value="0" />
 			<c:if test="${ not empty showShoppingCart }">
-				<img alt="shopping cart" id="shoppingCart"
-					src='<c:url value="/images/pages-front/icon/ico_cart.png" />' />
+				<div class="cartItems">
+					<img alt="shopping cart" id="shoppingCart"
+						src='<c:url value="/images/pages-front/icon/ico_cart.png" />' />
+
+					<%-- Set total quantity: (no_of_item) items --%>
+					<c:set var="totalQuantity" value="0" />
+					<c:if test="${ not empty cart }">
+						<div id="cartDetails" style="display: none;">
+							<c:forEach var="product" items="${ cart }" varStatus="rowNum">
+								<c:set var="totalQuantity"
+									value="${ totalQuantity + product.value.productQuantity }" />
+								<div class="row product-item-${ product.key }">
+									<div class="col-sm-1">${ rowNum.index }</div>
+									<div class="col-sm-7">${ product.value.productNameEn }</div>
+									<div class="col-sm-2">${ product.value.productQuantity }</div>
+									<div class="col-sm-2">${ product.value.productUnitId }</div>
+								</div>
+							</c:forEach>
+						</div>
+					</c:if>
+					<span>(</span> <span id="numOfProduct">${ totalQuantity }</span> <span>)
+						items</span>
+				</div>
+
+
 			</c:if>
 		</div>
 	</div>

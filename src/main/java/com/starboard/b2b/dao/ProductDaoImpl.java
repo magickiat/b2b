@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.search.CommonSearchRequest;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
@@ -108,17 +109,15 @@ public class ProductDaoImpl implements ProductDao {
 		Query query = sf.getCurrentSession().createQuery(sbQuery.toString());
 
 		if (condition != null) {
-			
-			if(StringUtils.isNotEmpty(condition.getSelectedBrand())){
+
+			if (StringUtils.isNotEmpty(condition.getSelectedBrand())) {
 				query.setString("productTypeId", condition.getSelectedBrand());
 				queryTotal.setString("productTypeId", condition.getSelectedBrand());
-			}else{
+			} else {
 				query.setLong("brandGroupId", condition.getBrandId());
 				queryTotal.setLong("brandGroupId", condition.getBrandId());
 			}
-			
-			
-			
+
 			if (StringUtils.isNotEmpty(condition.getSelectedBuyerGroup())) {
 				query.setString("productBuyerGroupId", condition.getSelectedBuyerGroup());
 				queryTotal.setString("productBuyerGroupId", condition.getSelectedBuyerGroup());
@@ -177,6 +176,7 @@ public class ProductDaoImpl implements ProductDao {
 		return list;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public List<ProductSearchResult> findProductModel(String modelId) {
 		StringBuffer sb = new StringBuffer();
@@ -192,5 +192,10 @@ public class ProductDaoImpl implements ProductDao {
 		log.info("result size: " + (list == null ? 0 : list.size()));
 
 		return list;
+	}
+
+	@Override
+	public Product findById(long productId) {
+		return (Product) sf.getCurrentSession().get(Product.class, productId);
 	}
 }

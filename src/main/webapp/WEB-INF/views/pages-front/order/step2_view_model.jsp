@@ -63,44 +63,52 @@
 		src='<c:url value="/scripts/zoom/jquery.elevateZoom-3.0.8.min.js" />'></script>
 
 
+	<c:url var="addToCartUrl" value="/frontend/order/add-to-cart" />
+	<c:url var="testAjaxUrl" value="/frontend/order/test-ajax" />
+
 	<script type="text/javascript">
-		$(document).ready(function() {
+		$(document).ready(
+				function() {
 
-			showLogCurrentProduct();
+					showLogCurrentProduct();
 
-			$('.zoomImg').elevateZoom({
-				scrollZoom : true
-			});
+					$('.zoomImg').elevateZoom({
+						scrollZoom : true
+					});
 
-			$('#btn-previous').click(function() {
-				window.history.back();
-			});
+					$('#btn-previous').click(function() {
+						window.history.back();
+					});
 
-			$('input[type=radio][name=withnose]').change(function() {
-				console.log('withnose = ' + this.value);
+					$('input[type=radio][name=withnose]').change(
+							function() {
+								console.log('withnose = ' + this.value);
 
-				if (this.value == 0) {
-					$('.withnose0').show();
-					$('.withnose1').hide();
-				} else if (this.value == 1) {
-					$('.withnose0').hide();
-					$('.withnose1').show();
-				} else {
-					console.log('not support this value: ' + this.value);
-				}
+								if (this.value == 0) {
+									$('.withnose0').show();
+									$('.withnose1').hide();
+								} else if (this.value == 1) {
+									$('.withnose0').hide();
+									$('.withnose1').show();
+								} else {
+									console.log('not support this value: '
+											+ this.value);
+								}
 
-				// Reset to first product
-				$('#withnoseFlag').val(this.value);
+								// Reset to first product
+								$('#withnoseFlag').val(this.value);
 
-				var product = $('#firstSearchProduct-withnose' + this.value).val();
-				var techId = $('#currentTechId').val();
-				/* var firstTech = $('#firstSearchTech-withnose' + this.value).val(); */
+								var product = $(
+										'#firstSearchProduct-withnose'
+												+ this.value).val();
+								var techId = $('#currentTechId').val();
+								/* var firstTech = $('#firstSearchTech-withnose' + this.value).val(); */
 
-				changeProductTechnology(techId, product);
+								changeProductTechnology(techId, product);
 
-			});
+							});
 
-		});
+				});
 
 		function changeProductTechnology(techId, productId) {
 
@@ -126,7 +134,7 @@
 			$(".product").elevateZoom({
 				scrollZoom : true
 			});
-			
+
 			showPrice(productId);
 
 			clearzoom();
@@ -161,12 +169,12 @@
 			$('.' + showItemKey).show();
 
 			showPrice(productId);
-			
+
 			clearzoom();
 			showLogCurrentProduct();
 		}
-		
-		function showPrice(productId){
+
+		function showPrice(productId) {
 			$('.product-price').hide();
 			$('.product-price-' + productId).show();
 		}
@@ -184,7 +192,54 @@
 		function addToCart() {
 			console.log('begin animate');
 			//TODO add animation to shopping cart
-			//TODO save product code to shopping cart with quantity 
+
+			var quantity = $('#quantity').val();
+			console.log('quantity: ' + quantity);
+			if (isValidNumber(quantity)) {
+
+				//TODO save product code to shopping cart with quantity
+				var productId = $('#currentProduct').val();
+				var param = {
+					'productId' : productId,
+					'quantity' : quantity
+				};
+
+				$.post('${addToCartUrl}', param).done(function(response) {
+					console.log(response);
+					renderToCart(response);
+				}).fail(function(result) {
+					alert(result.responseText);
+				});
+
+			} else {
+				alert('Quantity is not a number.');
+			}
+
+		}
+
+		function renderToCart(data) {
+			var totalQuantity = 0;
+			$.each(data, function(index) {
+				var productName = data[index].productNameEn;
+				var quantity = data[index].productQuantity;
+				console.log(productName + '\t' + quantity);
+				totalQuantity = totalQuantity + (+quantity);
+			});
+			
+			addQuantity(totalQuantity);
+		}
+
+		function addQuantity(quantity) {
+			var totalQuantity = $('#totalQuantity').val();
+			totalQuantity = (+totalQuantity) + (+quantity);
+			var num = formatNumber(totalQuantity);
+			$('#numOfProduct').text(num);
+			$('#totalQuantity').val(totalQuantity);
+		}
+	<%-- http://stackoverflow.com/questions/9011524/javascript-regexp-number-only-check --%>
+		function isValidNumber(num) {
+			var reg = new RegExp('^\\d+$');
+			return reg.test(num);
 		}
 
 		function clearzoom() {
@@ -193,6 +248,18 @@
 
 			$('.zoomImg').elevateZoom({
 				scrollZoom : true
+			});
+		}
+
+		function testAjax() {
+
+			$.post('${addToCartUrl}', {
+				'productId' : '1234',
+				'quantity' : '1'
+			}).done(function(result) {
+				alert('success: ' + result);
+			}).fail(function(result) {
+				alert(result.responseText);
 			});
 		}
 	</script>

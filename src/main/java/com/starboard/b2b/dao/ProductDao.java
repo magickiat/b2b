@@ -21,4 +21,6 @@ public interface ProductDao {
 
 	List<ProductSearchResult> findProductModel(String modelId);
 
+	Product findById(long productId);
+
 }

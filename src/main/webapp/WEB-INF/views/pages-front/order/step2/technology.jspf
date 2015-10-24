@@ -23,8 +23,8 @@
 						value="/upload/product_image/Technology/${ modelId }/${ rowTech.key }.png" />
 					<div class="col-sm-3">
 						<%-- Image --%>
-						<div class="tech-img">
-							<img src="${ imgTechUrl }" />
+						<div>
+							<img class="tech-img" src="${ imgTechUrl }" />
 						</div>
 						<%-- Text --%>
 						<div class="text-center">

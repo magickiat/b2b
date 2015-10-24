@@ -12,5 +12,5 @@
 <div class="col-sm-6">&nbsp;</div>
 
 <div class="col-sm-6">
-	<input type="button" class="btn btn-success" value="CHECK OUT" />
+	<input type="button" class="btn btn-success" value="CHECK OUT" onclick="testAjax()" />
 </div>

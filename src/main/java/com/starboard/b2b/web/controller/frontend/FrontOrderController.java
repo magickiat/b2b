@@ -3,6 +3,10 @@ package com.starboard.b2b.web.controller.frontend;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -10,10 +14,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.starboard.b2b.common.AddressConstant;
@@ -21,6 +27,7 @@ import com.starboard.b2b.common.Page;
 import com.starboard.b2b.common.WithnoseConstant;
 import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
+import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.service.BrandService;
@@ -29,10 +36,10 @@ import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.product.SearchProductForm;
-import com.starboard.b2b.web.form.product.ViewProductModelForm;
 
 @Controller
 @RequestMapping("/frontend/order/")
+@SessionAttributes({ "cart" })
 public class FrontOrderController {
 
 	private static final Logger log = LoggerFactory.getLogger(FrontOrderController.class);
@@ -84,6 +91,11 @@ public class FrontOrderController {
 	String step2SearchProduct(@RequestParam("brand_id") Long brandId, Model model) {
 		log.info("step2_search GET");
 		log.info("Brand id: " + brandId);
+
+		// Create cart
+		if (!model.containsAttribute("cart")) {
+			model.addAttribute("cart", new HashMap<Long, ProductDTO>());
+		}
 
 		// Show shopping cart
 		model.addAttribute("showShoppingCart", "true");
@@ -152,7 +164,7 @@ public class FrontOrderController {
 			model.addAttribute("productListNoWithnose", productListNoWithnose);
 			model.addAttribute("productListWithnose", productListWithnose);
 
-			// TODO find product size (productLength)
+			// find product size (productLength)
 			model.addAttribute("productListNoWithnoseLength", productService.findProductLength(productListNoWithnose));
 			model.addAttribute("productListWithnoseLength", productService.findProductLength(productListWithnose));
 
@@ -190,6 +202,52 @@ public class FrontOrderController {
 		model.addAttribute("productTechnology", productService.findAllProductTechnology());
 	}
 
+	@RequestMapping(value = "add-to-cart", method = RequestMethod.POST)
+	public @ResponseBody List<ProductDTO> addToCart(Long productId, Long quantity,
+			@ModelAttribute("cart") Map<Long, ProductDTO> cart) throws IllegalArgumentException {
+
+		log.info("productId = " + productId + "\tquantity = " + quantity);
+
+		// Validat Quantity
+		if (quantity == null) {
+			throw new IllegalArgumentException("Quantity is required.");
+		}
+		if (quantity <= 0) {
+			throw new IllegalArgumentException("Quantity must over than zero.");
+		}
+		if (quantity > Integer.MAX_VALUE) {
+			throw new IllegalArgumentException("Quantity is huge, please contact Administrator.");
+		}
+
+		// Validate Product
+		if (productId == null) {
+			throw new IllegalArgumentException("Please select product.");
+		}
+
+		ProductDTO product = productService.findById(productId);
+		if (product == null || product.getProductCode() == null) {
+			throw new IllegalArgumentException("Invalid product id");
+		}
+
+		ProductDTO productInCart = cart.get(productId);
+		if (productInCart == null) {
+			cart.put(productId, product);
+		}else{
+			quantity += productInCart.getProductQuantity();
+		}
+		
+		product.setProductQuantity(quantity);
+		
+		ArrayList<ProductDTO> result = new ArrayList<>();
+		Set<Long> keySet = cart.keySet();
+		for (Long key : keySet) {
+			result.add(cart.get(key));
+		}
+
+		result.trimToSize();
+		return result;
+	}
+
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	String createOrderForm(Model model) {
 		return "pages-front/order/create";
@@ -204,4 +262,11 @@ public class FrontOrderController {
 	String orderSummary(Model model) {
 		return "pages-front/order/summary";
 	}
+
+	@ExceptionHandler(IllegalArgumentException.class)
+	public @ResponseBody String handleException(Exception e, HttpServletResponse response) {
+		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		return e.getMessage();
+	}
+
 }

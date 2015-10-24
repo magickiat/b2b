@@ -3,13 +3,11 @@ package com.starboard.b2b.config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -65,17 +63,18 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		return new StandardServletMultipartResolver();
 	}
 
-	@Override
-	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-		configurer.favorPathExtension(true).ignoreAcceptHeader(true).useJaf(false)
-				.defaultContentType(MediaType.TEXT_HTML).mediaType("html", MediaType.TEXT_HTML)
-				.mediaType("xml", MediaType.APPLICATION_XML).mediaType("json", MediaType.APPLICATION_JSON);
-	}
+//	@Override
+//	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+//		configurer.favorPathExtension(true).ignoreAcceptHeader(true).useJaf(false)
+//				.defaultContentType(MediaType.TEXT_HTML).mediaType("html", MediaType.TEXT_HTML)
+//				.mediaType("xml", MediaType.APPLICATION_XML).mediaType("json", MediaType.APPLICATION_JSON);
+//	}
 
 	@Override
 	public Validator getValidator() {
 		return new LocalValidatorFactoryBean();
 	}
+
 	//
 	// @Bean
 	// public MessageSource messageSource() {

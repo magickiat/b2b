@@ -26,6 +26,7 @@ import com.starboard.b2b.dao.ProductTypeDao;
 import com.starboard.b2b.dao.ProductYearDao;
 import com.starboard.b2b.dto.ProductBuyerGroupDTO;
 import com.starboard.b2b.dto.ProductCategoryDTO;
+import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ProductModelDTO;
 import com.starboard.b2b.dto.ProductPriceDTO;
 import com.starboard.b2b.dto.ProductSearchResult;
@@ -35,6 +36,7 @@ import com.starboard.b2b.dto.ProductYearDTO;
 import com.starboard.b2b.dto.search.CommonSearchRequest;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.dto.search.SearchResult;
+import com.starboard.b2b.model.Product;
 import com.starboard.b2b.model.ProductBuyerGroup;
 import com.starboard.b2b.model.ProductCategory;
 import com.starboard.b2b.model.ProductTechnology;
@@ -276,10 +278,32 @@ public class ProductServiceImpl implements ProductService {
 	public void findProductPrice(List<ProductSearchResult> productListNoWithnose, String productBuyerGroupId,
 			String currency) {
 		for (ProductSearchResult result : productListNoWithnose) {
-			ProductPriceDTO price = productPriceDao.findProductPrice(result.getProduct().getProductCode(), productBuyerGroupId, currency);
+			ProductPriceDTO price = productPriceDao.findProductPrice(result.getProduct().getProductCode(),
+					productBuyerGroupId, currency);
 			log.info("prict: " + price);
 			result.setPrice(price);
 		}
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public String findProductUnit(long productId) {
+		Product dto = productDao.findById(productId);
+		if (dto != null) {
+			return dto.getProductUnitId();
+		}
+		return null;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public ProductDTO findById(Long productId) {
+		Product product = productDao.findById(productId);
+		ProductDTO dto = new ProductDTO();
+		if(product != null){
+			BeanUtils.copyProperties(product, dto);
+		}
+		return dto;
 	}
 
 }
