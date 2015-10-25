@@ -196,7 +196,10 @@
 			var quantity = $('#quantity').val();
 			console.log('quantity: ' + quantity);
 			if (isValidNumber(quantity)) {
-
+				if(quantity <= 0){
+					alert('Quantity must greater than zero');
+					return;
+				}
 				//TODO save product code to shopping cart with quantity
 				var productId = $('#currentProduct').val();
 				var param = {
@@ -212,7 +215,7 @@
 				});
 
 			} else {
-				alert('Quantity is not a number.');
+				alert('Please check Quantity.');
 			}
 
 		}
@@ -224,17 +227,19 @@
 				var quantity = data[index].productQuantity;
 				console.log(productName + '\t' + quantity);
 				totalQuantity = totalQuantity + (+quantity);
+				console.log('quantity = ' + quantity);
+				console.log('total quantity = ' + totalQuantity);
 			});
 			
 			addQuantity(totalQuantity);
 		}
 
 		function addQuantity(quantity) {
-			var totalQuantity = $('#totalQuantity').val();
-			totalQuantity = (+totalQuantity) + (+quantity);
-			var num = formatNumber(totalQuantity);
+			/* var totalQuantity = $('#totalQuantity').val();
+			totalQuantity = (+totalQuantity) + (+quantity); */
+			var num = formatNumber(quantity);
 			$('#numOfProduct').text(num);
-			$('#totalQuantity').val(totalQuantity);
+			$('#totalQuantity').val(quantity);
 		}
 	<%-- http://stackoverflow.com/questions/9011524/javascript-regexp-number-only-check --%>
 		function isValidNumber(num) {
@@ -251,17 +256,6 @@
 			});
 		}
 
-		function testAjax() {
-
-			$.post('${addToCartUrl}', {
-				'productId' : '1234',
-				'quantity' : '1'
-			}).done(function(result) {
-				alert('success: ' + result);
-			}).fail(function(result) {
-				alert(result.responseText);
-			});
-		}
 	</script>
 </body>
 </html>

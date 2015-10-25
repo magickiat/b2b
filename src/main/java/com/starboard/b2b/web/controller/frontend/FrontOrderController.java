@@ -160,8 +160,8 @@ public class FrontOrderController {
 			}
 
 			// Find product price
-			String invoiceCode= UserUtil.getCurrentUser().getCustomer().getInvoiceCode();
-			
+			String invoiceCode = UserUtil.getCurrentUser().getCustomer().getInvoiceCode();
+
 			if (productListNoWithnose != null && !productListNoWithnose.isEmpty()) {
 				productService.findProductPrice(productListNoWithnose, invoiceCode);
 			}
@@ -227,19 +227,23 @@ public class FrontOrderController {
 			throw new IllegalArgumentException("Please select product.");
 		}
 
+		// validate exist product
 		ProductDTO product = productService.findById(productId);
+
 		if (product == null || product.getProductCode() == null) {
 			throw new IllegalArgumentException("Invalid product id");
 		}
 
+		// get exist product in cart
 		ProductDTO productInCart = cart.get(productId);
 		if (productInCart == null) {
-			cart.put(productId, product);
+			productInCart = product;
+			cart.put(productId, productInCart);
 		} else {
 			quantity += productInCart.getProductQuantity();
 		}
 
-		product.setProductQuantity(quantity);
+		productInCart.setProductQuantity(quantity);
 
 		ArrayList<ProductDTO> result = new ArrayList<>();
 		Set<Long> keySet = cart.keySet();

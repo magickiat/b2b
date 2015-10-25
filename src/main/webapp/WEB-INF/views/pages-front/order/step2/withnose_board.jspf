@@ -29,43 +29,48 @@
 					<c:if test="${ rowNumTech.index  > 0}">style="display:none;"</c:if>>
 					<c:forEach var="p" items="${rowTech.value}"
 						varStatus="rowNumProduct">
-						<div class="product-price product-price-${ p.product.productId }"
+						<div
+							class="product-price product-price-${ p.product.productId } row"
 							<c:if test="${ rowNumProduct.index  > 0}">style="display:none;"</c:if>>
 
 							<%-- PRICE --%>
-							<div class="col-sm-3">
-								<h4>PRICE:</h4>
+							<div class="col-sm-2 text-left">
+								<h5>PRICE:</h5>
 							</div>
-							<div class="col-sm-3">
+							<div class="col-sm-4">
 								<c:choose>
 									<c:when test="${ empty p.price }">
-										<h4>TBA</h4>
+										<h5>TBA</h5>
 									</c:when>
 									<c:otherwise>
-										<fmt:formatNumber pattern="#,###.00" maxFractionDigits="2"
-											maxIntegerDigits="12" value="${ p.price.amount }"
-											minFractionDigits="2" minIntegerDigits="1">
-										</fmt:formatNumber>
-										${ p.product.productCurrency }
+										<h5>
+											<fmt:formatNumber pattern="#,###.00" maxFractionDigits="2"
+												maxIntegerDigits="12" value="${ p.price.amount }"
+												minFractionDigits="2" minIntegerDigits="1">
+											</fmt:formatNumber>
+											${ p.product.productCurrency }
+										</h5>
 									</c:otherwise>
 								</c:choose>
 							</div>
 
 							<%-- MSRP --%>
-							<div class="col-sm-3 price-msrp">
-								<h4>MSRP:</h4>
+							<div class="col-sm-2 price-msrp">
+								<h5>MSRP:</h5>
 							</div>
-							<div class="col-sm-3 price-msrp">
+							<div class="col-sm-4 price-msrp">
 								<c:choose>
 									<c:when test="${ empty p.price }">
-										<h4>TBA</h4>
+										<h5>TBA</h5>
 									</c:when>
 									<c:otherwise>
-										<fmt:formatNumber pattern="#,###.00" maxFractionDigits="2"
-											maxIntegerDigits="12" value="${ p.price.msrePrice }"
-											minFractionDigits="2" minIntegerDigits="1">
-										</fmt:formatNumber>
-										${ p.product.productCurrency }
+										<h5>
+											<fmt:formatNumber pattern="#,###.00" maxFractionDigits="2"
+												maxIntegerDigits="12" value="${ p.price.msrePrice }"
+												minFractionDigits="2" minIntegerDigits="1">
+											</fmt:formatNumber>
+											${ p.product.productCurrency }
+										</h5>
 									</c:otherwise>
 								</c:choose>
 							</div>
