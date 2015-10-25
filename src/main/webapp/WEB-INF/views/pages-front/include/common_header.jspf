@@ -54,7 +54,8 @@
 		<div class="col-sm-3">
 			<input type="hidden" id="totalQuantity" value="0" />
 			<c:if test="${ not empty showShoppingCart }">
-				<div class="cartItems">
+				<div id="cartItems" onmouseover="showCartDetails()"
+					onmouseout="hideCartDetails()">
 					<img alt="shopping cart" id="shoppingCart"
 						src='<c:url value="/images/pages-front/icon/ico_cart.png" />' />
 
@@ -66,7 +67,7 @@
 								<c:set var="totalQuantity"
 									value="${ totalQuantity + product.value.productQuantity }" />
 								<div class="row product-item-${ product.key }">
-									<div class="col-sm-1">${ rowNum.index }</div>
+									<div class="col-sm-1">${ rowNum.index + 1 }</div>
 									<div class="col-sm-7">${ product.value.productNameEn }</div>
 									<div class="col-sm-2">${ product.value.productQuantity }</div>
 									<div class="col-sm-2">${ product.value.productUnitId }</div>
@@ -83,3 +84,15 @@
 		</div>
 	</div>
 </sec:authorize>
+
+<script type="text/javascript">
+	function showCartDetails() {
+		$("#cartDetails").dialog({
+			modal : true
+		});
+	}
+
+	function hideCartDetails() {
+
+	}
+</script>

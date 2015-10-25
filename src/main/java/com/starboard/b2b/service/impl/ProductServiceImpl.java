@@ -275,9 +275,10 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public void findProductPrice(List<ProductSearchResult> productListNoWithnose, String productBuyerGroupId,
+	public void findProductPrice(List<ProductSearchResult> productList, String productBuyerGroupId,
 			String currency) {
-		for (ProductSearchResult result : productListNoWithnose) {
+		log.info("findProductPrice:");
+		for (ProductSearchResult result : productList) {
 			ProductPriceDTO price = productPriceDao.findProductPrice(result.getProduct().getProductCode(),
 					productBuyerGroupId, currency);
 			log.info("prict: " + price);

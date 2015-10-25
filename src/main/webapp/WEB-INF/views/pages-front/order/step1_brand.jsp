@@ -34,24 +34,24 @@
 						<!-- Brand Logo -->
 						<div class="col-md-4" style="margin-top: 30px;">
 							<a
-								href='<c:url value="/frontend/order/step2/index?brand_id=${ brand.id.brandGroupId }" />'>
+								href='<c:url value="/frontend/order/step2/index?brand_id=${ brand.brandGroupId }" />'>
 								<c:choose>
-									<c:when test="${brand.id.brandGroupId == 30}">
+									<c:when test="${brand.brandGroupId == 30}">
 										<img
 											src='<c:url value="/images/pages-front/icon/airush.png" />'
 											id="airushicon">
 									</c:when>
-									<c:when test="${brand.id.brandGroupId == 20}">
+									<c:when test="${brand.brandGroupId == 20}">
 										<img
 											src='<c:url value="/images/pages-front/icon/starboard.png" />'>
 									</c:when>
-									<c:when test="${brand.id.brandGroupId == 40}">
+									<c:when test="${brand.brandGroupId == 40}">
 										<img
 											src='<c:url value="/images/pages-front/icon/severne.png" />'
 											id="severneicon">
 									</c:when>
 
-									<c:when test="${brand.id.brandGroupId == 10}">
+									<c:when test="${brand.brandGroupId == 10}">
 										<img
 											src='<c:url value="/images/pages-front/icon/starboard.png" />'
 											id="starboardicon">

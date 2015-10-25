@@ -7,6 +7,7 @@ import com.starboard.b2b.dto.ProductBrandGroupDTO;
 import com.starboard.b2b.dto.search.SearchCustRequest;
 import com.starboard.b2b.dto.search.SearchCustResult;
 import com.starboard.b2b.model.Cust;
+import com.starboard.b2b.model.CustPriceGroup;
 
 public interface CustDao {
 	SearchCustResult listCust(SearchCustRequest req);
@@ -16,4 +17,8 @@ public interface CustDao {
 	List<AddressDTO> findAddress(Long custId, Long addressType);
 
 	List<ProductBrandGroupDTO> findProductBrandGroup(Long custId);
+
+	List<CustPriceGroup> findCustPriceGroup(String custInvoiceNo);
+
+	List<CustPriceGroup> findCustPriceGroup(Long custId);
 }

@@ -42,12 +42,11 @@
 										<h4>TBA</h4>
 									</c:when>
 									<c:otherwise>
-										<%-- 										<fmt:formatNumber pattern="#,###.00" maxFractionDigits="2" --%>
-										<%-- 											maxIntegerDigits="12" value="${ p.price.amount }" --%>
-										<%-- 											minFractionDigits="2" minIntegerDigits="1"> --%>
-
-										<%-- 										</fmt:formatNumber> --%>
-										<%-- 										${ p.product.productCurrency } --%>
+										<fmt:formatNumber pattern="#,###.00" maxFractionDigits="2"
+											maxIntegerDigits="12" value="${ p.price.amount }"
+											minFractionDigits="2" minIntegerDigits="1">
+										</fmt:formatNumber>
+										${ p.product.productCurrency }
 									</c:otherwise>
 								</c:choose>
 							</div>
@@ -62,12 +61,11 @@
 										<h4>TBA</h4>
 									</c:when>
 									<c:otherwise>
-										<%-- 										<fmt:formatNumber pattern="#,###.00" maxFractionDigits="2" --%>
-										<%-- 											maxIntegerDigits="12" value="${ p.price.amount }" --%>
-										<%-- 											minFractionDigits="2" minIntegerDigits="1"> --%>
-
-										<%-- 										</fmt:formatNumber> --%>
-										<%-- 										${ p.product.productCurrency } --%>
+										<fmt:formatNumber pattern="#,###.00" maxFractionDigits="2"
+											maxIntegerDigits="12" value="${ p.price.amount }"
+											minFractionDigits="2" minIntegerDigits="1">
+										</fmt:formatNumber>
+										${ p.product.productCurrency }
 									</c:otherwise>
 								</c:choose>
 							</div>

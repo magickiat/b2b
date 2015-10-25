@@ -24,6 +24,8 @@ public class ProductPriceDaoImpl implements ProductPriceDao {
 	@Override
 	@SuppressWarnings("rawtypes")
 	public ProductPriceDTO findProductPrice(String productCode, String productBuyerGroupId, String currency) {
+		log.info("productCode = " + productCode + "\tproductBuyerGroupId = " + productBuyerGroupId + "\tcurrency = "
+				+ currency);
 		StringBuffer sb = new StringBuffer();
 		sb.append(
 				" select new com.starboard.b2b.dto.ProductPriceDTO(p.id.productCode, p.id.productPriceGroupId, p.id.productCurrency, p.amount,p.productUnitId, p.msrePrice)  from ProductPrice p");
@@ -32,10 +34,8 @@ public class ProductPriceDaoImpl implements ProductPriceDao {
 		sb.append(" and p.id.productCurrency = :productCurrency");
 
 		ProductPriceDTO result = null;
-		List list = sessionFactory.getCurrentSession().createQuery(sb.toString())
-				.setString("productCode", productCode)
-				.setString("productPriceGroupId", productBuyerGroupId)
-				.setString("productCurrency", currency).list();
+		List list = sessionFactory.getCurrentSession().createQuery(sb.toString()).setString("productCode", productCode)
+				.setString("productPriceGroupId", productBuyerGroupId).setString("productCurrency", currency).list();
 		if (list != null && list.size() > 0) {
 			result = (ProductPriceDTO) list.get(0);
 		}

@@ -58,8 +58,7 @@ public class FrontOrderController {
 
 	@RequestMapping(value = "index", method = RequestMethod.GET)
 	String step1(Model model) {
-		List<ProductBrandGroupDTO> brandGroupList = brandService
-				.getBrandGroupList(UserUtil.getCurrentUser().getCustomer().getCustId());
+		List<ProductBrandGroupDTO> brandGroupList = brandService.getBrandGroupList(UserUtil.getCurrentUser().getCustomer().getCustId());
 		model.addAttribute("brandGroupList", brandGroupList);
 		return "pages-front/order/step1_brand";
 	}
@@ -151,6 +150,9 @@ public class FrontOrderController {
 			List<ProductSearchResult> productListWithnose = productService.findProductModel(modelId,
 					WithnoseConstant.WITHNOSE_PROTECTION);
 
+			model.addAttribute("productListNoWithnose", productListNoWithnose);
+			model.addAttribute("productListWithnose", productListWithnose);
+
 			// Find product buyer group from no Withnose product
 			if (!productListNoWithnose.isEmpty()) {
 				ProductSearchResult result = productListNoWithnose.get(0);
@@ -158,11 +160,15 @@ public class FrontOrderController {
 				log.info("productBuyerGroupId: " + productBuyerGroupId);
 				model.addAttribute("hasWithnoseBoard", "WB".equalsIgnoreCase(productBuyerGroupId));
 			}
+			
+			// Find product price
 			String currency = UserUtil.getCurrentUser().getCustomer().getCurrency();
-			productService.findProductPrice(productListNoWithnose, productBuyerGroupId, currency);
-
-			model.addAttribute("productListNoWithnose", productListNoWithnose);
-			model.addAttribute("productListWithnose", productListWithnose);
+			if (productListNoWithnose != null && !productListNoWithnose.isEmpty()) {
+				productService.findProductPrice(productListNoWithnose, productBuyerGroupId, currency);
+			}
+			if (productListWithnose != null && !productListWithnose.isEmpty()) {
+				productService.findProductPrice(productListWithnose, productBuyerGroupId, currency);
+			}
 
 			// find product size (productLength)
 			model.addAttribute("productListNoWithnoseLength", productService.findProductLength(productListNoWithnose));
@@ -232,12 +238,12 @@ public class FrontOrderController {
 		ProductDTO productInCart = cart.get(productId);
 		if (productInCart == null) {
 			cart.put(productId, product);
-		}else{
+		} else {
 			quantity += productInCart.getProductQuantity();
 		}
-		
+
 		product.setProductQuantity(quantity);
-		
+
 		ArrayList<ProductDTO> result = new ArrayList<>();
 		Set<Long> keySet = cart.keySet();
 		for (Long key : keySet) {

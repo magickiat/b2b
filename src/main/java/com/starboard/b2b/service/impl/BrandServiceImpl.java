@@ -49,27 +49,6 @@ public class BrandServiceImpl implements BrandService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<ProductBrandGroupDTO> getBrandGroupList(Long custId) {
-		// List<ProductBrandGroupDTO> result = new ArrayList<>();
-
-		// List<CustBrandGroup> custBrandGroupList =
-		// custBrandGroupDAO.findByCustId(custId);
-		// log.info("custBrandGroupList size: " + (custBrandGroupList == null ?
-		// 0 : custBrandGroupList.size()));
-		// for (CustBrandGroup custBrandGroup : custBrandGroupList) {
-		// List<ProductBrandGroup> brandList = productBrandGroupDAO
-		// .findByProductTypeId(custBrandGroup.getId().getBrandGroupId());
-		// log.info("brandList size: " + (brandList == null ? 0 :
-		// brandList.size()));
-		//
-		// for (ProductBrandGroup brandGroup : brandList) {
-		// ProductBrandGroupDTO brandGroupDTO = new ProductBrandGroupDTO();
-		// brandGroupDTO.setBrandGroupId(brandGroup.getId().getBrandGroupId());
-		// brandGroupDTO.setProductTypeId(brandGroup.getId().getProductTypeId());
-		// result.add(brandGroupDTO);
-		// }
-		// }
-		// return result;
-
 		return custDao.findProductBrandGroup(custId);
 	}
 
