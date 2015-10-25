@@ -224,7 +224,7 @@ public class ProductServiceImpl implements ProductService {
 				imgPath = imgPath.substring(7);
 			}
 
-			log.info("imgPath = " + imgPath);
+//			log.info("imgPath = " + imgPath);
 
 			File img = new File(uploadPath, imgPath);
 			if (!img.exists()) {

@@ -54,8 +54,7 @@
 		<div class="col-sm-3">
 			<input type="hidden" id="totalQuantity" value="0" />
 			<c:if test="${ not empty showShoppingCart }">
-				<div id="cartItems" onmouseover="showCartDetails()"
-					onmouseout="hideCartDetails()">
+				<div id="cartItems" onclick="showCartDetails()">
 					<img alt="shopping cart" id="shoppingCart"
 						src='<c:url value="/images/pages-front/icon/ico_cart.png" />' />
 
@@ -63,6 +62,13 @@
 					<c:set var="totalQuantity" value="0" />
 					<c:if test="${ not empty cart }">
 						<div id="cartDetails" style="display: none;">
+							<div class="row">
+								<div class="col-sm-1">No</div>
+								<div class="col-sm-7">Product Name</div>
+								<div class="col-sm-2">Order</div>
+								<div class="col-sm-2">UOM</div>
+							</div>
+
 							<c:forEach var="product" items="${ cart }" varStatus="rowNum">
 								<c:set var="totalQuantity"
 									value="${ totalQuantity + product.value.productQuantity }" />
@@ -88,11 +94,9 @@
 <script type="text/javascript">
 	function showCartDetails() {
 		$("#cartDetails").dialog({
-			modal : true
+	        resizable: false,
+	        modal: true,
+	        width:'auto'
 		});
-	}
-
-	function hideCartDetails() {
-
 	}
 </script>

@@ -222,15 +222,60 @@
 
 		function renderToCart(data) {
 			var totalQuantity = 0;
+			
+			// Header
+			var row = '';
+			row += '<div class="row">';
+			
+			row += '<div class="col-sm-1">';
+			row += 'No';
+			row += '</div>'
+			
+			row += '<div class="col-sm-7">';
+			row += 'Product Name';
+			row += '</div>';
+			
+			row += '<div class="col-sm-2">';
+			row += 'Order';
+			row += '</div>'
+			
+			row += '<div class="col-sm-2">';
+			row += 'UOM';
+			row += '</div>'
+			
+			row += '</div>';
 			$.each(data, function(index) {
 				var productName = data[index].productNameEn;
 				var quantity = data[index].productQuantity;
+				var productUnitId = data[index].productUnitId;
+				
+				row += '<div class="row product-item-'+ data[index].productId +'">';
+				
+				row += '<div class="col-sm-1">';
+				row += (index + 1);
+				row += '</div>'
+				
+				row += '<div class="col-sm-7">';
+				row += escapeHtml(productName);
+				row += '</div>';
+				
+				row += '<div class="col-sm-2">';
+				row += quantity;
+				row += '</div>'
+				
+				row += '<div class="col-sm-2">';
+				row += productUnitId;
+				row += '</div>'
+				
+				
+				row += '</div>';
+				
 				console.log(productName + '\t' + quantity);
 				totalQuantity = totalQuantity + (+quantity);
 				console.log('quantity = ' + quantity);
 				console.log('total quantity = ' + totalQuantity);
 			});
-			
+			$('#cartDetails').html(row);
 			addQuantity(totalQuantity);
 		}
 
