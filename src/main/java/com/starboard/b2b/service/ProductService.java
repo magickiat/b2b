@@ -41,7 +41,7 @@ public interface ProductService {
 	HashMap<String, List<ProductSearchResult>> groupProductByTechnology(
 			List<ProductSearchResult> productListNoWithnose);
 
-	void findProductPrice(List<ProductSearchResult> productListNoWithnose, String productBuyerGroupId, String currency);
+	void findProductPrice(List<ProductSearchResult> productListNoWithnose, String custInvoiceCode);
 
 	String findProductUnit(long productId);
 	

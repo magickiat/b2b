@@ -171,8 +171,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Page<SearchProductModelDTO> searchProduct(SearchProductForm form) {
 		log.info("form: " + form);
-		CommonSearchRequest<SearchProductForm> req = new CommonSearchRequest<>(form.getPage(),
-				applicationConfig.getPageSize());
+		CommonSearchRequest<SearchProductForm> req = new CommonSearchRequest<>(form.getPage(), applicationConfig.getPageSize());
 		req.setCondition(form);
 
 		// Find product model
@@ -261,8 +260,7 @@ public class ProductServiceImpl implements ProductService {
 		HashMap<String, List<ProductSearchResult>> technologies = new HashMap<>();
 		if (products != null && !products.isEmpty()) {
 			for (ProductSearchResult product : products) {
-				List<ProductSearchResult> listProductTech = technologies
-						.get(product.getProduct().getProductTechnologyId());
+				List<ProductSearchResult> listProductTech = technologies.get(product.getProduct().getProductTechnologyId());
 				if (listProductTech == null) {
 					listProductTech = new ArrayList<>();
 					technologies.put(product.getProduct().getProductTechnologyId(), listProductTech);
@@ -275,12 +273,10 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public void findProductPrice(List<ProductSearchResult> productList, String productBuyerGroupId,
-			String currency) {
+	public void findProductPrice(List<ProductSearchResult> productList, String custInvoiceCode) {
 		log.info("findProductPrice:");
 		for (ProductSearchResult result : productList) {
-			ProductPriceDTO price = productPriceDao.findProductPrice(result.getProduct().getProductCode(),
-					productBuyerGroupId, currency);
+			ProductPriceDTO price = productPriceDao.findProductPrice(result.getProduct().getProductCode(), custInvoiceCode);
 			log.info("prict: " + price);
 			result.setPrice(price);
 		}
@@ -301,7 +297,7 @@ public class ProductServiceImpl implements ProductService {
 	public ProductDTO findById(Long productId) {
 		Product product = productDao.findById(productId);
 		ProductDTO dto = new ProductDTO();
-		if(product != null){
+		if (product != null) {
 			BeanUtils.copyProperties(product, dto);
 		}
 		return dto;

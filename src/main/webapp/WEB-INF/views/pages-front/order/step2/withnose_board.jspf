@@ -62,7 +62,7 @@
 									</c:when>
 									<c:otherwise>
 										<fmt:formatNumber pattern="#,###.00" maxFractionDigits="2"
-											maxIntegerDigits="12" value="${ p.price.amount }"
+											maxIntegerDigits="12" value="${ p.price.msrePrice }"
 											minFractionDigits="2" minIntegerDigits="1">
 										</fmt:formatNumber>
 										${ p.product.productCurrency }

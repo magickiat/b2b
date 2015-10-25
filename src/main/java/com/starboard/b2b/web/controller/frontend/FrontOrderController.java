@@ -160,12 +160,13 @@ public class FrontOrderController {
 			}
 
 			// Find product price
-			String currency = UserUtil.getCurrentUser().getCustomer().getCurrency();
+			String invoiceCode= UserUtil.getCurrentUser().getCustomer().getInvoiceCode();
+			
 			if (productListNoWithnose != null && !productListNoWithnose.isEmpty()) {
-				productService.findProductPrice(productListNoWithnose, productBuyerGroupId, currency);
+				productService.findProductPrice(productListNoWithnose, invoiceCode);
 			}
 			if (productListWithnose != null && !productListWithnose.isEmpty()) {
-				productService.findProductPrice(productListWithnose, productBuyerGroupId, currency);
+				productService.findProductPrice(productListWithnose, invoiceCode);
 			}
 
 			// find product size (productLength)
