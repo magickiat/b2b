@@ -66,8 +66,8 @@ public class FrontOrderController {
 	@RequestMapping(value = "step2/index", method = RequestMethod.GET)
 	String step2ChooseAddress(@RequestParam("brand_id") Long brandId, Model model) {
 		log.info("Brand id: " + brandId);
-		List<AddressDTO> invoiceToAddress = customerService
-				.findAddress(UserUtil.getCurrentUser().getCustomer().getCustId(), AddressConstant.TYPE_INVOICE_TO);
+		List<AddressDTO> invoiceToAddress = customerService.findAddress(UserUtil.getCurrentUser().getCustomer().getCustId(),
+				AddressConstant.TYPE_INVOICE_TO);
 
 		/**
 		 * Get first invoice address only
@@ -145,10 +145,8 @@ public class FrontOrderController {
 			String productBuyerGroupId = null;
 
 			// Find product model
-			List<ProductSearchResult> productListNoWithnose = productService.findProductModel(modelId,
-					WithnoseConstant.NO_WITHNOSE_PROTECTION);
-			List<ProductSearchResult> productListWithnose = productService.findProductModel(modelId,
-					WithnoseConstant.WITHNOSE_PROTECTION);
+			List<ProductSearchResult> productListNoWithnose = productService.findProductModel(modelId, WithnoseConstant.NO_WITHNOSE_PROTECTION);
+			List<ProductSearchResult> productListWithnose = productService.findProductModel(modelId, WithnoseConstant.WITHNOSE_PROTECTION);
 
 			model.addAttribute("productListNoWithnose", productListNoWithnose);
 			model.addAttribute("productListWithnose", productListWithnose);
@@ -160,7 +158,7 @@ public class FrontOrderController {
 				log.info("productBuyerGroupId: " + productBuyerGroupId);
 				model.addAttribute("hasWithnoseBoard", "WB".equalsIgnoreCase(productBuyerGroupId));
 			}
-			
+
 			// Find product price
 			String currency = UserUtil.getCurrentUser().getCustomer().getCurrency();
 			if (productListNoWithnose != null && !productListNoWithnose.isEmpty()) {
@@ -174,10 +172,8 @@ public class FrontOrderController {
 			model.addAttribute("productListNoWithnoseLength", productService.findProductLength(productListNoWithnose));
 			model.addAttribute("productListWithnoseLength", productService.findProductLength(productListWithnose));
 
-			HashMap<String, List<ProductSearchResult>> noWithnoseTech = productService
-					.groupProductByTechnology(productListNoWithnose);
-			HashMap<String, List<ProductSearchResult>> withnoseTech = productService
-					.groupProductByTechnology(productListWithnose);
+			HashMap<String, List<ProductSearchResult>> noWithnoseTech = productService.groupProductByTechnology(productListNoWithnose);
+			HashMap<String, List<ProductSearchResult>> withnoseTech = productService.groupProductByTechnology(productListWithnose);
 
 			ArrayList<HashMap<String, List<ProductSearchResult>>> allTech = new ArrayList<>();
 			allTech.add(noWithnoseTech);
@@ -209,8 +205,8 @@ public class FrontOrderController {
 	}
 
 	@RequestMapping(value = "add-to-cart", method = RequestMethod.POST)
-	public @ResponseBody List<ProductDTO> addToCart(Long productId, Long quantity,
-			@ModelAttribute("cart") Map<Long, ProductDTO> cart) throws IllegalArgumentException {
+	public @ResponseBody List<ProductDTO> addToCart(Long productId, Long quantity, @ModelAttribute("cart") Map<Long, ProductDTO> cart)
+			throws IllegalArgumentException {
 
 		log.info("productId = " + productId + "\tquantity = " + quantity);
 
