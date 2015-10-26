@@ -53,40 +53,46 @@
 		<%-- Shopping cart --%>
 		<div class="col-sm-3">
 			<input type="hidden" id="totalQuantity" value="0" />
-			<c:if test="${ not empty showShoppingCart }">
-				<div id="cartItems" onclick="showCartDetails()">
+			<div id="cartItems" onclick="showCartDetails()">
+				<c:if test="${ not empty showShoppingCart }">
+
 					<img alt="shopping cart" id="shoppingCart"
 						src='<c:url value="/images/pages-front/icon/ico_cart.png" />' />
 
 					<%-- Set total quantity: (no_of_item) items --%>
 					<c:set var="totalQuantity" value="0" />
-					<c:if test="${ not empty cart }">
-						<div id="cartDetails" style="display: none;">
-							<div class="row">
-								<div class="col-sm-1">No</div>
-								<div class="col-sm-7">Product Name</div>
-								<div class="col-sm-2">Order</div>
-								<div class="col-sm-2">UOM</div>
-							</div>
+					<div id="cartDetails" style="display: none;">
 
-							<c:forEach var="product" items="${ cart }" varStatus="rowNum">
-								<c:set var="totalQuantity"
-									value="${ totalQuantity + product.value.productQuantity }" />
-								<div class="row product-item-${ product.key }">
-									<div class="col-sm-1">${ rowNum.index + 1 }</div>
-									<div class="col-sm-7">${ product.value.productNameEn }</div>
-									<div class="col-sm-2">${ product.value.productQuantity }</div>
-									<div class="col-sm-2">${ product.value.productUnitId }</div>
+						<c:choose>
+							<c:when test="${ empty cart }">
+								<div style="width: 200px;">No item</div>
+							</c:when>
+							<c:otherwise>
+								<div class="row">
+									<div class="col-sm-1">No</div>
+									<div class="col-sm-7">Product Name</div>
+									<div class="col-sm-2">Order</div>
+									<div class="col-sm-2">UOM</div>
 								</div>
-							</c:forEach>
-						</div>
-					</c:if>
-					<span>(</span> <span id="numOfProduct">${ totalQuantity }</span> <span>)
-						items</span>
-				</div>
+								<c:forEach var="product" items="${ cart }" varStatus="rowNum">
+									<c:set var="totalQuantity"
+										value="${ totalQuantity + product.value.productQuantity }" />
+									<div class="row product-item-${ product.key }">
+										<div class="col-sm-1">${ rowNum.index + 1 }</div>
+										<div class="col-sm-7">${ product.value.productNameEn }</div>
+										<div class="col-sm-2">${ product.value.productQuantity }</div>
+										<div class="col-sm-2">${ product.value.productUnitId }</div>
+									</div>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
 
-
-			</c:if>
+					</div>
+					<span>(</span>
+					<span id="numOfProduct">${ totalQuantity }</span>
+					<span>) items</span>
+				</c:if>
+			</div>
 		</div>
 	</div>
 </sec:authorize>
@@ -94,9 +100,9 @@
 <script type="text/javascript">
 	function showCartDetails() {
 		$("#cartDetails").dialog({
-	        resizable: false,
-	        modal: true,
-	        width:'auto'
+			resizable : false,
+			modal : true,
+			width : 'auto'
 		});
 	}
 </script>
