@@ -289,9 +289,11 @@ public class ProductServiceImpl implements ProductService {
 		for (SearchProductModelDTO result : productList) {
 			ProductPriceDTO price = productPriceDao.findProductPrice(result.getProductCode(), custInvoiceCode);
 			log.info("prict: " + price);
-			result.setProductPrice(price.getAmount());
-			result.setProductCurrency(price.getProductCurrency());
-			result.setProductUnitId(price.getProductUnitId());
+			if (price != null) {
+				result.setProductPrice(price.getAmount());
+				result.setProductCurrency(price.getProductCurrency());
+				result.setProductUnitId(price.getProductUnitId());
+			}
 		}
 	}
 
