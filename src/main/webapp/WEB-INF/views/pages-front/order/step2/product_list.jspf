@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page session="true"%>
 
 <c:choose>
@@ -8,7 +9,7 @@
 
 	<c:otherwise>
 
-		<table class="table table-list">
+		<table class="table table-hover table-list">
 			<thead>
 				<tr>
 					<th>#</th>
@@ -26,12 +27,72 @@
 						<td>${ rowNum.index + 1 }</td>
 						<td>${ product.productCode }</td>
 						<td>${ product.productNameEn }</td>
-						<td></td>
-						<td><input type="text" id="${ product.productId }" /></td>
+						<td><c:choose>
+								<c:when test="${ empty product.productPrice }">
+									TBA
+								</c:when>
+								<c:otherwise>
+									<fmt:formatNumber pattern="#,###.00" maxFractionDigits="2"
+										maxIntegerDigits="12" value="${ product.productPrice }"
+										minFractionDigits="2" minIntegerDigits="1">
+									</fmt:formatNumber>
+										${ product.productCurrency }
+								</c:otherwise>
+							</c:choose></td>
+						<td><input type="text" id="${ product.productId }"
+							name="product-order-number" /></td>
 					</tr>
 
 				</c:forEach>
+
+				<tr>
+					<td colspan="5">
+					
+<!-- 					<input type="button" id="addListToCart" -->
+<!-- 						value="ADD TO CART" onclick="addListToCart()" /> -->
+						
+						</td>
+				</tr>
 			</tbody>
 		</table>
+
+
+
 	</c:otherwise>
 </c:choose>
+
+
+<script type="text/javascript">
+	function addListToCart() {
+		console.log('List search, add to cart');
+		// 		console.log('begin animate');
+		// 		//TODO add animation to shopping cart
+
+		// 		var quantity = $('#quantity').val();
+		// 		console.log('quantity: ' + quantity);
+		// 		if (isValidNumber(quantity)) {
+		// 			if (quantity <= 0) {
+		// 				alert('Quantity must greater than zero');
+		// 				return;
+		// 			}
+		// 			//TODO save product code to shopping cart with quantity
+		// 			var productId = $('#currentProduct').val();
+		// 			var param = {
+		// 				'productId' : productId,
+		// 				'quantity' : quantity
+		// 			};
+
+		// 			$.post('${addToCartUrl}', param).done(function(response) {
+		// 				console.log(response);
+		// 				renderToCart(response);
+		// 			}).fail(function(result) {
+		// 				alert(result.responseText);
+		// 			});
+
+		// 		} else {
+		// 			alert('Please check Quantity.');
+		// 		}
+
+	}
+
+</script>

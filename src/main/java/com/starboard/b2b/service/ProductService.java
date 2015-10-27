@@ -38,13 +38,14 @@ public interface ProductService {
 
 	HashMap<String, ProductSearchResult> findProductLength(List<ProductSearchResult> productListNoWithnose);
 
-	HashMap<String, List<ProductSearchResult>> groupProductByTechnology(
-			List<ProductSearchResult> productListNoWithnose);
+	HashMap<String, List<ProductSearchResult>> groupProductByTechnology(List<ProductSearchResult> productListNoWithnose);
 
-	void findProductPrice(List<ProductSearchResult> productListNoWithnose, String custInvoiceCode);
+	void findProductPrice(List<ProductSearchResult> productList, String custInvoiceCode);
+
+	void findProductPriceList(List<SearchProductModelDTO> productList, String custInvoiceCode);
 
 	String findProductUnit(long productId);
-	
+
 	ProductDTO findById(Long productId);
 
 }

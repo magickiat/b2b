@@ -51,13 +51,12 @@ public class ProductDaoImpl implements ProductDao {
 	public SearchResult<SearchProductModelDTO> search(CommonSearchRequest<SearchProductForm> req) {
 
 		StringBuffer sbQuery = new StringBuffer(
-				"SELECT new com.starboard.b2b.dto.search.SearchProductModelDTO(p.productId, p.productCode, p.productPictureMedium, p.productModelId, m.productModelName, p.productNameEn) ");
+				"SELECT new com.starboard.b2b.dto.search.SearchProductModelDTO(p.productId, p.productCode, p.productPictureMedium, p.productModelId, m.productModelName, p.productNameEn, p.productPrice, p.productUnitId, p.productCurrency) ");
 		StringBuffer sbTotal = new StringBuffer("select count(distinct p.productModelId ) ");
 
 		// common query
 		StringBuffer sb = new StringBuffer();
-		sb.append(
-				"FROM Product p, ProductBuyerGroup pbg, ProductModel m where p.productBuyerGroupId = pbg.productBuyerGroupId ");
+		sb.append("FROM Product p, ProductBuyerGroup pbg, ProductModel m where p.productBuyerGroupId = pbg.productBuyerGroupId ");
 
 		sb.append("and p.productModelId = m.productModelId ");
 		sb.append("and p.isActive = 1 ");
@@ -100,7 +99,7 @@ public class ProductDaoImpl implements ProductDao {
 		// Set common query
 		sbTotal.append(sb);
 
-		if("image".equals(req.getCondition().getShowType())){
+		if ("image".equals(req.getCondition().getShowType())) {
 			sb.append(" GROUP BY p.productModelId ");
 		}
 		sb.append(" ORDER BY pbg.seq, p.productCode ");
@@ -170,8 +169,7 @@ public class ProductDaoImpl implements ProductDao {
 		sb.append(" AND p.productPreintro = :withnose");
 		sb.append(" ORDER BY p.productTechnologyId , p.productIntro ASC");
 
-		List list = sf.getCurrentSession().createQuery(sb.toString()).setString("modelId", modelId)
-				.setString("withnose", withnoseProtection).list();
+		List list = sf.getCurrentSession().createQuery(sb.toString()).setString("modelId", modelId).setString("withnose", withnoseProtection).list();
 
 		log.info("result size: " + (list == null ? 0 : list.size()));
 

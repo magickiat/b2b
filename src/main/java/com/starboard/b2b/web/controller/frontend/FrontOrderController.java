@@ -113,7 +113,7 @@ public class FrontOrderController {
 
 		return "pages-front/order/step2_search";
 	}
-	
+
 	@RequestMapping(value = "step2/search-action", method = RequestMethod.GET)
 	String step2SearchAction(@ModelAttribute SearchProductForm form, Model model) {
 		log.info("search condition: " + form.toString());
@@ -123,6 +123,10 @@ public class FrontOrderController {
 
 		setSearchCondition(form, model);
 		Page<SearchProductModelDTO> resultPage = productService.searchProduct(form);
+		if ("list".equals(form.getShowType())) {
+			log.info("Find product price, search type 'List'");
+			productService.findProductPriceList(resultPage.getResult(), UserUtil.getCurrentUser().getCustomer().getInvoiceCode());
+		}
 		model.addAttribute("resultPage", resultPage);
 
 		return "pages-front/order/step2_search";

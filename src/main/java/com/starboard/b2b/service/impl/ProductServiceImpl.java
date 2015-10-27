@@ -224,7 +224,7 @@ public class ProductServiceImpl implements ProductService {
 				imgPath = imgPath.substring(7);
 			}
 
-//			log.info("imgPath = " + imgPath);
+			// log.info("imgPath = " + imgPath);
 
 			File img = new File(uploadPath, imgPath);
 			if (!img.exists()) {
@@ -279,6 +279,19 @@ public class ProductServiceImpl implements ProductService {
 			ProductPriceDTO price = productPriceDao.findProductPrice(result.getProduct().getProductCode(), custInvoiceCode);
 			log.info("prict: " + price);
 			result.setPrice(price);
+		}
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public void findProductPriceList(List<SearchProductModelDTO> productList, String custInvoiceCode) {
+		log.info("findProductPrice:");
+		for (SearchProductModelDTO result : productList) {
+			ProductPriceDTO price = productPriceDao.findProductPrice(result.getProductCode(), custInvoiceCode);
+			log.info("prict: " + price);
+			result.setProductPrice(price.getAmount());
+			result.setProductCurrency(price.getProductCurrency());
+			result.setProductUnitId(price.getProductUnitId());
 		}
 	}
 
