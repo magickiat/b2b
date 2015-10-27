@@ -3,17 +3,18 @@ package com.starboard.b2b.dto.search;
 public class SearchProductModelDTO {
 	private long productId;
 	private String productCode;
+	private String productNameEn;
 	private String productPictureMedium;
 	private String productModelId;
 	private String productModelName;
 
-	public SearchProductModelDTO(long productId, String productCode, String productPictureMedium, String productModelId,
-			String productModelName) {
+	public SearchProductModelDTO(long productId, String productCode, String productPictureMedium, String productModelId, String productModelName, String productNameEn) {
 		this.productId = productId;
 		this.productCode = productCode;
 		this.productPictureMedium = productPictureMedium;
 		this.productModelId = productModelId;
 		this.productModelName = productModelName;
+		this.productNameEn = productNameEn;
 	}
 
 	public long getProductId() {
@@ -54,5 +55,13 @@ public class SearchProductModelDTO {
 
 	public void setProductPictureMedium(String productPictureMedium) {
 		this.productPictureMedium = productPictureMedium;
+	}
+
+	public String getProductNameEn() {
+		return productNameEn;
+	}
+
+	public void setProductNameEn(String productNameEn) {
+		this.productNameEn = productNameEn;
 	}
 }

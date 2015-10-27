@@ -113,7 +113,7 @@ public class FrontOrderController {
 
 		return "pages-front/order/step2_search";
 	}
-
+	
 	@RequestMapping(value = "step2/search-action", method = RequestMethod.GET)
 	String step2SearchAction(@ModelAttribute SearchProductForm form, Model model) {
 		log.info("search condition: " + form.toString());

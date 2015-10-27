@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.search.CommonSearchRequest;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
@@ -52,7 +51,7 @@ public class ProductDaoImpl implements ProductDao {
 	public SearchResult<SearchProductModelDTO> search(CommonSearchRequest<SearchProductForm> req) {
 
 		StringBuffer sbQuery = new StringBuffer(
-				"SELECT new com.starboard.b2b.dto.search.SearchProductModelDTO(p.productId, p.productCode, p.productPictureMedium, p.productModelId, m.productModelName) ");
+				"SELECT new com.starboard.b2b.dto.search.SearchProductModelDTO(p.productId, p.productCode, p.productPictureMedium, p.productModelId, m.productModelName, p.productNameEn) ");
 		StringBuffer sbTotal = new StringBuffer("select count(distinct p.productModelId ) ");
 
 		// common query
@@ -101,7 +100,10 @@ public class ProductDaoImpl implements ProductDao {
 		// Set common query
 		sbTotal.append(sb);
 
-		sb.append("GROUP BY p.productModelId ");
+		if("image".equals(req.getCondition().getShowType())){
+			sb.append(" GROUP BY p.productModelId ");
+		}
+		sb.append(" ORDER BY pbg.seq, p.productCode ");
 		sbQuery.append(sb);
 
 		// create query and set parameter

@@ -113,10 +113,10 @@
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label class="radio-inline"> <form:radiobutton
-									path="showType" value="image" />Images
-							</label> <label class="radio-inline"><form:radiobutton
-									path="showType" value="list" />List</label>
+							<label class="radio-inline"><form:radiobutton
+									path="showType" value="image" onclick="searchPage(1)" />Images </label> <label
+								class="radio-inline"><form:radiobutton path="showType"
+									value="list" onclick="searchPage(1)" />List</label>
 						</div>
 					</div>
 
@@ -131,7 +131,15 @@
 		</div>
 
 		<%-- List product model --%>
-			<%@include file="step2/list_product.jspf"%>
+		<c:choose>
+			<c:when test="${ searchProductForm.showType == 'image' }">
+				<%@include file="step2/product_image.jspf"%>
+			</c:when>
+			<c:otherwise>
+				<%@include file="step2/product_list.jspf"%>
+			</c:otherwise>
+		</c:choose>
+
 
 
 		<%-- Lower Paging --%>
@@ -152,10 +160,7 @@
 		}
 
 		function resetSearch() {
-			window
-					.open(
-							'<c:url value="/frontend/order/step2/search" />?brand_id=${searchProductForm.brandId}',
-							'_self');
+			window.open('<c:url value="/frontend/order/step2/search" />?brand_id=${searchProductForm.brandId}','_self');
 		}
 	</script>
 
