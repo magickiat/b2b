@@ -64,7 +64,7 @@
 	<script
 		src='<c:url value="/scripts/zoom/jquery.elevateZoom-3.0.8.min.js" />'></script>
 
-
+	<c:url var="addToCartUrl" value="/frontend/order/add-to-cart" />
 	<script type="text/javascript">
 		$(document).ready(
 				function() {
@@ -205,6 +205,10 @@
 					'productId' : productId,
 					'quantity' : quantity
 				};
+
+				console.log('productId = ' + productId);
+
+				console.log("calling url: ${addToCartUrl}");
 
 				$.post('${addToCartUrl}', param).done(function(response) {
 					console.log(response);
