@@ -129,13 +129,13 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public List<ProductBuyerGroupDTO> findAllProductBuyerGroup(Long brandId) {
+	public List<ProductBuyerGroupDTO> findProductBuyerGroupByBrandId(Long brandId) {
 		List<ProductBuyerGroupDTO> result = new ArrayList<>();
 
 		List<ProductBuyerGroup> list = null;
-		if(brandId == null){
+		if (brandId == null) {
 			list = productBuyerGroupDao.findAll();
-		}else{
+		} else {
 			list = productBuyerGroupDao.findByBrandId(brandId);
 		}
 		for (ProductBuyerGroup productBuyerGroup : list) {
@@ -149,7 +149,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public List<ProductTypeDTO> findAllProductType(Long brandGroupId) {
+	public List<ProductTypeDTO> findProductTypeByBrandId(Long brandGroupId) {
 		log.info("findAllProductType brandGroupId: " + brandGroupId);
 
 		List<ProductTypeDTO> result = new ArrayList<>();
@@ -321,6 +321,30 @@ public class ProductServiceImpl implements ProductService {
 			BeanUtils.copyProperties(product, dto);
 		}
 		return dto;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<ProductBuyerGroupDTO> findProductBuyerGroupByProductType(List<ProductTypeDTO> productType) {
+		List<ProductBuyerGroupDTO> result = new ArrayList<>();
+
+		List<ProductBuyerGroup> list = null;
+		if (productType == null || productType.isEmpty()) {
+			list = productBuyerGroupDao.findAll();
+		} else {
+			ArrayList<Long> productTypeList = new ArrayList<>();
+			for (ProductTypeDTO productTypeDTO : productType) {
+				productTypeList.add(productTypeDTO.getProductTypeId());
+			}
+			list = productBuyerGroupDao.findByProductType(productTypeList);
+		}
+		for (ProductBuyerGroup productBuyerGroup : list) {
+			ProductBuyerGroupDTO dto = new ProductBuyerGroupDTO();
+			BeanUtils.copyProperties(productBuyerGroup, dto);
+			result.add(dto);
+		}
+
+		return result;
 	}
 
 }

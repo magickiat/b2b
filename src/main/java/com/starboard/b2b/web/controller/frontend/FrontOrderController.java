@@ -27,8 +27,10 @@ import com.starboard.b2b.common.Page;
 import com.starboard.b2b.common.WithnoseConstant;
 import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
+import com.starboard.b2b.dto.ProductBuyerGroupDTO;
 import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ProductSearchResult;
+import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.service.BrandService;
 import com.starboard.b2b.service.CountryService;
@@ -202,13 +204,19 @@ public class FrontOrderController {
 	}
 
 	private void setSearchCondition(SearchProductForm form, Model model) {
-		model.addAttribute("productType", productService.findAllProductType(form.getBrandId()));
+		List<ProductTypeDTO> productTypes = productService.findProductTypeByBrandId(form.getBrandId());
+		model.addAttribute("productType", productTypes);
 
-		Long brandId = null;
+		// when all product type, find with relate product type
+		List<ProductBuyerGroupDTO> productBuyerGroups = null;
 		if (form.getSelectedBrand() != null && !"".equals(form.getSelectedBrand().trim())) {
-			brandId = new Long(form.getSelectedBrand());
+			Long brandId = new Long(form.getSelectedBrand());
+			productBuyerGroups = productService.findProductBuyerGroupByBrandId(brandId);
+		} else {
+			productBuyerGroups = productService.findProductBuyerGroupByProductType(productTypes);
 		}
-		model.addAttribute("productBuyerGroup", productService.findAllProductBuyerGroup(brandId));
+
+		model.addAttribute("productBuyerGroup", productBuyerGroups);
 		model.addAttribute("productModel", productService.findAllProductModel());
 		model.addAttribute("productYear", productService.findAllProductYear());
 		model.addAttribute("productTechnology", productService.findAllProductTechnology());
@@ -326,10 +334,11 @@ public class FrontOrderController {
 		return "pages-front/order/summary";
 	}
 
-//	@ExceptionHandler(IllegalArgumentException.class)
-//	public @ResponseBody String handleException(Exception e, HttpServletResponse response) {
-//		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-//		return e.getMessage();
-//	}
+	// @ExceptionHandler(IllegalArgumentException.class)
+	// public @ResponseBody String handleException(Exception e,
+	// HttpServletResponse response) {
+	// response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+	// return e.getMessage();
+	// }
 
 }

@@ -30,4 +30,15 @@ public class ProductBuyerGroupDaoImpl implements ProductBuyerGroupDao {
 		return sf.getCurrentSession().createQuery(sb.toString()).setLong("productTypeId", brandId).list();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ProductBuyerGroup> findByProductType(List<Long> productType) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("from ProductBuyerGroup bg ");
+		sb.append("where bg.productBuyerGroupId in ");
+		sb.append("( select distinct p.productBuyerGroupId from Product p where p.productTypeId IN ( :productTypeId) )");
+
+		return sf.getCurrentSession().createQuery(sb.toString()).setParameterList("productTypeId", productType).list();
+	}
+
 }
