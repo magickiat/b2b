@@ -63,7 +63,7 @@ public class ProductDaoImpl implements ProductDao {
 
 		SearchProductForm condition = req.getCondition();
 		if (condition != null) {
-			if (StringUtils.isNotEmpty(condition.getSelectedBrand())) {
+			if (StringUtils.isNotEmpty(condition.getSelectedBrand()) ) {
 				sb.append("and p.productTypeId = :productTypeId ");
 			} else {
 				sb.append(

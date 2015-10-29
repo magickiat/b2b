@@ -30,3 +30,5 @@ where `product_model`.`product_model_id` is not null or `product_model`.`product
 ;
 
 DELETE FROM `b2b`.`product_model` WHERE `product_model_id`='';
+
+update `b2b`.`product_model` set image = replace(image, 'png', 'jpg');

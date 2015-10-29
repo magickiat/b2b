@@ -7,6 +7,11 @@
 <jsp:useBean id="stringUtil" class="com.starboard.b2b.util.StringUtil"
 	scope="request"></jsp:useBean>
 
+
+<div id="indicator" style="display: none;">
+	<img src='<c:url value="/images/icon/loading_icon.gif" />' />
+</div>
+
 <div class="row">
 	<nav class="navbar">
 		<ul class="nav navbar-nav">

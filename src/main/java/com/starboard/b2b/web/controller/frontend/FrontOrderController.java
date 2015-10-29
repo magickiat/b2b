@@ -203,7 +203,12 @@ public class FrontOrderController {
 
 	private void setSearchCondition(SearchProductForm form, Model model) {
 		model.addAttribute("productType", productService.findAllProductType(form.getBrandId()));
-		model.addAttribute("productBuyerGroup", productService.findAllProductBuyerGroup());
+
+		Long brandId = null;
+		if (form.getSelectedBrand() != null && !"".equals(form.getSelectedBrand().trim())) {
+			brandId = new Long(form.getSelectedBrand());
+		}
+		model.addAttribute("productBuyerGroup", productService.findAllProductBuyerGroup(brandId));
 		model.addAttribute("productModel", productService.findAllProductModel());
 		model.addAttribute("productYear", productService.findAllProductYear());
 		model.addAttribute("productTechnology", productService.findAllProductTechnology());
@@ -321,10 +326,10 @@ public class FrontOrderController {
 		return "pages-front/order/summary";
 	}
 
-	@ExceptionHandler(IllegalArgumentException.class)
-	public @ResponseBody String handleException(Exception e, HttpServletResponse response) {
-		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		return e.getMessage();
-	}
+//	@ExceptionHandler(IllegalArgumentException.class)
+//	public @ResponseBody String handleException(Exception e, HttpServletResponse response) {
+//		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+//		return e.getMessage();
+//	}
 
 }

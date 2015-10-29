@@ -42,7 +42,7 @@
 					<div class="col-md-2">
 						<div class="form-group">
 							<form:select path="selectedBrand" cssClass="form-control"
-								multiple="false">
+								multiple="false" onchange="loadBuyerGroup(this)">
 								<form:option value="" label="ALL BRAND" />
 								<form:options items="${productType}" itemLabel="productTypeName"
 									itemValue="productTypeId" />
@@ -164,6 +164,14 @@
 					.open(
 							'<c:url value="/frontend/order/step2/search" />?brand_id=${searchProductForm.brandId}',
 							'_self');
+		}
+		
+		
+		$("#drop").change(function () {
+			
+		});
+		function loadBuyerGroup(brandId){
+			$('#searchProductModelForm').submit();
 		}
 
 		$('input[name=product-order-number]').keypress(function(e) {

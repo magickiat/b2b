@@ -28,7 +28,7 @@ public interface ProductService {
 
 	List<ProductTechnologyDTO> findAllProductTechnology();
 
-	List<ProductBuyerGroupDTO> findAllProductBuyerGroup();
+	List<ProductBuyerGroupDTO> findAllProductBuyerGroup(Long selectedBrandId);
 
 	Page<SearchProductModelDTO> searchProduct(SearchProductForm searchProductForm);
 

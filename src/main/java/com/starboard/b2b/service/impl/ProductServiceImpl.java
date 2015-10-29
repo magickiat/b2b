@@ -129,10 +129,15 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public List<ProductBuyerGroupDTO> findAllProductBuyerGroup() {
+	public List<ProductBuyerGroupDTO> findAllProductBuyerGroup(Long brandId) {
 		List<ProductBuyerGroupDTO> result = new ArrayList<>();
 
-		List<ProductBuyerGroup> list = productBuyerGroupDao.findAll();
+		List<ProductBuyerGroup> list = null;
+		if(brandId == null){
+			list = productBuyerGroupDao.findAll();
+		}else{
+			list = productBuyerGroupDao.findByBrandId(brandId);
+		}
 		for (ProductBuyerGroup productBuyerGroup : list) {
 			ProductBuyerGroupDTO dto = new ProductBuyerGroupDTO();
 			BeanUtils.copyProperties(productBuyerGroup, dto);
