@@ -40,59 +40,50 @@
 								</c:otherwise>
 							</c:choose></td>
 						<td><input type="text" id="${ product.productId }"
-							name="product-order-number" /></td>
+							name="product-order-number" maxlength="12" /></td>
 					</tr>
 
 				</c:forEach>
 
-				<tr>
-					<td colspan="5">
-					
-<!-- 					<input type="button" id="addListToCart" -->
-<!-- 						value="ADD TO CART" onclick="addListToCart()" /> -->
-						
-						</td>
-				</tr>
 			</tbody>
 		</table>
-
+		<div align="center">
+			<input type="button" id="addListToCart" class="btn btn-success"
+				value="ADD TO CART" max="12" onclick="addListToCart()" />
+		</div>
 
 
 	</c:otherwise>
 </c:choose>
 
-
+<c:url var="addListToCartUrl" value="/frontend/order/add-list-to-cart" />
 <script type="text/javascript">
 	function addListToCart() {
-		console.log('List search, add to cart');
-		// 		console.log('begin animate');
-		// 		//TODO add animation to shopping cart
+		console.log('add list to cart');
 
-		// 		var quantity = $('#quantity').val();
-		// 		console.log('quantity: ' + quantity);
-		// 		if (isValidNumber(quantity)) {
-		// 			if (quantity <= 0) {
-		// 				alert('Quantity must greater than zero');
-		// 				return;
-		// 			}
-		// 			//TODO save product code to shopping cart with quantity
-		// 			var productId = $('#currentProduct').val();
-		// 			var param = {
-		// 				'productId' : productId,
-		// 				'quantity' : quantity
-		// 			};
+		var array = [];
+		$('input[name=product-order-number]').each(function() {
+			if ($(this).val()) {
+				array.push({
+					productId : $(this).attr('id'),
+					quantity : $(this).val()
+				});
+			}
+		});
 
-		// 			$.post('${addToCartUrl}', param).done(function(response) {
-		// 				console.log(response);
-		// 				renderToCart(response);
-		// 			}).fail(function(result) {
-		// 				alert(result.responseText);
-		// 			});
+		if (jQuery.isEmptyObject(array)) {
+			console.log('nothing input');
+		} else {
+			var jsonString = JSON.stringify(array);
+			console.log(jsonString);
 
-		// 		} else {
-		// 			alert('Please check Quantity.');
-		// 		}
+			$.post('${addListToCartUrl}', jsonString).done(function(response) {
+				console.log(response);
+				renderToCart(response);
+			}).fail(function(result) {
+				alert(result.responseText);
+			});
+		}
 
 	}
-
 </script>

@@ -65,9 +65,6 @@
 		src='<c:url value="/scripts/zoom/jquery.elevateZoom-3.0.8.min.js" />'></script>
 
 
-	<c:url var="addToCartUrl" value="/frontend/order/add-to-cart" />
-	<c:url var="testAjaxUrl" value="/frontend/order/test-ajax" />
-
 	<script type="text/javascript">
 		$(document).ready(
 				function() {

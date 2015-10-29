@@ -183,8 +183,8 @@ public class ProductServiceImpl implements ProductService {
 
 		for (SearchProductModelDTO dto : resultList) {
 			// log.info("" + dto.getProductModelName());
-			if (StringUtils.isNotEmpty(dto.getProductPictureMedium())) {
-				String filename = dto.getProductPictureMedium();
+			if (StringUtils.isNotEmpty(dto.getModelImage())) {
+				String filename = dto.getModelImage();
 				if (filename.startsWith("/upload/")) {
 					filename = filename.substring("/upload/".length());
 				}
@@ -192,7 +192,7 @@ public class ProductServiceImpl implements ProductService {
 				// When not found, set null to use default image
 				File img = new File(uploadPath, filename);
 				if (!img.exists()) {
-					dto.setProductPictureMedium(null);
+					dto.setModelImage(null);
 				}
 			}
 		}

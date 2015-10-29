@@ -12,9 +12,10 @@ public class SearchProductModelDTO {
 	private BigDecimal productPrice;
 	private String productUnitId;
 	private String productCurrency;
+	private String modelImage;
 
 	public SearchProductModelDTO(long productId, String productCode, String productPictureMedium, String productModelId, String productModelName,
-			String productNameEn, BigDecimal productPrice, String productUnitId, String productCurrency) {
+			String productNameEn, BigDecimal productPrice, String productUnitId, String productCurrency, String modelImage) {
 		this.productId = productId;
 		this.productCode = productCode;
 		this.productPictureMedium = productPictureMedium;
@@ -23,6 +24,7 @@ public class SearchProductModelDTO {
 		this.productNameEn = productNameEn;
 		this.productPrice = productPrice;
 		this.productUnitId = productUnitId;
+		this.modelImage = modelImage;
 	}
 
 	public long getProductId() {
@@ -95,5 +97,13 @@ public class SearchProductModelDTO {
 
 	public void setProductCurrency(String productCurrency) {
 		this.productCurrency = productCurrency;
+	}
+
+	public String getModelImage() {
+		return modelImage;
+	}
+
+	public void setModelImage(String modelImage) {
+		this.modelImage = modelImage;
 	}
 }

@@ -114,9 +114,9 @@
 					<div class="col-md-3">
 						<div class="form-group">
 							<label class="radio-inline"><form:radiobutton
-									path="showType" value="image" onclick="searchPage(1)" />Images </label> <label
-								class="radio-inline"><form:radiobutton path="showType"
-									value="list" onclick="searchPage(1)" />List</label>
+									path="showType" value="image" onclick="searchPage(1)" />Images
+							</label> <label class="radio-inline"><form:radiobutton
+									path="showType" value="list" onclick="searchPage(1)" />List</label>
 						</div>
 					</div>
 
@@ -160,8 +160,17 @@
 		}
 
 		function resetSearch() {
-			window.open('<c:url value="/frontend/order/step2/search" />?brand_id=${searchProductForm.brandId}','_self');
+			window
+					.open(
+							'<c:url value="/frontend/order/step2/search" />?brand_id=${searchProductForm.brandId}',
+							'_self');
 		}
+
+		$('input[name=product-order-number]').keypress(function(e) {
+			return e.charCode === 0 || /\d/.test(String.fromCharCode(e.charCode));
+		}).on("cut copy paste", function(e) {
+			e.preventDefault();
+		});
 	</script>
 
 </body>

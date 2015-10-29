@@ -51,6 +51,14 @@ public class ProductDTO {
 	private String productPictureMedium;
 	private String productPictureBig;
 
+	public ProductDTO() {
+	}
+
+	public ProductDTO(Long productId, Long quantity) {
+		this.productId = productId;
+		this.productQuantity  = quantity;
+	}
+
 	public long getProductId() {
 		return productId;
 	}

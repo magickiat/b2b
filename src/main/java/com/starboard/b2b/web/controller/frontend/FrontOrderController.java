@@ -259,6 +259,53 @@ public class FrontOrderController {
 		return result;
 	}
 
+	@RequestMapping(value = "add-list-to-cart", method = RequestMethod.POST)
+	public @ResponseBody List<ProductDTO> addToCart(@ModelAttribute("products") ProductDTO[] products,
+			@ModelAttribute("cart") Map<Long, ProductDTO> cart) throws IllegalArgumentException {
+
+		for (ProductDTO productDTO : products) {
+			long quantity = productDTO.getProductQuantity();
+			long productId = productDTO.getProductId();
+
+			// Validat Quantity
+			if (quantity <= 0) {
+				throw new IllegalArgumentException("Quantity must over than zero.");
+			}
+			if (quantity > Integer.MAX_VALUE) {
+				throw new IllegalArgumentException("Quantity is huge, please contact Administrator.");
+			}
+
+			// Validate Product
+
+			// validate exist product
+			ProductDTO product = productService.findById(productId);
+
+			if (product == null || product.getProductCode() == null) {
+				throw new IllegalArgumentException("Invalid product id");
+			}
+
+			// get exist product in cart
+			ProductDTO productInCart = cart.get(productId);
+			if (productInCart == null) {
+				productInCart = product;
+				cart.put(productId, productInCart);
+			} else {
+				quantity += productInCart.getProductQuantity();
+			}
+
+			productInCart.setProductQuantity(quantity);
+		}
+
+		ArrayList<ProductDTO> result = new ArrayList<>();
+		Set<Long> keySet = cart.keySet();
+		for (Long key : keySet) {
+			result.add(cart.get(key));
+		}
+
+		result.trimToSize();
+		return result;
+	}
+
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	String createOrderForm(Model model) {
 		return "pages-front/order/create";

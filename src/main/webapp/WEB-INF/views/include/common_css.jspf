@@ -77,8 +77,12 @@ div.menu-link {
 	color: #6e1a1a;
 }
 
-#cartItems{
+#cartItems {
 	cursor: pointer;
+}
+
+#addListToCart {
+	margin-top: 15px;
 }
 -->
 </style>

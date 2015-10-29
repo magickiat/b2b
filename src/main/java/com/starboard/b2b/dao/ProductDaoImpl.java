@@ -51,7 +51,7 @@ public class ProductDaoImpl implements ProductDao {
 	public SearchResult<SearchProductModelDTO> search(CommonSearchRequest<SearchProductForm> req) {
 
 		StringBuffer sbQuery = new StringBuffer(
-				"SELECT new com.starboard.b2b.dto.search.SearchProductModelDTO(p.productId, p.productCode, p.productPictureMedium, p.productModelId, m.productModelName, p.productNameEn, p.productPrice, p.productUnitId, p.productCurrency) ");
+				"SELECT new com.starboard.b2b.dto.search.SearchProductModelDTO(p.productId, p.productCode, p.productPictureMedium, p.productModelId, m.productModelName, p.productNameEn, p.productPrice, p.productUnitId, p.productCurrency, m.image) ");
 		StringBuffer sbTotal = new StringBuffer("select count(distinct p.productModelId ) ");
 
 		// common query

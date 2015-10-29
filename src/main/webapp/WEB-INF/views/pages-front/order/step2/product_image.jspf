@@ -14,11 +14,11 @@
 
 				<%-- Check if not found image, use default image --%>
 				<c:choose>
-					<c:when test="${empty product.productPictureMedium }">
+					<c:when test="${empty product.modelImage }">
 						<c:set var="imageUrl" value="/images/b2b/default_image.jpg" />
 					</c:when>
 					<c:otherwise>
-						<c:set var="imageUrl" value="${ product.productPictureMedium }" />
+						<c:set var="imageUrl" value="${ product.modelImage }" />
 					</c:otherwise>
 				</c:choose>
 				<c:url var="productUrl" value="${ imageUrl }" />
