@@ -28,13 +28,12 @@
 						<td>${ product.productCode }</td>
 						<td>${ product.productNameEn }</td>
 						<td><c:choose>
-								<c:when test="${ empty product.productPrice }">
+								<c:when test="${ empty product.productPrice}">
 									TBA
 								</c:when>
 								<c:otherwise>
-									<fmt:formatNumber pattern="#,###.00" maxFractionDigits="2"
-										maxIntegerDigits="12" value="${ product.productPrice }"
-										minFractionDigits="2" minIntegerDigits="1">
+									<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
+										value="${ product.productPrice }">
 									</fmt:formatNumber>
 										${ product.productCurrency }
 								</c:otherwise>
@@ -104,7 +103,6 @@
 					'productId' : item.productId,
 					'quantity' : item.productQuantity
 				};
-
 
 				console.log("calling url: ${addToCartUrl}");
 
