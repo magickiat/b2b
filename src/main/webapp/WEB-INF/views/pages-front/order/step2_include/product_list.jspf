@@ -40,7 +40,8 @@
 								</c:otherwise>
 							</c:choose></td>
 						<td><input type="text" id="${ product.productId }"
-							name="product-order-number" maxlength="12" /></td>
+							name="product-order-number" class="form-control numberOnly"
+							maxlength="12" /></td>
 					</tr>
 
 				</c:forEach>
@@ -65,8 +66,8 @@
 		$('input[name=product-order-number]').each(function() {
 			if ($(this).val()) {
 				array.push({
-					productId : $(this).attr('id'),
-					quantity : $(this).val()
+					"productId" : parseInt($(this).attr('id')),
+					"productQuantity" : parseInt($(this).val())
 				});
 			}
 		});
@@ -74,15 +75,57 @@
 		if (jQuery.isEmptyObject(array)) {
 			console.log('nothing input');
 		} else {
-			var jsonString = JSON.stringify(array);
-			console.log(jsonString);
 
-			$.post('${addListToCartUrl}', jsonString).done(function(response) {
+			/* $.ajax({
+				url : '${addListToCartUrl}',
+				type : 'POST',
+				dataType : 'json',
+				data : JSON.stringify({
+					"products" : array
+				}),
+				headers: { 
+				    'Accept': 'application/json',
+				    'Content-Type': 'application/json' 
+				},
+				success : function(data) {
+					console.log(data);
+					renderToCart(data);
+				},
+				error : function(data, status, er) {
+					console.log(data.responseText);
+					alert(data.responseText);
+				}
+			}); */
+
+			$.each(array, function(index, item) {
+				console.log(item.productId);
+
+				var param = {
+					'productId' : item.productId,
+					'quantity' : item.productQuantity
+				};
+
+
+				console.log("calling url: ${addToCartUrl}");
+
+				$.post('${addToCartUrl}', param).done(function(response) {
+					console.log(response);
+					renderToCart(response);
+				}).fail(function(result) {
+					alert(result.responseText);
+					return;
+				});
+
+			});
+			/* 
+			$.post('${addListToCartUrl}', JSON.stringify({
+				"products" : array
+			}), 'application/json').done(function(response) {
 				console.log(response);
 				renderToCart(response);
 			}).fail(function(result) {
 				alert(result.responseText);
-			});
+			}); */
 		}
 
 	}

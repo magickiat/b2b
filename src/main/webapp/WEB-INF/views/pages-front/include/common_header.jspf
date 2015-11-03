@@ -8,6 +8,11 @@
 	scope="request"></jsp:useBean>
 
 
+<%-- common url --%>
+<c:url var="addToCartUrl" value="/frontend/order/add-to-cart" />
+
+
+
 <div id="indicator" style="display: none;">
 	<img src='<c:url value="/images/icon/loading_icon.gif" />' />
 </div>

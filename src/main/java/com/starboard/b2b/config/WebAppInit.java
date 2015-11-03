@@ -31,7 +31,7 @@ public class WebAppInit extends AbstractAnnotationConfigDispatcherServletInitial
 
 	@Override
 	protected Filter[] getServletFilters() {
-		return new Filter[] { new HiddenHttpMethodFilter(), new MultipartFilter(), new OpenSessionInViewFilter() };
+		return new Filter[] { new HiddenHttpMethodFilter(), new MultipartFilter()};
 	}
 
 }

@@ -56,12 +56,12 @@
 		$
 				.each(
 						data,
-						function(index) {
-							var productName = data[index].productNameEn;
-							var quantity = data[index].productQuantity;
-							var productUnitId = data[index].productUnitId;
+						function(index, item) {
+							var productName = item.productNameEn;
+							var quantity = item.productQuantity;
+							var productUnitId = item.productUnitId;
 
-							row += '<div class="row product-item-'+ data[index].productId +'">';
+							row += '<div class="row product-item-'+ item.productId +'">';
 
 							row += '<div class="col-sm-1">';
 							row += (index + 1);
@@ -81,10 +81,7 @@
 
 							row += '</div>';
 
-							console.log(productName + '\t' + quantity);
 							totalQuantity = totalQuantity + (+quantity);
-							console.log('quantity = ' + quantity);
-							console.log('total quantity = ' + totalQuantity);
 						});
 		$('#cartDetails').html(row);
 		addQuantity(totalQuantity);
@@ -97,4 +94,12 @@
 		$('#numOfProduct').text(num);
 		$('#totalQuantity').val(quantity);
 	}
+	
+	$('.numberOnly').keypress(function(e) {
+		return e.charCode === 0 || /\d/.test(String.fromCharCode(e.charCode));
+	}).on("cut copy paste", function(e) {
+		e.preventDefault();
+	});
+	
+	
 </script>

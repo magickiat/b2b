@@ -1,7 +1,14 @@
 
 package com.starboard.b2b.dto;
 
-public class ProductDTO {
+import java.io.Serializable;
+
+public class ProductDTO implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private long productId;
 
@@ -50,15 +57,15 @@ public class ProductDTO {
 	private String productPictureSmallVertical;
 	private String productPictureMedium;
 	private String productPictureBig;
-
+	
 	public ProductDTO() {
 	}
-
-	public ProductDTO(Long productId, Long quantity) {
+	
+	public ProductDTO(Long productId, Long productQuantity) {
 		this.productId = productId;
-		this.productQuantity  = quantity;
+		this.productQuantity = productQuantity;
 	}
-
+	
 	public long getProductId() {
 		return productId;
 	}

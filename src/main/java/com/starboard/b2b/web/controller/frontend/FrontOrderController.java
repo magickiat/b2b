@@ -6,16 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +27,7 @@ import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
 import com.starboard.b2b.dto.ProductBuyerGroupDTO;
 import com.starboard.b2b.dto.ProductDTO;
+import com.starboard.b2b.dto.ProductDtoWrapper;
 import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
@@ -223,8 +222,8 @@ public class FrontOrderController {
 	}
 
 	@RequestMapping(value = "add-to-cart", method = RequestMethod.POST)
-	public @ResponseBody List<ProductDTO> addToCart(Long productId, Long quantity, @ModelAttribute("cart") Map<Long, ProductDTO> cart)
-			throws IllegalArgumentException {
+	public @ResponseBody List<ProductDTO> addToCart(@RequestParam Long productId, @RequestParam Long quantity,
+			@ModelAttribute("cart") Map<Long, ProductDTO> cart) throws IllegalArgumentException {
 
 		log.info("productId = " + productId + "\tquantity = " + quantity);
 
@@ -271,52 +270,61 @@ public class FrontOrderController {
 		result.trimToSize();
 		return result;
 	}
+//
+//	@RequestMapping(value = "add-list-to-cart", method = RequestMethod.POST)
+//	public @ResponseBody List<ProductDTO> addListToCart(@RequestBody ProductDtoWrapper products, @ModelAttribute("cart") Map<Long, ProductDTO> cart)
+//			throws IllegalArgumentException {
+//
+//		List<ProductDTO> list = products.getProducts();
+//		for (ProductDTO productDTO : list) {
+//			long quantity = productDTO.getProductQuantity();
+//			long productId = productDTO.getProductId();
+//
+//			// Validat Quantity
+//			if (quantity <= 0) {
+//				throw new IllegalArgumentException("Quantity must over than zero.");
+//			}
+//			if (quantity > Integer.MAX_VALUE) {
+//				throw new IllegalArgumentException("Quantity is huge, please contact Administrator.");
+//			}
+//
+//			// Validate Product
+//
+//			// validate exist product
+//			ProductDTO product = productService.findById(productId);
+//
+//			if (product == null || product.getProductCode() == null) {
+//				throw new IllegalArgumentException("Invalid product id");
+//			}
+//
+//			// get exist product in cart
+//			ProductDTO productInCart = cart.get(productId);
+//			if (productInCart == null) {
+//				productInCart = product;
+//				cart.put(productId, productInCart);
+//			} else {
+//				quantity += productInCart.getProductQuantity();
+//			}
+//
+//			productInCart.setProductQuantity(quantity);
+//		}
+//
+//		ArrayList<ProductDTO> result = new ArrayList<>();
+//		Set<Long> keySet = cart.keySet();
+//		for (Long key : keySet) {
+//			result.add(cart.get(key));
+//		}
+//
+//		result.trimToSize();
+//		return result;
+//	}
 
-	@RequestMapping(value = "add-list-to-cart", method = RequestMethod.POST)
-	public @ResponseBody List<ProductDTO> addToCart(@ModelAttribute("products") ProductDTO[] products,
-			@ModelAttribute("cart") Map<Long, ProductDTO> cart) throws IllegalArgumentException {
-
-		for (ProductDTO productDTO : products) {
-			long quantity = productDTO.getProductQuantity();
-			long productId = productDTO.getProductId();
-
-			// Validat Quantity
-			if (quantity <= 0) {
-				throw new IllegalArgumentException("Quantity must over than zero.");
-			}
-			if (quantity > Integer.MAX_VALUE) {
-				throw new IllegalArgumentException("Quantity is huge, please contact Administrator.");
-			}
-
-			// Validate Product
-
-			// validate exist product
-			ProductDTO product = productService.findById(productId);
-
-			if (product == null || product.getProductCode() == null) {
-				throw new IllegalArgumentException("Invalid product id");
-			}
-
-			// get exist product in cart
-			ProductDTO productInCart = cart.get(productId);
-			if (productInCart == null) {
-				productInCart = product;
-				cart.put(productId, productInCart);
-			} else {
-				quantity += productInCart.getProductQuantity();
-			}
-
-			productInCart.setProductQuantity(quantity);
-		}
-
-		ArrayList<ProductDTO> result = new ArrayList<>();
-		Set<Long> keySet = cart.keySet();
-		for (Long key : keySet) {
-			result.add(cart.get(key));
-		}
-
-		result.trimToSize();
-		return result;
+	@RequestMapping(value = "/step3/checkout", method = RequestMethod.GET)
+	String checkout(@ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model) {
+		String invoiceCode = UserUtil.getCurrentUser().getCustomer().getInvoiceCode();
+		List<ProductSearchResult> products = productService.findProductPrice(cart, invoiceCode);
+		model.addAttribute("products", products);
+		return "pages-front/order/step3_confirm";
 	}
 
 	@RequestMapping(value = "create", method = RequestMethod.GET)

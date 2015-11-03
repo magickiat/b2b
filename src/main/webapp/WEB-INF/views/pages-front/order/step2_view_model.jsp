@@ -30,41 +30,41 @@
 		<div class="row">
 			<div class="col-sm-8 text-center product-img-big-view">
 				<%-- Product Model Picture --%>
-				<%@include file="step2/view_image.jspf"%>
+				<%@include file="step2_include/view_image.jspf"%>
 
 			</div>
 			<div class="col-sm-4">
 				<%-- Technology --%>
 				<div class="row product-img-big-view"><%@include
-						file="step2/technology.jspf"%></div>
+						file="step2_include/technology.jspf"%></div>
 
 				<%-- SIZE (Product length) --%>
 				<div class="row product-img-big-view"><%@include
-						file="step2/size.jspf"%></div>
+						file="step2_include/size.jspf"%></div>
 
 				<%-- Withnose board --%>
 				<div class="row product-img-big-view"><%@include
-						file="step2/withnose_board.jspf"%></div>
+						file="step2_include/withnose_board.jspf"%></div>
 
 				<%-- Quantity --%>
 				<div class="row product-img-big-view"><%@include
-						file="step2/quantity.jspf"%></div>
+						file="step2_include/quantity.jspf"%></div>
 
 				<%-- Button --%>
 				<div class="row product-img-big-view"><%@include
-						file="step2/button.jspf"%></div>
+						file="step2_include/button.jspf"%></div>
 			</div>
 		</div>
 
 		<div class="row">
-			<%@include file="step2/add_multiple.jspf"%>
+			<%@include file="step2_include/add_multiple.jspf"%>
 		</div>
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 	<script
 		src='<c:url value="/scripts/zoom/jquery.elevateZoom-3.0.8.min.js" />'></script>
 
-	<c:url var="addToCartUrl" value="/frontend/order/add-to-cart" />
+	
 	<script type="text/javascript">
 		$(document).ready(
 				function() {
@@ -199,7 +199,7 @@
 					alert('Quantity must greater than zero');
 					return;
 				}
-				//TODO save product code to shopping cart with quantity
+
 				var productId = $('#currentProduct').val();
 				var param = {
 					'productId' : productId,
@@ -211,7 +211,7 @@
 				console.log("calling url: ${addToCartUrl}");
 
 				$.post('${addToCartUrl}', param).done(function(response) {
-					console.log(response);
+					console.log(JSON.stringify(response));
 					renderToCart(response);
 				}).fail(function(result) {
 					alert(result.responseText);
@@ -230,6 +230,11 @@
 			$('.zoomImg').elevateZoom({
 				scrollZoom : true
 			});
+		}
+
+		function checkout() {
+			window.open('<c:url value="/frontend/order/step3/checkout" />',
+					'_self');
 		}
 	</script>
 </body>

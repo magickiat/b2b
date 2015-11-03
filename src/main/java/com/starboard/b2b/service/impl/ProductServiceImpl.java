@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -247,10 +249,10 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public HashMap<String, ProductSearchResult> findProductLength(List<ProductSearchResult> productListNoWithnose) {
+	public HashMap<String, ProductSearchResult> findProductLength(List<ProductSearchResult> productList) {
 		HashMap<String, ProductSearchResult> lengthGroup = new HashMap<>();
 
-		for (ProductSearchResult productSearchResult : productListNoWithnose) {
+		for (ProductSearchResult productSearchResult : productList) {
 			String productLength = productSearchResult.getProduct().getProductLength();
 			lengthGroup.put(productLength, productSearchResult);
 		}
@@ -281,7 +283,7 @@ public class ProductServiceImpl implements ProductService {
 	public void findProductPrice(List<ProductSearchResult> productList, String custInvoiceCode) {
 		log.info("findProductPrice:");
 		for (ProductSearchResult result : productList) {
-			ProductPriceDTO price = productPriceDao.findProductPrice(result.getProduct().getProductCode(), custInvoiceCode);
+			ProductPriceDTO price = productPriceDao.findProductPrice(result.getProduct().getProductCode(), custInvoiceCode, result.getProduct().getProductPreintro());
 			log.info("prict: " + price);
 			result.setPrice(price);
 		}
@@ -292,7 +294,7 @@ public class ProductServiceImpl implements ProductService {
 	public void findProductPriceList(List<SearchProductModelDTO> productList, String custInvoiceCode) {
 		log.info("findProductPrice:");
 		for (SearchProductModelDTO result : productList) {
-			ProductPriceDTO price = productPriceDao.findProductPrice(result.getProductCode(), custInvoiceCode);
+			ProductPriceDTO price = productPriceDao.findProductPrice(result.getProductCode(), custInvoiceCode, result.getProductPreintro());
 			log.info("prict: " + price);
 			if (price != null) {
 				result.setProductPrice(price.getAmount());
@@ -344,6 +346,22 @@ public class ProductServiceImpl implements ProductService {
 			result.add(dto);
 		}
 
+		return result;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<ProductSearchResult> findProductPrice(Map<Long, ProductDTO> cart, String invoiceCode) {
+		ArrayList<ProductSearchResult> result = new ArrayList<>();
+		Set<Long> keySet = cart.keySet();
+		for (Long key : keySet) {
+			ProductDTO productInCart = cart.get(key);
+			ProductSearchResult product = new ProductSearchResult(productInCart);
+			ProductPriceDTO price = productPriceDao.findProductPrice(productInCart.getProductCode(), invoiceCode, productInCart.getProductPreintro());
+			product.setPrice(price);
+			result.add(product);
+		}
+		result.trimToSize();
 		return result;
 	}
 

@@ -84,5 +84,9 @@ div.menu-link {
 #addListToCart {
 	margin-top: 15px;
 }
+
+.img-btn-cursor {
+	cursor: pointer;
+}
 -->
 </style>

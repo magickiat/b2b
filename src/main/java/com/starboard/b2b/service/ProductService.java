@@ -2,6 +2,7 @@ package com.starboard.b2b.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dto.ProductBuyerGroupDTO;
@@ -40,7 +41,7 @@ public interface ProductService {
 
 	HashMap<String, ProductSearchResult> findProductLength(List<ProductSearchResult> productListNoWithnose);
 
-	HashMap<String, List<ProductSearchResult>> groupProductByTechnology(List<ProductSearchResult> productListNoWithnose);
+	HashMap<String, List<ProductSearchResult>> groupProductByTechnology(List<ProductSearchResult> productList);
 
 	void findProductPrice(List<ProductSearchResult> productList, String custInvoiceCode);
 
@@ -49,5 +50,7 @@ public interface ProductService {
 	String findProductUnit(long productId);
 
 	ProductDTO findById(Long productId);
+
+	List<ProductSearchResult> findProductPrice(Map<Long, ProductDTO> cart, String invoiceCode);
 
 }

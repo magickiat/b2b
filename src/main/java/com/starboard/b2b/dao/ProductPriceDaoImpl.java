@@ -17,7 +17,7 @@ public class ProductPriceDaoImpl implements ProductPriceDao {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public ProductPriceDTO findProductPrice(String productCode, String custInvoiceCode) {
+	public ProductPriceDTO findProductPrice(String productCode, String custInvoiceCode, String preIntro) {
 		log.info("productCode = " + productCode + "\tcustInvoiceCode = " + custInvoiceCode);
 		StringBuffer sb = new StringBuffer();
 		sb.append(

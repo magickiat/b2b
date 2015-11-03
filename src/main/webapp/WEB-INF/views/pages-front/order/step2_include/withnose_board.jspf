@@ -35,42 +35,40 @@
 
 							<%-- PRICE --%>
 							<div class="col-sm-2 text-left">
-								<h5>PRICE:</h5>
+								<h4>PRICE:</h4>
 							</div>
 							<div class="col-sm-4">
 								<c:choose>
 									<c:when test="${ empty p.price }">
-										<h5>TBA</h5>
+										<h4>TBA</h4>
 									</c:when>
 									<c:otherwise>
-										<h5>
-											<fmt:formatNumber pattern="#,###.00" maxFractionDigits="2"
-												maxIntegerDigits="12" value="${ p.price.amount }"
-												minFractionDigits="2" minIntegerDigits="1">
+										<h4>
+											<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
+												value="${ p.price.amount }" minIntegerDigits="1">
 											</fmt:formatNumber>
 											${ p.product.productCurrency }
-										</h5>
+										</h4>
 									</c:otherwise>
 								</c:choose>
 							</div>
 
 							<%-- MSRP --%>
 							<div class="col-sm-2 price-msrp">
-								<h5>MSRP:</h5>
+								<h4>MSRP:</h4>
 							</div>
 							<div class="col-sm-4 price-msrp">
 								<c:choose>
 									<c:when test="${ empty p.price }">
-										<h5>TBA</h5>
+										<h4>TBA</h4>
 									</c:when>
 									<c:otherwise>
-										<h5>
-											<fmt:formatNumber pattern="#,###.00" maxFractionDigits="2"
-												maxIntegerDigits="12" value="${ p.price.msrePrice }"
-												minFractionDigits="2" minIntegerDigits="1">
+										<h4>
+											<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
+												value="${ p.price.msrePrice }" minIntegerDigits="1">
 											</fmt:formatNumber>
 											${ p.product.productCurrency }
-										</h5>
+										</h4>
 									</c:otherwise>
 								</c:choose>
 							</div>

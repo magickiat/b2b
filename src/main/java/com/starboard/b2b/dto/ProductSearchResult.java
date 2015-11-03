@@ -3,6 +3,8 @@ package com.starboard.b2b.dto;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.springframework.beans.BeanUtils;
+
 import com.starboard.b2b.model.Product;
 import com.starboard.b2b.model.ProductType;
 import com.starboard.b2b.util.StringUtil;
@@ -18,6 +20,11 @@ public class ProductSearchResult {
 	private Integer seq;
 
 	public ProductSearchResult() {
+	}
+	
+	public ProductSearchResult(ProductDTO dto) {
+		product = new Product();
+		BeanUtils.copyProperties(dto, product);
 	}
 
 	public ProductSearchResult(String productCurrency, long productId, Long productTypeId, Long productCatalogId, Long productGroupId,

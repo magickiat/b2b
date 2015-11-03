@@ -127,16 +127,16 @@
 
 		<%-- Upper Paging --%>
 		<div class="row">
-			<%@include file="step2/search_product_paging.jspf"%>
+			<%@include file="step2_include/search_product_paging.jspf"%>
 		</div>
 
 		<%-- List product model --%>
 		<c:choose>
 			<c:when test="${ searchProductForm.showType == 'image' }">
-				<%@include file="step2/product_image.jspf"%>
+				<%@include file="step2_include/product_image.jspf"%>
 			</c:when>
 			<c:otherwise>
-				<%@include file="step2/product_list.jspf"%>
+				<%@include file="step2_include/product_list.jspf"%>
 			</c:otherwise>
 		</c:choose>
 
@@ -144,7 +144,7 @@
 
 		<%-- Lower Paging --%>
 		<div class="row">
-			<%@include file="step2/search_product_paging.jspf"%>
+			<%@include file="step2_include/search_product_paging.jspf"%>
 		</div>
 
 	</div>
@@ -174,11 +174,6 @@
 			$('#searchProductModelForm').submit();
 		}
 
-		$('input[name=product-order-number]').keypress(function(e) {
-			return e.charCode === 0 || /\d/.test(String.fromCharCode(e.charCode));
-		}).on("cut copy paste", function(e) {
-			e.preventDefault();
-		});
 	</script>
 
 </body>
