@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +26,6 @@ import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
 import com.starboard.b2b.dto.ProductBuyerGroupDTO;
 import com.starboard.b2b.dto.ProductDTO;
-import com.starboard.b2b.dto.ProductDtoWrapper;
 import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
@@ -325,6 +323,21 @@ public class FrontOrderController {
 		List<ProductSearchResult> products = productService.findProductPrice(cart, invoiceCode);
 		model.addAttribute("products", products);
 		return "pages-front/order/step3_confirm";
+	}
+	
+	@RequestMapping(value = "/step3/remove", method = RequestMethod.POST)
+	String removeFromCart(@RequestParam Long productId, @ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model) {
+		log.info("/step3/remove POST");
+		log.info("product id = " + productId);
+		if(cart != null){
+			log.info("Before remove size: " + cart.size());
+			ProductDTO dto = cart.remove(productId);
+			log.info("Remove product: " + dto);
+			log.info("After remove size: " + cart.size());
+		}else{
+			log.warn("Not found shopping cart");
+		}
+		return checkout(cart, model);
 	}
 
 	@RequestMapping(value = "create", method = RequestMethod.GET)

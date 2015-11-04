@@ -72,8 +72,9 @@
 												TBA
 											</c:when>
 												<c:otherwise>
-													<span id="amount-${ rowCount.index }"><fmt:formatNumber pattern="#,###"
-															maxIntegerDigits="12" value="${ p.price.amount }">
+													<span id="amount-${ rowCount.index }"><fmt:formatNumber
+															pattern="#,###" maxIntegerDigits="12"
+															value="${ p.price.amount }">
 														</fmt:formatNumber></span>
 												</c:otherwise>
 											</c:choose></td>
@@ -81,19 +82,25 @@
 
 										<td><c:choose>
 												<c:when test="${ empty p.price }">TBA</c:when>
-												<c:otherwise><span id="total-amount-${ rowCount.index }">
-													<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
-														value="${ product.productQuantity * p.price.amount }"
-														minIntegerDigits="1">
-													</fmt:formatNumber>
-</span>
+												<c:otherwise>
+													<span id="total-amount-${ rowCount.index }"> <fmt:formatNumber
+															pattern="#,###" maxIntegerDigits="12"
+															value="${ product.productQuantity * p.price.amount }"
+															minIntegerDigits="1">
+														</fmt:formatNumber>
+													</span>
 													<input type="hidden" name="totalProductAmount"
 														value="${ totalAmount + (product.productQuantity * p.price.amount) }" />
 												</c:otherwise>
 											</c:choose></td>
 										<td>${ product.productCurrency }</td>
-										<td class="text-center"><img class="img-btn-cursor"
-											src='<c:url value="/images/pages-front/icon/btn_remove.png" />'>
+										<td class="text-center">
+											<form id="remove-${ product.productId }"
+												action='<c:url value="/frontend/order/step3/remove" />' method="post">
+												<input type="hidden" name="productId" value="${ product.productId }" />
+											</form> <img class="img-btn-cursor"
+											src='<c:url value="/images/pages-front/icon/btn_remove.png" />'
+											onclick="confirmRemove(${product.productId}, '${ product.productCode }')">
 										</td>
 									</tr>
 								</c:forEach>
@@ -113,47 +120,79 @@
 				</c:choose>
 			</div>
 		</div>
-		<%@include file="/WEB-INF/views/include/common_js.jspf"%>
+	</div>
+	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 
-		<script type="text/javascript">
-			$(document).ready(function() {
-				reCalAmount();
+	<script type="text/javascript">
+		$(document).ready(function() {
+			reCalAmount();
+		});
+
+		function reCalAmount() {
+			summaryQuantity();
+			summaryAmount();
+		}
+
+		function summaryQuantity() {
+			var quantity = 0;
+			console.log('Summar quantity');
+			$('input[name=quantity]').each(function(index, value) {
+				var val = $(value).val();
+				console.log('index = ' + index + '\tvalue = ' + val);
+				quantity = (+quantity) + (+val);
 			});
+			console.log('Total Quantity = ' + quantity);
+			$('#totalQty').text(formatNumber(quantity));
+		}
 
-			function reCalAmount() {
-				summaryQuantity();
-				summaryAmount();
-			}
+		function summaryAmount() {
+			var amount = 0;
 
-			function summaryQuantity() {
-				var quantity = 0;
-				console.log('Summar quantity');
-				$('input[name=quantity]').each(function(index, value) {
-					var val = $(value).val();
-					console.log('index = ' + index + '\tvalue = ' + val);
-					quantity = (+quantity) + (+val);
-				});
-				console.log('Total Quantity = ' + quantity);
-				$('#totalQty').text(formatNumber(quantity));
-			}
+			$('input[name=totalProductAmount]').each(function(index, value) {
+				var quantity = $('#quantity-' + index).val();
+				console.log('quantity = ' + quantity);
+				var val = $(value).val();
+				val = (+val) * (+quantity);
 
-			function summaryAmount() {
-				var amount = 0;
-
-				$('input[name=totalProductAmount]').each(
-						function(index, value) {
-							var quantity = $('#quantity-' + index).val();
-							console.log('quantity = ' + quantity);
-							var val = $(value).val();
-							val = (+val) * (+quantity);
-
-							console.log('index = ' + index + '\tvalue = ' + val);
-							amount = (+amount) + (+val);
-							$('#total-amount-' + index).text(val);
-						});
-				console.log('Total Amount = ' + amount);
-				$('#totalAmount').text(formatNumber(amount));
-			}
-		</script>
+				console.log('index = ' + index + '\tvalue = ' + val);
+				amount = (+amount) + (+val);
+				$('#total-amount-' + index).text(val);
+			});
+			console.log('Total Amount = ' + amount);
+			$('#totalAmount').text(formatNumber(amount));
+		}
+		
+		function confirmRemove(productId, productCode){
+			console.log('product_id = ' + productId + '\tproductCode = ' + productCode);
+			
+			<%-- http://stackoverflow.com/questions/12617084/jquery-confirm-dialog --%>
+			$('<div></div>').appendTo('body')
+			  .html('<div><h6>Do you want to delete order product code ' + productCode + '?</h6></div>')
+			  .dialog({
+			      modal: true, title: 'message', zIndex: 10000, autoOpen: true,
+			      width: 'auto', resizable: false,
+			      buttons: {
+			          Yes: function () {
+			             // doFunctionForYes();
+			             console.log('Do Yes.');
+			             removeFromCart(productId);
+			              $(this).dialog("close");
+			          },
+			          No: function () {
+			              //doFunctionForNo();
+			              console.log('Do No.');
+			              $(this).dialog("close");
+			          }
+			      },
+			      close: function (event, ui) {
+			          $(this).remove();
+			      }
+			});
+		}
+		
+		function removeFromCart(productId){
+			$('#remove-'+productId).submit();
+		}
+	</script>
 </body>
 </html>
