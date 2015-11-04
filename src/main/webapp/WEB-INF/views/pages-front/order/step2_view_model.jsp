@@ -232,10 +232,7 @@
 			});
 		}
 
-		function checkout() {
-			window.open('<c:url value="/frontend/order/step3/checkout" />',
-					'_self');
-		}
+		
 	</script>
 </body>
 </html>

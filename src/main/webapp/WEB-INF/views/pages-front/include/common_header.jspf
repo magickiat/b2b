@@ -94,6 +94,7 @@
 										<div class="col-sm-2">${ product.value.productUnitId }</div>
 									</div>
 								</c:forEach>
+								<div class="row text-center"><input type="button" class="btn btn-success" value="CHECK OUT" onclick="checkout()" /></div>
 							</c:otherwise>
 						</c:choose>
 

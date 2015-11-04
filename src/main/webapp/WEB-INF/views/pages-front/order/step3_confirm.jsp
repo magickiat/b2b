@@ -59,11 +59,10 @@
 										<td>${rowCount.index + 1 }</td>
 										<td>${ product.productCode }</td>
 										<td>${ product.productNameEn }</td>
-										<td><input type="hidden"
-											id="quantity-${ rowCount.index }"
-											value="${ product.productQuantity }" /> <input type="text"
-											name="quantity" class="form-control numberOnly" value="${ product.productQuantity }" /> <c:set
-												var="totalQuantity"
+										<td><input type="text" id="quantity-${ rowCount.index }"
+											name="quantity" class="form-control numberOnly"
+											value="${ product.productQuantity }" onblur="reCalAmount()" />
+											<c:set var="totalQuantity"
 												value="${ totalQuantity +  product.productQuantity }" /></td>
 
 										<td>${ product.productUnitId }</td>
@@ -73,21 +72,21 @@
 												TBA
 											</c:when>
 												<c:otherwise>
-													<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
-														value="${ p.price.amount }">
-													</fmt:formatNumber>
+													<span id="amount-${ rowCount.index }"><fmt:formatNumber pattern="#,###"
+															maxIntegerDigits="12" value="${ p.price.amount }">
+														</fmt:formatNumber></span>
 												</c:otherwise>
 											</c:choose></td>
 
 
 										<td><c:choose>
 												<c:when test="${ empty p.price }">TBA</c:when>
-												<c:otherwise>
+												<c:otherwise><span id="total-amount-${ rowCount.index }">
 													<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
 														value="${ product.productQuantity * p.price.amount }"
 														minIntegerDigits="1">
 													</fmt:formatNumber>
-
+</span>
 													<input type="hidden" name="totalProductAmount"
 														value="${ totalAmount + (product.productQuantity * p.price.amount) }" />
 												</c:otherwise>
@@ -118,10 +117,13 @@
 
 		<script type="text/javascript">
 			$(document).ready(function() {
-				// Summary quantity
+				reCalAmount();
+			});
+
+			function reCalAmount() {
 				summaryQuantity();
 				summaryAmount();
-			});
+			}
 
 			function summaryQuantity() {
 				var quantity = 0;
@@ -140,11 +142,14 @@
 
 				$('input[name=totalProductAmount]').each(
 						function(index, value) {
+							var quantity = $('#quantity-' + index).val();
+							console.log('quantity = ' + quantity);
 							var val = $(value).val();
-							console
-									.log('index = ' + index + '\tvalue = '
-											+ val);
+							val = (+val) * (+quantity);
+
+							console.log('index = ' + index + '\tvalue = ' + val);
 							amount = (+amount) + (+val);
+							$('#total-amount-' + index).text(val);
 						});
 				console.log('Total Amount = ' + amount);
 				$('#totalAmount').text(formatNumber(amount));

@@ -83,6 +83,8 @@
 
 							totalQuantity = totalQuantity + (+quantity);
 						});
+		row += '<div class="row text-center"><input type="button" class="btn btn-success" value="CHECK OUT" onclick="checkout()" /></div>';
+		
 		$('#cartDetails').html(row);
 		addQuantity(totalQuantity);
 	}
@@ -101,5 +103,8 @@
 		e.preventDefault();
 	});
 	
-	
+	function checkout() {
+		window.open('<c:url value="/frontend/order/step3/checkout" />',
+				'_self');
+	}
 </script>
