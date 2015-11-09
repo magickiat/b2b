@@ -30,7 +30,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-12">Address</div>
+					<div class="col-sm-12">${ invoiceToAddress.address }</div>
 				</div>
 			</div>
 			<div class="col-sm-6">

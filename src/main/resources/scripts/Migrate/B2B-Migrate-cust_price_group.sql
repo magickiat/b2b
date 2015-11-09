@@ -1,3 +1,5 @@
+truncate table `b2b`.`cust_price_group`;
+
 INSERT INTO `b2b`.`cust_price_group`
 (`cust_price_group_id`,
 `cust_code`,

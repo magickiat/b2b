@@ -1,3 +1,5 @@
+truncate table `b2b`.`product_technology`;
+
 INSERT INTO `b2b`.`product_technology`
 (`product_technology_id`,
 `product_technology_name`,
