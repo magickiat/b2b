@@ -31,6 +31,11 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-12">${ invoiceToAddress.address }</div>
+					<div class="col-sm-12">
+						TELEPHONE: <span class="telephone"><c:out
+								value="${invoiceToAddress.tel1 }" /></span> FAX: <span
+							class="telephone"><c:out value="${invoiceToAddress.fax }" /></span>
+					</div>
 				</div>
 			</div>
 			<div class="col-sm-6">
@@ -41,7 +46,7 @@
 					<div class="col-sm-8">
 
 						<c:if test="${ not empty dispatchToAddress }">
-							<select id="dispatchTo" name="dispatchTo" class="form-control">
+							<select id="dispatchTo" name="dispatchTo" class="form-control" onchange="changeDispatchTo(this)">
 								<c:forEach var="dispatchTo" items="${ dispatchToAddress }"
 									varStatus="rowCount">
 
@@ -53,9 +58,22 @@
 						</c:if>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-sm-12">Address</div>
-				</div>
+
+				<c:if test="${ not empty dispatchToAddress }">
+					<c:forEach var="addr" items="${ dispatchToAddress }"
+						varStatus="rowCount">
+						<div id="address-${ addr.addrId }" class="row dispatch-to-address"
+							<c:if test="${ rowCount.index > 0 }"> style="display: none;" </c:if>>
+							<div class="col-sm-12">${ addr.address }</div>
+							<div class="col-sm-12">
+								TELEPHONE: <span class="telephone"><c:out
+										value="${addr.tel1 }" /></span> FAX: <span class="telephone"><c:out
+										value="${addr.fax }" /></span>
+							</div>
+						</div>
+					</c:forEach>
+
+				</c:if>
 			</div>
 		</div>
 		<div class="row">&nbsp;</div>
@@ -266,6 +284,12 @@
 			}else{
 				console.log('go to RO page');
 			}
+		}
+		
+		function changeDispatchTo(addressId){
+			console.log('show dispatch-to-address id: ' + $(addressId).val());
+			$('.dispatch-to-address').hide();
+			$('#address-' + $(addressId).val()).show();
 		}
 		</script>
 </body>
