@@ -2,6 +2,8 @@ package com.starboard.b2b.dto;
 
 import java.util.Date;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 public class AddressDTO {
 	private long addrId;
 	private long custId;
@@ -55,6 +57,11 @@ public class AddressDTO {
 		this.timeUpdate = timeUpdate;
 	}
 
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
+	
 	public long getAddrId() {
 		return addrId;
 	}
