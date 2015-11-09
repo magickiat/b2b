@@ -30,8 +30,8 @@ import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.service.BrandService;
-import com.starboard.b2b.service.CountryService;
 import com.starboard.b2b.service.CustomerService;
+import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.product.SearchProductForm;
@@ -50,10 +50,10 @@ public class FrontOrderController {
 	private CustomerService customerService;
 
 	@Autowired
-	private CountryService countryService;
+	private BrandService brandService;
 
 	@Autowired
-	private BrandService brandService;
+	private OrderService orderService;
 
 	@RequestMapping(value = "index", method = RequestMethod.GET)
 	String step1(Model model) {
@@ -65,22 +65,7 @@ public class FrontOrderController {
 	@RequestMapping(value = "step2/index", method = RequestMethod.GET)
 	String step2ChooseAddress(@RequestParam("brand_id") Long brandId, Model model) {
 		log.info("Brand id: " + brandId);
-		List<AddressDTO> invoiceToAddress = customerService.findAddress(UserUtil.getCurrentUser().getCustomer().getCustId(),
-				AddressConstant.TYPE_INVOICE_TO);
 
-		/**
-		 * Get first invoice address only
-		 */
-		AddressDTO invoiceTo = null;
-		if (invoiceToAddress != null && !invoiceToAddress.isEmpty()) {
-			invoiceTo = invoiceToAddress.get(0);
-		}
-
-		model.addAttribute("invoiceToAddress", invoiceTo);
-
-		// model.addAttribute("dispatch"); // TODO get dispatch address
-
-		model.addAttribute("countryList", countryService.findAll());
 		model.addAttribute("brandId", brandId);
 		return "pages-front/order/step2_address";
 	}
@@ -183,18 +168,6 @@ public class FrontOrderController {
 			allTech.add(noWithnoseTech);
 			allTech.add(withnoseTech);
 			model.addAttribute("allTech", allTech);
-
-			// model.addAttribute("noWithnoseTech", noWithnoseTech);
-			// model.addAttribute("withnoseTech", withnoseTech);
-
-			// model.addAttribute("productImagesList", productImagesList);
-			// model.addAttribute("checkWithNose",
-			// Integer.valueOf(productListPre1.size()));
-			// model.addAttribute("header1",
-			// productModelgetHeader.getHeaderText1());
-			// model.addAttribute("header2",
-			// productModelgetHeader.getHeaderText2());
-			//
 		}
 
 		return "pages-front/order/step2_view_model";
@@ -268,73 +241,95 @@ public class FrontOrderController {
 		result.trimToSize();
 		return result;
 	}
-//
-//	@RequestMapping(value = "add-list-to-cart", method = RequestMethod.POST)
-//	public @ResponseBody List<ProductDTO> addListToCart(@RequestBody ProductDtoWrapper products, @ModelAttribute("cart") Map<Long, ProductDTO> cart)
-//			throws IllegalArgumentException {
-//
-//		List<ProductDTO> list = products.getProducts();
-//		for (ProductDTO productDTO : list) {
-//			long quantity = productDTO.getProductQuantity();
-//			long productId = productDTO.getProductId();
-//
-//			// Validat Quantity
-//			if (quantity <= 0) {
-//				throw new IllegalArgumentException("Quantity must over than zero.");
-//			}
-//			if (quantity > Integer.MAX_VALUE) {
-//				throw new IllegalArgumentException("Quantity is huge, please contact Administrator.");
-//			}
-//
-//			// Validate Product
-//
-//			// validate exist product
-//			ProductDTO product = productService.findById(productId);
-//
-//			if (product == null || product.getProductCode() == null) {
-//				throw new IllegalArgumentException("Invalid product id");
-//			}
-//
-//			// get exist product in cart
-//			ProductDTO productInCart = cart.get(productId);
-//			if (productInCart == null) {
-//				productInCart = product;
-//				cart.put(productId, productInCart);
-//			} else {
-//				quantity += productInCart.getProductQuantity();
-//			}
-//
-//			productInCart.setProductQuantity(quantity);
-//		}
-//
-//		ArrayList<ProductDTO> result = new ArrayList<>();
-//		Set<Long> keySet = cart.keySet();
-//		for (Long key : keySet) {
-//			result.add(cart.get(key));
-//		}
-//
-//		result.trimToSize();
-//		return result;
-//	}
+	//
+	// @RequestMapping(value = "add-list-to-cart", method = RequestMethod.POST)
+	// public @ResponseBody List<ProductDTO> addListToCart(@RequestBody
+	// ProductDtoWrapper products, @ModelAttribute("cart") Map<Long, ProductDTO>
+	// cart)
+	// throws IllegalArgumentException {
+	//
+	// List<ProductDTO> list = products.getProducts();
+	// for (ProductDTO productDTO : list) {
+	// long quantity = productDTO.getProductQuantity();
+	// long productId = productDTO.getProductId();
+	//
+	// // Validat Quantity
+	// if (quantity <= 0) {
+	// throw new IllegalArgumentException("Quantity must over than zero.");
+	// }
+	// if (quantity > Integer.MAX_VALUE) {
+	// throw new IllegalArgumentException("Quantity is huge, please contact
+	// Administrator.");
+	// }
+	//
+	// // Validate Product
+	//
+	// // validate exist product
+	// ProductDTO product = productService.findById(productId);
+	//
+	// if (product == null || product.getProductCode() == null) {
+	// throw new IllegalArgumentException("Invalid product id");
+	// }
+	//
+	// // get exist product in cart
+	// ProductDTO productInCart = cart.get(productId);
+	// if (productInCart == null) {
+	// productInCart = product;
+	// cart.put(productId, productInCart);
+	// } else {
+	// quantity += productInCart.getProductQuantity();
+	// }
+	//
+	// productInCart.setProductQuantity(quantity);
+	// }
+	//
+	// ArrayList<ProductDTO> result = new ArrayList<>();
+	// Set<Long> keySet = cart.keySet();
+	// for (Long key : keySet) {
+	// result.add(cart.get(key));
+	// }
+	//
+	// result.trimToSize();
+	// return result;
+	// }
 
 	@RequestMapping(value = "/step3/checkout", method = RequestMethod.GET)
 	String checkout(@ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model) {
+		// ----- Find product's price in cart ------
 		String invoiceCode = UserUtil.getCurrentUser().getCustomer().getInvoiceCode();
 		List<ProductSearchResult> products = productService.findProductPrice(cart, invoiceCode);
 		model.addAttribute("products", products);
+
+		// ----- Find Invoice Address ------
+		long custId = UserUtil.getCurrentUser().getCustomer().getCustId();
+		List<AddressDTO> invoiceToAddress = customerService.findAddress(custId, AddressConstant.INVOICE_TO);
+		// Get first invoice address only
+		AddressDTO invoiceTo = null;
+		if (invoiceToAddress != null && !invoiceToAddress.isEmpty()) {
+			invoiceTo = invoiceToAddress.get(0);
+			model.addAttribute("invoiceToAddress", invoiceTo);
+		}
+
+		// ----- Find Dispatch to Address ------
+		List<AddressDTO> dispatchToAddress = customerService.findAddress(custId, AddressConstant.DISPATCH_TO);
+		model.addAttribute("dispatchToAddress", dispatchToAddress);
+
+		// ----- Find Shipping Type -----
+		model.addAttribute("shippingTypeList", orderService.findAllShippingType());
+		
 		return "pages-front/order/step3_confirm";
 	}
-	
+
 	@RequestMapping(value = "/step3/remove", method = RequestMethod.POST)
 	String removeFromCart(@RequestParam Long productId, @ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model) {
 		log.info("/step3/remove POST");
 		log.info("product id = " + productId);
-		if(cart != null){
+		if (cart != null) {
 			log.info("Before remove size: " + cart.size());
 			ProductDTO dto = cart.remove(productId);
 			log.info("Remove product: " + dto);
 			log.info("After remove size: " + cart.size());
-		}else{
+		} else {
 			log.warn("Not found shopping cart");
 		}
 		return checkout(cart, model);

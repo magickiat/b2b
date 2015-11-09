@@ -23,6 +23,43 @@
 		</div>
 		<div class="row">&nbsp;</div>
 		<div class="row">
+			<div class="col-sm-6">
+				<div class="row">
+					<div class="col-sm-12">
+						<h4>INVOICE TO</h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">Address</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="row">
+					<div class="col-sm-4">
+						<h4>DISPATCH TO</h4>
+					</div>
+					<div class="col-sm-8">
+
+						<c:if test="${ not empty dispatchToAddress }">
+							<select id="dispatchTo" name="dispatchTo" class="form-control">
+								<c:forEach var="dispatchTo" items="${ dispatchToAddress }"
+									varStatus="rowCount">
+
+									<option value="${ dispatchTo.addrId }"
+										label="${ dispatchTo.address }" />
+
+								</c:forEach>
+							</select>
+						</c:if>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">Address</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">&nbsp;</div>
+		<div class="row">
 			<div class="col-sm-10 text-right">
 				<input type="button" id="btn-add" class="btn btn-success"
 					value="ADD" />
@@ -96,8 +133,10 @@
 										<td>${ product.productCurrency }</td>
 										<td class="text-center">
 											<form id="remove-${ product.productId }"
-												action='<c:url value="/frontend/order/step3/remove" />' method="post">
-												<input type="hidden" name="productId" value="${ product.productId }" />
+												action='<c:url value="/frontend/order/step3/remove" />'
+												method="post">
+												<input type="hidden" name="productId"
+													value="${ product.productId }" />
 											</form> <img class="img-btn-cursor"
 											src='<c:url value="/images/pages-front/icon/btn_remove.png" />'
 											onclick="confirmRemove(${product.productId}, '${ product.productCode }')">
@@ -113,6 +152,30 @@
 									<td><span id="totalAmount"></span></td>
 									<td></td>
 									<td></td>
+								</tr>
+								<tr>
+									<td colspan="9"></td>
+								</tr>
+								<tr>
+									<td colspan="3">Customer Remark</td>
+									<td colspan="6">Shipping and Service Fee</td>
+								</tr>
+								<tr>
+									<td colspan="3"><textarea rows="4" cols="50"
+											class="form-control"></textarea></td>
+									<td colspan="6"><label for="shippingType">Shipping
+											type</label> <select id="shippingType" name="shippingType"
+										class="form-control">
+											<c:forEach var="shippingType" items="${ shippingTypeList }">
+												<option label="${shippingType.shippingTypeName }"
+													value="${ shippingType.shippingTypeId }" />
+											</c:forEach>
+									</select></td>
+								</tr>
+								<tr>
+									<td class="text-center" colspan="9"><input type="button"
+										id="confirm" name="confirm" class="btn btn-success"
+										value="CONFIRM" onclick="return confirmOrder();" /></td>
 								</tr>
 							</tbody>
 						</table>
@@ -193,6 +256,17 @@
 		function removeFromCart(productId){
 			$('#remove-'+productId).submit();
 		}
-	</script>
+		
+		function confirmOrder(){
+			summaryQuantity();
+			var qty = $('#totalQty').text();
+			console.log('qty = ' + qty);
+			if(qty == 0){
+				alert('Not found any product to confirm');
+			}else{
+				console.log('go to RO page');
+			}
+		}
+		</script>
 </body>
 </html>
