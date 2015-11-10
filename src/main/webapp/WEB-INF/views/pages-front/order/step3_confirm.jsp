@@ -283,6 +283,7 @@
 				alert('Not found any product to confirm');
 			}else{
 				console.log('go to RO page');
+				
 			}
 		}
 		

@@ -9,7 +9,7 @@
 
 
 <%-- common url --%>
-<c:url var="addToCartUrl" value="/frontend/order/add-to-cart" />
+<c:url var="addToCartUrl" value="/frontend/order/add-to-cart.json" />
 
 
 
