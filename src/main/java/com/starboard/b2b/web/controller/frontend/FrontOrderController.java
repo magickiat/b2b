@@ -246,8 +246,7 @@ public class FrontOrderController {
 		result.trimToSize();
 		return result;
 	}
-	
-	
+
 	@RequestMapping(value = "update-to-cart", method = RequestMethod.POST)
 	@ResponseStatus(code = HttpStatus.OK)
 	public @ResponseBody void updateQuantityToCart(@RequestParam Long productId, @RequestParam Long quantity,
@@ -287,8 +286,7 @@ public class FrontOrderController {
 		productInCart.setProductQuantity(quantity);
 		log.info("Remaining quantity: " + productInCart.getProductQuantity());
 	}
-	
-	
+
 	//
 	// @RequestMapping(value = "add-list-to-cart", method = RequestMethod.POST)
 	// public @ResponseBody List<ProductDTO> addListToCart(@RequestBody
@@ -341,7 +339,7 @@ public class FrontOrderController {
 	// return result;
 	// }
 
-	@RequestMapping(value = "/step3/checkout", method = RequestMethod.GET)
+	@RequestMapping(value = "step3/checkout", method = RequestMethod.GET)
 	String checkout(@ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model) {
 		// ----- Find product's price in cart ------
 		String invoiceCode = UserUtil.getCurrentUser().getCustomer().getInvoiceCode();
@@ -368,19 +366,27 @@ public class FrontOrderController {
 		return "pages-front/order/step3_confirm";
 	}
 
-	@RequestMapping(value = "/step3/remove", method = RequestMethod.POST)
+	@RequestMapping(value = "step3/remove", method = RequestMethod.POST)
 	String removeFromCart(@RequestParam Long productId, @ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model) {
 		log.info("/step3/remove POST");
 		log.info("product id = " + productId);
 		if (cart != null) {
-			log.info("Before remove size: " + cart.size());
-			ProductDTO dto = cart.remove(productId);
-			log.info("Remove product: " + dto);
+			cart.remove(productId);
 			log.info("After remove size: " + cart.size());
 		} else {
 			log.warn("Not found shopping cart");
 		}
 		return checkout(cart, model);
+	}
+
+	@RequestMapping(value = "step4/submit", method = RequestMethod.POST)
+	String submitOrder(Long dispatchTo, String shippingType, @ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model) {
+		log.info("step4/submit POST");
+		log.info("dispatchTo = " + dispatchTo);
+		log.info("shippingType = " + shippingType);
+		log.info("cart size = " + cart.size());
+		
+		return "pages-front/order/step4_submit";
 	}
 
 	@RequestMapping(value = "create", method = RequestMethod.GET)
