@@ -46,7 +46,8 @@
 					<div class="col-sm-8">
 
 						<c:if test="${ not empty dispatchToAddress }">
-							<select id="dispatchTo" name="dispatchTo" class="form-control" onchange="changeDispatchTo(this)">
+							<select id="dispatchTo" name="dispatchTo" class="form-control"
+								onchange="changeDispatchTo(this)">
 								<c:forEach var="dispatchTo" items="${ dispatchToAddress }"
 									varStatus="rowCount">
 
@@ -116,8 +117,9 @@
 										<td>${ product.productNameEn }</td>
 										<td><input type="text" id="quantity-${ rowCount.index }"
 											name="quantity" class="form-control numberOnly"
-											value="${ product.productQuantity }" onblur="reCalAmount()" />
-											<c:set var="totalQuantity"
+											value="${ product.productQuantity }"
+											onblur="updateQuantity(${product.productId}, this)" /> <c:set
+												var="totalQuantity"
 												value="${ totalQuantity +  product.productQuantity }" /></td>
 
 										<td>${ product.productUnitId }</td>
@@ -204,10 +206,42 @@
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 
+	<c:url var="updateToCartUrl"
+		value="/frontend/order/update-to-cart.json" />
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			reCalAmount();
 		});
+		
+		function updateQuantity(productId, obj){
+
+			var quantity = $(obj).val();
+			console.log('quantity: ' + quantity);
+			if (isValidNumber(quantity)) {
+				if (quantity <= 0) {
+					alert('Quantity must greater than zero');
+					return;
+				}
+
+				var param = {
+					'productId' : productId,
+					'quantity' : quantity
+				};
+
+				console.log('productId = ' + productId);
+
+				$.post('${updateToCartUrl}', param).done(function(response) {
+					console.log(JSON.stringify(response));
+				}).fail(function(result) {
+					alert(result.responseText);
+				});
+
+			} else {
+				alert('Please check Quantity.');
+			}
+			reCalAmount();
+		}
 
 		function reCalAmount() {
 			summaryQuantity();
@@ -219,7 +253,6 @@
 			console.log('Summar quantity');
 			$('input[name=quantity]').each(function(index, value) {
 				var val = $(value).val();
-				console.log('index = ' + index + '\tvalue = ' + val);
 				quantity = (+quantity) + (+val);
 			});
 			console.log('Total Quantity = ' + quantity);
@@ -231,11 +264,9 @@
 
 			$('input[name=totalProductAmount]').each(function(index, value) {
 				var quantity = $('#quantity-' + index).val();
-				console.log('quantity = ' + quantity);
 				var val = $(value).val();
 				val = (+val) * (+quantity);
 
-				console.log('index = ' + index + '\tvalue = ' + val);
 				amount = (+amount) + (+val);
 				$('#total-amount-' + index).text(val);
 			});
@@ -283,7 +314,9 @@
 				alert('Not found any product to confirm');
 			}else{
 				console.log('go to RO page');
-				
+				$('input[name=quantity]').each(function(index, value) {
+					
+				});
 			}
 		}
 		

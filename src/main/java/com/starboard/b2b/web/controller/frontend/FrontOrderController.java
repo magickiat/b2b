@@ -12,6 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.starboard.b2b.common.AddressConstant;
@@ -244,6 +246,49 @@ public class FrontOrderController {
 		result.trimToSize();
 		return result;
 	}
+	
+	
+	@RequestMapping(value = "update-to-cart", method = RequestMethod.POST)
+	@ResponseStatus(code = HttpStatus.OK)
+	public @ResponseBody void updateQuantityToCart(@RequestParam Long productId, @RequestParam Long quantity,
+			@ModelAttribute("cart") Map<Long, ProductDTO> cart) throws IllegalArgumentException {
+
+		log.info("productId = " + productId + "\tquantity = " + quantity);
+
+		// Validat Quantity
+		if (quantity == null) {
+			throw new IllegalArgumentException("Quantity is required.");
+		}
+		if (quantity <= 0) {
+			throw new IllegalArgumentException("Quantity must over than zero.");
+		}
+		if (quantity > Integer.MAX_VALUE) {
+			throw new IllegalArgumentException("Quantity is huge, please contact Administrator.");
+		}
+
+		// Validate Product
+		if (productId == null) {
+			throw new IllegalArgumentException("Please select product.");
+		}
+
+		// validate exist product
+		ProductDTO product = productService.findById(productId);
+
+		if (product == null || product.getProductCode() == null) {
+			throw new IllegalArgumentException("Invalid product id");
+		}
+
+		// get exist product in cart
+		ProductDTO productInCart = cart.get(productId);
+		if (productInCart == null) {
+			throw new IllegalArgumentException("Not found this product in cart");
+		}
+
+		productInCart.setProductQuantity(quantity);
+		log.info("Remaining quantity: " + productInCart.getProductQuantity());
+	}
+	
+	
 	//
 	// @RequestMapping(value = "add-list-to-cart", method = RequestMethod.POST)
 	// public @ResponseBody List<ProductDTO> addListToCart(@RequestBody
