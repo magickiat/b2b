@@ -362,6 +362,9 @@ public class FrontOrderController {
 
 		// ----- Find Shipping Type -----
 		model.addAttribute("shippingTypeList", orderService.findAllShippingType());
+		
+		// ----- Find Payment Method -----
+		model.addAttribute("paymentMethodList", orderService.findAllPaymentMethod());
 
 		return "pages-front/order/step3_confirm";
 	}
@@ -380,11 +383,15 @@ public class FrontOrderController {
 	}
 
 	@RequestMapping(value = "step4/submit", method = RequestMethod.POST)
-	String submitOrder(Long dispatchTo, String shippingType, @ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model) {
-		log.info("step4/submit POST");
-		log.info("dispatchTo = " + dispatchTo);
-		log.info("shippingType = " + shippingType);
-		log.info("cart size = " + cart.size());
+	String submitOrder(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod, @ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model) {
+		log.info("----- step4/submit POST");
+		log.info("----- dispatchTo = " + dispatchTo);
+		log.info("----- shippingType = " + shippingType);
+		log.info("----- customerRemark = " + customerRemark);
+		log.info("----- paymentMethod = " + paymentMethod);
+		log.info("----- ----- cart size = " + cart.size());
+		
+		orderService.saveOrder(invoiceTo, dispatchTo, shippingType, customerRemark, paymentMethod, cart);
 		
 		return "pages-front/order/step4_submit";
 	}

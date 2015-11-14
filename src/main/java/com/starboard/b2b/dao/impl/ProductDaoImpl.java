@@ -22,7 +22,7 @@ import com.starboard.b2b.model.Brand;
 import com.starboard.b2b.model.Product;
 import com.starboard.b2b.web.form.product.SearchProductForm;
 
-@Repository
+@Repository("productDao")
 public class ProductDaoImpl implements ProductDao {
 
 	private static final Logger log = LoggerFactory.getLogger(ProductDaoImpl.class);

@@ -7,8 +7,16 @@ import java.util.Locale;
 
 public class DateTimeUtil {
 
-    public static Date getCurrentDate() {
-        return Calendar.getInstance(Locale.US).getTime();
-    }
+	public static Calendar getCalendar() {
+		return Calendar.getInstance(Locale.US);
+	}
+
+	public static Date getCurrentDate() {
+		return getCalendar().getTime();
+	}
+	
+	public static int getCurrentYear(){
+		return getCalendar().get(Calendar.YEAR);
+	}
 
 }

@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.starboard.b2b.dao.AppConfigDao;
 import com.starboard.b2b.model.AppConfig;
 
-@Repository
+@Repository("appConfigDao")
 public class AppConfigDaoImpl implements AppConfigDao {
 
 	@Autowired
