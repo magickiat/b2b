@@ -1,3 +1,4 @@
+truncate table `b2b`.`product_year`;
 
 INSERT INTO `b2b`.`product_year`
 (`product_year_id`,

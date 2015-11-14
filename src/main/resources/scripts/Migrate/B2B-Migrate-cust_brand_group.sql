@@ -1,3 +1,5 @@
+truncate table `b2b`.`cust_brand_group`;
+
 INSERT INTO `b2b`.`cust_brand_group`
 (`cust_id`,
 `brand_group_id`,

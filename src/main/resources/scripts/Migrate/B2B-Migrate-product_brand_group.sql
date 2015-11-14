@@ -1,3 +1,5 @@
+truncate table `b2b`.`product_brand_group`;
+
 INSERT INTO `b2b`.`product_brand_group`
 (`brand_group_id`,
 `product_type_id`,

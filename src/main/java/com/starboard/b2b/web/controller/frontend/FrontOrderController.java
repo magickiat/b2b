@@ -6,17 +6,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.starboard.b2b.common.AddressConstant;
@@ -241,6 +246,47 @@ public class FrontOrderController {
 		result.trimToSize();
 		return result;
 	}
+
+	@RequestMapping(value = "update-to-cart", method = RequestMethod.POST)
+	@ResponseStatus(code = HttpStatus.OK)
+	public @ResponseBody void updateQuantityToCart(@RequestParam Long productId, @RequestParam Long quantity,
+			@ModelAttribute("cart") Map<Long, ProductDTO> cart) throws IllegalArgumentException {
+
+		log.info("productId = " + productId + "\tquantity = " + quantity);
+
+		// Validat Quantity
+		if (quantity == null) {
+			throw new IllegalArgumentException("Quantity is required.");
+		}
+		if (quantity <= 0) {
+			throw new IllegalArgumentException("Quantity must over than zero.");
+		}
+		if (quantity > Integer.MAX_VALUE) {
+			throw new IllegalArgumentException("Quantity is huge, please contact Administrator.");
+		}
+
+		// Validate Product
+		if (productId == null) {
+			throw new IllegalArgumentException("Please select product.");
+		}
+
+		// validate exist product
+		ProductDTO product = productService.findById(productId);
+
+		if (product == null || product.getProductCode() == null) {
+			throw new IllegalArgumentException("Invalid product id");
+		}
+
+		// get exist product in cart
+		ProductDTO productInCart = cart.get(productId);
+		if (productInCart == null) {
+			throw new IllegalArgumentException("Not found this product in cart");
+		}
+
+		productInCart.setProductQuantity(quantity);
+		log.info("Remaining quantity: " + productInCart.getProductQuantity());
+	}
+
 	//
 	// @RequestMapping(value = "add-list-to-cart", method = RequestMethod.POST)
 	// public @ResponseBody List<ProductDTO> addListToCart(@RequestBody
@@ -293,7 +339,7 @@ public class FrontOrderController {
 	// return result;
 	// }
 
-	@RequestMapping(value = "/step3/checkout", method = RequestMethod.GET)
+	@RequestMapping(value = "step3/checkout", method = RequestMethod.GET)
 	String checkout(@ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model) {
 		// ----- Find product's price in cart ------
 		String invoiceCode = UserUtil.getCurrentUser().getCustomer().getInvoiceCode();
@@ -316,23 +362,31 @@ public class FrontOrderController {
 
 		// ----- Find Shipping Type -----
 		model.addAttribute("shippingTypeList", orderService.findAllShippingType());
-		
+
 		return "pages-front/order/step3_confirm";
 	}
 
-	@RequestMapping(value = "/step3/remove", method = RequestMethod.POST)
+	@RequestMapping(value = "step3/remove", method = RequestMethod.POST)
 	String removeFromCart(@RequestParam Long productId, @ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model) {
 		log.info("/step3/remove POST");
 		log.info("product id = " + productId);
 		if (cart != null) {
-			log.info("Before remove size: " + cart.size());
-			ProductDTO dto = cart.remove(productId);
-			log.info("Remove product: " + dto);
+			cart.remove(productId);
 			log.info("After remove size: " + cart.size());
 		} else {
 			log.warn("Not found shopping cart");
 		}
 		return checkout(cart, model);
+	}
+
+	@RequestMapping(value = "step4/submit", method = RequestMethod.POST)
+	String submitOrder(Long dispatchTo, String shippingType, @ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model) {
+		log.info("step4/submit POST");
+		log.info("dispatchTo = " + dispatchTo);
+		log.info("shippingType = " + shippingType);
+		log.info("cart size = " + cart.size());
+		
+		return "pages-front/order/step4_submit";
 	}
 
 	@RequestMapping(value = "create", method = RequestMethod.GET)
@@ -350,11 +404,11 @@ public class FrontOrderController {
 		return "pages-front/order/summary";
 	}
 
-	// @ExceptionHandler(IllegalArgumentException.class)
-	// public @ResponseBody String handleException(Exception e,
-	// HttpServletResponse response) {
-	// response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-	// return e.getMessage();
-	// }
+	@ExceptionHandler(IllegalArgumentException.class)
+	public @ResponseBody String handleException(Exception e, HttpServletResponse response) {
+		log.error(e.toString(), e);
+		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		return e.getMessage();
+	}
 
 }

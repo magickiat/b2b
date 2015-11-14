@@ -1,3 +1,4 @@
+truncate table `b2b`.`product_category`;
 
 INSERT INTO `b2b`.`product_category`
 (`product_category_id`,
