@@ -1,65 +1,64 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@page session="true"%>
 
-<jsp:useBean id="stringUtil" class="com.starboard.b2b.util.StringUtil"
-	scope="request"></jsp:useBean>
-
+<jsp:useBean id="stringUtil" class="com.starboard.b2b.util.StringUtil" scope="request"></jsp:useBean>
 
 <%-- common url --%>
 <c:url var="addToCartUrl" value="/frontend/order/add-to-cart" />
-
-
 
 <div id="indicator" style="display: none;">
 	<img src='<c:url value="/images/icon/loading_icon.gif" />' />
 </div>
 
-<div class="row">
-	<nav class="navbar">
-		<ul class="nav navbar-nav">
-			<li role="presentation" class="active"><a
-				href='<c:url value="/" />'>Home</a></li>
-			<li role="presentation"><a
-				href='<c:url value="/frontend/order/index" />'>Create Order</a></li>
-			<li role="presentation"><a
-				href="<c:url value="/frontend/order/summary" />">Order Summary</a></li>
-			<li role="presentation"><a
-				href="<c:url value="/frontend/download/index" />">Download</a></li>
-			<li role="presentation"><a
-				href="<c:url value="/frontend/user/view" />">Profile</a></li>
-			<li role="presentation"><a href="#">Accounting</a></li>
-			<li role="presentation"><a href="#">Contact us</a></li>
-			<sec:authorize access="isAuthenticated()">
-				<li role="presentation"><form:form
-						servletRelativeAction="/logout" method="post">
-						<input type="submit" class="btn btn-danger navbar-btn"
-							value="Logout" />
-					</form:form></li>
-			</sec:authorize>
-		</ul>
-	</nav>
+
+<div id="navbar-main">
+    <div class="navbar navbar-inverse navbar-fixed-top navtest">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon icon-home" style="font-size:30px; color:#3498db;"></span>
+                </button>
+                <a class="navbar-brand hidden-xs hidden-sm" href='<c:url value="/" />'><span class="icon icon-home" style="font-size:18px; color:#3498db;"></span></a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li role="presentation" class="active"><a href='<c:url value="/" />'>Home</a></li>
+					<li role="presentation"><a href='<c:url value="/frontend/order/index" />'>Create Order</a></li>
+					<li role="presentation"><a href="<c:url value="/frontend/order/summary" />">Order Summary</a></li>
+					<li role="presentation"><a href="<c:url value="/frontend/download/index" />">Download</a></li>
+					<li role="presentation"><a href="<c:url value="/frontend/user/view" />">Profile</a></li>
+					<li role="presentation"><a href="#">Accounting</a></li>
+					<li role="presentation"><a href="#">Contact us</a></li>
+					<sec:authorize access="isAuthenticated()">
+						<sec:authentication var="user" property="principal" />
+						<li role="presentation" class="dropdown">
+		                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Welcome:${user.name}<span class="caret"></span></a>
+		                  <ul class="dropdown-menu" role="menu">
+		                    <li><a href="#">${user.name}</a></li>
+		                    <li class="divider"></li>
+		                    <li><a href="#">Profile</a></li>
+		                    <li class="divider"></li>
+		                    <li>
+		                    	<form:form servletRelativeAction="/logout" method="post">
+									<input type="submit" class="btn btn-danger" value="Logout" />
+								</form:form>
+		                    </li>
+		                  </ul>
+		                </li>
+					</sec:authorize>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 
 <%-- Welcome bar --%>
 <sec:authorize access="isAuthenticated()">
-	<sec:authentication var="user" property="principal" />
+	
 
-	<div class="row well">
-		<div class="col-sm-1">
-			<p class="text-right">
-				<strong>Welcome:</strong>
-			</p>
-		</div>
-
-		<div class="col-sm-8">
-			<p class="text-left">
-				<strong>${user.name}</strong>
-			</p>
-		</div>
-
+	<div class="row">
 		<%-- Shopping cart --%>
 		<div class="col-sm-3">
 			<input type="hidden" id="totalQuantity" value="0" />
