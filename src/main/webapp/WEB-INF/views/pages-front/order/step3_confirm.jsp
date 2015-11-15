@@ -118,9 +118,16 @@
 									<c:forEach items="${ products }" var="p" varStatus="rowCount">
 										<c:set var="product" value="${ p.product }" />
 										<tr>
+											<%-- NO --%>
 											<td>${rowCount.index + 1 }</td>
+
+											<%-- product code --%>
 											<td>${ product.productCode }</td>
+
+											<%-- product name --%>
 											<td>${ product.productNameEn }</td>
+
+											<%-- QTY --%>
 											<td><input type="text" id="quantity-${ rowCount.index }"
 												name="quantity" class="form-control numberOnly"
 												value="${ product.productQuantity }"
@@ -128,9 +135,12 @@
 													var="totalQuantity"
 													value="${ totalQuantity +  product.productQuantity }" /></td>
 
+											<%-- UNIT TYPE --%>
 											<td>${ product.productUnitId }</td>
 
-											<td><c:choose>
+											<%-- unit price --%>
+											<td><input type="hidden" name="amount"
+												value="${ p.price.amount }" /> <c:choose>
 													<c:when test="${ empty p.price }">
 												TBA
 											</c:when>
@@ -139,10 +149,11 @@
 																pattern="#,###" maxIntegerDigits="12"
 																value="${ p.price.amount }">
 															</fmt:formatNumber></span>
+
 													</c:otherwise>
 												</c:choose></td>
 
-
+											<%-- amount --%>
 											<td><c:choose>
 													<c:when test="${ empty p.price }">TBA</c:when>
 													<c:otherwise>
@@ -152,13 +163,13 @@
 																minIntegerDigits="1">
 															</fmt:formatNumber>
 														</span>
-														<input type="hidden" name="totalProductAmount"
-															value="${ totalAmount + (product.productQuantity * p.price.amount) }" />
+
 													</c:otherwise>
 												</c:choose></td>
+											<%-- Currency --%>
 											<td>${ product.productCurrency }</td>
 											<td class="text-center">
-
+												<%-- warning because inner form --%>
 												<form id="remove-${ product.productId }"
 													action='<c:url value="/frontend/order/step3/remove" />'
 													method="post">
@@ -281,15 +292,17 @@
 		function summaryAmount() {
 			var amount = 0;
 
-			$('input[name=totalProductAmount]').each(function(index, value) {
-				var quantity = $('#quantity-' + index).val();
-				var val = $(value).val();
-				val = (+val) * (+quantity);
+			$('input[name=amount]').each(function(index, value) {
+				if($(value).val()){
+					var quantity = $('#quantity-' + index).val();
+					var val = $(value).val();
+					val = (+val) * (+quantity);
+					console.log('quantity = ' + quantity + '\tprice = ' + val);
+					$('#total-amount-' + index).text(val);
+					console.log('set amount: ' + $('#total-amount-' + index).text());
+					amount = (+amount) + (+val);
+				}
 				
-				$('#total-amount-' + index).text(val);
-				console.log('set amount: ' + $('#total-amount-' + index).text());
-				
-				amount = (+amount) + (+val);
 			});
 			console.log('Total Amount = ' + amount);
 			$('#totalAmount').text(formatNumber(amount));
