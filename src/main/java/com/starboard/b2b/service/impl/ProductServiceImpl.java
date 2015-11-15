@@ -361,6 +361,9 @@ public class ProductServiceImpl implements ProductService {
 			ProductSearchResult product = new ProductSearchResult(productInCart);
 			ProductPriceDTO price = productPriceDao.findProductPrice(productInCart.getProductCode(), invoiceCode, productInCart.getProductPreintro());
 			product.setPrice(price);
+			if(price != null){
+				productInCart.setProductPrice(price.getAmount());
+			}
 			result.add(product);
 		}
 		result.trimToSize();

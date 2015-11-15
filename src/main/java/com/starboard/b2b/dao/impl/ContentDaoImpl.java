@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Ken on 9/29/2015.
  */
-@Repository
+@Repository("contentDao")
 public class ContentDaoImpl implements ContentDao {
 
     @Autowired

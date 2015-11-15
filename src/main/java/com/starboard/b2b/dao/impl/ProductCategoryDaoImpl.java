@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.starboard.b2b.dao.ProductCategoryDao;
 import com.starboard.b2b.model.ProductCategory;
 
-@Repository
+@Repository("productCategoryDao")
 public class ProductCategoryDaoImpl implements ProductCategoryDao {
 
 	@Autowired

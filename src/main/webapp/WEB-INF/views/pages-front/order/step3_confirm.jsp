@@ -34,6 +34,9 @@
 						</div>
 					</div>
 					<div class="row">
+						<input type="hidden" name="invoiceTo"
+							value="${invoiceToAddress.addrId }" />
+
 						<div class="col-sm-12">${ invoiceToAddress.address }</div>
 						<div class="col-sm-12">
 							TELEPHONE: <span class="telephone"><c:out
@@ -50,9 +53,6 @@
 						<div class="col-sm-8">
 
 							<c:if test="${ not empty dispatchToAddress }">
-
-							
-								method="post">
 								<select id="dispatchTo" name="dispatchTo" class="form-control"
 									onchange="changeDispatchTo(this)">
 									<c:forEach var="dispatchTo" items="${ dispatchToAddress }"
@@ -161,6 +161,7 @@
 												</c:choose></td>
 											<td>${ product.productCurrency }</td>
 											<td class="text-center">
+
 												<form id="remove-${ product.productId }"
 													action='<c:url value="/frontend/order/step3/remove" />'
 													method="post">
@@ -190,7 +191,8 @@
 										<td colspan="6">Shipping and Service Fee</td>
 									</tr>
 									<tr>
-										<td colspan="3"><textarea rows="4" cols="50"
+										<td colspan="3"><textarea id="customerRemark"
+												name="customerRemark" rows="4" cols="50"
 												class="form-control"></textarea></td>
 										<td colspan="6"><label for="shippingType">Shipping
 												type</label> <select id="shippingType" name="shippingType"
@@ -198,6 +200,13 @@
 												<c:forEach var="shippingType" items="${ shippingTypeList }">
 													<option label="${shippingType.shippingTypeName }"
 														value="${ shippingType.shippingTypeId }" />
+												</c:forEach>
+										</select> <select id="paymentMethod" name="paymentMethod"
+											class="form-control" style="display: none;">
+												<c:forEach var="paymentMethod"
+													items="${ paymentMethodList }">
+													<option label="${paymentMethod.paymentMethodName }"
+														value="${ paymentMethod.paymentMethodId }" />
 												</c:forEach>
 										</select></td>
 									</tr>
@@ -279,9 +288,11 @@
 				var quantity = $('#quantity-' + index).val();
 				var val = $(value).val();
 				val = (+val) * (+quantity);
-
-				amount = (+amount) + (+val);
+				
 				$('#total-amount-' + index).text(val);
+				console.log('set amount: ' + $('#total-amount-' + index).text());
+				
+				amount = (+amount) + (+val);
 			});
 			console.log('Total Amount = ' + amount);
 			$('#totalAmount').text(formatNumber(amount));

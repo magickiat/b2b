@@ -10,10 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.starboard.b2b.dao.BrandDao;
 import com.starboard.b2b.model.Brand;
-import com.starboard.b2b.model.Cust;
-import com.starboard.b2b.model.Customer;
 
-@Repository
+@Repository("brandDao")
 public class BrandDaoImpl implements BrandDao {
 
 	@Autowired

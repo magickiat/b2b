@@ -12,7 +12,7 @@ import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.dao.CustomerDao;
 import com.starboard.b2b.model.Customer;
 
-@Repository
+@Repository("customerDao")
 public class CustomerDaoImpl implements CustomerDao {
 	@Autowired
 	private SessionFactory sessionFactory;

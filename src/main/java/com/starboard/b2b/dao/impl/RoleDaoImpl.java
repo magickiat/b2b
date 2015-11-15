@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.starboard.b2b.dao.RoleDao;
 import com.starboard.b2b.model.Role;
 
-@Repository
+@Repository("roleDao")
 public class RoleDaoImpl implements RoleDao {
 
 	@Autowired
