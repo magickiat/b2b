@@ -12,6 +12,7 @@
 	<title>Starboard Windsurfing</title>
 	<link rel="stylesheet" href="<c:url value="/scripts/assets/bootstrap/css/bootstrap.min.css"/>">
     <link rel="stylesheet" href="<c:url value="/scripts/assets/font-awesome/css/font-awesome.min.css"/>">
+    <link rel="stylesheet" href="<c:url value="/scripts/assets/font-awesome/css/francoisone.css"/>">
 	<link rel="stylesheet" href="<c:url value="/scripts/assets/css/form-elements.css"/>">
     <link rel="stylesheet" href="<c:url value="/scripts/assets/css/style.css"/>">
 </head>
@@ -44,12 +45,12 @@
 								modelAttribute="loginForm" method="post">
 		                   
 			                   		<div class="form-group">
-				                   		<label class="sr-only" for="username">Username</label>
+				                   		<label class="sr-only font_francois" for="username">Username</label>
 				                       	<form:input path="username" class="form-username form-control"
 												placeholder="Enter Username" />
 			                       	</div>
 			                        <div class="form-group">
-			                       	 	<label class="sr-only" for="password">Password</label>
+			                       	 	<label class="sr-only font_francois" for="password">Password</label>
 				                       	<form:password class="form-password form-control" path="password"
 											placeholder="Enter password" />
 			                        </div>
