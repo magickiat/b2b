@@ -50,9 +50,6 @@
 						<div class="col-sm-8">
 
 							<c:if test="${ not empty dispatchToAddress }">
-
-							
-								method="post">
 								<select id="dispatchTo" name="dispatchTo" class="form-control"
 									onchange="changeDispatchTo(this)">
 									<c:forEach var="dispatchTo" items="${ dispatchToAddress }"
@@ -288,9 +285,11 @@
 				var quantity = $('#quantity-' + index).val();
 				var val = $(value).val();
 				val = (+val) * (+quantity);
-
-				amount = (+amount) + (+val);
+				
 				$('#total-amount-' + index).text(val);
+				console.log('set amount: ' + $('#total-amount-' + index).text());
+				
+				amount = (+amount) + (+val);
 			});
 			console.log('Total Amount = ' + amount);
 			$('#totalAmount').text(formatNumber(amount));
