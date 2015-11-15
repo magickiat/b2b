@@ -16,10 +16,11 @@
 
 	<%-- Use when change technology  --%>
 	<input type="hidden" id="withnoseFlag" value="0" />
+	
+	<%@include
+			file="/WEB-INF/views/pages-front/include/common_header.jspf"%>
 
 	<div class="container">
-		<%@include
-			file="/WEB-INF/views/pages-front/include/common_header.jspf"%>
 
 
 		<div class="row">

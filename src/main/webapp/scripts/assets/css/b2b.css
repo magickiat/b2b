@@ -127,18 +127,19 @@ div.menu-link {
     font-size: 22px;
 }
 
+.header2{
+    font-family: francois_oneregular;
+    font-size: 22px;
+    font-weight: normal;
+}
+
 .row-header2 {
-	/*font-family: Verdana, Tahoma;*/
-	font-size: 11px;
-	font-weight: bold;
-	height: 70px;
-	background: rgba(255,255,255,0.5);
+	padding: 12px 0 18px 20px;
+	color: #333333;
+	/*background: rgba(255, 255, 255, 0.5559);*/
 	text-decoration: none;
 	z-index:1;
-	position:relative; 
-	float:none;
-	border: 2px;
-	
+	position:relative;
 }
 
 .showline {    
