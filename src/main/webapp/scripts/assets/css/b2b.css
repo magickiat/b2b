@@ -84,6 +84,9 @@ div.menu-link {
 
 .bg_color{
 	background-color: rgba(238, 238, 238, 0.5);
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 	/*box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, .5);*/
 }
 
@@ -139,7 +142,7 @@ div.menu-link {
 	/*background: rgba(255, 255, 255, 0.5559);*/
 	text-decoration: none;
 	z-index:1;
-	position:relative;
+	/*position:relative;*/
 }
 
 .showline {    
@@ -159,4 +162,13 @@ div.menu-link {
 	position:relative;
 	z-index:0;
 	background-color: #fff;
+}
+
+.txtupper{
+	font-family: francois_oneregular;
+	text-transform: uppercase;
+}
+
+.hero-feature {
+	/*margin-bottom: 30px;*/
 }

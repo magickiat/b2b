@@ -27,7 +27,8 @@
 						<td>${ rowNum.index + 1 }</td>
 						<td>${ product.productCode }</td>
 						<td>${ product.productNameEn }</td>
-						<td><c:choose>
+						<td>
+							<c:choose>
 								<c:when test="${ empty product.productPrice}">
 									TBA
 								</c:when>
@@ -37,10 +38,13 @@
 									</fmt:formatNumber>
 										${ product.productCurrency }
 								</c:otherwise>
-							</c:choose></td>
-						<td><input type="text" id="${ product.productId }"
+							</c:choose>
+						</td>
+						<td>
+							<input type="number" id="${ product.productId }"
 							name="product-order-number" class="form-control numberOnly"
-							maxlength="12" /></td>
+							maxlength="12" style="width: 80px;" />
+						</td>
 					</tr>
 
 				</c:forEach>

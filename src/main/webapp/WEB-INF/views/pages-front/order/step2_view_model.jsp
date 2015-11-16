@@ -11,52 +11,55 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Starboard Windsurfing</title>
 	<%@include file="/WEB-INF/views/include/common_css.jspf"%>
+	<link rel="stylesheet" href="<c:url value="/webjars/jquery-ui/1.11.4/jquery-ui.min.css"></c:url>">
 </head>
 <body>
 
 	<%-- Use when change technology  --%>
 	<input type="hidden" id="withnoseFlag" value="0" />
 	
-	<%@include
-			file="/WEB-INF/views/pages-front/include/common_header.jspf"%>
+	<%@include file="/WEB-INF/views/pages-front/include/common_header.jspf"%>
 
 	<div class="container">
-
-
 		<div class="row">
 			<img alt="step 1"
 				src='<c:url value="/images/pages-front/icon/step2.png" />'
 				width="100%">
 		</div>
-
 		<div class="row">&nbsp;</div>
-
 		<div class="row">
-			<div class="col-sm-8 text-center product-img-big-view">
-				<%-- Product Model Picture --%>
-				<%@include file="step2_include/view_image.jspf"%>
-
-			</div>
-			<div class="col-sm-4">
-				<%-- Technology --%>
-				<div class="row product-img-big-view"><%@include
-						file="step2_include/technology.jspf"%></div>
-
-				<%-- SIZE (Product length) --%>
-				<div class="row product-img-big-view"><%@include
-						file="step2_include/size.jspf"%></div>
-
-				<%-- Withnose board --%>
-				<div class="row product-img-big-view"><%@include
-						file="step2_include/withnose_board.jspf"%></div>
-
-				<%-- Quantity --%>
-				<div class="row product-img-big-view"><%@include
-						file="step2_include/quantity.jspf"%></div>
-
-				<%-- Button --%>
-				<div class="row product-img-big-view"><%@include
-						file="step2_include/button.jspf"%></div>
+			<div class="col-md-12 bg_color">
+				<div class="row-header2 header2 txtupper">product</div>
+				<div class="col-sm-8 text-center product-img-big-view">
+					<%-- Product Model Picture --%>
+					<%@include file="step2_include/view_image.jspf"%>
+				</div>
+				<div class="col-sm-4">
+					<%-- Technology --%>
+					<div class="row product-img-big-view">
+						<%@include file="step2_include/technology.jspf"%>
+					</div>
+	
+					<%-- SIZE (Product length) --%>
+					<div class="row product-img-big-view">
+						<%@include file="step2_include/size.jspf"%>
+					</div>
+	
+					<%-- Withnose board --%>
+					<div class="row product-img-big-view">
+						<%@include file="step2_include/withnose_board.jspf"%>
+					</div>
+	
+					<%-- Quantity --%>
+					<div class="row product-img-big-view">
+						<%@include file="step2_include/quantity.jspf"%>
+					</div>
+	
+					<%-- Button --%>
+					<div class="row product-img-big-view">
+						<%@include file="step2_include/button.jspf"%>
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -65,10 +68,7 @@
 		</div>
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
-	<script
-		src='<c:url value="/scripts/zoom/jquery.elevateZoom-3.0.8.min.js" />'></script>
-
-	
+	<script src='<c:url value="/scripts/zoom/jquery.elevateZoom-3.0.8.min.js" />'></script>
 	<script type="text/javascript">
 		$(document).ready(
 				function() {
@@ -239,8 +239,6 @@
 		
 	</script>
 	
-	<script src="<c:url value="/scripts/assets/js/jquery-1.11.1.min.js"/>"></script>
-	<script src="<c:url value="/scripts/assets/bootstrap/js/bootstrap.min.js"/>"></script>
 	<script src="<c:url value="/scripts/assets/js/jquery.backstretch.min.js"/>"></script>
 	<script>
 		jQuery(document).ready(function() {
