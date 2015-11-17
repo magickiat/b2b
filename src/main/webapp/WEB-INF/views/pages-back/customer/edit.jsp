@@ -86,7 +86,19 @@
 		</div>
 
 		<hr />
-
+		<%-- List Address --%>
+		<div class="row">
+			<div class="col-sm-10">
+				<b>Address</b>
+			</div>
+			
+		</div>
+		<div class="row">
+			<%@include file="list_address.jspf"%>
+		</div>
+		
+		<hr/>
+		
 		<div class="row">
 			<div class="col-sm-10">
 				<b>Product Brand</b>
