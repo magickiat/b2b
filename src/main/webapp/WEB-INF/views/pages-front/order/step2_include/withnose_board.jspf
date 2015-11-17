@@ -6,8 +6,7 @@
 <div class="col-sm-12">
 	<c:if test="${ hasWithnoseBoard }">
 		<h3>Withnose board</h3>
-		<input type="radio" id="noWithnose" name="withnose" value="0"
-			checked="checked" />
+		<input type="radio" id="noWithnose" name="withnose" value="0" checked="checked" />
 		<label for="noWithnose">No</label>
 		<input type="radio" name="withnose" value="1" />
 		<label for="withnose">Yes</label>

@@ -13,12 +13,12 @@
 	<%@include file="/WEB-INF/views/include/common_css.jspf"%>
 	<link rel="stylesheet" href="<c:url value="/webjars/jquery-ui/1.11.4/jquery-ui.min.css"></c:url>">
 </head>
-<body>
-
-	<%-- Use when change technology  --%>
-	<input type="hidden" id="withnoseFlag" value="0" />
+<body class="pd-bottom">
 	
 	<%@include file="/WEB-INF/views/pages-front/include/common_header.jspf"%>
+	
+	<%-- Use when change technology  --%>
+	<input type="hidden" id="withnoseFlag" value="0" />
 
 	<div class="container">
 		<div class="row">
@@ -28,7 +28,7 @@
 		</div>
 		<div class="row">&nbsp;</div>
 		<div class="row">
-			<div class="col-md-12 bg_color">
+			<div class="col-md-12 bg_color" style="padding-bottom: 50px;">
 				<div class="row-header2 header2 txtupper">product</div>
 				<div class="col-sm-8 text-center product-img-big-view">
 					<%-- Product Model Picture --%>

@@ -1,16 +1,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page session="true"%>
 
-<div class="col-sm-6">
+<div class="col-sm-4">
 	<input type="button" id="btn-previous" class="btn btn-primary" value="PREVIOUS" />
 </div>
-
-<div class="col-sm-6">
+<div class="col-sm-4">
 	<input type="button" class="btn btn-success" value="ADD TO CART" onclick="addToCart()" />
 </div>
-<div class="col-sm-12">&nbsp;</div>
-<div class="col-sm-6">&nbsp;</div>
-
-<div class="col-sm-6">
+<div class="col-sm-4">
 	<input type="button" class="btn btn-success" value="CHECK OUT" onclick="checkout()" />
 </div>

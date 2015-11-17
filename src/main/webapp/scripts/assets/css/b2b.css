@@ -5,6 +5,10 @@ label {
 	font-weight: normal !important;
 }
 
+.pd-bottom{
+	padding-bottom: 50px;	
+}
+
 div.menu-link {
 	cursor: pointer;
 }
@@ -41,7 +45,12 @@ div.menu-link {
 }
 
 .product-img-big-view {
-	border: solid 1px black;
+	border:10px solid rgba(238, 238, 238, 0.6);  
+	-moz-box-shadow:inset 0 0 10px #000000;  
+	-webkit-box-shadow:inset 0 0 10px #000000;  
+	 box-shadow:inset 0 0 5px #000000;
+	/*background-color: #fff;*/
+	padding: 10px;
 }
 
 .product-model-detail {
