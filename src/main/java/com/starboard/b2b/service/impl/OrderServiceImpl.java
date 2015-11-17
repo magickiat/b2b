@@ -127,8 +127,6 @@ public class OrderServiceImpl implements OrderService {
 		order.setPaymentTermId(configService.getString(OrderConfig.KEY_DEFAULT_PAYMENT_TERM_ID));
 		order.setRemarkCustomer(customerRemark);
 		order.setTimeCreate(DateTimeUtil.getCurrentDate());
-
-		order.setTimeUpdate(DateTimeUtil.getCurrentDate());
 		long orderId = orderDao.save(order);
 
 		// Create Order Detail

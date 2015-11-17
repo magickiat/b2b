@@ -306,15 +306,17 @@
 		function summaryAmount() {
 			var amount = 0;
 
-			$('input[name=totalProductAmount]').each(function(index, value) {
-				var quantity = $('#quantity-' + index).val();
-				var val = $(value).val();
-				val = (+val) * (+quantity);
+			$('input[name=amount]').each(function(index, value) {
+				if($(value).val()){
+					var quantity = $('#quantity-' + index).val();
+					var val = $(value).val();
+					val = (+val) * (+quantity);
+					console.log('quantity = ' + quantity + '\tprice = ' + val);
+					$('#total-amount-' + index).text(val);
+					console.log('set amount: ' + $('#total-amount-' + index).text());
+					amount = (+amount) + (+val);
+				}
 				
-				$('#total-amount-' + index).text(val);
-				console.log('set amount: ' + $('#total-amount-' + index).text());
-				
-				amount = (+amount) + (+val);
 			});
 			console.log('Total Amount = ' + amount);
 			$('#totalAmount').text(formatNumber(amount));
