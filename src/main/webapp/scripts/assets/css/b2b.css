@@ -1,0 +1,174 @@
+body{
+ font-family: 'francois_oneregular';
+}
+label {
+	font-weight: normal !important;
+}
+
+div.menu-link {
+	cursor: pointer;
+}
+
+.brand_logo {
+	width: 256px;
+	height: 256px;
+}
+
+.bottom-align-text {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+
+.tech-img {
+	width: 75px;
+	height: 75px;
+	text-align: center;
+}
+
+.product-img {
+	width: 256px;
+	height: 256px;
+	text-align: center;
+	border: solid 1px black;
+	margin: 5px;
+}
+
+.product-img-default {
+	width: 256px;
+	height: 256px;
+	text-align: center;
+}
+
+.product-img-big-view {
+	border: solid 1px black;
+}
+
+.product-model-detail {
+	border: solid 1px black;
+}
+
+.product-size {
+	margin: 2px;
+	min-width: 70px;
+}
+
+.table-image {
+	margin: auto;
+}
+
+.price-msrp {
+	color: #6e1a1a;
+}
+
+#cartItems {
+	cursor: pointer;
+}
+
+#addListToCart {
+	margin-top: 15px;
+}
+
+.img-btn-cursor {
+	cursor: pointer;
+}
+
+.navbar-default{
+	background : transparent;
+	font-family: francois_oneregular;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: #000;
+}
+
+.bg_color{
+	background-color: rgba(238, 238, 238, 0.5);
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	/*box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, .5);*/
+}
+
+.container2{
+	margin-top: : 20px;
+}
+
+
+#shadow2{
+	background-color: #666666;
+    color: #000;
+    height: 50px;
+    box-shadow: -1px -1px 2px 0px rgba(0, 0, 0, .5);
+	padding: 15px 0px 2px;
+	margin-top: -20px;
+	background: rgb(206,206,206); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(206,206,206,1) 0%, rgba(182,182,182,1) 43%, rgba(182,182,182,1) 43%, rgba(182,182,182,1) 43%, rgba(149,149,149,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(206,206,206,1)), color-stop(43%,rgba(182,182,182,1)), color-stop(43%,rgba(182,182,182,1)), color-stop(43%,rgba(182,182,182,1)), color-stop(100%,rgba(149,149,149,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(206,206,206,1) 0%,rgba(182,182,182,1) 43%,rgba(182,182,182,1) 43%,rgba(182,182,182,1) 43%,rgba(149,149,149,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(206,206,206,1) 0%,rgba(182,182,182,1) 43%,rgba(182,182,182,1) 43%,rgba(182,182,182,1) 43%,rgba(149,149,149,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(206,206,206,1) 0%,rgba(182,182,182,1) 43%,rgba(182,182,182,1) 43%,rgba(182,182,182,1) 43%,rgba(149,149,149,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(206,206,206,1) 0%,rgba(182,182,182,1) 43%,rgba(182,182,182,1) 43%,rgba(182,182,182,1) 43%,rgba(149,149,149,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cecece', endColorstr='#959595',GradientType=0 ); /* IE6-9 */
+}
+
+.row-header {
+	/*font-family: Verdana, Tahoma;*/
+	font-size: 11px;
+	font-weight: bold;
+	padding: 12px 0 18px;
+	color: #333333;
+	background: rgba(255, 255, 255, 0.5559);
+	text-decoration: none;
+	z-index:1;
+	position:relative;
+}
+
+.header1{
+	padding-left: 20px;
+    font-family: francois_oneregular;
+    font-size: 22px;
+}
+
+.header2{
+    font-family: francois_oneregular;
+    font-size: 22px;
+    font-weight: normal;
+}
+
+.row-header2 {
+	padding: 12px 0 18px 20px;
+	color: #333333;
+	/*background: rgba(255, 255, 255, 0.5559);*/
+	text-decoration: none;
+	z-index:1;
+	/*position:relative;*/
+}
+
+.showline {    
+	border:10px solid rgba(238, 238, 238, 0.6);  
+	-moz-box-shadow:inset 0 0 10px #000000;  
+	-webkit-box-shadow:inset 0 0 10px #000000;  
+	 box-shadow:inset 0 0 5px #000000;
+	position:relative;
+	z-index:0;
+}
+
+.showline2 {    
+	border:10px solid rgba(238, 238, 238, 0.6);  
+	-moz-box-shadow:inset 0 0 10px #000000;  
+	-webkit-box-shadow:inset 0 0 10px #000000;  
+	 box-shadow:inset 0 0 5px #000000;
+	position:relative;
+	z-index:0;
+	background-color: #fff;
+}
+
+.txtupper{
+	font-family: francois_oneregular;
+	text-transform: uppercase;
+}
+
+.hero-feature {
+	/*margin-bottom: 30px;*/
+}

@@ -5,10 +5,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Starboard</title>
-<%@include file="/WEB-INF/views/include/common_css.jspf"%>
-<link type="text/css" href="<c:url value="/css/pages-front/index.css"/>" rel="stylesheet"></link>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Starboard Windsurfing</title>
+    <%@include file="/WEB-INF/views/include/common_css.jspf" %>
 </head>
 <body>
 	<div class="background">

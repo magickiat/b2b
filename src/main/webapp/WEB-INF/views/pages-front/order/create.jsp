@@ -17,7 +17,6 @@
 			<h2>Create Order</h2>
 		</div>
 		
-		
 		<div class="row">
 		<sec:authentication var="user" property="principal" />
 		
