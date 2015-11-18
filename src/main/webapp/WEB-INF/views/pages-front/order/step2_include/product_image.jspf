@@ -1,41 +1,48 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page session="true"%>
 
-<c:choose>
-	<c:when test="${empty resultPage.result }">
-		<h3>Not found any product.</h3>
-	</c:when>
 
-	<c:otherwise>
+<div class="row text-center">
+	<c:choose>
+	
+		<c:when test="${empty resultPage.result }">
+			<h3>Not found any product.</h3>
+		</c:when>
+	
+		<c:otherwise>
 		
-		<table class="table-image">
-			<c:forEach items="${ resultPage.result }" var="product"
-				varStatus="rowNum">
+				<c:forEach items="${ resultPage.result }" var="product" varStatus="rowNum">
+					<%-- Check if not found image, use default image --%>
+					<c:choose>
+						<c:when test="${empty product.modelImage }">
+							<c:set var="imageUrl" value="/images/b2b/default_image.jpg" />
+						</c:when>
+						<c:otherwise>
+							<c:set var="imageUrl" value="${ product.modelImage }" />
+						</c:otherwise>
+					</c:choose>
+					<c:url var="productUrl" value="${ imageUrl }" />
+					<div class="col-md-3 col-sm-6 hero-feature" style="<c:if test="${ rowNum.index % 4 == 0 }">clear: left;</c:if>">
+				        <div class="thumbnail">
+				        	<a href='<c:url value="/frontend/order/step2/view?modelId=${ product.productModelId }" />'>
+								<img alt="${ product.productModelName }" src="${ productUrl }" />
+							</a>
+				            <div class="caption">
+				                <p>
+				                    <a href='<c:url value="/frontend/order/step2/view?modelId=${ product.productModelId }" />'>
+										<span style="text-align: center;">${ product.productModelName }</span>
+									</a>
+				                </p>
+				            </div>
+				        </div>
+				    </div>
+	
+					<!--<c:if test="${ rowNum.index % 4 == 0 }"></c:if>-->
+					<!--<c:if test="${ (rowNum.index + 1) % 4 == 0 }"></c:if>-->
+					
+				</c:forEach>
+			
+		</c:otherwise>
+	</c:choose>
 
-				<%-- Check if not found image, use default image --%>
-				<c:choose>
-					<c:when test="${empty product.modelImage }">
-						<c:set var="imageUrl" value="/images/b2b/default_image.jpg" />
-					</c:when>
-					<c:otherwise>
-						<c:set var="imageUrl" value="${ product.modelImage }" />
-					</c:otherwise>
-				</c:choose>
-				<c:url var="productUrl" value="${ imageUrl }" />
-
-				<c:if test="${ rowNum.index % 4 == 0 }">
-					<tr>
-				</c:if>
-				<td width="256px" valign="top" align="center"><a
-					href='<c:url value="/frontend/order/step2/view?modelId=${ product.productModelId }" />'>
-						<img class="product-img" alt="${ product.productModelName }"
-						src="${ productUrl }" /> <span style="text-align: center;">${ product.productModelName }</span>
-				</a></td>
-
-				<c:if test="${ (rowNum.index + 1) % 4 == 0 }">
-					</tr>
-				</c:if>
-			</c:forEach>
-		</table>
-	</c:otherwise>
-</c:choose>
+</div>

@@ -18,39 +18,41 @@ import com.starboard.b2b.web.form.product.SearchProductForm;
 
 public interface ProductService {
 
-	// Query Brands by brandGroupId, if brandGroupId = 0 is query all
-	List<ProductTypeDTO> findProductTypeByBrandId(Long brandGroupId);
+    // Query Brands by brandGroupId, if brandGroupId = 0 is query all
+    List<ProductTypeDTO> findProductTypeByBrandId(Long brandGroupId);
 
-	List<ProductCategoryDTO> findAllProductCategory();
+    List<ProductCategoryDTO> findAllProductCategory();
 
-	List<ProductModelDTO> findAllProductModel();
+    List<ProductModelDTO> findAllProductModel();
 
-	List<ProductYearDTO> findAllProductYear();
+    List<ProductYearDTO> findAllProductYear();
 
-	List<ProductTechnologyDTO> findAllProductTechnology();
+    List<ProductTechnologyDTO> findAllProductTechnology();
 
-	List<ProductBuyerGroupDTO> findProductBuyerGroupByBrandId(Long selectedBrandId);
-	
-	List<ProductBuyerGroupDTO> findProductBuyerGroupByProductType(List<ProductTypeDTO> productType);
+    List<ProductBuyerGroupDTO> findProductBuyerGroupByBrandId(Long selectedBrandId);
 
-	Page<SearchProductModelDTO> searchProduct(SearchProductForm searchProductForm);
+    List<ProductBuyerGroupDTO> findProductBuyerGroupByProductType(List<ProductTypeDTO> productType);
 
-	List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection);
+    Page<SearchProductModelDTO> searchProduct(SearchProductForm searchProductForm);
 
-	List<ProductSearchResult> findProductModel(String modelId);
+    List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection);
 
-	HashMap<String, ProductSearchResult> findProductLength(List<ProductSearchResult> productListNoWithnose);
+    List<ProductSearchResult> findProductModel(String modelId);
 
-	HashMap<String, List<ProductSearchResult>> groupProductByTechnology(List<ProductSearchResult> productList);
+    HashMap<String, ProductSearchResult> findProductLength(List<ProductSearchResult> productListNoWithnose);
 
-	void findProductPrice(List<ProductSearchResult> productList, String custInvoiceCode);
+    HashMap<String, List<ProductSearchResult>> groupProductByTechnology(List<ProductSearchResult> productList);
 
-	void findProductPriceList(List<SearchProductModelDTO> productList, String custInvoiceCode);
+    void findProductPrice(List<ProductSearchResult> productList, String custInvoiceCode);
 
-	String findProductUnit(long productId);
+    void findProductPriceList(List<SearchProductModelDTO> productList, String custInvoiceCode);
 
-	ProductDTO findById(Long productId);
+    String findProductUnit(long productId);
 
-	List<ProductSearchResult> findProductPrice(Map<Long, ProductDTO> cart, String invoiceCode);
+    ProductDTO findById(Long productId);
+
+    ProductDTO findByProductCode(String productCode);
+
+    List<ProductSearchResult> findProductPrice(Map<Long, ProductDTO> cart, String invoiceCode);
 
 }
