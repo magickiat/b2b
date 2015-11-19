@@ -11,8 +11,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.http.MediaType;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.support.StandardServletMultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -28,74 +27,76 @@ import org.springframework.web.servlet.view.JstlView;
 @PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-	private final Logger log = LoggerFactory.getLogger(getClass());
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
-	@Value("${upload.path}")
-	private String uploadPath;
+    @Value("${upload.path}")
+    private String uploadPath;
 
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		// Upload folder
-		log.info("upload path: " + uploadPath);
-		registry.addResourceHandler("/upload/**").addResourceLocations("file:" + uploadPath);
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // Upload folder
+        log.info("upload path: " + uploadPath);
+        registry.addResourceHandler("/upload/**").addResourceLocations("file:" + uploadPath);
 
-		// WebJars
-		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
-				.setCachePeriod(31556926);
-	}
+        // WebJars
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
+                .setCachePeriod(31556926);
+    }
 
-	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-		configurer.enable();
-	}
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
+    }
 
-	@Bean
-	public ViewResolver viewResolver() {
-		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-		viewResolver.setViewClass(JstlView.class);
-		viewResolver.setPrefix("/WEB-INF/views/");
-		viewResolver.setSuffix(".jsp");
-		return viewResolver;
-	}
+    @Bean
+    public ViewResolver viewResolver() {
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setViewClass(JstlView.class);
+        viewResolver.setPrefix("/WEB-INF/views/");
+        viewResolver.setSuffix(".jsp");
+        return viewResolver;
+    }
 
-	@Bean
-	public MultipartResolver multipartResolver() {
-		return new StandardServletMultipartResolver();
-	}
+    @Bean(name = "multipartResolver")
+    public CommonsMultipartResolver createMultipartResolver() {
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+        resolver.setDefaultEncoding("utf-8");
+        return resolver;
+    }
 
-	@Override
-	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-		configurer.favorPathExtension(true).ignoreAcceptHeader(true).useJaf(false)
-				.defaultContentType(MediaType.TEXT_HTML)
-				.mediaType("html", MediaType.TEXT_HTML)
-//				.mediaType("xml", MediaType.APPLICATION_XML)
-				.mediaType("json", MediaType.APPLICATION_JSON);
-	}
+    @Override
+    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+        configurer.favorPathExtension(true).ignoreAcceptHeader(true).useJaf(false)
+                .defaultContentType(MediaType.TEXT_HTML)
+                .mediaType("html", MediaType.TEXT_HTML)
+                //.mediaType("xml", MediaType.APPLICATION_XML)
+                .mediaType("json", MediaType.APPLICATION_JSON);
+    }
 
-	@Override
-	public Validator getValidator() {
-		return new LocalValidatorFactoryBean();
-	}
+    @Override
+    public Validator getValidator() {
+        return new LocalValidatorFactoryBean();
+    }
 
-	//
-	// @Bean
-	// public MessageSource messageSource() {
-	// ResourceBundleMessageSource source = new ResourceBundleMessageSource();
-	// source.setBasename("classpath:messages");
-	// source.setUseCodeAsDefaultMessage(true);
-	// return source;
-	// }
+    //
+    // @Bean
+    // public MessageSource messageSource() {
+    // ResourceBundleMessageSource source = new ResourceBundleMessageSource();
+    // source.setBasename("classpath:messages");
+    // source.setUseCodeAsDefaultMessage(true);
+    // return source;
+    // }
 
-	/*
+    /*
 	 * PropertySourcesPlaceHolderConfigurer Bean only required for @Value("{}")
 	 * annotations. Remove this bean if you are not using @Value annotations for
 	 * injecting properties.
-	 */
-	@Bean
-	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-		return new PropertySourcesPlaceholderConfigurer();
-	}
-	
+     */
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
+
 //	@Override
 //	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 //		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();

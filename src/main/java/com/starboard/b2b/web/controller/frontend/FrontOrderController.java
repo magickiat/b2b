@@ -72,6 +72,10 @@ public class FrontOrderController {
     String step1(Model model) {
         List<ProductBrandGroupDTO> brandGroupList = brandService.getBrandGroupList(UserUtil.getCurrentUser().getCustomer().getCustId());
         model.addAttribute("brandGroupList", brandGroupList);
+        // Create cart
+        if (!model.containsAttribute("cart")) {
+            model.addAttribute("cart", new HashMap<Long, ProductDTO>());
+        }
         return "pages-front/order/step1_brand";
     }
 
