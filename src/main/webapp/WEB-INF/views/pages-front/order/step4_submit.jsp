@@ -20,14 +20,14 @@
 
 		<div class="row">
 			<img alt="step 1"
-				src='<c:url value="/images/pages-front/icon/step4.png" />'
-				width="100%">
+				src='<c:url value="/images/pages-front/icon/step4.png" />'>
 		</div>
 
 		<div class="row">&nbsp;</div>
 		<div class="row"></div>
 	</div>
 	
+	<%@include file="/WEB-INF/views/include/common_footer.jspf" %>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 	<script src="<c:url value="/scripts/assets/js/jquery-1.11.1.min.js"/>"></script>
 	<script src="<c:url value="/scripts/assets/bootstrap/js/bootstrap.min.js"/>"></script>
