@@ -23,6 +23,7 @@
 		${ user.customer.name }
 		</div>
 	</div>
+	<%@include file="/WEB-INF/views/include/common_footer.jspf" %>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 </body>
 </html>

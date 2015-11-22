@@ -30,7 +30,7 @@
         <li><a href="<c:url value="/frontend/download/index" />">Download</a></li>
         <li><a href="<c:url value="/frontend/user/view" />">Profile</a></li>
         <li><a href="#">Accounting</a></li>
-		<li><a href="#">Contact us</a></li>
+		<li><a href="<c:url value="/frontend/contactus" />">Contact us</a></li>
       </ul>
       <sec:authorize access="isAuthenticated()">
       	<ul class="nav navbar-nav navbar-right">
@@ -49,7 +49,7 @@
 <sec:authorize access="isAuthenticated()">
 	<sec:authentication var="user" property="principal" />
 	
-	<div class="row" id="shadow2"> 
+	<div class="" id="shadow2"> 
 		<div class="container">
 			<div class="col-sm-1">
 				<p class="text-right">
@@ -122,4 +122,4 @@
 	}
 </script>
 
-<div style="clear: both; height: 50px;"></div>
+<div style="clear: both; height: 20px;"></div>

@@ -1,11 +1,15 @@
 package com.starboard.b2b.service.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +26,15 @@ import com.starboard.b2b.dao.OrderDetailDao;
 import com.starboard.b2b.dao.OrdersIdRunningDao;
 import com.starboard.b2b.dao.PaymentMethodDao;
 import com.starboard.b2b.dao.ShippingTypeDao;
-import com.starboard.b2b.dto.AddressDTO;
+import com.starboard.b2b.dto.OrdAddressDTO;
+import com.starboard.b2b.dto.OrderDTO;
 import com.starboard.b2b.dto.PaymentMethodDTO;
 import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ShippingTypeDTO;
+import com.starboard.b2b.dto.search.SearchOrderDTO;
+import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 import com.starboard.b2b.model.Addr;
 import com.starboard.b2b.model.OrdAddress;
-import com.starboard.b2b.model.OrdAddressId;
 import com.starboard.b2b.model.OrdDetail;
 import com.starboard.b2b.model.Orders;
 import com.starboard.b2b.model.User;
@@ -92,7 +98,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional
-	public void saveOrder(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod,
+	public OrderDTO saveOrder(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod,
 			Map<Long, ProductDTO> cart) {
 		Addr invoiceToAddr = addrDao.findById(invoiceTo);
 		if (invoiceToAddr == null) {
@@ -107,10 +113,11 @@ public class OrderServiceImpl implements OrderService {
 		Entry<Long, ProductDTO> firstProduct = cart.entrySet().iterator().next();
 		long brandGroupId = firstProduct.getValue().getProductTypeId();
 
-		// Create Order
+		// Save Order
 		String orderCode = generateOrderCode();
 		log.info("\tGenerated orderCode = " + orderCode);
 
+		Date currentDate = DateTimeUtil.getCurrentDate();
 		User user = UserUtil.getCurrentUser();
 
 		Orders order = new Orders();
@@ -119,19 +126,20 @@ public class OrderServiceImpl implements OrderService {
 		order.setCustUserId("" + user.getId());
 		order.setOrderCode(orderCode);
 		order.setOrderStatus(configService.getString(OrderConfig.KEY_DEFAULT_ORDER_STATUS));
-		order.setOrderDate(DateTimeUtil.getCurrentDate());
+		order.setOrderDate(currentDate);
 		order.setBrandGroupId(brandGroupId);
 		order.setShippingId(shippingType);
 		order.setPaymentMethodId(paymentMethod);
 		order.setPaymentCurrencyId(user.getCustomer().getCurrency());
 		order.setPaymentTermId(configService.getString(OrderConfig.KEY_DEFAULT_PAYMENT_TERM_ID));
 		order.setRemarkCustomer(customerRemark);
-		order.setTimeCreate(DateTimeUtil.getCurrentDate());
+		order.setTimeCreate(currentDate);
+		order.setExpectShipmentDate(currentDate);
 		order.setUserCreate(user.getUsername());
 
 		long orderId = orderDao.save(order);
 
-		// Create Order Detail
+		// Save Order Detail
 		Set<Long> keySet = cart.keySet();
 		for (Long key : keySet) {
 			ProductDTO product = cart.get(key);
@@ -146,13 +154,19 @@ public class OrderServiceImpl implements OrderService {
 
 			OrdDetail orderDetail = new OrdDetail();
 			orderDetail.setOrderId(orderId);
-			orderDetail.setOrderProductId(product.getProductId());
+			orderDetail.setProductId(product.getProductId());
 			orderDetail.setAmount(product.getProductQuantity());
 			if (product.getProductPrice() != null && product.getProductPrice().intValue() >= 0) {
-				orderDetail.setPrice(product.getProductPrice().multiply(new BigDecimal(product.getProductQuantity())));
+				orderDetail.setPrice(product.getProductPrice());
 			}
 			orderDetail.setProductCurrency(product.getProductCurrency());
+			if(StringUtils.isEmpty(product.getProductCurrency())){
+				orderDetail.setProductCurrency("TBA");	
+			}
 			orderDetail.setProductUnitId(product.getProductUnitId());
+			if(product.getProductUnitId() == null){
+				orderDetail.setProductUnitId("PCS");
+			}
 			orderDetail.setProductBuyerGroupId(product.getProductBuyerGroupId());
 			orderDetail.setUserCreate(user.getUsername());
 			orderDetail.setTimeCreate(DateTimeUtil.getCurrentDate());
@@ -160,8 +174,15 @@ public class OrderServiceImpl implements OrderService {
 			orderDetailDao.save(orderDetail);
 		}
 
+		// Save Order address
 		orderAddressDao.save(createOrderAddress(invoiceToAddr, orderId, AddressConstant.INVOICE_TO));
 		orderAddressDao.save(createOrderAddress(dispatchToAddr, orderId, AddressConstant.DISPATCH_TO));
+		
+		// For generate report
+		OrderDTO dto = new OrderDTO();
+		dto.setOrderId(orderId);
+		dto.setOrderCode(orderCode);
+		return dto;
 	}
 
 	public OrdAddress createOrderAddress(Addr addr, Long orderId, Long addressType) {
@@ -181,5 +202,40 @@ public class OrderServiceImpl implements OrderService {
 	@Transactional
 	public long getNextRunningNo(int year) {
 		return ordersIdRunningDao.generateRunning(year);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public OrderDTO findOrder(Long orderId) {
+		if(orderId != null){
+			Orders order = orderDao.findById(orderId);
+			OrderDTO dto = new OrderDTO();
+			try {
+				BeanUtils.copyProperties(dto, order);
+			} catch (IllegalAccessException | InvocationTargetException e) {
+				log.error(e.toString(), e);
+			}
+			return dto;
+		}
+		return null;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<SearchOrderDetailDTO> searchOrderDetail(Long orderId) {
+		return orderDetailDao.searchOrderDetail(orderId);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public SearchOrderDTO findOrderForReport(Long orderId) {
+		return orderDao.findOrderForReport(orderId);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<OrdAddressDTO> findOrderAddress(Long orderId) {
+		
+		return null;
 	}
 }

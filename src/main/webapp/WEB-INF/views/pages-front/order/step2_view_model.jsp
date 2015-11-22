@@ -23,8 +23,7 @@
 	<div class="container">
 		<div class="row">
 			<img alt="step 1"
-				src='<c:url value="/images/pages-front/icon/step2.png" />'
-				width="100%">
+				src='<c:url value="/images/pages-front/icon/step2.png" />'>
 		</div>
 		<div class="row">&nbsp;</div>
 		<div class="row">
@@ -67,6 +66,8 @@
 			<%@include file="step2_include/add_multiple.jspf"%>
 		</div>
 	</div>
+	
+	<%@include file="/WEB-INF/views/include/common_footer.jspf" %>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 	<script src='<c:url value="/scripts/zoom/jquery.elevateZoom-3.0.8.min.js" />'></script>
 	<script type="text/javascript">
