@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
@@ -56,7 +57,76 @@
 								</td>
 							</tr>
 						</table>
-					</form:form>		    	
+					</form:form>						
+					
+					<form:form servletRelativeAction="/frontend/user/edit" class="form-horizontal"
+						commandName="userForm" method="post">		
+						<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Address</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${ userForm.addresses }" var="addr"> 
+								<tr>
+									<td>
+									<div>
+										<table>
+											<tr>
+												<td rowspan="4" valign="top">Address : </td>
+												<td rowspan="4" valign="top">
+													<textarea name="" rows="4" cols="50">${ addr.address }</textarea>
+												</td>
+												<td>Country : </td>
+												<td>
+<%-- 													<form:select path="addresses" style="width: 150px;"> --%>
+<%-- 														<form:options items="${ countries }"/> --%>
+<%-- 													</form:select> --%>
+									
+														<select name="country">
+															<option value="" disabled="disabled">---please select---</option>
+															<c:forEach items="${ countries }" var="country">																															
+																<option value="${ country.key }" ${country.key==addr.regionCountryId?'selected="selected"':''}>${ country.value }</option>
+															</c:forEach>	
+														</select>														
+												</td>
+												<td>Telephone : </td>
+												<td><form:input path="telephone"  class="form-control" value="${ addr.tel1 }"/></td>
+											</tr>
+											<tr>
+												<td>PostCode :</td>
+												<td><form:input path="postCode"  class="form-control" value="${ addr.postCode }"/></td>
+												<td>Fax : </td>
+												<td><form:input path="fax"  class="form-control" value="${ addr.fax }"/></td>
+											</tr>
+											<tr>
+												<td>Email : </td>
+												<td><form:input path="emailOfAddr"  class="form-control" value="${ addr.email }"/></td>
+												<td>Address Type :</td>
+												<td>
+													
+													<select name="address">
+														<option value="" disabled="disabled">---please select---</option>
+														<c:forEach items="${ addressTypes }" var="addressType">																															
+															<option value="${ addressType }" ${addressType==addr.type?'selected="selected"':''}>${ addressType }</option>
+														</c:forEach>	
+													</select>	
+											</tr>
+											<tr>
+												<td colspan="6" align="right">
+												<button type="submit" class="btn btn-default">SAVE</button>
+												<button type="button" class="btn btn-default">CANCLE</button>
+												</td>
+											</tr>
+										</table>
+									</div>
+									</td>
+								</tr>
+							</c:forEach>	
+						</tbody>
+						</table>					
+					</form:form>						    	
 			    </div>
 			</div>
 		</div>

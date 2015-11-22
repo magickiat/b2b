@@ -1,8 +1,12 @@
 package com.starboard.b2b.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.dao.AddrDao;
 import com.starboard.b2b.model.Addr;
@@ -14,7 +18,13 @@ public class AddrDaoImpl implements AddrDao {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public Addr findById(long addrId){
+	public Addr findById(long addrId) {
 		return (Addr) sessionFactory.getCurrentSession().get(Addr.class, addrId);
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Addr> findByCustId(long custId) {
+		return sessionFactory.getCurrentSession().createCriteria(Addr.class).add(Restrictions.eq("custId", custId)).list();
 	}
 }
