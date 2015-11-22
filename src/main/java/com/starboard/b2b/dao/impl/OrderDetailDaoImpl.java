@@ -1,12 +1,14 @@
 package com.starboard.b2b.dao.impl;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.starboard.b2b.dao.OrderDetailDao;
+import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 import com.starboard.b2b.model.OrdDetail;
 
 @Repository("orderDetailDao")
@@ -18,5 +20,16 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 	@Override
 	public Serializable save(OrdDetail detail) {
 		return sessionFactory.getCurrentSession().save(detail);
+	}
+
+	@Override
+	public List<SearchOrderDetailDTO> searchOrderDetail(Long orderId) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select new com.starboard.b2b.dto.search.SearchOrderDetailDTO(p.productCode, p.productNameEn, od.amount, 0L, od.amount, od.productUnitId, od.price)");
+		sb.append(" FROM    OrdDetail od,    Product p ");
+		sb.append(" WHERE od.productId = p.productId");
+		sb.append(" and od.orderId = :orderId");
+		
+		return sessionFactory.getCurrentSession().createQuery(sb.toString()).setLong("orderId", orderId).list();
 	}
 }
