@@ -1,15 +1,30 @@
 package com.starboard.b2b.web.controller.frontend;
 
 import com.starboard.b2b.bean.ExcelOrderBean;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletResponse;
+import com.starboard.b2b.common.AddressConstant;
+import com.starboard.b2b.common.Page;
+import com.starboard.b2b.common.WithnoseConstant;
+import com.starboard.b2b.dto.AddressDTO;
+import com.starboard.b2b.dto.OrderStatusDTO;
+import com.starboard.b2b.dto.ProductBrandGroupDTO;
+import com.starboard.b2b.dto.ProductBuyerGroupDTO;
+import com.starboard.b2b.dto.ProductDTO;
+import com.starboard.b2b.dto.ProductSearchResult;
+import com.starboard.b2b.dto.ProductTypeDTO;
+import com.starboard.b2b.dto.search.SearchProductModelDTO;
+import com.starboard.b2b.exception.B2BException;
+import com.starboard.b2b.service.BrandService;
+import com.starboard.b2b.service.CustomerService;
+import com.starboard.b2b.service.OrderService;
+import com.starboard.b2b.service.ProductService;
+import com.starboard.b2b.util.ExcelOrderUtil;
+import com.starboard.b2b.util.UserUtil;
+import com.starboard.b2b.web.form.product.OrderSummaryForm;
+import com.starboard.b2b.web.form.product.SearchProductForm;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,30 +39,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
-import com.starboard.b2b.common.AddressConstant;
-import com.starboard.b2b.common.Page;
-import com.starboard.b2b.common.WithnoseConstant;
-import com.starboard.b2b.dto.AddressDTO;
-import com.starboard.b2b.dto.ProductBrandGroupDTO;
-import com.starboard.b2b.dto.ProductBuyerGroupDTO;
-import com.starboard.b2b.dto.ProductDTO;
-import com.starboard.b2b.dto.ProductSearchResult;
-import com.starboard.b2b.dto.ProductTypeDTO;
-import com.starboard.b2b.dto.search.SearchProductModelDTO;
-import com.starboard.b2b.exception.B2BException;
-import com.starboard.b2b.service.BrandService;
-import com.starboard.b2b.service.CustomerService;
-import com.starboard.b2b.service.OrderService;
-import com.starboard.b2b.service.ProductService;
-import com.starboard.b2b.util.ExcelOrderUtil;
-import com.starboard.b2b.util.UserUtil;
-import com.starboard.b2b.web.form.product.SearchProductForm;
-import java.io.IOException;
-import org.apache.poi.EncryptedDocumentException;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/frontend/order/")
@@ -460,7 +462,40 @@ public class FrontOrderController {
 
     @RequestMapping(value = "summary", method = RequestMethod.GET)
     String orderSummary(Model model) {
+        OrderSummaryForm form = new OrderSummaryForm();
+        setOrderSummarySearchFrom(form, model);
+        model.addAttribute("orderSummaryForm", form);
         return "pages-front/order/summary";
+    }
+
+    @RequestMapping(value = "summary/search-action", method = RequestMethod.GET)
+    String orderSummarySearchAction(@ModelAttribute OrderSummaryForm form, Model model) {
+        log.info("search condition: " + form.toString());
+
+        setOrderSummarySearchFrom(form, model);
+        /*
+        TODO: waiting for search order summary api
+        Page<SearchProductModelDTO> resultPage = productService.searchProduct(form);
+        if ("list".equals(form.getShowType())) {
+            log.info("Find product price, search type 'List'");
+            productService.findProductPriceList(resultPage.getResult(), UserUtil.getCurrentUser().getCustomer().getInvoiceCode());
+        }*/
+        //model.addAttribute("resultPage", resultPage);
+
+        return "pages-front/order/summary";
+    }
+
+    /**
+     * Set all required search condition for order summary page
+     * @param form Order Summary form
+     * @param model Model attributes
+     */
+    private void setOrderSummarySearchFrom(final OrderSummaryForm form, final Model model){
+        final List<ProductTypeDTO> productTypes = productService.findProductTypeByBrandId(form.getBrandId());
+        model.addAttribute("productType", productTypes);
+
+        final List<OrderStatusDTO> orderStatus = orderService.findAllOrderStatus();
+        model.addAttribute("orderStatus", orderStatus);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

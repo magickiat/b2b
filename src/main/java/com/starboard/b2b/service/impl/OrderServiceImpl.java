@@ -1,41 +1,44 @@
 package com.starboard.b2b.service.impl;
 
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.common.OrderConfig;
 import com.starboard.b2b.dao.AddrDao;
 import com.starboard.b2b.dao.OrderAddressDao;
 import com.starboard.b2b.dao.OrderDao;
 import com.starboard.b2b.dao.OrderDetailDao;
+import com.starboard.b2b.dao.OrderStatusDao;
 import com.starboard.b2b.dao.OrdersIdRunningDao;
 import com.starboard.b2b.dao.PaymentMethodDao;
 import com.starboard.b2b.dao.ShippingTypeDao;
-import com.starboard.b2b.dto.AddressDTO;
+import com.starboard.b2b.dto.OrderStatusDTO;
 import com.starboard.b2b.dto.PaymentMethodDTO;
 import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ShippingTypeDTO;
 import com.starboard.b2b.model.Addr;
 import com.starboard.b2b.model.OrdAddress;
-import com.starboard.b2b.model.OrdAddressId;
 import com.starboard.b2b.model.OrdDetail;
+import com.starboard.b2b.model.OrderStatus;
 import com.starboard.b2b.model.Orders;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.ConfigService;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.UserUtil;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 @Service("orderService")
 public class OrderServiceImpl implements OrderService {
@@ -65,6 +68,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private ConfigService configService;
+
+	@Autowired
+	private OrderStatusDao orderStatusDao;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -179,5 +185,17 @@ public class OrderServiceImpl implements OrderService {
 	@Transactional
 	public long getNextRunningNo(int year) {
 		return ordersIdRunningDao.generateRunning(year);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<OrderStatusDTO> findAllOrderStatus() {
+		final List<OrderStatusDTO> orderStatuses = new ArrayList<>();
+		for (OrderStatus status : orderStatusDao.findAll()) {
+			final OrderStatusDTO orderStatus = new OrderStatusDTO();
+			BeanUtils.copyProperties(status, orderStatus);
+			orderStatuses.add(orderStatus);
+		}
+		return orderStatuses;
 	}
 }

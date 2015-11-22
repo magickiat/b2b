@@ -1,11 +1,12 @@
 package com.starboard.b2b.service;
 
-import java.util.List;
-import java.util.Map;
-
+import com.starboard.b2b.dto.OrderStatusDTO;
 import com.starboard.b2b.dto.PaymentMethodDTO;
 import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ShippingTypeDTO;
+
+import java.util.List;
+import java.util.Map;
 
 public interface OrderService {
 
@@ -18,4 +19,6 @@ public interface OrderService {
 	void saveOrder(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod, Map<Long, ProductDTO> cart);
 
 	String generateOrderCode();
+
+	List<OrderStatusDTO> findAllOrderStatus();
 }

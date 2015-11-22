@@ -1,0 +1,134 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@page session="true"%>
+
+<c:choose>
+	<c:when test="${empty resultPage.result }">
+		<h3>Not found any order.</h3>
+	</c:when>
+
+	<c:otherwise>
+
+		<table class="table table-hover table-list">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Product Code</th>
+					<th>Product Name</th>
+					<th>Product Price</th>
+					<th>Order Number</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${ resultPage.result }" var="product"
+					varStatus="rowNum">
+
+					<tr>
+						<td>${ rowNum.index + 1 }</td>
+						<td>${ product.productCode }</td>
+						<td>${ product.productNameEn }</td>
+						<td>
+							<c:choose>
+								<c:when test="${ empty product.productPrice}">
+									TBA
+								</c:when>
+								<c:otherwise>
+									<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
+										value="${ product.productPrice }">
+									</fmt:formatNumber>
+										${ product.productCurrency }
+								</c:otherwise>
+							</c:choose>
+						</td>
+						<td>
+							<input type="number" id="${ product.productId }"
+							name="product-order-number" class="form-control numberOnly"
+							maxlength="12" style="width: 80px;" />
+						</td>
+					</tr>
+
+				</c:forEach>
+
+			</tbody>
+		</table>
+		<div align="center">
+			<input type="button" id="addListToCart" class="btn btn-success"
+				value="ADD TO CART" max="12" onclick="addListToCart()" />
+		</div>
+
+
+	</c:otherwise>
+</c:choose>
+
+<c:url var="addListToCartUrl" value="/frontend/order/add-list-to-cart" />
+<script type="text/javascript">
+	function addListToCart() {
+		console.log('add list to cart');
+
+		var array = [];
+		$('input[name=product-order-number]').each(function() {
+			if ($(this).val()) {
+				array.push({
+					"productId" : parseInt($(this).attr('id')),
+					"productQuantity" : parseInt($(this).val())
+				});
+			}
+		});
+
+		if (jQuery.isEmptyObject(array)) {
+			console.log('nothing input');
+		} else {
+
+			/* $.ajax({
+				url : '${addListToCartUrl}',
+				type : 'POST',
+				dataType : 'json',
+				data : JSON.stringify({
+					"products" : array
+				}),
+				headers: { 
+				    'Accept': 'application/json',
+				    'Content-Type': 'application/json' 
+				},
+				success : function(data) {
+					console.log(data);
+					renderToCart(data);
+				},
+				error : function(data, status, er) {
+					console.log(data.responseText);
+					alert(data.responseText);
+				}
+			}); */
+
+			$.each(array, function(index, item) {
+				console.log(item.productId);
+
+				var param = {
+					'productId' : item.productId,
+					'quantity' : item.productQuantity
+				};
+
+				console.log("calling url: ${addToCartUrl}");
+
+				$.post('${addToCartUrl}', param).done(function(response) {
+					console.log(response);
+					renderToCart(response);
+				}).fail(function(result) {
+					alert(result.responseText);
+					return;
+				});
+
+			});
+			/* 
+			$.post('${addListToCartUrl}', JSON.stringify({
+				"products" : array
+			}), 'application/json').done(function(response) {
+				console.log(response);
+				renderToCart(response);
+			}).fail(function(result) {
+				alert(result.responseText);
+			}); */
+		}
+
+	}
+</script>

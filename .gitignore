@@ -4,3 +4,5 @@ licenseheader.txt
 nbactions-dev-deploy.xml
 nb-configuration.xml
 /nbproject/
+/.settings
+b2b.iml
