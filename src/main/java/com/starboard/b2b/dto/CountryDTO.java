@@ -1,22 +1,22 @@
 package com.starboard.b2b.dto;
 
 public class CountryDTO {
-	private Integer countryCode;
+	private String countryCode;
 	private String countryName;
 
 	public CountryDTO() {
 	}
 
-	public CountryDTO(Integer countryCode, String countryName) {
+	public CountryDTO(String countryCode, String countryName) {
 		this.countryCode = countryCode;
 		this.countryName = countryName;
 	}
 
-	public Integer getCountryCode() {
+	public String getCountryCode() {
 		return countryCode;
 	}
 
-	public void setCountryCode(Integer countryCode) {
+	public void setCountryCode(String countryCode) {
 		this.countryCode = countryCode;
 	}
 

@@ -1,10 +1,10 @@
-package com.starboard.b2b.dao;
+package com.starboard.b2b.service;
 
 import java.util.List;
 
 import com.starboard.b2b.model.Addr;
 
-public interface AddrDao {
+public interface AddrService {
 
 	Addr findById(long addrId);
 
