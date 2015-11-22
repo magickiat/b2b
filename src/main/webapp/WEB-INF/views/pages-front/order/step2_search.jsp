@@ -21,8 +21,7 @@
 		
 		<div class="row">
 			<img alt="step 1"
-				src='<c:url value="/images/pages-front/icon/step2.png" />'
-				width="100%">
+				src='<c:url value="/images/pages-front/icon/step2.png" />'>
 		</div>
 		<div class="row">&nbsp;</div>
 		
@@ -41,8 +40,12 @@
 						<!-- ROW 1 -->
 						<div class="row">
 							<div class="col-md-3">
-								SEARCH:
-								<form:input path="keyword" />
+								<div class="form-group">
+								    <label class="col-sm-3 control-label">SEARCH:</label>
+								    <div class="col-sm-9">
+								      <form:input path="keyword" class="form-control" />
+								    </div>
+								  </div>
 							</div>
 							<div class="col-md-2">
 								<div class="form-group">
@@ -158,7 +161,7 @@
 	</div>
 
 
-
+	<%@include file="/WEB-INF/views/include/common_footer.jspf" %>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 
 	<script type="text/javascript">

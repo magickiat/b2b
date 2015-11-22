@@ -38,8 +38,12 @@
 			<div class="col-sm-2"></div>
 		</div>
 	</div>
+<<<<<<< HEAD
 <%@include file="/WEB-INF/views/include/common_footer.jspf" %>
 	<%@include file="/WEB-INF/views/include/common_footer.jspf" %>
+=======
+	
+>>>>>>> branch 'master' of https://github.com/magickiat/b2b.git
 	<%@include file="/WEB-INF/views/include/common_footer.jspf" %>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 	<script src="<c:url value="/scripts/assets/js/jquery-1.11.1.min.js"/>"></script>

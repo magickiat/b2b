@@ -23,12 +23,11 @@
 		<form id="submitOrderForm" action='<c:url value="/frontend/order/step4/submit" />' method="post">
 			<div class="row">
 				<img alt="step 1"
-					src='<c:url value="/images/pages-front/icon/step3.png" />'
-					width="100%">
+					src='<c:url value="/images/pages-front/icon/step3.png" />'>
 			</div>
 			
 			<div class="row">
-				<div class="col-md-12 bg_color showline" style="padding-bottom: 50px;">
+				<div class="col-md-12 bg_color showline2" style="padding-bottom: 50px;">
 					<div class="row row-header header1 txtupper">confirm</div>
 					<div class="row">&nbsp;</div>
 					<div class="row">
@@ -247,7 +246,7 @@
 		</form>
 	</div>
 
-
+	<%@include file="/WEB-INF/views/include/common_footer.jspf" %>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 
 	<c:url var="updateToCartUrl"
