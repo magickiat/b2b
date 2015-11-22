@@ -20,14 +20,25 @@
 
 		<div class="row">
 			<img alt="step 1"
-				src='<c:url value="/images/pages-front/icon/step4.png" />'
-				width="100%">
+				src='<c:url value="/images/pages-front/icon/step4.png" />'>
 		</div>
 
 		<div class="row">&nbsp;</div>
 		<div class="row"></div>
+		<div class="row">
+			<div class="col-sm-2"></div>
+			<div class="col-sm-8 text-center">
+
+				<input type="button" class="btn btn-default" id="btnExcel" value="EXCEL" />
+				<input type="button" class="btn btn-default" id="btnPdf" value="PDF" />
+				<input type="button" class="btn btn-default" id="btnPrint" value="PRINT" />
+				<input type="button" class="btn btn-default" id="btnFinish" value="FINISH" />
+
+			</div>
+			<div class="col-sm-2"></div>
+		</div>
 	</div>
-	
+	<%@include file="/WEB-INF/views/include/common_footer.jspf" %>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 	<script src="<c:url value="/scripts/assets/js/jquery-1.11.1.min.js"/>"></script>
 	<script src="<c:url value="/scripts/assets/bootstrap/js/bootstrap.min.js"/>"></script>

@@ -9,3 +9,4 @@
 <link rel="stylesheet" href="<c:url value="/scripts/assets/font-awesome/css/francoisone.css"/>">
 <link rel="stylesheet" href="<c:url value="/scripts/assets/bootstrap/css/bootstrap.css"/>">
 <link rel="stylesheet" href="<c:url value="/scripts/assets/css/b2b.css"/>">
+<link rel="stylesheet" href="<c:url value="/scripts/assets/bootstrap-datepicker/css/bootstrap-datepicker.css"/>">

@@ -1,5 +1,8 @@
 package com.starboard.b2b.dto;
 
+import com.starboard.b2b.model.Content;
+import com.starboard.b2b.model.Customer;
+
 /**
  * Created by Ken on 9/29/2015.
  */
@@ -9,6 +12,16 @@ public class ContentDTO extends BaseDTO {
     private String title;
     private String content;
 
+    public ContentDTO(){}
+    
+	public ContentDTO(Content cont) {
+		super(cont);
+		this.id = cont.getId();
+		this.title = cont.getTitle();
+		this.content = cont.getContent();
+	}
+    
+    
     public Integer getId() {
         return id;
     }
@@ -32,4 +45,6 @@ public class ContentDTO extends BaseDTO {
     public void setContent(String content) {
         this.content = content;
     }
+
+
 }

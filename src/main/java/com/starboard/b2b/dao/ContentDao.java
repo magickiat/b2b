@@ -1,5 +1,9 @@
 package com.starboard.b2b.dao;
 
+import com.starboard.b2b.common.Pagination;
+import com.starboard.b2b.dto.search.SearchContentRequest;
+import com.starboard.b2b.dto.search.SearchContentResult;
+import com.starboard.b2b.dto.search.SearchCustResult;
 import com.starboard.b2b.model.Content;
 
 import java.util.List;
@@ -12,5 +16,9 @@ public interface ContentDao {
     List list();
 
     void add(Content content);
+
+	List<Content> list(Pagination page);
+
+	SearchContentResult listContent(SearchContentRequest req);
 
 }

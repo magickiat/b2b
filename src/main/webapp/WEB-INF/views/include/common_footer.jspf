@@ -1,0 +1,20 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<jsp:useBean id="date" class="java.util.Date" />
+
+
+<div class="container">
+	<hr>
+	<!-- Footer -->
+	<footer>
+		<div class="row">
+			<div class="col-lg-12">
+				<p>
+					Copyright © Starboard Windsurfing
+					<fmt:formatDate value="${date}" pattern="yyyy" />
+				</p>
+			</div>
+		</div>
+	</footer>
+
+</div>

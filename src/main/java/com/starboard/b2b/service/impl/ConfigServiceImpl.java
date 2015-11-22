@@ -56,7 +56,7 @@ public class ConfigServiceImpl implements ConfigService {
 		String temp = config.get(key);
 		if (temp == null) {
 			temp = appConfigDao.getConfig(key);
-			if(temp != null){
+			if (temp != null) {
 				config.put(key, temp);
 				value = Integer.valueOf(temp);
 			}
@@ -79,6 +79,26 @@ public class ConfigServiceImpl implements ConfigService {
 		config.setTimeCreate(new Date());
 		Integer id = appConfigDao.add(config);
 		log.info("config id: " + id);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Boolean getBoolean(String key) {
+		Boolean value = null;
+		String temp = config.get(key);
+		if (temp == null) {
+			temp = appConfigDao.getConfig(key);
+		}
+
+		if (temp != null) {
+			temp = temp.trim();
+			if ("true".equals(temp) || "false".equals(temp)) {
+				config.put(key, temp);
+				value = Boolean.valueOf(temp);
+			}
+		}
+
+		return value;
 	}
 
 }

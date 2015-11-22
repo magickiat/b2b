@@ -9,5 +9,7 @@ public interface ConfigService {
 	String getString(String key);
 
 	Integer getInt(String key);
+	
+	Boolean getBoolean(String key);
 
 }

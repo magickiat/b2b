@@ -69,7 +69,7 @@
         </div>
         
     </div>
-
+	
      <script src="<c:url value="/scripts/assets/js/jquery-1.11.1.min.js"/>"></script>
      <script src="<c:url value="/scripts/assets/bootstrap/js/bootstrap.min.js"/>"></script>
      <script src="<c:url value="/scripts/assets/js/jquery.backstretch.min.js"/>"></script>

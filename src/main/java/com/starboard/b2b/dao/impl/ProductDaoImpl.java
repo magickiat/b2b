@@ -201,7 +201,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Product findByProductCode(String productCode) {
-        List<Product> result = sf.getCurrentSession().createCriteria(Product.class).add(Restrictions.eq("product_code", productCode)).list();
+        List<Product> result = sf.getCurrentSession().createCriteria(Product.class).add(Restrictions.eq("productCode", productCode)).list();
         if (result.isEmpty()) {
             return null;
         }
