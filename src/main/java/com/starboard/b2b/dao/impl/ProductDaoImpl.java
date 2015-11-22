@@ -53,7 +53,13 @@ public class ProductDaoImpl implements ProductDao {
 
         StringBuilder sbQuery = new StringBuilder(
                 "SELECT new com.starboard.b2b.dto.search.SearchProductModelDTO(p.productId, p.productCode, p.productPictureMedium, p.productModelId, m.productModelName, p.productNameEn, p.productPrice, p.productUnitId, p.productCurrency, m.image, p.productPreintro) ");
-        StringBuilder sbTotal = new StringBuilder("select count(distinct p.productModelId ) ");
+        StringBuilder sbTotal = new StringBuilder("");
+        if ("image".equals(req.getCondition().getShowType())) {
+            sbTotal.append(" select count(distinct p.productModelId) ");
+        }else{
+        	sbTotal.append(" select count(p.productId)  "); // when group by must count group, not first record 	
+        }
+       
 
         // common query
         StringBuffer sb = new StringBuffer();

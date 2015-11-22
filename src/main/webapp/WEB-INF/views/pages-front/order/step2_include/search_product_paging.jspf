@@ -5,6 +5,7 @@
 	<div class="col-sm-12">
 		<c:choose>
 			<c:when test="${!empty resultPage.total and resultPage.total > 0}">
+			Total: ${ resultPage.total }
 				<c:url var="firstUrl" value="searchPage('1')" />
 				<c:url var="lastUrl" value="searchPage('${resultPage.totalPage}')" />
 				<c:url var="prevUrl" value="searchPage('${resultPage.current - 1}')" />
