@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
 <html>
@@ -29,7 +29,7 @@
                     <div class="row">
                         <div class="col-md-3">
                             SEARCH:
-                            <form:input path="keyword"/>
+                            <form:input path="keyword" cssClass="form-control"/>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
@@ -51,7 +51,6 @@
                             <button class="btn btn-success" onclick="searchOrder()">Search</button>
                             <button class="btn btn-success">Excel</button>
                         </div>
-                        <div class="col-md-2">&nbsp;</div>
                     </div>
                     <%-- Search criteria row 2--%>
                     <div class="row">
@@ -75,6 +74,7 @@
                         </div>
                         <div class="col-md-6">&nbsp;</div>
                     </div>
+                    <hr>
                 </form:form>
             </div>
         </div>
@@ -87,16 +87,7 @@
             <div class="">
                 <%@include file="step2_include/search_product_paging.jspf" %>
             </div>
-            <div class="row row-header2 header2 txtupper">Latest Features</div>
-            <%-- List product model --%>
-            <c:choose>
-                <c:when test="${ searchProductForm.showType == 'image' }">
-                    <%@include file="step2_include/product_image.jspf" %>
-                </c:when>
-                <c:otherwise>
-                    <%@include file="step2_include/product_list.jspf" %>
-                </c:otherwise>
-            </c:choose>
+            <%-- List order model --%>
 
             <%-- Lower Paging --%>
             <div class="">
@@ -115,8 +106,8 @@
         $.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.png"/>");
         var dateFromPicker = $('#dateFromPicker');
         var dateToPicker = $('#dateToPicker');
-        dateFromPicker.datetimepicker({ locale: 'th', format: 'DD/MM/YYYY' });
-        dateToPicker.datetimepicker({ locale: 'th', format: 'DD/MM/YYYY', useCurrent: false});
+        dateFromPicker.datetimepicker({locale: 'th', format: 'DD/MM/YYYY'});
+        dateToPicker.datetimepicker({locale: 'th', format: 'DD/MM/YYYY', useCurrent: false});
         dateFromPicker.on("dp.change", function (e) {
             $('#dateToPicker').data("DateTimePicker").minDate(e.date);
         });

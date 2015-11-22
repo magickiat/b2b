@@ -1,22 +1,5 @@
 package com.starboard.b2b.service.impl;
 
-import java.lang.reflect.InvocationTargetException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.common.OrderConfig;
 import com.starboard.b2b.dao.AddrDao;
@@ -29,6 +12,7 @@ import com.starboard.b2b.dao.PaymentMethodDao;
 import com.starboard.b2b.dao.ShippingTypeDao;
 import com.starboard.b2b.dto.OrdAddressDTO;
 import com.starboard.b2b.dto.OrderDTO;
+import com.starboard.b2b.dto.OrderStatusDTO;
 import com.starboard.b2b.dto.PaymentMethodDTO;
 import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ShippingTypeDTO;
@@ -48,13 +32,14 @@ import com.starboard.b2b.util.UserUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -265,7 +250,11 @@ public class OrderServiceImpl implements OrderService {
 		final List<OrderStatusDTO> orderStatuses = new ArrayList<>();
 		for (OrderStatus status : orderStatusDao.findAll()) {
 			final OrderStatusDTO orderStatus = new OrderStatusDTO();
-			BeanUtils.copyProperties(status, orderStatus);
+			try {
+				BeanUtils.copyProperties(orderStatus, status);
+			} catch (IllegalAccessException | InvocationTargetException e) {
+				log.error("Got problem while copying bean properties.. with erro {}", e.getMessage(), e);
+			}
 			orderStatuses.add(orderStatus);
 		}
 		return orderStatuses;
