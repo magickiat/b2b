@@ -1,5 +1,7 @@
 package com.starboard.b2b.dao.impl;
 
+import java.math.BigInteger;
+
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -22,6 +24,16 @@ public class AddrDaoImpl implements AddrDao {
 		return (Addr) sessionFactory.getCurrentSession().get(Addr.class, addrId);
 	}
 
+	@Override
+	public void save(Object obj){
+		 sessionFactory.getCurrentSession().save(obj);
+	}
+
+	@Override
+	public Long maxId() {
+		return ((BigInteger) sessionFactory.getCurrentSession().createSQLQuery("select max(addr_id) from addr").uniqueResult()).longValue();
+	}
+	
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Addr> findByCustId(long custId) {

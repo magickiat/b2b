@@ -1,6 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@page session="true"%>
 
 
@@ -8,59 +8,102 @@
 
 <div class="col-sm-12" style="border: 1;">
 	<%-- Loop All Tech --%>
-	<div class="formgroup">
-		<div class="col-sm-1">
-			Address
+	<form:form servletRelativeAction="/backend/customer/save_address" class="form-horizontal" modelAttribute="addressForm" method="post">
+		<div class="row">
+			<div class="col-sm-12">
+				<form:errors path="*" cssClass="alert alert-danger" element="div" />
+			</div>
 		</div>
-		<div class="col-sm-4">
-			<textarea rows="4" cols="50">
-			</textarea>
+		<div class="formgroup">
+			<form:hidden path="addrId" value="${addr.addrId }"/>
+			<form:hidden path="custId" value="${addr.custId }"/>
+			<form:hidden path="custId" value="${addr.type }"/>
+			<div class="col-sm-1">
+				Address
+			</div>
+			<div class="col-sm-4">
+				<textarea name="address" id="address" rows="4" cols="50">${addr.address }</textarea>
+			</div>
+			<div class="col-sm-1">
+				Country
+			</div>
+			<div class="col-sm-3">
+				<%-- <form:select path="regionCountryId" items="${ country }" itemLabel="countryName" itemValue="countryCode"></form:select> --%>
+				<select id="regionCountryId" name="regionCountryId">
+					<c:forEach items="${country }" var="country">
+						<c:choose>
+							<c:when test="${country.countryCode eq addr.regionCountryId}" >
+								<option value="${country.countryCode }" selected="selected">${country.countryName }</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${country.countryCode }">${country.countryName }</option>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+				</select>
+				
+				<!-- <select style="width: 100%;">
+					<option>c1</option>
+					<option>c2</option>
+				</select> -->
+			</div>
+			<div class="col-sm-1">
+				Telephone
+			</div>
+			<div class="col-sm-2">
+				<form:input path="tel1" value="${addr.tel1 }"/>
+				<%-- <input type="text" id="tell" value="${addr.tel1 }"> --%>
+			</div>
 		</div>
-		<div class="col-sm-1">
-			Country
+		<div class="formgroup">
+			<div class="col-sm-1">
+				PostCode
+			</div>
+			<div class="col-sm-3">
+				<form:input path="postCode" value="${addr.postCode }"/>
+				<%-- <input type="text" id="postCode" value="${addr.postCode }"> --%>
+			</div>
+			<div class="col-sm-1">
+				Fax
+			</div>
+			<div class="col-sm-2">
+				<form:input path="fax" value="${addr.fax }"/>
+				<%-- <input type="text" id="fax" value="${addr.fax }"> --%>
+			</div>
 		</div>
-		<div class="col-sm-3">
-			<select style="width: 100%;">
-				<option>c1</option>
-				<option>c2</option>
-			</select>
+		<div class="formgroup">
+			<div class="col-sm-1">
+				Email
+			</div>
+			<div class="col-sm-3">
+				<form:input path="email" value="${addr.email }"/>
+				<%-- <input type="text" id="email" value="${addr.email }"> --%>
+			</div>
+			<div class="col-sm-1">
+				Address Type
+			</div>
+			<div class="col-sm-2">
+				<select id="type" name="type">
+					<c:choose>
+						<c:when test="${addr.type eq '1'}" >
+							<option value="1" selected="selected">c1</option>
+						</c:when>
+						<c:when test="${addr.type eq '2'}" >
+							<option value="2" selected="selected">c2</option>
+						</c:when>
+						<c:otherwise>
+							<option value="1" selected="selected">c1</option>
+						</c:otherwise>
+					</c:choose>
+				</select>
+			</div>
 		</div>
-		<div class="col-sm-1">
-			Telephone
+		<div class="formgroup">
+			<div class="col-sm-12" align="center">
+				<input type="submit" value="save"/>
+				<input type="reset" value="cancel"/>
+			</div>
 		</div>
-		<div class="col-sm-2">
-			<input type="text">
-		</div>
-	</div>
-	<div class="formgroup">
-		<div class="col-sm-1">
-			PostCode
-		</div>
-		<div class="col-sm-3">
-			<input type="text">
-		</div>
-		<div class="col-sm-1">
-			Fax
-		</div>
-		<div class="col-sm-2">
-			<input type="text">
-		</div>
-	</div>
-	<div class="formgroup">
-		<div class="col-sm-1">
-			Email
-		</div>
-		<div class="col-sm-3">
-			<input type="text">
-		</div>
-		<div class="col-sm-1">
-			Address Type
-		</div>
-		<div class="col-sm-2">
-			<select style="width: 100%;">
-				<option>c1</option>
-				<option>c2</option>
-			</select>
-		</div>
-	</div>
+	</form:form>
 </div>
+

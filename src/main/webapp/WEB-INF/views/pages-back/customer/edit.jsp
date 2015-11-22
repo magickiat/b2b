@@ -94,7 +94,13 @@
 			
 		</div>
 		<div class="row">
-			<%@include file="list_address.jspf"%>
+			<c:forEach items="${listAddr }" var="addr">
+				<%@include file="list_address.jspf"%>
+			</c:forEach>
+			<div>
+				<c:url var="addAddressUrl" value="/backend/customer/add_address?cusId=${ customerForm.custId }" />
+				<button type="button" onclick="javascript:window.location.href = '${addAddressUrl}'">Add Address</button>
+			</div>
 		</div>
 		
 		<hr/>

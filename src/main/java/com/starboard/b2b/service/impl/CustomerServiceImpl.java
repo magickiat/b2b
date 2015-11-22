@@ -16,15 +16,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.common.Pagination;
+import com.starboard.b2b.dao.AddrDao;
 import com.starboard.b2b.dao.BrandDao;
+import com.starboard.b2b.dao.CountryDao;
 import com.starboard.b2b.dao.CustDao;
 import com.starboard.b2b.dao.CustomerDao;
 import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.BrandDTO;
+import com.starboard.b2b.dto.CountryDTO;
 import com.starboard.b2b.dto.CustDTO;
 import com.starboard.b2b.dto.CustomerDTO;
 import com.starboard.b2b.dto.search.SearchCustRequest;
 import com.starboard.b2b.dto.search.SearchCustResult;
+import com.starboard.b2b.model.Addr;
 import com.starboard.b2b.model.Brand;
 import com.starboard.b2b.model.Cust;
 import com.starboard.b2b.model.Customer;
@@ -50,6 +54,12 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	private BrandDao brandDao;
+	
+	@Autowired
+	private CountryDao countryDao;
+	
+	@Autowired
+	private AddrDao addrDao;
 
 	@Transactional(readOnly = true)
 	public CustomerDTO findById(Long id) {
@@ -198,4 +208,53 @@ public class CustomerServiceImpl implements CustomerService {
 		return custDao.findAddress(custId, addressType);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<AddressDTO> findAddressByCustomerId(Long custId) {
+		return custDao.findAddressByCustomerId(custId);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<CountryDTO> listCountry() {
+		return countryDao.findAll();
+	}
+	
+	@Override
+	@Transactional
+	public void saveAddress(Long addId,Long custId,String address,String regionCountryId,String tel1,String postCode,String fax,String email,String type) {
+		if(addId==null || addId==0){
+			addId = addrDao.maxId();
+			if(addId == null){
+				addId = 0L;
+			}
+			addId = addId+1;
+			addrDao.save(createAddress(addId, custId, address, regionCountryId, tel1, postCode, fax, email, type));
+		}else{
+			Addr addr = addrDao.findById(addId);
+			addr.setCustId(custId);
+			addr.setAddress(address);
+			addr.setRegionCountryId(regionCountryId);
+			addr.setTel1(tel1);
+			addr.setPostCode(postCode);
+			addr.setFax(fax);
+			addr.setEmail(email);
+			addr.setType(type);
+		}
+		
+	}
+	
+	public Addr createAddress(Long addrId,Long custId,String address,String regionCountryId,String tel1,String postCode,String fax,String email,String type) {
+		Addr addr = new Addr();
+		addr.setAddrId(addrId);
+		addr.setCustId(custId);
+		addr.setAddress(address);
+		addr.setRegionCountryId(regionCountryId);
+		addr.setTel1(tel1);
+		addr.setPostCode(postCode);
+		addr.setFax(fax);
+		addr.setEmail(email);
+		addr.setType(type);
+		return addr;
+	}
 }

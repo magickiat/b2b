@@ -21,4 +21,6 @@ public interface CustDao {
 	List<CustPriceGroup> findCustPriceGroup(String custInvoiceNo);
 
 	List<CustPriceGroup> findCustPriceGroup(Long custId);
+	
+	List<AddressDTO> findAddressByCustomerId(Long custId);
 }

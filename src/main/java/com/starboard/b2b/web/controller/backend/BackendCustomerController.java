@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.starboard.b2b.dto.AddressDTO;
+import com.starboard.b2b.dto.CountryDTO;
 import com.starboard.b2b.dto.CustDTO;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.BrandService;
@@ -24,6 +26,7 @@ import com.starboard.b2b.service.ConfigService;
 import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.UserService;
 import com.starboard.b2b.util.PagingUtil;
+import com.starboard.b2b.web.form.address.AddressForm;
 import com.starboard.b2b.web.form.brand.BrandForm;
 import com.starboard.b2b.web.form.customer.CreateCustomerForm;
 import com.starboard.b2b.web.form.customer.CustomerForm;
@@ -85,14 +88,18 @@ public class BackendCustomerController {
 		CustDTO custDto = new CustDTO();
 		List<User> users = new ArrayList<User>();
 		custDto = customerService.findCustById(id);
-
+		List<AddressDTO> listAddress = customerService.findAddressByCustomerId(id);
+		List<CountryDTO> listCountry = customerService.listCountry();
 		if (custDto != null) {
 			users = userService.findUserByCustId(id);
 		}
-
+		AddressForm addrFrom = new AddressForm();
 		model.addAttribute("customerForm", custDto);
 		model.addAttribute("users", users);
 		model.addAttribute("selectedBrand", customerService.getSelectedBrand(id));
+		model.addAttribute("listAddr", listAddress);
+		model.addAttribute("country", listCountry);
+		model.addAttribute("addressForm",addrFrom);
 		return "pages-back/customer/edit";
 	}
 
@@ -156,5 +163,45 @@ public class BackendCustomerController {
 		log.info("Selected brand id: " + brandForm);
 		customerService.addBrand(brandForm);
 		return update(brandForm.getCustId(), model);
+	}
+	
+	@RequestMapping(value = "add_address", method = RequestMethod.GET)
+	String addAddredd(@RequestParam(value = "cusId", required = true) Long cusId, Model model) throws Exception {
+		log.info("/add_address POST");
+		CustDTO custDto = new CustDTO();
+		List<User> users = new ArrayList<User>();
+		custDto = customerService.findCustById(cusId);
+		List<AddressDTO> listAddress = customerService.findAddressByCustomerId(cusId);
+		AddressDTO addrDto = new AddressDTO();
+		addrDto.setCustId(cusId);
+		listAddress.add(addrDto);
+		List<CountryDTO> listCountry = customerService.listCountry();
+		if (custDto != null) {
+			users = userService.findUserByCustId(cusId);
+		}
+		AddressForm addrFrom = new AddressForm();
+		model.addAttribute("customerForm", custDto);
+		model.addAttribute("users", users);
+		model.addAttribute("selectedBrand", customerService.getSelectedBrand(cusId));
+		model.addAttribute("listAddr", listAddress);
+		model.addAttribute("country", listCountry);
+		model.addAttribute("addressForm",addrFrom);
+		return "pages-back/customer/edit";
+	}
+	
+	@RequestMapping(value = "save_address", method = RequestMethod.POST)
+	String saveAddressSubmit(@ModelAttribute("addressForm") @Valid AddressForm addressForm,
+			BindingResult binding, Model model) throws Exception {
+		log.info("/save_address POST");
+		log.warn("binding error: " + binding.hasErrors());
+		model.addAttribute("addressForm", addressForm);
+		
+		/*if (binding.hasErrors()) {
+			return "pages-back/customer/edit";
+		}*/
+		customerService.saveAddress(addressForm.getAddrId(), addressForm.getCustId(), addressForm.getAddress(), addressForm.getRegionCountryId(), 
+					addressForm.getTel1(), addressForm.getPostCode(), addressForm.getFax(), addressForm.getEmail(), addressForm.getType());
+		
+		return update(addressForm.getCustId(),model);
 	}
 }

@@ -7,6 +7,7 @@ import com.starboard.b2b.common.Page;
 import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.BrandDTO;
+import com.starboard.b2b.dto.CountryDTO;
 import com.starboard.b2b.dto.CustDTO;
 import com.starboard.b2b.dto.CustomerDTO;
 import com.starboard.b2b.web.form.brand.BrandForm;
@@ -41,4 +42,10 @@ public interface CustomerService {
 	CustDTO findCustById(Long custId);
 	
 	List<AddressDTO> findAddress(Long custId, Long addressType);
+	
+	List<AddressDTO> findAddressByCustomerId(Long custId);
+	
+	List<CountryDTO> listCountry();
+	
+	void saveAddress(Long addId, Long custId,String address,String regionCountryId,String tel1,String postCode,String fax,String email,String type);
 }

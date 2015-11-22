@@ -92,4 +92,20 @@ public class CustDaoImpl implements CustDao {
 		return null;
 	}
 
+	/**
+	 * Get a address when have more than one
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AddressDTO> findAddressByCustomerId(Long custId) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(
+				"select new com.starboard.b2b.dto.AddressDTO(a.addrId,a.custId,a.custCode,a.contactId,a.address,a.subDistrict,a.district,a.province,a.regionCountryId,a.postCode,a.tel1,a.tel2,a.fax,a.email,a.transType,a.transTel,a.type,a.userCreate,a.userUpdate,a.timeCreate,a.timeUpdate) ");
+		sb.append(" from Addr a where a.custId = :custId order by a.type asc");
+
+		return (List<AddressDTO>) sessionFactory.getCurrentSession().createQuery(sb.toString())
+				.setLong("custId", custId).list();
+
+	}
+	
 }
