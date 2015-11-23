@@ -1,10 +1,14 @@
 package com.starboard.b2b.web.controller;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +31,13 @@ import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ProductService;
 
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+
 @Controller
 @RequestMapping("/report")
 public class ReportController {
@@ -45,7 +56,7 @@ public class ReportController {
 	// http://kodejava.org/how-do-i-create-an-excel-document-using-apache-poi/
 	// https://poi.apache.org/spreadsheet/quick-guide.html
 	@RequestMapping(value = "order/excel", method = RequestMethod.GET)
-	String generateExcelOrder(Long orderId, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	String generateOrderExcel(Long orderId, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		log.info("Generate excel order report: orderId = " + orderId);
 		String filename = "" + orderId;
 		HSSFWorkbook workbook = new HSSFWorkbook();
@@ -154,6 +165,26 @@ public class ReportController {
 		workbook.close();
 		os.flush();
 
+		return null;
+	}
+	
+	@RequestMapping(value = "order/pdf", method = RequestMethod.GET)
+	String generateOrderPDF(Long orderId, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		InputStream jasperStream = this.getClass().getResourceAsStream("/report/ro.jasper");
+	    Map<String,Object> params = new HashMap<>();
+	    params.put("orderId", orderId);
+	    params.put("SUBREPORT_DIR", this.getClass().getResource("/report/").getPath());
+	    
+	    JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+	    JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
+
+	    response.setContentType("application/x-pdf");
+	    response.setHeader("Content-disposition", "inline; filename=helloWorldReport.pdf");
+
+	    final OutputStream outStream = response.getOutputStream();
+	    JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+	    outStream.flush();
+	    outStream.close();
 		return null;
 	}
 }
