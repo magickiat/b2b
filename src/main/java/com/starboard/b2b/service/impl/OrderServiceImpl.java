@@ -2,6 +2,7 @@ package com.starboard.b2b.service.impl;
 
 import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.common.OrderConfig;
+import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dao.AddrDao;
 import com.starboard.b2b.dao.OrderAddressDao;
 import com.starboard.b2b.dao.OrderDao;
@@ -16,8 +17,10 @@ import com.starboard.b2b.dto.OrderStatusDTO;
 import com.starboard.b2b.dto.PaymentMethodDTO;
 import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ShippingTypeDTO;
+import com.starboard.b2b.dto.search.CommonSearchRequest;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
+import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.Addr;
 import com.starboard.b2b.model.OrdAddress;
 import com.starboard.b2b.model.OrdDetail;
@@ -26,14 +29,17 @@ import com.starboard.b2b.model.Orders;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.ConfigService;
 import com.starboard.b2b.service.OrderService;
+import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.UserUtil;
+import com.starboard.b2b.web.form.product.OrderSummaryForm;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,6 +55,12 @@ import java.util.Set;
 public class OrderServiceImpl implements OrderService {
 
 	private static final Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
+
+	@Value("${upload.path}")
+	private String uploadPath;
+
+	@Autowired
+	private ApplicationConfig applicationConfig;
 
 	@Autowired
 	private ShippingTypeDao shippingTypeDao;
@@ -258,5 +270,29 @@ public class OrderServiceImpl implements OrderService {
 			orderStatuses.add(orderStatus);
 		}
 		return orderStatuses;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<SearchOrderDTO> searchOrder(final OrderSummaryForm orderSummaryForm) {
+		log.info("Search order summary form: {}",orderSummaryForm);
+		final CommonSearchRequest<OrderSummaryForm> req = new CommonSearchRequest<>(orderSummaryForm.getPage(), applicationConfig.getPageSize());
+		req.setCondition(orderSummaryForm);
+
+		// Find product model
+		final SearchResult<SearchOrderDTO> result = orderDao.search(req);
+
+		// Validate has image exist
+		final List<SearchOrderDTO> resultList = result.getResult();
+		log.info("resultList size: {}", (resultList == null ? 0 : resultList.size()));
+
+		// create result page object
+		final Page<SearchOrderDTO> page = new Page<>();
+		page.setCurrent(orderSummaryForm.getPage());
+		log.info("current page: {}" , page.getCurrent());
+		page.setPageSize(req.getPageSize());
+		page.setTotal(result.getTotal());
+		page.setResult(result.getResult());
+		return page;
 	}
 }

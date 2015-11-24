@@ -88,7 +88,7 @@
                 <%@include file="step2_include/search_product_paging.jspf" %>
             </div>
             <%-- List order model --%>
-
+                <%@include file="step2_include/order_summary_list.jspf"%>
             <%-- Lower Paging --%>
             <div class="">
                 <%@include file="step2_include/search_product_paging.jspf" %>
@@ -106,8 +106,8 @@
         $.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.png"/>");
         var dateFromPicker = $('#dateFromPicker');
         var dateToPicker = $('#dateToPicker');
-        dateFromPicker.datetimepicker({locale: 'th', format: 'DD/MM/YYYY'});
-        dateToPicker.datetimepicker({locale: 'th', format: 'DD/MM/YYYY', useCurrent: false});
+        dateFromPicker.datetimepicker({locale: 'th', format: 'YYYY-MM-DD'});
+        dateToPicker.datetimepicker({locale: 'th', format: 'YYYY-MM-DD', useCurrent: false});
         dateFromPicker.on("dp.change", function (e) {
             $('#dateToPicker').data("DateTimePicker").minDate(e.date);
         });
