@@ -13,6 +13,7 @@ import com.starboard.b2b.dto.ProductBuyerGroupDTO;
 import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.ProductTypeDTO;
+import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.service.BrandService;
@@ -36,6 +37,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -506,26 +508,28 @@ public class FrontOrderController {
     String orderSummary(Model model) {
         final OrderSummaryForm form = new OrderSummaryForm();
         setOrderSummarySearchFrom(form, model);
-        model.addAttribute("orderSummaryForm", form);
+		Page<SearchOrderDTO> resultPage = orderService.searchOrder(form);
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("orderSummaryForm", form);
         return "pages-front/order/summary";
     }
 
     @RequestMapping(value = "summary/search-action", method = RequestMethod.GET)
     String orderSummarySearchAction(@ModelAttribute OrderSummaryForm form, Model model) {
         log.info("search condition: " + form.toString());
-
         setOrderSummarySearchFrom(form, model);
-        /*
-        TODO: waiting for search order summary api
-        Page<SearchProductModelDTO> resultPage = productService.searchProduct(form);
-        if ("list".equals(form.getShowType())) {
-            log.info("Find product price, search type 'List'");
-            productService.findProductPriceList(resultPage.getResult(), UserUtil.getCurrentUser().getCustomer().getInvoiceCode());
-        }*/
-        //model.addAttribute("resultPage", resultPage);
-
+		Page<SearchOrderDTO> resultPage = orderService.searchOrder(form);
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("orderSummaryForm", form);
         return "pages-front/order/summary";
     }
+
+	@RequestMapping(value = "summary/report/{orderCode}", method = RequestMethod.GET)
+	String orderSummaryReport(@ModelAttribute OrderSummaryForm form, Model model, @PathVariable final String orderCode) {
+		log.info("Report for order: {}" + orderCode);
+		//FIXME just call. wait until report page is ready
+		return "pages-front/order/report";
+	}
 
     /**
      * Set all required search condition for order summary page
@@ -535,7 +539,6 @@ public class FrontOrderController {
     private void setOrderSummarySearchFrom(final OrderSummaryForm form, final Model model){
         final List<ProductTypeDTO> productTypes = productService.findProductTypeByBrandId(form.getBrandId());
         model.addAttribute("productType", productTypes);
-
         final List<OrderStatusDTO> orderStatus = orderService.findAllOrderStatus();
         model.addAttribute("orderStatus", orderStatus);
     }

@@ -4,13 +4,21 @@ package com.starboard.b2b.web.form.product;
  * Created by User: Thanakit Jumparuang (jthanakit.dev@gmail.com) Date: 11/21/2015 Time: 01:40
  */
 public class OrderSummaryForm {
-
+    private int page;
     private long brandId;
     private String keyword;
     private String selectedBrand;
     private String selectedStatus;
     private String dateFrom;
     private String dateTo;
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
 
     public long getBrandId() {
         return brandId;
