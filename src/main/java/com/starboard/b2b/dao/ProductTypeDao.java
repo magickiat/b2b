@@ -10,4 +10,5 @@ public interface ProductTypeDao {
 
 	List<ProductType> findByProductBrandGroupId(Long brandGroupId);
 
+        List<ProductType> findByIds(List<Long> ids);
 }

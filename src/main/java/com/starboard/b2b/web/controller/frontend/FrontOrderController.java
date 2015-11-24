@@ -19,6 +19,7 @@ import com.starboard.b2b.service.BrandService;
 import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ProductService;
+import com.starboard.b2b.util.ArchiveUtil;
 import com.starboard.b2b.util.ExcelOrderUtil;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.product.OrderSummaryForm;
@@ -46,6 +47,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -224,20 +226,24 @@ public class FrontOrderController {
      */
     @RequestMapping(value = "download-template", method = RequestMethod.GET)
     public void downloadExcelOrder(@RequestParam("brand_id") Long brandId, HttpServletResponse response) throws IOException {
-        BrandDTO brand = brandService.getBrand(brandId);
-        if (brand == null) {
-            throw new B2BException(String.format("brand with id [%s] are not found", brandId));
+        List<ProductTypeDTO> types = productService.findProductTypeByBrandId(brandId);
+        if (types == null || types.isEmpty()) {
+            throw new B2BException(String.format("product type not found for brand group id [%s]", brandId));
         }
         //
-        long custId = UserUtil.getCurrentUser().getCustomer().getCustId();
-        //
         String rootDownloadPath = environment.getProperty("download.path");
-        String brandDownloadPath = rootDownloadPath + "/" + brand.getName().replaceAll(" ", "_").trim();
+        List<String> files = new ArrayList<>();
+        for (ProductTypeDTO type : types) {
+            String name = type.getProductTypeName().toUpperCase().replaceAll(" ", "_").trim();
+            files.add(String.format("%s/%s.xls", rootDownloadPath, name));
+        }
         //
-        response.setContentType("text/plain");
-//      response.setHeader("Content-Disposition", "attachment; filename=fname.ext");
-        try (PrintWriter writer = response.getWriter()) {
-            writer.write("");
+        byte[] zip = ArchiveUtil.zip(files);
+        //
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition", "attachment; filename=EXCEL_ORDER.zip");
+        try (OutputStream output = response.getOutputStream()) {
+            output.write(zip);
         }
     }
 

@@ -32,4 +32,11 @@ public class ProductTypeDaoImpl implements ProductTypeDao {
 		return query.setLong("brandGroupId", brandGroupId).list();
 
 	}
+
+    @Override
+    public List<ProductType> findByIds(List<Long> ids) {
+            Query query = sf.getCurrentSession().getNamedQuery("ProductType.findByIds");
+            query.setParameter("ids", ids);
+            return query.list();
+    }
 }
