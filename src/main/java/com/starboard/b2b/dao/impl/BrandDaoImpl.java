@@ -38,4 +38,9 @@ public class BrandDaoImpl implements BrandDao {
 			//TODO insert to cust_brand_group
 		}
 	}
+
+    @Override
+    public Brand getBrand(long brandId) {
+        return Brand.class.cast(sessionFactory.getCurrentSession().get(Brand.class, Long.valueOf(brandId).intValue()));
+    }
 }

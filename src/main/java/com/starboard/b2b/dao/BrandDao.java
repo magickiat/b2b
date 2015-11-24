@@ -12,4 +12,5 @@ public interface BrandDao {
 
 	void addSelectedBrand(Long custId, List<Integer> selectedBrand);
 
+        public Brand getBrand(long brandId);
 }

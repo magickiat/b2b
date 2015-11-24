@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoiceTo" language="java"  pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a118fccc-f903-4302-bf25-b2fc3d211623">
+	<property name="ireport.zoom" value="2.5937424601000023"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="normal" isBlankWhenNull="false" fontName="SansSerif" fontSize="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
+	<style name="head" fontName="SansSerif" fontSize="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
+	<parameter name="orderId" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[new Long(0)]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select *
+from ord_address oa
+left join orders o on oa.order_id = o.order_id
+left join cust c on o.cust_id = c.cust_id
+where type=0 and oa.order_id=$P{orderId}]]>
+	</queryString>
+	<field name="order_address_id" class="java.lang.Long"/>
+	<field name="order_id" class="java.lang.Long"/>
+	<field name="order_fname" class="java.lang.String"/>
+	<field name="order_lname" class="java.lang.String"/>
+	<field name="order_addr" class="java.lang.String"/>
+	<field name="subdistrict" class="java.lang.String"/>
+	<field name="district" class="java.lang.String"/>
+	<field name="order_country_id" class="java.lang.String"/>
+	<field name="order_province" class="java.lang.String"/>
+	<field name="order_zipcode" class="java.lang.String"/>
+	<field name="order_tel" class="java.lang.String"/>
+	<field name="order_mobile" class="java.lang.String"/>
+	<field name="fax" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="type" class="java.lang.Long"/>
+	<field name="user_create" class="java.lang.String"/>
+	<field name="user_update" class="java.lang.String"/>
+	<field name="time_create" class="java.sql.Timestamp"/>
+	<field name="time_update" class="java.sql.Timestamp"/>
+	<field name="order_code" class="java.lang.String"/>
+	<field name="so_code" class="java.lang.String"/>
+	<field name="cust_id" class="java.lang.Long"/>
+	<field name="cust_code" class="java.lang.String"/>
+	<field name="cust_user_id" class="java.lang.String"/>
+	<field name="member_id" class="java.lang.Long"/>
+	<field name="brand_group_id" class="java.lang.Long"/>
+	<field name="discount" class="java.math.BigDecimal"/>
+	<field name="price" class="java.math.BigDecimal"/>
+	<field name="total_price" class="java.math.BigDecimal"/>
+	<field name="ship_price" class="java.math.BigDecimal"/>
+	<field name="net_price" class="java.math.BigDecimal"/>
+	<field name="product_unit_id" class="java.lang.String"/>
+	<field name="track_id" class="java.lang.String"/>
+	<field name="shipping_id" class="java.lang.String"/>
+	<field name="payment_id" class="java.lang.String"/>
+	<field name="payment_currency_id" class="java.lang.String"/>
+	<field name="payment_term_id" class="java.lang.String"/>
+	<field name="payment_method_id" class="java.lang.String"/>
+	<field name="order_status" class="java.lang.String"/>
+	<field name="order_date" class="java.sql.Timestamp"/>
+	<field name="expect_shipment_date" class="java.sql.Timestamp"/>
+	<field name="expect_receipt_date" class="java.sql.Timestamp"/>
+	<field name="remark_customer" class="java.lang.String"/>
+	<field name="remark_orders" class="java.lang.String"/>
+	<field name="invoice_code" class="java.lang.String"/>
+	<field name="sale_id" class="java.lang.String"/>
+	<field name="name_th" class="java.lang.String"/>
+	<field name="name_en" class="java.lang.String"/>
+	<field name="currency" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="77" splitType="Stretch">
+			<staticText>
+				<reportElement style="head" x="8" y="6" width="70" height="15" uuid="e50bed7a-34c4-43b1-9544-5526033b04f9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Invoice To :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="normal" x="130" y="66" width="29" height="11" uuid="c9124497-4186-4403-9ef7-17e2affe958e"/>
+				<text><![CDATA[Fax : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="normal" x="9" y="66" width="29" height="11" uuid="8d908fa4-e300-475c-9cd2-ce11010a144c"/>
+				<text><![CDATA[Tel : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="normal" x="8" y="21" width="264" height="11" uuid="ea1589cb-faba-415e-ba8d-a57089473575"/>
+				<textFieldExpression><![CDATA[$F{name_en}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="normal" x="8" y="32" width="265" height="34" uuid="24dc3b42-6ec3-4c14-b092-73b18ad96585"/>
+				<textFieldExpression><![CDATA[$F{order_addr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="normal" x="38" y="66" width="92" height="11" uuid="ae91e42b-cc0a-4dd1-a030-7d458a84a9de"/>
+				<textFieldExpression><![CDATA[$F{order_tel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="normal" x="159" y="66" width="113" height="11" uuid="80aa2327-7bf5-41ff-b1df-8c9a6a73aad6"/>
+				<textFieldExpression><![CDATA[$F{fax}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
