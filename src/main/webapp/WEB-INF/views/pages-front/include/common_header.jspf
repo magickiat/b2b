@@ -36,7 +36,7 @@
       	<ul class="nav navbar-nav navbar-right">
 	        <li role="presentation">
 	        	<form:form servletRelativeAction="/logout" method="post">
-					<input type="submit" style="text-transform: uppercase;" class="btn btn-danger navbar-btn" value="Logout" />
+					<input type="submit" style="text-transform: uppercase; color:#f00;" class="btn btn-default navbar-btn" value="Logout" />
 				</form:form>
 	        </li>
 	      </ul>
@@ -53,12 +53,12 @@
 		<div class="container">
 			<div class="col-sm-1">
 				<p class="text-right">
-					<strong>Welcome:</strong>
+					<strong>Welcome : </strong>
 				</p>
 			</div>
-	
 			<div class="col-sm-8">
 				<p class="text-left">
+					<span class="glyphicon glyphicon-user"></span>
 					<strong>${user.name}</strong>
 				</p>
 			</div>
@@ -81,7 +81,7 @@
 									<div style="width: 200px;">No item</div>
 								</c:when>
 								<c:otherwise>
-									<div class="row" style="font-family: 'francois_oneregular';">
+									<div class="row" style="font-family: 'francois_oneregular'; border-bottom: dashed 1px #ccc;">
 										<div class="col-sm-1">No</div>
 										<div class="col-sm-7">Product Name</div>
 										<div class="col-sm-2">Order</div>
@@ -90,14 +90,14 @@
 									<c:forEach var="product" items="${ cart }" varStatus="rowNum">
 										<c:set var="totalQuantity"
 											value="${ totalQuantity + product.value.productQuantity }" />
-										<div class="row product-item-${ product.key }" style="font-family: 'francois_oneregular';">
+										<div class="row product-item-${ product.key }" style="font-family: 'francois_oneregular'; border-bottom: dashed 1px #ccc;">
 											<div class="col-sm-1">${ rowNum.index + 1 }</div>
 											<div class="col-sm-7">${ product.value.productNameEn }</div>
 											<div class="col-sm-2">${ product.value.productQuantity }</div>
 											<div class="col-sm-2">${ product.value.productUnitId }</div>
 										</div>
 									</c:forEach>
-									<div class="row text-center"><input type="button" class="btn btn-success" value="CHECK OUT" onclick="checkout()" /></div>
+									<div class="row text-center" style="padding: 5px 0 5px;"><input type="button" class="btn btn-success" value="CHECK OUT" onclick="checkout()" /></div>
 								</c:otherwise>
 							</c:choose>
 	

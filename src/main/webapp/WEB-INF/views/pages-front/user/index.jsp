@@ -18,7 +18,7 @@
 	
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12 bg_color showline">
+			<div class="col-md-12 bg_color showline2">
 				<div class="row row-header header1">Profile</div>
 			    <div>
 					<form:form servletRelativeAction="/frontend/user/edit" class="form-horizontal"

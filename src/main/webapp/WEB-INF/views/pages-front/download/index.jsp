@@ -16,11 +16,51 @@
 	<div class="container">
 		
 		<div class="row">
-			<div class="col-md-12">
-				<div class="row row-header header1">Download</div>
+			<div class="col-md-12 bg_color" style="padding-bottom: 50px;">
+				<div class="row row-header2 header2 txtupper">Download</div>
 			    <div>
-			    	
-			    </div>
+					<table class="table table-hover">
+				      <thead>
+				        <tr>
+				          <th style="width: 30px;">#</th>
+				          <th>First Name</th>
+				          <th>Last Name</th>
+				        </tr>
+				      </thead>
+				      <tbody>
+				        <tr>
+				          <th scope="row">1</th>
+				          <td>Mark</td>
+				          <td>Otto</td>
+				        </tr>
+				        <tr>
+				          <th scope="row">1</th>
+				          <td>Mark</td>
+				          <td>Otto</td>
+				        </tr>
+				        <tr>
+				          <th scope="row">1</th>
+				          <td>Mark</td>
+				          <td>Otto</td>
+				        </tr>
+				        <tr>
+				          <th scope="row">1</th>
+				          <td>Mark</td>
+				          <td>Otto</td>
+				        </tr>
+				        <tr>
+				          <th scope="row">1</th>
+				          <td>Mark</td>
+				          <td>Otto</td>
+				        </tr>
+				        <tr>
+				          <th scope="row">1</th>
+				          <td>Mark</td>
+				          <td>Otto</td>
+				        </tr>
+				      </tbody>
+				    </table>
+				</div>
 			</div>
 		</div>
 	</div>
