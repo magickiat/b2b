@@ -56,6 +56,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Value("${upload.path}")
     private String uploadPath;
+    
+    @Value("${download.path}")
+    private String downloadPath;
 
     @Autowired
     private ApplicationConfig applicationConfig;

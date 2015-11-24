@@ -5,6 +5,7 @@ import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.common.WithnoseConstant;
 import com.starboard.b2b.dto.AddressDTO;
+import com.starboard.b2b.dto.BrandDTO;
 import com.starboard.b2b.dto.OrderDTO;
 import com.starboard.b2b.dto.OrderStatusDTO;
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
@@ -47,6 +48,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +56,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.core.env.Environment;
 
 @Controller
 @RequestMapping("/frontend/order/")
@@ -73,6 +76,9 @@ public class FrontOrderController {
 
 	@Autowired
 	private OrderService orderService;
+        
+        @Autowired
+        private Environment environment;
 
 	@RequestMapping(value = "index", method = RequestMethod.GET)
 	String step1(Model model) {
@@ -214,6 +220,28 @@ public class FrontOrderController {
 		model.addAttribute("productYear", productService.findAllProductYear());
 		model.addAttribute("productTechnology", productService.findAllProductTechnology());
 	}
+
+    /*
+     * download excel order
+     */
+    @RequestMapping(value = "download-template", method = RequestMethod.GET)
+    public void downloadExcelOrder(@RequestParam("brand_id") Long brandId, HttpServletResponse response) throws IOException {
+        BrandDTO brand = brandService.getBrand(brandId);
+        if (brand == null) {
+            throw new B2BException(String.format("brand with id [%s] are not found", brandId));
+        }
+        //
+        long custId = UserUtil.getCurrentUser().getCustomer().getCustId();
+        //
+        String rootDownloadPath = environment.getProperty("download.path");
+        String brandDownloadPath = rootDownloadPath + "/" + brand.getName().replaceAll(" ", "_").trim();
+        //
+        response.setContentType("text/plain");
+//      response.setHeader("Content-Disposition", "attachment; filename=fname.ext");
+        try (PrintWriter writer = response.getWriter()) {
+            writer.write("");
+        }
+    }
 
 	/*
 	 * upload excel order

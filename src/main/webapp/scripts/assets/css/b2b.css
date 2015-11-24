@@ -181,3 +181,8 @@ div.menu-link {
 .hero-feature {
 	/*margin-bottom: 30px;*/
 }
+
+.custom-ui-widget-header-warning {
+  background: #EBCCCC;
+  font-size: 1em;
+}

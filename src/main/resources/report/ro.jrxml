@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ro" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba40db7d-9060-4710-81d4-f1a174b6499e">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="right" hAlign="Right"/>
+	<style name="center" hAlign="Center"/>
+	<style name="tabColor" hAlign="Center" vAlign="Middle" fontName="SansSerif" fontSize="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true">
+		<paragraph lineSpacing="AtLeast"/>
+	</style>
+	<style name="normal" fill="Solid" hAlign="Center" vAlign="Middle" pattern="" isBlankWhenNull="true" fontName="SansSerif" fontSize="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
+	<style name="normal10" fontName="SansSerif" fontSize="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
+	<style name="normalCenter" hAlign="Left" vAlign="Middle" fontName="SansSerif" fontSize="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
+	<subDataset name="Table Dataset 1" uuid="b1e4d6d9-6642-4efd-b6aa-181e3b11a787"/>
+	<parameter name="orderId" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[new Long(0)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="showcate" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="productCurrency" class="java.lang.String">
+		<parameterDescription><![CDATA[product currency]]></parameterDescription>
+		<defaultValueExpression><![CDATA["EUR"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="allPageSize" class="java.lang.Integer"/>
+	<parameter name="relativePage" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select (od.price*od.amount) as total,p.product_buyer_group_id,ptype.product_type_name,od.product_unit_id,pt.payment_term_name,pm.payment_method_name,o.remark_orders,o.order_id,p.product_code,p.product_name_en,o.expect_shipment_date,o.order_code,st.shipping_type_name,o.payment_currency_id,od.amount,od.price from product_type ptype,payment_term pt,payment_method pm,orders o,shipping_type st,product p,ord_detail od where ptype.product_type_id=p.product_type_id and pt.payment_term_id=o.payment_term_id and pm.payment_method_id=o.payment_method_id and od.order_id=o.order_id and od.product_id=p.product_id and o.shipping_id=st.shipping_type_id and o.order_id=$P{orderId}
+ and od.product_currency=$P{productCurrency}
+ order by od.product_id, od.order_product_id]]>
+	</queryString>
+	<field name="total" class="java.math.BigDecimal"/>
+	<field name="product_buyer_group_id" class="java.lang.String"/>
+	<field name="product_type_name" class="java.lang.String"/>
+	<field name="product_unit_id" class="java.lang.String"/>
+	<field name="payment_term_name" class="java.lang.String"/>
+	<field name="payment_method_name" class="java.lang.String"/>
+	<field name="remark_orders" class="java.lang.String"/>
+	<field name="order_id" class="java.lang.Long"/>
+	<field name="product_code" class="java.lang.String"/>
+	<field name="product_name_en" class="java.lang.String"/>
+	<field name="expect_shipment_date" class="java.sql.Timestamp"/>
+	<field name="order_code" class="java.lang.String"/>
+	<field name="shipping_type_name" class="java.lang.String"/>
+	<field name="payment_currency_id" class="java.lang.String"/>
+	<field name="amount" class="java.lang.Long"/>
+	<field name="price" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="189" splitType="Stretch">
+			<rectangle>
+				<reportElement x="355" y="12" width="200" height="26" uuid="f733e55f-cdc0-4b26-8fe9-883dbed1ea85"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="tabColor" x="395" y="40" width="39" height="20" uuid="b7566f2a-4d8a-4a84-8a73-a6941c85940e"/>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabColor" x="508" y="40" width="38" height="20" uuid="9b45b630-28d1-418b-81c2-929631be5d28"/>
+				<text><![CDATA[Page]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="286" y="80" width="269" height="83" uuid="db21d908-1fb8-4440-898d-f113e8c1ffb0"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="355" y="12" width="200" height="26" uuid="5fe6e07e-0786-412d-9c5d-5482139691f8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="20" isBold="true" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[RO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabColor" x="21" y="163" width="121" height="12" isPrintWhenDetailOverflows="true" uuid="1520f35a-13b2-446e-9271-a208a1f1d1db"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Expected Shipping Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabColor" x="171" y="163" width="100" height="12" isPrintWhenDetailOverflows="true" uuid="493c6c23-8ba6-40ad-9e4c-def0195b8950"/>
+				<text><![CDATA[Order Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabColor" x="303" y="163" width="100" height="12" isPrintWhenDetailOverflows="true" uuid="66150a92-b41c-4dd6-92a4-1d7ef3895cd9"/>
+				<text><![CDATA[Ship Via ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabColor" x="431" y="163" width="100" height="12" isPrintWhenDetailOverflows="true" uuid="3b11f24e-6ab1-45aa-a0bd-d9fab9c8e15a"/>
+				<text><![CDATA[Currency]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="293" height="25" uuid="5fe96602-a591-4207-adff-56dc22d7648a"/>
+				<textElement>
+					<font fontName="SansSerif" size="12" isBold="true" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[TACO  IMPORT EXPORT CO., LTD.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="normal10" x="0" y="25" width="242" height="13" uuid="3ba5a8ab-c1a9-4e2f-b213-8d0a51e8eb2b"/>
+				<text><![CDATA[175/1 MOO 12 SOI SUKSAWAI 2,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="normal10" x="0" y="38" width="256" height="22" uuid="8c9cabf0-e63e-4645-a690-e105c5f81c63"/>
+				<text><![CDATA[BANGNA-TRAD KM. 13 RD., BANGPLEE-YAI,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="normal10" x="0" y="50" width="256" height="20" uuid="bd2f3d6d-26d0-4bad-8fc3-2ca6a59a4bc3"/>
+				<text><![CDATA[BANGPLEE, SAMUTPRAKARN 10540, THAILAND]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="normal10" x="0" y="60" width="256" height="20" uuid="5fde71b7-bc77-4f68-bc06-1d7c19d79892"/>
+				<text><![CDATA[Tel : 662 316 8096  Fax : 662 316 8097]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="normal" x="365" y="50" width="100" height="20" uuid="dcceafe7-c8c6-4151-9946-7144b8ae69ea"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="80" width="276" height="83" uuid="a49d3040-cf0c-49a2-bde8-a0851ffa6391"/>
+			</rectangle>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="normal" x="14" y="175" width="133" height="12" isPrintWhenDetailOverflows="true" uuid="748dd2ed-bb2e-4723-b043-deb6d1fc6507"/>
+				<textFieldExpression><![CDATA[$F{expect_shipment_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="normal" x="171" y="175" width="100" height="12" isPrintWhenDetailOverflows="true" uuid="2c592bc0-6f0e-4505-a761-8a3b3b1cfef5"/>
+				<textFieldExpression><![CDATA[$F{order_code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="normal" x="293" y="175" width="128" height="14" isPrintWhenDetailOverflows="true" uuid="38623cbc-c8b2-4dee-9a22-11116a65a08f"/>
+				<textFieldExpression><![CDATA[$F{shipping_type_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="normal" x="412" y="175" width="134" height="14" isPrintWhenDetailOverflows="true" uuid="25739f18-ed53-4e4c-81a2-363be10f08f8"/>
+				<textFieldExpression><![CDATA[$P{productCurrency}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="480" y="50" width="41" height="20" uuid="7ad44a60-736b-47aa-ad7e-6f692ecf5654"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}+ $P{relativePage}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="531" y="50" width="40" height="20" uuid="b27c42ec-0c3b-40f9-834c-d1957fd89ba0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isUnderline="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $P{allPageSize}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="286" y="80" width="269" height="83" uuid="0301a120-a1b5-4e4d-8cff-306fc7214c98"/>
+				<subreportParameter name="orderId">
+					<subreportParameterExpression><![CDATA[$F{order_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/dispatchTo.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="0" y="80" width="276" height="83" uuid="b5e0414b-3dca-4a88-be91-db6fa7c74df9"/>
+				<subreportParameter name="orderId">
+					<subreportParameterExpression><![CDATA[$F{order_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/invoiceTo.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement style="normal10" x="523" y="50" width="11" height="20" uuid="3d268d46-06cd-4a14-a259-dccf7343138d"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[of]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<elementGroup>
+				<staticText>
+					<reportElement style="tabColor" mode="Opaque" x="384" y="0" width="38" height="15" uuid="5312a4d1-8ee8-4d62-bb16-b4a1938bbd88"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<text><![CDATA[Qty]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="tabColor" x="494" y="0" width="61" height="15" uuid="a1fd1f65-1d3a-4d30-8fdd-e0480225284c"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Amount]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="tabColor" mode="Transparent" x="58" y="0" width="89" height="15" uuid="bbe5a05c-8164-421c-9740-e8f254fb75d6"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<text><![CDATA[Brand]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="tabColor" x="448" y="0" width="46" height="15" uuid="96cc5499-77fe-433b-81e4-c7ecc61328ff"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Unit Price]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="tabColor" mode="Opaque" x="142" y="0" width="204" height="15" uuid="1acdc8f0-e02b-4660-8923-867c0470e29c"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<text><![CDATA[Description]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="tabColor" mode="Opaque" x="421" y="0" width="27" height="15" uuid="f004722e-5c0c-4237-b30b-487fd34dfd1b"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[UOM]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="tabColor" x="0" y="0" width="58" height="15" uuid="7beddad3-b476-430d-8f92-5d5638ed2d8f"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Justified"/>
+					<text><![CDATA[Product Code]]></text>
+				</staticText>
+			</elementGroup>
+			<staticText>
+				<reportElement style="tabColor" mode="Opaque" x="346" y="0" width="41" height="15" uuid="3270b27b-de8a-47ba-b32b-de4e8b68826c"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[Category]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement style="normal10" x="0" y="1" width="100" height="20" uuid="df2ac011-4064-4a0e-bae7-5db30ba8e6eb"/>
+				<textFieldExpression><![CDATA[$F{product_code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="normal10" x="147" y="1" width="199" height="23" uuid="c50e726f-5234-489a-bcbe-1d72ba72683e"/>
+				<textFieldExpression><![CDATA[$F{product_name_en}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="normal10" x="384" y="1" width="38" height="20" uuid="a02bf227-a00d-49a4-a7f7-02a599ee768c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement style="normal10" x="448" y="0" width="49" height="24" uuid="882a5950-86b1-4a61-ae88-468af30d9ab1"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[($F{price} != null && !$P{productCurrency}.equals("TBA")) ? $F{price} : "TBA"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="normal10" x="421" y="1" width="27" height="20" uuid="96579be1-c357-4ca2-805a-6a70c8a7201b"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[($F{product_unit_id} != null) ? $F{product_unit_id} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="normal10" x="58" y="1" width="89" height="20" uuid="6f41816c-0bbb-43ab-b350-320c52783be7"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{product_type_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="normal10" x="346" y="0" width="38" height="20" uuid="d0a43c11-1055-4d5b-9912-9200d31f441d">
+					<printWhenExpression><![CDATA[$P{showcate}==true]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{product_buyer_group_id}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement style="normal10" x="497" y="0" width="58" height="20" uuid="a0b53b4d-7f92-403b-bdf6-6b03f3519e18"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[($F{price} != null && !$P{productCurrency}.equals("TBA")  ) ? $F{total} : "TBA"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="166" splitType="Stretch">
+			<staticText>
+				<reportElement style="normal10" x="0" y="43" width="55" height="20" uuid="e9af5510-e1db-459e-9794-316f10005c2b"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Dashed"/>
+				</box>
+				<text><![CDATA[*Remark :  ]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="63" width="379" height="101" uuid="ba510a44-3acd-4799-bbb7-e2f8cb7c4cca"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="tabColor" x="14" y="63" width="100" height="20" uuid="6b19e00f-36bd-4305-b9b8-1edf573cc964"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Payment : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabColor" x="14" y="77" width="100" height="20" uuid="2045147c-1396-4ecf-90f7-345510fa34c9"/>
+				<textElement textAlignment="Left">
+					<font isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Terms : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabColor" x="14" y="89" width="100" height="20" uuid="890d8976-46e6-4da0-baa7-3299c941a189"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Currency : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabColor" x="14" y="99" width="100" height="20" uuid="86c94205-bd1a-4556-a008-b23914c0a711"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Beneficiary : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabColor" x="14" y="109" width="100" height="20" uuid="01cd123a-0e7e-49bf-84df-c2db96b4038d"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Banker : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="normalCenter" x="114" y="99" width="254" height="20" uuid="73596265-7004-495f-b2a6-54f81ca9286f"/>
+				<text><![CDATA[TACO IMPORT EXPORT CO.,LTD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="normalCenter" x="114" y="109" width="213" height="20" uuid="647f8872-dbf2-47d5-b436-553f3f0446e8"/>
+				<text><![CDATA[Kasikorn Bank Public Co., LTD]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="379" y="63" width="176" height="81" uuid="cd2a5857-a8b2-4458-8b59-012a16f64148"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="379" y="144" width="176" height="20" uuid="f31b0870-9fa8-4042-aecf-81c797bfdddc"/>
+			</rectangle>
+			<textField>
+				<reportElement style="normal10" x="55" y="43" width="500" height="20" uuid="7a1fe4c6-4558-43a2-8e83-42f93386ff3b"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.5" lineStyle="Dashed"/>
+					<leftPen lineStyle="Dashed"/>
+					<bottomPen lineStyle="Dashed"/>
+					<rightPen lineStyle="Dashed"/>
+				</box>
+				<textFieldExpression><![CDATA[($F{remark_orders} != null) ? $F{remark_orders} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="normalCenter" x="114" y="89" width="265" height="20" uuid="e714a2b7-2c81-4ad5-828f-ca8b96ebda5a"/>
+				<textFieldExpression><![CDATA[$P{productCurrency}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="normalCenter" x="114" y="63" width="265" height="20" uuid="a6c62997-d36c-4433-9284-96d94ca19289"/>
+				<textFieldExpression><![CDATA[$F{payment_method_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement style="normalCenter" x="114" y="77" width="265" height="20" uuid="56289418-4497-4fb6-aa6e-da068f6edb97"/>
+				<textFieldExpression><![CDATA[$F{payment_term_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="normalCenter" x="114" y="119" width="213" height="20" uuid="2c6ac9cb-bcbe-412a-b300-3a717754f32a"/>
+				<text><![CDATA[Bangplee Branch]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="normalCenter" x="114" y="129" width="213" height="20" uuid="cf00660e-1bfd-4aed-912e-424a39292f44"/>
+				<text><![CDATA[Thailand, Swift Code: KASITHBK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="normalCenter" x="114" y="139" width="213" height="20" uuid="090c5284-ea6f-4d65-8aba-ec90c6f9aabb"/>
+				<text><![CDATA[Acc No. 340-92-0012-4]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="379" y="63" width="176" height="100" uuid="7e2102fe-ca0d-42e3-8145-0831e597f388"/>
+				<subreportParameter name="productCurrency">
+					<subreportParameterExpression><![CDATA[$P{productCurrency}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="orderId">
+					<subreportParameterExpression><![CDATA[$F{order_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "sumTotal.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="167">
+			<staticText>
+				<reportElement style="normal10" x="0" y="44" width="55" height="20" uuid="b5c46b68-f0d3-4cbb-81cc-0b447349bda9"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Dashed"/>
+				</box>
+				<text><![CDATA[*Remark :  ]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="64" width="379" height="101" uuid="58055080-7fd5-4c2e-8285-372f1cde00ad"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="tabColor" x="14" y="64" width="100" height="20" uuid="db0c5f83-0121-4549-8999-901ea0d7822d"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Payment : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabColor" x="14" y="78" width="100" height="20" uuid="b7e7fe71-18f7-4120-a5bc-d07fad4ee227"/>
+				<textElement textAlignment="Left">
+					<font isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Terms : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabColor" x="14" y="90" width="100" height="20" uuid="9af20f49-4c4b-421f-aec3-2a9524a397c4"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Currency : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabColor" x="14" y="100" width="100" height="20" uuid="316fee9a-f80a-44fc-a474-7d2a0b49539b"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Beneficiary : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabColor" x="14" y="110" width="100" height="20" uuid="0cbf62b6-3132-47ac-8ab6-82571e156b8e"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Banker : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="normalCenter" x="114" y="100" width="254" height="20" uuid="6f4d2636-87ae-4b4c-bbd4-6a36070bf515"/>
+				<text><![CDATA[TACO IMPORT EXPORT CO.,LTD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="normalCenter" x="114" y="110" width="213" height="20" uuid="96303567-1cde-4146-9f74-d6c7f96fb6cf"/>
+				<text><![CDATA[Kasikorn Bank Public Co., LTD]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="379" y="64" width="176" height="101" uuid="0786f39b-ef00-4f80-9af6-8f4730bcd91e"/>
+			</rectangle>
+			<textField>
+				<reportElement style="normalCenter" x="114" y="90" width="265" height="20" uuid="47af205e-d5f4-4988-99c6-d07b3914f5d1"/>
+				<textFieldExpression><![CDATA[$P{productCurrency}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="normalCenter" x="114" y="64" width="265" height="20" uuid="bb24205c-b4c4-4e08-87ef-7b15e6684e89"/>
+				<textFieldExpression><![CDATA[$F{payment_method_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="normalCenter" x="114" y="78" width="265" height="20" uuid="e3c55ac1-dc31-4699-801b-f346507b89df"/>
+				<textFieldExpression><![CDATA[$F{payment_term_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="normalCenter" x="114" y="120" width="213" height="20" uuid="c5bb6314-71c7-4252-9faf-b13c20f357d2"/>
+				<text><![CDATA[Bangplee Branch]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="normalCenter" x="114" y="130" width="213" height="20" uuid="d98eca05-5bc0-4de3-894e-7c9b7a0ae8a0"/>
+				<text><![CDATA[Thailand, Swift Code: KASITHBK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="normalCenter" x="114" y="140" width="213" height="20" uuid="292b9bd3-f9eb-4a4c-8688-1c653845d18d"/>
+				<text><![CDATA[Acc No. 340-92-0012-4]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="379" y="64" width="176" height="100" uuid="54f88fc2-bc7d-4bd1-9a47-63c180536ee6"/>
+				<subreportParameter name="productCurrency">
+					<subreportParameterExpression><![CDATA[$P{productCurrency}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="orderId">
+					<subreportParameterExpression><![CDATA[$F{order_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "sumTotal.jasper"]]></subreportExpression>
+			</subreport>
+			<line>
+				<reportElement x="379" y="142" width="176" height="1" uuid="e8821d3f-3286-432d-8170-3ebd087c2a1c"/>
+			</line>
+			<subreport>
+				<reportElement x="271" y="0" width="282" height="44" uuid="8fe457f5-b84f-4ddc-a511-6a963d2a04ed">
+					<printWhenExpression><![CDATA[$P{showcate}==true]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="productCurrency">
+					<subreportParameterExpression><![CDATA[$P{productCurrency}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="orderId">
+					<subreportParameterExpression><![CDATA[$F{order_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "sumTypeProduct.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement style="normal10" x="53" y="44" width="500" height="20" uuid="72a1ebd2-e827-4308-9526-e315f699e8cc"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.5" lineStyle="Dashed"/>
+					<leftPen lineStyle="Dashed"/>
+					<bottomPen lineStyle="Dashed"/>
+					<rightPen lineStyle="Dashed"/>
+				</box>
+				<textFieldExpression><![CDATA[($F{remark_orders} != null) ? $F{remark_orders} : ""]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
