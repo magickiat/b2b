@@ -1,5 +1,6 @@
 package com.starboard.b2b.service;
 
+import com.starboard.b2b.dto.BrandDTO;
 import java.util.List;
 
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
@@ -13,4 +14,5 @@ public interface BrandService {
 
 	List<ProductBrandGroupDTO> getBrandGroupList(Long custId);
 	
+        public BrandDTO getBrand(long brandId);
 }

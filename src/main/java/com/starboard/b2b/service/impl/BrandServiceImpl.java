@@ -13,11 +13,16 @@ import com.starboard.b2b.dao.BrandDao;
 import com.starboard.b2b.dao.CustBrandGroupDAO;
 import com.starboard.b2b.dao.CustDao;
 import com.starboard.b2b.dao.ProductBrandGroupDAO;
+import com.starboard.b2b.dto.BrandDTO;
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
+import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.model.Brand;
 import com.starboard.b2b.model.CustBrandGroup;
 import com.starboard.b2b.model.ProductBrandGroup;
 import com.starboard.b2b.service.BrandService;
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
+import org.apache.commons.beanutils.BeanUtils;
 
 @Service("brandService")
 public class BrandServiceImpl implements BrandService {
@@ -52,4 +57,19 @@ public class BrandServiceImpl implements BrandService {
 		return custDao.findProductBrandGroup(custId);
 	}
 
+    @Override
+    @Transactional(readOnly = true)
+    public BrandDTO getBrand(long brandId) {
+        Brand entity = brandDao.getBrand(brandId);
+        if(entity == null) {
+            return null;
+        }
+        try {
+            BrandDTO brand = new BrandDTO();
+            BeanUtils.copyProperties(brand, entity);
+            return brand;
+        } catch (IllegalAccessException | InvocationTargetException ex) {
+            throw new B2BException(ex);
+        }
+    }
 }

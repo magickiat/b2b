@@ -74,8 +74,13 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" role="upload">Upload</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <div class="col-sm-6 text-left" style="padding: 0px;">
+                                <a href="<c:url value="/frontend/order/download-template?brand_id=${brandId}"/>" title="download excel order template" class="btn btn-default">Download Excel Order</a>
+                            </div>
+                            <div class="col-sm-6 text-right" style="padding: 0px;">
+                                <button type="button" class="btn btn-primary" role="upload">Upload</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
                         </div>
                     </div>
                 </div>
