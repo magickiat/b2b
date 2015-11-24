@@ -7,3 +7,4 @@ nb-configuration.xml
 /.settings
 b2b.iml
 /.classpath
+src/main/resources/application-magic.properties
