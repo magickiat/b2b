@@ -38,25 +38,26 @@ public class ExcelOrderUtil {
                 continue;
             }
             //
-            Cell productCode = row.getCell(3);
-            Cell quantity = row.getCell(5);
-            Cell remark = row.getCell(6);
+            Cell productCodeCell = row.getCell(3);
+            Cell quantityCell = row.getCell(5);
+            Cell remarkCell = row.getCell(6);
             //
-            if (productCode == null) {
+            if (productCodeCell == null || productCodeCell.getCellType() != Cell.CELL_TYPE_STRING) {
                 continue;
             }
-            if (quantity == null) {
+            if (quantityCell == null || quantityCell.getCellType() != Cell.CELL_TYPE_NUMERIC) {
                 continue;
             }
-            int qty = Double.valueOf(quantity.getNumericCellValue()).intValue();
-            if (qty == 0) {
+            int quantity = Double.valueOf(quantityCell.getNumericCellValue()).intValue();
+            if (quantity == 0) {
                 continue;
             }
+            String remark = remarkCell == null || remarkCell.getCellType() != Cell.CELL_TYPE_STRING ? "" : remarkCell.getStringCellValue();
             //
             ExcelOrderBean order = new ExcelOrderBean();
-            order.setProductCode(productCode.getStringCellValue());
-            order.setQuantity(qty);
-            order.setRemark(remark == null ? "" : remark.getStringCellValue());
+            order.setProductCode(productCodeCell.getStringCellValue());
+            order.setQuantity(quantity);
+            order.setRemark(remark);
             list.add(order);
         }
         if (list.isEmpty()) {

@@ -5,6 +5,7 @@
  */
 package com.starboard.b2b.util;
 
+import com.starboard.b2b.exception.B2BException;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,6 +25,9 @@ public class ArchiveUtil {
         try (ZipOutputStream zip = new ZipOutputStream(output)) {
             for (String file : files) {
                 File content = new File(file);
+                if (!content.exists()) {
+                    throw new B2BException(String.format("request file are not exist for downloaded -> [%s]", content.getName()));
+                }
                 zip.putNextEntry(new ZipEntry(content.getName()));
                 try (FileInputStream input = new FileInputStream(content)) {
                     byte[] data = new byte[input.available()];
@@ -32,6 +36,9 @@ public class ArchiveUtil {
                 }
                 zip.closeEntry();
             }
+        }
+        if (output.size() == 0) {
+            throw new B2BException("request file are not exist for download");
         }
         return output.toByteArray();
     }

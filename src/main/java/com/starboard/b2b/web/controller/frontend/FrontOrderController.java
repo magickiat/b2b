@@ -5,7 +5,6 @@ import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.common.WithnoseConstant;
 import com.starboard.b2b.dto.AddressDTO;
-import com.starboard.b2b.dto.BrandDTO;
 import com.starboard.b2b.dto.OrderDTO;
 import com.starboard.b2b.dto.OrderStatusDTO;
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
@@ -51,7 +50,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -230,7 +228,7 @@ public class FrontOrderController {
     public void downloadExcelOrder(@RequestParam("brand_id") Long brandId, HttpServletResponse response) throws IOException {
         List<ProductTypeDTO> types = productService.findProductTypeByBrandId(brandId);
         if (types == null || types.isEmpty()) {
-            throw new B2BException(String.format("product type not found for brand group id [%s]", brandId));
+            throw new B2BException(String.format("product type not found for brand id [%s]", brandId));
         }
         //
         String rootDownloadPath = environment.getProperty("download.path");
@@ -249,46 +247,50 @@ public class FrontOrderController {
         }
     }
 
-	/*
-	 * upload excel order
-	 */
-	@RequestMapping(value = "upload-orders", method = RequestMethod.POST)
-	public ModelAndView uploadExcelOrder(@RequestParam("file") MultipartFile file, @ModelAttribute("cart") Map<Long, ProductDTO> cart) {
-		try {
-			if (file.isEmpty()) {
-				throw new B2BException("empty order file");
-			}
-			//
-			List<ExcelOrderBean> orders = ExcelOrderUtil.parseOrder(file.getBytes());
-			//
-			List<ProductDTO> products = new ArrayList<>(orders.size());
-			for (ExcelOrderBean order : orders) {
-				ProductDTO product = productService.findByProductCode(order.getProductCode());
-				if (product.getProductCode() == null) {
-					throw new B2BException(String.format("product not found for product code %s", order.getProductCode()));
-				}
-				product.setProductQuantity(order.getQuantity());
-				products.add(product);
-			}
-			//
-			for (ProductDTO product : products) {
-				if (cart.get(product.getProductId()) == null) {
-					cart.put(product.getProductId(), product);
-				} else {
-					ProductDTO productInCart = cart.get(product.getProductId());
-					productInCart.setProductQuantity(productInCart.getProductQuantity() + product.getProductQuantity());
-				}
-			}
-			//
-			return new ModelAndView("redirect:step3/checkout");
-		} catch (IOException ex) {
-			throw new B2BException("could not read order file");
-		} catch (EncryptedDocumentException ex) {
-			throw new B2BException("order file are protected by password");
-		} catch (InvalidFormatException ex) {
-			throw new B2BException("order file are not an excel file format");
-		}
-	}
+    /*
+     * upload excel order
+     */
+    @RequestMapping(value = "upload-orders", method = RequestMethod.POST)
+    public ModelAndView uploadExcelOrder(@RequestParam("file") MultipartFile file, @ModelAttribute("cart") Map<Long, ProductDTO> cart) {
+        try {
+            if (file.isEmpty()) {
+                throw new B2BException("excel order file are not present in this request");
+            }
+            //
+            List<ExcelOrderBean> orders = ExcelOrderUtil.parseOrder(file.getBytes());
+            //
+            if (orders == null) {
+                throw new B2BException("order are not found in this upload file");
+            }
+            //
+            List<ProductDTO> products = new ArrayList<>(orders.size());
+            for (ExcelOrderBean order : orders) {
+                ProductDTO product = productService.findByProductCode(order.getProductCode());
+                if (product.getProductCode() == null) {
+                    throw new B2BException(String.format("product not found for product code %s", order.getProductCode()));
+                }
+                product.setProductQuantity(order.getQuantity());
+                products.add(product);
+            }
+            //
+            for (ProductDTO product : products) {
+                if (cart.get(product.getProductId()) == null) {
+                    cart.put(product.getProductId(), product);
+                } else {
+                    ProductDTO productInCart = cart.get(product.getProductId());
+                    productInCart.setProductQuantity(productInCart.getProductQuantity() + product.getProductQuantity());
+                }
+            }
+            //
+            return new ModelAndView("redirect:step3/checkout");
+        } catch (IOException ex) {
+            throw new B2BException("could not read excel order file");
+        } catch (EncryptedDocumentException ex) {
+            throw new B2BException("excel order file has password protection");
+        } catch (InvalidFormatException ex) {
+            throw new B2BException("uploaded file are not an valid excel file format");
+        }
+    }
 
 	@RequestMapping(value = "add-to-cart", method = RequestMethod.POST)
 	public @ResponseBody List<ProductDTO> addToCart(@RequestParam Long productId, @RequestParam Long quantity,
