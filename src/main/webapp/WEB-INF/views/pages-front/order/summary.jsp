@@ -37,7 +37,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <form:select path="selectedBrand" cssClass="form-control" multiple="false">
+                                <form:select path="selectedBrand" cssClass="form-control" multiple="false" onchange="loadBuyerGroup()">
                                     <form:option value="" label="ALL BRAND"/>
                                     <form:options items="${productType}" itemLabel="productTypeName" itemValue="productTypeId"/>
                                 </form:select>
@@ -129,6 +129,10 @@
      * Search order
      **/
     function searchOrder() {
+        $('#orderSummaryForm').submit();
+    }
+
+    function loadBuyerGroup(){
         $('#orderSummaryForm').submit();
     }
 </script>
