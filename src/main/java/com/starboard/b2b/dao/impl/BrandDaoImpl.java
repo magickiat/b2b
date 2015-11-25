@@ -1,6 +1,7 @@
 package com.starboard.b2b.dao.impl;
 
-import java.util.List;
+import com.starboard.b2b.dao.BrandDao;
+import com.starboard.b2b.model.Brand;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,8 +9,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.starboard.b2b.dao.BrandDao;
-import com.starboard.b2b.model.Brand;
+import java.util.List;
 
 @Repository("brandDao")
 public class BrandDaoImpl implements BrandDao {

@@ -1,8 +1,8 @@
 package com.starboard.b2b.dao;
 
-import java.util.List;
-
 import com.starboard.b2b.model.Brand;
+
+import java.util.List;
 
 public interface BrandDao {
 

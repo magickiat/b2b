@@ -1,14 +1,5 @@
 package com.starboard.b2b.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.starboard.b2b.dao.BrandDao;
 import com.starboard.b2b.dao.CustBrandGroupDAO;
 import com.starboard.b2b.dao.CustDao;
@@ -17,12 +8,17 @@ import com.starboard.b2b.dto.BrandDTO;
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
 import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.model.Brand;
-import com.starboard.b2b.model.CustBrandGroup;
-import com.starboard.b2b.model.ProductBrandGroup;
 import com.starboard.b2b.service.BrandService;
-import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
+
 import org.apache.commons.beanutils.BeanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 @Service("brandService")
 public class BrandServiceImpl implements BrandService {
