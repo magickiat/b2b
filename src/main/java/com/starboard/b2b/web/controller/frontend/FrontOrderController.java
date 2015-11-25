@@ -5,7 +5,6 @@ import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.common.WithnoseConstant;
 import com.starboard.b2b.dto.AddressDTO;
-import com.starboard.b2b.dto.BrandDTO;
 import com.starboard.b2b.dto.OrderDTO;
 import com.starboard.b2b.dto.OrderStatusDTO;
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
@@ -51,7 +50,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
