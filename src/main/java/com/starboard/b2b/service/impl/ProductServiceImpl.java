@@ -383,4 +383,16 @@ public class ProductServiceImpl implements ProductService {
         return result;
     }
 
+    @Override
+    public List<String> getProductTypeNames(List<Long> ids) {
+        List<ProductType> types = productTypeDao.findByIds(ids);
+        if(types == null || types.isEmpty()) {
+            return null;
+        }
+        List<String> names = new ArrayList<>();
+        for(ProductType type : types) {
+            names.add(type.getProductTypeName());
+        }
+        return names;
+    }
 }

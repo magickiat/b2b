@@ -55,4 +55,5 @@ public interface ProductService {
 
     List<ProductSearchResult> findProductPrice(Map<Long, ProductDTO> cart, String invoiceCode);
 
+    List<String> getProductTypeNames(List<Long> ids);
 }
