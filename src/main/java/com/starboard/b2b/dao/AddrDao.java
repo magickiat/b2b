@@ -13,5 +13,7 @@ public interface AddrDao {
 	Long maxId();
 	
 	List<Addr> findByCustId(long custId);
+	
+	public void update(Addr addr);
 
 }
