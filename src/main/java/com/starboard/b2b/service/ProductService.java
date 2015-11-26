@@ -55,5 +55,7 @@ public interface ProductService {
 
     List<ProductSearchResult> findProductPrice(Map<Long, ProductDTO> cart, String invoiceCode);
 
-    List<String> getProductTypeNames(List<Long> ids);
+    public ProductTypeDTO getProductType(Long brandGroupId);
+
+    public List<ProductTypeDTO> getProductTypes(Long customerId, Long brandGroupId);
 }
