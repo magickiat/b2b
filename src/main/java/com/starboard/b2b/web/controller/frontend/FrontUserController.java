@@ -1,9 +1,13 @@
 package com.starboard.b2b.web.controller.frontend;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.starboard.b2b.common.AddressConstant;
+import com.starboard.b2b.dto.CountryDTO;
+import com.starboard.b2b.model.User;
+import com.starboard.b2b.service.AddrService;
+import com.starboard.b2b.service.CountryService;
+import com.starboard.b2b.service.UserService;
+import com.starboard.b2b.web.form.user.AddressForm;
+import com.starboard.b2b.web.form.user.UserForm;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,19 +17,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.starboard.b2b.common.AddressConstant;
-import com.starboard.b2b.dto.CountryDTO;
-import com.starboard.b2b.model.Addr;
-import com.starboard.b2b.model.User;
-import com.starboard.b2b.service.AddrService;
-import com.starboard.b2b.service.CountryService;
-import com.starboard.b2b.service.UserService;
-import com.starboard.b2b.web.form.user.AddressForm;
-import com.starboard.b2b.web.form.user.UserForm;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/frontend/user")
@@ -49,26 +46,22 @@ public class FrontUserController {
 
 	@RequestMapping("view")
 	String view(Model model) {
-
-		UserForm userForm = new UserForm();
-		User userAuthen = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Map<String, String> countries = getCountries();
-		List<Long> addressTypes = getAddressConstant();		
-		User user = userService.findByUsername(userAuthen.getUsername());
-		List<AddressForm> addressForms = new ArrayList<AddressForm>();
+		final UserForm userForm = new UserForm();
+		final User userAuthen = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		final Map<String, String> countries = getCountries();
+		final List<Long> addressTypes = getAddressConstant();
+		final List<AddressForm> addressForms = new ArrayList<>();
 		try{
-			Long cust = user.getCustomer().getCustId();
-			addressForms = (cust != null)?addrService.findByCustId(cust):new ArrayList<AddressForm>();
+			final User user = userService.findByUsername(userAuthen.getUsername());
+			userForm.setId(userAuthen.getId().toString());
+			userForm.setUsername(userAuthen.getUsername());
+			userForm.setEmail(userAuthen.getEmail());
+			addressForms.addAll(addrService.findByCustId(user.getCustomer().getCustId()));
+			userForm.setAddresses(addressForms);
+			userForm.setCustId(user.getCustomer().getCustId());
 		}catch(Exception e){
-			e.printStackTrace();
+			log.error("Got problem while finding address.");
 		}
-		
-		userForm.setId(userAuthen.getUsername());
-		userForm.setUsername(userAuthen.getUsername());
-		userForm.setPassword(userAuthen.getPassword());
-		userForm.setEmail(userAuthen.getEmail());
-		userForm.setAddresses(addressForms); // AddressList
-		
 		model.addAttribute("userForm", userForm);
 		model.addAttribute("countries", countries);
 		model.addAttribute("addressTypes", addressTypes);
@@ -76,30 +69,44 @@ public class FrontUserController {
 		return "pages-front/user/index";
 	}
 
-	@RequestMapping("edit") // this method call from both update user and address?? where the update user detail section?
+	@RequestMapping("edit")
 	String edit(@ModelAttribute UserForm userForm, Model model, BindingResult binding) {
-		User userAuthen = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Map<String, String> countries = getCountries();
+		List<Long> addressTypes = getAddressConstant();
+		log.info("### edit ###");
+		log.info("userForm1 Email----> " + userForm.getEmail());
+		List<AddressForm> addressForms = new ArrayList<>();
+		try{
+			//Update user detail
+			userService.update(userForm);
+			//Get address detail
+			addressForms.addAll(addrService.findByCustId(userForm.getCustId()));
+			userForm.setAddresses(addressForms);
+		}catch(Exception e){
+			log.error("Got problem while finding address.");
+		}
+
+		model.addAttribute("userForm", userForm);
+		model.addAttribute("countries", countries);
+		model.addAttribute("addressTypes", addressTypes);
+		return "pages-front/user/index";
+	}
+
+	@RequestMapping("address/edit")
+	String editAddress(@ModelAttribute UserForm userForm, Model model, BindingResult binding) {
 		Map<String, String> countries = getCountries();
 		List<Long> addressTypes = getAddressConstant();	
-		System.out.println("### edit ###");
-		System.out.println("userForm1 Email----> " + userForm.getEmail()); // Not using sysout
-		//userService.update(userForm);
-		addrService.update(userForm);
-		User user = userService.findByUsername(userAuthen.getUsername());
-		List<AddressForm> addressForms = new ArrayList<AddressForm>();//Duplicate dec *
+		log.info("userForm Email----> " + userForm.getEmail());
+		List<AddressForm> addressForms = new ArrayList<>();
 		try{
-			Long cust = user.getCustomer().getCustId(); // create method to get just customer id instead of get whole user object then use only cust id
-			addressForms = (cust != null)?addrService.findByCustId(cust):new ArrayList<AddressForm>(); //Duplicate declaration *
+			//Update address detail
+			addrService.update(userForm);
+			//Get address detail
+			addressForms.addAll(addrService.findByCustId(userForm.getCustId()));
+			userForm.setAddresses(addressForms);
 		}catch(Exception e){
-			e.printStackTrace(); //<-- Do not print stack trace
+			log.error("Got problem while finding address.");
 		}
-		
-		userForm.setId(userForm.getUsername()); //getUsername(), this is not id
-		userForm.setUsername(userForm.getUsername());
-		userForm.setPassword(userForm.getPassword());
-		userForm.setEmail(userForm.getEmail());
-		userForm.setAddresses(addressForms);
-		
 		model.addAttribute("userForm", userForm);
 		model.addAttribute("countries", countries);
 		model.addAttribute("addressTypes", addressTypes);

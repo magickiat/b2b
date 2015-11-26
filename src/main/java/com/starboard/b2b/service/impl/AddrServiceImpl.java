@@ -1,7 +1,10 @@
 package com.starboard.b2b.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.starboard.b2b.dao.AddrDao;
+import com.starboard.b2b.model.Addr;
+import com.starboard.b2b.service.AddrService;
+import com.starboard.b2b.web.form.user.AddressForm;
+import com.starboard.b2b.web.form.user.UserForm;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,11 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.starboard.b2b.dao.AddrDao;
-import com.starboard.b2b.model.Addr;
-import com.starboard.b2b.service.AddrService;
-import com.starboard.b2b.web.form.user.AddressForm;
-import com.starboard.b2b.web.form.user.UserForm;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("AddrService")
 public class AddrServiceImpl implements AddrService {
@@ -61,6 +61,8 @@ public class AddrServiceImpl implements AddrService {
 			addr.setTel1(addressForm.getTelephone());
 			addr.setFax(addressForm.getFax());
 			addr.setType(addressForm.getAddressType());
+			addr.setEmail(addressForm.getEmail());
+			addr.setCustId(userForm.getCustId());
 			addrDao.update(addr);
 		}		
 	}

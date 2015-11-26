@@ -24,6 +24,7 @@
 					<form:form id="userForm" servletRelativeAction="/frontend/user/edit" class="form-horizontal"
 						commandName="userForm" method="post">
 						<form:hidden path="id" class="form-control" value="${ userForm.id }"/>
+						<form:hidden path="custId"  value="${ userForm.custId }"/>
 						<table class="table table-hover">
 						<thead>
 							<tr>
@@ -67,15 +68,12 @@
 						<tbody>
 							<c:forEach items="${ userForm.addresses }" var="address" varStatus="row">
 								<form:hidden class="form-control" path="addresses[${row.index}].id" value="${ address.id }"/>
-								<!--  for index inside c:foreach use varStatus instead
-								   replace all 'count' with 'row.index' ....Ok?
-								 -->
 								<tr>
 									<td>
 									<div>
 										<table>
 											<tr>
-												<td rowspan="4" valign="top">Address : ${ address.id }</td>
+												<td rowspan="4" valign="top">Address : </td>
 												<td rowspan="4" valign="top">
 													<textarea id="address${row.index}" name="addresses[${row.index}].address" rows="4" cols="50">${ address.address }</textarea>
 												</td>
@@ -112,8 +110,8 @@
 											</tr>
 											<tr>
 												<td colspan="6" align="right">
-												<button type="submit" class="btn btn-default" onclick="save(${row.index})">SAVE</button>
-												<button type="button" class="btn btn-default">CANCLE</button>
+												<button type="button" class="btn btn-default" onclick="save()">SAVE</button>
+												<button type="button" class="btn btn-default">CANCEL</button>
 												</td>
 											</tr>
 										</table>
@@ -139,33 +137,16 @@
 		 	$.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.png"/>");
 		});
 		
-	 	function save(row){
-	 		var address 	= $("#address"+row).val();
-	 		var country 	= $("#country"+row).val();
-	 		var telephone	= $("#telephone"+row).val();
-	 		var postcode 	= $("#postcode"+row).val();
-	 		var fax 		= $("#fax"+row).val();
-	 		var emailOfAddr	= $("#email"+row).val();	 
-	 		var addressType	= $("#addressType"+row).val();
-	 		alert('address: ' + address);
-	 		//console.log(password+":"+confirmPassword);
-	 		//window.location.href = "../user/edit?address="+address;
-	 		// For url should be use <c:url value="/url"/>
-	 		
-	 		var datastring = $("#userForm").serialize();
-	 		
+	 	function save(){
 	 		$.ajax({
 	 		            type: "POST",
-	 		            url: "/frontend/user/edit",
-	 		            data: datastring, // just use $("#userForm").serialize()
-	 		            //data: "address=" + address + "&country=" + country + "&telephone=" + telephone + "&postcode=" + postcode + "&fax=" + fax + "&emailOfAddr=" + emailOfAddr + "&addressType=" + addressType,
+	 		            url: "<c:url value="/frontend/user/address/edit"/>",
+	 		            data: $("#userForm").serialize(),
 	 		            dataType: "json",
-	 		            success: function(data) {
+	 		            success: function() {
 	 		                //var obj = jQuery.parseJSON(data); if the dataType is not specified as json uncomment this
 	 		                // do what ever you want with the server response
-	 		            },
-	 		            error: function(){
-	 		                  alert('error handing here');
+							console.log("save complete");
 	 		            }
 	 		        });
 	 	}

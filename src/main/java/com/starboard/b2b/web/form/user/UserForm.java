@@ -9,6 +9,8 @@ public class UserForm {
 	private String password;
 	private String confirmPassword;
 	private String email;
+	private long custId;
+
 	private List<AddressForm> addresses = new ArrayList<AddressForm>();
 
 	public String getUsername() {
@@ -59,4 +61,11 @@ public class UserForm {
 		this.addresses = addresses;
 	}
 
+	public long getCustId() {
+		return custId;
+	}
+
+	public void setCustId(long custId) {
+		this.custId = custId;
+	}
 }
