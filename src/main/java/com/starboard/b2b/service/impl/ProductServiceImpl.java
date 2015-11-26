@@ -56,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Value("${upload.path}")
     private String uploadPath;
-    
+
     @Value("${download.path}")
     private String downloadPath;
 
@@ -384,15 +384,28 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<String> getProductTypeNames(List<Long> ids) {
-        List<ProductType> types = productTypeDao.findByIds(ids);
-        if(types == null || types.isEmpty()) {
+    public ProductTypeDTO getProductType(Long brandGroupId) {
+        ProductType type = productTypeDao.findById(brandGroupId);
+        if(type == null) {
             return null;
         }
-        List<String> names = new ArrayList<>();
-        for(ProductType type : types) {
-            names.add(type.getProductTypeName());
+        ProductTypeDTO dto = new ProductTypeDTO();
+        BeanUtils.copyProperties(type, dto);
+        return dto;
+    }
+
+    @Override
+    public List<ProductTypeDTO> getProductTypes(Long customerId, Long brandGroupId) {
+        List<ProductType> types = productTypeDao.findByCustomerAndBrand(customerId, brandGroupId);
+        if (types == null || types.isEmpty()) {
+            return null;
         }
-        return names;
+        List<ProductTypeDTO> list = new ArrayList<>();
+        for (ProductType type : types) {
+            ProductTypeDTO dto = new ProductTypeDTO();
+            BeanUtils.copyProperties(type, dto);
+            list.add(dto);
+        }
+        return list;
     }
 }

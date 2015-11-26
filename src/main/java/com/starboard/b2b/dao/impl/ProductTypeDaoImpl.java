@@ -22,6 +22,11 @@ public class ProductTypeDaoImpl implements ProductTypeDao {
 		return sf.getCurrentSession().createCriteria(ProductType.class).list();
 	}
 
+    @Override
+    public ProductType findById(Long id) {
+        return ProductType.class.cast(sf.getCurrentSession().get(ProductType.class, id));
+    }
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<ProductType> findByProductBrandGroupId(Long brandGroupId) {
@@ -34,9 +39,10 @@ public class ProductTypeDaoImpl implements ProductTypeDao {
 	}
 
     @Override
-    public List<ProductType> findByIds(List<Long> ids) {
-            Query query = sf.getCurrentSession().getNamedQuery("ProductType.findByIds");
-            query.setParameter("ids", ids);
-            return query.list();
+    public List<ProductType> findByCustomerAndBrand(Long customerId, Long brandGroupId) {
+        Query query = sf.getCurrentSession().getNamedQuery("ProductType.findByCustomerAndBrand");
+        query.setLong("cid", customerId);
+        query.setLong("bid", brandGroupId);
+        return query.list();
     }
 }

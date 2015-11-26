@@ -6,9 +6,11 @@ import com.starboard.b2b.model.ProductType;
 
 public interface ProductTypeDao {
 
-	List<ProductType> findAll();
+	public List<ProductType> findAll();
+        
+        public ProductType findById(Long id);
 
-	List<ProductType> findByProductBrandGroupId(Long brandGroupId);
+	public List<ProductType> findByProductBrandGroupId(Long brandGroupId);
 
-        List<ProductType> findByIds(List<Long> ids);
+        public List<ProductType> findByCustomerAndBrand(Long customerId, Long brandGroupId);
 }

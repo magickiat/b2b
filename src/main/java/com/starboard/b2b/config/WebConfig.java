@@ -31,17 +31,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Value("${upload.path}")
     private String uploadPath;
-    //
-    @Value("${download.path}")
-    private String downloadPath;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // Upload folder
         log.info("upload path: " + uploadPath);
         registry.addResourceHandler("/upload/**").addResourceLocations("file:" + uploadPath);
-        log.info("download path: " + downloadPath);
-        registry.addResourceHandler("/download/**").addResourceLocations("file:" + downloadPath);
         // WebJars
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
                 .setCachePeriod(31556926);

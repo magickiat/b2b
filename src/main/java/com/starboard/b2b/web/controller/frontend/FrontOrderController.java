@@ -225,17 +225,22 @@ public class FrontOrderController {
      * download excel order
      */
     @RequestMapping(value = "download-template", method = RequestMethod.GET)
-    public void downloadExcelOrder(@RequestParam("brand_id") Long brandId, HttpServletResponse response) throws IOException {
-        List<ProductTypeDTO> types = productService.findProductTypeByBrandId(brandId);
+    public void downloadExcelOrder(@RequestParam("brand_id") Long brandGroupId, HttpServletResponse response) throws IOException {
+        ProductTypeDTO parent = productService.getProductType(brandGroupId);
+        List<ProductTypeDTO> types = productService.getProductTypes(UserUtil.getCurrentUser().getCustomer().getCustId(), brandGroupId);
+        if (parent == null) {
+            throw new B2BException(String.format("brand not found for brand id [%s]", brandGroupId));
+        }
         if (types == null || types.isEmpty()) {
-            throw new B2BException(String.format("product type not found for brand id [%s]", brandId));
+            throw new B2BException(String.format("product type not found for brand id [%s]", brandGroupId));
         }
         //
-        String rootDownloadPath = environment.getProperty("download.path");
+        String rootPath = environment.getProperty("upload.path");
+        String parentPath = parent.getProductTypeName().toUpperCase().replaceAll(" ", "_").trim();
         List<String> files = new ArrayList<>();
         for (ProductTypeDTO type : types) {
             String name = type.getProductTypeName().toUpperCase().replaceAll(" ", "_").trim();
-            files.add(String.format("%s/%s.xls", rootDownloadPath, name));
+            files.add(String.format("%s/excel/%s/STB_ORDER_FORM_%s.xls", rootPath, parentPath, name));
         }
         //
         byte[] zip = ArchiveUtil.zip(files);
