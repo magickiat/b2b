@@ -8,7 +8,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.dao.AddrDao;
 import com.starboard.b2b.model.Addr;
@@ -38,5 +37,10 @@ public class AddrDaoImpl implements AddrDao {
 	@SuppressWarnings("unchecked")
 	public List<Addr> findByCustId(long custId) {
 		return sessionFactory.getCurrentSession().createCriteria(Addr.class).add(Restrictions.eq("custId", custId)).list();
+	}
+
+	@Override
+	public void update(Addr addr) {
+		sessionFactory.getCurrentSession().update(addr);
 	}
 }
