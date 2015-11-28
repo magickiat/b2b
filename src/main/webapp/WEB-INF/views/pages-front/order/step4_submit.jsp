@@ -30,7 +30,7 @@
 					<input type="button" class="btn btn-default" id="btnExcel" value="EXCEL" />
 					<input type="button" class="btn btn-default" id="btnPdf" value="PDF" />
 					<input type="button" class="btn btn-default" id="btnPrint" value="PRINT" />
-					<input type="button" class="btn btn-default" id="btnFinish" value="FINISH" />
+					<input type="button" class="btn btn-default" id="btnFinish" value="FINISH" onclick="gotoOrderSummary();" />
 				</div>
 				<div class="col-sm-3"></div>
 			</div>
@@ -45,6 +45,10 @@
 		jQuery(document).ready(function() {
 		 	$.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.png"/>");
 		});
+		
+		function gotoOrderSummary(){
+			window.location.href = '<c:url value="/frontend/order/summary" />';
+		}
 	</script>
 </body>
 </html>

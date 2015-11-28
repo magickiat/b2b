@@ -11,4 +11,6 @@ public interface OrderDetailDao {
 	Serializable save(OrdDetail detail);
 
 	List<SearchOrderDetailDTO> searchOrderDetail(Long orderId);
+	
+	List<String> findAllOrderCurrency(Long orderId);
 }

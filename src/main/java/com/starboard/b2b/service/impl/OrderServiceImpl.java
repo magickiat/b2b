@@ -295,4 +295,10 @@ public class OrderServiceImpl implements OrderService {
 		page.setResult(result.getResult());
 		return page;
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<String> findAllOrderCurrency(Long orderId) {
+		return orderDetailDao.findAllOrderCurrency(orderId);
+	}
 }

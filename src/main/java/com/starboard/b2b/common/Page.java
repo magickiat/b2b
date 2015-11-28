@@ -29,7 +29,7 @@ public class Page<T> {
 		if (pageSize == 0) {
 			return 0;
 		} else {
-			return (int) Math.ceil(total / pageSize);
+			return (int) Math.ceil((double)total / (double)pageSize);
 		}
 	}
 

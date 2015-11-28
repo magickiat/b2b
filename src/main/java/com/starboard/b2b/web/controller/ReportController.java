@@ -170,13 +170,25 @@ public class ReportController {
 	
 	@RequestMapping(value = "order/pdf", method = RequestMethod.GET)
 	String generateOrderPDF(Long orderId, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		InputStream jasperStream = this.getClass().getResourceAsStream("/report/ro.jasper");
 	    Map<String,Object> params = new HashMap<>();
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 	    params.put("orderId", orderId);
 	    params.put("showcate", false);
 //	    params.put("productCurrency", "");
 	    params.put("SUBREPORT_DIR", this.getClass().getResource("/report/").getPath());
 	    
+	    InputStream jasperStream = this.getClass().getResourceAsStream("/report/ro.jasper");
 	    JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
 	    JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
 

@@ -32,4 +32,16 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 		
 		return sessionFactory.getCurrentSession().createQuery(sb.toString()).setLong("orderId", orderId).list();
 	}
+
+	@Override
+	public List<String> findAllOrderCurrency(Long orderId) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("select new java.lang.String(od.productCurrency)");
+		sb.append(" from OrdDetail od");
+		sb.append(" where od.orderId = :orderId");
+		sb.append(" order by od.productCurrency asc");
+		return sessionFactory.getCurrentSession().createQuery(sb.toString()).setLong("orderId", orderId).list();
+	}
+	
+ 
 }
