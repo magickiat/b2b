@@ -173,6 +173,8 @@ public class ReportController {
 		InputStream jasperStream = this.getClass().getResourceAsStream("/report/ro.jasper");
 	    Map<String,Object> params = new HashMap<>();
 	    params.put("orderId", orderId);
+	    params.put("showcate", false);
+//	    params.put("productCurrency", "");
 	    params.put("SUBREPORT_DIR", this.getClass().getResource("/report/").getPath());
 	    
 	    JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
