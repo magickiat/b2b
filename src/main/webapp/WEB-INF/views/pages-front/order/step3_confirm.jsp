@@ -92,13 +92,10 @@
 					</div>
 					<div class="row">&nbsp;</div>
 					<div class="">
-						<div class="col-sm-10 text-right">
-							<input type="button" id="btn-add" class="btn btn-success"
-								value="ADD" />
-						</div>
-						<div class="col-sm-2">
-							<input type="button" id="btn-upload" class="btn btn-success"
-								value="UPLOAD" />
+						<div class="col-sm-10 text-right"></div>
+						<div class="col-sm-2 text-right">
+							<input type="button" id="btn-add" class="btn btn-success" value="ADD" />
+							<input type="button" id="btn-upload" class="btn btn-success" value="UPLOAD" />
 						</div>
 						<div class="row">&nbsp;</div>
 						<div class="">
@@ -222,7 +219,9 @@
 															<c:forEach var="paymentMethod"
 																items="${ paymentMethodList }">
 																<option label="${paymentMethod.paymentMethodName }"
-																	value="${ paymentMethod.paymentMethodId }" />
+																	value="${ paymentMethod.paymentMethodId }"
+																	<c:if test="${ paymentMethod.paymentMethodId == 'T/T' }"> selected </c:if>
+																	 />
 															</c:forEach>
 													</select>
 												</td>
