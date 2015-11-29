@@ -10,3 +10,4 @@ b2b.iml
 src/main/resources/application-magic.properties
 src/main/resources/application-dev.properties
 /.metadata/
+nbactions.xml
