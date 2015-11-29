@@ -64,7 +64,7 @@
 			</div>
 	
 			<%-- Shopping cart --%>
-			<div class="col-sm-3">
+			<div class="col-sm-3" style="text-align: right;">
 				<input type="hidden" id="totalQuantity" value="0" />
 				<div id="cartItems" onclick="showCartDetails()">
 					<c:if test="${ not empty showShoppingCart }">
