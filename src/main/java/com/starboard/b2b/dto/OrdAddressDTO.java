@@ -147,4 +147,30 @@ public class OrdAddressDTO {
 	public void setTimeUpdate(Date timeUpdate) {
 		this.timeUpdate = timeUpdate;
 	}
+
+	@Override
+	public String toString() {
+		return "OrdAddressDTO{" +
+				"orderAddressId=" + orderAddressId +
+				", orderId=" + orderId +
+				", orderFname='" + orderFname + '\'' +
+				", orderLname='" + orderLname + '\'' +
+				", orderAddr='" + orderAddr + '\'' +
+				", subdistrict='" + subdistrict + '\'' +
+				", district='" + district + '\'' +
+				", orderCountryId='" + orderCountryId + '\'' +
+				", orderProvince='" + orderProvince + '\'' +
+				", orderZipcode='" + orderZipcode + '\'' +
+				", orderTel='" + orderTel + '\'' +
+				", orderMobile='" + orderMobile + '\'' +
+				", fax='" + fax + '\'' +
+				", email='" + email + '\'' +
+				", description='" + description + '\'' +
+				", type=" + type +
+				", userCreate='" + userCreate + '\'' +
+				", userUpdate='" + userUpdate + '\'' +
+				", timeCreate=" + timeCreate +
+				", timeUpdate=" + timeUpdate +
+				'}';
+	}
 }

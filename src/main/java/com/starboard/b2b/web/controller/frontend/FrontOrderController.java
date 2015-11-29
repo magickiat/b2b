@@ -5,6 +5,7 @@ import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.common.WithnoseConstant;
 import com.starboard.b2b.dto.AddressDTO;
+import com.starboard.b2b.dto.OrdAddressDTO;
 import com.starboard.b2b.dto.OrderDTO;
 import com.starboard.b2b.dto.OrderStatusDTO;
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
@@ -13,6 +14,7 @@ import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
+import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.service.BrandService;
@@ -146,7 +148,7 @@ public class FrontOrderController {
 	}
 
 	@RequestMapping(value = "step2/view", method = RequestMethod.GET)
-	String step2ModelDetail(String modelId, Model model) {
+	String step2ModelDetail(@RequestParam String modelId, Model model) {
 		log.info("GET step2/view");
 		log.info("modelId = " + modelId);
 
@@ -533,8 +535,23 @@ public class FrontOrderController {
 
 	@RequestMapping(value = "summary/report/{orderCode}", method = RequestMethod.GET)
 	String orderSummaryReport(@ModelAttribute OrderSummaryForm form, Model model, @PathVariable final String orderCode) {
-		log.info("Report for order: {}" + orderCode);
-		//FIXME just call. wait until report page is ready
+		log.info("Report for order: {}",  orderCode);
+		SearchOrderDTO orderReport = orderService.findOrderForReport(orderCode);
+		List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(orderCode);
+		for(OrdAddressDTO ordAddress : ordAddresses){
+			log.info("received order address {} ", ordAddress);
+			if(ordAddress.getType() == AddressConstant.INVOICE_TO){
+				orderReport.setInvoiceToAddress(ordAddress);
+			}
+			if(ordAddress.getType() == AddressConstant.DISPATCH_TO){
+				orderReport.setDispatchToAddress(ordAddress);
+			}
+		}
+		List<SearchOrderDetailDTO> orderDetails = orderService.searchOrderDetail(orderCode);
+		if(orderDetails != null && !orderDetails.isEmpty()){
+			orderReport.setOrderDetails(orderDetails);
+		}
+		model.addAttribute("orderDetails", orderReport);
 		return "pages-front/order/report";
 	}
 

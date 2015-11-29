@@ -4,6 +4,7 @@ import com.starboard.b2b.dao.OrderDao;
 import com.starboard.b2b.dto.search.CommonSearchRequest;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchResult;
+import com.starboard.b2b.model.OrdAddress;
 import com.starboard.b2b.model.Orders;
 import com.starboard.b2b.web.form.product.OrderSummaryForm;
 
@@ -43,6 +44,15 @@ public class OrderDaoImpl implements OrderDao {
 		sb.append(" WHERE    o.brandGroupId = p.productTypeId        AND o.custId = c.custId        and o.orderStatus = os.orderStatusId");
 		sb.append(" and o.orderId = :orderId ");
 		return (SearchOrderDTO) sessionFactory.getCurrentSession().createQuery(sb.toString()).setLong("orderId", orderId).uniqueResult();
+	}
+
+	@Override
+	public SearchOrderDTO findOrderForReport(String orderCode) {
+		String searchQuery = " SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(   o.orderCode,    c.nameEn,    p.productTypeName,    o.orderDate,    o.expectShipmentDate,    os.orderStatusName, o.paymentMethodId, o.shippingId )"
+		+ " FROM Orders o, ProductType p, Cust c, OrderStatus os"
+		+ " WHERE o.brandGroupId = p.productTypeId AND o.custId = c.custId and o.orderStatus = os.orderStatusId"
+		+ " and o.orderCode = :orderCode ";
+		return (SearchOrderDTO) sessionFactory.getCurrentSession().createQuery(searchQuery).setString("orderCode", orderCode).uniqueResult();
 	}
 
 	@Override
@@ -120,5 +130,13 @@ public class OrderDaoImpl implements OrderDao {
 		log.info("List size: {}", (searchOrderDTOs != null ? searchOrderDTOs.size() : 0));
 		log.info("Total {}", result.getTotal());
 		return result;
+	}
+
+	@Override
+	public List<OrdAddress> findOrderAddress(final String orderCode) {
+		return sessionFactory.getCurrentSession()
+				.createQuery("SELECT o FROM OrdAddress o, Orders r WHERE o.orderId = r.orderId AND r.orderCode = :orderCode")
+				.setString("orderCode", orderCode)
+				.list();
 	}
 }

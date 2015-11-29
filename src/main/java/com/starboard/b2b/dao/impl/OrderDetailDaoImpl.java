@@ -1,15 +1,15 @@
 package com.starboard.b2b.dao.impl;
 
-import java.io.Serializable;
-import java.util.List;
+import com.starboard.b2b.dao.OrderDetailDao;
+import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
+import com.starboard.b2b.model.OrdDetail;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.starboard.b2b.dao.OrderDetailDao;
-import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
-import com.starboard.b2b.model.OrdDetail;
+import java.io.Serializable;
+import java.util.List;
 
 @Repository("orderDetailDao")
 public class OrderDetailDaoImpl implements OrderDetailDao {
@@ -31,5 +31,16 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 		sb.append(" and od.orderId = :orderId");
 		
 		return sessionFactory.getCurrentSession().createQuery(sb.toString()).setLong("orderId", orderId).list();
+	}
+
+	@Override
+	public List<SearchOrderDetailDTO> searchOrderDetail(String orderCode) {
+		String searchOrderDetail = " select new com.starboard.b2b.dto.search.SearchOrderDetailDTO(p.productCode, p.productNameEn, od.amount, 0L, od.amount, od.productUnitId, od.price)"
+		+ " FROM    OrdDetail od, Orders r, Product p "
+		+ " WHERE od.productId = p.productId"
+		+ " and od.orderId = r.id"
+		+ " and r.orderCode = :orderCode";
+
+		return sessionFactory.getCurrentSession().createQuery(searchOrderDetail).setString("orderCode", orderCode).list();
 	}
 }
