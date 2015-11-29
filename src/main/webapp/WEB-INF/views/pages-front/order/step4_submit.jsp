@@ -27,10 +27,10 @@
 				<div class="row row-header2 header2 txtupper">print</div>
 				<div class="col-sm-3"></div>
 				<div class="col-sm-6 text-center" style="padding-bottom: 5px; padding-top: 5px;">
-					<input type="button" class="btn btn-default" id="btnExcel" value="EXCEL" />
-					<input type="button" class="btn btn-default" id="btnPdf" value="PDF" />
+					<input type="button" class="btn btn-default" id="btnExcel" value="EXCEL" onclick="exportExcel()"/>
+					<input type="button" class="btn btn-default" id="btnPdf" value="PDF" onclick="exportPdf()" />
 					<input type="button" class="btn btn-default" id="btnPrint" value="PRINT" />
-					<input type="button" class="btn btn-default" id="btnFinish" value="FINISH" />
+					<input type="button" class="btn btn-default" id="btnFinish" value="FINISH" onclick="gotoOrderSummary();" />
 				</div>
 				<div class="col-sm-3"></div>
 			</div>
@@ -45,6 +45,18 @@
 		jQuery(document).ready(function() {
 		 	$.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.png"/>");
 		});
+		
+		function exportExcel(){
+			window.location.href = '<c:url value="/report/order/excel?orderId=${order.orderId}" />';
+		}
+		
+		function exportPdf(){
+			window.location.href = '<c:url value="/report/order/pdf?orderId=${order.orderId}" />';
+		}
+		
+		function gotoOrderSummary(){
+			window.location.href = '<c:url value="/frontend/order/summary" />';
+		}
 	</script>
 </body>
 </html>
