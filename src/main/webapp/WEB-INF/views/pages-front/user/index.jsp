@@ -166,10 +166,6 @@
 			$("#addressType"+row).val(addressType);
 	 	}
 
-// 		function cancel(address){
-// 	 		console.log(address);
-// 	 	}
-
 	</script>
 </body>
 </html>
