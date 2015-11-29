@@ -32,9 +32,17 @@ public interface OrderService {
 
 	List<SearchOrderDetailDTO> searchOrderDetail(Long orderId);
 
+	List<SearchOrderDetailDTO> searchOrderDetail(String orderCode);
+
 	SearchOrderDTO findOrderForReport(Long orderId);
+
+	SearchOrderDTO findOrderForReport(String orderCode);
 
 	List<OrdAddressDTO> findOrderAddress(Long orderId);
 
+	List<OrdAddressDTO> findOrderAddress(String orderCode);
+
 	Page<SearchOrderDTO> searchOrder(OrderSummaryForm orderSummaryForm);
+	
+	List<String> findAllOrderCurrency(Long orderId);
 }

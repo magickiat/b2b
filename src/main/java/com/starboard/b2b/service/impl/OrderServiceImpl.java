@@ -245,8 +245,20 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional(readOnly = true)
+	public List<SearchOrderDetailDTO> searchOrderDetail(String orderCode) {
+		return orderDetailDao.searchOrderDetail(orderCode);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
 	public SearchOrderDTO findOrderForReport(Long orderId) {
 		return orderDao.findOrderForReport(orderId);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public SearchOrderDTO findOrderForReport(String orderCode) {
+		return orderDao.findOrderForReport(orderCode);
 	}
 
 	@Override
@@ -258,6 +270,25 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional(readOnly = true)
+	public List<OrdAddressDTO> findOrderAddress(final String orderCode) {
+		List<OrdAddress> ordAddresses = orderDao.findOrderAddress(orderCode);
+		List<OrdAddressDTO> ordAddressDTOs = new ArrayList<>();
+		if(ordAddresses != null && !ordAddresses.isEmpty()){
+			for(OrdAddress ordAddress : ordAddresses){
+				try {
+					OrdAddressDTO ordAddressDTO = new OrdAddressDTO();
+					BeanUtils.copyProperties(ordAddressDTO, ordAddress);
+					ordAddressDTOs.add(ordAddressDTO);
+				} catch (IllegalAccessException | InvocationTargetException e) {
+					log.error("Got problem while copying bean properties.. with error {}", e.getMessage(), e);
+				}
+			}
+		}
+		return ordAddressDTOs;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
 	public List<OrderStatusDTO> findAllOrderStatus() {
 		final List<OrderStatusDTO> orderStatuses = new ArrayList<>();
 		for (OrderStatus status : orderStatusDao.findAll()) {
@@ -265,7 +296,7 @@ public class OrderServiceImpl implements OrderService {
 			try {
 				BeanUtils.copyProperties(orderStatus, status);
 			} catch (IllegalAccessException | InvocationTargetException e) {
-				log.error("Got problem while copying bean properties.. with erro {}", e.getMessage(), e);
+				log.error("Got problem while copying bean properties.. with error {}", e.getMessage(), e);
 			}
 			orderStatuses.add(orderStatus);
 		}
@@ -294,5 +325,11 @@ public class OrderServiceImpl implements OrderService {
 		page.setTotal(result.getTotal());
 		page.setResult(result.getResult());
 		return page;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<String> findAllOrderCurrency(Long orderId) {
+		return orderDetailDao.findAllOrderCurrency(orderId);
 	}
 }

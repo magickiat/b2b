@@ -109,7 +109,7 @@ public class ProductDaoImpl implements ProductDao {
         if ("image".equals(req.getCondition().getShowType())) {
             sb.append(" GROUP BY p.productModelId ");
         }
-        sb.append(" ORDER BY pbg.seq, p.productCode ");
+        sb.append(" ORDER BY pbg.seq, p.productNameEn ");
         sbQuery.append(sb);
 
         // create query and set parameter
