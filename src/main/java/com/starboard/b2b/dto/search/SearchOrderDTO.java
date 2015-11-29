@@ -1,8 +1,9 @@
 package com.starboard.b2b.dto.search;
 
-import java.util.Date;
-
 import com.starboard.b2b.dto.OrdAddressDTO;
+
+import java.util.Date;
+import java.util.List;
 
 public class SearchOrderDTO {
 
@@ -18,6 +19,7 @@ public class SearchOrderDTO {
 	private OrdAddressDTO dispatchToAddress;
 	private OrdAddressDTO invoiceToAddress;
 	
+	private List<SearchOrderDetailDTO> orderDetails;
 
 	public SearchOrderDTO() {
 	}
@@ -115,4 +117,11 @@ public class SearchOrderDTO {
 		this.shippingType = shippingType;
 	}
 
+	public List<SearchOrderDetailDTO> getOrderDetails() {
+		return orderDetails;
+	}
+
+	public void setOrderDetails(List<SearchOrderDetailDTO> orderDetails) {
+		this.orderDetails = orderDetails;
+	}
 }
