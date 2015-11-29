@@ -171,11 +171,8 @@ public class FrontOrderController {
 			model.addAttribute("productListWithnose", productListWithnose);
 
 			// Find product buyer group from no Withnose product
-			if (!productListNoWithnose.isEmpty()) {
-				ProductSearchResult result = productListNoWithnose.get(0);
-				productBuyerGroupId = result.getProduct().getProductBuyerGroupId();
-				log.info("productBuyerGroupId: " + productBuyerGroupId);
-				model.addAttribute("hasWithnoseBoard", "WB".equalsIgnoreCase(productBuyerGroupId));
+			if (!productListWithnose.isEmpty()) {
+				model.addAttribute("hasWithnoseBoard", !productListWithnose.isEmpty());
 			}
 
 			// Find product price
