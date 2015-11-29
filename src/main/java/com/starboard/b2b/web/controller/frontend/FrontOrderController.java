@@ -171,8 +171,11 @@ public class FrontOrderController {
 			model.addAttribute("productListWithnose", productListWithnose);
 
 			// Find product buyer group from no Withnose product
-			if (!productListWithnose.isEmpty()) {
-				model.addAttribute("hasWithnoseBoard", !productListWithnose.isEmpty());
+			if (!productListNoWithnose.isEmpty()) {
+				ProductSearchResult result = productListNoWithnose.get(0);
+				productBuyerGroupId = result.getProduct().getProductBuyerGroupId();
+				log.info("productBuyerGroupId: " + productBuyerGroupId);
+				model.addAttribute("hasWithnoseBoard", "WB".equalsIgnoreCase(productBuyerGroupId));
 			}
 
 			// Find product price
@@ -245,7 +248,7 @@ public class FrontOrderController {
         byte[] zip = ArchiveUtil.zip(files);
         //
         response.setContentType("application/octet-stream");
-        response.setHeader("Content-Disposition", "attachment; filename=EXCEL_ORDER.zip");
+        response.setHeader("Content-Disposition", String.format("attachment; filename=%s%s.zip", "STB_ORDER_FORM_", parentPath));
         try (OutputStream output = response.getOutputStream()) {
             output.write(zip);
         }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sumTotal" language="java" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sumTotal" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="aca454c7-48b7-44d3-9a67-cd5d0ad9c36c">
 	<property name="ireport.zoom" value="2.357947691000002"/>
-	<property name="ireport.x" value="88"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="style1" hAlign="Left" vAlign="Middle" fontName="SansSerif" fontSize="8" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
 	<style name="style2" hAlign="Right" vAlign="Middle" fontName="SansSerif" fontSize="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
@@ -36,63 +36,58 @@ group by od.order_id]]>
 	<detail>
 		<band height="100" splitType="Stretch">
 			<staticText>
-				<reportElement style="style1" x="12" y="39" width="82" height="20"/>
+				<reportElement style="style1" x="12" y="39" width="82" height="20" uuid="cf54334d-9f02-4e6d-808b-48f9994627f7"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sub Total]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement style="style2" x="94" y="39" width="65" height="20"/>
-				<textElement/>
+				<reportElement style="style2" x="94" y="39" width="65" height="20" uuid="688a515b-6d9e-4a2f-b8ad-ab5dc6f731a5"/>
 				<textFieldExpression><![CDATA[$F{subTotal}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="style1" x="12" y="11" width="82" height="15"/>
+				<reportElement style="style1" x="12" y="11" width="82" height="15" uuid="311e056b-7184-4959-98ca-7f7664e587f6"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total]]></text>
 			</staticText>
-			<textField pattern="#,##0.00">
-				<reportElement style="style2" x="94" y="11" width="65" height="15"/>
-				<textElement/>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="style2" x="94" y="11" width="65" height="15" uuid="d5e6f550-82a3-488c-8ced-772d377b7bdb"/>
 				<textFieldExpression><![CDATA[$F{sumTotal}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="style1" x="12" y="26" width="82" height="13"/>
+				<reportElement style="style1" x="12" y="26" width="82" height="13" uuid="3d43204b-81c1-4a54-979b-5675d113cce8"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Order Discount]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement style="style2" x="94" y="26" width="65" height="13"/>
-				<textElement/>
+				<reportElement style="style2" x="94" y="26" width="65" height="13" uuid="1c883e08-148c-4c4c-81e0-bb6aac20025f"/>
 				<textFieldExpression><![CDATA[$F{discount}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="style1" x="12" y="78" width="82" height="20"/>
+				<reportElement style="style1" x="12" y="78" width="82" height="20" uuid="7871b2b2-88a5-493f-8c45-48fd1d262990"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Amount]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement style="style2" x="94" y="78" width="65" height="20"/>
-				<textElement/>
+				<reportElement style="style2" x="94" y="78" width="65" height="20" uuid="bb7ddf97-6180-44f6-8e47-dae3e6b08653"/>
 				<textFieldExpression><![CDATA[$F{sumTotal}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="style1" x="12" y="59" width="82" height="13"/>
+				<reportElement style="style1" x="12" y="59" width="82" height="13" uuid="eaeab985-f8cc-49be-aac9-20f0999a3cff"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Vat]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="style2" x="94" y="59" width="65" height="13"/>
-				<textElement/>
+				<reportElement style="style2" x="94" y="59" width="65" height="13" uuid="bcd3f130-3d2c-4858-9643-6c1fac53a6c1"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 		</band>
