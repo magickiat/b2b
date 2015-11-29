@@ -161,8 +161,6 @@ public class FrontOrderController {
 			model.addAttribute("errorMsg", "Not found product model " + modelId);
 		} else {
 
-			String productBuyerGroupId;
-
 			// Find product model
 			List<ProductSearchResult> productListNoWithnose = productService.findProductModel(modelId, WithnoseConstant.NO_WITHNOSE_PROTECTION);
 			List<ProductSearchResult> productListWithnose = productService.findProductModel(modelId, WithnoseConstant.WITHNOSE_PROTECTION);
@@ -171,11 +169,8 @@ public class FrontOrderController {
 			model.addAttribute("productListWithnose", productListWithnose);
 
 			// Find product buyer group from no Withnose product
-			if (!productListNoWithnose.isEmpty()) {
-				ProductSearchResult result = productListNoWithnose.get(0);
-				productBuyerGroupId = result.getProduct().getProductBuyerGroupId();
-				log.info("productBuyerGroupId: " + productBuyerGroupId);
-				model.addAttribute("hasWithnoseBoard", "WB".equalsIgnoreCase(productBuyerGroupId));
+			if (!productListWithnose.isEmpty()) {
+				model.addAttribute("hasWithnoseBoard", true);
 			}
 
 			// Find product price
