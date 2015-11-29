@@ -1,32 +1,9 @@
 package com.starboard.b2b.web.controller;
 
-import com.starboard.b2b.dto.search.SearchOrderDTO;
-import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
-import com.starboard.b2b.service.CustomerService;
-import com.starboard.b2b.service.OrderService;
-import com.starboard.b2b.service.ProductService;
-
-import net.sf.jasperreports.engine.JREmptyDataSource;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -37,6 +14,36 @@ import java.util.Map;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.internal.SessionImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.starboard.b2b.dto.OrderDTO;
+import com.starboard.b2b.dto.search.SearchOrderDTO;
+import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
+import com.starboard.b2b.service.CustomerService;
+import com.starboard.b2b.service.OrderService;
+import com.starboard.b2b.service.ProductService;
+
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 @Controller
 @RequestMapping("/report")
@@ -52,6 +59,9 @@ public class ReportController {
 
 	@Autowired
 	private ProductService productService;
+
+	@Autowired
+	private SessionFactory sessionFactory;
 
 	// http://kodejava.org/how-do-i-create-an-excel-document-using-apache-poi/
 	// https://poi.apache.org/spreadsheet/quick-guide.html
@@ -78,7 +88,7 @@ public class ReportController {
 
 				// ----- Create order detail row
 				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY", Locale.US);
-				
+
 				HSSFRow orderRow1 = sheetOrder.createRow(1);
 				orderRow1.createCell(0).setCellValue(StringUtils.isEmpty(order.getOrderCode()) ? "" : order.getOrderCode());
 				orderRow1.createCell(1).setCellValue(StringUtils.isEmpty(order.getCustomerName()) ? "" : order.getCustomerName());
@@ -138,7 +148,7 @@ public class ReportController {
 					}
 					HSSFRow totalPriceRow = sheetOrderLine.createRow(row);
 					totalPriceRow.createCell(6).setCellValue(df.format(totalPrice));
-					
+
 					sheetOrderLine.autoSizeColumn(0);
 					sheetOrderLine.autoSizeColumn(1);
 					sheetOrderLine.autoSizeColumn(2);
@@ -167,38 +177,55 @@ public class ReportController {
 
 		return null;
 	}
-	
+
 	@RequestMapping(value = "order/pdf", method = RequestMethod.GET)
+	@Transactional
 	String generateOrderPDF(Long orderId, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	    Map<String,Object> params = new HashMap<>();
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    params.put("orderId", orderId);
-	    params.put("showcate", false);
-//	    params.put("productCurrency", "");
-	    params.put("SUBREPORT_DIR", this.getClass().getResource("/report/").getPath());
-	    
-	    InputStream jasperStream = this.getClass().getResourceAsStream("/report/ro.jasper");
-	    JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
-	    JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
+		Map<String, Object> params = new HashMap<>();
 
-	    response.setContentType("application/x-pdf");
-	    response.setHeader("Content-disposition", "inline; filename=helloWorldReport.pdf");
+		Session session = sessionFactory.openSession();
 
-	    final OutputStream outStream = response.getOutputStream();
-	    JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
-	    outStream.flush();
-	    outStream.close();
+		Connection connection = null;
+		Transaction tx = null;
+		try {
+			
+			OrderDTO order = orderService.findOrder(orderId);
+
+			connection = ((SessionImpl) session).connection();
+			tx = session.beginTransaction();
+
+			params.put("orderId", orderId);
+			params.put("showcate", false);
+			params.put("allPageSize", 1); // fix total page
+			params.put("relativePage", 0);
+			
+			// params.put("productCurrency", "");
+			params.put("SUBREPORT_DIR", this.getClass().getResource("/report/").getPath());
+
+			InputStream jasperStream = this.getClass().getResourceAsStream("/report/ro.jasper");
+			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, connection);
+
+			response.setContentType("application/x-pdf");
+			response.setHeader("Content-disposition", "inline; filename="+order.getOrderCode()+".pdf");
+
+			final OutputStream outStream = response.getOutputStream();
+			JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+			outStream.flush();
+			outStream.close();
+
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+		} finally {
+
+			if (connection != null) {
+				connection.close();
+			}
+		}
+
 		return null;
 	}
 }
