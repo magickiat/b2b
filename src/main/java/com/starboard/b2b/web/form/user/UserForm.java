@@ -2,6 +2,7 @@ package com.starboard.b2b.web.form.user;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.starboard.b2b.web.form.address.AddressForm;
 
 public class UserForm {
 	private String id;
