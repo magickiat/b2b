@@ -246,7 +246,7 @@ public class FrontOrderController {
         byte[] zip = ArchiveUtil.zip(files);
         //
         response.setContentType("application/octet-stream");
-        response.setHeader("Content-Disposition", "attachment; filename=EXCEL_ORDER.zip");
+        response.setHeader("Content-Disposition", String.format("attachment; filename=%s%s.zip", "STB_ORDER_FORM_", parentPath));
         try (OutputStream output = response.getOutputStream()) {
             output.write(zip);
         }

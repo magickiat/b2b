@@ -5,8 +5,6 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -16,12 +14,6 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "product_type")
-@NamedQueries({
-//    @NamedQuery(
-//            name = "ProductType.findByCustomerAndBrand", 
-//            query = "SELECT p FROM ProductType p LEFT JOIN CustBrandGroup c ON p.productTypeId = c.id.brandGroupId LEFT JOIN ProductBrandGroup b ON c.id.brandGroupId = b.id.productTypeId WHERE c.id.custId = :cid AND b.id.brandGroupId = :bid"
-//    )
-})
 public class ProductType implements java.io.Serializable {
 
 	private long productTypeId;
