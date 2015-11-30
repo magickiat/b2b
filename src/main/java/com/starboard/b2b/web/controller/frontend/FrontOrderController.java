@@ -237,7 +237,7 @@ public class FrontOrderController {
         List<String> files = new ArrayList<>();
         for (ProductTypeDTO type : types) {
             String name = type.getProductTypeName().toUpperCase().replaceAll(" ", "_").trim();
-            files.add(String.format("%s/excel/%s/STB_ORDER_FORM_%s.xls", rootPath, parentPath, name));
+            files.add(String.format("%s/excel/%s/STB_ORDER_FORM_%s.xls", rootPath, name, name));
         }
         //
         byte[] zip = ArchiveUtil.zip(files);
