@@ -444,7 +444,7 @@ public class FrontOrderController {
 
 		// ----- Find Invoice Address ------
 		long custId = UserUtil.getCurrentUser().getCustomer().getCustId();
-		List<AddressDTO> invoiceToAddress = customerService.findAddress(custId, AddressConstant.INVOICE_TO);
+		List<AddressDTO> invoiceToAddress = customerService.findAddress(custId, AddressConstant.ORDER_INVOICE_TO);
 		// Get first invoice address only
 		AddressDTO invoiceTo;
 		if (invoiceToAddress != null && !invoiceToAddress.isEmpty()) {
@@ -453,7 +453,7 @@ public class FrontOrderController {
 		}
 
 		// ----- Find Dispatch to Address ------
-		List<AddressDTO> dispatchToAddress = customerService.findAddress(custId, AddressConstant.DISPATCH_TO);
+		List<AddressDTO> dispatchToAddress = customerService.findAddress(custId, AddressConstant.ORDER_DISPATCH_TO);
 		model.addAttribute("dispatchToAddress", dispatchToAddress);
 
 		// ----- Find Shipping Type -----
@@ -531,14 +531,14 @@ public class FrontOrderController {
 	@RequestMapping(value = "summary/report/{orderCode}", method = RequestMethod.GET)
 	String orderSummaryReport(@ModelAttribute OrderSummaryForm form, Model model, @PathVariable final String orderCode) {
 		log.info("Report for order: {}",  orderCode);
-		SearchOrderDTO orderReport = orderService.findOrderForReport(orderCode);
-		List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(orderCode);
+		final SearchOrderDTO orderReport = orderService.findOrderForReport(orderCode);
+		final List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(orderCode);
 		for(OrdAddressDTO ordAddress : ordAddresses){
 			log.info("received order address {} ", ordAddress);
-			if(ordAddress.getType() == AddressConstant.INVOICE_TO){
+			if(ordAddress.getType() == AddressConstant.ORDER_INVOICE_TO){
 				orderReport.setInvoiceToAddress(ordAddress);
 			}
-			if(ordAddress.getType() == AddressConstant.DISPATCH_TO){
+			if(ordAddress.getType() == AddressConstant.ORDER_DISPATCH_TO){
 				orderReport.setDispatchToAddress(ordAddress);
 			}
 		}
@@ -546,7 +546,7 @@ public class FrontOrderController {
 		if(orderDetails != null && !orderDetails.isEmpty()){
 			orderReport.setOrderDetails(orderDetails);
 		}
-		model.addAttribute("orderDetails", orderReport);
+		model.addAttribute("orderReport", orderReport);
 		return "pages-front/order/report";
 	}
 

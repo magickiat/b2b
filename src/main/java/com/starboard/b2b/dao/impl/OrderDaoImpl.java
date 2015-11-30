@@ -37,19 +37,17 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public SearchOrderDTO findOrderForReport(Long orderId) {
-		StringBuffer sb = new StringBuffer();
-		sb.append(
-				" SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(   o.orderCode,    c.nameEn,    p.productTypeName,    o.orderDate,    o.expectShipmentDate,    os.orderStatusName, o.paymentMethodId, o.shippingId )");
-		sb.append(" FROM    Orders o,    ProductType p,    Cust c,    OrderStatus os");
-		sb.append(" WHERE    o.brandGroupId = p.productTypeId        AND o.custId = c.custId        and o.orderStatus = os.orderStatusId");
-		sb.append(" and o.orderId = :orderId ");
-		return (SearchOrderDTO) sessionFactory.getCurrentSession().createQuery(sb.toString()).setLong("orderId", orderId).uniqueResult();
+		String searchQuery = "SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(o.orderId, o.orderCode, c.nameEn, p.productTypeName, o.orderDate, o.expectShipmentDate, os.orderStatusName, o.paymentMethodId, o.shippingId )"
+				+ " FROM Orders o, ProductType p, Cust c, OrderStatus os "
+				+ " WHERE o.brandGroupId = p.productTypeId AND o.custId = c.custId and o.orderStatus = os.orderStatusId"
+				+ " and o.orderId = :orderId ";
+		return (SearchOrderDTO) sessionFactory.getCurrentSession().createQuery(searchQuery).setLong("orderId", orderId).uniqueResult();
 	}
 
 	@Override
 	public SearchOrderDTO findOrderForReport(String orderCode) {
-		String searchQuery = " SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(   o.orderCode,    c.nameEn,    p.productTypeName,    o.orderDate,    o.expectShipmentDate,    os.orderStatusName, o.paymentMethodId, o.shippingId )"
-		+ " FROM Orders o, ProductType p, Cust c, OrderStatus os"
+		String searchQuery = "SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(o.orderId, o.orderCode, c.nameEn, p.productTypeName, o.orderDate, o.expectShipmentDate, os.orderStatusName, o.paymentMethodId, o.shippingId )"
+		+ " FROM Orders o, ProductType p, Cust c, OrderStatus os "
 		+ " WHERE o.brandGroupId = p.productTypeId AND o.custId = c.custId and o.orderStatus = os.orderStatusId"
 		+ " and o.orderCode = :orderCode ";
 		return (SearchOrderDTO) sessionFactory.getCurrentSession().createQuery(searchQuery).setString("orderCode", orderCode).uniqueResult();
@@ -60,6 +58,7 @@ public class OrderDaoImpl implements OrderDao {
 
 		final String ordersQuery = "SELECT " +
 				" new com.starboard.b2b.dto.search.SearchOrderDTO( " +
+				" o.orderId, " +
 				" o.orderCode, " +
 				" c.nameEn, " +
 				" p.productTypeName, " +
