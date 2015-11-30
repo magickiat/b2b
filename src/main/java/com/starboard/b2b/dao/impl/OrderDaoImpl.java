@@ -95,7 +95,7 @@ public class OrderDaoImpl implements OrderDao {
 				"AND (:productTypeId = 0 OR p.productTypeId = :productTypeId) " +
 				"AND (:orderStatusId IS NULL OR os.orderStatusId = :orderStatusId) " +
 				"AND ((:fromDate IS NULL OR :toDate IS NULL) OR ( DATE(o.orderDate) BETWEEN :fromDate AND :toDate)) " +
-				"ORDER BY o.orderId ";
+				"ORDER BY o.orderDate DESC ";
 		final String keyword = StringUtils.isEmpty(searchRequest.getCondition().getKeyword()) ? null : "%"+searchRequest.getCondition().getKeyword()+"%";
 		final int productTypeId = StringUtils.isEmpty(searchRequest.getCondition().getSelectedBrand()) ? 0 : Integer.parseInt(searchRequest.getCondition().getSelectedBrand());
 		final String orderStatusId = StringUtils.isEmpty(searchRequest.getCondition().getSelectedStatus()) ? null : searchRequest.getCondition().getSelectedStatus();
