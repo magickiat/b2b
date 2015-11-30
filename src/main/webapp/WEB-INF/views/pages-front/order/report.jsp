@@ -21,7 +21,9 @@
 <%@include file="/WEB-INF/views/pages-front/include/common_header.jspf" %>
 
 <div class="container">
-
+	<c:set var="orderId" value="${ orderReport.orderId }"/>
+	<%@include file="/WEB-INF/views/include/export_report.jspf" %>
+	
     <div class="row">
         <!-- Header -->
         <div class="col-md-12 bg_color">
