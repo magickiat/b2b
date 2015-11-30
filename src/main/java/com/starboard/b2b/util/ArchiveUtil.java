@@ -26,7 +26,7 @@ public class ArchiveUtil {
             for (String file : files) {
                 File content = new File(file);
                 if (!content.exists()) {
-                    throw new B2BException(String.format("request file are not exist for downloaded -> [%s]", content.getName()));
+                    continue;
                 }
                 zip.putNextEntry(new ZipEntry(content.getName()));
                 try (FileInputStream input = new FileInputStream(content)) {
@@ -38,7 +38,7 @@ public class ArchiveUtil {
             }
         }
         if (output.size() == 0) {
-            throw new B2BException("request file are not exist for download");
+            throw new B2BException("request file are not ready to download");
         }
         return output.toByteArray();
     }
