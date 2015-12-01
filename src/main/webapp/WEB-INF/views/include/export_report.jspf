@@ -10,9 +10,12 @@
 				value="EXCEL" onclick="exportExcel()" /> <input type="button"
 				class="btn btn-default" id="btnPdf" value="PDF"
 				onclick="exportPdf()" /> <input type="button"
-				class="btn btn-default" id="btnPrint" value="PRINT" /> <input
-				type="button" class="btn btn-default" id="btnFinish" value="FINISH"
-				onclick="gotoOrderSummary();" />
+				class="btn btn-default" id="btnPrint" value="PRINT" />
+
+			<c:if test="${ not empty order }">
+				<input type="button" class="btn btn-default" id="btnFinish"
+					value="FINISH" onclick="gotoOrderSummary();" />
+			</c:if>
 		</div>
 		<div class="col-sm-3"></div>
 	</div>
