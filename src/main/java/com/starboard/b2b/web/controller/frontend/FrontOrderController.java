@@ -510,6 +510,7 @@ public class FrontOrderController {
 
     @RequestMapping(value = "summary", method = RequestMethod.GET)
     String orderSummary(Model model) {
+    	log.info("summary GET");
         final OrderSummaryForm form = new OrderSummaryForm();
         setOrderSummarySearchFrom(form, model);
 		Page<SearchOrderDTO> resultPage = orderService.searchOrder(form);
