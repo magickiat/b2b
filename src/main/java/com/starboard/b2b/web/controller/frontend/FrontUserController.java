@@ -50,7 +50,7 @@ public class FrontUserController {
 		final UserForm userForm = new UserForm();
 		final User userAuthen = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		final Map<String, String> countries = getCountries();
-		final List<Long> addressTypes = getAddressConstant();
+		final Map<Long, String> addressTypes = getAddressConstant();
 		final List<AddressForm> addressForms = new ArrayList<>();
 		try {
 			final User user = userService.findByUsername(userAuthen.getUsername());
@@ -73,7 +73,7 @@ public class FrontUserController {
 	@RequestMapping("edit")
 	String edit(@ModelAttribute UserForm userForm, Model model, BindingResult binding) {
 		Map<String, String> countries = getCountries();
-		List<Long> addressTypes = getAddressConstant();
+		Map<Long, String> addressTypes = getAddressConstant();
 		List<AddressForm> addressForms = new ArrayList<>();
 		try {
 			// Update user detail
@@ -95,7 +95,7 @@ public class FrontUserController {
 	String editAddress(@ModelAttribute UserForm userForm, Model model, BindingResult binding,
 			@RequestParam(value = "addressId", required = false) long addressId) {
 		Map<String, String> countries = getCountries();
-		List<Long> addressTypes = getAddressConstant();
+		Map<Long, String> addressTypes = getAddressConstant();
 		List<AddressForm> addressForms = new ArrayList<>();
 
 		for (AddressForm addressForm : userForm.getAddresses()) {
@@ -122,19 +122,23 @@ public class FrontUserController {
 		return "pages-front/user/index";
 	}
 
-//	@RequestMapping(value = "address/cancel", headers="Accept=*/*", method = RequestMethod.POST, produces = "application/json")
-//	public @ResponseBody AddressForm cancelAddress(@RequestParam(value = "addressId", required = false) long addressId) {
-//		log.info("addressId---------------------------------------------> " + addressId);
-//		AddressForm addressForm = new AddressForm();
-//		try {
-//			addressForm = addrService.findById(addressId);
-//		} catch (Exception e) {
-//			log.error("Got problem while updating address.");
-//
-//		}
-//		log.info("--------------------------------------------> " + addressForm.toString());
-//		return addressForm;
-//	}
+	// @RequestMapping(value = "address/cancel", headers="Accept=*/*", method =
+	// RequestMethod.POST, produces = "application/json")
+	// public @ResponseBody AddressForm cancelAddress(@RequestParam(value =
+	// "addressId", required = false) long addressId) {
+	// log.info("addressId---------------------------------------------> " +
+	// addressId);
+	// AddressForm addressForm = new AddressForm();
+	// try {
+	// addressForm = addrService.findById(addressId);
+	// } catch (Exception e) {
+	// log.error("Got problem while updating address.");
+	//
+	// }
+	// log.info("--------------------------------------------> " +
+	// addressForm.toString());
+	// return addressForm;
+	// }
 
 	public Map<String, String> getCountries() {
 		List<CountryDTO> countryDTOList = countryService.findAll();
@@ -145,10 +149,10 @@ public class FrontUserController {
 		return countries;
 	}
 
-	public List<Long> getAddressConstant() {
-		List<Long> addresses = new ArrayList<Long>();
-		addresses.add(AddressConstant.USER_INVOICE_TO);
-		addresses.add(AddressConstant.USER_DISPATCH_TO);
+	public Map<Long, String> getAddressConstant() {
+		Map<Long, String> addresses = new HashMap<Long, String>();
+		addresses.put(AddressConstant.USER_INVOICE_TO, "Dispatch To");
+		addresses.put(AddressConstant.USER_DISPATCH_TO, " Invoice To");
 		return addresses;
 	}
 }

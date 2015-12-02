@@ -44,13 +44,13 @@
 									<td><form:password path="password" class="form-control" value="${ userForm.password }" /></td>
 									<td><form:password path="confirmPassword" class="form-control" value="${ userForm.confirmPassword }" />
 									</td>
-									<td><form:input path="email" class="form-control" value="${ userForm.email }" /></td>
+									<td><form:input id="userEmail" path="email" class="form-control" value="${ userForm.email }" /></td>
 									<td>
 										<%-- FIXME: we don't have active time yet.
 										<form:input path="activeTime"  class="form-control" value=""/> --%>
 									</td>
 									<td>
-										<button type="submit" class="btn btn-success">Save</button>
+										<button type="submit" class="btn btn-success" onclick="saveUser()">Save</button>
 									</td>
 								</tr>
 						</table>
@@ -101,20 +101,20 @@
 													<tr>
 														<td  style="padding: 0 5px;">Email :</td>
 														<td>
-															<form:input id="email${row.index}" path="addresses[${row.index}].email" class="form-control" value="${ address.email }" />
+															<form:input id="addressEmail${row.index}" path="addresses[${row.index}].email" class="form-control" value="${ address.email }" />
 														</td>
 														<td  style="padding: 0 5px;">Address Type :</td>
 														<td>
 															<select id="addressType${row.index}" name="addresses[${row.index}].type">
 																	<option value="" disabled="disabled">---please select---</option>
 																	<c:forEach items="${ addressTypes }" var="addressType">
-																		<option value="${ addressType }"${addressType==address.type?'selected="selected"':''}>${ addressType }</option>
+																		<option value="${ addressType.key }"${addressType.key==address.type?'selected="selected"':''}>${ addressType.value }</option>
 																	</c:forEach>
 															</select>
 													</tr>
 													<tr>
 														<td colspan="6" align="right">
-															<button type="button" class="btn btn-success" onclick="save(${row.index})">SAVE</button>
+															<button type="button" class="btn btn-success" onclick="saveAddress(${row.index})">SAVE</button>
 															<button type="button" class="btn btn-default" 
 															onclick="cancel(${ row.index }, '${ address.address}', '${ address.regionCountryId}', '${ address.tel1 }', 
  															'${ address.postCode }', '${ address.fax }', '${ address.email }', '${ address.type }', '${ address}')">CANCEL</button>
@@ -145,21 +145,46 @@
 		 	$.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.png"/>");
 		});
 		
-	 	function save(row){
+	 	function saveAddress(row){
 	 		var addressId 	= $("#addressId"+row).val();
 	 		
-	 		$.ajax({
-	            type: "POST",
-	            url: "<c:url value="/frontend/user/address/edit"/>",
-	            data: $("#userForm").serialize() + "&addressId=" + addressId,
-	            dataType: "text",
-	            success: function() {
-	                //var obj = jQuery.parseJSON(data); if the dataType is not specified as json uncomment this
-	                // do what ever you want with the server response
-					console.log("save complete");	 		                
-					location.reload();
-	            }
-	        });
+	 		if(!validateTelephone($("#tel1"+row).val())){
+	 			alert("Telephone is invalid! Please try again.");
+	 			return false;	 			
+	 		}
+	 		
+	 		if(!validateTelephone($("#fax"+row).val())){
+	 			alert("Fax is invalid! Please try again.");
+	 			return false;	 			
+	 		}
+	 		
+	 		if(!validateEmail($("#addressEmail"+row).val())){
+	 			alert("Email is invalid! Please try again.");
+	 			return false;
+	 		}
+	 		
+	 		if(validateEmail($("#addressEmail"+row).val()) ){
+	 			$.ajax({
+		            type: "POST",
+		            url: "<c:url value="/frontend/user/address/edit"/>",
+		            data: $("#userForm").serialize() + "&addressId=" + addressId,
+		            dataType: "text",
+		            success: function() {
+		                //var obj = jQuery.parseJSON(data); if the dataType is not specified as json uncomment this
+		                // do what ever you want with the server response
+						console.log("save complete");	 		                
+						location.reload();
+		            }
+		        });	
+	 		}
+	 	}
+	 	
+	 	function saveUser(){
+	 		if(!validateEmail($("#userEmail").val())){
+	 			alert("User's email is invalid! Please try again.");
+	 			return false;	 			
+	 		}
+	 		//return true;
 	 	}
 	 	
 	 	function cancel(row, address, country, telephone, postCode, fax, email, addressType, addressObj){
@@ -170,6 +195,16 @@
 			$("#fax"+row).val(fax);
 			$("#email"+row).val(email);	 
 			$("#addressType"+row).val(addressType);
+	 	}
+	 	
+	 	function validateEmail(email) {
+	 		// check email format and allow null
+	 		return !email || /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/.test(email);
+	 	}
+	 	
+	 	function validateTelephone(telephone){
+	 		// check telephone format and allow null
+	 		return !telephone || /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g.test(telephone);
 	 	}
 
 	</script>
