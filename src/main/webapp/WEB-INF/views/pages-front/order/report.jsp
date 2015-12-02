@@ -21,12 +21,14 @@
 <%@include file="/WEB-INF/views/pages-front/include/common_header.jspf" %>
 
 <div class="container">
-
+	<c:set var="orderId" value="${ orderReport.orderId }"/>
+	<%@include file="/WEB-INF/views/include/export_report.jspf" %>
+	
     <div class="row">
         <!-- Header -->
         <div class="col-md-12 bg_color">
-            <span>${orderDetails.orderCode}</span> <span>${orderDetails.orderStatus}</span><br/>
-            <fmt:formatDate pattern="dd-MM-yyyy HH:mm:ss" value="${orderDetails.orderDate}" />
+            <span>${orderReport.orderCode}</span> <span>${orderReport.orderStatus}</span><br/>
+            <fmt:formatDate pattern="dd-MM-yyyy HH:mm:ss" value="${orderReport.orderDate}" />
         </div>
         <!-- Order info -->
         <div class="col-md-12 bg_color">
@@ -41,10 +43,10 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>${orderDetails.orderCode}</td>
-                    <td>${orderDetails.paymentMethod}</td>
-                    <td>${orderDetails.shippingType}</td>
-                    <td>${orderDetails.orderStatus}</td>
+                    <td>${orderReport.orderCode}</td>
+                    <td>${orderReport.paymentMethod}</td>
+                    <td>${orderReport.shippingType}</td>
+                    <td>${orderReport.orderStatus}</td>
                 </tr>
                 </tbody>
             </table>
@@ -55,11 +57,11 @@
                 <tr>
                     <td>
                         Dispatch to:
-                        <span>${orderDetails.dispatchToAddress.orderAddr} <br/>Tel: ${orderDetails.dispatchToAddress.orderTel}  Fax: ${orderDetails.dispatchToAddress.fax}</span>
+                        <span>${orderReport.dispatchToAddress.orderAddr} <br/>Tel: ${orderReport.dispatchToAddress.orderTel}  Fax: ${orderReport.dispatchToAddress.fax}</span>
                     </td>
                     <td>
                         Invoice to:
-                        <span>${orderDetails.invoiceToAddress.orderAddr} <br/>Tel: ${orderDetails.invoiceToAddress.orderTel}  Fax: ${orderDetails.invoiceToAddress.fax}</span>
+                        <span>${orderReport.invoiceToAddress.orderAddr} <br/>Tel: ${orderReport.invoiceToAddress.orderTel}  Fax: ${orderReport.invoiceToAddress.fax}</span>
                     </td>
                 </tr>
             </table>
@@ -79,7 +81,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${ orderDetails.orderDetails }" var="ordDetail" varStatus="rowNum">
+                <c:forEach items="${ orderReport.orderDetails }" var="ordDetail" varStatus="rowNum">
 
                     <tr>
                         <td>${ rowNum.index + 1 }</td>

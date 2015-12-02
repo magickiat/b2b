@@ -37,19 +37,17 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public SearchOrderDTO findOrderForReport(Long orderId) {
-		StringBuffer sb = new StringBuffer();
-		sb.append(
-				" SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(   o.orderCode,    c.nameEn,    p.productTypeName,    o.orderDate,    o.expectShipmentDate,    os.orderStatusName, o.paymentMethodId, o.shippingId )");
-		sb.append(" FROM    Orders o,    ProductType p,    Cust c,    OrderStatus os");
-		sb.append(" WHERE    o.brandGroupId = p.productTypeId        AND o.custId = c.custId        and o.orderStatus = os.orderStatusId");
-		sb.append(" and o.orderId = :orderId ");
-		return (SearchOrderDTO) sessionFactory.getCurrentSession().createQuery(sb.toString()).setLong("orderId", orderId).uniqueResult();
+		String searchQuery = "SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(o.orderId, o.orderCode, c.nameEn, p.productTypeName, o.orderDate, o.expectShipmentDate, os.orderStatusName, o.paymentMethodId, o.shippingId )"
+				+ " FROM Orders o, ProductType p, Cust c, OrderStatus os "
+				+ " WHERE o.brandGroupId = p.productTypeId AND o.custId = c.custId and o.orderStatus = os.orderStatusId"
+				+ " and o.orderId = :orderId ";
+		return (SearchOrderDTO) sessionFactory.getCurrentSession().createQuery(searchQuery).setLong("orderId", orderId).uniqueResult();
 	}
 
 	@Override
 	public SearchOrderDTO findOrderForReport(String orderCode) {
-		String searchQuery = " SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(   o.orderCode,    c.nameEn,    p.productTypeName,    o.orderDate,    o.expectShipmentDate,    os.orderStatusName, o.paymentMethodId, o.shippingId )"
-		+ " FROM Orders o, ProductType p, Cust c, OrderStatus os"
+		String searchQuery = "SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(o.orderId, o.orderCode, c.nameEn, p.productTypeName, o.orderDate, o.expectShipmentDate, os.orderStatusName, o.paymentMethodId, o.shippingId )"
+		+ " FROM Orders o, ProductType p, Cust c, OrderStatus os "
 		+ " WHERE o.brandGroupId = p.productTypeId AND o.custId = c.custId and o.orderStatus = os.orderStatusId"
 		+ " and o.orderCode = :orderCode ";
 		return (SearchOrderDTO) sessionFactory.getCurrentSession().createQuery(searchQuery).setString("orderCode", orderCode).uniqueResult();
@@ -60,6 +58,7 @@ public class OrderDaoImpl implements OrderDao {
 
 		final String ordersQuery = "SELECT " +
 				" new com.starboard.b2b.dto.search.SearchOrderDTO( " +
+				" o.orderId, " +
 				" o.orderCode, " +
 				" c.nameEn, " +
 				" p.productTypeName, " +
@@ -81,7 +80,7 @@ public class OrderDaoImpl implements OrderDao {
 				"AND (:productTypeId = 0 OR p.productTypeId = :productTypeId) " +
 				"AND (:orderStatusId IS NULL OR os.orderStatusId = :orderStatusId) " +
 				"AND ((:fromDate IS NULL OR :toDate IS NULL) OR ( DATE(o.orderDate) BETWEEN :fromDate AND :toDate)) " +
-				"ORDER BY o.orderId ";
+				"ORDER BY o.orderDate DESC ";
 		final String ordersTotalQuery = "SELECT count(o.orderCode) " +
 				"FROM Orders o, ProductType p, Cust c, OrderStatus os " +
 				"WHERE o.brandGroupId = p.productTypeId " +
@@ -95,8 +94,8 @@ public class OrderDaoImpl implements OrderDao {
 				"))" +
 				"AND (:productTypeId = 0 OR p.productTypeId = :productTypeId) " +
 				"AND (:orderStatusId IS NULL OR os.orderStatusId = :orderStatusId) " +
-				"AND ((:fromDate IS NULL OR :toDate IS NULL) OR ( DATE(o.orderDate) BETWEEN :fromDate AND :toDate)) " +
-				"ORDER BY o.orderId ";
+				"AND ((:fromDate IS NULL OR :toDate IS NULL) OR ( DATE(o.orderDate) BETWEEN :fromDate AND :toDate)) ";
+				
 		final String keyword = StringUtils.isEmpty(searchRequest.getCondition().getKeyword()) ? null : "%"+searchRequest.getCondition().getKeyword()+"%";
 		final int productTypeId = StringUtils.isEmpty(searchRequest.getCondition().getSelectedBrand()) ? 0 : Integer.parseInt(searchRequest.getCondition().getSelectedBrand());
 		final String orderStatusId = StringUtils.isEmpty(searchRequest.getCondition().getSelectedStatus()) ? null : searchRequest.getCondition().getSelectedStatus();

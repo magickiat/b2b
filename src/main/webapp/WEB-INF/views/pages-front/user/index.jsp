@@ -46,7 +46,8 @@
 									</td>
 									<td><form:input path="email" class="form-control" value="${ userForm.email }" /></td>
 									<td>
-										<%-- <form:input path="activeTime"  class="form-control" value=""/> --%>
+										<%-- FIXME: we don't have active time yet.
+										<form:input path="activeTime"  class="form-control" value=""/> --%>
 									</td>
 									<td>
 										<button type="submit" class="btn btn-success">Save</button>
@@ -117,8 +118,6 @@
 															<button type="button" class="btn btn-default" 
 															onclick="cancel(${ row.index }, '${ address.address}', '${ address.regionCountryId}', '${ address.tel1 }', 
  															'${ address.postCode }', '${ address.fax }', '${ address.email }', '${ address.type }', '${ address}')">CANCEL</button>
-<!-- 															<button type="button" class="btn btn-default"  -->
-<%-- 															onclick="cancel('${ address}')">CANCEL</button> --%>
 														</td>
 													</tr>
 												</table>

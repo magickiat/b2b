@@ -67,6 +67,9 @@
 		</div>
 	</div>
 	
+	<%-- Message dialog --%>
+	<div id="dialog" style="display:none;"></div>
+	
 	<%@include file="/WEB-INF/views/include/common_footer.jspf" %>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 	<script src='<c:url value="/scripts/zoom/jquery.elevateZoom-3.0.8.min.js" />'></script>
@@ -194,8 +197,6 @@
 		}
 
 		function addToCart() {
-			console.log('begin animate');
-			//TODO add animation to shopping cart
 
 			var quantity = $('#quantity').val();
 			console.log('quantity: ' + quantity);
@@ -218,6 +219,22 @@
 				$.post('${addToCartUrl}', param).done(function(response) {
 					console.log(JSON.stringify(response));
 					renderToCart(response);
+					
+					<%-- http://stackoverflow.com/questions/10179040/jquery-dialog-open-and-automatically-close-after-3-seconds --%>
+					console.log('begin animate');
+					$('#dialog').html('Added to cart');
+					$('#dialog').dialog({
+					    autoOpen: true,
+					    show: "blind",
+					    hide: "fadeOut",
+					    modal: true,
+					    open: function(event, ui) {
+					        setTimeout(function(){
+					            $('#dialog').dialog('close');                
+					        }, 3000);
+					    }
+					});
+					
 				}).fail(function(result) {
 					alert(result.responseText);
 				});

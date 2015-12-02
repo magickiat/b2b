@@ -1,9 +1,13 @@
 package com.starboard.b2b.web.controller.frontend;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.starboard.b2b.common.AddressConstant;
+import com.starboard.b2b.dto.CountryDTO;
+import com.starboard.b2b.model.User;
+import com.starboard.b2b.service.AddrService;
+import com.starboard.b2b.service.CountryService;
+import com.starboard.b2b.service.UserService;
+import com.starboard.b2b.web.form.address.AddressForm;
+import com.starboard.b2b.web.form.user.UserForm;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,14 +20,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.starboard.b2b.common.AddressConstant;
-import com.starboard.b2b.dto.CountryDTO;
-import com.starboard.b2b.model.User;
-import com.starboard.b2b.service.AddrService;
-import com.starboard.b2b.service.CountryService;
-import com.starboard.b2b.service.UserService;
-import com.starboard.b2b.web.form.address.AddressForm;
-import com.starboard.b2b.web.form.user.UserForm;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/frontend/user")
@@ -147,8 +147,8 @@ public class FrontUserController {
 
 	public List<Long> getAddressConstant() {
 		List<Long> addresses = new ArrayList<Long>();
-		addresses.add(AddressConstant.INVOICE_TO);
-		addresses.add(AddressConstant.DISPATCH_TO);
+		addresses.add(AddressConstant.USER_INVOICE_TO);
+		addresses.add(AddressConstant.USER_DISPATCH_TO);
 		return addresses;
 	}
 }

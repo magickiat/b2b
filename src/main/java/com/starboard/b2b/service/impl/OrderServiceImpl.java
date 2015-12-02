@@ -192,8 +192,8 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 		// Save Order address
-		orderAddressDao.save(createOrderAddress(invoiceToAddr, orderId, AddressConstant.INVOICE_TO));
-		orderAddressDao.save(createOrderAddress(dispatchToAddr, orderId, AddressConstant.DISPATCH_TO));
+		orderAddressDao.save(createOrderAddress(invoiceToAddr, orderId, AddressConstant.ORDER_INVOICE_TO));
+		orderAddressDao.save(createOrderAddress(dispatchToAddr, orderId, AddressConstant.ORDER_DISPATCH_TO));
 
 		// For generate report
 		OrderDTO dto = new OrderDTO();
