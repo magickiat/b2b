@@ -49,7 +49,7 @@
 										<%-- <form:input path="activeTime"  class="form-control" value=""/> --%>
 									</td>
 									<td>
-										<button type="submit" class="btn btn-default">Submit</button>
+										<button type="submit" class="btn btn-success">Save</button>
 									</td>
 								</tr>
 						</table>
