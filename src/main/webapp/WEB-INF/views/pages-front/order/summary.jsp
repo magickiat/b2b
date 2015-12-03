@@ -25,6 +25,7 @@
                            modelAttribute="orderSummaryForm"
                            servletRelativeAction="/frontend/order/summary/search-action"
                            method="get">
+                    <form:hidden path="custId" value="${orderSummaryForm.custId}"/>
                     <%-- Search criteria row 1--%>
                     <div class="row">
                         <div class="col-md-3">
@@ -37,7 +38,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <form:select path="selectedBrand" cssClass="form-control" multiple="false" onchange="loadBuyerGroup()">
+                                <form:select path="selectedBrand" cssClass="form-control" multiple="false" onchange="submitForm()">
                                     <form:option value="" label="ALL BRAND"/>
                                     <form:options items="${productType}" itemLabel="productTypeName" itemValue="productTypeId"/>
                                 </form:select>
@@ -52,7 +53,7 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <button class="btn btn-success" onclick="searchOrder()" style="width: 100px;">Search</button>
+                            <button class="btn btn-success" onclick="submitForm()" style="width: 100px;">Search</button>
                             <button class="btn btn-default" style="width: 100px;">Excel</button>
                         </div>
                     </div>
@@ -126,13 +127,9 @@
     });
 
     /**
-     * Search order
+     * Submit form order
      **/
-    function searchOrder() {
-        $('#orderSummaryForm').submit();
-    }
-
-    function loadBuyerGroup(){
+    function submitForm(){
         $('#orderSummaryForm').submit();
     }
 </script>

@@ -80,6 +80,7 @@ public class OrderDaoImpl implements OrderDao {
 				"AND (:productTypeId = 0 OR p.productTypeId = :productTypeId) " +
 				"AND (:orderStatusId IS NULL OR os.orderStatusId = :orderStatusId) " +
 				"AND ((:fromDate IS NULL OR :toDate IS NULL) OR ( DATE(o.orderDate) BETWEEN :fromDate AND :toDate)) " +
+				"AND (:custId = 0 OR o.custId = :custId) " +
 				"ORDER BY o.orderDate DESC ";
 		final String ordersTotalQuery = "SELECT count(o.orderCode) " +
 				"FROM Orders o, ProductType p, Cust c, OrderStatus os " +
@@ -94,20 +95,22 @@ public class OrderDaoImpl implements OrderDao {
 				"))" +
 				"AND (:productTypeId = 0 OR p.productTypeId = :productTypeId) " +
 				"AND (:orderStatusId IS NULL OR os.orderStatusId = :orderStatusId) " +
-				"AND ((:fromDate IS NULL OR :toDate IS NULL) OR ( DATE(o.orderDate) BETWEEN :fromDate AND :toDate)) ";
+				"AND ((:fromDate IS NULL OR :toDate IS NULL) OR ( DATE(o.orderDate) BETWEEN :fromDate AND :toDate)) " +
+				"AND (:custId = 0 OR o.custId = :custId) ";
 				
 		final String keyword = StringUtils.isEmpty(searchRequest.getCondition().getKeyword()) ? null : "%"+searchRequest.getCondition().getKeyword()+"%";
 		final int productTypeId = StringUtils.isEmpty(searchRequest.getCondition().getSelectedBrand()) ? 0 : Integer.parseInt(searchRequest.getCondition().getSelectedBrand());
 		final String orderStatusId = StringUtils.isEmpty(searchRequest.getCondition().getSelectedStatus()) ? null : searchRequest.getCondition().getSelectedStatus();
 		final String fromDate = StringUtils.isEmpty(searchRequest.getCondition().getDateFrom()) ? null : searchRequest.getCondition().getDateFrom();
 		final String toDate = StringUtils.isEmpty(searchRequest.getCondition().getDateTo()) ? null : searchRequest.getCondition().getDateTo();
-
+		final long custId = searchRequest.getCondition().getCustId();
 		final List searchOrderDTOs = sessionFactory.getCurrentSession().createQuery(ordersQuery)
 				.setString("keyword", keyword)
 				.setInteger("productTypeId", productTypeId)
 				.setString("orderStatusId", orderStatusId)
 				.setString("fromDate", fromDate)
 				.setString("toDate", toDate)
+				.setLong("custId", custId)
 				.setFirstResult(searchRequest.getFirstResult()).setMaxResults(searchRequest.getPageSize())
 				.list();
 		log.info("Search order with parameter:\n\t{}\n\t{}\n\t{}\n\t{}\n\t{}", searchRequest.getCondition().getSelectedBrand()
@@ -121,6 +124,7 @@ public class OrderDaoImpl implements OrderDao {
 				.setString("orderStatusId", orderStatusId)
 				.setString("fromDate", fromDate)
 				.setString("toDate", toDate)
+				.setLong("custId", custId)
 				.uniqueResult();
 		final SearchResult<SearchOrderDTO> result = new SearchResult<>();
 		result.setTotal(ordersTotal == null ? 0 : (long) ordersTotal);
