@@ -444,7 +444,7 @@ public class FrontOrderController {
 
 		// ----- Find Invoice Address ------
 		long custId = UserUtil.getCurrentUser().getCustomer().getCustId();
-		List<AddressDTO> invoiceToAddress = customerService.findAddress(custId, AddressConstant.ORDER_INVOICE_TO);
+		List<AddressDTO> invoiceToAddress = customerService.findAddress(custId, AddressConstant.USER_INVOICE_TO);
 		// Get first invoice address only
 		AddressDTO invoiceTo;
 		if (invoiceToAddress != null && !invoiceToAddress.isEmpty()) {
@@ -453,7 +453,7 @@ public class FrontOrderController {
 		}
 
 		// ----- Find Dispatch to Address ------
-		List<AddressDTO> dispatchToAddress = customerService.findAddress(custId, AddressConstant.ORDER_DISPATCH_TO);
+		List<AddressDTO> dispatchToAddress = customerService.findAddress(custId, AddressConstant.USER_DISPATCH_TO);
 		model.addAttribute("dispatchToAddress", dispatchToAddress);
 
 		// ----- Find Shipping Type -----
@@ -479,7 +479,7 @@ public class FrontOrderController {
 	}
 
 	@RequestMapping(value = "step4/submit", method = RequestMethod.POST)
-	String submitOrder(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod,
+	String submitOrder(@RequestParam Long invoiceTo, @RequestParam Long dispatchTo, @RequestParam String shippingType, @RequestParam String customerRemark, @RequestParam String paymentMethod,
 			@ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model, SessionStatus session) {
 		log.info("----- step4/submit POST");
 		log.info("----- dispatchTo = " + dispatchTo);
@@ -494,6 +494,28 @@ public class FrontOrderController {
 		// Clear Shopping Cart session
 		// http://vard-lokkur.blogspot.com/2011/01/spring-mvc-session-attributes-handling.html
 		session.setComplete();
+		
+		
+		
+		
+		
+		final SearchOrderDTO orderReport = orderService.findOrderForReport(order.getOrderCode());
+		final List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(order.getOrderCode());
+		for(OrdAddressDTO ordAddress : ordAddresses){
+			log.info("received order address {} ", ordAddress);
+			if(ordAddress.getType() == AddressConstant.ORDER_INVOICE_TO){
+				orderReport.setInvoiceToAddress(ordAddress);
+			}
+			if(ordAddress.getType() == AddressConstant.ORDER_DISPATCH_TO){
+				orderReport.setDispatchToAddress(ordAddress);
+			}
+		}
+		List<SearchOrderDetailDTO> orderDetails = orderService.searchOrderDetail(order.getOrderCode());
+		if(orderDetails != null && !orderDetails.isEmpty()){
+			orderReport.setOrderDetails(orderDetails);
+		}
+		model.addAttribute("orderReport", orderReport);
+		
 
 		return "pages-front/order/step4_submit";
 	}
