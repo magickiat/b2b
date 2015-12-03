@@ -151,8 +151,8 @@ public class FrontUserController {
 
 	public Map<Long, String> getAddressConstant() {
 		Map<Long, String> addresses = new HashMap<Long, String>();
-		addresses.put(AddressConstant.USER_INVOICE_TO, "Dispatch To");
-		addresses.put(AddressConstant.USER_DISPATCH_TO, " Invoice To");
+		addresses.put(AddressConstant.USER_INVOICE_TO, "Invoice To");
+		addresses.put(AddressConstant.USER_DISPATCH_TO, "Dispatch To");
 		return addresses;
 	}
 }

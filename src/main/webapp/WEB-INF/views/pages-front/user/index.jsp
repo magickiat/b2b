@@ -21,7 +21,7 @@
 			<div class="col-md-12 bg_color showline2">
 				<div class="row row-header header1">Profile</div>
 				<div>
-					<form:form id="userForm"
+					<form:form id="userForm" onsubmit="return saveUser()"
 						servletRelativeAction="/frontend/user/edit"
 						class="form-horizontal" commandName="userForm" method="post">
 						<form:hidden path="id" class="form-control"
@@ -50,7 +50,7 @@
 										<form:input path="activeTime"  class="form-control" value=""/> --%>
 									</td>
 									<td>
-										<button type="submit" class="btn btn-success" onclick="saveUser()">Save</button>
+										<button type="submit" class="btn btn-success" >Save</button>
 									</td>
 								</tr>
 						</table>
@@ -150,16 +150,19 @@
 	 		
 	 		if(!validateTelephone($("#tel1"+row).val())){
 	 			alert("Telephone is invalid! Please try again.");
+	 			$("#tel1"+row).focus();
 	 			return false;	 			
 	 		}
 	 		
 	 		if(!validateTelephone($("#fax"+row).val())){
 	 			alert("Fax is invalid! Please try again.");
+	 			$("#fax"+row).focus();
 	 			return false;	 			
 	 		}
 	 		
 	 		if(!validateEmail($("#addressEmail"+row).val())){
 	 			alert("Email is invalid! Please try again.");
+	 			$("#addressEmail"+row).focus();
 	 			return false;
 	 		}
 	 		
@@ -182,18 +185,19 @@
 	 	function saveUser(){
 	 		if(!validateEmail($("#userEmail").val())){
 	 			alert("User's email is invalid! Please try again.");
+	 			$("#userEmail").focus();
 	 			return false;	 			
 	 		}
-	 		//return true;
+	 		return true;
 	 	}
 	 	
 	 	function cancel(row, address, country, telephone, postCode, fax, email, addressType, addressObj){
 			$("#address"+row).val(address);
 			$("#country"+row).val(country);
-			$("#telephone"+row).val(telephone);
+			$("#tel1"+row).val(telephone);
 			$("#postcode"+row).val(postCode);
 			$("#fax"+row).val(fax);
-			$("#email"+row).val(email);	 
+			$("#addressEmail"+row).val(email);	 
 			$("#addressType"+row).val(addressType);
 	 	}
 	 	
