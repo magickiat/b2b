@@ -10,6 +10,6 @@ public interface AddrService {
 
 	List<AddressForm> findByCustId(long custId);
 	
-	void update(AddressForm addressForm);
+	boolean update(AddressForm addressForm);
 
 }

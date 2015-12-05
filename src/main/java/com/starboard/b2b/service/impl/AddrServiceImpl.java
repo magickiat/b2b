@@ -60,7 +60,8 @@ public class AddrServiceImpl implements AddrService {
 
 	@Override
 	@Transactional
-	public void update(AddressForm addressForm) {
+	public boolean update(AddressForm addressForm) {
+		boolean isSuccess = false;
 		Addr addr = addrDao.findById(addressForm.getAddrId());
 		addr.setAddrId(addressForm.getAddrId());
 		addr.setAddress(addressForm.getAddress());
@@ -70,7 +71,15 @@ public class AddrServiceImpl implements AddrService {
 		addr.setFax(addressForm.getFax());
 		addr.setType(addressForm.getType());
 		addr.setEmail(addressForm.getEmail());
-		addrDao.update(addr);
+		
+		try{
+			addrDao.update(addr);
+			isSuccess = true;
+		}catch(Exception e){
+			isSuccess = false;
+		}
+		
+		return isSuccess;
 	}
 
 }

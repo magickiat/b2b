@@ -19,7 +19,7 @@ public interface UserService {
 
 	void add(UserRegisterForm user);
 	
-	void update(UserForm userForm);
+	boolean update(UserForm userForm);
 
 	boolean isExistUsername(String username);
 }

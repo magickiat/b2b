@@ -1,5 +1,21 @@
 package com.starboard.b2b.web.controller.frontend;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.dto.CountryDTO;
 import com.starboard.b2b.model.User;
@@ -8,22 +24,6 @@ import com.starboard.b2b.service.CountryService;
 import com.starboard.b2b.service.UserService;
 import com.starboard.b2b.web.form.address.AddressForm;
 import com.starboard.b2b.web.form.user.UserForm;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/frontend/user")
@@ -71,74 +71,22 @@ public class FrontUserController {
 	}
 
 	@RequestMapping("edit")
-	String edit(@ModelAttribute UserForm userForm, Model model, BindingResult binding) {
-		Map<String, String> countries = getCountries();
-		Map<Long, String> addressTypes = getAddressConstant();
-		List<AddressForm> addressForms = new ArrayList<>();
-		try {
-			// Update user detail
-			userService.update(userForm);
-			// Get address detail
-			addressForms.addAll(addrService.findByCustId(userForm.getCustId()));
-			userForm.setAddresses(addressForms);
-		} catch (Exception e) {
-			log.error("Got problem while finding address.");
-		}
-
-		model.addAttribute("userForm", userForm);
-		model.addAttribute("countries", countries);
-		model.addAttribute("addressTypes", addressTypes);
-		return "pages-front/user/index";
+	@ResponseBody String edit(@ModelAttribute UserForm userForm, Model model) {
+		// Update user detail
+		boolean isUpdateSuccess = userService.update(userForm);
+		return (isUpdateSuccess==true?"true":"false");
 	}
-
+	
 	@RequestMapping("address/edit")
-	String editAddress(@ModelAttribute UserForm userForm, Model model, BindingResult binding,
-			@RequestParam(value = "addressId", required = false) long addressId) {
-		Map<String, String> countries = getCountries();
-		Map<Long, String> addressTypes = getAddressConstant();
-		List<AddressForm> addressForms = new ArrayList<>();
-
+	@ResponseBody String editAddress2(@ModelAttribute UserForm userForm, Model model, @RequestParam(value = "addressId", required = false) long addressId) {
+		boolean isUpdateSuccess = false;
 		for (AddressForm addressForm : userForm.getAddresses()) {
 			if (addressForm.getAddrId() == addressId) {
-				try {
-					// Update address detail
-					addrService.update(addressForm);
-				} catch (Exception e) {
-					log.error("Got problem while updating address.");
-				}
+				isUpdateSuccess = addrService.update(addressForm);
 			}
 		}
-
-		try {
-			// Get address detail
-			addressForms.addAll(addrService.findByCustId(userForm.getCustId()));
-			userForm.setAddresses(addressForms);
-		} catch (Exception e) {
-			log.error("Got problem while finding address.");
-		}
-		model.addAttribute("userForm", userForm);
-		model.addAttribute("countries", countries);
-		model.addAttribute("addressTypes", addressTypes);
-		return "pages-front/user/index";
+		return (isUpdateSuccess==true?"true":"false");
 	}
-
-	// @RequestMapping(value = "address/cancel", headers="Accept=*/*", method =
-	// RequestMethod.POST, produces = "application/json")
-	// public @ResponseBody AddressForm cancelAddress(@RequestParam(value =
-	// "addressId", required = false) long addressId) {
-	// log.info("addressId---------------------------------------------> " +
-	// addressId);
-	// AddressForm addressForm = new AddressForm();
-	// try {
-	// addressForm = addrService.findById(addressId);
-	// } catch (Exception e) {
-	// log.error("Got problem while updating address.");
-	//
-	// }
-	// log.info("--------------------------------------------> " +
-	// addressForm.toString());
-	// return addressForm;
-	// }
 
 	public Map<String, String> getCountries() {
 		List<CountryDTO> countryDTOList = countryService.findAll();
