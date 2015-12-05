@@ -64,7 +64,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/frontend/order/")
-@SessionAttributes({ "cart" })
+@SessionAttributes({ "cart", "brandId" })
 public class FrontOrderController {
 
 	private static final Logger log = LoggerFactory.getLogger(FrontOrderController.class);
@@ -91,6 +91,13 @@ public class FrontOrderController {
 		// Create cart
 		if (!model.containsAttribute("cart")) {
 			model.addAttribute("cart", new HashMap<Long, ProductDTO>());
+		}else{
+			HashMap<Long, ProductDTO> cart = (HashMap<Long, ProductDTO>)model.asMap().get("cart");
+			if(!cart.isEmpty()){
+				log.info("Already selected product, redirect to quick order");
+				Long brandId = (Long)model.asMap().get("brandId");
+				return step2SearchProduct(brandId, model);
+			}
 		}
 		return "pages-front/order/step1_brand";
 	}
@@ -99,7 +106,11 @@ public class FrontOrderController {
 	String step2ChooseAddress(@RequestParam("brand_id") Long brandId, Model model) {
 		log.info("Brand id: " + brandId);
 
+		if(model.containsAttribute("brandId")){
+			brandId = (Long)model.asMap().get("brandId");
+		}
 		model.addAttribute("brandId", brandId);
+		
 		return "pages-front/order/step2_address";
 	}
 

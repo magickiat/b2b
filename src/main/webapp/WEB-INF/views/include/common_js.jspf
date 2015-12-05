@@ -107,4 +107,15 @@
 		window.open('<c:url value="/frontend/order/step3/checkout" />',
 				'_self');
 	}
+	
+	function gotoCreateOrder(){
+		gotoPage('<c:url value="/frontend/order/index" />');
+	}
+	function gotoUploadOrder(){
+		gotoPage('<c:url value="/frontend/order/step2/index" />?brand_id=');
+	}
+	
+	function gotoPage(url){
+		window.location.href=url;
+	}
 </script>

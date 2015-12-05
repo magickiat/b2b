@@ -98,9 +98,8 @@
 					<div class="">
 						<div class="col-sm-10 text-right"></div>
 						<div class="col-sm-2 text-right">
-							<input type="button" id="btn-add" class="btn btn-success"
-								value="ADD" /> <input type="button" id="btn-upload"
-								class="btn btn-success" value="UPLOAD" />
+							<input type="button" id="btn-add" onclick="gotoCreateOrder()" class="btn btn-success" value="ADD" /> 
+							<input type="button" id="btn-upload" class="btn btn-success" onclick="gotoUploadOrder()" value="UPLOAD" />
 						</div>
 						<div class="row">&nbsp;</div>
 						<div class="">
