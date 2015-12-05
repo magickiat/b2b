@@ -14,6 +14,6 @@ public interface AddrDao {
 	
 	List<Addr> findByCustId(long custId);
 	
-	public void update(Addr addr);
+	void update(Addr addr);
 
 }

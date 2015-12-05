@@ -50,7 +50,7 @@
 										<form:input path="activeTime"  class="form-control" value=""/> --%>
 									</td>
 									<td>
-										<button type="submit" class="btn btn-success" >Save</button>
+										<button type="button" class="btn btn-success" onclick="saveUser()">Save</button>
 									</td>
 								</tr>
 						</table>
@@ -91,7 +91,7 @@
 													<tr>
 														<td  style="padding: 0 5px;">PostCode :</td>
 														<td>
-															<form:input id="postcode${row.index}" path="addresses[${row.index}].postCode" class="form-control" value="${ address.postCode }" />
+															<form:input id="postcode${row.index}" path="addresses[${row.index}].postCode" class="form-control" maxlength="5" value="${ address.postCode }" />
 														</td>
 														<td  style="padding: 0 5px;">Fax :</td>
 														<td>
@@ -136,17 +136,16 @@
 	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 	<script src="<c:url value="/scripts/assets/js/jquery-1.11.1.min.js"/>"></script>
-	<script
-		src="<c:url value="/scripts/assets/bootstrap/js/bootstrap.min.js"/>"></script>
-	<script
-		src="<c:url value="/scripts/assets/js/jquery.backstretch.min.js"/>"></script>
+	<script src="<c:url value="/scripts/assets/bootstrap/js/bootstrap.min.js"/>"></script>
+	<script src="<c:url value="/scripts/assets/js/jquery.backstretch.min.js"/>"></script>
 	<script>
 		jQuery(document).ready(function() {
 		 	$.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.png"/>");
 		});
 		
 	 	function saveAddress(row){
-	 		var addressId 	= $("#addressId"+row).val();
+	 		var addressId 		= $("#addressId"+row).val();
+	 		var isUpdateSuccess = false;
 	 		
 	 		if(!validateTelephone($("#tel1"+row).val())){
 	 			alert("Telephone is invalid! Please try again.");
@@ -168,15 +167,20 @@
 	 		
 	 		if(validateEmail($("#addressEmail"+row).val()) ){
 	 			$.ajax({
+	 				//async: false,
 		            type: "POST",
 		            url: "<c:url value="/frontend/user/address/edit"/>",
 		            data: $("#userForm").serialize() + "&addressId=" + addressId,
 		            dataType: "text",
-		            success: function() {
-		                //var obj = jQuery.parseJSON(data); if the dataType is not specified as json uncomment this
+		            success: function(data) {		           
+		                //var obj = jQuery.parseJSON(data); //if the dataType is not specified as json uncomment this
 		                // do what ever you want with the server response
-						console.log("save complete");	 		                
-						location.reload();
+						console.log("save complete");
+						if(data == "true"){
+							alert("Updated successfully.");
+						}else{
+							alert("Updated failed.");
+						}
 		            }
 		        });	
 	 		}
@@ -188,7 +192,23 @@
 	 			$("#userEmail").focus();
 	 			return false;	 			
 	 		}
-	 		return true;
+
+			$.ajax({
+	            type: "POST",
+	            url: "<c:url value="/frontend/user/edit"/>",
+	            data: $("#userForm").serialize(),
+	            dataType: "text",
+	            success: function(data) {
+	                //var obj = jQuery.parseJSON(data); //if the dataType is not specified as json uncomment this
+	                // do what ever you want with the server response
+	            	console.log("save complete");
+					if(data == "true"){
+						alert("Updated successfully.");
+					}else{
+						alert("Updated failed.");
+					}
+	            }
+	        });	
 	 	}
 	 	
 	 	function cancel(row, address, country, telephone, postCode, fax, email, addressType, addressObj){

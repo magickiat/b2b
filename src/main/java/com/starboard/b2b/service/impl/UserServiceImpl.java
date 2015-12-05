@@ -86,13 +86,21 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public void update(UserForm userForm) {
+	public boolean update(UserForm userForm) {
+		boolean isSuccess = false;
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if(!StringUtils.isEmpty(userForm.getPassword())){
 			user.setPassword(new MD5().encode(userForm.getPassword()));
 		}
 		user.setEmail(userForm.getEmail());
-		userDao.update(user);
+		
+		try{
+			userDao.update(user);
+			isSuccess = true;
+		}catch(Exception e){
+			isSuccess = false;
+		}
+		return isSuccess;
 	}
 
 	@Override
