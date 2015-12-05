@@ -62,9 +62,8 @@
 			</div>
 		</div>
 
-		<div class="row">
-			<%@include file="step2_include/add_multiple.jspf"%>
-		</div>
+		<%@include file="step2_include/add_multiple.jspf"%>
+		
 	</div>
 	
 	<%-- Message dialog --%>

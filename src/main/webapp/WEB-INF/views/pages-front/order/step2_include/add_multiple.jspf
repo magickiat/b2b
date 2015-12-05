@@ -2,21 +2,20 @@
 <%@page session="true"%>
 
 <div class="row">&nbsp;</div>
-<div class="row">
-	<div class="col-sm-12 row-header2 header2 bg_color txtupper text-right" onclick="toggleAddMultiple()">
-		add multiple order <img alt=""
-			src='<c:url value="/images/pages-front/icon/btn_add.png" />'>
+<div class="row row-header2  showline2 bg_color" onclick="toggleAddMultiple()">
+	<div class="col-sm-12 header2 txtupper text-right">
+		add multiple order <img alt="" src='<c:url value="/images/pages-front/icon/btn_add.png" />'>
 	</div>
-</div>
-
-<div id="add-multiple" class="row" style="display: none;">
+	
+	
+	<div id="add-multiple" class="col-sm-12" style="display: none;">
 
 	<c:forEach var="rowAllTech" items="${ allTech }"
 		varStatus="rowNumAllTech">
 
 		<c:if test="${ not empty rowAllTech }">
 			<%-- Withnose type --%>
-			<div class="col-sm-12 row-header2 header2 bg_color txtupper">
+			<div class="col-sm-12 row-header2 header2 txtupper">
 
 				<c:forEach var="rowTech" items="${ rowAllTech }"
 					varStatus="rowNumTech" begin="0" end="0">
@@ -58,13 +57,10 @@
 
 									<table>
 										<tr>
-											<c:forEach var="p" items="${rowTech.value}"
-												varStatus="rowNumProduct">
+											<c:forEach var="p" items="${rowTech.value}" varStatus="rowNumProduct">
 												<td>
 
-													<button type="button"
-														id="btn-${modelId}-size${rowNumProduct.index}"
-														class="btn product-size btn-primary btn-product-size size${rowNumProduct.index}">
+													<button type="button" id="btn-${modelId}-size${rowNumProduct.index}" class="btn product-size btn-primary btn-product-size size${rowNumProduct.index}">
 														<c:out value="${ p.product.productLength }"></c:out>
 													</button>
 
@@ -73,11 +69,10 @@
 										</tr>
 
 										<tr>
-											<c:forEach var="p" items="${rowTech.value}"
-												varStatus="rowNumProduct">
-												<td><input type="text" id="${ p.product.productId }"
-													name="product-order-number"
-													class="input-multiple numberOnly" /></td>
+											<c:forEach var="p" items="${rowTech.value}" varStatus="rowNumProduct">
+												<td align="center">
+													<input type="text" id="${ p.product.productId }" name="product-order-number" class="input-multiple numberOnly" />
+												</td>
 											</c:forEach>
 										</tr>
 
@@ -93,6 +88,10 @@
 	</c:forEach>
 
 </div>
+
+</div>
+
+
 
 
 <script type="text/javascript">
