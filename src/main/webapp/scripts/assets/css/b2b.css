@@ -196,3 +196,10 @@ input::-webkit-inner-spin-button {
   background: #EBCCCC;
   font-size: 1em;
 }
+
+
+.input-multiple{
+	margin: 2px;
+	min-width: 70px;
+	width: 70px;
+}

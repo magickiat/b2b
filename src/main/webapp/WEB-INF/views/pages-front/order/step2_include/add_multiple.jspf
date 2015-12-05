@@ -1,2 +1,102 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page session="true"%>
+
+<div class="row">&nbsp;</div>
+<div class="row">
+	<div class="col-sm-12 row-header2 header2 bg_color txtupper text-right" onclick="toggleAddMultiple()">
+		add multiple order <img alt=""
+			src='<c:url value="/images/pages-front/icon/btn_add.png" />'>
+	</div>
+</div>
+
+<div id="add-multiple" class="row" style="display: none;">
+
+	<c:forEach var="rowAllTech" items="${ allTech }"
+		varStatus="rowNumAllTech">
+
+		<c:if test="${ not empty rowAllTech }">
+			<%-- Withnose type --%>
+			<div class="col-sm-12 row-header2 header2 bg_color txtupper">
+
+				<c:forEach var="rowTech" items="${ rowAllTech }"
+					varStatus="rowNumTech" begin="0" end="0">
+
+					<c:forEach var="p" items="${rowTech.value}"
+						varStatus="rowNumProduct" begin="0" end="0">
+
+						<c:set var="withnose" value="${ p.product.productPreintro }" />
+						<%-- Find withnose type by get first product for check --%>
+						<c:choose>
+							<c:when test="${ p.product.productPreintro == 0}">no withnose product</c:when>
+							<c:otherwise>withnose product</c:otherwise>
+						</c:choose>
+
+					</c:forEach>
+				</c:forEach>
+
+			</div>
+
+
+			<div class="col-sm-12 bg_color">
+
+				<table class="table">
+					<thead>
+						<tr>
+							<th class="txtupper">technology</th>
+							<th class="txtupper">size</th>
+							<th class="txtupper">quantity totals</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<c:forEach var="rowTech" items="${ rowAllTech }"
+							varStatus="rowNumTech">
+
+							<tr>
+								<td>${ rowTech.key }</td>
+								<td>
+
+									<table>
+										<tr>
+											<c:forEach var="p" items="${rowTech.value}"
+												varStatus="rowNumProduct">
+												<td>
+
+													<button type="button"
+														id="btn-${modelId}-size${rowNumProduct.index}"
+														class="btn product-size btn-primary btn-product-size size${rowNumProduct.index}">
+														<c:out value="${ p.product.productLength }"></c:out>
+													</button>
+
+												</td>
+											</c:forEach>
+										</tr>
+
+										<tr>
+											<c:forEach var="p" items="${rowTech.value}"
+												varStatus="rowNumProduct">
+												<td><input type="text" id="${ p.product.productId }"
+													name="product-order-number"
+													class="input-multiple numberOnly" /></td>
+											</c:forEach>
+										</tr>
+
+									</table>
+								</td>
+								<td><span id="${ withnose}-${ rowTech.key }">0</span></td>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+
+		</c:if>
+	</c:forEach>
+
+</div>
+
+
+<script type="text/javascript">
+function toggleAddMultiple(){
+	$('#add-multiple').toggle();
+}
+</script>

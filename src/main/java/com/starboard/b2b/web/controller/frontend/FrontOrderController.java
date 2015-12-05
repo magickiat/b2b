@@ -192,6 +192,9 @@ public class FrontOrderController {
 			HashMap<String, List<ProductSearchResult>> noWithnoseTech = productService.groupProductByTechnology(productListNoWithnose);
 			HashMap<String, List<ProductSearchResult>> withnoseTech = productService.groupProductByTechnology(productListWithnose);
 
+			model.addAttribute("noWithnoseTech", noWithnoseTech);
+			model.addAttribute("withnoseTech", withnoseTech);
+			
 			ArrayList<HashMap<String, List<ProductSearchResult>>> allTech = new ArrayList<>();
 			allTech.add(noWithnoseTech);
 			allTech.add(withnoseTech);
