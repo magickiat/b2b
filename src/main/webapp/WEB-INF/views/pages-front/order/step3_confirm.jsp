@@ -12,8 +12,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Starboard Windsurfing</title>
 <%@include file="/WEB-INF/views/include/common_css.jspf"%>
-<link rel="stylesheet"
-	href="<c:url value="/webjars/jquery-ui/1.11.4/jquery-ui.min.css"></c:url>">
 </head>
 <body>
 
