@@ -220,7 +220,7 @@
 					renderToCart(response);
 					
 					<%-- http://stackoverflow.com/questions/10179040/jquery-dialog-open-and-automatically-close-after-3-seconds --%>
-					console.log('begin animate');
+					/* console.log('begin animate'); */
 					$('#dialog').html('Added to cart');
 					$('#dialog').dialog({
 					    autoOpen: true,

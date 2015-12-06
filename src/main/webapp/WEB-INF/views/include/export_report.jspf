@@ -2,24 +2,21 @@
 <%@page session="true"%>
 
 <div class="row text-center">
-	<div class="col-md-12 bg_color">
-		<div class="col-sm-3"></div>
-		<div class="col-sm-6 text-center"
-			style="padding-bottom: 5px; padding-top: 5px;">
-			<input type="button" class="btn btn-default" id="btnExcel"
-				value="EXCEL" onclick="exportExcel()" /> <input type="button"
-				class="btn btn-default" id="btnPdf" value="PDF"
-				onclick="exportPdf()" /> <input type="button"
-				class="btn btn-default" id="btnPrint" value="PRINT" />
+	<div class="col-md-12 bg_color text-center row-header2">
+		<input type="button" class="btn btn-default" id="btnExcel"
+			value="EXCEL" onclick="exportExcel()" /> <input type="button"
+			class="btn btn-default" id="btnPdf" value="PDF" onclick="exportPdf()" />
+		<input type="button" class="btn btn-default" id="btnPrint"
+			value="PRINT" onclick="printPdf()" />
 
-			<c:if test="${ not empty order }">
-				<input type="button" class="btn btn-default" id="btnFinish"
-					value="FINISH" onclick="gotoOrderSummary();" />
-			</c:if>
-		</div>
-		<div class="col-sm-3"></div>
+		<c:if test="${ not empty order }">
+			<input type="button" class="btn btn-default" id="btnFinish"
+				value="FINISH" onclick="gotoOrderSummary();" />
+		</c:if>
 	</div>
 </div>
+
+<div id="pdfContainer" class="pdfContainer" style="display: none;"></div>
 
 <script type="text/javascript">
 	function exportExcel() {
@@ -32,5 +29,39 @@
 
 	function gotoOrderSummary() {
 		window.location.href = '<c:url value="/frontend/order/summary" />';
+	}
+
+	function printPdf() {
+		var url = '<c:url value="/report/order/pdf?orderId=${orderId}" />';
+		var content = "<object id='pdfObject' type='application/pdf' data='"
+				+ url + "' width='100%' height='100%' />";
+				/* var x=window.open();
+				x.document.open();
+				x.document.write(content);
+				x.document.close(); */
+				
+				window.open(url, '_self');
+				
+		/* $("#pdfContainer").dialog({
+			modal : true,
+			width : 800,
+			height : 400,
+			resizable : false,
+			buttons : {
+				'Print' : function(){
+					var pdf = document.getElementById("pdfContainer");
+					if(pdf){
+						console.log('found print area');
+						pdf.focus();
+						pdf.print();
+					}
+				},
+				'Close' : function() {
+					$(this).dialog('close');
+				}
+			}
+		}); */
+		return false;
+
 	}
 </script>
