@@ -2,7 +2,7 @@
 <%@page session="true"%>
 
 <link rel="stylesheet" href="<c:url value="/scripts/assets/bootstrap/css/bootstrap.css"/>">
-<link rel="stylesheet" href="<c:url value="/webjars/jquery-ui/1.11.4/jquery-ui.min.css"></c:url>" />
+<link rel="stylesheet" href="<c:url value="/webjars/jquery-ui/1.11.4/jquery-ui.min.css"></c:url>">
 <link rel="stylesheet" href="<c:url value="/scripts/assets/font-awesome/css/francoisone.css"/>">
 <link rel="stylesheet" href="<c:url value="/scripts/assets/font-awesome/css/font-awesome.min.css"/>">
 <link rel="stylesheet" href="<c:url value="/scripts/assets/bootstrap-datepicker/css/bootstrap-datepicker.css"/>">

@@ -23,7 +23,7 @@
 				<li><a href="<c:url value="/frontend/order/summary" />">Order Summary</a></li>
 				<li><a href="<c:url value="/frontend/download/index" />">Download</a></li>
 				<li><a href="<c:url value="/frontend/user/view" />">Profile</a></li>
-				<li><a href="#">Accounting</a></li>
+				<!-- <li><a href="#">Accounting</a></li> -->
 				<li><a href="<c:url value="/frontend/contactus" />">Contact us</a></li>
 			</ul>
 		</div>

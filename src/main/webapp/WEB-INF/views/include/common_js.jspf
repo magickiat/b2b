@@ -6,12 +6,21 @@
 
 
 <script type="text/javascript" src="${jquery}"></script>
-<script type="text/javascript" src="${jquery_ui}"></script>
 <script type="text/javascript" src="${bootstrap_js}"></script>
+<script type="text/javascript" src="${jquery_ui}"></script>
+<script src="<c:url value="/scripts/assets/js/jquery.backstretch.min.js"/>"></script>
+<script src="<c:url value="/scripts/assets/js/scripts.js"/>"></script>
+<!--[if lt IE 10]>
+    <script src="<c:url value="/scripts/assets/js/placeholder.js"/>"></script>
+<![endif]-->
+
 
 <script type="text/javascript">
 
 	$(document).ready(function() {
+		
+		$.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.png"/>");
+		
 		$('nav > ul.nav > li').click(function(e) {
 			$('ul.nav > li').removeClass('active');
 			$(this).addClass('active');
