@@ -1,5 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <%@page session="true"%>
@@ -7,6 +7,7 @@
 <jsp:useBean id="stringUtil" class="com.starboard.b2b.util.StringUtil" scope="request"></jsp:useBean>
 
 <%-- common url --%>
+<c:url var="bg" value="/images/pages-front/starboardbglogin.png" />
 <c:url var="addToCartUrl" value="/frontend/order/add-to-cart.json" />
 
 <div id="indicator" style="display: none;">
