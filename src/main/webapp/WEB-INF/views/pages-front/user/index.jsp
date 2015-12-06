@@ -134,8 +134,8 @@
 	</div>
 
 	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>
-	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 	<script src="<c:url value="/scripts/assets/js/jquery-1.11.1.min.js"/>"></script>
+	<%@include file="/WEB-INF/views/include/common_js.jspf"%>	
 	<script src="<c:url value="/scripts/assets/bootstrap/js/bootstrap.min.js"/>"></script>
 	<script src="<c:url value="/scripts/assets/js/jquery.backstretch.min.js"/>"></script>
 	<script>
@@ -177,10 +177,38 @@
 		                // do what ever you want with the server response
 						console.log("save complete");
 						if(data == "true"){
-							alert("Updated successfully.");
+							$('<div></div>').appendTo('body')
+							  .html('<div><h6>Address has been updated successfully.</h6></div>')
+							  .dialog({
+							      modal: true, title: 'message', zIndex: 10000, autoOpen: true,
+							      width: '300', resizable: false,
+							      buttons: {
+							          Ok: function () {
+							              $(this).dialog("close");
+							          },
+							      },
+							      close: function (event, ui) {
+							          $(this).remove();
+							      }
+							});
 						}else{
-							alert("Updated failed.");
+							$('<div></div>').appendTo('body')
+							  .html('<div><h6>Address updated has been failed.</h6></div>')
+							  .dialog({
+							      modal: true, title: 'message', zIndex: 10000, autoOpen: true,
+							      width: '300', resizable: false,
+							      buttons: {
+							          Ok: function () {
+							              $(this).dialog("close");
+							          },
+							      },
+							      close: function (event, ui) {
+							          $(this).remove();
+							      }
+							});
 						}
+						
+						
 		            }
 		        });	
 	 		}
@@ -203,9 +231,35 @@
 	                // do what ever you want with the server response
 	            	console.log("save complete");
 					if(data == "true"){
-						alert("Updated successfully.");
+						$('<div></div>').appendTo('body')
+						  .html('<div><h6>User has been updated successfully.</h6></div>')
+						  .dialog({
+						      modal: true, title: 'message', zIndex: 10000, autoOpen: true,
+						      width: '300', resizable: false,
+						      buttons: {
+						          Ok: function () {
+						              $(this).dialog("close");
+						          },
+						      },
+						      close: function (event, ui) {
+						          $(this).remove();
+						      }
+						});
 					}else{
-						alert("Updated failed.");
+						$('<div></div>').appendTo('body')
+						  .html('<div><h6>User updated has been failed.</h6></div>')
+						  .dialog({
+						      modal: true, title: 'message', zIndex: 10000, autoOpen: true,
+						      width: '300', resizable: false,
+						      buttons: {
+						          Ok: function () {
+						              $(this).dialog("close");
+						          },
+						      },
+						      close: function (event, ui) {
+						          $(this).remove();
+						      }
+						});
 					}
 	            }
 	        });	
