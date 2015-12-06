@@ -10,7 +10,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Starboard Windsurfing - Profile</title>
+<title>Starboard Windsurfing</title>
 <%@include file="/WEB-INF/views/include/common_css.jspf"%>
 </head>
 <body>
@@ -135,7 +135,6 @@
 
 	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>	
-	<script src="<c:url value="/scripts/assets/bootstrap/js/bootstrap.min.js"/>"></script>
 	<script src="<c:url value="/scripts/assets/js/jquery.backstretch.min.js"/>"></script>
 	<script>
 		jQuery(document).ready(function() {
@@ -146,7 +145,8 @@
 	 		var addressId 		= $("#addressId"+row).val();
 	 		var isUpdateSuccess = false;
 	 		
-	 		if(!validateTelephone($("#tel1"+row).val())){
+	 		
+	 		/* if(!validateTelephone($("#tel1"+row).val())){
 	 			alert("Telephone is invalid! Please try again.");
 	 			$("#tel1"+row).focus();
 	 			return false;	 			
@@ -162,7 +162,7 @@
 	 			alert("Email is invalid! Please try again.");
 	 			$("#addressEmail"+row).focus();
 	 			return false;
-	 		}
+	 		} */
 	 		
 	 		if(validateEmail($("#addressEmail"+row).val()) ){
 	 			$.ajax({
