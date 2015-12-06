@@ -205,13 +205,8 @@ public class ReportController {
 			InputStream jasperStream = this.getClass().getResourceAsStream("/report/ro.jasper");
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
 			
-			// find total page
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, connection);
-			params.put("allPageSize", jasperPrint.getPages().size()); // fix total page
-			
-			// fill total page
-			jasperPrint = JasperFillManager.fillReport(jasperReport, params, connection);
-			
+
 			response.setContentType("application/x-pdf");
 			response.setHeader("Content-disposition", "inline; filename="+order.getOrderCode()+".pdf");
 
