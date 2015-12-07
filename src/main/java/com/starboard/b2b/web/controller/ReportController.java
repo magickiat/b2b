@@ -1,5 +1,6 @@
 package com.starboard.b2b.web.controller;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
@@ -43,7 +44,6 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 
 @Controller
 @RequestMapping("/report")
@@ -187,6 +187,8 @@ public class ReportController {
 
 		Connection connection = null;
 		Transaction tx = null;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		OutputStream outStream = response.getOutputStream();
 		try {
 			
 			OrderDTO order = orderService.findOrder(orderId);
@@ -210,10 +212,15 @@ public class ReportController {
 			response.setContentType("application/x-pdf");
 			response.setHeader("Content-disposition", "inline; filename="+order.getOrderCode()+".pdf");
 
-			final OutputStream outStream = response.getOutputStream();
-			JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
-			outStream.flush();
-			outStream.close();
+			
+		    
+			JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
+			
+			response.setContentLength(baos.size());
+			baos.writeTo(outStream);
+			
+			jasperStream.close();
+			
 
 			tx.commit();
 		} catch (Exception e) {
@@ -225,6 +232,9 @@ public class ReportController {
 			if (connection != null) {
 				connection.close();
 			}
+			outStream.flush();
+			outStream.close();
+			baos.close();
 		}
 
 		return null;
