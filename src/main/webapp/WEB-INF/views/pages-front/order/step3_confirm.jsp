@@ -64,8 +64,7 @@
 											<c:forEach var="dispatchTo" items="${ dispatchToAddress }"
 												varStatus="rowCount">
 
-												<option value="${ dispatchTo.addrId }"
-													label="${ dispatchTo.address }" />
+												<option value="${ dispatchTo.addrId }">${ dispatchTo.address }</option>
 
 											</c:forEach>
 										</select>
@@ -96,8 +95,10 @@
 					<div class="">
 						<div class="col-sm-10 text-right"></div>
 						<div class="col-sm-2 text-right">
-							<input type="button" id="btn-add" onclick="gotoCreateOrder()" class="btn btn-success" value="ADD" /> 
-							<input type="button" id="btn-upload" class="btn btn-success" onclick="gotoUploadOrder()" value="UPLOAD" />
+							<input type="button" id="btn-add" onclick="gotoCreateOrder()"
+								class="btn btn-success" value="ADD" /> <input type="button"
+								id="btn-upload" class="btn btn-success"
+								onclick="gotoUploadOrder()" value="UPLOAD" />
 						</div>
 						<div class="row">&nbsp;</div>
 						<div class="">
@@ -136,9 +137,8 @@
 															value="${ totalQuantity +  product.productQuantity }" />
 													</td>
 													<td>${ product.productUnitId }</td>
-													<td>
-													<input type="hidden" name="amount" value="${ p.price.amount }" />
-													<c:choose>
+													<td><input type="hidden" name="amount"
+														value="${ p.price.amount }" /> <c:choose>
 															<c:when test="${ empty p.price }">
 																TBA
 															</c:when>
@@ -198,16 +198,15 @@
 													class="form-control">
 														<c:forEach var="shippingType"
 															items="${ shippingTypeList }">
-															<option label="${shippingType.shippingTypeName }"
-																value="${ shippingType.shippingTypeId }" />
+															<option label="${shippingType.shippingTypeName }">${ shippingType.shippingTypeId }</option>
 														</c:forEach>
 												</select> <select id="paymentMethod" name="paymentMethod"
 													class="form-control" style="display: none;">
 														<c:forEach var="paymentMethod"
 															items="${ paymentMethodList }">
 															<option label="${paymentMethod.paymentMethodName }"
-																value="${ paymentMethod.paymentMethodId }"
-																<c:if test="${ paymentMethod.paymentMethodId == 'T/T' }"> selected </c:if> />
+																<c:if test="${ paymentMethod.paymentMethodId == 'T/T' }"> selected </c:if>>
+																${ paymentMethod.paymentMethodId }</option>
 														</c:forEach>
 												</select></td>
 											</tr>
