@@ -18,7 +18,7 @@
 
 <script type="text/javascript">
 	function exportExcel() {
-		window.location.href = '<c:url value="/report/order/excel?orderId=${orderId}" />';
+		window.location.href = '<c:url value="/report/order/excel?orderId[]=${orderId}" />';
 	}
 
 	function exportPdf() {

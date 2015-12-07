@@ -15,4 +15,6 @@ public interface OrderDetailDao {
 	List<SearchOrderDetailDTO> searchOrderDetail(String orderCode);
 
 	List<String> findAllOrderCurrency(Long orderId);
+
+	List<SearchOrderDetailDTO> searchOrderDetail(Long[] ordersId);
 }
