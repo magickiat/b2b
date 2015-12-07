@@ -135,11 +135,23 @@ public class OrderDaoImpl implements OrderDao {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<OrdAddress> findOrderAddress(final String orderCode) {
 		return sessionFactory.getCurrentSession()
 				.createQuery("SELECT o FROM OrdAddress o, Orders r WHERE o.orderId = r.orderId AND r.orderCode = :orderCode")
 				.setString("orderCode", orderCode)
 				.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<SearchOrderDTO> findOrderForReport(Long[] ordersId) {
+		String searchQuery = "SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(o.orderId, o.orderCode, c.nameEn, p.productTypeName, o.orderDate, o.expectShipmentDate, os.orderStatusName, o.paymentMethodId, o.shippingId )"
+				+ " FROM Orders o, ProductType p, Cust c, OrderStatus os "
+				+ " WHERE o.brandGroupId = p.productTypeId AND o.custId = c.custId and o.orderStatus = os.orderStatusId"
+				+ " and o.orderId in (:orderId) "
+				+ " order by o.orderId";
+		return sessionFactory.getCurrentSession().createQuery(searchQuery).setParameterList("orderId", ordersId).list();
 	}
 }

@@ -332,4 +332,16 @@ public class OrderServiceImpl implements OrderService {
 	public List<String> findAllOrderCurrency(Long orderId) {
 		return orderDetailDao.findAllOrderCurrency(orderId);
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<SearchOrderDTO> findOrderForReport(Long[] ordersId) {
+		return orderDao.findOrderForReport(ordersId);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<SearchOrderDetailDTO> searchOrderDetail(Long[] ordersId) {
+		return orderDetailDao.searchOrderDetail(ordersId);
+	}
 }

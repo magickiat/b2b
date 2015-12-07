@@ -1,5 +1,6 @@
 package com.starboard.b2b.web.controller;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
@@ -28,8 +29,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.starboard.b2b.dto.OrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
@@ -43,7 +46,6 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 
 @Controller
 @RequestMapping("/report")
@@ -66,9 +68,10 @@ public class ReportController {
 	// http://kodejava.org/how-do-i-create-an-excel-document-using-apache-poi/
 	// https://poi.apache.org/spreadsheet/quick-guide.html
 	@RequestMapping(value = "order/excel", method = RequestMethod.GET)
-	String generateOrderExcel(Long orderId, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	String generateOrderExcel(@RequestParam("orderId[]") Long[] orderId, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
 		log.info("Generate excel order report: orderId = " + orderId);
-		String filename = "" + orderId;
+		String filename = "excel_order_list";
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		// ----- Create header row sheet "order" -----
 		HSSFSheet sheetOrder = workbook.createSheet("order");
@@ -80,32 +83,34 @@ public class ReportController {
 		rowHeadOrder.createCell(4).setCellValue("Expected Shipment Date");
 		rowHeadOrder.createCell(5).setCellValue("Status");
 
-		if (orderId != null) {
-			SearchOrderDTO order = orderService.findOrderForReport(orderId);
+		if (orderId != null && orderId.length > 0) {
+			
+			List<SearchOrderDTO> orderList = orderService.findOrderForReport(orderId);
 
-			if (order != null) {
-				filename = order.getOrderCode();
+			if (orderList != null && orderList.size() > 0) {
 
 				// ----- Create order detail row
 				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY", Locale.US);
+				for (SearchOrderDTO order : orderList) {
+					HSSFRow orderRow1 = sheetOrder.createRow(1);
+					orderRow1.createCell(0).setCellValue(StringUtils.isEmpty(order.getOrderCode()) ? "" : order.getOrderCode());
+					orderRow1.createCell(1).setCellValue(StringUtils.isEmpty(order.getCustomerName()) ? "" : order.getCustomerName());
+					orderRow1.createCell(2).setCellValue(StringUtils.isEmpty(order.getProductTypeName()) ? "" : order.getProductTypeName());
+					if (order.getOrderDate() == null) {
+						orderRow1.createCell(3).setCellValue("");
+					} else {
+						orderRow1.createCell(3).setCellValue(sdf.format(order.getOrderDate()));
+					}
+					if (order.getExpectShipmentDate() == null) {
+						orderRow1.createCell(4).setCellValue("");
+					} else {
+						orderRow1.createCell(4).setCellValue(sdf.format(order.getExpectShipmentDate()));
+					}
 
-				HSSFRow orderRow1 = sheetOrder.createRow(1);
-				orderRow1.createCell(0).setCellValue(StringUtils.isEmpty(order.getOrderCode()) ? "" : order.getOrderCode());
-				orderRow1.createCell(1).setCellValue(StringUtils.isEmpty(order.getCustomerName()) ? "" : order.getCustomerName());
-				orderRow1.createCell(2).setCellValue(StringUtils.isEmpty(order.getProductTypeName()) ? "" : order.getProductTypeName());
-				if (order.getOrderDate() == null) {
-					orderRow1.createCell(3).setCellValue("");
-				} else {
-					orderRow1.createCell(3).setCellValue(sdf.format(order.getOrderDate()));
+					orderRow1.createCell(5).setCellValue(StringUtils.isEmpty(order.getOrderStatus()) ? "" : order.getOrderStatus());
+
 				}
-				if (order.getExpectShipmentDate() == null) {
-					orderRow1.createCell(4).setCellValue("");
-				} else {
-					orderRow1.createCell(4).setCellValue(sdf.format(order.getExpectShipmentDate()));
-				}
-
-				orderRow1.createCell(5).setCellValue(StringUtils.isEmpty(order.getOrderStatus()) ? "" : order.getOrderStatus());
-
+				
 				// ----- resize column -----
 				sheetOrder.autoSizeColumn(0);
 				sheetOrder.autoSizeColumn(1);
@@ -187,6 +192,8 @@ public class ReportController {
 
 		Connection connection = null;
 		Transaction tx = null;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		OutputStream outStream = response.getOutputStream();
 		try {
 			
 			OrderDTO order = orderService.findOrder(orderId);
@@ -196,7 +203,7 @@ public class ReportController {
 
 			params.put("orderId", orderId);
 			params.put("showcate", false);
-			params.put("allPageSize", 1); // fix total page
+			
 			params.put("relativePage", 0);
 			
 			// params.put("productCurrency", "");
@@ -204,15 +211,21 @@ public class ReportController {
 
 			InputStream jasperStream = this.getClass().getResourceAsStream("/report/ro.jasper");
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+			
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, connection);
 
 			response.setContentType("application/x-pdf");
 			response.setHeader("Content-disposition", "inline; filename="+order.getOrderCode()+".pdf");
 
-			final OutputStream outStream = response.getOutputStream();
-			JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
-			outStream.flush();
-			outStream.close();
+			
+		    
+			JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
+			
+			response.setContentLength(baos.size());
+			baos.writeTo(outStream);
+			
+			jasperStream.close();
+			
 
 			tx.commit();
 		} catch (Exception e) {
@@ -224,6 +237,9 @@ public class ReportController {
 			if (connection != null) {
 				connection.close();
 			}
+			outStream.flush();
+			outStream.close();
+			baos.close();
 		}
 
 		return null;

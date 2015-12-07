@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ro" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba40db7d-9060-4710-81d4-f1a174b6499e">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ro" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba40db7d-9060-4710-81d4-f1a174b6499e">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="1520"/>
 	<property name="ireport.y" value="0"/>
 	<style name="right" hAlign="Right"/>
 	<style name="center" hAlign="Center"/>
@@ -143,18 +143,18 @@
 				<textFieldExpression><![CDATA[$P{productCurrency}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="480" y="50" width="41" height="20" uuid="7ad44a60-736b-47aa-ad7e-6f692ecf5654"/>
+				<reportElement x="479" y="50" width="41" height="20" uuid="7ad44a60-736b-47aa-ad7e-6f692ecf5654"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="8" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}+ $P{relativePage}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="531" y="50" width="40" height="20" uuid="b27c42ec-0c3b-40f9-834c-d1957fd89ba0"/>
+				<reportElement x="534" y="50" width="37" height="20" uuid="b27c42ec-0c3b-40f9-834c-d1957fd89ba0"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="8" isUnderline="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[" " + $P{allPageSize}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<subreport>
 				<reportElement x="286" y="80" width="269" height="83" uuid="0301a120-a1b5-4e4d-8cff-306fc7214c98"/>
@@ -173,7 +173,7 @@
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/invoiceTo.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement style="normal10" x="523" y="50" width="11" height="20" uuid="3d268d46-06cd-4a14-a259-dccf7343138d"/>
+				<reportElement style="normal10" x="522" y="50" width="11" height="20" uuid="3d268d46-06cd-4a14-a259-dccf7343138d"/>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[of]]></text>
 			</staticText>

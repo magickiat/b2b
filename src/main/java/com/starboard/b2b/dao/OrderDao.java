@@ -32,4 +32,6 @@ public interface OrderDao {
 	SearchResult<SearchOrderDTO> search(CommonSearchRequest<OrderSummaryForm> searchRequest);
 
 	List<OrdAddress> findOrderAddress(String orderCode);
+
+	List<SearchOrderDTO> findOrderForReport(Long[] ordersId);
 }

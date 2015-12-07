@@ -1,5 +1,38 @@
 package com.starboard.b2b.web.controller.frontend;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.starboard.b2b.bean.ExcelOrderBean;
 import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.common.Page;
@@ -28,40 +61,6 @@ import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.product.OrderSummaryForm;
 import com.starboard.b2b.web.form.product.SearchProductForm;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.poi.EncryptedDocumentException;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletResponse;
-
 @Controller
 @RequestMapping("/frontend/order/")
 @SessionAttributes({ "cart", "brandId" })
@@ -89,7 +88,7 @@ public class FrontOrderController {
 		List<ProductBrandGroupDTO> brandGroupList = brandService.getBrandGroupList(UserUtil.getCurrentUser().getCustomer().getCustId());
 		model.addAttribute("brandGroupList", brandGroupList);
 		// Create cart
-		if (!model.containsAttribute("cart")) {
+		if (model.asMap().get("cart") == null) {
 			model.addAttribute("cart", new HashMap<Long, ProductDTO>());
 		}else{
 			HashMap<Long, ProductDTO> cart = (HashMap<Long, ProductDTO>)model.asMap().get("cart");
@@ -106,9 +105,15 @@ public class FrontOrderController {
 	String step2ChooseAddress(@RequestParam("brand_id") Long brandId, Model model) {
 		log.info("Brand id: " + brandId);
 
-		if(model.containsAttribute("brandId")){
-			brandId = (Long)model.asMap().get("brandId");
+		if (model.asMap().get("cart") != null){
+			HashMap<Long, ProductDTO> cart = (HashMap<Long, ProductDTO>)model.asMap().get("cart");
+			if(!cart.isEmpty()){
+				if(model.containsAttribute("brandId") && model.asMap().get("brandId") != null){
+					brandId = (Long)model.asMap().get("brandId");
+				}
+			}
 		}
+		
 		model.addAttribute("brandId", brandId);
 		
 		return "pages-front/order/step2_address";
@@ -285,20 +290,23 @@ public class FrontOrderController {
             for (ExcelOrderBean order : orders) {
                 ProductDTO product = productService.findByProductCode(order.getProductCode());
                 if (product.getProductCode() == null) {
-                    throw new B2BException(String.format("product not found for product code %s", order.getProductCode()));
+                    //throw new B2BException(String.format("product not found for product code %s", order.getProductCode()));
+                	continue;
                 }
                 product.setProductQuantity(order.getQuantity());
                 products.add(product);
             }
             //
-            for (ProductDTO product : products) {
-                if (cart.get(product.getProductId()) == null) {
-                    cart.put(product.getProductId(), product);
-                } else {
-                    ProductDTO productInCart = cart.get(product.getProductId());
-                    productInCart.setProductQuantity(productInCart.getProductQuantity() + product.getProductQuantity());
-                }
-            }
+           if(!products.isEmpty()){
+        	   for (ProductDTO product : products) {
+                   if (cart.get(product.getProductId()) == null) {
+                       cart.put(product.getProductId(), product);
+                   } else {
+                       ProductDTO productInCart = cart.get(product.getProductId());
+                       productInCart.setProductQuantity(productInCart.getProductQuantity() + product.getProductQuantity());
+                   }
+               }
+           }
             //
             return new ModelAndView("redirect:step3/checkout");
         } catch (IOException ex) {
@@ -496,7 +504,7 @@ public class FrontOrderController {
 
 	@RequestMapping(value = "step4/submit", method = RequestMethod.POST)
 	String submitOrder(@RequestParam Long invoiceTo, @RequestParam Long dispatchTo, @RequestParam String shippingType, @RequestParam String customerRemark, @RequestParam String paymentMethod,
-			@ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model, SessionStatus session) {
+			@ModelAttribute("brandId") Long brandId, @ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model, SessionStatus session) {
 		log.info("----- step4/submit POST");
 		log.info("----- dispatchTo = " + dispatchTo);
 		log.info("----- shippingType = " + shippingType);
@@ -509,6 +517,8 @@ public class FrontOrderController {
 
 		// Clear Shopping Cart session
 		// http://vard-lokkur.blogspot.com/2011/01/spring-mvc-session-attributes-handling.html
+		model.addAttribute("brandId", null);
+		model.addAttribute("cart", null);
 		session.setComplete();
 		
 		
@@ -602,14 +612,6 @@ public class FrontOrderController {
         model.addAttribute("productType", productTypes);
         final List<OrderStatusDTO> orderStatus = orderService.findAllOrderStatus();
         model.addAttribute("orderStatus", orderStatus);
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    public @ResponseBody
-    String handleException(Exception e, HttpServletResponse response) {
-        log.error(e.toString(), e);
-        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        return e.getMessage();
     }
 
 }
