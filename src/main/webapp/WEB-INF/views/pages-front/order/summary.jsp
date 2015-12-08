@@ -113,9 +113,6 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-    	// background
-        $.backstretch("${ bg}");
-        
     	// datepicker
         var dateFromPicker = $('#dateFromPicker');
         var dateToPicker = $('#dateToPicker');

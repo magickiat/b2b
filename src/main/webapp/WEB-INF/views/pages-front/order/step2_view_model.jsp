@@ -256,11 +256,5 @@
 		
 	</script>
 	
-	<script>
-		jQuery(document).ready(function() {
-		 	$.backstretch("${bg}");
-		});
-	</script>
-	
 </body>
 </html>

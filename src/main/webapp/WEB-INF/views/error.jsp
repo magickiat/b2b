@@ -35,10 +35,5 @@
 	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 
-	<script>
-		jQuery(document).ready(function() {
-			$.backstretch("${bg}");
-		});
-	</script>
 </body>
 </html>
