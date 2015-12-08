@@ -7,7 +7,7 @@
 <jsp:useBean id="stringUtil" class="com.starboard.b2b.util.StringUtil" scope="request"></jsp:useBean>
 
 <%-- common url --%>
-<c:url var="bg" value="/images/pages-front/starboardbglogin.png" />
+<c:url var="bg" value="/images/b2b/background.jpg" />
 <c:url var="addToCartUrl" value="/frontend/order/add-to-cart.json" />
 
 <div id="indicator" style="display: none;">

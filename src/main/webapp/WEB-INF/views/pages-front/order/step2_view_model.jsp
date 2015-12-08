@@ -258,7 +258,7 @@
 	
 	<script>
 		jQuery(document).ready(function() {
-		 	$.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.png"/>");
+		 	$.backstretch("${bg}");
 		});
 	</script>
 	

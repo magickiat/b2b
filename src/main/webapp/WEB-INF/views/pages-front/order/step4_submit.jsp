@@ -36,7 +36,7 @@
 	<script src="<c:url value="/scripts/assets/js/jquery.backstretch.min.js"/>"></script>
 	<script>
 		jQuery(document).ready(function() {
-		 	$.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.png"/>");
+		 	$.backstretch("${bg}");
 		});
 	</script>
 </body>

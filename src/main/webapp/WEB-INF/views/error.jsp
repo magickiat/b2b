@@ -19,7 +19,8 @@
 
 		<div class="row">
 			<div class="col-sm-12 header2 txtupper bg_color">Warning</div>
-			<div class="col-sm-12 bg_color">Please contact administrator with this message</div> 
+			<div class="col-sm-12 bg_color">Please contact administrator
+				with this message</div>
 			<div class="col-sm-12 bg_color">${exception.message}</div>
 
 			<!-- PLEASE DON'T REMOVE THIS COMMENT
@@ -35,12 +36,9 @@
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 
 	<script>
-		jQuery(document)
-				.ready(
-						function() {
-							$
-									.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.png"/>");
-						});
+		jQuery(document).ready(function() {
+			$.backstretch("${bg}");
+		});
 	</script>
 </body>
 </html>

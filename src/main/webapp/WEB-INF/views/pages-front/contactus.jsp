@@ -69,7 +69,9 @@
 	
 	<script>
 		jQuery(document).ready(function() {
-			$.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.png"/>");
+			//background
+			$.backstretch("${bg}");
+			
 			$('.date').datepicker();
 		});
 	
