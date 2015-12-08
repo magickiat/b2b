@@ -25,7 +25,10 @@
 				<c:forEach items="${ resultPage.result }" var="order" varStatus="rowNum">
 
 					<tr>
-						<td><a href="<c:url value="/frontend/order/summary/report/${order.orderCode}"/>">${ order.orderCode }</a></td>
+						<td>
+							<input type="hidden" id="orderId-${ order.orderId }" name="orderId" value="${ order.orderId }" />
+							<a href="<c:url value="/frontend/order/summary/report/${order.orderCode}"/>">${ order.orderCode }</a>
+						</td>
 						<td>&nbsp;</td>
 						<td>${ order.customerName }</td>
 						<td>${ order.productTypeName }</td>

@@ -44,6 +44,8 @@ public interface OrderService {
 
 	Page<SearchOrderDTO> searchOrder(OrderSummaryForm orderSummaryForm);
 	
+	List<SearchOrderDTO> searchOrderForReport(OrderSummaryForm orderSummaryForm);
+	
 	List<String> findAllOrderCurrency(Long orderId);
 
 	List<SearchOrderDTO> findOrderForReport(Long[] ordersId);

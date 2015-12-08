@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -29,17 +30,22 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dto.OrderDTO;
+import com.starboard.b2b.dto.OrderStatusDTO;
+import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ProductService;
+import com.starboard.b2b.web.form.product.OrderSummaryForm;
 
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -86,13 +92,14 @@ public class ReportController {
 		if (orderId != null && orderId.length > 0) {
 			
 			List<SearchOrderDTO> orderList = orderService.findOrderForReport(orderId);
-
+			log.info("order size: " + (orderList == null? 0 : orderList.size()));
 			if (orderList != null && orderList.size() > 0) {
 
 				// ----- Create order detail row
 				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY", Locale.US);
+				int orderRow = 1;
 				for (SearchOrderDTO order : orderList) {
-					HSSFRow orderRow1 = sheetOrder.createRow(1);
+					HSSFRow orderRow1 = sheetOrder.createRow(orderRow++);
 					orderRow1.createCell(0).setCellValue(StringUtils.isEmpty(order.getOrderCode()) ? "" : order.getOrderCode());
 					orderRow1.createCell(1).setCellValue(StringUtils.isEmpty(order.getCustomerName()) ? "" : order.getCustomerName());
 					orderRow1.createCell(2).setCellValue(StringUtils.isEmpty(order.getProductTypeName()) ? "" : order.getProductTypeName());
@@ -170,18 +177,61 @@ public class ReportController {
 		} else {
 			log.warn("Required orderId");
 		}
-
-		// Set servlet response excel
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ServletOutputStream os = response.getOutputStream();
-		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + ".xls\"");
-
-		workbook.write(os);
-		workbook.close();
-		os.flush();
+		try{
+			workbook.write(baos);
+			workbook.close();
+			
+			// Set servlet response excel
+			
+			response.setContentType("application/vnd.ms-excel");
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + ".xls\"");
+			response.setContentLength(baos.size());
+			baos.writeTo(os);
+			
+		}catch(Exception e){
+			log.error(e.toString(), e);
+		} finally {
+			os.flush();
+			os.close();
+			baos.close();
+		}
 
 		return null;
 	}
+	
+	@RequestMapping(value = "ordersummary/excel", method = RequestMethod.GET)
+	String generateOrderSummaryExcel(@ModelAttribute OrderSummaryForm form, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		log.info("search condition: " + form.toString());
+        setOrderSummarySearchFrom(form, model);
+		List<SearchOrderDTO> list = orderService.searchOrderForReport(form);
+		if(list != null && list.size() > 0){
+			ArrayList<Long> orderId = new ArrayList<>();
+			
+			for (SearchOrderDTO dto : list) {
+				orderId.add(dto.getOrderId());
+			}
+			
+			return generateOrderExcel(orderId.toArray(new Long[orderId.size()]), request, response);
+		}
+
+		return null;
+	}
+	
+	 /**
+     * Set all required search condition for order summary page
+     * @param form Order Summary form
+     * @param model Model attributes
+     */
+    private void setOrderSummarySearchFrom(final OrderSummaryForm form, final Model model){
+        final List<ProductTypeDTO> productTypes = productService.findProductTypeByBrandId(form.getBrandId());
+        model.addAttribute("productType", productTypes);
+        final List<OrderStatusDTO> orderStatus = orderService.findAllOrderStatus();
+        model.addAttribute("orderStatus", orderStatus);
+    }
+
 
 	@RequestMapping(value = "order/pdf", method = RequestMethod.GET)
 	@Transactional
@@ -213,20 +263,15 @@ public class ReportController {
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
 			
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, connection);
-
-			response.setContentType("application/x-pdf");
-			response.setHeader("Content-disposition", "inline; filename="+order.getOrderCode()+".pdf");
-
-			
-		    
 			JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
 			
+			response.setContentType("application/x-pdf");
+			response.setHeader("Content-disposition", "inline; filename="+order.getOrderCode()+".pdf");
 			response.setContentLength(baos.size());
+			
 			baos.writeTo(outStream);
 			
 			jasperStream.close();
-			
-
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null) {

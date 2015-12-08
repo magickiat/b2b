@@ -114,7 +114,7 @@
 						sum += parseInt($(this).val());
 					}
 				});
-				$('#'+ $(this).val()).text(sum);
+				$('#'+ $(this).val()).text(formatNumber(sum));
 			}
 		});
 	}

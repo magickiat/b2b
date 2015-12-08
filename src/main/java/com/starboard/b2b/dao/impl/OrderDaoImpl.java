@@ -53,6 +53,7 @@ public class OrderDaoImpl implements OrderDao {
 		return (SearchOrderDTO) sessionFactory.getCurrentSession().createQuery(searchQuery).setString("orderCode", orderCode).uniqueResult();
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public SearchResult<SearchOrderDTO> search(CommonSearchRequest<OrderSummaryForm> searchRequest) {
 
@@ -153,5 +154,52 @@ public class OrderDaoImpl implements OrderDao {
 				+ " and o.orderId in (:orderId) "
 				+ " order by o.orderId";
 		return sessionFactory.getCurrentSession().createQuery(searchQuery).setParameterList("orderId", ordersId).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<SearchOrderDTO> searchOrderSummaryForReport(OrderSummaryForm form) {
+
+		final String ordersQuery = "SELECT " +
+				" new com.starboard.b2b.dto.search.SearchOrderDTO( " +
+				" o.orderId, " +
+				" o.orderCode, " +
+				" c.nameEn, " +
+				" p.productTypeName, " +
+				" o.orderDate, " +
+				" o.expectShipmentDate, " +
+				" os.orderStatusName, " +
+				" o.paymentMethodId, " +
+				" o.shippingId) " +
+				"FROM Orders o, ProductType p, Cust c, OrderStatus os " +
+				"WHERE o.brandGroupId = p.productTypeId " +
+				"AND o.custId = c.custId " +
+				"AND o.orderStatus = os.orderStatusId " +
+				"AND (:keyword IS NULL OR (" +
+				"	o.orderCode LIKE :keyword" +
+				"	OR c.nameEn LIKE :keyword" +
+				"	OR p.productTypeName LIKE :keyword" +
+				"	OR os.orderStatusName LIKE :keyword" +
+				"))" +
+				"AND (:productTypeId = 0 OR p.productTypeId = :productTypeId) " +
+				"AND (:orderStatusId IS NULL OR os.orderStatusId = :orderStatusId) " +
+				"AND ((:fromDate IS NULL OR :toDate IS NULL) OR ( DATE(o.orderDate) BETWEEN :fromDate AND :toDate)) " +
+				"AND (:custId = 0 OR o.custId = :custId) " +
+				"ORDER BY o.orderDate DESC ";
+			
+		final String keyword = StringUtils.isEmpty(form.getKeyword()) ? null : "%"+form.getKeyword()+"%";
+		final int productTypeId = StringUtils.isEmpty(form.getSelectedBrand()) ? 0 : Integer.parseInt(form.getSelectedBrand());
+		final String orderStatusId = StringUtils.isEmpty(form.getSelectedStatus()) ? null : form.getSelectedStatus();
+		final String fromDate = StringUtils.isEmpty(form.getDateFrom()) ? null : form.getDateFrom();
+		final String toDate = StringUtils.isEmpty(form.getDateTo()) ? null : form.getDateTo();
+		final long custId = form.getCustId();
+		return sessionFactory.getCurrentSession().createQuery(ordersQuery)
+				.setString("keyword", keyword)
+				.setInteger("productTypeId", productTypeId)
+				.setString("orderStatusId", orderStatusId)
+				.setString("fromDate", fromDate)
+				.setString("toDate", toDate)
+				.setLong("custId", custId)
+				.list();
 	}
 }

@@ -344,4 +344,10 @@ public class OrderServiceImpl implements OrderService {
 	public List<SearchOrderDetailDTO> searchOrderDetail(Long[] ordersId) {
 		return orderDetailDao.searchOrderDetail(ordersId);
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<SearchOrderDTO> searchOrderForReport(OrderSummaryForm orderSummaryForm) {
+		return orderDao.searchOrderSummaryForReport(orderSummaryForm);
+	}
 }
