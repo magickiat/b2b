@@ -23,7 +23,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.starboard.b2b")
+@ComponentScan(basePackages = {"com.starboard.b2b.web"})
 @PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
 public class WebConfig extends WebMvcConfigurerAdapter {
 

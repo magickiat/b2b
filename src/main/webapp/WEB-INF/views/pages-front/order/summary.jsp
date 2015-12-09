@@ -54,7 +54,7 @@
                         </div>
                         <div class="col-md-3">
                             <button class="btn btn-success" onclick="submitForm()" style="width: 100px;">Search</button>
-                            <button class="btn btn-default" style="width: 100px;">Excel</button>
+                            <button class="btn btn-default" onclick="exportExcel()" style="width: 100px;">Excel</button>
                         </div>
                     </div>
                     <%-- Search criteria row 2--%>
@@ -105,15 +105,15 @@
     </div>
 </div>
 
-<%@include file="/WEB-INF/views/include/common_footer.jspf" %>
 <%@include file="/WEB-INF/views/include/common_js.jspf" %>
+<%@include file="/WEB-INF/views/include/common_footer.jspf" %>
 
-<script src="<c:url value="/scripts/assets/js/jquery.backstretch.min.js"/>"></script>
 <script src="<c:url value="/scripts/assets/datepicker/moment-with-locales.js"/>"></script>
 <script src="<c:url value="/scripts/assets/datepicker/bootstrap-datetimepicker.js"/>"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
-        $.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.png"/>");
+    	// datepicker
         var dateFromPicker = $('#dateFromPicker');
         var dateToPicker = $('#dateToPicker');
         dateFromPicker.datetimepicker({locale: 'th', format: 'YYYY-MM-DD'});
@@ -130,6 +130,14 @@
      * Submit form order
      **/
     function submitForm(){
+    	var action = '<c:url value="/frontend/order/summary/search-action" />';
+    	$('#orderSummaryForm').attr('action', action);
+        $('#orderSummaryForm').submit();
+    }
+    
+    function exportExcel(){
+    	var action = '<c:url value="/report/ordersummary/excel" />';
+    	$('#orderSummaryForm').attr('action', action);
         $('#orderSummaryForm').submit();
     }
 </script>

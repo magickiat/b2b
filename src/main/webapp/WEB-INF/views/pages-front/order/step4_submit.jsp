@@ -33,11 +33,6 @@
 	</div>
 	<%@include file="/WEB-INF/views/include/common_footer.jspf" %>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
-	<script src="<c:url value="/scripts/assets/js/jquery.backstretch.min.js"/>"></script>
-	<script>
-		jQuery(document).ready(function() {
-		 	$.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.png"/>");
-		});
-	</script>
+	
 </body>
 </html>

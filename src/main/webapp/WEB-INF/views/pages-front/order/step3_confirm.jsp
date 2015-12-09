@@ -143,14 +143,12 @@
 																TBA
 															</c:when>
 															<c:otherwise>
-																<span id="amount-${ rowCount.index }"> <fmt:formatNumber
-																		pattern="#,###" maxIntegerDigits="12"
-																		value="${ p.price.amount }">
-																	</fmt:formatNumber>
+																<span id="amount-${ rowCount.index }"> 
+																<fmt:formatNumber pattern="#,###" maxIntegerDigits="12" value="${ p.price.amount }">
+																</fmt:formatNumber>
 																</span>
 															</c:otherwise>
 														</c:choose></td>
-
 
 													<td><c:choose>
 															<c:when test="${ empty p.price }">TBA</c:when>
@@ -227,8 +225,7 @@
 
 		</form>
 
-		<form id="remove-item"
-			action='<c:url value="/frontend/order/step3/remove" />' method="post">
+		<form id="remove-item" action='<c:url value="/frontend/order/step3/remove" />' method="post">
 			<input type="hidden" id="productId" name="productId" value="" />
 		</form>
 	</div>
@@ -236,8 +233,7 @@
 	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 
-	<c:url var="updateToCartUrl"
-		value="/frontend/order/update-to-cart.json" />
+	<c:url var="updateToCartUrl" value="/frontend/order/update-to-cart.json" />
 
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -358,13 +354,6 @@
 			$('.dispatch-to-address').hide();
 			$('#address-' + $(addressId).val()).show();
 		}
-	</script>
-	<script
-		src="<c:url value="/scripts/assets/js/jquery.backstretch.min.js"/>"></script>
-	<script>
-		jQuery(document).ready(function() {
-		 	$.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.png"/>");
-		});
 	</script>
 </body>
 </html>

@@ -30,6 +30,9 @@ public interface OrderDao {
 	 * @return Search result
 	 */
 	SearchResult<SearchOrderDTO> search(CommonSearchRequest<OrderSummaryForm> searchRequest);
+	
+	// for generate excel in order summary page
+	List<SearchOrderDTO> searchOrderSummaryForReport(OrderSummaryForm searchRequest);
 
 	List<OrdAddress> findOrderAddress(String orderCode);
 
