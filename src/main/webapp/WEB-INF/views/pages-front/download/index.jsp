@@ -18,45 +18,45 @@
 		<div class="row">
 			<div class="col-md-12 bg_color" style="padding-bottom: 50px;">
 				<div class="row row-header2 header2 txtupper">Download</div>
-			    <div>
+			    <div class="">
 					<table class="table table-hover">
 				      <thead>
 				        <tr>
 				          <th style="width: 30px;">#</th>
-				          <th>First Name</th>
-				          <th>Last Name</th>
+				          <th style="width: 20%;">File Name</th>
+				          <th>Descript</th>
 				        </tr>
 				      </thead>
 				      <tbody>
 				        <tr>
 				          <th scope="row">1</th>
 				          <td>Mark</td>
-				          <td>Otto</td>
+				          <td>Starboard Windsurfing 2015</td>
 				        </tr>
 				        <tr>
-				          <th scope="row">1</th>
+				          <th scope="row">2</th>
 				          <td>Mark</td>
-				          <td>Otto</td>
+				          <td>Starboard Windsurfing 2015</td>
 				        </tr>
 				        <tr>
-				          <th scope="row">1</th>
+				          <th scope="row">3</th>
 				          <td>Mark</td>
-				          <td>Otto</td>
+				          <td>Starboard Windsurfing 2015</td>
 				        </tr>
 				        <tr>
-				          <th scope="row">1</th>
+				          <th scope="row">4</th>
 				          <td>Mark</td>
-				          <td>Otto</td>
+				          <td>Starboard Windsurfing 2015</td>
 				        </tr>
 				        <tr>
-				          <th scope="row">1</th>
+				          <th scope="row">5</th>
 				          <td>Mark</td>
-				          <td>Otto</td>
+				          <td>Starboard Windsurfing 2015</td>
 				        </tr>
 				        <tr>
-				          <th scope="row">1</th>
+				          <th scope="row">6</th>
 				          <td>Mark</td>
-				          <td>Otto</td>
+				          <td>Starboard Windsurfing 2015</td>
 				        </tr>
 				      </tbody>
 				    </table>

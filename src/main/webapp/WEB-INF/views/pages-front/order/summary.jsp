@@ -81,8 +81,8 @@
                             </div>
                         </div>
                         <div class="col-md-7">&nbsp;</div>
+                        <div class="col-md-12">&nbsp;</div>
                     </div>
-                    <hr>
                 </form:form>
             </div>
         </div>
@@ -116,8 +116,8 @@
     	// datepicker
         var dateFromPicker = $('#dateFromPicker');
         var dateToPicker = $('#dateToPicker');
-        dateFromPicker.datetimepicker({locale: 'th', format: 'YYYY-MM-DD'});
-        dateToPicker.datetimepicker({locale: 'th', format: 'YYYY-MM-DD', useCurrent: false});
+        dateFromPicker.datetimepicker({locale: 'en', format: 'YYYY-MM-DD'});
+        dateToPicker.datetimepicker({locale: 'en', format: 'YYYY-MM-DD', useCurrent: false});
         dateFromPicker.on("dp.change", function (e) {
             $('#dateToPicker').data("DateTimePicker").minDate(e.date);
         });

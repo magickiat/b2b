@@ -21,11 +21,19 @@
 <%@include file="/WEB-INF/views/pages-front/include/common_header.jspf" %>
 
 	<div class="container">
-		<c:set var="orderId" value="${ orderReport.orderId }"/>
-		<%@include file="/WEB-INF/views/include/export_report.jspf" %>
-		
 	    <div class="row">
-	       <%@include file="orderSummary.jspf" %>
+	    	<div class="col-md-12 bg_color">
+	    		<div class="row row-header2 header2 txtupper">order report</div>
+	    		<c:set var="orderId" value="${ orderReport.orderId }"/>
+				<%@include file="/WEB-INF/views/include/export_report.jspf" %>
+				<div class="row">&nbsp;</div>
+	    	</div>
+	    </div>
+	    <div class="row">&nbsp;</div>
+	    <div class="row">
+	    	<div class="col-md-12 bg_color showline2">
+	    		<%@include file="orderSummary.jspf" %>
+	    	</div>
 	    </div>
     </div>
     

@@ -25,6 +25,11 @@
 				<li><a href="<c:url value="/frontend/user/view" />">Profile</a></li>
 				<!-- <li><a href="#">Accounting</a></li> -->
 				<li><a href="<c:url value="/frontend/contactus" />">Contact us</a></li>
+				<li>
+					<sec:authorize access="isAuthenticated()">
+						<a onclick="logout()">Log out</a>
+					</sec:authorize>
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -41,9 +46,11 @@
 			</div>
 			<div class="col-sm-8">
 				<span class="glyphicon glyphicon-user"></span> <strong>${user.name}</strong>
+				<!-- 
 				<sec:authorize access="isAuthenticated()">
 					<span style="margin-left: 50px;" onclick="logout()"><a href="#">Logout</a></span>
 				</sec:authorize>
+				-->
 			</div>
 
 			<%-- Shopping cart --%>
