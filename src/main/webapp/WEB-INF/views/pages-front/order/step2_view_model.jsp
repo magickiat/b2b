@@ -223,6 +223,7 @@
 					/* console.log('begin animate'); */
 					$('#dialog').html('Added to cart');
 					$('#dialog').dialog({
+						dialogClass: 'style1',
 					    autoOpen: true,
 					    show: "blind",
 					    hide: "fadeOut",

@@ -311,8 +311,13 @@
 			$('<div></div>').appendTo('body')
 			  .html('<div><h6>Do you want to delete order product code ' + productCode + '?</h6></div>')
 			  .dialog({
-			      modal: true, title: 'message', zIndex: 10000, autoOpen: true,
-			      width: 'auto', resizable: false,
+				  dialogClass: 'style1',
+			      modal: true, 
+			      title: 'message', 
+			      zIndex: 10000, 
+			      autoOpen: true,
+			      width: 'auto', 
+			      resizable: false,
 			      buttons: {
 			          Yes: function () {
 			             // doFunctionForYes();
