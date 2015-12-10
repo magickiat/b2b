@@ -41,65 +41,73 @@
 
 	<div class="" id="shadow2">
 		<div class="container">
-			<div class="col-sm-1">
-				<p class="text-right">Welcome :</p>
-			</div>
-			<div class="col-sm-8">
-				<span class="glyphicon glyphicon-user"></span> <strong>${user.name}</strong>
-				<!-- 
-				<sec:authorize access="isAuthenticated()">
-					<span style="margin-left: 50px;" onclick="logout()"><a href="#">Logout</a></span>
-				</sec:authorize>
-				-->
+			<div class="col-sm-9">
+				Welcome : <span class="glyphicon glyphicon-user"></span> <strong>${user.name}</strong>
 			</div>
 
 			<%-- Shopping cart --%>
-			<div class="col-sm-3" style="text-align: right;">
+			<div class="col-sm-3" style="">
 				<input type="hidden" id="totalQuantity" value="0" />
-				<div id="cartItems" onclick="showCartDetails()">
+				<div id="cartItems">
 					<c:if test="${ not empty showShoppingCart }">
-
-						<img alt="shopping cart" id="shoppingCart"
-							src='<c:url value="/images/pages-front/icon/ico_cart.png" />' />
-
+					
 						<%-- Set total quantity: (no_of_item) items --%>
 						<c:set var="totalQuantity" value="0" />
-						<div id="cartDetails" style="display: none;">
-
-							<c:choose>
-								<c:when test="${ empty cart }">
-									<div style="width: 200px;">No item</div>
-								</c:when>
-								<c:otherwise>
-									<div class="row"
-										style="font-family: 'francois_oneregular'; border-bottom: dashed 1px #ccc;">
-										<div class="col-sm-1">No</div>
-										<div class="col-sm-7">Product Name</div>
-										<div class="col-sm-2">Order</div>
-										<div class="col-sm-2">UOM</div>
-									</div>
-									<c:forEach var="product" items="${ cart }" varStatus="rowNum">
-										<c:set var="totalQuantity"
-											value="${ totalQuantity + product.value.productQuantity }" />
-										<div class="row product-item-${ product.key }"
-											style="font-family: 'francois_oneregular'; border-bottom: dashed 1px #ccc;">
-											<div class="col-sm-1">${ rowNum.index + 1 }</div>
-											<div class="col-sm-7">${ product.value.productNameEn }</div>
-											<div class="col-sm-2">${ product.value.productQuantity }</div>
-											<div class="col-sm-2">${ product.value.productUnitId }</div>
+						
+						<div id="cartDetails" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+						            	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						            	<h5 class="modal-title" id="important-msg-label">
+						            		<img src="<c:url value="/images/pages-front/icon/ico_cart.png" />" />  &nbsp; MY CART
+						            	</h5>
+						          	</div>
+									<div class="modal-body">
+										<div class="row" style="font-family: 'francois_oneregular'; border-bottom: dashed 1px #ccc;">
+											<div class="col-sm-1">No</div>
+											<div class="col-sm-7">Product Name</div>
+											<div class="col-sm-2">Order</div>
+											<div class="col-sm-2">UOM</div>
 										</div>
-									</c:forEach>
-									<div class="row text-center" style="padding: 5px 0 5px;">
-										<input type="button" class="btn btn-success" value="CHECK OUT"
-											onclick="checkout()" />
+										<div id="cartDetails_List">
+											<c:choose>
+												<c:when test="${ empty cart }">
+													<div class="col-sm-12 text-center" style="padding: 5px 0 5px;">No item</div>
+													<div class="row"></div>
+												</c:when>
+												<c:otherwise>
+													<c:forEach var="product" items="${ cart }" varStatus="rowNum">
+														<c:set var="totalQuantity" value="${ totalQuantity + product.value.productQuantity }" />
+														<div class="row product-item-${ product.key }" style="font-family: 'francois_oneregular'; border-bottom: dashed 1px #ccc;">
+															<div class="col-sm-1">${ rowNum.index + 1 }</div>
+															<div class="col-sm-7">${ product.value.productNameEn }</div>
+															<div class="col-sm-2">${ product.value.productQuantity }</div>
+															<div class="col-sm-2">${ product.value.productUnitId }</div>
+														</div>
+													</c:forEach>
+												</c:otherwise>
+											</c:choose>
+										</div>
 									</div>
-								</c:otherwise>
-							</c:choose>
-
+						          	<div class="modal-footer">
+						            	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						            	<button type="button" class="btn btn-success" id="dont-show-again" onclick="checkout()">CHECK OUT</button>
+						            </div>
+								</div>
+							</div>
 						</div>
-						<span>(</span>
-						<span id="numOfProduct">${ totalQuantity }</span>
-						<span>) items</span>
+						
+						<span onclick="showCartDetails()" style="cursor: pointer; float: right;">
+							<span>(</span>
+							<span id="numOfProduct">${ totalQuantity }</span>
+							<span>) items</span>
+						</span>
+						
+						<img alt="shopping cart" id="shoppingCart" onclick="showCartDetails()" 
+							class="img-btn-cursor" style="float: right; margin-right: 5px;"
+							src='<c:url value="/images/pages-front/icon/ico_cart.png" />' />
+						
 					</c:if>
 				</div>
 			</div>
@@ -109,11 +117,19 @@
 
 <script type="text/javascript">
 	function showCartDetails() {
-		$("#cartDetails").dialog({
-			resizable : false,
-			modal : true,
-			width : 'auto'
-		});
+		//$("#cartDetails").dialog({
+		//	resizable : false,
+		//	modal : true,
+		//	width : 'auto'
+		//});
+		var total_qty = $("#numOfProduct").text();
+		if(total_qty > 0){
+			$('#dont-show-again').show();
+		}
+		else{
+			$('#dont-show-again').hide();
+		}
+		$("#cartDetails").modal();
 	}
 
 	function logout() {

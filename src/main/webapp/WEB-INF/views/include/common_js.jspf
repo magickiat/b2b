@@ -10,16 +10,13 @@
 <script type="text/javascript" src="${jquery_ui}"></script>
 <script src="<c:url value="/scripts/assets/js/jquery.backstretch.min.js"/>"></script>
 <script src="<c:url value="/scripts/assets/js/scripts.js"/>"></script>
-<!--[if lt IE 10]>
-    <script src="<c:url value="/scripts/assets/js/placeholder.js"/>"></script>
-<![endif]-->
 
 
 <script type="text/javascript">
 
 	$(document).ready(function() {
 		
-		$.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.png"/>");
+		$.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbg.jpg"/>");
 		
 		$('nav > ul.nav > li').click(function(e) {
 			$('ul.nav > li').removeClass('active');
@@ -46,6 +43,9 @@
 
 		// Header
 		var row = '';
+		
+		/*
+		comment by nui 2015-12-10 20:51 for new in layout medal popup
 		row += '<div class="row">';
 
 		row += '<div class="col-sm-1">';
@@ -65,39 +65,46 @@
 		row += '</div>'
 
 		row += '</div>';
-		$
-				.each(
-						data,
-						function(index, item) {
-							var productName = item.productNameEn;
-							var quantity = item.productQuantity;
-							var productUnitId = item.productUnitId;
+		*/
+		$.each(data,function(index, item) {
+					var productName = item.productNameEn;
+					var quantity = item.productQuantity;
+					var productUnitId = item.productUnitId;
 
-							row += '<div class="row product-item-'+ item.productId +'">';
+					row += '<div class="row product-item-'+ item.productId +'" style="font-family: francois_oneregular; border-bottom: dashed 1px #ccc;">';
 
-							row += '<div class="col-sm-1">';
-							row += (index + 1);
-							row += '</div>'
+					row += '<div class="col-sm-1">';
+					row += (index + 1);
+					row += '</div>'
 
-							row += '<div class="col-sm-7">';
-							row += escapeHtml(productName);
-							row += '</div>';
+					row += '<div class="col-sm-7">';
+					row += escapeHtml(productName);
+					row += '</div>';
 
-							row += '<div class="col-sm-2">';
-							row += quantity;
-							row += '</div>'
+					row += '<div class="col-sm-2">';
+					row += quantity;
+					row += '</div>'
 
-							row += '<div class="col-sm-2">';
-							row += productUnitId;
-							row += '</div>'
+					row += '<div class="col-sm-2">';
+					row += productUnitId;
+					row += '</div>'
 
-							row += '</div>';
+					row += '</div>';
 
-							totalQuantity = totalQuantity + (+quantity);
-						});
-		row += '<div class="row text-center"><input type="button" class="btn btn-success" value="CHECK OUT" onclick="checkout()" /></div>';
+					totalQuantity = totalQuantity + (+quantity);
+				});
 		
-		$('#cartDetails').html(row);
+		//begin comment by nui 2015-12-10 20:51, new in layout modal popup 
+		//row += '<div class="row text-center"><input type="button" class="btn btn-success" value="CHECK OUT" onclick="checkout()" /></div>';
+		//$('#cartDetails').html(row);
+		$('#cartDetails_List').html(row);
+		if(totalQuantity > 0){
+			$('#dont-show-again').show();
+		}
+		else{
+			$('#dont-show-again').hide();
+		}
+		//end comment by nui 2015-12-10 20:51, new in layout modal popup
 		addQuantity(totalQuantity);
 	}
 

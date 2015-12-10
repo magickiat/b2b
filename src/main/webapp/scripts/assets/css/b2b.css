@@ -81,7 +81,7 @@ input::-webkit-inner-spin-button {
 }
 
 #cartItems {
-	cursor: pointer;
+	/*cursor: pointer;*/
 }
 
 #addListToCart {

@@ -234,6 +234,9 @@
 					    }
 					});
 					
+					//clear txt qty
+					$('#quantity').val('0')
+					
 				}).fail(function(result) {
 					alert(result.responseText);
 				});
