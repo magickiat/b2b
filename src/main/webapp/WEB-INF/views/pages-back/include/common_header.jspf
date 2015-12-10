@@ -22,7 +22,7 @@
     </div>
 
 </div>
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default navbar-static-top bg_color">
     <ul class="nav navbar-nav">
         <li role="presentation" class="active"><a
                 href='<c:url value="/backend/order/" />'>Order</a></li>
