@@ -1,0 +1,13 @@
+
+@font-face {
+    font-family: 'francois_oneregular';
+    src: url('../fonts/francoisone-webfont-webfont.eot');
+    src: url('../fonts/francoisone-webfont-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/francoisone-webfont-webfont.woff2') format('woff2'),
+         url('../fonts/francoisone-webfont-webfont.woff') format('woff'),
+         url('../fonts/francoisone-webfont-webfont.ttf') format('truetype'),
+         url('../fonts/francoisone-webfont-webfont.svg#francois_oneregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
