@@ -1,8 +1,12 @@
 package com.starboard.b2b.web.controller.backend;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -14,6 +18,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.starboard.b2b.dto.B2BFile;
 import com.starboard.b2b.exception.B2BException;
@@ -33,7 +40,7 @@ public class AdminController {
 		return "pages-back/admin/index";
 	}
 
-	@RequestMapping(value = "/image/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/file/list", method = RequestMethod.GET)
 	String list(@RequestParam(name = "folder", required = false) String folder, Model model) throws B2BException {
 
 		String rootPath = env.getProperty("upload.path");
@@ -79,12 +86,12 @@ public class AdminController {
 		return "pages-back/admin/image/index";
 	}
 
-	@RequestMapping(value = "new-folder", method = RequestMethod.POST)
+	@RequestMapping(value = "/file/new-folder", method = RequestMethod.POST)
 	String newFolder(@RequestParam(name = "subFolder", required = true) String subFolder,
 			@RequestParam(name = "folderName", required = true) String folderName, Model model) {
 
 		log.info("Sub folder = {}\tNew folder name: {}", subFolder, folderName);
-		
+
 		String rootPath = env.getProperty("upload.path");
 		if (rootPath == null) {
 			throw new B2BException("Not found upload path");
@@ -107,12 +114,56 @@ public class AdminController {
 		log.info("new folder path: " + newFolder.getAbsolutePath());
 		boolean success = newFolder.mkdirs();
 		log.info("success: " + success);
-		
+
 		if (!success) {
 			throw new B2BException("Cannot create folder");
 		}
 
 		return list(subFolder, model);
 
+	}
+
+	@RequestMapping(value = "/file/upload", method = RequestMethod.POST)
+	public @ResponseBody List<B2BFile> upload(@RequestParam String subFolder, MultipartHttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+
+		Map<String, MultipartFile> fileMap = request.getFileMap();
+		// Maintain a list to send back the files info. to the client side
+		List<B2BFile> uploadedFiles = new ArrayList<>();
+
+		// Iterate through the map
+		for (MultipartFile uploadFile : fileMap.values()) {
+
+			log.info("uploaded file: {}\tContent type: {}", uploadFile.getOriginalFilename(), uploadFile.getContentType());
+			B2BFile file = new B2BFile();
+			file.setName(uploadFile.getName());
+			file.setNameWithPath(subFolder + uploadFile.getName());
+			file.setSize(uploadFile.getSize());
+			file.setContentType(uploadFile.getContentType());
+
+			if (uploadFile.getSize() < 1) {
+				file.setRemark("File size is zero");
+			} else if (!B2BFileUtil.isImage(uploadFile.getContentType())) {
+				file.setImage(false);
+			} else {
+				file.setImage(true);
+
+				// Save the file to local disk
+				String rootPath = env.getProperty("upload.path");
+				if (rootPath == null) {
+					throw new B2BException("Not found upload path");
+				}
+				try {
+					B2BFileUtil.saveFileToLocalDisk(rootPath, subFolder, uploadFile);
+				} catch (Exception e) {
+					log.error(e.getMessage(), e);
+					file.setRemark(e.getMessage());
+				}
+			}
+			 // adding the file info to the list
+			uploadedFiles.add(file);
+		}
+
+		return uploadedFiles;
 	}
 }

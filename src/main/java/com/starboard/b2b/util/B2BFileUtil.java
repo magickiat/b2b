@@ -1,13 +1,17 @@
 package com.starboard.b2b.util;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.starboard.b2b.dto.B2BFile;
 
@@ -46,11 +50,26 @@ public class B2BFileUtil {
 				f.setNameWithPath(file.getAbsolutePath().substring(rootFolder.length()));
 				f.setFullPath(file.getAbsolutePath());
 				f.setFolder(file.isDirectory());
+//				f.setContentType(contentType); // Find content type before set
 				files.add(f);
 			}
 		}
 		
 
 		return files;
+	}
+
+	public static boolean isImage(String contentType) {
+		return contentType.startsWith("image/");
+	}
+
+	public static void saveFileToLocalDisk(String root, String folder, MultipartFile uploadFile) throws IOException {
+		File parent = new File(root, folder);
+		if(parent.exists() && parent.isDirectory()){
+			File dest = new File(parent.getAbsolutePath(), uploadFile.getOriginalFilename());
+			FileUtils.writeByteArrayToFile(dest, uploadFile.getBytes(), false);
+		}else{
+			throw new FileNotFoundException("Parent folder not found: " + folder);
+		}
 	}
 }

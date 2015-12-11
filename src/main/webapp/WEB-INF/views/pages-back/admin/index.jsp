@@ -19,7 +19,7 @@
 			<h2>Welcome Admin page</h2>
 		</div>
 		<div class="row">
-			<a href='<c:url value="/backend/admin/image/list" />'>Upload image</a>
+			<a href='<c:url value="/backend/admin/file/list" />'>Upload image</a>
 		</div>
 	</div>
 	

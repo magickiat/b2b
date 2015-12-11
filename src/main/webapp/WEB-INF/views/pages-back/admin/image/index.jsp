@@ -11,6 +11,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Starboard Windsurfing</title>
 <%@include file="/WEB-INF/views/include/common_css.jspf"%>
+
+<link rel="stylesheet" href="<c:url value="/scripts/dropzone/dropzone.css" />">
+
 </head>
 <body>
 	<div class="container">
@@ -22,28 +25,18 @@
 		</div>
 
 		<%-- Folder --%>
-		<div class="row bg_color">
+		<div class="row row-header2 header2 bg_color">
 			<div class="col-sm-12">
-				<form id="newFolderForm"
-					action='<c:url value="/backend/admin/new-folder" />' method="post"
-					style="display: none;">
-					<input type="hidden" id="subFolder" name="subFolder"
-						value="${ subFolder }" />
-					<div>
-						Folder name: <input type="text" id="folderName" name="folderName" />
-					</div>
+				<button class="btn btn-default" onclick="upload()">Upload</button>
 
-					<div>
-						<input type="submit" value="Create" />
-					</div>
-				</form>
-				<button class="btn btn-default" onclick="newFolder()">New
-					Folder</button>
+				<button class="btn btn-default" class="btn btn-default"
+					onclick="newFolder()">New Folder</button>
 				<button class="btn btn-default" onclick="back()">Back</button>
 			</div>
 		</div>
 		<div class="row bg_color">
 			<div class="col-sm-12">
+				<label for="selectedFolder">Image Path:</label>
 				<c:if test="${ not empty folders }">
 					<select id="selectedFolder" name="selectedFolder"
 						class="form-control" onchange="list(this)">
@@ -101,15 +94,57 @@
 
 	</div>
 
+
+
+	<%-- New folder form --%>
+	<form id="newFolderForm"
+		action='<c:url value="/backend/admin/file/new-folder" />' method="post"
+		style="display: none;">
+		<input type="hidden" id="subFolder" name="subFolder"
+			value="${ subFolder }" />
+		<div>
+			Folder name: <input type="text" id="folderName" name="folderName" />
+		</div>
+	</form>
+
+	<%-- Upload dialog --%>
+	<div id="uploadDialog" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="modal-title">
+						<ul class="nav nav-pills" id="ImgTab">
+							<li class="active"><a href="#uplod">Upload</a></li>
+						</ul>
+					</div>
+					<div id='content' class="tab-content">
+						<div class="tab-pane active" id="uplod">
+							<form action="UploadImages" class="dropzone"
+								id="my-awesome-dropzone" enctype="multipart/form-data">
+								
+								</form>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="model-cl1">Done</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
+
+	<script type="text/javascript"
+		src='<c:url value="/scripts/dropzone/dropzone.js" />'></script>
 
 	<script type="text/javascript">
 		function list(folder) {
 			if (folder.value) {
 				folder = folder.value;
 			}
-			window.location.href = '<c:url value="/backend/admin/image/list?folder='
+			window.location.href = '<c:url value="/backend/admin/file/list?folder='
 					+ folder + '" />';
 		}
 
@@ -119,10 +154,7 @@
 
 		function newFolder() {
 			$('#newFolderForm').dialog({
-				open : function() {
-					// On open, hide the original submit button
-					$(this).find("[type=submit]").hide();
-				},
+
 				buttons : [ {
 					text : "Create",
 					click : function() {
@@ -137,6 +169,35 @@
 				} ]
 			});
 		}
+
+		function upload() {
+			$("#uploadDialog").modal('show');
+		}
+		
+		Dropzone.options.myAwesomeDropzone = {
+		        paramName: "file",
+		        maxFilesize: 10,
+		        url: 'upload.json?subFolder=${subFolder}',
+		        uploadMultiple: true,
+		        parallelUploads: 5,
+		        maxFiles: 20,
+		        acceptedFiles: "image/*",
+		        init: function () {
+		            var cd;
+		            this.on("success", function (file, response) {
+		                $('.dz-progress').hide();
+		                $('.dz-size').hide();
+		                $('.dz-error-mark').hide();
+		                console.log(response);
+		                console.log(file);
+		                cd = response;
+		            });
+		        }
+		    };
+		$(document).on('click', '#model-cl1', function(f) {
+	        $('#uploadDialog').modal('hide');
+	        list('${subFolder}');
+	    });
 	</script>
 </body>
 </html>
