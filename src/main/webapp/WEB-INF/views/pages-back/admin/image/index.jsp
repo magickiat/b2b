@@ -67,6 +67,7 @@
 				<thead>
 					<tr>
 						<th>No</th>
+						<th>Sub folder</th>
 						<th>File name</th>
 						<th>Type</th>
 					</tr>
@@ -77,12 +78,13 @@
 						<tr>
 
 							<td>${ rowNum.index + 1 }</td>
+							<td>${ subFolder }</td>
 							<td><c:choose>
 									<c:when test="${ item.folder }">
-										<a href="#" onclick="list('${ item.nameWithPath }')">${ item.nameWithPath }</a>
+										<a href="#" onclick="list('${ item.nameWithPath }')">${ item.name }</a>
 									</c:when>
 									<c:otherwise>
-										<a href='<c:url value="/upload/${ item.nameWithPath }" />'>${ item.nameWithPath }</a>
+										<a href='<c:url value="/upload/${ item.nameWithPath }" />'>${ item.name }</a>
 									</c:otherwise>
 								</c:choose></td>
 							<td><c:choose>
@@ -116,7 +118,24 @@
 		}
 
 		function newFolder() {
-			$('#newFolderForm').dialog();
+			$('#newFolderForm').dialog({
+				open : function() {
+					// On open, hide the original submit button
+					$(this).find("[type=submit]").hide();
+				},
+				buttons : [ {
+					text : "Create",
+					click : function() {
+						newFolderForm.submit();
+					},
+					type : "submit"
+				}, {
+					text : "Close",
+					click : function() {
+						$(this).dialog("close");
+					}
+				} ]
+			});
 		}
 	</script>
 </body>
