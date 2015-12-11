@@ -37,11 +37,7 @@
 							<c:out value="${ p.product.productNameEn }"></c:out>
 						</h3>
 
-						<c:set var="imageUrl" value="/images/b2b/default_image.jpg" />
-						<c:if test="${ not empty p.product.productPictureBig }">
-							<c:set var="imageUrl" value="${ p.product.productPictureBig }" />
-						</c:if>
-						<img class="product zoomImg" src='<c:url value="${ imageUrl }" />'
+						<img class="product zoomImg" src='<c:url value="/upload/product_image/BIG/${ p.product.productCode }.jpg" />'
 							data-zoom-image='<c:url value="${ imageUrl }" />'
 							style="width: 475px;"></img>
 					</div>

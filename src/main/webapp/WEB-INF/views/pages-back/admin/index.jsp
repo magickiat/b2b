@@ -18,7 +18,7 @@
 		<div class="row">
 			<h2>Welcome Admin page</h2>
 		</div>
-		<div class="row">
+		<div class="row row-header2 header2 bg_color">
 			<a href='<c:url value="/backend/admin/file/list" />'>Upload image</a>
 		</div>
 	</div>
