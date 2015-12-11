@@ -43,12 +43,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/pages-front/images/**", "/upload/**", "/js/**", "/scripts/**", "/css/**", "/img/**", "/webjars/**", "/resources/**");
+		web.ignoring().antMatchers("/pages-front/images/**", "/upload/**", "/js/**", "/scripts/**", "/css/**", "/img/**", "/images/**", "/webjars/**", "/resources/**");
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers("/login/**", "/gen_user/**", "/gen_customer/**").permitAll()
+		http.csrf().disable().authorizeRequests().antMatchers("/login/**").permitAll()
 				.antMatchers("/backend/**").hasRole(ROLE_ADMIN)
 				.antMatchers("/frontend/**").hasAnyRole(ROLE_USER, ROLE_ADMIN)
 				.antMatchers("/report/**").authenticated()
