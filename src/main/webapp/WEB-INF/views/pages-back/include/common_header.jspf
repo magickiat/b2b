@@ -31,7 +31,7 @@
 	              	<span class="caret"></span>
               	</a>
               <ul class="dropdown-menu">
-              	<li><a href="#">Admin</a></li>
+              	<li role="presentation"><a href='<c:url value="/backend/admin/index" />'>Admin</a></li>
                 <li><a href="#">My Information</a></li>
 		        <li><a href="#">User</a></li>
 		        <li><a href="#">Role</a></li>
