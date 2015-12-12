@@ -109,7 +109,22 @@
 		</div>
 		
 		<hr/>
-		
+		<%-- List Contact --%>
+		<div class="row">
+			<div class="col-sm-10">
+				<b>Contact</b>
+			</div>
+			
+		</div>
+		<div class="row">
+			<c:forEach items="${listContact }" var="contact">
+				<%@include file="list_contact.jspf"%>
+			</c:forEach>
+			<div>
+				<c:url var="addContactUrl" value="/backend/customer/add_contact?cusId=${ customerForm.custId }" />
+				<button type="button" onclick="javascript:window.location.href = '${addContactUrl}'">Add Contact</button>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-sm-10">
 				<b>Product Brand</b>

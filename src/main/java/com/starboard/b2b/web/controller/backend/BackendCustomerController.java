@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.starboard.b2b.dto.AddressDTO;
+import com.starboard.b2b.dto.ContactDTO;
 import com.starboard.b2b.dto.CountryDTO;
 import com.starboard.b2b.dto.CustDTO;
 import com.starboard.b2b.model.User;
@@ -28,6 +29,7 @@ import com.starboard.b2b.service.UserService;
 import com.starboard.b2b.util.PagingUtil;
 import com.starboard.b2b.web.form.address.AddressForm;
 import com.starboard.b2b.web.form.brand.BrandForm;
+import com.starboard.b2b.web.form.contact.ContactForm;
 import com.starboard.b2b.web.form.customer.CreateCustomerForm;
 import com.starboard.b2b.web.form.customer.CustomerForm;
 import com.starboard.b2b.web.form.user.UserRegisterForm;
@@ -89,10 +91,12 @@ public class BackendCustomerController {
 		List<User> users = new ArrayList<User>();
 		custDto = customerService.findCustById(id);
 		List<AddressDTO> listAddress = customerService.findAddressByCustomerId(id);
+		List<ContactDTO> listContact = customerService.findContactByCustomerId(id);
 		List<CountryDTO> listCountry = customerService.listCountry();
 		if (custDto != null) {
 			users = userService.findUserByCustId(id);
 		}
+		ContactForm contactForm = new ContactForm();
 		AddressForm addrFrom = new AddressForm();
 		model.addAttribute("customerForm", custDto);
 		model.addAttribute("users", users);
@@ -100,6 +104,8 @@ public class BackendCustomerController {
 		model.addAttribute("listAddr", listAddress);
 		model.addAttribute("country", listCountry);
 		model.addAttribute("addressForm",addrFrom);
+		model.addAttribute("contactForm", contactForm);
+		model.addAttribute("listContact", listContact);
 		return "pages-back/customer/edit";
 	}
 
@@ -172,6 +178,7 @@ public class BackendCustomerController {
 		List<User> users = new ArrayList<User>();
 		custDto = customerService.findCustById(cusId);
 		List<AddressDTO> listAddress = customerService.findAddressByCustomerId(cusId);
+		List<ContactDTO> listContact = customerService.findContactByCustomerId(cusId);
 		AddressDTO addrDto = new AddressDTO();
 		addrDto.setCustId(cusId);
 		listAddress.add(addrDto);
@@ -179,6 +186,7 @@ public class BackendCustomerController {
 		if (custDto != null) {
 			users = userService.findUserByCustId(cusId);
 		}
+		ContactForm contactForm = new ContactForm();
 		AddressForm addrFrom = new AddressForm();
 		model.addAttribute("customerForm", custDto);
 		model.addAttribute("users", users);
@@ -186,6 +194,8 @@ public class BackendCustomerController {
 		model.addAttribute("listAddr", listAddress);
 		model.addAttribute("country", listCountry);
 		model.addAttribute("addressForm",addrFrom);
+		model.addAttribute("listContact", listContact);
+		model.addAttribute("contactForm", contactForm);
 		return "pages-back/customer/edit";
 	}
 	
@@ -203,5 +213,48 @@ public class BackendCustomerController {
 					addressForm.getTel1(), addressForm.getPostCode(), addressForm.getFax(), addressForm.getEmail(), addressForm.getType());
 		
 		return update(addressForm.getCustId(),model);
+	}
+	
+	@RequestMapping(value = "add_contact", method = RequestMethod.GET)
+	String addContact(@RequestParam(value = "cusId", required = true) Long cusId, Model model) throws Exception {
+		log.info("/add_Contact GET");
+		CustDTO custDto = new CustDTO();
+		List<User> users = new ArrayList<User>();
+		custDto = customerService.findCustById(cusId);
+		List<AddressDTO> listAddress = customerService.findAddressByCustomerId(cusId);
+		List<ContactDTO> listContact = customerService.findContactByCustomerId(cusId);
+		List<CountryDTO> listCountry = customerService.listCountry();
+		ContactDTO contact = new ContactDTO();
+		contact.setCustId(cusId);
+		listContact.add(contact);
+		if (custDto != null) {
+			users = userService.findUserByCustId(cusId);
+		}
+		ContactForm contactForm = new ContactForm();
+		AddressForm addrFrom = new AddressForm();
+		model.addAttribute("customerForm", custDto);
+		model.addAttribute("users", users);
+		model.addAttribute("selectedBrand", customerService.getSelectedBrand(cusId));
+		model.addAttribute("listAddr", listAddress);
+		model.addAttribute("country", listCountry);
+		model.addAttribute("addressForm",addrFrom);
+		model.addAttribute("contactForm", contactForm);
+		model.addAttribute("listContact", listContact);
+		return "pages-back/customer/edit";
+	}
+	
+	@RequestMapping(value = "save_contact", method = RequestMethod.POST)
+	String saveContactSubmit(@ModelAttribute("contactForm") @Valid ContactForm contact,
+			BindingResult binding, Model model) throws Exception {
+		log.info("/save_address POST");
+		log.warn("binding error: " + binding.hasErrors());
+		model.addAttribute("contactForm", contact);
+		
+		/*if (binding.hasErrors()) {
+			return "pages-back/customer/edit";
+		}*/
+		customerService.saveContact(contact.getContactId(),contact.getCustId(),contact.getNameEn(),contact.getNameNick(),contact.getPosition(),contact.getBirthDate()
+				,contact.getAddress(),contact.getTel(),contact.getEmail(),contact.getMobileId(),contact.getFax(),contact.getSkype(),contact.getFacebook(),contact.getTwitter());
+		return update(contact.getCustId(),model);
 	}
 }

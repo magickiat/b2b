@@ -1,5 +1,6 @@
 package com.starboard.b2b.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -7,6 +8,7 @@ import com.starboard.b2b.common.Page;
 import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.BrandDTO;
+import com.starboard.b2b.dto.ContactDTO;
 import com.starboard.b2b.dto.CountryDTO;
 import com.starboard.b2b.dto.CustDTO;
 import com.starboard.b2b.dto.CustomerDTO;
@@ -48,4 +50,9 @@ public interface CustomerService {
 	List<CountryDTO> listCountry();
 	
 	void saveAddress(Long addId, Long custId,String address,String regionCountryId,String tel1,String postCode,String fax,String email,String type);
+	
+	List<ContactDTO> findContactByCustomerId(Long custId);
+	
+	void saveContact(Long contactId, Long custId, String nameEn, String nameNick, String position, Date birthDate, String address, 
+			 String tel, String email, String mobileId, String fax, String skype, String facebook, String twitter);
 }
