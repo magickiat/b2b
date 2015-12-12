@@ -29,7 +29,6 @@
 			<div class="row">
 				
 				<div class="col-md-12 bg_color">
-					<div class="row row-header2 header2">CREATE ORDER</div>
 					<div class="">
 						<c:choose>
 							<c:when test="${empty brandGroupList }">

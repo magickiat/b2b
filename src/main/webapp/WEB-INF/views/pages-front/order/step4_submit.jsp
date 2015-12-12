@@ -22,7 +22,6 @@
 			<img alt="step 1" src='<c:url value="/images/pages-front/icon/step4.png" />'>
 		</div>
 		<div class="row">&nbsp;</div>
-		<div class="row row-header2 header2 txtupper">print</div>
 		
 		<c:set var="orderId" value="${ order.orderId }" />
 		<%@include file="/WEB-INF/views/include/export_report.jspf" %>
