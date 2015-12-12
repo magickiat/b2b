@@ -1,83 +1,114 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!-- Header -->
-<div class="">
-	<span>${orderReport.orderCode}</span> <span>${orderReport.orderStatus}</span><br />
-	<fmt:formatDate pattern="dd-MM-yyyy HH:mm:ss"
-		value="${orderReport.orderDate}" />
+<div class="row">
+	<div class="col-sm-6">
+		<h1>${orderReport.orderCode}</h1>
+	</div>
+	<div class="col-sm-6 text-right">
+		<h1>${orderReport.orderStatus}</h1>
+	</div>
 </div>
 <!-- Order info -->
-<div class="">
-	<table class="table table-hover table-list">
-		<thead>
-			<tr>
-				<td>Order Number</td>
-				<td>Payment Method</td>
-				<td>Shipping Type</td>
-				<td>Order Status</td>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>${orderReport.orderCode}</td>
-				<td>${orderReport.paymentMethod}</td>
-				<td>${orderReport.shippingType}</td>
-				<td>${orderReport.orderStatus}</td>
-			</tr>
-		</tbody>
-	</table>
+<div class="row">
+	<div class="col-sm-12">
+		<table class="table table-hover table-list">
+			<thead>
+				<tr>
+					<td>Order Date</td>
+					<td>Expected Shipping Date</td>
+					<td>Payment Term</td>
+					<td>Payment Method</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><fmt:formatDate pattern="dd-MM-yyyy HH:mm:ss"
+							value="${orderReport.orderDate}" /></td>
+					<td></td>
+					<td>${orderReport.paymentTermDescription}</td>
+					<td>${orderReport.paymentMethod}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>
 <!-- Order Address detail -->
-<div class="">
-	<table class="table table-hover table-list">
-		<tr>
-			<td>Dispatch to: <span>${orderReport.dispatchToAddress.orderAddr}
-					<br />Tel: ${orderReport.dispatchToAddress.orderTel} Fax:
-					${orderReport.dispatchToAddress.fax}
-			</span>
-			</td>
-			<td>Invoice to: <span>${orderReport.invoiceToAddress.orderAddr}
-					<br />Tel: ${orderReport.invoiceToAddress.orderTel} Fax:
-					${orderReport.invoiceToAddress.fax}
-			</span>
-			</td>
-		</tr>
-	</table>
+<div class="row">
+	<div class="col-sm-6">
+		<div class="row">
+			<div class="col-sm-12">Dispatch to:
+				${orderReport.dispatchToAddress.orderAddr}</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">Tel:
+				${orderReport.dispatchToAddress.orderTel} Fax:
+				${orderReport.dispatchToAddress.fax}</div>
+		</div>
+
+	</div>
+	<div class="col-sm-6">
+
+		<div class="row">
+			<div class="col-sm-12">Invoice to:
+				${orderReport.invoiceToAddress.orderAddr}</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">Tel:
+				${orderReport.invoiceToAddress.orderTel} Fax:
+				${orderReport.invoiceToAddress.fax}</div>
+		</div>
+
+	</div>
 </div>
 <!-- Order detail -->
-<div class="">
-	<table class="table table-hover table-list">
-		<thead>
-			<tr>
-				<th>No</th>
-				<th>Product Code</th>
-				<th>Description</th>
-				<th>Qty</th>
-				<th>UOM</th>
-				<th>Unit Price</th>
-				<th>Amount</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${ orderReport.orderDetails }" var="ordDetail"
-				varStatus="rowNum">
-
+<div class="row">
+	<div class="col-sm-12">
+		<table class="table table-hover table-list">
+			<thead>
 				<tr>
-					<td>${ rowNum.index + 1 }</td>
-					<td>${ ordDetail.productCode }</td>
-					<td>${ ordDetail.productName }</td>
-					<td>${ ordDetail.amount }</td>
-					<td>${ ordDetail.productUnit }</td>
-					<td><fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
-							value="${ ordDetail.unitPrice }">
-						</fmt:formatNumber></td>
-					<td><fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
-							value="${ ordDetail.amount * ordDetail.unitPrice }">
-						</fmt:formatNumber></td>
+					<th>No</th>
+					<th>Product Code</th>
+					<th>Description</th>
+					<th>Qty</th>
+					<th>UOM</th>
+					<th>Unit Price</th>
+					<th>Amount</th>
 				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${ orderReport.orderDetails }" var="ordDetail"
+					varStatus="rowNum">
 
-			</c:forEach>
-		</tbody>
-	</table>
+					<tr>
+						<td>${ rowNum.index + 1 }</td>
+						<td>${ ordDetail.productCode }</td>
+						<td>${ ordDetail.productName }</td>
+						<td>${ ordDetail.amount }</td>
+						<td>${ ordDetail.productUnit }</td>
+						<td><fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
+								value="${ ordDetail.unitPrice }">
+							</fmt:formatNumber></td>
+						<td><fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
+								value="${ ordDetail.amount * ordDetail.unitPrice }">
+							</fmt:formatNumber></td>
+					</tr>
+
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
 </div>
 <!-- Customer remark -->
+<div class="row">
+
+	<div class="col-sm-6">
+		<div class="row">Customer Remark</div>
+		<div class="row">${ orderReport.remarkCustomer }</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="row">Shipping Type</div>
+		<div class="row">${ orderReport.shippingType }</div>
+	</div>
+
+</div>

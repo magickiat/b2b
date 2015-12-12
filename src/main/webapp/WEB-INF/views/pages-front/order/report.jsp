@@ -23,7 +23,6 @@
 	<div class="container">
 	    <div class="row">
 	    	<div class="col-md-12 bg_color">
-	    		<div class="row row-header2 header2 txtupper">order report</div>
 	    		<c:set var="orderId" value="${ orderReport.orderId }"/>
 				<%@include file="/WEB-INF/views/include/export_report.jspf" %>
 				<div class="row">&nbsp;</div>
