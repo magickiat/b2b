@@ -1,6 +1,7 @@
 package com.starboard.b2b.dto.search;
 
 import com.starboard.b2b.dto.OrdAddressDTO;
+import com.starboard.b2b.dto.SoDTO;
 
 import java.util.Date;
 import java.util.List;
@@ -21,6 +22,8 @@ public class SearchOrderDTO {
 	private OrdAddressDTO invoiceToAddress;
 	
 	private List<SearchOrderDetailDTO> orderDetails;
+	private List<SoDTO> salesOrders;
+	private List<String> documents;
 
 	public SearchOrderDTO() {
 	}
@@ -145,5 +148,21 @@ public class SearchOrderDTO {
 
 	public void setOrderDetails(List<SearchOrderDetailDTO> orderDetails) {
 		this.orderDetails = orderDetails;
+	}
+
+	public List<SoDTO> getSalesOrders() {
+		return salesOrders;
+	}
+
+	public void setSalesOrders(List<SoDTO> salesOrders) {
+		this.salesOrders = salesOrders;
+	}
+
+	public List<String> getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(List<String> documents) {
+		this.documents = documents;
 	}
 }

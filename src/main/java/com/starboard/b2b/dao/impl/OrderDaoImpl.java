@@ -1,11 +1,14 @@
 package com.starboard.b2b.dao.impl;
 
 import com.starboard.b2b.dao.OrderDao;
+import com.starboard.b2b.dto.SoDTO;
 import com.starboard.b2b.dto.search.CommonSearchRequest;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.OrdAddress;
 import com.starboard.b2b.model.Orders;
+import com.starboard.b2b.model.So;
+import com.starboard.b2b.model.SoDetail;
 import com.starboard.b2b.web.form.product.OrderSummaryForm;
 
 import org.hibernate.SessionFactory;
@@ -15,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository("orderDao")
@@ -128,6 +132,18 @@ public class OrderDaoImpl implements OrderDao {
 				.setLong("custId", custId)
 				.uniqueResult();
 		final SearchResult<SearchOrderDTO> result = new SearchResult<>();
+		//Find Sales Order for each order
+		for (Object object : searchOrderDTOs) {
+			SearchOrderDTO sOrder = (SearchOrderDTO) object;
+			List<SoDTO> so = sessionFactory.getCurrentSession().createQuery("SELECT new com.starboard.b2b.dto.SoDTO(s) from So s where s.orderId = :orderId")
+					.setLong("orderId", sOrder.getOrderId())
+					.list();
+			if(so != null && !so.isEmpty() ){
+				sOrder.setSalesOrders(so);
+			}else{
+				sOrder.setSalesOrders(new ArrayList<SoDTO>());
+			}
+		}
 		result.setTotal(ordersTotal == null ? 0 : (long) ordersTotal);
 		result.setResult(searchOrderDTOs);
 
@@ -201,5 +217,22 @@ public class OrderDaoImpl implements OrderDao {
 				.setString("toDate", toDate)
 				.setLong("custId", custId)
 				.list();
+	}
+
+	/**
+	 * Find So by so id
+	 *
+	 * @param soId so id
+	 * @return So object
+	 */
+	@Override
+	public So findSoById(long soId) {
+		return (So) sessionFactory.getCurrentSession().get(So.class, soId);
+	}
+
+	@Override
+	public List<SoDetail> findSoDetailBySoId(long soId) {
+		return (List<SoDetail>) sessionFactory.getCurrentSession().createQuery("select sd from SoDetail sd where sd.soId = :soId")
+				.setLong("soId", soId).list();
 	}
 }

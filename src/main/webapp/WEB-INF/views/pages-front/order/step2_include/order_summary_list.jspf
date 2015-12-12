@@ -29,7 +29,16 @@
 							<input type="hidden" id="orderId-${ order.orderId }" name="orderId" value="${ order.orderId }" />
 							<a href="<c:url value="/frontend/order/summary/report/${order.orderCode}"/>">${ order.orderCode }</a>
 						</td>
-						<td>&nbsp;</td>
+						<td>
+							<c:if test="${ order.salesOrders != null && order.salesOrders.size() > 0}">
+								<select name="so" id="soSelect${rowNum.index}" class="form-control" onchange="exportPdf(this)">
+									<option value="0">Select SO Ref No</option>
+									<c:forEach items="${ order.salesOrders }" var="so" varStatus="row">
+										<option value="${so.soId}">${so.soNo}</option>
+									</c:forEach>
+								</select>
+							</c:if>
+						</td>
 						<td>${ order.customerName }</td>
 						<td>${ order.productTypeName }</td>
 						<td>

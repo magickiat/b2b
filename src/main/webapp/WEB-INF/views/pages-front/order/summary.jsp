@@ -26,6 +26,7 @@
                            servletRelativeAction="/frontend/order/summary/search-action"
                            method="get">
                     <form:hidden path="custId" value="${orderSummaryForm.custId}"/>
+                    <form:hidden path="page" />
                     <%-- Search criteria row 1--%>
                     <div class="row">
                         <div class="col-md-3">
@@ -93,18 +94,34 @@
         <div class="col-md-12 bg_color showline2">
             <%-- Upper Paging --%>
             <div class="">
-                <%@include file="step2_include/search_product_paging.jspf" %>
+                <%@include file="step2_include/search_order_paging.jspf" %>
             </div>
             <%-- List order model --%>
                 <%@include file="step2_include/order_summary_list.jspf"%>
             <%-- Lower Paging --%>
             <div class="">
-                <%@include file="step2_include/search_product_paging.jspf" %>
+                <%@include file="step2_include/search_order_paging.jspf" %>
             </div>
         </div>
     </div>
 </div>
-
+<!-- Modal -->
+<div class="modal modal-message modal-danger fade" id="alertModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Alert!</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 <%@include file="/WEB-INF/views/include/common_js.jspf" %>
 <%@include file="/WEB-INF/views/include/common_footer.jspf" %>
 
@@ -139,6 +156,22 @@
     	var action = '<c:url value="/report/ordersummary/excel" />';
     	$('#orderSummaryForm').attr('action', action);
         $('#orderSummaryForm').submit();
+    }
+
+    function exportPdf(so) {
+        if(so.value != 0){
+            $.get('<c:url value="/report/so/detail/count"/>', {soId : so.value}, function(data){
+                if(data != null && data != '0'){
+                    window.location.href = '<c:url value="/report/so/pdf"/>?soId='+so.value;
+                }else{
+                    var alertMsg = "Could not found detail for so id "+so.value;
+                    var alertModal = $('#alertModal');
+                    alertModal.find('.modal-header > .modal-title').html('Not found SO detail!');
+                    alertModal.find('.modal-body').html(alertMsg);
+                    alertModal.modal();
+                }
+            });
+        }
     }
 </script>
 </body>

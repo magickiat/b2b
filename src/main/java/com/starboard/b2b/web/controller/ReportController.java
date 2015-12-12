@@ -1,21 +1,22 @@
 package com.starboard.b2b.web.controller;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.sql.Connection;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import com.starboard.b2b.dto.OrderDTO;
+import com.starboard.b2b.dto.OrderStatusDTO;
+import com.starboard.b2b.dto.ProductTypeDTO;
+import com.starboard.b2b.dto.SoDTO;
+import com.starboard.b2b.dto.SoDetailDTO;
+import com.starboard.b2b.dto.search.SearchOrderDTO;
+import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
+import com.starboard.b2b.service.CustomerService;
+import com.starboard.b2b.service.OrderService;
+import com.starboard.b2b.service.ProductService;
+import com.starboard.b2b.web.form.product.OrderSummaryForm;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -35,23 +36,24 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.starboard.b2b.common.Page;
-import com.starboard.b2b.dto.OrderDTO;
-import com.starboard.b2b.dto.OrderStatusDTO;
-import com.starboard.b2b.dto.ProductTypeDTO;
-import com.starboard.b2b.dto.search.SearchOrderDTO;
-import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
-import com.starboard.b2b.service.CustomerService;
-import com.starboard.b2b.service.OrderService;
-import com.starboard.b2b.service.ProductService;
-import com.starboard.b2b.web.form.product.OrderSummaryForm;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/report")
@@ -288,5 +290,68 @@ public class ReportController {
 		}
 
 		return null;
+	}
+
+	@RequestMapping(value = "so/pdf", method = RequestMethod.GET)
+	@Transactional
+	String generateSOPDF(final Long soId, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		final Map<String, Object> params = new HashMap<>();
+		final Session session = sessionFactory.openSession();
+		log.info("Calling generateSOPDF for so id {}", soId);
+		Connection connection = null;
+		Transaction tx = null;
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		OutputStream outStream = response.getOutputStream();
+		try {
+
+			final SoDTO so = orderService.findSO(soId);
+			//find so detail before generate jasper report
+			final List<SoDetailDTO> soDetail = orderService.findSoDetail(soId);
+			if(!soDetail.isEmpty()){
+				connection = ((SessionImpl) session).connection();
+				tx = session.beginTransaction();
+				log.info("Generating pdf by Jasper");
+				params.put("soId", soId);
+				params.put("showcate", false);
+				params.put("relativePage", 0);
+				params.put("SUBREPORT_DIR", this.getClass().getResource("/report/").getPath());
+
+				final InputStream jasperStream = this.getClass().getResourceAsStream("/report/so/so.jasper");
+				final JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+
+				final JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, connection);
+				JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
+
+				response.setContentType("application/x-pdf");
+				response.setHeader("Content-disposition", "inline; filename="+so.getSoNo()+".pdf");
+				response.setContentLength(baos.size());
+
+				baos.writeTo(outStream);
+
+				jasperStream.close();
+				tx.commit();
+			}
+		} catch (Exception e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			log.error("Got problem while exporting sales order pdf with error {}", e.getMessage(), e);
+		} finally {
+
+			if (connection != null) {
+				connection.close();
+			}
+			outStream.flush();
+			outStream.close();
+			baos.close();
+		}
+
+		return null;
+	}
+
+	@RequestMapping(value = "so/detail/count")
+	@ResponseBody
+	String countSoDetail(final Long soId) throws Exception {
+		return String.valueOf(orderService.findSoDetail(soId).size());
 	}
 }

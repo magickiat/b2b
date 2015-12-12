@@ -111,7 +111,7 @@ input::-webkit-inner-spin-button {
 }
 
 .container2{
-	margin-top: : 20px;
+	margin-top: 20px;
 }
 
 
@@ -247,6 +247,10 @@ input::-webkit-inner-spin-button {
 	
 }
 
-
+/*Custom for modal*/
+.modal-message.modal-danger .modal-header {
+	color: #d73d32;
+	border-bottom: 3px solid #e46f61;
+}
 
 

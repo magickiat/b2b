@@ -7,6 +7,8 @@ import com.starboard.b2b.dto.OrderStatusDTO;
 import com.starboard.b2b.dto.PaymentMethodDTO;
 import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ShippingTypeDTO;
+import com.starboard.b2b.dto.SoDTO;
+import com.starboard.b2b.dto.SoDetailDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 import com.starboard.b2b.web.form.product.OrderSummaryForm;
@@ -51,4 +53,8 @@ public interface OrderService {
 	List<SearchOrderDTO> findOrderForReport(Long[] ordersId);
 
 	List<SearchOrderDetailDTO> searchOrderDetail(Long[] ordersId);
+
+	SoDTO findSO(final long soId);
+
+	List<SoDetailDTO> findSoDetail(final long soId);
 }
