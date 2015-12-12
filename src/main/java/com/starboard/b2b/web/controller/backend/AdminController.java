@@ -160,10 +160,22 @@ public class AdminController {
 					file.setRemark(e.getMessage());
 				}
 			}
-			 // adding the file info to the list
+			// adding the file info to the list
 			uploadedFiles.add(file);
 		}
 
 		return uploadedFiles;
+	}
+
+	@RequestMapping(value = "/file/delete")
+	@ResponseBody int  deleteFile(@RequestParam("subFolder") String subFolder, @RequestParam("files[]") String[] files, Model model) {
+		String rootPath = env.getProperty("upload.path");
+		if (rootPath == null) {
+			throw new B2BException("Not found upload path");
+		}
+		
+		int deletedFile = B2BFileUtil.delete(rootPath, files);
+		log.info("Deleted {} files", deletedFile);
+		return deletedFile;
 	}
 }

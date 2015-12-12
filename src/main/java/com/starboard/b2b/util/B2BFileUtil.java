@@ -72,4 +72,19 @@ public class B2BFileUtil {
 			throw new FileNotFoundException("Parent folder not found: " + folder);
 		}
 	}
+	
+	public static int delete(String root, String[] files){
+		int deleted = 0;
+		
+		if(files != null && files.length > 0){
+			for (String filename : files) {
+				File file = new File(root, filename);
+				if(file.exists() && file.delete()){
+					deleted++;
+				}
+			}
+		}
+		
+		return deleted;
+	}
 }

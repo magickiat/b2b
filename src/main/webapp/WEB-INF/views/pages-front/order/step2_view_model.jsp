@@ -231,7 +231,7 @@
 					    open: function(event, ui) {
 					        setTimeout(function(){
 					            $('#dialog').dialog('close');                
-					        }, 3000);
+					        }, 2000);
 					    }
 					});
 					

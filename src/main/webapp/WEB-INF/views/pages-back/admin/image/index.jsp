@@ -12,7 +12,8 @@
 <title>Starboard Windsurfing</title>
 <%@include file="/WEB-INF/views/include/common_css.jspf"%>
 
-<link rel="stylesheet" href="<c:url value="/scripts/dropzone/dropzone.css" />">
+<link rel="stylesheet"
+	href="<c:url value="/scripts/dropzone/dropzone.css" />">
 
 </head>
 <body>
@@ -27,10 +28,10 @@
 		<%-- Folder --%>
 		<div class="row row-header2 header2 bg_color">
 			<div class="col-sm-12">
+				<button class="btn btn-danger" onclick="deleteFile()">Delete</button>
 				<button class="btn btn-default" onclick="upload()">Upload</button>
-
-				<button class="btn btn-default" class="btn btn-default"
-					onclick="newFolder()">New Folder</button>
+				<button class="btn btn-default" onclick="newFolder()">New
+					Folder</button>
 				<button class="btn btn-default" onclick="back()">Back</button>
 			</div>
 		</div>
@@ -55,10 +56,11 @@
 		<%-- Files --%>
 		<div class="row bg_color">
 
-
 			<table class="table table-hover">
 				<thead>
 					<tr>
+						<th><input type="checkbox" id="checkAll" class="checkbox"
+							onclick="checkAll()" /></th>
 						<th>No</th>
 						<th>Sub folder</th>
 						<th>File name</th>
@@ -69,7 +71,9 @@
 
 					<c:forEach var="item" items="${ listFile }" varStatus="rowNum">
 						<tr>
-
+							<td align="center"><input type="checkbox"
+								id="${ item.nameWithPath }" name="selectFile" class="checkbox"
+								value="${ item.nameWithPath }" /></td>
 							<td>${ rowNum.index + 1 }</td>
 							<td>${ subFolder }</td>
 							<td><c:choose>
@@ -98,8 +102,8 @@
 
 	<%-- New folder form --%>
 	<form id="newFolderForm"
-		action='<c:url value="/backend/admin/file/new-folder" />' method="post"
-		style="display: none;">
+		action='<c:url value="/backend/admin/file/new-folder" />'
+		method="post" style="display: none;">
 		<input type="hidden" id="subFolder" name="subFolder"
 			value="${ subFolder }" />
 		<div>
@@ -120,9 +124,7 @@
 					<div id='content' class="tab-content">
 						<div class="tab-pane active" id="uplod">
 							<form action="UploadImages" class="dropzone"
-								id="my-awesome-dropzone" enctype="multipart/form-data">
-								
-								</form>
+								id="my-awesome-dropzone" enctype="multipart/form-data"></form>
 						</div>
 					</div>
 				</div>
@@ -154,7 +156,8 @@
 
 		function newFolder() {
 			$('#newFolderForm').dialog({
-
+				modal: true,
+				resizable: false,
 				buttons : [ {
 					text : "Create",
 					click : function() {
@@ -173,31 +176,77 @@
 		function upload() {
 			$("#uploadDialog").modal('show');
 		}
-		
+
 		Dropzone.options.myAwesomeDropzone = {
-		        paramName: "file",
-		        maxFilesize: 10,
-		        url: 'upload.json?subFolder=${subFolder}',
-		        uploadMultiple: true,
-		        parallelUploads: 5,
-		        maxFiles: 20,
-		        acceptedFiles: "image/*",
-		        init: function () {
-		            var cd;
-		            this.on("success", function (file, response) {
-		                $('.dz-progress').hide();
-		                $('.dz-size').hide();
-		                $('.dz-error-mark').hide();
-		                console.log(response);
-		                console.log(file);
-		                cd = response;
-		            });
-		        }
-		    };
+			paramName : "file",
+			maxFilesize : 10,
+			url : 'upload.json?subFolder=${subFolder}',
+			uploadMultiple : true,
+			parallelUploads : 5,
+			maxFiles : 20,
+			acceptedFiles : "image/*",
+			init : function() {
+				var cd;
+				this.on("success", function(file, response) {
+					$('.dz-progress').hide();
+					$('.dz-size').hide();
+					$('.dz-error-mark').hide();
+					console.log(response);
+					console.log(file);
+					cd = response;
+				});
+			}
+		};
 		$(document).on('click', '#model-cl1', function(f) {
-	        $('#uploadDialog').modal('hide');
-	        list('${subFolder}');
-	    });
+			$('#uploadDialog').modal('hide');
+			list('${subFolder}');
+		});
+
+		function checkAll() {
+			$('input[name=selectFile]').click();
+		}
+
+		function deleteFile() {
+			
+			$( "#dialog-confirm" ).dialog({
+		      resizable: false,
+		      height:140,
+		      modal: true,
+		      buttons: {
+		        "Delete": function() {
+		        	var subFolder = '${subFolder}';
+		        	
+		        	var files = [];
+					$('input[name=selectFile]:checked').each(function(index, value) {
+						files.push($(value).val());
+					});
+					
+					if(files.length > 0){
+
+						var param = {
+							'subFolder' : subFolder,
+							'files[]' : files
+						};
+
+						$.post('<c:url value="/backend/admin/file/delete.json" />', param)
+						.done(function(data, statusText) {
+							console.log('Delete ' + data + ' files');
+						})
+						.fail(function(xhr, textStatus, errorThrown) {
+							alert('Error occured, please contact Administrator\n' + xhr.responseText);
+						});
+					}
+					
+					list(subFolder);	
+					
+		          $( this ).dialog( "close" );
+		        },
+		        Cancel: function() {
+		          $( this ).dialog( "close" );
+		        }
+		      }
+		    });
+		}
 	</script>
 </body>
 </html>
