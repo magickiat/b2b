@@ -137,8 +137,6 @@
 			<div class="col-md-12 bg_color">
 				<%-- Upper Paging --%>
 				
-				<div class="row row-header2 header2 txtupper">Latest Features</div>
-				
 				<div class="">
 					<%@include file="step2_include/search_product_paging.jspf"%>
 				</div>
