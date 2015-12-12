@@ -23,7 +23,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.starboard.b2b")
+@ComponentScan(basePackages = {"com.starboard.b2b.web"})
 @PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
@@ -36,7 +36,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // Upload folder
         log.info("upload path: " + uploadPath);
-        registry.addResourceHandler("/upload/**").addResourceLocations("file:" + uploadPath);
+        registry.addResourceHandler("/upload/**").addResourceLocations("file://" + uploadPath);
         // WebJars
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
                 .setCachePeriod(31556926);

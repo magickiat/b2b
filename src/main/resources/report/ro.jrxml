@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ro" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba40db7d-9060-4710-81d4-f1a174b6499e">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ro" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba40db7d-9060-4710-81d4-f1a174b6499e">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="441"/>
 	<style name="right" hAlign="Right"/>
 	<style name="center" hAlign="Center"/>
 	<style name="tabColor" hAlign="Center" vAlign="Middle" fontName="SansSerif" fontSize="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true">
@@ -28,26 +28,56 @@
 	<parameter name="allPageSize" class="java.lang.Integer"/>
 	<parameter name="relativePage" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[select (od.price*od.amount) as total,p.product_buyer_group_id,ptype.product_type_name,od.product_unit_id,pt.payment_term_name,pm.payment_method_name,o.remark_orders,o.order_id,p.product_code,p.product_name_en,o.expect_shipment_date,o.order_code,st.shipping_type_name,o.payment_currency_id,od.amount,od.price from product_type ptype,payment_term pt,payment_method pm,orders o,shipping_type st,product p,ord_detail od where ptype.product_type_id=p.product_type_id and pt.payment_term_id=o.payment_term_id and pm.payment_method_id=o.payment_method_id and od.order_id=o.order_id and od.product_id=p.product_id and o.shipping_id=st.shipping_type_id and o.order_id=$P{orderId}
+		<![CDATA[select (od.price*od.amount) as total,p.product_buyer_group_id,ptype.product_type_name,od.product_unit_id,pt.payment_term_name,pm.payment_method_name,o.remark_customer,o.order_id,p.product_code,p.product_name_en,o.expect_shipment_date,o.order_code,st.shipping_type_name,o.payment_currency_id,od.amount,od.price from product_type ptype,payment_term pt,payment_method pm,orders o,shipping_type st,product p,ord_detail od where ptype.product_type_id=p.product_type_id and pt.payment_term_id=o.payment_term_id and pm.payment_method_id=o.payment_method_id and od.order_id=o.order_id and od.product_id=p.product_id and o.shipping_id=st.shipping_type_id and o.order_id=$P{orderId}
  and od.product_currency=$P{productCurrency}
  order by od.product_id, od.order_product_id]]>
 	</queryString>
 	<field name="total" class="java.math.BigDecimal"/>
-	<field name="product_buyer_group_id" class="java.lang.String"/>
-	<field name="product_type_name" class="java.lang.String"/>
-	<field name="product_unit_id" class="java.lang.String"/>
-	<field name="payment_term_name" class="java.lang.String"/>
-	<field name="payment_method_name" class="java.lang.String"/>
-	<field name="remark_orders" class="java.lang.String"/>
-	<field name="order_id" class="java.lang.Long"/>
-	<field name="product_code" class="java.lang.String"/>
-	<field name="product_name_en" class="java.lang.String"/>
-	<field name="expect_shipment_date" class="java.sql.Timestamp"/>
-	<field name="order_code" class="java.lang.String"/>
-	<field name="shipping_type_name" class="java.lang.String"/>
-	<field name="payment_currency_id" class="java.lang.String"/>
-	<field name="amount" class="java.lang.Long"/>
-	<field name="price" class="java.math.BigDecimal"/>
+	<field name="product_buyer_group_id" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="product_type_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="product_unit_id" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="payment_term_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="payment_method_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="remark_customer" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="order_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="product_code" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="product_name_en" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="expect_shipment_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="order_code" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="shipping_type_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="payment_currency_id" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="amount" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="price" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -143,18 +173,18 @@
 				<textFieldExpression><![CDATA[$P{productCurrency}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="480" y="50" width="41" height="20" uuid="7ad44a60-736b-47aa-ad7e-6f692ecf5654"/>
+				<reportElement x="479" y="50" width="41" height="20" uuid="7ad44a60-736b-47aa-ad7e-6f692ecf5654"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="8" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}+ $P{relativePage}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="531" y="50" width="40" height="20" uuid="b27c42ec-0c3b-40f9-834c-d1957fd89ba0"/>
+				<reportElement x="534" y="50" width="37" height="20" uuid="b27c42ec-0c3b-40f9-834c-d1957fd89ba0"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="8" isUnderline="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[" " + $P{allPageSize}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<subreport>
 				<reportElement x="286" y="80" width="269" height="83" uuid="0301a120-a1b5-4e4d-8cff-306fc7214c98"/>
@@ -173,7 +203,7 @@
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/invoiceTo.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement style="normal10" x="523" y="50" width="11" height="20" uuid="3d268d46-06cd-4a14-a259-dccf7343138d"/>
+				<reportElement style="normal10" x="522" y="50" width="11" height="20" uuid="3d268d46-06cd-4a14-a259-dccf7343138d"/>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[of]]></text>
 			</staticText>
@@ -386,7 +416,7 @@
 					<bottomPen lineStyle="Dashed"/>
 					<rightPen lineStyle="Dashed"/>
 				</box>
-				<textFieldExpression><![CDATA[($F{remark_orders} != null) ? $F{remark_orders} : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{remark_customer} != null) ? $F{remark_customer} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="normalCenter" x="114" y="89" width="265" height="20" uuid="e714a2b7-2c81-4ad5-828f-ca8b96ebda5a"/>
@@ -535,7 +565,7 @@
 					<bottomPen lineStyle="Dashed"/>
 					<rightPen lineStyle="Dashed"/>
 				</box>
-				<textFieldExpression><![CDATA[($F{remark_orders} != null) ? $F{remark_orders} : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{remark_customer} != null) ? $F{remark_customer} : ""]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>

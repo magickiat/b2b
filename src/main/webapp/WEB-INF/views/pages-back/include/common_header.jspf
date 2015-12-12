@@ -1,47 +1,74 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="sec"
-          uri="http://www.springframework.org/security/tags" %>
-<%@page session="true" %>
+	uri="http://www.springframework.org/security/tags"%>
+<%@page session="true"%>
 
 <div class="row">
 
-    <div class="col-sm-12">
-        <div class="pull-right">
-            <sec:authorize access="isAuthenticated()">
-                <sec:authentication var="user" property="principal"/>
-
-
-                <form:form servletRelativeAction="/logout" method="post">
-                    Welcome: ${user.name}
-                    <input type="submit" class="btn btn-danger" value="Logout"/>
-                </form:form>
-
-            </sec:authorize>
-        </div>
-    </div>
-
+	<nav class="navbar navbar-default navbar-static-top bg_color">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href='<c:url value="/backend/order/" />'>Order</a></li>
+					<li><a href="#">Product</a></li>
+					<li><a href='<c:url value="/backend/customer/" />'>Customer</a></li>
+					<li><a href="#">Download Management</a></li>
+					<li><a href="#">Event</a></li>
+					<li><a href='<c:url value="/backend/feed-contents/" />'>Feed
+							Content</a></li>
+					<li><a href="#">Contact us</a></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false"> <span>User management</span> <span
+							class="caret"></span>
+					</a>
+						<ul class="dropdown-menu">
+							<li role="presentation"><a
+								href='<c:url value="/backend/admin/index" />'>Admin</a></li>
+							<li><a href="#">My Information</a></li>
+							<li><a href="#">User</a></li>
+							<li><a href="#">Role</a></li>
+						</ul></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false"> <sec:authorize
+								access="isAuthenticated()">
+								<sec:authentication var="user" property="principal" />
+			                Welcome: ${user.name}
+			            </sec:authorize> <span class="caret"></span>
+					</a>
+						<ul class="dropdown-menu">
+							<li><form:form servletRelativeAction="/logout" method="post">
+									<input type="submit" style="width: 98%; margin-left: 1%;"
+										class="btn btn-danger" value="Logout" />
+								</form:form></li>
+						</ul></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 </div>
-<nav class="navbar navbar-default">
-    <ul class="nav navbar-nav">
-        <li role="presentation" class="active"><a
-                href='<c:url value="/backend/order/" />'>Order</a></li>
-        <li role="presentation"><a href="#">Product</a></li>
-        <li role="presentation"><a
-                href='<c:url value="/backend/customer/" />'>Customer</a></li>
-        <li role="presentation"><a href="#">My Information</a></li>
-        <li role="presentation"><a href="#">User</a></li>
-        <li role="presentation"><a href="#">Role</a></li>
-        <li role="presentation"><a href="#">Download Management</a></li>
-        <li role="presentation"><a href="#">Admin</a></li>
-        <li role="presentation"><a href="#">Event</a></li>
-        <li role="presentation"><a
-                href='<c:url value="/backend/feed-contents/" />'>Feed Content</a></li>
-        <li role="presentation"><a href="#">Contact us</a></li>
-    </ul>
-</nav>
-
 
 <c:if test="${!empty errorMsg }">
-    <div class="row text-danger">${ errorMsg }</div>
+	<div class="row text-danger">${ errorMsg }</div>
 </c:if>
+
+<div id="dialog-confirm" title="Confirm?" style="display: none;">
+	<p>Are you sure?</p>
+</div>
+
+<div id="dialog-msg" title="Message" style="display: none;">
+xxx
+</div>

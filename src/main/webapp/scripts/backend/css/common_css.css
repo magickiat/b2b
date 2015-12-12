@@ -1,0 +1,6 @@
+#navbar-main .navtest{
+	background: #444;
+	background: rgba(0, 0, 0, 0.3);
+	-moz-border-radius: 0 0 4px 4px; -webkit-border-radius: 0 0 4px 4px; border-radius: 0 0 4px 4px;
+	border-color: rgba(0, 0, 0, 0.35);
+}

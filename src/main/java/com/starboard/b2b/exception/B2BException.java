@@ -11,7 +11,12 @@ package com.starboard.b2b.exception;
  */
 public class B2BException extends RuntimeException {
 
-    public B2BException() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public B2BException() {
         super();
     }
 

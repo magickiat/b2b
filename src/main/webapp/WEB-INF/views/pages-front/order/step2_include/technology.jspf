@@ -19,12 +19,15 @@
 
 				<div class="menu-link"
 					onclick="changeProductTechnology('${stringUtil.removeSpecialChar(rowTech.key)}', ${ rowTech.value[0].product.productId })">
-					<c:url var="imgTechUrl"
+					<c:url var="jpgImgTechUrl"
 						value="/upload/product_image/Technology/${ modelId }/${ rowTech.key }.jpg" />
+<%-- 					<c:url var="pngImgTechUrl" --%>
+<%-- 						value="/upload/product_image/Technology/${ modelId }/${ rowTech.key }.png" /> --%>
+
 					<div class="col-sm-3">
 						<%-- Image --%>
 						<div>
-							<img class="tech-img" src="${ imgTechUrl }" />
+							<img class="tech-img" src="${ jpgImgTechUrl }" />
 						</div>
 						<%-- Text --%>
 						<div class="text-center">

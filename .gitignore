@@ -8,3 +8,6 @@ nb-configuration.xml
 b2b.iml
 /.classpath
 src/main/resources/application-magic.properties
+src/main/resources/application-dev.properties
+/.metadata/
+nbactions.xml

@@ -53,7 +53,7 @@
 		</table>
 		<div align="center">
 			<input type="button" id="addListToCart" class="btn btn-success"
-				value="ADD TO CART" max="12" onclick="addListToCart()" />
+				value="ADD TO CART" onclick="addListToCart()" />
 		</div>
 
 
@@ -111,7 +111,7 @@
 				console.log("calling url: ${addToCartUrl}");
 
 				$.post('${addToCartUrl}', param).done(function(response) {
-					console.log(response);
+					/* console.log(response); */
 					renderToCart(response);
 				}).fail(function(result) {
 					alert(result.responseText);

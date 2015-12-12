@@ -21,6 +21,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import com.starboard.b2b.common.WithnoseConstant;
 import com.starboard.b2b.config.WebConfig;
 import com.starboard.b2b.dto.ProductSearchResult;
+import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.service.ProductService;
 
 @WebAppConfiguration
@@ -87,5 +88,14 @@ public class ProductServiceImplTest {
 		assertTrue(productLength.containsKey("XL"));
 
 	}
-
+        
+        @Test
+        public void testGetProductTypes() {
+            final long customerId = 1001L;
+            final long brandGroupId = 10L;
+            List<ProductTypeDTO> types = productService.getProductTypes(customerId, brandGroupId);
+            for(ProductTypeDTO type : types) {
+                System.out.println(type.getProductTypeName());
+            }
+        }
 }

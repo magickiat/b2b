@@ -11,7 +11,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Starboard Windsurfing</title>
 	<%@include file="/WEB-INF/views/include/common_css.jspf"%>
-	<link rel="stylesheet" href="<c:url value="/webjars/jquery-ui/1.11.4/jquery-ui.min.css"></c:url>">
+	
 </head>
 <body class="pd-bottom">
 	
@@ -62,10 +62,12 @@
 			</div>
 		</div>
 
-		<div class="row">
-			<%@include file="step2_include/add_multiple.jspf"%>
-		</div>
+		<%@include file="step2_include/add_multiple.jspf"%>
+		
 	</div>
+	
+	<%-- Message dialog --%>
+	<div id="dialog" style="display:none;"></div>
 	
 	<%@include file="/WEB-INF/views/include/common_footer.jspf" %>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
@@ -194,8 +196,6 @@
 		}
 
 		function addToCart() {
-			console.log('begin animate');
-			//TODO add animation to shopping cart
 
 			var quantity = $('#quantity').val();
 			console.log('quantity: ' + quantity);
@@ -218,6 +218,26 @@
 				$.post('${addToCartUrl}', param).done(function(response) {
 					console.log(JSON.stringify(response));
 					renderToCart(response);
+					
+					<%-- http://stackoverflow.com/questions/10179040/jquery-dialog-open-and-automatically-close-after-3-seconds --%>
+					/* console.log('begin animate'); */
+					$('#dialog').html('Added to cart');
+					$('#dialog').dialog({
+						dialogClass: 'style1',
+					    autoOpen: true,
+					    show: "blind",
+					    hide: "fadeOut",
+					    modal: true,
+					    open: function(event, ui) {
+					        setTimeout(function(){
+					            $('#dialog').dialog('close');                
+					        }, 2000);
+					    }
+					});
+					
+					//clear txt qty
+					$('#quantity').val('0')
+					
 				}).fail(function(result) {
 					alert(result.responseText);
 				});
@@ -238,13 +258,6 @@
 		}
 
 		
-	</script>
-	
-	<script src="<c:url value="/scripts/assets/js/jquery.backstretch.min.js"/>"></script>
-	<script>
-		jQuery(document).ready(function() {
-		 	$.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.png"/>");
-		});
 	</script>
 	
 </body>

@@ -25,6 +25,8 @@
                            modelAttribute="orderSummaryForm"
                            servletRelativeAction="/frontend/order/summary/search-action"
                            method="get">
+                    <form:hidden path="custId" value="${orderSummaryForm.custId}"/>
+                    <form:hidden path="page" />
                     <%-- Search criteria row 1--%>
                     <div class="row">
                         <div class="col-md-3">
@@ -37,7 +39,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <form:select path="selectedBrand" cssClass="form-control" multiple="false" onchange="loadBuyerGroup()">
+                                <form:select path="selectedBrand" cssClass="form-control" multiple="false" onchange="submitForm()">
                                     <form:option value="" label="ALL BRAND"/>
                                     <form:options items="${productType}" itemLabel="productTypeName" itemValue="productTypeId"/>
                                 </form:select>
@@ -52,8 +54,8 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <button class="btn btn-success" onclick="searchOrder()" style="width: 100px;">Search</button>
-                            <button class="btn btn-default" style="width: 100px;">Excel</button>
+                            <button class="btn btn-success" onclick="submitForm()" style="width: 100px;">Search</button>
+                            <button class="btn btn-default" onclick="exportExcel()" style="width: 100px;">Excel</button>
                         </div>
                     </div>
                     <%-- Search criteria row 2--%>
@@ -80,8 +82,8 @@
                             </div>
                         </div>
                         <div class="col-md-7">&nbsp;</div>
+                        <div class="col-md-12">&nbsp;</div>
                     </div>
-                    <hr>
                 </form:form>
             </div>
         </div>
@@ -92,31 +94,47 @@
         <div class="col-md-12 bg_color showline2">
             <%-- Upper Paging --%>
             <div class="">
-                <%@include file="step2_include/search_product_paging.jspf" %>
+                <%@include file="step2_include/search_order_paging.jspf" %>
             </div>
             <%-- List order model --%>
                 <%@include file="step2_include/order_summary_list.jspf"%>
             <%-- Lower Paging --%>
             <div class="">
-                <%@include file="step2_include/search_product_paging.jspf" %>
+                <%@include file="step2_include/search_order_paging.jspf" %>
             </div>
         </div>
     </div>
 </div>
-
-<%@include file="/WEB-INF/views/include/common_footer.jspf" %>
+<!-- Modal -->
+<div class="modal modal-message modal-danger fade" id="alertModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Alert!</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 <%@include file="/WEB-INF/views/include/common_js.jspf" %>
+<%@include file="/WEB-INF/views/include/common_footer.jspf" %>
 
-<script src="<c:url value="/scripts/assets/js/jquery.backstretch.min.js"/>"></script>
 <script src="<c:url value="/scripts/assets/datepicker/moment-with-locales.js"/>"></script>
 <script src="<c:url value="/scripts/assets/datepicker/bootstrap-datetimepicker.js"/>"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
-        $.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.png"/>");
+    	// datepicker
         var dateFromPicker = $('#dateFromPicker');
         var dateToPicker = $('#dateToPicker');
-        dateFromPicker.datetimepicker({locale: 'th', format: 'YYYY-MM-DD'});
-        dateToPicker.datetimepicker({locale: 'th', format: 'YYYY-MM-DD', useCurrent: false});
+        dateFromPicker.datetimepicker({locale: 'en', format: 'YYYY-MM-DD'});
+        dateToPicker.datetimepicker({locale: 'en', format: 'YYYY-MM-DD', useCurrent: false});
         dateFromPicker.on("dp.change", function (e) {
             $('#dateToPicker').data("DateTimePicker").minDate(e.date);
         });
@@ -126,14 +144,34 @@
     });
 
     /**
-     * Search order
+     * Submit form order
      **/
-    function searchOrder() {
+    function submitForm(){
+    	var action = '<c:url value="/frontend/order/summary/search-action" />';
+    	$('#orderSummaryForm').attr('action', action);
+        $('#orderSummaryForm').submit();
+    }
+    
+    function exportExcel(){
+    	var action = '<c:url value="/report/ordersummary/excel" />';
+    	$('#orderSummaryForm').attr('action', action);
         $('#orderSummaryForm').submit();
     }
 
-    function loadBuyerGroup(){
-        $('#orderSummaryForm').submit();
+    function exportPdf(so) {
+        if(so.value != 0){
+            $.get('<c:url value="/report/so/detail/count"/>', {soId : so.value}, function(data){
+                if(data != null && data != '0'){
+                    window.location.href = '<c:url value="/report/so/pdf"/>?soId='+so.value;
+                }else{
+                    var alertMsg = "Could not found detail for so id "+so.value;
+                    var alertModal = $('#alertModal');
+                    alertModal.find('.modal-header > .modal-title').html('Not found SO detail!');
+                    alertModal.find('.modal-body').html(alertMsg);
+                    alertModal.modal();
+                }
+            });
+        }
     }
 </script>
 </body>

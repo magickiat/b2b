@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html>
@@ -22,33 +22,16 @@
 			<img alt="step 1" src='<c:url value="/images/pages-front/icon/step4.png" />'>
 		</div>
 		<div class="row">&nbsp;</div>
+		
+		<c:set var="orderId" value="${ order.orderId }" />
+		<%@include file="/WEB-INF/views/include/export_report.jspf" %>
+		
 		<div class="row">
-			<div class="col-md-12 bg_color">
-				<div class="row row-header2 header2 txtupper">print</div>
-				<div class="col-sm-3"></div>
-				<div class="col-sm-6 text-center" style="padding-bottom: 5px; padding-top: 5px;">
-					<input type="button" class="btn btn-default" id="btnExcel" value="EXCEL" />
-					<input type="button" class="btn btn-default" id="btnPdf" value="PDF" />
-					<input type="button" class="btn btn-default" id="btnPrint" value="PRINT" />
-					<input type="button" class="btn btn-default" id="btnFinish" value="FINISH" onclick="gotoOrderSummary();" />
-				</div>
-				<div class="col-sm-3"></div>
-			</div>
-		</div>
+	       <%@include file="orderSummary.jspf" %>
+	    </div>
 	</div>
 	<%@include file="/WEB-INF/views/include/common_footer.jspf" %>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
-	<script src="<c:url value="/scripts/assets/js/jquery-1.11.1.min.js"/>"></script>
-	<script src="<c:url value="/scripts/assets/bootstrap/js/bootstrap.min.js"/>"></script>
-	<script src="<c:url value="/scripts/assets/js/jquery.backstretch.min.js"/>"></script>
-	<script>
-		jQuery(document).ready(function() {
-		 	$.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.png"/>");
-		});
-		
-		function gotoOrderSummary(){
-			window.location.href = '<c:url value="/frontend/order/summary" />';
-		}
-	</script>
+	
 </body>
 </html>

@@ -187,22 +187,25 @@ public class ProductServiceImpl implements ProductService {
         // Validate has image exist
         List<SearchProductModelDTO> resultList = result.getResult();
         log.info("resultList size: " + (resultList == null ? 0 : resultList.size()));
-
-        for (SearchProductModelDTO dto : resultList) {
-            // log.info("" + dto.getProductModelName());
-            if (StringUtils.isNotEmpty(dto.getModelImage())) {
-                String filename = dto.getModelImage();
-                if (filename.startsWith("/upload/")) {
-                    filename = filename.substring("/upload/".length());
-                }
-
-                // When not found, set null to use default image
-                File img = new File(uploadPath, filename);
-                if (!img.exists()) {
-                    dto.setModelImage(null);
-                }
-            }
-        }
+        
+        // Use model name convention to map image
+        // Format: /upload/product_image/Medium/{model_id}.jpg
+//
+//        for (SearchProductModelDTO dto : resultList) {
+//            // log.info("" + dto.getProductModelName());
+//            if (StringUtils.isNotEmpty(dto.getModelImage())) {
+//                String filename = dto.getModelImage();
+//                if (filename.startsWith("/upload/")) {
+//                    filename = filename.substring("/upload/".length());
+//                }
+//
+//                // When not found, set null to use default image
+//                File img = new File(uploadPath, filename);
+//                if (!img.exists()) {
+//                    dto.setModelImage(null);
+//                }
+//            }
+//        }
 
         // create result page object
         Page<SearchProductModelDTO> page = new Page<>();
@@ -381,6 +384,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ProductTypeDTO getProductType(Long brandGroupId) {
         ProductType type = productTypeDao.findById(brandGroupId);
         if(type == null) {
@@ -392,6 +396,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ProductTypeDTO> getProductTypes(Long customerId, Long brandGroupId) {
         List<ProductType> types = productTypeDao.findByCustomerAndBrand(customerId, brandGroupId);
         if (types == null || types.isEmpty()) {

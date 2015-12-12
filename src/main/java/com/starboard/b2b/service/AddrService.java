@@ -2,16 +2,14 @@ package com.starboard.b2b.service;
 
 import java.util.List;
 
-import com.starboard.b2b.model.Addr;
-import com.starboard.b2b.web.form.user.AddressForm;
-import com.starboard.b2b.web.form.user.UserForm;
+import com.starboard.b2b.web.form.address.AddressForm;
 
 public interface AddrService {
 
-	Addr findById(long addrId);
+	AddressForm findById(long addrId);
 
 	List<AddressForm> findByCustId(long custId);
 	
-	void update(UserForm userForm);
+	boolean update(AddressForm addressForm);
 
 }

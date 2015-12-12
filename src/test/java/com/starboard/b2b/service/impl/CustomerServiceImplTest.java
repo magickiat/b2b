@@ -1,8 +1,11 @@
 package com.starboard.b2b.service.impl;
 
-import static org.junit.Assert.*;
-
-import java.util.List;
+import com.starboard.b2b.common.AddressConstant;
+import com.starboard.b2b.config.WebConfig;
+import com.starboard.b2b.dao.CustDao;
+import com.starboard.b2b.dto.AddressDTO;
+import com.starboard.b2b.model.Cust;
+import com.starboard.b2b.service.CustomerService;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,12 +18,11 @@ import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.starboard.b2b.common.AddressConstant;
-import com.starboard.b2b.config.WebConfig;
-import com.starboard.b2b.dao.CustDao;
-import com.starboard.b2b.dto.AddressDTO;
-import com.starboard.b2b.model.Cust;
-import com.starboard.b2b.service.CustomerService;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -42,7 +44,7 @@ public class CustomerServiceImplTest {
 		Cust customer = custDao.findById(new Long(1001));
 		assertNotNull(customer);
 		
-		List<AddressDTO> addressess = customerService.findAddress(customer.getCustId(), AddressConstant.DISPATCH_TO);
+		List<AddressDTO> addressess = customerService.findAddress(customer.getCustId(), AddressConstant.ORDER_DISPATCH_TO);
 		assertNotNull(addressess);
 		assertFalse(addressess.isEmpty());
 		assertEquals(2, addressess.size());

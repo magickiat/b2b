@@ -54,7 +54,6 @@ public class So implements java.io.Serializable {
 	}
 
 	@Id
-
 	@Column(name = "so_id", unique = true, nullable = false)
 	public long getSoId() {
 		return this.soId;

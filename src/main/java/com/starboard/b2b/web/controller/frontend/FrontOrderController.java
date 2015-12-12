@@ -1,29 +1,14 @@
 package com.starboard.b2b.web.controller.frontend;
 
-import com.starboard.b2b.bean.ExcelOrderBean;
-import com.starboard.b2b.common.AddressConstant;
-import com.starboard.b2b.common.Page;
-import com.starboard.b2b.common.WithnoseConstant;
-import com.starboard.b2b.dto.AddressDTO;
-import com.starboard.b2b.dto.OrderDTO;
-import com.starboard.b2b.dto.OrderStatusDTO;
-import com.starboard.b2b.dto.ProductBrandGroupDTO;
-import com.starboard.b2b.dto.ProductBuyerGroupDTO;
-import com.starboard.b2b.dto.ProductDTO;
-import com.starboard.b2b.dto.ProductSearchResult;
-import com.starboard.b2b.dto.ProductTypeDTO;
-import com.starboard.b2b.dto.search.SearchOrderDTO;
-import com.starboard.b2b.dto.search.SearchProductModelDTO;
-import com.starboard.b2b.exception.B2BException;
-import com.starboard.b2b.service.BrandService;
-import com.starboard.b2b.service.CustomerService;
-import com.starboard.b2b.service.OrderService;
-import com.starboard.b2b.service.ProductService;
-import com.starboard.b2b.util.ArchiveUtil;
-import com.starboard.b2b.util.ExcelOrderUtil;
-import com.starboard.b2b.util.UserUtil;
-import com.starboard.b2b.web.form.product.OrderSummaryForm;
-import com.starboard.b2b.web.form.product.SearchProductForm;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.EncryptedDocumentException;
@@ -33,9 +18,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,19 +33,37 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletResponse;
+import com.starboard.b2b.bean.ExcelOrderBean;
+import com.starboard.b2b.common.AddressConstant;
+import com.starboard.b2b.common.Page;
+import com.starboard.b2b.common.WithnoseConstant;
+import com.starboard.b2b.dto.AddressDTO;
+import com.starboard.b2b.dto.OrdAddressDTO;
+import com.starboard.b2b.dto.OrderDTO;
+import com.starboard.b2b.dto.OrderStatusDTO;
+import com.starboard.b2b.dto.ProductBrandGroupDTO;
+import com.starboard.b2b.dto.ProductBuyerGroupDTO;
+import com.starboard.b2b.dto.ProductDTO;
+import com.starboard.b2b.dto.ProductSearchResult;
+import com.starboard.b2b.dto.ProductTypeDTO;
+import com.starboard.b2b.dto.search.SearchOrderDTO;
+import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
+import com.starboard.b2b.dto.search.SearchProductModelDTO;
+import com.starboard.b2b.exception.B2BException;
+import com.starboard.b2b.model.User;
+import com.starboard.b2b.service.BrandService;
+import com.starboard.b2b.service.CustomerService;
+import com.starboard.b2b.service.OrderService;
+import com.starboard.b2b.service.ProductService;
+import com.starboard.b2b.util.ArchiveUtil;
+import com.starboard.b2b.util.ExcelOrderUtil;
+import com.starboard.b2b.util.UserUtil;
+import com.starboard.b2b.web.form.product.OrderSummaryForm;
+import com.starboard.b2b.web.form.product.SearchProductForm;
 
 @Controller
 @RequestMapping("/frontend/order/")
-@SessionAttributes({ "cart" })
+@SessionAttributes({ "cart", "brandId" })
 public class FrontOrderController {
 
 	private static final Logger log = LoggerFactory.getLogger(FrontOrderController.class);
@@ -77,16 +80,23 @@ public class FrontOrderController {
 	@Autowired
 	private OrderService orderService;
         
-        @Autowired
-        private Environment environment;
+    @Autowired
+	private Environment environment;
 
 	@RequestMapping(value = "index", method = RequestMethod.GET)
 	String step1(Model model) {
 		List<ProductBrandGroupDTO> brandGroupList = brandService.getBrandGroupList(UserUtil.getCurrentUser().getCustomer().getCustId());
 		model.addAttribute("brandGroupList", brandGroupList);
 		// Create cart
-		if (!model.containsAttribute("cart")) {
+		if (model.asMap().get("cart") == null) {
 			model.addAttribute("cart", new HashMap<Long, ProductDTO>());
+		}else{
+			HashMap<Long, ProductDTO> cart = (HashMap<Long, ProductDTO>)model.asMap().get("cart");
+			if(!cart.isEmpty()){
+				log.info("Already selected product, redirect to quick order");
+				Long brandId = (Long)model.asMap().get("brandId");
+				return step2SearchProduct(brandId, model);
+			}
 		}
 		return "pages-front/order/step1_brand";
 	}
@@ -95,7 +105,17 @@ public class FrontOrderController {
 	String step2ChooseAddress(@RequestParam("brand_id") Long brandId, Model model) {
 		log.info("Brand id: " + brandId);
 
+		if (model.asMap().get("cart") != null){
+			HashMap<Long, ProductDTO> cart = (HashMap<Long, ProductDTO>)model.asMap().get("cart");
+			if(!cart.isEmpty()){
+				if(model.containsAttribute("brandId") && model.asMap().get("brandId") != null){
+					brandId = (Long)model.asMap().get("brandId");
+				}
+			}
+		}
+		
 		model.addAttribute("brandId", brandId);
+		
 		return "pages-front/order/step2_address";
 	}
 
@@ -146,7 +166,7 @@ public class FrontOrderController {
 	}
 
 	@RequestMapping(value = "step2/view", method = RequestMethod.GET)
-	String step2ModelDetail(String modelId, Model model) {
+	String step2ModelDetail(@RequestParam String modelId, Model model) {
 		log.info("GET step2/view");
 		log.info("modelId = " + modelId);
 
@@ -159,8 +179,6 @@ public class FrontOrderController {
 			model.addAttribute("errorMsg", "Not found product model " + modelId);
 		} else {
 
-			String productBuyerGroupId;
-
 			// Find product model
 			List<ProductSearchResult> productListNoWithnose = productService.findProductModel(modelId, WithnoseConstant.NO_WITHNOSE_PROTECTION);
 			List<ProductSearchResult> productListWithnose = productService.findProductModel(modelId, WithnoseConstant.WITHNOSE_PROTECTION);
@@ -169,11 +187,8 @@ public class FrontOrderController {
 			model.addAttribute("productListWithnose", productListWithnose);
 
 			// Find product buyer group from no Withnose product
-			if (!productListNoWithnose.isEmpty()) {
-				ProductSearchResult result = productListNoWithnose.get(0);
-				productBuyerGroupId = result.getProduct().getProductBuyerGroupId();
-				log.info("productBuyerGroupId: " + productBuyerGroupId);
-				model.addAttribute("hasWithnoseBoard", "WB".equalsIgnoreCase(productBuyerGroupId));
+			if (!productListWithnose.isEmpty()) {
+				model.addAttribute("hasWithnoseBoard", true);
 			}
 
 			// Find product price
@@ -193,6 +208,9 @@ public class FrontOrderController {
 			HashMap<String, List<ProductSearchResult>> noWithnoseTech = productService.groupProductByTechnology(productListNoWithnose);
 			HashMap<String, List<ProductSearchResult>> withnoseTech = productService.groupProductByTechnology(productListWithnose);
 
+			model.addAttribute("noWithnoseTech", noWithnoseTech);
+			model.addAttribute("withnoseTech", withnoseTech);
+			
 			ArrayList<HashMap<String, List<ProductSearchResult>>> allTech = new ArrayList<>();
 			allTech.add(noWithnoseTech);
 			allTech.add(withnoseTech);
@@ -240,13 +258,13 @@ public class FrontOrderController {
         List<String> files = new ArrayList<>();
         for (ProductTypeDTO type : types) {
             String name = type.getProductTypeName().toUpperCase().replaceAll(" ", "_").trim();
-            files.add(String.format("%s/excel/%s/STB_ORDER_FORM_%s.xls", rootPath, parentPath, name));
+            files.add(String.format("%s/excel/%s/STB_ORDER_FORM_%s.xls", rootPath, name, name));
         }
         //
         byte[] zip = ArchiveUtil.zip(files);
         //
         response.setContentType("application/octet-stream");
-        response.setHeader("Content-Disposition", "attachment; filename=EXCEL_ORDER.zip");
+        response.setHeader("Content-Disposition", String.format("attachment; filename=%s%s.zip", "STB_ORDER_FORM_", parentPath));
         try (OutputStream output = response.getOutputStream()) {
             output.write(zip);
         }
@@ -272,20 +290,23 @@ public class FrontOrderController {
             for (ExcelOrderBean order : orders) {
                 ProductDTO product = productService.findByProductCode(order.getProductCode());
                 if (product.getProductCode() == null) {
-                    throw new B2BException(String.format("product not found for product code %s", order.getProductCode()));
+                    //throw new B2BException(String.format("product not found for product code %s", order.getProductCode()));
+                	continue;
                 }
                 product.setProductQuantity(order.getQuantity());
                 products.add(product);
             }
             //
-            for (ProductDTO product : products) {
-                if (cart.get(product.getProductId()) == null) {
-                    cart.put(product.getProductId(), product);
-                } else {
-                    ProductDTO productInCart = cart.get(product.getProductId());
-                    productInCart.setProductQuantity(productInCart.getProductQuantity() + product.getProductQuantity());
-                }
-            }
+           if(!products.isEmpty()){
+        	   for (ProductDTO product : products) {
+                   if (cart.get(product.getProductId()) == null) {
+                       cart.put(product.getProductId(), product);
+                   } else {
+                       ProductDTO productInCart = cart.get(product.getProductId());
+                       productInCart.setProductQuantity(productInCart.getProductQuantity() + product.getProductQuantity());
+                   }
+               }
+           }
             //
             return new ModelAndView("redirect:step3/checkout");
         } catch (IOException ex) {
@@ -447,7 +468,7 @@ public class FrontOrderController {
 
 		// ----- Find Invoice Address ------
 		long custId = UserUtil.getCurrentUser().getCustomer().getCustId();
-		List<AddressDTO> invoiceToAddress = customerService.findAddress(custId, AddressConstant.INVOICE_TO);
+		List<AddressDTO> invoiceToAddress = customerService.findAddress(custId, AddressConstant.USER_INVOICE_TO);
 		// Get first invoice address only
 		AddressDTO invoiceTo;
 		if (invoiceToAddress != null && !invoiceToAddress.isEmpty()) {
@@ -456,7 +477,7 @@ public class FrontOrderController {
 		}
 
 		// ----- Find Dispatch to Address ------
-		List<AddressDTO> dispatchToAddress = customerService.findAddress(custId, AddressConstant.DISPATCH_TO);
+		List<AddressDTO> dispatchToAddress = customerService.findAddress(custId, AddressConstant.USER_DISPATCH_TO);
 		model.addAttribute("dispatchToAddress", dispatchToAddress);
 
 		// ----- Find Shipping Type -----
@@ -482,8 +503,8 @@ public class FrontOrderController {
 	}
 
 	@RequestMapping(value = "step4/submit", method = RequestMethod.POST)
-	String submitOrder(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod,
-			@ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model, SessionStatus session) {
+	String submitOrder(@RequestParam Long invoiceTo, @RequestParam Long dispatchTo, @RequestParam String shippingType, @RequestParam String customerRemark, @RequestParam String paymentMethod,
+			@ModelAttribute("brandId") Long brandId, @ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model, SessionStatus session) {
 		log.info("----- step4/submit POST");
 		log.info("----- dispatchTo = " + dispatchTo);
 		log.info("----- shippingType = " + shippingType);
@@ -496,7 +517,31 @@ public class FrontOrderController {
 
 		// Clear Shopping Cart session
 		// http://vard-lokkur.blogspot.com/2011/01/spring-mvc-session-attributes-handling.html
+		model.addAttribute("brandId", null);
+		model.addAttribute("cart", null);
 		session.setComplete();
+		
+		
+		
+		
+		
+		final SearchOrderDTO orderReport = orderService.findOrderForReport(order.getOrderCode());
+		final List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(order.getOrderCode());
+		for(OrdAddressDTO ordAddress : ordAddresses){
+			log.info("received order address {} ", ordAddress);
+			if(ordAddress.getType() == AddressConstant.ORDER_INVOICE_TO){
+				orderReport.setInvoiceToAddress(ordAddress);
+			}
+			if(ordAddress.getType() == AddressConstant.ORDER_DISPATCH_TO){
+				orderReport.setDispatchToAddress(ordAddress);
+			}
+		}
+		List<SearchOrderDetailDTO> orderDetails = orderService.searchOrderDetail(order.getOrderCode());
+		if(orderDetails != null && !orderDetails.isEmpty()){
+			orderReport.setOrderDetails(orderDetails);
+		}
+		model.addAttribute("orderReport", orderReport);
+		
 
 		return "pages-front/order/step4_submit";
 	}
@@ -513,7 +558,11 @@ public class FrontOrderController {
 
     @RequestMapping(value = "summary", method = RequestMethod.GET)
     String orderSummary(Model model) {
-        final OrderSummaryForm form = new OrderSummaryForm();
+    	log.info("summary GET");
+		final User userAuthen = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		final long custId = userAuthen.getCustomer().getCustId();
+		final OrderSummaryForm form = new OrderSummaryForm();
+		form.setCustId(custId);
         setOrderSummarySearchFrom(form, model);
 		Page<SearchOrderDTO> resultPage = orderService.searchOrder(form);
 		model.addAttribute("resultPage", resultPage);
@@ -533,8 +582,23 @@ public class FrontOrderController {
 
 	@RequestMapping(value = "summary/report/{orderCode}", method = RequestMethod.GET)
 	String orderSummaryReport(@ModelAttribute OrderSummaryForm form, Model model, @PathVariable final String orderCode) {
-		log.info("Report for order: {}" + orderCode);
-		//FIXME just call. wait until report page is ready
+		log.info("Report for order: {}",  orderCode);
+		final SearchOrderDTO orderReport = orderService.findOrderForReport(orderCode);
+		final List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(orderCode);
+		for(OrdAddressDTO ordAddress : ordAddresses){
+			log.info("received order address {} ", ordAddress);
+			if(ordAddress.getType().equals(AddressConstant.ORDER_INVOICE_TO)){
+				orderReport.setInvoiceToAddress(ordAddress);
+			}
+			if(ordAddress.getType().equals(AddressConstant.ORDER_DISPATCH_TO)){
+				orderReport.setDispatchToAddress(ordAddress);
+			}
+		}
+		List<SearchOrderDetailDTO> orderDetails = orderService.searchOrderDetail(orderCode);
+		if(orderDetails != null && !orderDetails.isEmpty()){
+			orderReport.setOrderDetails(orderDetails);
+		}
+		model.addAttribute("orderReport", orderReport);
 		return "pages-front/order/report";
 	}
 
@@ -548,14 +612,6 @@ public class FrontOrderController {
         model.addAttribute("productType", productTypes);
         final List<OrderStatusDTO> orderStatus = orderService.findAllOrderStatus();
         model.addAttribute("orderStatus", orderStatus);
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    public @ResponseBody
-    String handleException(Exception e, HttpServletResponse response) {
-        log.error(e.toString(), e);
-        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        return e.getMessage();
     }
 
 }

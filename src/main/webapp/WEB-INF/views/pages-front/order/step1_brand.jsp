@@ -29,7 +29,6 @@
 			<div class="row">
 				
 				<div class="col-md-12 bg_color">
-					<div class="row row-header2 header2">CREATE ORDER</div>
 					<div class="">
 						<c:choose>
 							<c:when test="${empty brandGroupList }">
@@ -78,13 +77,6 @@
 	</div>
 	<%@include file="/WEB-INF/views/include/common_footer.jspf" %>
 	<%@include file="/WEB-INF/views/include/common_js.jspf" %>
-	<script src="<c:url value="/scripts/assets/js/jquery-1.11.1.min.js"/>"></script>
-	<script src="<c:url value="/scripts/assets/bootstrap/js/bootstrap.min.js"/>"></script>
-	<script src="<c:url value="/scripts/assets/js/jquery.backstretch.min.js"/>"></script>
-	<script>
-		jQuery(document).ready(function() {
-		 	$.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.png"/>");
-		});
-	</script>
+
 </body>
 </html>

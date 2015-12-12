@@ -1,11 +1,14 @@
 package com.starboard.b2b.dto.search;
 
-import java.util.Date;
-
 import com.starboard.b2b.dto.OrdAddressDTO;
+import com.starboard.b2b.dto.SoDTO;
+
+import java.util.Date;
+import java.util.List;
 
 public class SearchOrderDTO {
 
+	private long orderId;
 	private String orderCode;
 	private String customerName;
 	private String productTypeName;
@@ -18,6 +21,9 @@ public class SearchOrderDTO {
 	private OrdAddressDTO dispatchToAddress;
 	private OrdAddressDTO invoiceToAddress;
 	
+	private List<SearchOrderDetailDTO> orderDetails;
+	private List<SoDTO> salesOrders;
+	private List<String> documents;
 
 	public SearchOrderDTO() {
 	}
@@ -33,6 +39,27 @@ public class SearchOrderDTO {
 		this.orderStatus = orderStatus;
 		this.paymentMethod = paymentMethod;
 		this.shippingType = shippingType;
+	}
+
+	public SearchOrderDTO(long orderId, String orderCode, String customerName, String productTypeName, Date orderDate, Date expectShipmentDate,
+						  String orderStatus, String paymentMethod, String shippingType) {
+		this.orderId = orderId;
+		this.orderCode = orderCode;
+		this.customerName = customerName;
+		this.productTypeName = productTypeName;
+		this.orderDate = orderDate;
+		this.expectShipmentDate = expectShipmentDate;
+		this.orderStatus = orderStatus;
+		this.paymentMethod = paymentMethod;
+		this.shippingType = shippingType;
+	}
+
+	public long getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(long orderId) {
+		this.orderId = orderId;
 	}
 
 	public String getOrderCode() {
@@ -115,4 +142,27 @@ public class SearchOrderDTO {
 		this.shippingType = shippingType;
 	}
 
+	public List<SearchOrderDetailDTO> getOrderDetails() {
+		return orderDetails;
+	}
+
+	public void setOrderDetails(List<SearchOrderDetailDTO> orderDetails) {
+		this.orderDetails = orderDetails;
+	}
+
+	public List<SoDTO> getSalesOrders() {
+		return salesOrders;
+	}
+
+	public void setSalesOrders(List<SoDTO> salesOrders) {
+		this.salesOrders = salesOrders;
+	}
+
+	public List<String> getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(List<String> documents) {
+		this.documents = documents;
+	}
 }

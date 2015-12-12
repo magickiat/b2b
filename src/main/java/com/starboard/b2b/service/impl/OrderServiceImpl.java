@@ -17,6 +17,8 @@ import com.starboard.b2b.dto.OrderStatusDTO;
 import com.starboard.b2b.dto.PaymentMethodDTO;
 import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ShippingTypeDTO;
+import com.starboard.b2b.dto.SoDTO;
+import com.starboard.b2b.dto.SoDetailDTO;
 import com.starboard.b2b.dto.search.CommonSearchRequest;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
@@ -26,6 +28,8 @@ import com.starboard.b2b.model.OrdAddress;
 import com.starboard.b2b.model.OrdDetail;
 import com.starboard.b2b.model.OrderStatus;
 import com.starboard.b2b.model.Orders;
+import com.starboard.b2b.model.So;
+import com.starboard.b2b.model.SoDetail;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.ConfigService;
 import com.starboard.b2b.service.OrderService;
@@ -192,8 +196,8 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 		// Save Order address
-		orderAddressDao.save(createOrderAddress(invoiceToAddr, orderId, AddressConstant.INVOICE_TO));
-		orderAddressDao.save(createOrderAddress(dispatchToAddr, orderId, AddressConstant.DISPATCH_TO));
+		orderAddressDao.save(createOrderAddress(invoiceToAddr, orderId, AddressConstant.ORDER_INVOICE_TO));
+		orderAddressDao.save(createOrderAddress(dispatchToAddr, orderId, AddressConstant.ORDER_DISPATCH_TO));
 
 		// For generate report
 		OrderDTO dto = new OrderDTO();
@@ -245,8 +249,20 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional(readOnly = true)
+	public List<SearchOrderDetailDTO> searchOrderDetail(String orderCode) {
+		return orderDetailDao.searchOrderDetail(orderCode);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
 	public SearchOrderDTO findOrderForReport(Long orderId) {
 		return orderDao.findOrderForReport(orderId);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public SearchOrderDTO findOrderForReport(String orderCode) {
+		return orderDao.findOrderForReport(orderCode);
 	}
 
 	@Override
@@ -258,6 +274,25 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional(readOnly = true)
+	public List<OrdAddressDTO> findOrderAddress(final String orderCode) {
+		List<OrdAddress> ordAddresses = orderDao.findOrderAddress(orderCode);
+		List<OrdAddressDTO> ordAddressDTOs = new ArrayList<>();
+		if(ordAddresses != null && !ordAddresses.isEmpty()){
+			for(OrdAddress ordAddress : ordAddresses){
+				try {
+					OrdAddressDTO ordAddressDTO = new OrdAddressDTO();
+					BeanUtils.copyProperties(ordAddressDTO, ordAddress);
+					ordAddressDTOs.add(ordAddressDTO);
+				} catch (IllegalAccessException | InvocationTargetException e) {
+					log.error("Got problem while copying bean properties.. with error {}", e.getMessage(), e);
+				}
+			}
+		}
+		return ordAddressDTOs;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
 	public List<OrderStatusDTO> findAllOrderStatus() {
 		final List<OrderStatusDTO> orderStatuses = new ArrayList<>();
 		for (OrderStatus status : orderStatusDao.findAll()) {
@@ -265,7 +300,7 @@ public class OrderServiceImpl implements OrderService {
 			try {
 				BeanUtils.copyProperties(orderStatus, status);
 			} catch (IllegalAccessException | InvocationTargetException e) {
-				log.error("Got problem while copying bean properties.. with erro {}", e.getMessage(), e);
+				log.error("Got problem while copying bean properties.. with error {}", e.getMessage(), e);
 			}
 			orderStatuses.add(orderStatus);
 		}
@@ -300,5 +335,53 @@ public class OrderServiceImpl implements OrderService {
 	@Transactional(readOnly = true)
 	public List<String> findAllOrderCurrency(Long orderId) {
 		return orderDetailDao.findAllOrderCurrency(orderId);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<SearchOrderDTO> findOrderForReport(Long[] ordersId) {
+		return orderDao.findOrderForReport(ordersId);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<SearchOrderDetailDTO> searchOrderDetail(Long[] ordersId) {
+		return orderDetailDao.searchOrderDetail(ordersId);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<SearchOrderDTO> searchOrderForReport(OrderSummaryForm orderSummaryForm) {
+		return orderDao.searchOrderSummaryForReport(orderSummaryForm);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public SoDTO findSO(long soId) {
+		So so = orderDao.findSoById(soId);
+		SoDTO dto = new SoDTO();
+		try {
+			BeanUtils.copyProperties(dto, so);
+		} catch (IllegalAccessException | InvocationTargetException e) {
+			log.error(e.toString(), e);
+		}
+		return dto;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<SoDetailDTO> findSoDetail(long soId) {
+		List<SoDetail> so = orderDao.findSoDetailBySoId(soId);
+		List<SoDetailDTO> soDTOs = new ArrayList<>();
+		if(so != null && !so.isEmpty()){
+			try {
+				SoDetailDTO dto = new SoDetailDTO();
+				BeanUtils.copyProperties(dto, so);
+				soDTOs.add(dto);
+			} catch (IllegalAccessException | InvocationTargetException e) {
+				log.error(e.toString(), e);
+			}
+		}
+		return soDTOs;
 	}
 }

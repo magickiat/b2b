@@ -6,6 +6,7 @@ package com.starboard.b2b.web.form.product;
 public class OrderSummaryForm {
     private int page;
     private long brandId;
+    private long custId;
     private String keyword;
     private String selectedBrand;
     private String selectedStatus;
@@ -66,5 +67,13 @@ public class OrderSummaryForm {
 
     public void setDateTo(String dateTo) {
         this.dateTo = dateTo;
+    }
+
+    public long getCustId() {
+        return custId;
+    }
+
+    public void setCustId(long custId) {
+        this.custId = custId;
     }
 }

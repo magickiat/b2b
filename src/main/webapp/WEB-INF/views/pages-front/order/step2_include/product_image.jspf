@@ -13,15 +13,7 @@
 		
 				<c:forEach items="${ resultPage.result }" var="product" varStatus="rowNum">
 					<%-- Check if not found image, use default image --%>
-					<c:choose>
-						<c:when test="${empty product.modelImage }">
-							<c:set var="imageUrl" value="/images/b2b/default_image.jpg" />
-						</c:when>
-						<c:otherwise>
-							<c:set var="imageUrl" value="${ product.modelImage }" />
-						</c:otherwise>
-					</c:choose>
-					<c:url var="productUrl" value="${ imageUrl }" />
+					<c:url var="productUrl" value="/upload/product_image/Medium/${ product.productModelId }.jpg" />
 					<div class="col-md-3 col-sm-6 hero-feature" style="<c:if test="${ rowNum.index % 4 == 0 }">clear: left;</c:if>">
 				        <div class="thumbnail">
 				        	<a href='<c:url value="/frontend/order/step2/view?modelId=${ product.productModelId }" />'>

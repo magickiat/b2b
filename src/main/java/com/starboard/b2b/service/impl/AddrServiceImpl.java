@@ -1,10 +1,7 @@
 package com.starboard.b2b.service.impl;
 
-import com.starboard.b2b.dao.AddrDao;
-import com.starboard.b2b.model.Addr;
-import com.starboard.b2b.service.AddrService;
-import com.starboard.b2b.web.form.user.AddressForm;
-import com.starboard.b2b.web.form.user.UserForm;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.starboard.b2b.dao.AddrDao;
+import com.starboard.b2b.model.Addr;
+import com.starboard.b2b.service.AddrService;
+import com.starboard.b2b.web.form.address.AddressForm;
 
 @Service("AddrService")
 public class AddrServiceImpl implements AddrService {
@@ -25,8 +24,18 @@ public class AddrServiceImpl implements AddrService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Addr findById(long addrId) {
-		return addrDao.findById(addrId);
+	public AddressForm findById(long addrId) {
+		Addr addr = addrDao.findById(addrId);
+		AddressForm addressForm = new AddressForm();
+		addressForm.setAddrId(addr.getAddrId());
+		addressForm.setAddress(addr.getAddress());
+		addressForm.setType(addr.getType());
+		addressForm.setRegionCountryId(addr.getRegionCountryId());
+		addressForm.setEmail(addr.getEmail());
+		addressForm.setFax(addr.getFax());
+		addressForm.setPostCode(addr.getPostCode());
+		addressForm.setTel1(addr.getTel1());
+		return addressForm;
 	}
 
 	@Override
@@ -36,14 +45,14 @@ public class AddrServiceImpl implements AddrService {
 		List<AddressForm> addressForms = new ArrayList<>();
 		for (Addr addr : addrs) {
 			AddressForm addressForm = new AddressForm();
-			addressForm.setId(addr.getAddrId());
+			addressForm.setAddrId(addr.getAddrId());
 			addressForm.setAddress(addr.getAddress());
-			addressForm.setAddressType(addr.getType());
-			addressForm.setCountry(addr.getRegionCountryId());
+			addressForm.setType(addr.getType());
+			addressForm.setRegionCountryId(addr.getRegionCountryId());
 			addressForm.setEmail(addr.getEmail());
 			addressForm.setFax(addr.getFax());
 			addressForm.setPostCode(addr.getPostCode());
-			addressForm.setTelephone(addr.getTel1());
+			addressForm.setTel1(addr.getTel1());
 			addressForms.add(addressForm);
 		}
 		return addressForms;
@@ -51,20 +60,26 @@ public class AddrServiceImpl implements AddrService {
 
 	@Override
 	@Transactional
-	public void update(UserForm userForm) {
-		for(AddressForm addressForm: userForm.getAddresses()){
-			Addr addr = new Addr();//addrDao.findById(addressForm.getId());
-			addr.setAddrId(addressForm.getId());
-			addr.setAddress(addressForm.getAddress());
-			addr.setRegionCountryId(addressForm.getCountry());
-			addr.setPostCode(addressForm.getPostCode());
-			addr.setTel1(addressForm.getTelephone());
-			addr.setFax(addressForm.getFax());
-			addr.setType(addressForm.getAddressType());
-			addr.setEmail(addressForm.getEmail());
-			addr.setCustId(userForm.getCustId());
+	public boolean update(AddressForm addressForm) {
+		boolean isSuccess = false;
+		Addr addr = addrDao.findById(addressForm.getAddrId());
+		addr.setAddrId(addressForm.getAddrId());
+		addr.setAddress(addressForm.getAddress());
+		addr.setRegionCountryId(addressForm.getRegionCountryId());
+		addr.setPostCode(addressForm.getPostCode());
+		addr.setTel1(addressForm.getTel1());
+		addr.setFax(addressForm.getFax());
+		addr.setType(addressForm.getType());
+		addr.setEmail(addressForm.getEmail());
+		
+		try{
 			addrDao.update(addr);
-		}		
+			isSuccess = true;
+		}catch(Exception e){
+			isSuccess = false;
+		}
+		
+		return isSuccess;
 	}
 
 }

@@ -1,13 +1,9 @@
 package com.starboard.b2b.web.controller.frontend;
 
-import com.starboard.b2b.common.AddressConstant;
-import com.starboard.b2b.dto.CountryDTO;
-import com.starboard.b2b.model.User;
-import com.starboard.b2b.service.AddrService;
-import com.starboard.b2b.service.CountryService;
-import com.starboard.b2b.service.UserService;
-import com.starboard.b2b.web.form.user.AddressForm;
-import com.starboard.b2b.web.form.user.UserForm;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,14 +11,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.starboard.b2b.common.AddressConstant;
+import com.starboard.b2b.dto.CountryDTO;
+import com.starboard.b2b.model.User;
+import com.starboard.b2b.service.AddrService;
+import com.starboard.b2b.service.CountryService;
+import com.starboard.b2b.service.UserService;
+import com.starboard.b2b.web.form.address.AddressForm;
+import com.starboard.b2b.web.form.user.UserForm;
 
 @Controller
 @RequestMapping("/frontend/user")
@@ -32,7 +33,7 @@ public class FrontUserController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private AddrService addrService;
 
@@ -49,9 +50,9 @@ public class FrontUserController {
 		final UserForm userForm = new UserForm();
 		final User userAuthen = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		final Map<String, String> countries = getCountries();
-		final List<Long> addressTypes = getAddressConstant();
+		final Map<Long, String> addressTypes = getAddressConstant();
 		final List<AddressForm> addressForms = new ArrayList<>();
-		try{
+		try {
 			final User user = userService.findByUsername(userAuthen.getUsername());
 			userForm.setId(userAuthen.getId().toString());
 			userForm.setUsername(userAuthen.getUsername());
@@ -59,58 +60,32 @@ public class FrontUserController {
 			addressForms.addAll(addrService.findByCustId(user.getCustomer().getCustId()));
 			userForm.setAddresses(addressForms);
 			userForm.setCustId(user.getCustomer().getCustId());
-		}catch(Exception e){
+		} catch (Exception e) {
 			log.error("Got problem while finding address.");
 		}
 		model.addAttribute("userForm", userForm);
 		model.addAttribute("countries", countries);
 		model.addAttribute("addressTypes", addressTypes);
-		
+
 		return "pages-front/user/index";
 	}
 
 	@RequestMapping("edit")
-	String edit(@ModelAttribute UserForm userForm, Model model, BindingResult binding) {
-		Map<String, String> countries = getCountries();
-		List<Long> addressTypes = getAddressConstant();
-		log.info("### edit ###");
-		log.info("userForm1 Email----> " + userForm.getEmail());
-		List<AddressForm> addressForms = new ArrayList<>();
-		try{
-			//Update user detail
-			userService.update(userForm);
-			//Get address detail
-			addressForms.addAll(addrService.findByCustId(userForm.getCustId()));
-			userForm.setAddresses(addressForms);
-		}catch(Exception e){
-			log.error("Got problem while finding address.");
-		}
-
-		model.addAttribute("userForm", userForm);
-		model.addAttribute("countries", countries);
-		model.addAttribute("addressTypes", addressTypes);
-		return "pages-front/user/index";
+	@ResponseBody String edit(@ModelAttribute UserForm userForm, Model model) {
+		// Update user detail
+		boolean isUpdateSuccess = userService.update(userForm);
+		return (isUpdateSuccess==true?"true":"false");
 	}
-
+	
 	@RequestMapping("address/edit")
-	String editAddress(@ModelAttribute UserForm userForm, Model model, BindingResult binding) {
-		Map<String, String> countries = getCountries();
-		List<Long> addressTypes = getAddressConstant();	
-		log.info("userForm Email----> " + userForm.getEmail());
-		List<AddressForm> addressForms = new ArrayList<>();
-		try{
-			//Update address detail
-			addrService.update(userForm);
-			//Get address detail
-			addressForms.addAll(addrService.findByCustId(userForm.getCustId()));
-			userForm.setAddresses(addressForms);
-		}catch(Exception e){
-			log.error("Got problem while finding address.");
+	@ResponseBody String editAddress2(@ModelAttribute UserForm userForm, Model model, @RequestParam(value = "addressId", required = false) long addressId) {
+		boolean isUpdateSuccess = false;
+		for (AddressForm addressForm : userForm.getAddresses()) {
+			if (addressForm.getAddrId() == addressId) {
+				isUpdateSuccess = addrService.update(addressForm);
+			}
 		}
-		model.addAttribute("userForm", userForm);
-		model.addAttribute("countries", countries);
-		model.addAttribute("addressTypes", addressTypes);
-		return "pages-front/user/index";
+		return (isUpdateSuccess==true?"true":"false");
 	}
 
 	public Map<String, String> getCountries() {
@@ -122,10 +97,10 @@ public class FrontUserController {
 		return countries;
 	}
 
-	public List<Long> getAddressConstant() {
-		List<Long> addresses = new ArrayList<Long>();
-		addresses.add(AddressConstant.INVOICE_TO);
-		addresses.add(AddressConstant.DISPATCH_TO);
+	public Map<Long, String> getAddressConstant() {
+		Map<Long, String> addresses = new HashMap<Long, String>();
+		addresses.put(AddressConstant.USER_INVOICE_TO, "Invoice To");
+		addresses.put(AddressConstant.USER_DISPATCH_TO, "Dispatch To");
 		return addresses;
 	}
 }
