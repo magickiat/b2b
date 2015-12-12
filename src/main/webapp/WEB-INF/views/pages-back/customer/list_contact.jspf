@@ -1,0 +1,128 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@page session="true"%>
+
+
+<div class="col-sm-12">&nbsp;</div>
+
+<div class="col-sm-12" style="border: 1;">
+	<%-- Loop All Tech --%>
+	<form:form servletRelativeAction="/backend/customer/save_contact" class="form-horizontal" modelAttribute="contactForm" method="post"> 
+		<div class="row">
+			<div class="col-sm-12">
+				<form:errors path="*" cssClass="alert alert-danger" element="div" />
+			</div>
+		</div>
+		<div class="formgroup">
+			<form:hidden path="contactId" value="${contact.contactId }"/>
+			<form:hidden path="custId" value="${contact.custId }"/>
+			<div class="col-sm-3">
+				Contact Information
+			</div>
+			<div class="col-sm-1">
+				Customer
+			</div>
+			<div class="col-sm-8">
+				${ customerForm.nameEn }
+			</div>
+		</div>
+		<div class="formgroup">
+			<div class="col-sm-3">
+			
+			</div>
+			<div class="col-sm-2">
+				Contact Name
+			</div>
+			<div class="col-sm-2">
+				<form:input path="nameEn" value="${contact.nameEn }"/>
+			</div>
+			<div class="col-sm-1">
+				Nick Name
+			</div>
+			<div class="col-sm-4">
+				<form:input path="nameNick" value="${contact.nameNick }"/>
+			</div>
+		</div>
+		<div class="formgroup">
+			<div class="col-sm-3">
+				<img src="" alt="pickture" height="130px;" width="200px;">
+			</div>
+			<div class="col-sm-9">
+				<div class="formgroup">
+				  <table style="width: 100%;">
+				    <tbody>
+				    	<tr>
+					      <td style="width: 23%;">Position</td>
+					      <td style="width: 23%;"><form:input path="position" value="${contact.position }"/></td>
+					      <td style="width: 11.7%;">Birth Date</td>
+					      <td style="width: 42.3%;"><form:input path="birthDate" value="${contact.birthDate }"/></td>
+					    </tr>
+				  </tbody></table>
+				</div>
+				<div class="formgroup">
+				  <table style="width: 100%;">
+				    <tbody>
+				    	<tr>
+					      <td style="width: 23%;">Address</td>
+					      <td style="width: 23%;"><form:input path="address" value="${contact.address }"/></td>
+					      <td style="width: 11.7%;">Telephone</td>
+					      <td style="width: 42.3%;"><form:input path="tel" value="${contact.tel}"/></td>
+					    </tr>
+				  </tbody></table>
+				</div>
+				<div class="formgroup">
+				  <table style="width: 100%;">
+				    <tbody>
+				    	<tr>
+					      <td style="width: 23%;">Email</td>
+					      <td style="width: 23%;"><form:input path="email" value="${contact.email }"/></td>
+					      <td style="width: 11.7%;">Mobile Phone</td>
+					      <td style="width: 42.3%;"><form:input path="mobile" value="${contact.mobile }"/></td>
+					    </tr>
+				  </tbody></table>
+				</div>
+				<div class="formgroup">
+				  <table style="width: 100%;">
+				    <tbody>
+				    	<tr>
+					      <td style="width: 23%;">Fax</td>
+					      <td style="width: 23%;"><form:input path="fax" value="${contact.fax }"/></td>
+					      <td style="width: 11.7%;">Mobile Type</td>
+					      <td style="width: 42.3%;"></td>
+					    </tr>
+				  </tbody></table>
+				</div>
+				<div class="formgroup">
+				  <table style="width: 100%;">
+				    <tbody>
+				    	<tr>
+					      <td style="width: 23%;">Skype</td>
+					      <td style="width: 23%;"><form:input path="skype" value="${contact.skype }"/></td>
+					      <td style="width: 11.7%;">Facebook</td>
+					      <td style="width: 42.3%;"><form:input path="facebook" value="${contact.facebook }"/></td>
+					    </tr>
+				  </tbody></table>
+				</div>
+				<div class="formgroup">
+				  <table style="width: 100%;">
+				    <tbody>
+				    	<tr>
+					      <td style="width: 23%;"></td>
+					      <td style="width: 23%;"></td>
+					      <td style="width: 11.7%;">Twitter</td>
+					      <td style="width: 42.3%;"><form:input path="tel" value="${contact.twitter }"/></td>
+					    </tr>
+				  </tbody></table>
+				</div>
+			</div>
+		</div>
+		<div class="formgroup">
+			<div class="col-sm-12" align="center">
+				<input type="submit" value="save"/>
+				<input type="reset" value="cancel"/>
+			</div>
+		</div>
+	</form:form>
+</div>
+
