@@ -68,7 +68,7 @@
 											<tr>
 												<c:forEach var="p" items="${rowTech.value}" varStatus="rowNumProduct">
 													<td align="center">
-														<input type="text" id="${ p.product.productId }" name="product-order-number" class="input-multiple numberOnly ${ withnose}-${ rowTech.key }" onblur="updateTotal()" />
+														<input type="text" id="${ p.product.productId }" name="product-order-number" class="form-control input-multiple numberOnly ${ withnose}-${ rowTech.key }" onblur="updateTotal()" />
 													</td>
 												</c:forEach>
 											</tr>

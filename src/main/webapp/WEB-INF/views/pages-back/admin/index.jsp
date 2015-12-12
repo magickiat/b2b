@@ -10,16 +10,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Starboard Windsurfing</title>
-    <%@include file="/WEB-INF/views/include/common_css.jspf" %>
+    <%@include file="/WEB-INF/views/include/common_cssbackend.jspf" %>
 </head>
 <body>
+	<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 	<div class="container">
-		<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 		<div class="row">
-			<h2>Welcome Admin page</h2>
-		</div>
-		<div class="row row-header2 header2 bg_color">
-			<a href='<c:url value="/backend/admin/file/list" />'>Upload image</a>
+			<div class="col-md-12 bg_color" style="min-height: 400px;">
+				<div class="row row-header2 header2">Welcome Admin page</div>
+				<div>
+					<a href='<c:url value="/backend/admin/file/list" />'>Upload image</a>
+				</div>	
+			</div>
 		</div>
 	</div>
 	

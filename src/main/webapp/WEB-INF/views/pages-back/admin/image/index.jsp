@@ -10,31 +10,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Starboard Windsurfing</title>
-<%@include file="/WEB-INF/views/include/common_css.jspf"%>
-
-<link rel="stylesheet"
-	href="<c:url value="/scripts/dropzone/dropzone.css" />">
+<%@include file="/WEB-INF/views/include/common_cssbackend.jspf"%>
+<link rel="stylesheet" href="<c:url value="/scripts/dropzone/dropzone.css" />">
 
 </head>
 <body>
+	<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
+	
 	<div class="container">
-		<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 		<div class="row">
-			<div class="col-sm-12">
-				<h2>Image upload page</h2>
+			<div class="col-sm-12 bg_color">
+				<div class="row row-header2 header2">Image upload page</div>
+				<div class="col-sm-12" style="text-align: right;">
+					<button class="btn btn-danger" onclick="deleteFile()">Delete</button>
+					<button class="btn btn-default" onclick="upload()">Upload</button>
+					<button class="btn btn-default" onclick="newFolder()">New
+						Folder</button>
+					<button class="btn btn-default" onclick="back()">Back</button>
+				</div>
+				
+				
 			</div>
 		</div>
-
 		<%-- Folder --%>
-		<div class="row row-header2 header2 bg_color">
-			<div class="col-sm-12">
-				<button class="btn btn-danger" onclick="deleteFile()">Delete</button>
-				<button class="btn btn-default" onclick="upload()">Upload</button>
-				<button class="btn btn-default" onclick="newFolder()">New
-					Folder</button>
-				<button class="btn btn-default" onclick="back()">Back</button>
-			</div>
-		</div>
 		<div class="row bg_color">
 			<div class="col-sm-12">
 				<label for="selectedFolder">Image Path:</label>
