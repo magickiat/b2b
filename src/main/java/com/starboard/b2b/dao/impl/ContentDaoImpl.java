@@ -8,6 +8,7 @@ import com.starboard.b2b.model.Content;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +51,7 @@ public class ContentDaoImpl implements ContentDao {
 		SearchContentResult result = new SearchContentResult();
 
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Content.class);
-		List list = criteria.setFirstResult(req.getFirstResult()).setMaxResults(req.getPageSize()).list();
+		List list = criteria.addOrder(Order.desc("timeCreate")).setFirstResult(req.getFirstResult()).setMaxResults(req.getPageSize()).list();
 
 		Object totalRecord = sessionFactory.getCurrentSession().createCriteria(Content.class)
 				.setProjection(Projections.rowCount()).uniqueResult();
