@@ -1,5 +1,7 @@
 package com.starboard.b2b.dao.impl;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import com.starboard.b2b.dao.CustDao;
 import com.starboard.b2b.dto.AddressDTO;
+import com.starboard.b2b.dto.ContactDTO;
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
 import com.starboard.b2b.dto.search.SearchCustRequest;
 import com.starboard.b2b.dto.search.SearchCustResult;
@@ -104,6 +107,22 @@ public class CustDaoImpl implements CustDao {
 		sb.append(" from Addr a where a.custId = :custId order by a.type asc");
 
 		return (List<AddressDTO>) sessionFactory.getCurrentSession().createQuery(sb.toString())
+				.setLong("custId", custId).list();
+
+	}
+	
+	/**
+	 * Get a address when have more than one
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ContactDTO> findContactByCustomerId(Long custId) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(
+				"select new com.starboard.b2b.dto.ContactDTO(c.contactId, c.custId, c.nameTh, c.nameTitle, c.nameEn, c.nameNick, c.position, c.birthDate, c.address, c.email, c.tel, c.mobile, c.fax, c.skype, c.facebook, c.twitter, c.markUp, c.salesId, c.mobileId, c.imgPath, c.userCreate,	 c.userUpdate, c.timeCreate, c.timeUpdate, c.signaturePath) ");
+		sb.append(" from Contact c where c.custId = :custId order by c.contactId asc");
+
+		return (List<ContactDTO>) sessionFactory.getCurrentSession().createQuery(sb.toString())
 				.setLong("custId", custId).list();
 
 	}

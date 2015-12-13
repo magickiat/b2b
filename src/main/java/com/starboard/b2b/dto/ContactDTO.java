@@ -1,273 +1,224 @@
 package com.starboard.b2b.dto;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
-public class ContactDTO {
+import org.apache.commons.lang.builder.ToStringBuilder;
 
-	private long id;
-	private long contact_id;
-	private String address;
-	private Date birth_date;
-	private long cust_id;
-	private String email;
-	private String facebook;
-	private String fax;
-	private String img_path;
-	private double mark_up;
-	private String mobile;
-	private String mobile_id;
-	private String name_en;
-	private String name_nick;
-	private String name_th;
-	private String name_title;
+public class ContactDTO {
+	private Long contactId;
+	private Long custId;
+	private String nameTh;
+	private String nameTitle;
+	private String nameEn;
+	private String nameNick;
 	private String position;
-	private String sales_id;
-	private String signature_path;
-	private String skype;
+	private Date birthDate;
+	private String address;
+	private String email;
 	private String tel;
+	private String mobile;
+	private String fax;
+	private String skype;
+	private String facebook;
 	private String twitter;
+	private BigDecimal markUp;
+	private String salesId;
+	private String mobileId;
+	private String imgPath;
 	private String userCreate;
 	private String userUpdate;
 	private Date timeCreate;
 	private Date timeUpdate;
-
-	public ContactDTO(long id, long contact_id, String address, Date birth_date, long cust_id, String email, String facebook, String fax,
-			String img_path, double mark_up, String mobile, String mobile_id, String name_en, String name_nick, String name_th, String name_title,
-			String position, String sales_id, String signature_path, String skype, String tel, String twitter, String userCreate, String userUpdate,
-			Date timeCreate, Date timeUpdate) {
-		this.id = id;
-		this.timeCreate = timeCreate;
-		this.timeUpdate = timeUpdate;
+	private String signaturePath;
+	
+	public ContactDTO() {
+		
+	}
+	public ContactDTO(Long contactId, Long custId, String nameTh, String nameTitle, String nameEn, String nameNick, String position, Date birthDate, String address, String email,
+			 String tel, String mobile, String fax, String skype, String facebook, String twitter, BigDecimal markUp, String salesId, String mobileId, String imgPath, String userCreate, 
+			 String userUpdate, Date timeCreate, Date timeUpdate, String signaturePath) {
+		this.contactId = contactId;
+		this.custId = custId;
+		this.nameTh = nameTh;
+		this.nameTitle = nameTitle;
+		this.nameEn = nameEn;
+		this.nameNick = nameNick;
+		this.position = position;
+		this.birthDate = birthDate;
+		this.address = address;
+		this.email = email;
+		this.tel = tel;
+		this.mobile = mobile;
+		this.fax = fax;
+		this.skype = skype;
+		this.facebook = facebook;
+		this.twitter = twitter;
+		this.markUp = markUp;
+		this.salesId = salesId;
+		this.mobileId = mobileId;
+		this.imgPath = imgPath;
 		this.userCreate = userCreate;
 		this.userUpdate = userUpdate;
-		this.contact_id = contact_id;
-		this.address = address;
-		this.birth_date = birth_date;
-		this.cust_id = cust_id;
-		this.email = email;
-		this.facebook = facebook;
-		this.fax = fax;
-		this.img_path = img_path;
-		this.mark_up = mark_up;
-		this.mobile = mobile;
-		this.mobile_id = mobile_id;
-		this.name_en = name_en;
-		this.name_nick = name_nick;
-		this.name_th = name_th;
-		this.name_title = name_title;
-		this.position = position;
-		this.sales_id = sales_id;
-		this.signature_path = signature_path;
-		this.skype = skype;
-		this.tel = tel;
-		this.twitter = twitter;
+		this.timeCreate = timeCreate;
+		this.timeUpdate = timeUpdate;
+		this.signaturePath = signaturePath;
 	}
-
-	public String getTwitter() {
-		return twitter;
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
 	}
-
-	public void setTwitter(String twitter) {
-		this.twitter = twitter;
+	public Long getContactId() {
+		return contactId;
 	}
-
-	public String getTel() {
-		return tel;
+	public void setContactId(Long contactId) {
+		this.contactId = contactId;
 	}
-
-	public void getTel(String tel) {
-		this.tel = tel;
+	public Long getCustId() {
+		return custId;
 	}
-
-	public String getSkype() {
-		return skype;
+	public void setCustId(Long custId) {
+		this.custId = custId;
 	}
-
-	public void setSkype(String skype) {
-		this.skype = skype;
+	public void setCustId(long custId) {
+		this.custId = custId;
 	}
-
-	public String getSignaturePath() {
-		return signature_path;
+	public String getNameTh() {
+		return nameTh;
 	}
-
-	public void setSignaturePath(String signature_path) {
-		this.signature_path = signature_path;
+	public void setNameTh(String nameTh) {
+		this.nameTh = nameTh;
 	}
-
-	public String getSalesId() {
-		return sales_id;
+	public String getNameTitle() {
+		return nameTitle;
 	}
-
-	public void setSalesId(String sales_id) {
-		this.sales_id = sales_id;
+	public void setNameTitle(String nameTitle) {
+		this.nameTitle = nameTitle;
 	}
-
+	public String getNameEn() {
+		return nameEn;
+	}
+	public void setNameEn(String nameEn) {
+		this.nameEn = nameEn;
+	}
+	public String getNameNick() {
+		return nameNick;
+	}
+	public void setNameNick(String nameNick) {
+		this.nameNick = nameNick;
+	}
 	public String getPosition() {
 		return position;
 	}
-
 	public void setPosition(String position) {
 		this.position = position;
 	}
-
-	public String getNameTitle() {
-		return name_title;
-	}
-
-	public void setNameTitle(String name_title) {
-		this.name_title = name_title;
-	}
-
-	public String getNameTh() {
-		return name_th;
-	}
-
-	public void setNameTh(String name_th) {
-		this.name_th = name_th;
-	}
-
-	public String getNameNick() {
-		return name_nick;
-	}
-
-	public void setNameNick(String name_nick) {
-		this.name_nick = name_nick;
-	}
-
-	public String getNameEn() {
-		return name_en;
-	}
-
-	public void setNameEn(String name_en) {
-		this.name_en = name_en;
-	}
-
-	public String getMobileId() {
-		return mobile_id;
-	}
-
-	public void setMobileId(String mobile_id) {
-		this.mobile_id = mobile_id;
-	}
-
-	public String getMobile() {
-		return mobile;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
-
-	public double getMarkup() {
-		return mark_up;
-	}
-
-	public void setMark_up(double mark_up) {
-		this.mark_up = mark_up;
-	}
-
-	public String getImgPath() {
-		return img_path;
-	}
-
-	public void setImgPath(String img_path) {
-		this.img_path = img_path;
-	}
-
-	public String getFax() {
-		return fax;
-	}
-
-	public void setFax(String fax) {
-		this.fax = fax;
-	}
-
-	public String getFacebook() {
-		return facebook;
-	}
-
-	public void setFacebook(String facebook) {
-		this.facebook = facebook;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public long getCustId() {
-		return cust_id;
-	}
-
-	public void setCustId(long cust_id) {
-		this.cust_id = cust_id;
-	}
-
 	public Date getBirthDate() {
-		return birth_date;
+		return birthDate;
 	}
-
-	public void setBirthDate(Date birth_date) {
-		this.birth_date = birth_date;
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
 	}
-
 	public String getAddress() {
 		return address;
 	}
-
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
-	public long getContactId() {
-		return contact_id;
+	public String getEmail() {
+		return email;
 	}
-
-	public void setContactId(long contact_id) {
-		this.contact_id = contact_id;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-
-	public long getId() {
-		return id;
+	public String getTel() {
+		return tel;
 	}
-
-	public void setId(long id) {
-		this.id = id;
+	public void setTel(String tel) {
+		this.tel = tel;
 	}
-
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	public String getFax() {
+		return fax;
+	}
+	public void setFax(String fax) {
+		this.fax = fax;
+	}
+	public String getSkype() {
+		return skype;
+	}
+	public void setSkype(String skype) {
+		this.skype = skype;
+	}
+	public String getFacebook() {
+		return facebook;
+	}
+	public void setFacebook(String facebook) {
+		this.facebook = facebook;
+	}
+	public String getTwitter() {
+		return twitter;
+	}
+	public void setTwitter(String twitter) {
+		this.twitter = twitter;
+	}
+	public BigDecimal getMarkUp() {
+		return markUp;
+	}
+	public void setMarkUp(BigDecimal markUp) {
+		this.markUp = markUp;
+	}
+	public String getSalesId() {
+		return salesId;
+	}
+	public void setSalesId(String salesId) {
+		this.salesId = salesId;
+	}
+	public String getMobileId() {
+		return mobileId;
+	}
+	public void setMobileId(String mobileId) {
+		this.mobileId = mobileId;
+	}
+	public String getImgPath() {
+		return imgPath;
+	}
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
 	public String getUserCreate() {
 		return userCreate;
 	}
-
 	public void setUserCreate(String userCreate) {
 		this.userCreate = userCreate;
 	}
-
 	public String getUserUpdate() {
 		return userUpdate;
 	}
-
 	public void setUserUpdate(String userUpdate) {
 		this.userUpdate = userUpdate;
 	}
-
 	public Date getTimeCreate() {
 		return timeCreate;
 	}
-
 	public void setTimeCreate(Date timeCreate) {
 		this.timeCreate = timeCreate;
 	}
-
 	public Date getTimeUpdate() {
 		return timeUpdate;
 	}
-
 	public void setTimeUpdate(Date timeUpdate) {
 		this.timeUpdate = timeUpdate;
+	}
+	public String getSignaturePath() {
+		return signaturePath;
+	}
+	public void setSignaturePath(String signaturePath) {
+		this.signaturePath = signaturePath;
 	}
 }

@@ -18,11 +18,13 @@ import com.starboard.b2b.common.Page;
 import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.dao.AddrDao;
 import com.starboard.b2b.dao.BrandDao;
+import com.starboard.b2b.dao.ContactDao;
 import com.starboard.b2b.dao.CountryDao;
 import com.starboard.b2b.dao.CustDao;
 import com.starboard.b2b.dao.CustomerDao;
 import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.BrandDTO;
+import com.starboard.b2b.dto.ContactDTO;
 import com.starboard.b2b.dto.CountryDTO;
 import com.starboard.b2b.dto.CustDTO;
 import com.starboard.b2b.dto.CustomerDTO;
@@ -30,6 +32,7 @@ import com.starboard.b2b.dto.search.SearchCustRequest;
 import com.starboard.b2b.dto.search.SearchCustResult;
 import com.starboard.b2b.model.Addr;
 import com.starboard.b2b.model.Brand;
+import com.starboard.b2b.model.Contact;
 import com.starboard.b2b.model.Cust;
 import com.starboard.b2b.model.Customer;
 import com.starboard.b2b.service.CustomerService;
@@ -60,6 +63,9 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Autowired
 	private AddrDao addrDao;
+	
+	@Autowired
+	private ContactDao contactDao;
 
 	@Transactional(readOnly = true)
 	public CustomerDTO findById(Long id) {
@@ -256,5 +262,63 @@ public class CustomerServiceImpl implements CustomerService {
 		addr.setEmail(email);
 		addr.setType(type);
 		return addr;
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<ContactDTO> findContactByCustomerId(Long custId) {
+		return custDao.findContactByCustomerId(custId);
+	}
+
+	@Override
+	@Transactional
+	public void saveContact(Long contactId, Long custId, String nameEn, String nameNick, String position, Date birthDate, String address, String tel,
+			String email, String mobileId, String fax, String skype, String facebook, String twitter) {
+		if(contactId==null || contactId==0){
+			//contactId = contactDao.maxId();
+			/*if(contactId == null){
+				contactId = 0L;
+			}*/
+			//contactId = contactId+1;
+			contactDao.save(createContact(contactId, custId, nameEn, nameNick, position, birthDate, address, tel, email, mobileId, fax, skype, facebook, twitter));
+		}else{
+			Contact contact = contactDao.findById(contactId);
+			contact.setContactId(contactId);
+			contact.setCustId(custId);
+			contact.setNameEn(nameEn);
+			contact.setNameNick(nameNick);
+			contact.setPosition(position);
+			contact.setBirthDate(birthDate);
+			contact.setAddress(address);
+			contact.setEmail(email);
+			contact.setTel(tel);
+			contact.setEmail(email);
+			contact.setMobileId(mobileId);
+			contact.setFax(fax);
+			contact.setSkype(skype);
+			contact.setFacebook(facebook);
+			contact.setTwitter(twitter);
+		}
+		
+	}
+	public Contact createContact(Long contactId, Long custId, String nameEn, String nameNick, String position, Date birthDate, String address, String tel,
+			String email, String mobileId, String fax, String skype, String facebook, String twitter) {
+		Contact contact = new Contact();
+		contact.setContactId(contactId);
+		contact.setCustId(custId);
+		contact.setNameEn(nameEn);
+		contact.setNameNick(nameNick);
+		contact.setPosition(position);
+		contact.setBirthDate(birthDate);
+		contact.setAddress(address);
+		contact.setEmail(email);
+		contact.setTel(tel);
+		contact.setEmail(email);
+		contact.setMobileId(mobileId);
+		contact.setFax(fax);
+		contact.setSkype(skype);
+		contact.setFacebook(facebook);
+		contact.setTwitter(twitter);
+		return contact;
 	}
 }

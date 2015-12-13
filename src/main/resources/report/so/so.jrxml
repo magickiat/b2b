@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2015-12-12T15:52:37 -->
+<!-- 2015-12-13T15:08:09 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ro" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba40db7d-9060-4710-81d4-f1a174b6499e">
 	<property name="ireport.zoom" value="4.0"/>
 	<property name="ireport.x" value="1520"/>
@@ -39,7 +39,7 @@ ptype.product_type_name,
 od.product_unit_id,
 pt.payment_term_name,
 pm.payment_method_name,
-r.remark_orders,
+r.remark_customer,
 o.order_id,
 o.so_id,
 p.product_code,
@@ -79,7 +79,7 @@ order by od.product_id, od.order_product_id]]>
 	<field name="payment_method_name" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="remark_orders" class="java.lang.String">
+	<field name="remark_customer" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="order_id" class="java.lang.Long">
@@ -199,7 +199,7 @@ order by od.product_id, od.order_product_id]]>
 			</textField>
 			<textField>
 				<reportElement style="normal" x="171" y="175" width="100" height="12" isPrintWhenDetailOverflows="true" uuid="2c592bc0-6f0e-4505-a761-8a3b3b1cfef5"/>
-				<textFieldExpression><![CDATA[$F{order_code}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{so_no}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="normal" x="293" y="175" width="128" height="14" isPrintWhenDetailOverflows="true" uuid="38623cbc-c8b2-4dee-9a22-11116a65a08f"/>
@@ -453,7 +453,7 @@ order by od.product_id, od.order_product_id]]>
 					<bottomPen lineStyle="Dashed"/>
 					<rightPen lineStyle="Dashed"/>
 				</box>
-				<textFieldExpression><![CDATA[($F{remark_orders} != null) ? $F{remark_orders} : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{remark_customer} != null) ? $F{remark_customer} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="normalCenter" x="114" y="89" width="265" height="20" uuid="e714a2b7-2c81-4ad5-828f-ca8b96ebda5a"/>
@@ -602,7 +602,7 @@ order by od.product_id, od.order_product_id]]>
 					<bottomPen lineStyle="Dashed"/>
 					<rightPen lineStyle="Dashed"/>
 				</box>
-				<textFieldExpression><![CDATA[($F{remark_orders} != null) ? $F{remark_orders} : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{remark_customer} != null) ? $F{remark_customer} : ""]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>

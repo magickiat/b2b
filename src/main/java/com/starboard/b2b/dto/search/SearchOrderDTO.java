@@ -18,6 +18,9 @@ public class SearchOrderDTO {
 	private String paymentMethod;
 	private String shippingType;
 	
+	private String paymentTermDescription;
+	private String remarkCustomer;
+	
 	private OrdAddressDTO dispatchToAddress;
 	private OrdAddressDTO invoiceToAddress;
 	
@@ -29,7 +32,7 @@ public class SearchOrderDTO {
 	}
 
 	public SearchOrderDTO(String orderCode, String customerName, String productTypeName, Date orderDate, Date expectShipmentDate,
-			String orderStatus, String paymentMethod, String shippingType) {
+			String orderStatus, String paymentMethod, String shippingType, String paymentTermDescription, String remarkCustomer) {
 		super();
 		this.orderCode = orderCode;
 		this.customerName = customerName;
@@ -39,10 +42,12 @@ public class SearchOrderDTO {
 		this.orderStatus = orderStatus;
 		this.paymentMethod = paymentMethod;
 		this.shippingType = shippingType;
+		this.paymentTermDescription = paymentTermDescription;
+		this.remarkCustomer = remarkCustomer;
 	}
 
 	public SearchOrderDTO(long orderId, String orderCode, String customerName, String productTypeName, Date orderDate, Date expectShipmentDate,
-						  String orderStatus, String paymentMethod, String shippingType) {
+						  String orderStatus, String paymentMethod, String shippingType, String paymentTermDescription, String remarkCustomer) {
 		this.orderId = orderId;
 		this.orderCode = orderCode;
 		this.customerName = customerName;
@@ -52,6 +57,8 @@ public class SearchOrderDTO {
 		this.orderStatus = orderStatus;
 		this.paymentMethod = paymentMethod;
 		this.shippingType = shippingType;
+		this.paymentTermDescription = paymentTermDescription;
+		this.remarkCustomer = remarkCustomer;
 	}
 
 	public long getOrderId() {
@@ -164,5 +171,21 @@ public class SearchOrderDTO {
 
 	public void setDocuments(List<String> documents) {
 		this.documents = documents;
+	}
+
+	public String getPaymentTermDescription() {
+		return paymentTermDescription;
+	}
+
+	public void setPaymentTermDescription(String paymentTermDescription) {
+		this.paymentTermDescription = paymentTermDescription;
+	}
+
+	public String getRemarkCustomer() {
+		return remarkCustomer;
+	}
+
+	public void setRemarkCustomer(String remarkCustomer) {
+		this.remarkCustomer = remarkCustomer;
 	}
 }

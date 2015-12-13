@@ -1,20 +1,11 @@
 package com.starboard.b2b.dao;
 
-import java.util.List;
+import com.starboard.b2b.model.Contact;
 
-import com.starboard.b2b.dto.ContactDTO;
-
-/**
- * create by nui on 13/12/2015
- */
 public interface ContactDao {
+	Long maxId();
 	
-	List<ContactDTO> list();
+	Contact findById(Long contactId);
 	
-	ContactDTO getById(int id);
-	
-	void addContact(ContactDTO contact);
-	
-	void updateContact(ContactDTO contact);
-	
+	void save(Contact obj);
 }
