@@ -254,3 +254,224 @@ input::-webkit-inner-spin-button {
 }
 
 
+/*------------------------------------ 
+  [EXS] EXPERIENCE SECTION 
+  ------------------------------------*/
+.timeline {
+  position: relative;
+  width: 851px;
+  padding: 0 0 100px;
+  margin: 0 auto;
+  list-style: none;
+  overflow: hidden;
+}
+
+.timeline:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 100%;
+  background: #eee;
+  margin-left: -1px;
+}
+
+.timeline > li {
+  position: relative;
+  clear: both;
+  float: left;
+  width: 360px;
+  background: #fafafa;
+  padding: 20px;
+  border: 1px solid #eee;
+  margin: -150px 0 0;
+  -webkit-border-radius: 2px;
+     -moz-border-radius: 2px;
+          border-radius: 2px;
+  text-align: center;
+  -webkit-transition: .2s;
+     -moz-transition: .2s;
+          transition: .2s;
+}
+
+.timeline > li:before { /* Marker line */
+  content: "";
+  position: absolute;
+  right: -51px;
+  top: 50%;
+  width: 50px;
+  height: 1px;
+  background: #eee;
+  -webkit-transition: .2s;
+     -moz-transition: .2s;
+          transition: .2s;
+}
+
+.timeline > li:after { /* Marker dot */
+  content: "";
+  position: absolute;
+  right: -75px;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  background: #eee;
+  margin-top: -8px;
+  border: 3px solid #fff;
+  -webkit-border-radius: 50%;
+	 -moz-border-radius: 50%;
+          border-radius: 50%;
+  -webkit-transition: .2s;
+     -moz-transition: .2s;
+          transition: .2s;
+}
+
+.timeline > li.right { 
+  float:right;
+}
+
+.timeline > li.right:before { /* Marker line for right box */
+  left: -51px;
+  right: auto;
+}
+
+.timeline > li.right:after { /* Marker dot for right box */
+  left: -74px;
+  right: auto;
+}
+
+.timeline > li.present:after,
+.timeline > li.right.present:after { /* Alternative marker style within .present */
+  top: 50%;
+  right: -82px;
+  width: 32px;
+  height: 32px;
+  background: #fff;
+  border-color: #eee;
+  margin-top: -16px;
+}
+
+.timeline > li.right.present:after { /* Alternative marker style within .present right box */
+  left: -83px;
+  right: auto;
+}
+
+.timeline > li:hover {
+  border-color: #aaa;
+  -webkit-box-shadow: 0 0 8px #eee;
+     -moz-box-shadow: 0 0 8px #eee;
+          box-shadow: 0 0 8px #eee;
+}
+
+.timeline > li:hover:before,
+.timeline > li:hover:after {
+  background: #b5b5b5;
+}
+
+.timeline > li.present:hover:after,
+.timeline > li.right.present:hover:after {
+  background: #fff;
+  border-color: #b5b5b5;
+}
+
+.timeline .year span {
+  display: inline-block;
+  background: #fafafa;
+  padding: 6px 12px;
+  border: 1px solid #eee;
+  -webkit-border-radius: 2px;
+     -moz-border-radius: 2px;
+          border-radius: 2px;
+  font-size: 20px;
+  font-family: "Droid sans", sans-serif;
+  color: #b5b5b5;  
+}
+
+.timeline > li.year { /* Year style */
+  float: none;
+  clear: both;
+  width: 100%;
+  background: transparent;
+  margin: 0;
+  padding: 100px 0 200px;
+  border: 0;
+  -webkit-border-radius: 0;
+     -moz-border-radius: 0;
+          border-radius: 0;
+  text-align: center;
+  -webkit-box-shadow: none;
+	 -moz-box-shadow: none;
+          box-shadow: none;
+}
+
+.timeline > li.year.top { /* Top year style */
+  padding-top: 0;
+}
+
+.timeline > li.year:hover,
+.timeline > li.year.top:hover {
+  border-color: #eee;
+  -webkit-box-shadow: none;
+     -moz-box-shadow: none;
+          box-shadow: none;
+}
+
+.timeline > li.break { /* Fix overlapped box */
+  margin: 40px 0;
+}
+
+.tl-header {
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #eee;
+  -webkit-box-shadow: 0 1px #fff;  
+     -moz-box-shadow: 0 1px #fff;
+          box-shadow: 0 1px #fff;
+  text-align: center;
+  text-shadow: 0 1px #fff;
+}
+
+.tl-role,
+.tl-company {
+  margin: 0;
+  padding: 0;
+  font-size: 24px;
+  line-height: 22px;	
+}
+
+.tl-company {
+  margin: 0 0 10px;
+  font-size: 16px;
+}
+
+.tl-time {
+  font-size: 16px;
+  letter-spacing: -1px;
+  color: #b5b5b5;
+  font-family: "Droid Sans", sans-serif;
+}
+
+.timeline > li img,
+.timeline > li .video-wrap {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 20px;
+  -webkit-border-radius: 2px;
+     -moz-border-radius: 2px;
+          border-radius: 2px;
+  border-bottom: 1px solid #eee;
+  -webkit-box-shadow: 0 1px #fff;
+     -moz-box-shadow: 0 1px #fff;
+          box-shadow: 0 1px #fff;
+}
+
+.timeline > li .video-wrap {
+  width: 100%;
+  overflow: hidden;
+}
+
+.tl-content {
+  text-align: left;
+}
+
+
