@@ -24,7 +24,8 @@ public class ContactServiceImpl implements ContactService {
 	@Override
 	public List<ContactDTO> list() {
 		// TODO Auto-generated method stub
-		return contactDao.list();
+		//return contactDao.list();
+		return null;
 	}
 
 	@Override
