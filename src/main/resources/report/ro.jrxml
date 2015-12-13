@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2015-12-13T14:08:19 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ro" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba40db7d-9060-4710-81d4-f1a174b6499e">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="441"/>
-	<style name="right" hAlign="Right"/>
-	<style name="center" hAlign="Center"/>
-	<style name="tabColor" hAlign="Center" vAlign="Middle" fontName="SansSerif" fontSize="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="1520"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="B2B Local DB"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="right" hTextAlign="Right" hImageAlign="Right"/>
+	<style name="center" hTextAlign="Center" hImageAlign="Center"/>
+	<style name="tabColor" hTextAlign="Center" hImageAlign="Center" vTextAlign="Middle" vImageAlign="Middle" fontName="SansSerif" fontSize="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true">
 		<paragraph lineSpacing="AtLeast"/>
 	</style>
-	<style name="normal" fill="Solid" hAlign="Center" vAlign="Middle" pattern="" isBlankWhenNull="true" fontName="SansSerif" fontSize="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
+	<style name="normal" fill="Solid" hTextAlign="Center" hImageAlign="Center" vTextAlign="Middle" vImageAlign="Middle" pattern="" isBlankWhenNull="true" fontName="SansSerif" fontSize="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
 	<style name="normal10" fontName="SansSerif" fontSize="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
-	<style name="normalCenter" hAlign="Left" vAlign="Middle" fontName="SansSerif" fontSize="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
+	<style name="normalCenter" hTextAlign="Left" hImageAlign="Left" vTextAlign="Middle" vImageAlign="Middle" fontName="SansSerif" fontSize="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
 	<subDataset name="Table Dataset 1" uuid="b1e4d6d9-6642-4efd-b6aa-181e3b11a787"/>
 	<parameter name="orderId" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[new Long(0)]]></defaultValueExpression>
@@ -28,7 +32,22 @@
 	<parameter name="allPageSize" class="java.lang.Integer"/>
 	<parameter name="relativePage" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[select (od.price*od.amount) as total,p.product_buyer_group_id,ptype.product_type_name,od.product_unit_id,pt.payment_term_name,pm.payment_method_name,o.remark_customer,o.order_id,p.product_code,p.product_name_en,o.expect_shipment_date,o.order_code,st.shipping_type_name,o.payment_currency_id,od.amount,od.price from product_type ptype,payment_term pt,payment_method pm,orders o,shipping_type st,product p,ord_detail od where ptype.product_type_id=p.product_type_id and pt.payment_term_id=o.payment_term_id and pm.payment_method_id=o.payment_method_id and od.order_id=o.order_id and od.product_id=p.product_id and o.shipping_id=st.shipping_type_id and o.order_id=$P{orderId}
+		<![CDATA[select (od.price*od.amount) as total,p.product_buyer_group_id,
+ptype.product_type_name,
+od.product_unit_id,
+pt.payment_term_name,
+pm.payment_method_name,
+o.remark_customer,
+o.order_id,
+p.product_code,
+p.product_name_en,
+o.expect_shipment_date,
+o.order_code,
+st.shipping_type_name,
+o.payment_currency_id,
+od.amount,
+od.price 
+from product_type ptype,payment_term pt,payment_method pm,orders o,shipping_type st,product p,ord_detail od where ptype.product_type_id=p.product_type_id and pt.payment_term_id=o.payment_term_id and pm.payment_method_id=o.payment_method_id and od.order_id=o.order_id and od.product_id=p.product_id and o.shipping_id=st.shipping_type_id and o.order_id=$P{orderId}
  and od.product_currency=$P{productCurrency}
  order by od.product_id, od.order_product_id]]>
 	</queryString>
