@@ -120,7 +120,6 @@
 	}
 	
 	function addMultipleOrderToCart(){
-		console.log('addMultipleOrderToCart');
 		
 		// collect product
 		var array = [];
@@ -152,10 +151,9 @@
 					'quantity' : item.productQuantity
 				};
 
-				console.log("calling url: ${addToCartUrl}");
-
 				$.post('${addToCartUrl}', param).done(function(response) {
 					renderToCart(response);
+					showDialogAutoClose('Added to cart');
 				}).fail(function(result) {
 					alert(result.responseText);
 					return;
@@ -163,20 +161,7 @@
 
 			});
 			
-			<%-- http://stackoverflow.com/questions/10179040/jquery-dialog-open-and-automatically-close-after-3-seconds --%>
-				/* console.log('begin animate'); */
-				$('#dialog').html('Added to cart');
-				$('#dialog').dialog({
-				    autoOpen: true,
-				    show: "blind",
-				    hide: "fadeOut",
-				    modal: true,
-				    open: function(event, ui) {
-				        setTimeout(function(){
-				            $('#dialog').dialog('close');                
-				        }, 3000);
-				    }
-				});
 		}
+		
 	}
 </script>

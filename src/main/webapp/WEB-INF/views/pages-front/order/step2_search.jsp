@@ -137,7 +137,7 @@
 			<div class="col-md-12 bg_color">
 				<%-- Upper Paging --%>
 				
-				<div class="">
+				<div class="row">
 					<%@include file="step2_include/search_product_paging.jspf"%>
 				</div>
 				<%-- List product model --%>
@@ -151,7 +151,7 @@
 				</c:choose>
 		
 				<%-- Lower Paging --%>
-				<div class="">
+				<div class="row">
 					<%@include file="step2_include/search_product_paging.jspf"%>
 				</div>		
 			</div>
@@ -171,16 +171,8 @@
 		}
 
 		function resetSearch() {
-			window
-					.open(
-							'<c:url value="/frontend/order/step2/search" />?brand_id=${searchProductForm.brandId}',
-							'_self');
+			window.open('<c:url value="/frontend/order/step2/search" />?brand_id=${searchProductForm.brandId}', '_self');
 		}
-		
-		
-		$("#drop").change(function () {
-			
-		});
 		
 		function loadBuyerGroup(brandId){
 			$('#searchProductModelForm').submit();
