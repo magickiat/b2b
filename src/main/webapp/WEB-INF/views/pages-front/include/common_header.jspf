@@ -115,6 +115,10 @@
 	</div>
 </sec:authorize>
 
+
+
+<div style="clear: both; height: 20px;"></div>
+
 <script type="text/javascript">
 	function showCartDetails() {
 		//$("#cartDetails").dialog({
@@ -137,6 +141,5 @@
 			window.location.replace('<c:url value="/" />');
 		});
 	}
+	
 </script>
-
-<div style="clear: both; height: 20px;"></div>
