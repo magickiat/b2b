@@ -157,8 +157,10 @@
 		</div>
 	</div>
 
-
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
+	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>
+	
+	
 	<script type="text/javascript">
 		$(document).ready(function() {
 
