@@ -24,7 +24,7 @@
 				<div class="row row-header2 header2 txtupper">Order Summary</div>
 				<!-- Search section -->
 				<div>
-					<form:form id="orderSummaryForm" modelAttribute="orderSummaryForm"
+					<form:form id="searchForm" modelAttribute="orderSummaryForm"
 						servletRelativeAction="/frontend/order/summary/search-action"
 						method="get">
 						<form:hidden path="custId" value="${orderSummaryForm.custId}" />
@@ -101,7 +101,7 @@
 
 		<%-- Upper Paging --%>
 		<div class="row">
-			<%@include file="step2_include/search_order_paging.jspf"%>
+		<%@include file="/WEB-INF/views/include/paging_submit.jspf"%>
 		</div>
 
 		<%-- List order model --%>
@@ -113,7 +113,7 @@
 
 		<%-- Lower Paging --%>
 		<div class="row">
-			<%@include file="step2_include/search_order_paging.jspf"%>
+		<%@include file="/WEB-INF/views/include/paging_submit.jspf"%>
 		</div>
 	</div>
 	<!-- Modal -->
@@ -167,14 +167,14 @@
 		 **/
 		function submitForm() {
 			var action = '<c:url value="/frontend/order/summary/search-action" />';
-			$('#orderSummaryForm').attr('action', action);
-			$('#orderSummaryForm').submit();
+			$('#searchForm').attr('action', action);
+			$('#searchForm').submit();
 		}
 
 		function exportExcel() {
 			var action = '<c:url value="/report/ordersummary/excel" />';
-			$('#orderSummaryForm').attr('action', action);
-			$('#orderSummaryForm').submit();
+			$('#searchForm').attr('action', action);
+			$('#searchForm').submit();
 		}
 
 		function exportPdf(so) {

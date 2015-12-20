@@ -112,8 +112,6 @@
 				<c:otherwise>
 
 
-					<!-- Base URL for pagination -->
-					<c:set var="baseUrl" value="/backend/order/search" />
 					<%@include file="/WEB-INF/views/include/paging_submit.jspf"%>
 
 					<div class="row">
