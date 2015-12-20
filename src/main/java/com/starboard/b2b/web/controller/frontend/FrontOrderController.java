@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -50,7 +49,6 @@ import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.exception.B2BException;
-import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.BrandService;
 import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.OrderService;
@@ -559,11 +557,9 @@ public class FrontOrderController {
     @RequestMapping(value = "summary", method = RequestMethod.GET)
     String orderSummary(Model model) {
     	log.info("summary GET");
-		final User userAuthen = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		final long custId = userAuthen.getCustomer().getCustId();
 		final OrderSummaryForm form = new OrderSummaryForm();
-		form.setCustId(custId);
-        setOrderSummarySearchFrom(form, model);
+		form.setCustId(UserUtil.getCurrentUser().getCustomer().getCustId());
+        setOrderSummarySearchForm(form, model);
 		Page<SearchOrderDTO> resultPage = orderService.searchOrder(form);
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("orderSummaryForm", form);
@@ -573,7 +569,7 @@ public class FrontOrderController {
     @RequestMapping(value = "summary/search-action", method = RequestMethod.GET)
     String orderSummarySearchAction(@ModelAttribute OrderSummaryForm form, Model model) {
         log.info("search condition: " + form.toString());
-        setOrderSummarySearchFrom(form, model);
+        setOrderSummarySearchForm(form, model);
 		Page<SearchOrderDTO> resultPage = orderService.searchOrder(form);
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("orderSummaryForm", form);
@@ -607,7 +603,7 @@ public class FrontOrderController {
      * @param form Order Summary form
      * @param model Model attributes
      */
-    private void setOrderSummarySearchFrom(final OrderSummaryForm form, final Model model){
+    private void setOrderSummarySearchForm(final OrderSummaryForm form, final Model model){
         final List<ProductTypeDTO> productTypes = productService.findProductTypeByBrandId(form.getBrandId());
         model.addAttribute("productType", productTypes);
         final List<OrderStatusDTO> orderStatus = orderService.findAllOrderStatus();

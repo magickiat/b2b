@@ -1,5 +1,21 @@
 package com.starboard.b2b.service.impl;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dao.ProductBuyerGroupDao;
 import com.starboard.b2b.dao.ProductCategoryDao;
@@ -30,23 +46,6 @@ import com.starboard.b2b.model.ProductYear;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.web.form.product.SearchProductForm;
-
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 @Service("productService")
 @PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
