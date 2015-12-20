@@ -121,7 +121,6 @@
         </div>
     </div>
 </div>
-</div>
 <%@include file="/WEB-INF/views/include/common_js.jspf" %>
 <%@include file="/WEB-INF/views/include/common_footer.jspf" %>
 
