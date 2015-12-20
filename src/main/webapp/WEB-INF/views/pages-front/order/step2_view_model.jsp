@@ -85,7 +85,6 @@
 
 					$('input[type=radio][name=withnose]').change(
 							function() {
-								console.log('withnose = ' + this.value);
 
 								if (this.value == 0) {
 									$('.withnose0').show();
@@ -149,6 +148,8 @@
 
 			$('.withnose0-tech').hide();
 			$('.withnose1-tech').hide();
+			
+			$('.product-item').hide();
 		}
 
 		function changeCurrentSize(productId, currentButton) {
@@ -209,9 +210,6 @@
 				};
 
 				console.log('productId = ' + productId);
-
-				console.log("calling url: ${addToCartUrl}");
-
 				$.post('${addToCartUrl}', param).done(function(response) {
 					renderToCart(response);
 					

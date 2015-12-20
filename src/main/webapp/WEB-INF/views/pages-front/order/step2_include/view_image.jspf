@@ -31,7 +31,7 @@
 					</c:if>
 
 					<div
-						class="withnose${ rowNumAllTech.index }-${stringUtil.removeSpecialChar(rowTech.key)}-item withnose${ rowNumAllTech.index }-${stringUtil.removeSpecialChar(rowTech.key)}-item-${ stringUtil.removeSpecialChar(p.product.productId)}"
+						class="product-item withnose${ rowNumAllTech.index }-${stringUtil.removeSpecialChar(rowTech.key)}-item withnose${ rowNumAllTech.index }-${stringUtil.removeSpecialChar(rowTech.key)}-item-${ stringUtil.removeSpecialChar(p.product.productId)}"
 						<c:if test="${ rowNumProduct.index  > 0}">style="display:none;"</c:if>>
 						<h3>
 							<c:out value="${ p.product.productNameEn }"></c:out>
