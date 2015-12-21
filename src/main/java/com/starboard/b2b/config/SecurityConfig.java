@@ -1,11 +1,13 @@
 package com.starboard.b2b.config;
 
+import com.starboard.b2b.security.MD5;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -13,10 +15,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.starboard.b2b.security.MD5;
+import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
@@ -35,6 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final String ROLE_ADMIN = "ADMIN";
 	@Autowired
 	private UserDetailsService userDetailsService;
+	@Autowired
+	private DataSource datasource;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -52,9 +58,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/backend/**").hasRole(ROLE_ADMIN)
 				.antMatchers("/frontend/**").hasAnyRole(ROLE_USER, ROLE_ADMIN)
 				.antMatchers("/report/**").authenticated()
-				.anyRequest().authenticated().and().formLogin().loginPage("/login")
-				.defaultSuccessUrl("/frontend").failureUrl("/login?error").and().logout().logoutSuccessUrl("/login")
-				.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+				.anyRequest().authenticated()
+				.and().formLogin().loginPage("/login")
+				.defaultSuccessUrl("/frontend")
+				.failureUrl("/login?error")
+				.and().logout().logoutSuccessUrl("/login")
+				.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+			    .and().rememberMe().rememberMeParameter("rememberMe").tokenRepository(persistentTokenRepository())
+				.tokenValiditySeconds(86400).and().csrf();
+	}
+
+	@Bean
+	public PersistentTokenRepository persistentTokenRepository(){
+		JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+		tokenRepository.setDataSource(datasource);
+		return tokenRepository;
 	}
 
 	@Bean
