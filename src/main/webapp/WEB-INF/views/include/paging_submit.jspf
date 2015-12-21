@@ -55,6 +55,6 @@
 <script type="text/javascript">
 	function searchPage(page) {
 		$('#page').val(page);
-		$('#orderSummaryForm').submit();
+		$('#searchForm').submit();
 	}
 </script>

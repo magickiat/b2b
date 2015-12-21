@@ -10,6 +10,6 @@ public class BackendIndexController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	String index() {
-		return "pages-back/order/search";
+		return "redirect:/backend/order/search";
 	}
 }
