@@ -1,11 +1,11 @@
 package com.starboard.b2b.config;
 
-import javax.servlet.Filter;
+import com.starboard.b2b.security.SecurityUserDetailService;
 
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import com.starboard.b2b.security.SecurityUserDetailService;
+import javax.servlet.Filter;
 
 public class WebAppInit extends AbstractAnnotationConfigDispatcherServletInitializer {
 

@@ -1,16 +1,5 @@
 package com.starboard.b2b.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.dao.ContentDao;
@@ -22,6 +11,17 @@ import com.starboard.b2b.service.ContentService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.feed.CreateFeedContentForm;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Ken on 9/29/2015.
@@ -44,6 +44,7 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	@Transactional(readOnly = true)
 	public Page<ContentDTO> listCont(Integer pageIndex) {
+		log.info("Search content for page index: {}", pageIndex);
 		SearchContentRequest req = new SearchContentRequest(pageIndex, applicationConfig.getPageSize());
 		log.info(req.toString());
 		SearchContentResult searchResult = contentDao.listContent(req);

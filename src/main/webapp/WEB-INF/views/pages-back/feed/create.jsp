@@ -34,14 +34,14 @@
 	        </div>
 	
 	        <div class="form-group">
-	            <label class="col-sm-1">หัวข้อ</label>
+	            <label class="col-sm-1">Title:</label>
 	            <div class="col-sm-5">
 	                <form:input path="title" cssClass="form-control"></form:input>
 	            </div>
 	        </div>
 	
 	        <div class="form-group">
-	            <label class="col-sm-1">เนื้อหา</label>
+	            <label class="col-sm-1">Content:</label>
 	            <div class="col-sm-5">
 	                <form:textarea path="content" rows="5" cols="30" cssClass="form-control"></form:textarea>
 	            </div>
@@ -49,16 +49,17 @@
 	
 	        <div class="form-group">
 	            <div class="col-sm-5">
-	                <button type="submit" class="btn btn-primary">ตกลง</button>
+	                <button type="submit" class="btn btn-primary">Submit</button>
 	            </div>
 	        </div>
 	
 	    </form:form>
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf" %>
+	<script src="<c:url value="/scripts/ckeditor/ckeditor.js"/>"></script>
 	<script type="text/javascript">
-	    $(document).ready(function () {
-	
+		$(document).ready(function () {
+			CKEDITOR.replace('content');
 	    });
 	</script>
 </body>

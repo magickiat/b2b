@@ -1,6 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page session="true"%>
 
+<div class="col-sm-12">
 <div class="row pull-right">
 	<div class="col-sm-12">
 		<c:choose>
@@ -16,12 +17,14 @@
 					<!-- Previous 5 page -->
 					<c:choose>
 						<c:when test="${resultPage.current == 1}">
+							<li><a>Total: ${ resultPage.total }</a></li>
 							<li class="disabled"><a href="#">&lt;&lt;</a></li>
 							<li class="disabled"><a href="#">&lt;</a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="${firstUrl}">&lt;&lt;</a></li>
-							<li><a href="${prevUrl}">&lt;</a></li>
+							<li><a>Total: ${ resultPage.total }</a></li>
+							<li><a href="#" onclick="${firstUrl}">&lt;&lt;</a></li>
+							<li><a href="#" onclick="${prevUrl}">&lt;</a></li>
 						</c:otherwise>
 					</c:choose>
 
@@ -39,8 +42,8 @@
 							<li class="disabled"><a href="#">&gt;&gt;</a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="${nextUrl}">&gt;</a></li>
-							<li><a href="${lastUrl}">&gt;&gt;</a></li>
+							<li><a href="#" onclick="${nextUrl}">&gt;</a></li>
+							<li><a href="#" onclick="${lastUrl}">&gt;&gt;</a></li>
 						</c:otherwise>
 					</c:choose>
 
