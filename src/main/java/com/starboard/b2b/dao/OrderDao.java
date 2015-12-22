@@ -7,7 +7,7 @@ import com.starboard.b2b.model.OrdAddress;
 import com.starboard.b2b.model.Orders;
 import com.starboard.b2b.model.So;
 import com.starboard.b2b.model.SoDetail;
-import com.starboard.b2b.web.form.product.OrderSummaryForm;
+import com.starboard.b2b.web.form.order.OrderSummaryForm;
 
 import java.util.List;
 

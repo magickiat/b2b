@@ -9,7 +9,7 @@ import com.starboard.b2b.model.OrdAddress;
 import com.starboard.b2b.model.Orders;
 import com.starboard.b2b.model.So;
 import com.starboard.b2b.model.SoDetail;
-import com.starboard.b2b.web.form.product.OrderSummaryForm;
+import com.starboard.b2b.web.form.order.OrderSummaryForm;
 
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -41,7 +41,7 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public SearchOrderDTO findOrderForReport(Long orderId) {
-		String searchQuery = "SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(o.orderId, o.orderCode, c.nameEn, p.productTypeName, o.orderDate, o.expectShipmentDate, os.orderStatusName, o.paymentMethodId, o.shippingId, pt.description, o.remarkCustomer  )"
+		String searchQuery = "SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(o.orderId, o.orderCode, c.nameEn, p.productTypeName, o.orderDate, o.expectShipmentDate, os.orderStatusName, o.paymentMethodId, o.shippingId, pt.description, o.remarkCustomer, pt.paymentTermId, o.orderStatus  )"
 				+ " FROM Orders o, ProductType p, Cust c, OrderStatus os, PaymentTerm pt "
 				+ " WHERE o.brandGroupId = p.productTypeId AND o.custId = c.custId and o.orderStatus = os.orderStatusId and o.paymentTermId = pt.paymentTermId "
 				+ " and o.orderId = :orderId ";
@@ -50,7 +50,7 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public SearchOrderDTO findOrderForReport(String orderCode) {
-		String searchQuery = "SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(o.orderId, o.orderCode, c.nameEn, p.productTypeName, o.orderDate, o.expectShipmentDate, os.orderStatusName, o.paymentMethodId, o.shippingId, pt.description, o.remarkCustomer  )"
+		String searchQuery = "SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(o.orderId, o.orderCode, c.nameEn, p.productTypeName, o.orderDate, o.expectShipmentDate, os.orderStatusName, o.paymentMethodId, o.shippingId, pt.description, o.remarkCustomer, pt.paymentTermId, o.orderStatus  )"
 		+ " FROM Orders o, ProductType p, Cust c, OrderStatus os, PaymentTerm pt "
 		+ " WHERE o.brandGroupId = p.productTypeId AND o.custId = c.custId and o.orderStatus = os.orderStatusId  and o.paymentTermId = pt.paymentTermId "
 		+ " and o.orderCode = :orderCode ";
@@ -71,7 +71,7 @@ public class OrderDaoImpl implements OrderDao {
 				" o.expectShipmentDate, " +
 				" os.orderStatusName, " +
 				" o.paymentMethodId, " +
-				" o.shippingId, pt.description, o.remarkCustomer ) " +
+				" o.shippingId, pt.description, o.remarkCustomer, pt.paymentTermId, o.orderStatus ) " +
 				"FROM Orders o, ProductType p, Cust c, OrderStatus os, PaymentTerm pt " +
 				"WHERE o.brandGroupId = p.productTypeId " +
 				"AND o.custId = c.custId " +
@@ -164,7 +164,7 @@ public class OrderDaoImpl implements OrderDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<SearchOrderDTO> findOrderForReport(Long[] ordersId) {
-		String searchQuery = "SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(o.orderId, o.orderCode, c.nameEn, p.productTypeName, o.orderDate, o.expectShipmentDate, os.orderStatusName, o.paymentMethodId, o.shippingId, pt.description, o.remarkCustomer  )"
+		String searchQuery = "SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(o.orderId, o.orderCode, c.nameEn, p.productTypeName, o.orderDate, o.expectShipmentDate, os.orderStatusName, o.paymentMethodId, o.shippingId, pt.description, o.remarkCustomer, pt.paymentTermId, o.orderStatus  )"
 				+ " FROM Orders o, ProductType p, Cust c, OrderStatus os, PaymentTerm pt "
 				+ " WHERE o.brandGroupId = p.productTypeId AND o.custId = c.custId and o.orderStatus = os.orderStatusId"
 				+ " and o.orderId in (:orderId)  and o.paymentTermId = pt.paymentTermId  "
@@ -186,7 +186,7 @@ public class OrderDaoImpl implements OrderDao {
 				" o.expectShipmentDate, " +
 				" os.orderStatusName, " +
 				" o.paymentMethodId, " +
-				" o.shippingId, pt.description, o.remarkCustomer ) " +
+				" o.shippingId, pt.description, o.remarkCustomer, pt.paymentTermId, o.orderStatus ) " +
 				"FROM Orders o, ProductType p, Cust c, OrderStatus os, PaymentTerm pt " +
 				"WHERE o.brandGroupId = p.productTypeId " +
 				"AND o.custId = c.custId " +

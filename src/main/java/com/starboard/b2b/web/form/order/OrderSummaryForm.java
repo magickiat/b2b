@@ -1,4 +1,4 @@
-package com.starboard.b2b.web.form.product;
+package com.starboard.b2b.web.form.order;
 
 /**
  * Created by User: Thanakit Jumparuang (jthanakit.dev@gmail.com) Date: 11/21/2015 Time: 01:40

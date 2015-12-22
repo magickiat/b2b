@@ -15,15 +15,18 @@ public class SearchOrderDTO {
 	private Date orderDate;
 	private Date expectShipmentDate;
 	private String orderStatus;
+	private String orderStatusId;
 	private String paymentMethod;
 	private String shippingType;
-	
+
+	private String paymentTermId;
+
 	private String paymentTermDescription;
 	private String remarkCustomer;
-	
+
 	private OrdAddressDTO dispatchToAddress;
 	private OrdAddressDTO invoiceToAddress;
-	
+
 	private List<SearchOrderDetailDTO> orderDetails;
 	private List<SoDTO> salesOrders;
 	private List<String> documents;
@@ -31,8 +34,8 @@ public class SearchOrderDTO {
 	public SearchOrderDTO() {
 	}
 
-	public SearchOrderDTO(String orderCode, String customerName, String productTypeName, Date orderDate, Date expectShipmentDate,
-			String orderStatus, String paymentMethod, String shippingType, String paymentTermDescription, String remarkCustomer) {
+	public SearchOrderDTO(String orderCode, String customerName, String productTypeName, Date orderDate, Date expectShipmentDate, String orderStatus,
+			String paymentMethod, String shippingType, String paymentTermDescription, String remarkCustomer, String paymentTermId, String orderStatusId) {
 		super();
 		this.orderCode = orderCode;
 		this.customerName = customerName;
@@ -44,10 +47,13 @@ public class SearchOrderDTO {
 		this.shippingType = shippingType;
 		this.paymentTermDescription = paymentTermDescription;
 		this.remarkCustomer = remarkCustomer;
+		this.paymentTermId = paymentTermId;
+		this.orderStatusId = orderStatusId;
 	}
 
 	public SearchOrderDTO(long orderId, String orderCode, String customerName, String productTypeName, Date orderDate, Date expectShipmentDate,
-						  String orderStatus, String paymentMethod, String shippingType, String paymentTermDescription, String remarkCustomer) {
+			String orderStatus, String paymentMethod, String shippingType, String paymentTermDescription, String remarkCustomer,
+			String paymentTermId, String orderStatusId) {
 		this.orderId = orderId;
 		this.orderCode = orderCode;
 		this.customerName = customerName;
@@ -59,6 +65,8 @@ public class SearchOrderDTO {
 		this.shippingType = shippingType;
 		this.paymentTermDescription = paymentTermDescription;
 		this.remarkCustomer = remarkCustomer;
+		this.paymentTermId = paymentTermId;
+		this.orderStatusId = orderStatusId;
 	}
 
 	public long getOrderId() {
@@ -187,5 +195,21 @@ public class SearchOrderDTO {
 
 	public void setRemarkCustomer(String remarkCustomer) {
 		this.remarkCustomer = remarkCustomer;
+	}
+
+	public String getPaymentTermId() {
+		return paymentTermId;
+	}
+
+	public void setPaymentTermId(String paymentTermId) {
+		this.paymentTermId = paymentTermId;
+	}
+
+	public String getOrderStatusId() {
+		return orderStatusId;
+	}
+
+	public void setOrderStatusId(String orderStatusId) {
+		this.orderStatusId = orderStatusId;
 	}
 }

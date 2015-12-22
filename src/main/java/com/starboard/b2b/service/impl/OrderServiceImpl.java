@@ -10,11 +10,13 @@ import com.starboard.b2b.dao.OrderDetailDao;
 import com.starboard.b2b.dao.OrderStatusDao;
 import com.starboard.b2b.dao.OrdersIdRunningDao;
 import com.starboard.b2b.dao.PaymentMethodDao;
+import com.starboard.b2b.dao.PaymentTermDao;
 import com.starboard.b2b.dao.ShippingTypeDao;
 import com.starboard.b2b.dto.OrdAddressDTO;
 import com.starboard.b2b.dto.OrderDTO;
 import com.starboard.b2b.dto.OrderStatusDTO;
 import com.starboard.b2b.dto.PaymentMethodDTO;
+import com.starboard.b2b.dto.PaymentTermDTO;
 import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ShippingTypeDTO;
 import com.starboard.b2b.dto.SoDTO;
@@ -36,7 +38,7 @@ import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.UserUtil;
-import com.starboard.b2b.web.form.product.OrderSummaryForm;
+import com.starboard.b2b.web.form.order.OrderSummaryForm;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
@@ -71,6 +73,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private PaymentMethodDao paymentMethodDao;
+	
+	@Autowired
+	private PaymentTermDao paymentTermDao;
 
 	@Autowired
 	private OrdersIdRunningDao ordersIdRunningDao;
@@ -382,5 +387,11 @@ public class OrderServiceImpl implements OrderService {
 			}
 		}
 		return soDTOs;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<PaymentTermDTO> findAllPaymentTerm() {
+		return paymentTermDao.list();
 	}
 }

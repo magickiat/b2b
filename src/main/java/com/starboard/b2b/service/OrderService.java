@@ -1,26 +1,29 @@
 package com.starboard.b2b.service;
 
+import java.util.List;
+import java.util.Map;
+
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dto.OrdAddressDTO;
 import com.starboard.b2b.dto.OrderDTO;
 import com.starboard.b2b.dto.OrderStatusDTO;
 import com.starboard.b2b.dto.PaymentMethodDTO;
+import com.starboard.b2b.dto.PaymentTermDTO;
 import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ShippingTypeDTO;
 import com.starboard.b2b.dto.SoDTO;
 import com.starboard.b2b.dto.SoDetailDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
-import com.starboard.b2b.web.form.product.OrderSummaryForm;
-
-import java.util.List;
-import java.util.Map;
+import com.starboard.b2b.web.form.order.OrderSummaryForm;
 
 public interface OrderService {
 
 	List<ShippingTypeDTO> findAllShippingType();
 
 	List<PaymentMethodDTO> findAllPaymentMethod();
+	
+	List<PaymentTermDTO> findAllPaymentTerm();
 
 	long getNextRunningNo(int year);
 
