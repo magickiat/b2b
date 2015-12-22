@@ -22,6 +22,7 @@ import com.starboard.b2b.dao.ProductCategoryDao;
 import com.starboard.b2b.dao.ProductDao;
 import com.starboard.b2b.dao.ProductModelDao;
 import com.starboard.b2b.dao.ProductPriceDao;
+import com.starboard.b2b.dao.ProductPriceGroupDao;
 import com.starboard.b2b.dao.ProductTechnologyDao;
 import com.starboard.b2b.dao.ProductTypeDao;
 import com.starboard.b2b.dao.ProductYearDao;
@@ -30,6 +31,7 @@ import com.starboard.b2b.dto.ProductCategoryDTO;
 import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ProductModelDTO;
 import com.starboard.b2b.dto.ProductPriceDTO;
+import com.starboard.b2b.dto.ProductPriceGroupDTO;
 import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.ProductTechnologyDTO;
 import com.starboard.b2b.dto.ProductTypeDTO;
@@ -82,6 +84,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductPriceDao productPriceDao;
+    
+    @Autowired
+    private ProductPriceGroupDao productPriceGroupDao;
 
     @Override
     @Transactional
@@ -409,4 +414,10 @@ public class ProductServiceImpl implements ProductService {
         }
         return list;
     }
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<ProductPriceGroupDTO> listProductPriceGroup() {
+		return productPriceGroupDao.list();
+	}
 }

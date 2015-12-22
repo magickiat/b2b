@@ -35,11 +35,19 @@
 					<td>${ ordDetail.productCode }</td>
 					<td>${ ordDetail.productName }</td>
 
-					<td>Price Group select</td>
-
+					<td>
+						<select id="product-price-${ ordDetail.orderDetailId }"
+							name="product-price-group" class="form-control"
+							onchange="changeProductPriceGroup(${ ordDetail.orderDetailId }, this)">
+							<option value="blank"></option>
+							<c:forEach var="priceGroup"
+								items="${ form.productPriceGroupList }">
+								<option value="${ priceGroup.productPriceGroupId }">${ priceGroup.productPriceGroupName }</option>
+							</c:forEach>
+						</select>
+					</td>
 
 					<td>${ ordDetail.amount }</td>
-
 
 					<td>Shipped</td>
 					<td>Pending</td>
@@ -57,14 +65,36 @@
 					</td>
 
 
-					<td><form action='<c:url value="/backend/order/delete-suborder" />'>
-						<input type="hidden" name="orderDetailId" value="${ ordDetail.orderDetailId }" />
-					</form>
-					Remove</td>
-					<td>Split</td>
+					<td>
+						<input type="button" id="btn-remove-${ ordDetail.orderDetailId }"
+							name="btn-remove" class="btn btn-default"
+							onclick="removeOrder(${ ordDetail.orderDetailId })"
+							value="Remove" />
+					</td>
+					<td>
+						<input type="button" id="btn-split-${ ordDetail.orderDetailId }"
+							name="btn-split" class="btn btn-default"
+							onclick="splitOrder(${ ordDetail.orderDetailId })" value="Split" />
+					</td>
 				</tr>
 
 			</c:forEach>
 		</tbody>
 	</table>
 </div>
+
+
+<script type="text/javascript">
+
+	function changeProductPriceGroup(orderDetailId, objSelect){
+		alert('change price group ' + orderDetailId);
+	}
+	
+	function removeOrder(orderDetailId){
+		alert('removed ' + orderDetailId);
+	}
+	
+	function splitOrder(orderDetailId){
+		alert('popup split order ' + orderDetailId);
+	}
+</script>

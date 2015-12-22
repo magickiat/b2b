@@ -19,6 +19,7 @@ import com.starboard.b2b.dto.OrderStatusDTO;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
+import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.web.form.order.ApproveRejectForm;
@@ -75,20 +76,24 @@ public class BackendOrderController {
 		ApproveRejectForm form = new ApproveRejectForm();
 		// ----- find order -----
 		final SearchOrderDTO orderReport = orderService.findOrderForReport(orderCode);
+		if(orderReport == null){
+			throw new B2BException("Not found order");
+		}
+		
 		form.setOrderReport(orderReport);
-		
+		form.setPaymentTermId(orderReport.getPaymentTermId());
+		form.setPaymentMethodId(orderReport.getPaymentMethod());
+
 		log.info("order status = " + orderReport.getOrderStatus());
-		
-		if (orderReport != null && OrderStatus.WAIT_FOR_APPROVE.equals(orderReport.getOrderStatusId())) {
-			form.setPaymentTermId(orderReport.getPaymentTermId());
-			form.setPaymentMethodId(orderReport.getPaymentMethod());
+		if (OrderStatus.WAIT_FOR_APPROVE.equals(orderReport.getOrderStatusId())) {
 			form.setEditMode(true);
 		}else{
 			form.setEditMode(false);
 		}
 
-		model.addAttribute("paymentMethodList", orderService.findAllPaymentMethod());
-		model.addAttribute("paymentTermList", orderService.findAllPaymentTerm());
+		form.setPaymentMethodList(orderService.findAllPaymentMethod());
+		form.setPaymentTermList(orderService.findAllPaymentTerm());
+		form.setProductPriceGroupList(productService.listProductPriceGroup());
 		
 		
 		// ---- find order address -----

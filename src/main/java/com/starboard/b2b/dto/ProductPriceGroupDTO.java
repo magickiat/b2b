@@ -7,6 +7,12 @@ public class ProductPriceGroupDTO {
 	private String productPriceGroupName;
 	private String description;
 
+	public ProductPriceGroupDTO(String productPriceGroupId, String productPriceGroupName, String description) {
+		this.productPriceGroupId = productPriceGroupId;
+		this.productPriceGroupName = productPriceGroupName;
+		this.description = description;
+	}
+
 	public String getProductPriceGroupId() {
 		return productPriceGroupId;
 	}

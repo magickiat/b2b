@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.starboard.b2b.dto.PaymentMethodDTO;
 import com.starboard.b2b.dto.PaymentTermDTO;
+import com.starboard.b2b.dto.ProductPriceGroupDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 
@@ -17,6 +18,7 @@ public class ApproveRejectForm {
 	private List<PaymentMethodDTO> paymentMethodList;
 	private List<PaymentTermDTO> paymentTermList;
 	private List<SearchOrderDetailDTO> orderDetails;
+	private List<ProductPriceGroupDTO> productPriceGroupList;
 
 	public ApproveRejectForm() {
 	}
@@ -75,5 +77,13 @@ public class ApproveRejectForm {
 
 	public void setOrderDetails(List<SearchOrderDetailDTO> orderDetails) {
 		this.orderDetails = orderDetails;
+	}
+
+	public List<ProductPriceGroupDTO> getProductPriceGroupList() {
+		return productPriceGroupList;
+	}
+
+	public void setProductPriceGroupList(List<ProductPriceGroupDTO> productPriceGroupList) {
+		this.productPriceGroupList = productPriceGroupList;
 	}
 }
