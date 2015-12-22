@@ -2,10 +2,8 @@ package com.starboard.b2b.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,14 +18,19 @@ import com.starboard.b2b.dao.AddrDao;
 import com.starboard.b2b.dao.BrandDao;
 import com.starboard.b2b.dao.ContactDao;
 import com.starboard.b2b.dao.CountryDao;
+import com.starboard.b2b.dao.CustBrandGroupDAO;
 import com.starboard.b2b.dao.CustDao;
 import com.starboard.b2b.dao.CustomerDao;
+import com.starboard.b2b.dao.MobileTypeDao;
+import com.starboard.b2b.dao.ProductBrandGroupDAO;
+import com.starboard.b2b.dao.ProductTypeDao;
 import com.starboard.b2b.dto.AddressDTO;
-import com.starboard.b2b.dto.BrandDTO;
 import com.starboard.b2b.dto.ContactDTO;
 import com.starboard.b2b.dto.CountryDTO;
+import com.starboard.b2b.dto.CustBrandGroupDTO;
 import com.starboard.b2b.dto.CustDTO;
 import com.starboard.b2b.dto.CustomerDTO;
+import com.starboard.b2b.dto.MobileTypeDTO;
 import com.starboard.b2b.dto.search.SearchCustRequest;
 import com.starboard.b2b.dto.search.SearchCustResult;
 import com.starboard.b2b.model.Addr;
@@ -35,6 +38,7 @@ import com.starboard.b2b.model.Brand;
 import com.starboard.b2b.model.Contact;
 import com.starboard.b2b.model.Cust;
 import com.starboard.b2b.model.Customer;
+import com.starboard.b2b.model.ProductType;
 import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.DateTimeUtil;
@@ -66,6 +70,18 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Autowired
 	private ContactDao contactDao;
+	
+	@Autowired
+	private CustBrandGroupDAO custBrandGroupDAO;
+	
+	@Autowired
+	private ProductBrandGroupDAO productBrandGroupDAO;
+	
+	@Autowired
+    private ProductTypeDao productTypeDao;
+	
+	@Autowired
+	private MobileTypeDao mobileTypeDao;
 
 	@Transactional(readOnly = true)
 	public CustomerDTO findById(Long id) {
@@ -111,12 +127,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional
 	public void addBrand(BrandForm form) {
-		Customer customer = customerDao.findById(form.getCustId());
-		if (form.getSelectedBrand() == null || form.getSelectedBrand().size() == 0) {
-			customer.setBrands(null);
-		} else {
-			brandDao.addSelectedBrand(form.getCustId(), form.getSelectedBrand());
-		}
+		brandDao.addSelectedBrand(form, form.getSelectedBrand());
 	}
 
 	@Override
@@ -136,17 +147,19 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Set<BrandDTO> getSelectedBrand(Long custId) {
-		Customer customer = customerDao.findById(custId);
-		if (customer != null) {
-			return copyBrandToDTO(customer.getBrands());
-		} else {
-			return null;
-		}
-
+	public List<ProductType> getProductType() {
+		List<ProductType> listProduct =  productTypeDao.findAll();
+		return listProduct;
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<CustBrandGroupDTO> getCustBrandGroupById(Long custId) {
+		List<CustBrandGroupDTO>  listCustBrandGroup =  custBrandGroupDAO.findProductType(custId);
+		return listCustBrandGroup;
 	}
 
-	private Set<BrandDTO> copyBrandToDTO(Set<Brand> brands) {
+	/*private Set<BrandDTO> copyBrandToDTO(Set<Brand> brands) {
 		Set<BrandDTO> list = new HashSet<>();
 		if (brands != null && brands.size() > 0) {
 			for (Brand brand : brands) {
@@ -154,7 +167,7 @@ public class CustomerServiceImpl implements CustomerService {
 			}
 		}
 		return list;
-	}
+	}*/
 
 	private List<CustomerDTO> copyCustomerToDTO(List<Customer> list) {
 		ArrayList<CustomerDTO> custList = new ArrayList<>();
@@ -273,14 +286,14 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional
 	public void saveContact(Long contactId, Long custId, String nameEn, String nameNick, String position, Date birthDate, String address, String tel,
-			String email, String mobileId, String fax, String skype, String facebook, String twitter) {
+			String email,String mobile, String mobileId, String fax, String skype, String facebook, String twitter) {
 		if(contactId==null || contactId==0){
 			//contactId = contactDao.maxId();
 			/*if(contactId == null){
 				contactId = 0L;
 			}*/
 			//contactId = contactId+1;
-			contactDao.save(createContact(contactId, custId, nameEn, nameNick, position, birthDate, address, tel, email, mobileId, fax, skype, facebook, twitter));
+			contactDao.save(createContact(contactId, custId, nameEn, nameNick, position, birthDate, address, tel, email, mobile, mobileId, fax, skype, facebook, twitter));
 		}else{
 			Contact contact = contactDao.findById(contactId);
 			contact.setContactId(contactId);
@@ -293,6 +306,7 @@ public class CustomerServiceImpl implements CustomerService {
 			contact.setEmail(email);
 			contact.setTel(tel);
 			contact.setEmail(email);
+			contact.setMobile(mobile);
 			contact.setMobileId(mobileId);
 			contact.setFax(fax);
 			contact.setSkype(skype);
@@ -302,7 +316,7 @@ public class CustomerServiceImpl implements CustomerService {
 		
 	}
 	public Contact createContact(Long contactId, Long custId, String nameEn, String nameNick, String position, Date birthDate, String address, String tel,
-			String email, String mobileId, String fax, String skype, String facebook, String twitter) {
+			String email,String mobile, String mobileId, String fax, String skype, String facebook, String twitter) {
 		Contact contact = new Contact();
 		contact.setContactId(contactId);
 		contact.setCustId(custId);
@@ -314,11 +328,18 @@ public class CustomerServiceImpl implements CustomerService {
 		contact.setEmail(email);
 		contact.setTel(tel);
 		contact.setEmail(email);
+		contact.setMobile(mobile);
 		contact.setMobileId(mobileId);
 		contact.setFax(fax);
 		contact.setSkype(skype);
 		contact.setFacebook(facebook);
 		contact.setTwitter(twitter);
 		return contact;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<MobileTypeDTO> getMobileType() {
+		return mobileTypeDao.findAll();
 	}
 }

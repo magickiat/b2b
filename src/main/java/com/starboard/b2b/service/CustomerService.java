@@ -2,16 +2,17 @@ package com.starboard.b2b.service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.dto.AddressDTO;
-import com.starboard.b2b.dto.BrandDTO;
 import com.starboard.b2b.dto.ContactDTO;
 import com.starboard.b2b.dto.CountryDTO;
+import com.starboard.b2b.dto.CustBrandGroupDTO;
 import com.starboard.b2b.dto.CustDTO;
 import com.starboard.b2b.dto.CustomerDTO;
+import com.starboard.b2b.dto.MobileTypeDTO;
+import com.starboard.b2b.model.ProductType;
 import com.starboard.b2b.web.form.brand.BrandForm;
 import com.starboard.b2b.web.form.customer.CreateCustomerForm;
 import com.starboard.b2b.web.form.customer.CustomerForm;
@@ -33,7 +34,9 @@ public interface CustomerService {
 
 	void addBrand(BrandForm brand);
 
-	Set<BrandDTO> getSelectedBrand(Long custId);
+	List<ProductType> getProductType();
+	
+	List<CustBrandGroupDTO> getCustBrandGroupById(Long custId);
 
 	List<Integer> getSelectedBrandId(Long custId);
 
@@ -54,5 +57,7 @@ public interface CustomerService {
 	List<ContactDTO> findContactByCustomerId(Long custId);
 	
 	void saveContact(Long contactId, Long custId, String nameEn, String nameNick, String position, Date birthDate, String address, 
-			 String tel, String email, String mobileId, String fax, String skype, String facebook, String twitter);
+			 String tel, String email, String mobile, String mobileId, String fax, String skype, String facebook, String twitter);
+	
+	List<MobileTypeDTO> getMobileType();
 }

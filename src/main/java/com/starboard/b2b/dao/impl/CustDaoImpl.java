@@ -1,7 +1,5 @@
 package com.starboard.b2b.dao.impl;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -75,7 +73,7 @@ public class CustDaoImpl implements CustDao {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select new com.starboard.b2b.dto.ProductBrandGroupDTO(b.id.brandGroupId, b.id.productTypeId)");
 		sb.append(" from ProductBrandGroup b");
-		sb.append(" where b.id.brandGroupId in");
+		sb.append(" where b.id.productTypeId in");
 		sb.append(" (select distinct c.id.brandGroupId from CustBrandGroup c where c.id.custId = :custId)");
 		sb.append(" group by b.id.brandGroupId");
 		

@@ -84,17 +84,16 @@
 			</div>
 			<div class="col-sm-2">
 				<select id="type" name="type">
-					<c:choose>
-						<c:when test="${addr.type eq '1'}" >
-							<option value="1" selected="selected">c1</option>
-						</c:when>
-						<c:when test="${addr.type eq '2'}" >
-							<option value="2" selected="selected">c2</option>
-						</c:when>
-						<c:otherwise>
-							<option value="1" selected="selected">c1</option>
-						</c:otherwise>
-					</c:choose>
+					<c:forEach items="${ addressTypes }" var="addressType">
+						<c:choose>
+							<c:when test="${addressType.key eq addr.type}" >
+								<option value="${addressType.key}" selected="selected">${ addressType.value }</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${addressType.key}">${ addressType.value }</option>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
 				</select>
 			</div>
 		</div>

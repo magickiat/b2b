@@ -19,7 +19,7 @@
 	
 	<div class="container">
 		
-		<div class="row">
+		<div class="row bg_color">
 			<form:form servletRelativeAction="/backend/customer/update"
 				class="form-horizontal" modelAttribute="customerForm" method="post">
 				<form:errors path="*" cssClass="alert alert-danger" element="div" />
@@ -48,7 +48,7 @@
 
 		<hr />
 
-		<div class="row">
+		<div class="row bg_color">
 			<div class="form-group" style="background-color: blue;">
 				<label class="control-label col-sm-11">Login Account</label>
 				<div class="col-sm-1">
@@ -60,7 +60,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row bg_color">
 			<table class="table table-hover" id="list_user">
 				<thead>
 					<tr>
@@ -92,7 +92,7 @@
 
 		<hr />
 		<%-- List Address --%>
-		<div class="row">
+		<div class="row bg_color">
 			<div class="col-sm-10">
 				<b>Address</b>
 			</div>
@@ -140,18 +140,18 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-12">
-				<table class="table table-hover" id="list_user">
+				<table class="table table-hover" id="list_brand">
 					<thead>
 						<tr>
 							<th>No</th>
-							<th>Password</th>
+							<th>Product</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach items="${ selectedBrand }" var="brand" varStatus="no">
 							<tr>
 								<td>${no.index + 1}</td>
-								<td>${brand.name }</td>
+								<td>${brand.productTypeName }</td>
 							</tr>
 						</c:forEach>
 					</tbody>

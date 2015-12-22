@@ -89,7 +89,20 @@
 					      <td style="width: 23%;">Fax</td>
 					      <td style="width: 23%;"><form:input path="fax" value="${contact.fax }"/></td>
 					      <td style="width: 11.7%;">Mobile Type</td>
-					      <td style="width: 42.3%;"></td>
+					      <td style="width: 42.3%;">
+					      	<select id="mobileId" name="mobileId">
+								<c:forEach items="${listMobileType }" var="mobileType">
+									<c:choose>
+										<c:when test="${mobileType.mobileId eq contact.mobileId}" >
+											<option value="${mobileType.mobileId}" selected="selected">${ mobileType.name }</option>
+										</c:when>
+										<c:otherwise>
+											<option value="${mobileType.mobileId}">${ mobileType.name }</option>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+							</select>
+					      </td>
 					    </tr>
 				  </tbody></table>
 				</div>

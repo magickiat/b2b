@@ -22,7 +22,7 @@
 			<form:hidden path="custId" />
 
 			<form:checkboxes items="${ brands }" path="selectedBrand"
-				itemLabel="name" itemValue="id" element="span class='checkbox'" />
+				itemLabel="productTypeName" itemValue="productTypeId" element="span class='checkbox'" />
 
 
 			<div class="form-group">

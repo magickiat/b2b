@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.dao.CustBrandGroupDAO;
+import com.starboard.b2b.dto.CustBrandGroupDTO;
 import com.starboard.b2b.model.CustBrandGroup;
 
 @Repository("custBrandGroupDAO")
@@ -29,4 +30,15 @@ public class CustBrandGroupDAOImpl implements CustBrandGroupDAO {
 				.add(Restrictions.eq("id.custId", custId)).addOrder(Order.asc("id.custId")).list();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public List<CustBrandGroupDTO> findProductType(Long custId) {
+		String searchOrderDetail = " select new com.starboard.b2b.dto.CustBrandGroupDTO(cg.id.custId, cg.id.brandGroupId, p.productTypeId, p.productTypeName, p.productTypeDescription, cg.userCreate, cg.userUpdate)"
+				+ " FROM    CustBrandGroup cg, ProductType p "
+				+ " WHERE cg.id.brandGroupId = p.productTypeId"
+				+ " and cg.id.custId = :custId";
+
+				return sessionFactory.getCurrentSession().createQuery(searchOrderDetail).setLong("custId", custId).list();
+	}
 }

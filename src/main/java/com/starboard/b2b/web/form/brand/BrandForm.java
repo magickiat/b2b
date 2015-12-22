@@ -7,6 +7,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 public class BrandForm {
 	private Long custId;
 	private List<Integer> selectedBrand;
+	private String userCreate;
+	private String userUpdate;
 
 
 	@Override
@@ -28,5 +30,21 @@ public class BrandForm {
 
 	public void setCustId(Long custId) {
 		this.custId = custId;
+	}
+
+	public String getUserCreate() {
+		return userCreate;
+	}
+
+	public void setUserCreate(String userCreate) {
+		this.userCreate = userCreate;
+	}
+
+	public String getUserUpdate() {
+		return userUpdate;
+	}
+
+	public void setUserUpdate(String userUpdate) {
+		this.userUpdate = userUpdate;
 	}
 }

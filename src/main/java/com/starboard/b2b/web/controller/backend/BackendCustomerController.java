@@ -1,13 +1,16 @@
 package com.starboard.b2b.web.controller.backend;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,10 +20,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.ContactDTO;
 import com.starboard.b2b.dto.CountryDTO;
+import com.starboard.b2b.dto.CustBrandGroupDTO;
 import com.starboard.b2b.dto.CustDTO;
+import com.starboard.b2b.model.ProductType;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.BrandService;
 import com.starboard.b2b.service.ConfigService;
@@ -100,8 +106,10 @@ public class BackendCustomerController {
 		AddressForm addrFrom = new AddressForm();
 		model.addAttribute("customerForm", custDto);
 		model.addAttribute("users", users);
-		model.addAttribute("selectedBrand", customerService.getSelectedBrand(id));
+		model.addAttribute("selectedBrand", customerService.getCustBrandGroupById(id));
 		model.addAttribute("listAddr", listAddress);
+		model.addAttribute("addressTypes", getAddressConstant());
+		model.addAttribute("listMobileType", customerService.getMobileType());
 		model.addAttribute("country", listCountry);
 		model.addAttribute("addressForm",addrFrom);
 		model.addAttribute("contactForm", contactForm);
@@ -151,15 +159,30 @@ public class BackendCustomerController {
 	@RequestMapping(value = "/add_brand", method = RequestMethod.GET)
 	String addBrandForm(@RequestParam(value = "id", required = true) Long id, Model model) throws Exception {
 		log.info("/add_brand GET");
-
 		log.info("Customer ID: " + id);
-
+		
 		BrandForm form = new BrandForm();
 		form.setCustId(id);
-		form.setSelectedBrand(customerService.getSelectedBrandId(form.getCustId()));
-
+		//
+		List<CustBrandGroupDTO> listCust = customerService.getCustBrandGroupById(id);
+		String listProductTypeId = "";
+		if(null!=listCust){
+			for(CustBrandGroupDTO custDTO : listCust){
+				listProductTypeId = listProductTypeId +":"+custDTO.getProductTypeId();
+			}
+		}
+		List<Integer> selectBrand = new ArrayList<Integer>();
+		List<ProductType> listProductType = customerService.getProductType();
+		if(listCust != null && listProductType != null){
+			for(ProductType product : listProductType){
+				if(listProductTypeId.indexOf(String.valueOf(product.getProductTypeId())) != -1){
+					selectBrand.add((int) product.getProductTypeId());
+				}
+			}
+		}
+		form.setSelectedBrand(selectBrand);
 		model.addAttribute("brandForm", form);
-		model.addAttribute("brands", brandService.list());
+		model.addAttribute("brands", listProductType);
 		return "pages-back/customer/add_brand";
 	}
 
@@ -167,6 +190,9 @@ public class BackendCustomerController {
 	String addBrandSubmit(@ModelAttribute BrandForm brandForm, Model model) throws Exception {
 		log.info("/add_brand POST");
 		log.info("Selected brand id: " + brandForm);
+		User userAuthen = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		brandForm.setUserCreate(userAuthen.getUsername());
+		brandForm.setUserUpdate(userAuthen.getUsername());
 		customerService.addBrand(brandForm);
 		return update(brandForm.getCustId(), model);
 	}
@@ -190,8 +216,10 @@ public class BackendCustomerController {
 		AddressForm addrFrom = new AddressForm();
 		model.addAttribute("customerForm", custDto);
 		model.addAttribute("users", users);
-		model.addAttribute("selectedBrand", customerService.getSelectedBrand(cusId));
+		model.addAttribute("selectedBrand", customerService.getCustBrandGroupById(cusId));
 		model.addAttribute("listAddr", listAddress);
+		model.addAttribute("addressTypes", getAddressConstant());
+		model.addAttribute("listMobileType", customerService.getMobileType());
 		model.addAttribute("country", listCountry);
 		model.addAttribute("addressForm",addrFrom);
 		model.addAttribute("listContact", listContact);
@@ -234,8 +262,10 @@ public class BackendCustomerController {
 		AddressForm addrFrom = new AddressForm();
 		model.addAttribute("customerForm", custDto);
 		model.addAttribute("users", users);
-		model.addAttribute("selectedBrand", customerService.getSelectedBrand(cusId));
+		model.addAttribute("selectedBrand", customerService.getCustBrandGroupById(cusId));
 		model.addAttribute("listAddr", listAddress);
+		model.addAttribute("addressTypes", getAddressConstant());
+		model.addAttribute("listMobileType", customerService.getMobileType());
 		model.addAttribute("country", listCountry);
 		model.addAttribute("addressForm",addrFrom);
 		model.addAttribute("contactForm", contactForm);
@@ -254,7 +284,13 @@ public class BackendCustomerController {
 			return "pages-back/customer/edit";
 		}*/
 		customerService.saveContact(contact.getContactId(),contact.getCustId(),contact.getNameEn(),contact.getNameNick(),contact.getPosition(),contact.getBirthDate()
-				,contact.getAddress(),contact.getTel(),contact.getEmail(),contact.getMobileId(),contact.getFax(),contact.getSkype(),contact.getFacebook(),contact.getTwitter());
+				,contact.getAddress(),contact.getTel(),contact.getEmail(),contact.getMobile(),contact.getMobileId(),contact.getFax(),contact.getSkype(),contact.getFacebook(),contact.getTwitter());
 		return update(contact.getCustId(),model);
+	}
+	public Map<Long, String> getAddressConstant() {
+		Map<Long, String> addresses = new HashMap<Long, String>();
+		addresses.put(AddressConstant.USER_INVOICE_TO, "Invoice To");
+		addresses.put(AddressConstant.USER_DISPATCH_TO, "Dispatch To");
+		return addresses;
 	}
 }
