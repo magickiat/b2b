@@ -1,4 +1,4 @@
-package com.starboard.b2b.web.form.product;
+package com.starboard.b2b.web.form.order;
 
 public class SearchOrderForm {
 	private int page;

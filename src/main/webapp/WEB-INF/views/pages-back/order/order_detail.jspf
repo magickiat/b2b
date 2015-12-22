@@ -1,0 +1,70 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<div class="col-sm-12">
+	<table class="table table-hover table-list">
+		<thead>
+			<tr>
+				<th>No</th>
+				<th>Product Code</th>
+				<th>Description</th>
+
+				<th>Price</th>
+
+
+				<th>Qty</th>
+
+				<th>Shipped</th>
+				<th>Pending</th>
+
+
+				<th>UOM</th>
+				<th>Unit Price</th>
+				<th>Amount</th>
+
+				<th>Remove</th>
+				<th>Split</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${ form.orderReport.orderDetails }" var="ordDetail"
+				varStatus="rowNum">
+
+				<tr>
+					<td>${ rowNum.index + 1 }</td>
+					<td>${ ordDetail.productCode }</td>
+					<td>${ ordDetail.productName }</td>
+
+					<td>Price Group select</td>
+
+
+					<td>${ ordDetail.amount }</td>
+
+
+					<td>Shipped</td>
+					<td>Pending</td>
+
+					<td>${ ordDetail.productUnit }</td>
+					<td>
+						<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
+							value="${ ordDetail.unitPrice }">
+						</fmt:formatNumber>
+					</td>
+					<td>
+						<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
+							value="${ ordDetail.amount * ordDetail.unitPrice }">
+						</fmt:formatNumber>
+					</td>
+
+
+					<td><form action='<c:url value="/backend/order/delete-suborder" />'>
+						<input type="hidden" name="orderDetailId" value="${ ordDetail.orderDetailId }" />
+					</form>
+					Remove</td>
+					<td>Split</td>
+				</tr>
+
+			</c:forEach>
+		</tbody>
+	</table>
+</div>

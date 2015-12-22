@@ -6,6 +6,20 @@ import com.starboard.b2b.model.BaseModel;
 
 public class BaseDTO {
 	protected String userCreate;
+	protected String userUpdate;
+	protected Date timeCreate;
+	protected Date timeUpdate;
+
+	public BaseDTO() {
+	}
+
+	public BaseDTO(BaseModel base) {
+		this.userCreate = base.getUserCreate();
+		this.userUpdate = base.getUserUpdate();
+		this.timeCreate = base.getTimeCreate();
+		this.timeUpdate = base.getTimeUpdate();
+	}
+
 	public String getUserCreate() {
 		return userCreate;
 	}
@@ -36,20 +50,6 @@ public class BaseDTO {
 
 	public void setTimeUpdate(Date timeUpdate) {
 		this.timeUpdate = timeUpdate;
-	}
-
-	protected String userUpdate;
-	protected Date timeCreate;
-	protected Date timeUpdate;
-
-	public BaseDTO() {
-	}
-
-	public BaseDTO(BaseModel base) {
-		this.userCreate = base.getUserCreate();
-		this.userUpdate = base.getUserUpdate();
-		this.timeCreate = base.getTimeCreate();
-		this.timeUpdate = base.getTimeUpdate();
 	}
 
 }

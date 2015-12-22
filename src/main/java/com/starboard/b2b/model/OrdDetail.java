@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 @Table(name = "ord_detail")
 public class OrdDetail implements java.io.Serializable {
 
-	private long orderProductId;
+	private long orderDetailId;
 	private Long orderId;
 	private Long productId;
 	private Long amount;
@@ -36,13 +36,13 @@ public class OrdDetail implements java.io.Serializable {
 	public OrdDetail() {
 	}
 
-	public OrdDetail(long orderProductId) {
-		this.orderProductId = orderProductId;
+	public OrdDetail(long orderDetailId) {
+		this.orderDetailId = orderDetailId;
 	}
 
-	public OrdDetail(long orderProductId, Long orderId, Long productId, Long amount, Long status, BigDecimal price, String productUnitId,
+	public OrdDetail(long orderDetailId, Long orderId, Long productId, Long amount, Long status, BigDecimal price, String productUnitId,
 			String productBuyerGroupId, String productCurrency, String userCreate, String userUpdate, Date timeCreate, Date timeUpdate) {
-		this.orderProductId = orderProductId;
+		this.orderDetailId = orderDetailId;
 		this.orderId = orderId;
 		this.productId = productId;
 		this.amount = amount;
@@ -55,17 +55,6 @@ public class OrdDetail implements java.io.Serializable {
 		this.userUpdate = userUpdate;
 		this.timeCreate = timeCreate;
 		this.timeUpdate = timeUpdate;
-	}
-
-	@Id
-	@Column(name = "order_product_id", unique = true, nullable = false)
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public long getOrderProductId() {
-		return this.orderProductId;
-	}
-
-	public void setOrderProductId(long orderProductId) {
-		this.orderProductId = orderProductId;
 	}
 
 	@Column(name = "order_id")
@@ -176,6 +165,17 @@ public class OrdDetail implements java.io.Serializable {
 
 	public void setTimeUpdate(Date timeUpdate) {
 		this.timeUpdate = timeUpdate;
+	}
+
+	@Id
+	@Column(name = "order_detail_id", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public long getOrderDetailId() {
+		return orderDetailId;
+	}
+
+	public void setOrderDetailId(long orderDetailId) {
+		this.orderDetailId = orderDetailId;
 	}
 
 }

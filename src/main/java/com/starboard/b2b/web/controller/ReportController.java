@@ -10,7 +10,7 @@ import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ProductService;
-import com.starboard.b2b.web.form.product.OrderSummaryForm;
+import com.starboard.b2b.web.form.order.OrderSummaryForm;
 
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;

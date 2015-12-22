@@ -56,7 +56,7 @@ import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.ArchiveUtil;
 import com.starboard.b2b.util.ExcelOrderUtil;
 import com.starboard.b2b.util.UserUtil;
-import com.starboard.b2b.web.form.product.OrderSummaryForm;
+import com.starboard.b2b.web.form.order.OrderSummaryForm;
 import com.starboard.b2b.web.form.product.SearchProductForm;
 
 @Controller
@@ -81,6 +81,7 @@ public class FrontOrderController {
     @Autowired
 	private Environment environment;
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "index", method = RequestMethod.GET)
 	String step1(Model model) {
 		List<ProductBrandGroupDTO> brandGroupList = brandService.getBrandGroupList(UserUtil.getCurrentUser().getCustomer().getCustId());
@@ -99,6 +100,7 @@ public class FrontOrderController {
 		return "pages-front/order/step1_brand";
 	}
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "step2/index", method = RequestMethod.GET)
 	String step2ChooseAddress(@RequestParam("brand_id") Long brandId, Model model) {
 		log.info("Brand id: " + brandId);

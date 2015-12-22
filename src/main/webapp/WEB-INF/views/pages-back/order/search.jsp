@@ -134,7 +134,7 @@
 										<tr>
 											<td><input type="hidden" id="orderId-${ order.orderId }"
 												name="orderId" value="${ order.orderId }" /> <a
-												href="<c:url value="/frontend/order/summary/report/${order.orderCode}"/>">${ order.orderCode }</a>
+												href="<c:url value="/backend/order/view/${order.orderCode}"/>">${ order.orderCode }</a>
 											</td>
 
 											<td>${ order.customerName }</td>
