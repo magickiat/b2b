@@ -23,8 +23,9 @@
 				<div class="row" style="min-height: 300px;">
 					<div class="col-md-12">
 						<div class="container" style="margin-top: 35px;">
+							
 							<!-- Timeline -->
-							<ul class="timeline">
+							<ul class="timeline" style="display: none;">
 							
 								<li class="year top"><span class="txtupper">contact us</span></li>
 								

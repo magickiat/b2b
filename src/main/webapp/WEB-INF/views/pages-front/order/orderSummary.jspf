@@ -97,18 +97,19 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		
+		<!-- Customer remark -->		
+		<div class="col-sm-6">
+			<div class="row">Customer Remark</div>
+			<div class="row">${ orderReport.remarkCustomer }</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="row">Shipping Type</div>
+			<div class="row">${ orderReport.shippingType }</div>
+		</div>
+		
 	</div>
-</div>
-<!-- Customer remark -->
-<div class="row">
-
-	<div class="col-sm-6">
-		<div class="row">Customer Remark</div>
-		<div class="row">${ orderReport.remarkCustomer }</div>
-	</div>
-	<div class="col-sm-6">
-		<div class="row">Shipping Type</div>
-		<div class="row">${ orderReport.shippingType }</div>
-	</div>
-
+	
+	
+	
 </div>

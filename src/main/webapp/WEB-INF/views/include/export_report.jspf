@@ -2,6 +2,7 @@
 <%@page session="true"%>
 
 <div class="row text-center">
+	<div class="col-md-12">&nbsp;</div>
 	<div class="col-md-12 text-center">
 		<input type="button" class="btn btn-default" id="btnExcel" value="EXCEL" onclick="exportExcel()" /> 
 		<input type="button" class="btn btn-default" id="btnPdf" value="PDF" onclick="exportPdf()" />
