@@ -61,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		filter.setForceEncoding(true);
 		http.addFilterBefore(filter, CsrfFilter.class);
 
-		http.csrf().disable().authorizeRequests().antMatchers("/login/**").permitAll()
+		http.authorizeRequests().antMatchers("/login/**").permitAll()
 				.antMatchers("/backend/**").hasRole(ROLE_ADMIN)
 				.antMatchers("/frontend/**").hasAnyRole(ROLE_USER, ROLE_ADMIN)
 				.antMatchers("/report/**").authenticated()

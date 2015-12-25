@@ -34,7 +34,14 @@
 		</div>
 	</div>
 </nav>
-
+<form id="logoutForm" action="<c:url value="/logout"/>"
+      method="post">
+	<input type="submit"
+	       value="Log out" />
+	<input type="hidden"
+	       name="${_csrf.parameterName}"
+	       value="${_csrf.token}"/>
+</form>
 <%-- Welcome bar --%>
 <sec:authorize access="isAuthenticated()">
 	<sec:authentication var="user" property="principal" />
@@ -137,9 +144,10 @@
 	}
 
 	function logout() {
-		$.post('<c:url value="/logout" />').done(function() {
+		$("#logoutForm").submit();
+		/*$.post('<c:url value="/logout" />').done(function() {
 			window.location.replace('<c:url value="/" />');
-		});
+		});*/
 	}
 	
 </script>
