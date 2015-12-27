@@ -8,7 +8,7 @@ import com.starboard.b2b.dto.CountryDTO;
 import com.starboard.b2b.dto.ProductTypeDTO;
 
 public class SearchCustomerForm {
-	private int page;
+	private int page = 1;
 	
 	private String keyword;
 	private Long selectedBrand;
