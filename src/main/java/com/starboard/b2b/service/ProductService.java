@@ -19,6 +19,7 @@ import com.starboard.b2b.web.form.product.SearchProductForm;
 
 public interface ProductService {
 
+	List<ProductTypeDTO> findAllProductType();
 	// Query Brands by brandGroupId, if brandGroupId = 0 is query all
 	List<ProductTypeDTO> findProductTypeByBrandId(Long brandGroupId);
 

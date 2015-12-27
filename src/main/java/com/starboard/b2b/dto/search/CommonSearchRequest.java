@@ -1,5 +1,7 @@
 package com.starboard.b2b.dto.search;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 public class CommonSearchRequest<T> {
 	private int page;
 	private int size;
@@ -43,6 +45,11 @@ public class CommonSearchRequest<T> {
 
 	public void setCondition(T condition) {
 		this.condition = condition;
+	}
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
 	}
 
 }

@@ -2,6 +2,7 @@
 package com.starboard.b2b.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class CustDTO {
 	private long custId;
@@ -15,6 +16,8 @@ public class CustDTO {
 	private String userUpdate;
 	private Date timeCreate;
 	private Date timeUpdate;
+	
+	private List<AddressDTO> addressList;
 
 	public long getCustId() {
 		return custId;
@@ -102,6 +105,14 @@ public class CustDTO {
 
 	public void setTimeUpdate(Date timeUpdate) {
 		this.timeUpdate = timeUpdate;
+	}
+
+	public List<AddressDTO> getAddressList() {
+		return addressList;
+	}
+
+	public void setAddressList(List<AddressDTO> addressList) {
+		this.addressList = addressList;
 	}
 
 }

@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.starboard.b2b.common.Page;
-import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.ContactDTO;
 import com.starboard.b2b.dto.CountryDTO;
@@ -16,6 +15,7 @@ import com.starboard.b2b.model.ProductType;
 import com.starboard.b2b.web.form.brand.BrandForm;
 import com.starboard.b2b.web.form.customer.CreateCustomerForm;
 import com.starboard.b2b.web.form.customer.CustomerForm;
+import com.starboard.b2b.web.form.customer.SearchCustomerForm;
 
 public interface CustomerService {
 	CustomerDTO findById(Long id);
@@ -23,10 +23,8 @@ public interface CustomerService {
 	CustomerDTO findByName(String name);
 
 	List<CustomerDTO> list();
-
-	Page<CustDTO> listCust(Integer page);
-
-	List<CustomerDTO> list(Pagination page);
+	
+	Page<CustDTO> listCust(SearchCustomerForm form);
 
 	void add(CreateCustomerForm customer);
 

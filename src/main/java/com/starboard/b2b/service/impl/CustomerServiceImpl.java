@@ -31,7 +31,7 @@ import com.starboard.b2b.dto.CustBrandGroupDTO;
 import com.starboard.b2b.dto.CustDTO;
 import com.starboard.b2b.dto.CustomerDTO;
 import com.starboard.b2b.dto.MobileTypeDTO;
-import com.starboard.b2b.dto.search.SearchCustRequest;
+import com.starboard.b2b.dto.search.CommonSearchRequest;
 import com.starboard.b2b.dto.search.SearchCustResult;
 import com.starboard.b2b.model.Addr;
 import com.starboard.b2b.model.Brand;
@@ -46,6 +46,7 @@ import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.brand.BrandForm;
 import com.starboard.b2b.web.form.customer.CreateCustomerForm;
 import com.starboard.b2b.web.form.customer.CustomerForm;
+import com.starboard.b2b.web.form.customer.SearchCustomerForm;
 
 @Service("customerService")
 public class CustomerServiceImpl implements CustomerService {
@@ -194,9 +195,11 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Page<CustDTO> listCust(Integer pageIndex) {
-		SearchCustRequest req = new SearchCustRequest(pageIndex, applicationConfig.getPageSize());
-		log.info(req.toString());
+	public Page<CustDTO> listCust(SearchCustomerForm form) {
+		
+		// ----- set request ------
+		CommonSearchRequest<SearchCustomerForm> req = new CommonSearchRequest<SearchCustomerForm>(form.getPage(), applicationConfig.getPageSize());
+		req.setCondition(form);
 		SearchCustResult searchResult = custDao.listCust(req);
 		List<CustDTO> result = new ArrayList<>();
 		for (Cust cust : searchResult.getResult()) {
@@ -204,11 +207,19 @@ public class CustomerServiceImpl implements CustomerService {
 			BeanUtils.copyProperties(cust, dto);
 			result.add(dto);
 		}
+		
+		// ----- set address -----
+		for (CustDTO cust : result) {
+			cust.setAddressList(findAddressByCustomerId(cust.getCustId()));
+		}
+		
+		// ----- prepare result page -----
 		Page<CustDTO> page = new Page<>();
 		page.setCurrent(req.getPage());
 		page.setResult(result);
 		page.setPageSize(req.getPageSize());
 		page.setTotal(searchResult.getTotal());
+		
 		return page;
 	}
 

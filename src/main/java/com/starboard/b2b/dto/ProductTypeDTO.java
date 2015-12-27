@@ -1,7 +1,7 @@
 
 package com.starboard.b2b.dto;
 
-public class ProductTypeDTO {
+public class ProductTypeDTO extends BaseDTO {
 
 	private long productTypeId;
 	private String productTypeName;

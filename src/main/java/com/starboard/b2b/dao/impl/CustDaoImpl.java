@@ -2,9 +2,15 @@ package com.starboard.b2b.dao.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.SimpleExpression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +20,11 @@ import com.starboard.b2b.dao.CustDao;
 import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.ContactDTO;
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
-import com.starboard.b2b.dto.search.SearchCustRequest;
+import com.starboard.b2b.dto.search.CommonSearchRequest;
 import com.starboard.b2b.dto.search.SearchCustResult;
 import com.starboard.b2b.model.Cust;
 import com.starboard.b2b.model.CustPriceGroup;
+import com.starboard.b2b.web.form.customer.SearchCustomerForm;
 
 @Repository("custDao")
 public class CustDaoImpl implements CustDao {
@@ -29,20 +36,38 @@ public class CustDaoImpl implements CustDao {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public SearchCustResult listCust(SearchCustRequest req) {
+	public SearchCustResult listCust(CommonSearchRequest<SearchCustomerForm> req) {
 		log.info("search request: " + req);
 
-		SearchCustResult result = new SearchCustResult();
-
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Cust.class);
-		List list = criteria.setFirstResult(req.getFirstResult()).setMaxResults(req.getPageSize()).list();
+		Criteria criteriaTotal = sessionFactory.getCurrentSession().createCriteria(Cust.class);
 
-		Object totalRecord = sessionFactory.getCurrentSession().createCriteria(Cust.class)
-				.setProjection(Projections.rowCount()).uniqueResult();
+		// ----- Set criteria
+		Criterion rtCustCode = null;
+		if (req != null && req.getCondition() != null) {
+			if (StringUtils.isNotEmpty(req.getCondition().getKeyword())) {
+				rtCustCode = Restrictions.or(Restrictions.like("custCode", req.getCondition().getKeyword(), MatchMode.ANYWHERE),
+						Restrictions.like("nameEn", req.getCondition().getKeyword(), MatchMode.ANYWHERE));
+			}
+		}
+
+		if (rtCustCode != null) {
+			criteria.add(rtCustCode);
+			criteriaTotal.add(rtCustCode);
+		}
+
+		// ----- Find records -----
+		List list = criteria.setFirstResult(req.getFirstResult()).setMaxResults(req.getPageSize()).list();
+		
+		
+		// ----- Find total -----
+		Object totalRecord = criteriaTotal.setProjection(Projections.rowCount()).uniqueResult();
+
+		// ----- Set result -----
+		SearchCustResult result = new SearchCustResult();
 		result.setResult(list);
 		result.setTotal((long) totalRecord);
 
-		log.info("Total " + result.getTotal());
 		return result;
 	}
 
@@ -62,8 +87,8 @@ public class CustDaoImpl implements CustDao {
 				"select new com.starboard.b2b.dto.AddressDTO(a.addrId,a.custId,a.custCode,a.contactId,a.address,a.subDistrict,a.district,a.province,a.regionCountryId,a.postCode,a.tel1,a.tel2,a.fax,a.email,a.transType,a.transTel,a.type,a.userCreate,a.userUpdate,a.timeCreate,a.timeUpdate) ");
 		sb.append(" from Addr a where a.custId = :custId and a.type = :type order by a.addrId asc");
 
-		return (List<AddressDTO>) sessionFactory.getCurrentSession().createQuery(sb.toString())
-				.setLong("custId", custId).setLong("type", addressType).list();
+		return (List<AddressDTO>) sessionFactory.getCurrentSession().createQuery(sb.toString()).setLong("custId", custId).setLong("type", addressType)
+				.list();
 
 	}
 
@@ -76,7 +101,7 @@ public class CustDaoImpl implements CustDao {
 		sb.append(" where b.id.productTypeId in");
 		sb.append(" (select distinct c.id.brandGroupId from CustBrandGroup c where c.id.custId = :custId)");
 		sb.append(" group by b.id.brandGroupId");
-		
+
 		return sessionFactory.getCurrentSession().createQuery(sb.toString()).setLong("custId", custId).list();
 	}
 
@@ -104,11 +129,10 @@ public class CustDaoImpl implements CustDao {
 				"select new com.starboard.b2b.dto.AddressDTO(a.addrId,a.custId,a.custCode,a.contactId,a.address,a.subDistrict,a.district,a.province,a.regionCountryId,a.postCode,a.tel1,a.tel2,a.fax,a.email,a.transType,a.transTel,a.type,a.userCreate,a.userUpdate,a.timeCreate,a.timeUpdate) ");
 		sb.append(" from Addr a where a.custId = :custId order by a.type asc");
 
-		return (List<AddressDTO>) sessionFactory.getCurrentSession().createQuery(sb.toString())
-				.setLong("custId", custId).list();
+		return (List<AddressDTO>) sessionFactory.getCurrentSession().createQuery(sb.toString()).setLong("custId", custId).list();
 
 	}
-	
+
 	/**
 	 * Get a address when have more than one
 	 */
@@ -120,9 +144,8 @@ public class CustDaoImpl implements CustDao {
 				"select new com.starboard.b2b.dto.ContactDTO(c.contactId, c.custId, c.nameTh, c.nameTitle, c.nameEn, c.nameNick, c.position, c.birthDate, c.address, c.email, c.tel, c.mobile, c.fax, c.skype, c.facebook, c.twitter, c.markUp, c.salesId, c.mobileId, c.imgPath, c.userCreate,	 c.userUpdate, c.timeCreate, c.timeUpdate, c.signaturePath) ");
 		sb.append(" from Contact c where c.custId = :custId order by c.contactId asc");
 
-		return (List<ContactDTO>) sessionFactory.getCurrentSession().createQuery(sb.toString())
-				.setLong("custId", custId).list();
+		return (List<ContactDTO>) sessionFactory.getCurrentSession().createQuery(sb.toString()).setLong("custId", custId).list();
 
 	}
-	
+
 }

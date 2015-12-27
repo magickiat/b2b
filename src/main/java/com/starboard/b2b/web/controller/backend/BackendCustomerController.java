@@ -28,16 +28,16 @@ import com.starboard.b2b.dto.CustBrandGroupDTO;
 import com.starboard.b2b.dto.CustDTO;
 import com.starboard.b2b.model.ProductType;
 import com.starboard.b2b.model.User;
-import com.starboard.b2b.service.BrandService;
-import com.starboard.b2b.service.ConfigService;
+import com.starboard.b2b.service.CountryService;
 import com.starboard.b2b.service.CustomerService;
+import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.service.UserService;
-import com.starboard.b2b.util.PagingUtil;
 import com.starboard.b2b.web.form.address.AddressForm;
 import com.starboard.b2b.web.form.brand.BrandForm;
 import com.starboard.b2b.web.form.contact.ContactForm;
 import com.starboard.b2b.web.form.customer.CreateCustomerForm;
 import com.starboard.b2b.web.form.customer.CustomerForm;
+import com.starboard.b2b.web.form.customer.SearchCustomerForm;
 import com.starboard.b2b.web.form.user.UserRegisterForm;
 
 @Controller
@@ -46,23 +46,32 @@ public class BackendCustomerController {
 	private static final Logger log = LoggerFactory.getLogger(BackendCustomerController.class);
 
 	@Autowired
-	private ConfigService configService;
-
-	@Autowired
-	private PagingUtil pagingUtil;
+	private ProductService productService;
 
 	@Autowired
 	private CustomerService customerService;
 
 	@Autowired
-	private BrandService brandService;
-
-	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private CountryService countryService;
+
 	@RequestMapping(method = RequestMethod.GET)
-	String search(@RequestParam(value = "page", required = false) Integer page, Model model) throws Exception {
-		model.addAttribute("resultPage", customerService.listCust(page));
+	String search(Model model) throws Exception {
+
+		SearchCustomerForm form = new SearchCustomerForm();
+		return search(form, model);
+	}
+
+	@RequestMapping(value = "search", method = RequestMethod.GET)
+	String search(@ModelAttribute SearchCustomerForm searchForm, Model model) {
+		searchForm.setCountryList(countryService.findAll());
+		searchForm.setProductTypeList(productService.findAllProductType());
+
+		model.addAttribute("searchForm", searchForm);
+		model.addAttribute("resultPage", customerService.listCust(searchForm));
+		
 		return "pages-back/customer/search";
 	}
 
@@ -74,8 +83,8 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "create", method = RequestMethod.POST)
-	String createCustomerSubmit(@ModelAttribute("customerForm") @Valid CreateCustomerForm customerForm,
-			BindingResult binding, Model model) throws Exception {
+	String createCustomerSubmit(@ModelAttribute("customerForm") @Valid CreateCustomerForm customerForm, BindingResult binding, Model model)
+			throws Exception {
 		log.info("/create POST");
 		log.warn("binding error: " + binding.hasErrors());
 		model.addAttribute("customerForm", customerForm);
@@ -85,7 +94,7 @@ public class BackendCustomerController {
 		}
 
 		customerService.add(customerForm);
-		return search(0, model);
+		return search(new SearchCustomerForm(), model);
 	}
 
 	@RequestMapping(value = "update", method = RequestMethod.GET)
@@ -111,15 +120,14 @@ public class BackendCustomerController {
 		model.addAttribute("addressTypes", getAddressConstant());
 		model.addAttribute("listMobileType", customerService.getMobileType());
 		model.addAttribute("country", listCountry);
-		model.addAttribute("addressForm",addrFrom);
+		model.addAttribute("addressForm", addrFrom);
 		model.addAttribute("contactForm", contactForm);
 		model.addAttribute("listContact", listContact);
 		return "pages-back/customer/edit";
 	}
 
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	String update(@ModelAttribute @Valid CustomerForm customerForm, BindingResult binding, RedirectAttributes attr,
-			Model model) throws Exception {
+	String update(@ModelAttribute @Valid CustomerForm customerForm, BindingResult binding, RedirectAttributes attr, Model model) throws Exception {
 		log.info("/update POST");
 		log.info("customer id: " + customerForm.getCustId());
 		if (binding.hasErrors()) {
@@ -140,8 +148,7 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "/createuser", method = RequestMethod.POST)
-	String createUser(@ModelAttribute @Valid UserRegisterForm registerForm, BindingResult binding, Model model)
-			throws Exception {
+	String createUser(@ModelAttribute @Valid UserRegisterForm registerForm, BindingResult binding, Model model) throws Exception {
 		log.info("/gen_user POST");
 		if (!binding.hasErrors()) {
 			if (!userService.isExistUsername(registerForm.getUsername())) {
@@ -160,22 +167,22 @@ public class BackendCustomerController {
 	String addBrandForm(@RequestParam(value = "id", required = true) Long id, Model model) throws Exception {
 		log.info("/add_brand GET");
 		log.info("Customer ID: " + id);
-		
+
 		BrandForm form = new BrandForm();
 		form.setCustId(id);
 		//
 		List<CustBrandGroupDTO> listCust = customerService.getCustBrandGroupById(id);
 		String listProductTypeId = "";
-		if(null!=listCust){
-			for(CustBrandGroupDTO custDTO : listCust){
-				listProductTypeId = listProductTypeId +":"+custDTO.getProductTypeId();
+		if (null != listCust) {
+			for (CustBrandGroupDTO custDTO : listCust) {
+				listProductTypeId = listProductTypeId + ":" + custDTO.getProductTypeId();
 			}
 		}
 		List<Integer> selectBrand = new ArrayList<Integer>();
 		List<ProductType> listProductType = customerService.getProductType();
-		if(listCust != null && listProductType != null){
-			for(ProductType product : listProductType){
-				if(listProductTypeId.indexOf(String.valueOf(product.getProductTypeId())) != -1){
+		if (listCust != null && listProductType != null) {
+			for (ProductType product : listProductType) {
+				if (listProductTypeId.indexOf(String.valueOf(product.getProductTypeId())) != -1) {
 					selectBrand.add((int) product.getProductTypeId());
 				}
 			}
@@ -196,7 +203,7 @@ public class BackendCustomerController {
 		customerService.addBrand(brandForm);
 		return update(brandForm.getCustId(), model);
 	}
-	
+
 	@RequestMapping(value = "add_address", method = RequestMethod.GET)
 	String addAddredd(@RequestParam(value = "cusId", required = true) Long cusId, Model model) throws Exception {
 		log.info("/add_address POST");
@@ -221,28 +228,27 @@ public class BackendCustomerController {
 		model.addAttribute("addressTypes", getAddressConstant());
 		model.addAttribute("listMobileType", customerService.getMobileType());
 		model.addAttribute("country", listCountry);
-		model.addAttribute("addressForm",addrFrom);
+		model.addAttribute("addressForm", addrFrom);
 		model.addAttribute("listContact", listContact);
 		model.addAttribute("contactForm", contactForm);
 		return "pages-back/customer/edit";
 	}
-	
+
 	@RequestMapping(value = "save_address", method = RequestMethod.POST)
-	String saveAddressSubmit(@ModelAttribute("addressForm") @Valid AddressForm addressForm,
-			BindingResult binding, Model model) throws Exception {
+	String saveAddressSubmit(@ModelAttribute("addressForm") @Valid AddressForm addressForm, BindingResult binding, Model model) throws Exception {
 		log.info("/save_address POST");
 		log.warn("binding error: " + binding.hasErrors());
 		model.addAttribute("addressForm", addressForm);
-		
-		/*if (binding.hasErrors()) {
-			return "pages-back/customer/edit";
-		}*/
-		customerService.saveAddress(addressForm.getAddrId(), addressForm.getCustId(), addressForm.getAddress(), addressForm.getRegionCountryId(), 
-					addressForm.getTel1(), addressForm.getPostCode(), addressForm.getFax(), addressForm.getEmail(), addressForm.getType());
-		
-		return update(addressForm.getCustId(),model);
+
+		/*
+		 * if (binding.hasErrors()) { return "pages-back/customer/edit"; }
+		 */
+		customerService.saveAddress(addressForm.getAddrId(), addressForm.getCustId(), addressForm.getAddress(), addressForm.getRegionCountryId(),
+				addressForm.getTel1(), addressForm.getPostCode(), addressForm.getFax(), addressForm.getEmail(), addressForm.getType());
+
+		return update(addressForm.getCustId(), model);
 	}
-	
+
 	@RequestMapping(value = "add_contact", method = RequestMethod.GET)
 	String addContact(@RequestParam(value = "cusId", required = true) Long cusId, Model model) throws Exception {
 		log.info("/add_Contact GET");
@@ -267,26 +273,27 @@ public class BackendCustomerController {
 		model.addAttribute("addressTypes", getAddressConstant());
 		model.addAttribute("listMobileType", customerService.getMobileType());
 		model.addAttribute("country", listCountry);
-		model.addAttribute("addressForm",addrFrom);
+		model.addAttribute("addressForm", addrFrom);
 		model.addAttribute("contactForm", contactForm);
 		model.addAttribute("listContact", listContact);
 		return "pages-back/customer/edit";
 	}
-	
+
 	@RequestMapping(value = "save_contact", method = RequestMethod.POST)
-	String saveContactSubmit(@ModelAttribute("contactForm") @Valid ContactForm contact,
-			BindingResult binding, Model model) throws Exception {
+	String saveContactSubmit(@ModelAttribute("contactForm") @Valid ContactForm contact, BindingResult binding, Model model) throws Exception {
 		log.info("/save_address POST");
 		log.warn("binding error: " + binding.hasErrors());
 		model.addAttribute("contactForm", contact);
-		
-		/*if (binding.hasErrors()) {
-			return "pages-back/customer/edit";
-		}*/
-		customerService.saveContact(contact.getContactId(),contact.getCustId(),contact.getNameEn(),contact.getNameNick(),contact.getPosition(),contact.getBirthDate()
-				,contact.getAddress(),contact.getTel(),contact.getEmail(),contact.getMobile(),contact.getMobileId(),contact.getFax(),contact.getSkype(),contact.getFacebook(),contact.getTwitter());
-		return update(contact.getCustId(),model);
+
+		/*
+		 * if (binding.hasErrors()) { return "pages-back/customer/edit"; }
+		 */
+		customerService.saveContact(contact.getContactId(), contact.getCustId(), contact.getNameEn(), contact.getNameNick(), contact.getPosition(),
+				contact.getBirthDate(), contact.getAddress(), contact.getTel(), contact.getEmail(), contact.getMobile(), contact.getMobileId(),
+				contact.getFax(), contact.getSkype(), contact.getFacebook(), contact.getTwitter());
+		return update(contact.getCustId(), model);
 	}
+
 	public Map<Long, String> getAddressConstant() {
 		Map<Long, String> addresses = new HashMap<Long, String>();
 		addresses.put(AddressConstant.USER_INVOICE_TO, "Invoice To");
