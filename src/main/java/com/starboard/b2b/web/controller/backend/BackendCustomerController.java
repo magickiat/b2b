@@ -86,13 +86,18 @@ public class BackendCustomerController {
 	String createCustomerSubmit(@ModelAttribute("customerForm") @Valid CreateCustomerForm customerForm, BindingResult binding, Model model)
 			throws Exception {
 		log.info("/create POST");
-		log.warn("binding error: " + binding.hasErrors());
+		
 		model.addAttribute("customerForm", customerForm);
 
 		if (binding.hasErrors()) {
+			log.warn("binding error: " + binding.hasErrors());
 			return "pages-back/customer/create";
 		}
-
+		if(customerService.isExistCustomerCode(customerForm.getCode())){
+			model.addAttribute("errorMsg", "Duplicate cutomer code");
+			return "pages-back/customer/create";
+		}
+		
 		customerService.add(customerForm);
 		return search(new SearchCustomerForm(), model);
 	}
@@ -131,7 +136,6 @@ public class BackendCustomerController {
 		log.info("/update POST");
 		log.info("customer id: " + customerForm.getCustId());
 		if (binding.hasErrors()) {
-			attr.addFlashAttribute("msg", "Hello");
 			return "redirect:update?id=" + customerForm.getCustId();
 		}
 		customerService.update(customerForm);

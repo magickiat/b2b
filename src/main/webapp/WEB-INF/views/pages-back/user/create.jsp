@@ -52,7 +52,7 @@
 				<label class="control-label col-sm-2"> Contact Email:</label>
 				<div class="col-sm-10">
 					<form:input class="form-control" path="email"
-						placeholder="Enter password" />
+						placeholder="Enter email" />
 				</div>
 			</div>
 			<%-- <div class="form-group">

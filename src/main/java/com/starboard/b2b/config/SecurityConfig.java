@@ -22,6 +22,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.sql.DataSource;
 
 @Configuration
@@ -61,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		filter.setForceEncoding(true);
 		http.addFilterBefore(filter, CsrfFilter.class);
 
-		http.authorizeRequests().antMatchers("/login/**").permitAll()
+		http.authorizeRequests().antMatchers("/login/**", "/gen_user", "/system/env").permitAll()
 				.antMatchers("/backend/**").hasRole(ROLE_ADMIN)
 				.antMatchers("/frontend/**").hasAnyRole(ROLE_USER, ROLE_ADMIN)
 				.antMatchers("/report/**").authenticated()
@@ -72,7 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and().logout().logoutSuccessUrl("/login")
 				.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 			    .and().rememberMe().rememberMeParameter("rememberMe").tokenRepository(persistentTokenRepository())
-				.tokenValiditySeconds(86400).and().csrf();
+				.tokenValiditySeconds((int) TimeUnit.MILLISECONDS.convert(5L, TimeUnit.DAYS)).and().csrf();
 	}
 
 	@Bean

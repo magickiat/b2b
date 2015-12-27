@@ -24,7 +24,8 @@
 					<li><a href='<c:url value="/backend/customer/" />'>Customer</a></li>
 					<li><a href="#">Download Management</a></li>
 					<li><a href="#">Event</a></li>
-					<li><a href='<c:url value="/backend/feed-contents/" />'>Feed Content</a></li>
+					<li><a href='<c:url value="/backend/feed-contents/" />'>Feed
+							Content</a></li>
 					<li><a href="#">Contact us</a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -61,13 +62,14 @@
 </div>
 
 <c:if test="${!empty errorMsg }">
-	<div class="row text-danger">${ errorMsg }</div>
+	<div class="row text-danger bg_color">
+		<div class="col-sm-12 text-center">${ errorMsg }</div>
+	</div>
+	<div class="row">&nbsp;</div>
 </c:if>
 
 <div id="dialog-confirm" title="Confirm?" style="display: none;">
 	<p>Are you sure?</p>
 </div>
 
-<div id="dialog-msg" title="Message" style="display: none;">
-xxx
-</div>
+<div id="dialog-msg" title="Message" style="display: none;">xxx</div>

@@ -1,5 +1,18 @@
 package com.starboard.b2b.service.impl;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
 import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.dao.UserDao;
 import com.starboard.b2b.model.Cust;
@@ -11,19 +24,6 @@ import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.user.UserForm;
 import com.starboard.b2b.web.form.user.UserRegisterForm;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -93,13 +93,6 @@ public class UserServiceImpl implements UserService {
 			user.setPassword(new MD5().encode(userForm.getPassword()));
 		}
 		user.setEmail(userForm.getEmail());
-		
-		try{
-			userDao.update(user);
-			isSuccess = true;
-		}catch(Exception e){
-			isSuccess = false;
-		}
 		return isSuccess;
 	}
 
