@@ -1,7 +1,13 @@
 package com.starboard.b2b.model;
 
-import javax.persistence.*;
 import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * Created by Ken on 9/29/2015.
@@ -19,7 +25,7 @@ public class Content extends BaseModel implements Serializable {
     @Column(length = 255, nullable = false)
     private String title;
 
-    @Column(length = 255, nullable = false)
+    @Column(nullable = false)
     private String content;
 
     public Integer getId() {

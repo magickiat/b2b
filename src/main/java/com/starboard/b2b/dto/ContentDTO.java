@@ -1,9 +1,9 @@
 package com.starboard.b2b.dto;
 
 import com.starboard.b2b.model.Content;
-import com.starboard.b2b.model.Customer;
 
 /**
+ *
  * Created by Ken on 9/29/2015.
  */
 public class ContentDTO extends BaseDTO {
@@ -11,6 +11,8 @@ public class ContentDTO extends BaseDTO {
     private Integer id;
     private String title;
     private String content;
+    private String fullContent;
+    private boolean isMore;
 
     public ContentDTO(){}
     
@@ -46,5 +48,19 @@ public class ContentDTO extends BaseDTO {
         this.content = content;
     }
 
+    public String getFullContent() {
+        return fullContent;
+    }
 
+    public void setFullContent(String fullContent) {
+        this.fullContent = fullContent;
+    }
+
+    public boolean getIsMore() {
+        return isMore;
+    }
+
+    public void setMore(boolean more) {
+        isMore = more;
+    }
 }

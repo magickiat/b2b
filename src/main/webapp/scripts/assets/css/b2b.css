@@ -474,4 +474,32 @@ input::-webkit-inner-spin-button {
   text-align: left;
 }
 
+.feed-footer {
+    border: 1px solid #d1d1d1;
+    padding: 0 15px;
+    text-align: justify;
+}
 
+.feed-footer .read_more {
+    float: right;
+    margin-left: 0;
+    margin-right: 0;
+    white-space: nowrap;
+}
+
+.clear-block::after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+.clear-block {
+    display: inline-block;
+}
+* html .clear-block {
+    height: 1%;
+}
+.clear-block {
+    display: block;
+}

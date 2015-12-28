@@ -62,4 +62,8 @@ public class ContentDaoImpl implements ContentDao {
 		return result;
 	}
 
+	@Override
+	public Content findById(int feedId) {
+		return (Content) sessionFactory.getCurrentSession().get(Content.class, feedId);
+	}
 }

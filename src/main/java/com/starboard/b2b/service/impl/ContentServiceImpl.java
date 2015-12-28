@@ -30,6 +30,7 @@ import java.util.List;
 @Transactional
 public class ContentServiceImpl implements ContentService {
 	private static final Logger log = LoggerFactory.getLogger(ContentServiceImpl.class);
+	private static final int maxContentLength = 1700;
 
     @Autowired
     private ContentDao contentDao;
@@ -51,7 +52,13 @@ public class ContentServiceImpl implements ContentService {
 		List<ContentDTO> result = new ArrayList<>();
 		for (Content cont : searchResult.getResult()) {
 			ContentDTO dto = new ContentDTO();
-			BeanUtils.copyProperties(cont, dto);
+			BeanUtils.copyProperties(cont, dto, "content");
+			if(cont.getContent().length() > maxContentLength){
+				dto.setContent(cont.getContent().substring(0, maxContentLength));
+				dto.setMore(true);
+			}else{
+				dto.setContent(cont.getContent());
+			}
 			result.add(dto);
 		}
 		Page<ContentDTO> page = new Page<>();
@@ -61,7 +68,23 @@ public class ContentServiceImpl implements ContentService {
 		page.setTotal(searchResult.getTotal());
 		return page;
 	}
-    
+
+	@Override
+	public Page<ContentDTO> content(int feedId) {
+		Page<ContentDTO> page = new Page<>();
+		Content content = contentDao.findById(feedId);
+		if(content != null){
+			ContentDTO contentDTO = new ContentDTO();
+			List<ContentDTO> result = new ArrayList<>();
+			BeanUtils.copyProperties(content, contentDTO);
+			result.add(contentDTO);
+			page.setResult(result);
+		}else{
+			page.setResult(new ArrayList<ContentDTO>());
+		}
+		return page;
+	}
+
 	@Transactional(readOnly = true)
 	public List<ContentDTO> list(Pagination page) {
 		return copyContentToDTO(contentDao.list(page));

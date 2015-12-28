@@ -5,9 +5,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Starboard</title>
-<%@include file="/WEB-INF/views/include/common_css.jspf"%>
+	<%@include file="/WEB-INF/views/include/common_meta.jspf" %>
+	<title>Starboard</title>
+	<%@include file="/WEB-INF/views/include/common_css.jspf"%>
 </head>
 <body>
 	<div class="container">

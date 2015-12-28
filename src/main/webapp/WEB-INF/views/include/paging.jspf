@@ -46,13 +46,9 @@
 							<li><a href="#" onclick="${lastUrl}">&gt;&gt;</a></li>
 						</c:otherwise>
 					</c:choose>
-
 				</ul>
-
 			</c:when>
-			
 		</c:choose>
 	</div>
-
 </div>
-
+</div>

@@ -9,15 +9,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<%@include file="/WEB-INF/views/include/common_meta.jspf" %>
 		<title>Backend-List Feed Content</title>
 		<%@include file="/WEB-INF/views/include/common_cssbackend.jspf" %>
 	</head>
 	<body>
-
 		<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf" %>
 		<!-- Base URL for pagination -->
 		<c:set var="baseUrl" value="/backend/feed-contents"/>
@@ -49,34 +45,29 @@
 						<tbody>
 							<c:forEach items="${resultPage.result}" var="content">
 								<tr>
-									<td>${content.title }</td>
-									<td>${content.content }</td>
-									<td>${content.timeCreate }</td>
+									<td><a href="<c:url value="/news"/>?feedId=${content.id}&side=back">${content.title}</a></td>
+									<td>
+										<div class="clear-block">
+											<div>${content.content}</div>
+											<c:if test="${content.isMore}">
+												<div class="feed-footer">
+													<span class="read_more"><a href="<c:url value="/news"/>?feedId=${content.id}&side=back">Read more</a></span>
+												</div>
+											</c:if>
+										</div>
+									</td>
+									<td>${content.timeCreate}</td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 				</div>
-				<%-- Upper Paging --%>
+				<%-- Lower Paging --%>
 				<div class="row">
 					<%@include file="/WEB-INF/views/include/paging.jspf" %>
 				</div>
 			</div>
 		</div>
 		<%@include file="/WEB-INF/views/include/common_js.jspf" %>
-		<script type="text/javascript">
-			$(document).ready(function () {
-				/*$('.nav li a').click(function (e) {
-
-				 $('.nav li').removeClass('active');
-
-				 var $parent = $(this).parent();
-				 if (!$parent.hasClass('active')) {
-				 $parent.addClass('active');
-				 }
-				 e.preventDefault();
-				 });*/
-			});
-		</script>
 	</body>
 </html>

@@ -2,7 +2,6 @@ package com.starboard.b2b.service;
 
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dto.ContentDTO;
-import com.starboard.b2b.model.Content;
 import com.starboard.b2b.web.form.feed.CreateFeedContentForm;
 
 import java.util.List;
@@ -18,4 +17,5 @@ public interface ContentService {
 
 	Page<ContentDTO> listCont(Integer pageIndex);
 
+    Page<ContentDTO> content(int feedId);
 }
