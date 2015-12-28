@@ -5,13 +5,14 @@ import java.util.List;
 import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.ContactDTO;
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
-import com.starboard.b2b.dto.search.SearchCustRequest;
+import com.starboard.b2b.dto.search.CommonSearchRequest;
 import com.starboard.b2b.dto.search.SearchCustResult;
 import com.starboard.b2b.model.Cust;
 import com.starboard.b2b.model.CustPriceGroup;
+import com.starboard.b2b.web.form.customer.SearchCustomerForm;
 
 public interface CustDao {
-	SearchCustResult listCust(SearchCustRequest req);
+	SearchCustResult listCust(CommonSearchRequest<SearchCustomerForm> req);
 
 	Cust findById(Long custId);
 

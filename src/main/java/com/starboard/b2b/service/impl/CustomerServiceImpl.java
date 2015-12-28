@@ -1,8 +1,8 @@
 package com.starboard.b2b.service.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -29,15 +29,12 @@ import com.starboard.b2b.dto.ContactDTO;
 import com.starboard.b2b.dto.CountryDTO;
 import com.starboard.b2b.dto.CustBrandGroupDTO;
 import com.starboard.b2b.dto.CustDTO;
-import com.starboard.b2b.dto.CustomerDTO;
 import com.starboard.b2b.dto.MobileTypeDTO;
-import com.starboard.b2b.dto.search.SearchCustRequest;
+import com.starboard.b2b.dto.search.CommonSearchRequest;
 import com.starboard.b2b.dto.search.SearchCustResult;
 import com.starboard.b2b.model.Addr;
-import com.starboard.b2b.model.Brand;
 import com.starboard.b2b.model.Contact;
 import com.starboard.b2b.model.Cust;
-import com.starboard.b2b.model.Customer;
 import com.starboard.b2b.model.ProductType;
 import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.util.ApplicationConfig;
@@ -46,6 +43,7 @@ import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.brand.BrandForm;
 import com.starboard.b2b.web.form.customer.CreateCustomerForm;
 import com.starboard.b2b.web.form.customer.CustomerForm;
+import com.starboard.b2b.web.form.customer.SearchCustomerForm;
 
 @Service("customerService")
 public class CustomerServiceImpl implements CustomerService {
@@ -84,32 +82,42 @@ public class CustomerServiceImpl implements CustomerService {
 	private MobileTypeDao mobileTypeDao;
 
 	@Transactional(readOnly = true)
-	public CustomerDTO findById(Long id) {
-		Customer customer = customerDao.findById(id);
-		return customer == null ? null : new CustomerDTO(customer);
+	public CustDTO findById(Long id) {
+		Cust customer = customerDao.findById(id);
+		CustDTO cust = new CustDTO();
+		if(customer != null){
+			BeanUtils.copyProperties(cust, customer);
+		}
+		
+		return cust;
 	}
 
 	@Transactional(readOnly = true)
-	public CustomerDTO findByName(String name) {
-		Customer customer = customerDao.findByName(name);
-		return customer == null ? null : new CustomerDTO(customer);
+	public CustDTO findByName(String name) {
+		Cust customer = customerDao.findByName(name);
+		CustDTO cust = new CustDTO();
+		if(customer != null){
+			BeanUtils.copyProperties(cust, customer);
+		}
+		
+		return cust;
 	}
 
 	@Transactional(readOnly = true)
-	public List<CustomerDTO> list() {
+	public List<CustDTO> list() {
 		return copyCustomerToDTO(customerDao.list());
 	}
 
 	@Transactional(readOnly = true)
-	public List<CustomerDTO> list(Pagination page) {
+	public List<CustDTO> list(Pagination page) {
 		return copyCustomerToDTO(customerDao.list(page));
 	}
 
 	@Transactional
 	public void add(CreateCustomerForm form) {
-		Customer customer = new Customer();
-		customer.setCode(form.getCode());
-		customer.setName(form.getName());
+		Cust customer = new Cust();
+		customer.setCustCode(form.getCode());
+		customer.setNameEn(form.getName());
 		customer.setUserCreate(UserUtil.getCurrentUsername());
 		customer.setTimeCreate(new Date());
 		customerDao.add(customer);
@@ -117,9 +125,9 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Transactional
 	public void update(CustomerForm customerForm) {
-		Customer customer = customerDao.findById(customerForm.getCustId());
-		customer.setCode(customerForm.getCode());
-		customer.setName(customerForm.getName());
+		Cust customer = customerDao.findById(customerForm.getCustId());
+		customer.setCustCode(customerForm.getCode());
+		customer.setNameEn(customerForm.getName());
 		customer.setTimeUpdate(DateTimeUtil.getCurrentDate());
 		customer.setUserUpdate(UserUtil.getCurrentUser().getName());
 	}
@@ -130,20 +138,6 @@ public class CustomerServiceImpl implements CustomerService {
 		brandDao.addSelectedBrand(form, form.getSelectedBrand());
 	}
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<Integer> getSelectedBrandId(Long custId) {
-		ArrayList<Integer> brandList = new ArrayList<>();
-		Customer customer = customerDao.findById(custId);
-		if (customer != null && customer.getBrands() != null) {
-			Iterator<Brand> iterator = customer.getBrands().iterator();
-			while (iterator.hasNext()) {
-				Brand brand = (Brand) iterator.next();
-				brandList.add(brand.getId());
-			}
-		}
-		return brandList;
-	}
 
 	@Override
 	@Transactional(readOnly = true)
@@ -159,21 +153,13 @@ public class CustomerServiceImpl implements CustomerService {
 		return listCustBrandGroup;
 	}
 
-	/*private Set<BrandDTO> copyBrandToDTO(Set<Brand> brands) {
-		Set<BrandDTO> list = new HashSet<>();
-		if (brands != null && brands.size() > 0) {
-			for (Brand brand : brands) {
-				list.add(new BrandDTO(brand));
-			}
-		}
-		return list;
-	}*/
-
-	private List<CustomerDTO> copyCustomerToDTO(List<Customer> list) {
-		ArrayList<CustomerDTO> custList = new ArrayList<>();
+	private List<CustDTO> copyCustomerToDTO(List<Cust> list) {
+		ArrayList<CustDTO> custList = new ArrayList<>();
 		if (list != null && list.size() > 0) {
-			for (Customer customer : list) {
-				custList.add(new CustomerDTO(customer));
+			for (Cust customer : list) {
+				CustDTO cust = new CustDTO();
+				BeanUtils.copyProperties(cust, customer);
+				custList.add(cust);
 			}
 		}
 		return custList;
@@ -183,7 +169,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Transactional(readOnly = true)
 	public boolean isExistCustomerCode(String code) {
 		log.info("isExistCustomerCode");
-		return customerDao.exist("code", code);
+		return customerDao.exist("custCode", code);
 	}
 
 	@Override
@@ -194,9 +180,11 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Page<CustDTO> listCust(Integer pageIndex) {
-		SearchCustRequest req = new SearchCustRequest(pageIndex, applicationConfig.getPageSize());
-		log.info(req.toString());
+	public Page<CustDTO> listCust(SearchCustomerForm form) {
+		
+		// ----- set request ------
+		CommonSearchRequest<SearchCustomerForm> req = new CommonSearchRequest<SearchCustomerForm>(form.getPage(), applicationConfig.getPageSize());
+		req.setCondition(form);
 		SearchCustResult searchResult = custDao.listCust(req);
 		List<CustDTO> result = new ArrayList<>();
 		for (Cust cust : searchResult.getResult()) {
@@ -204,11 +192,19 @@ public class CustomerServiceImpl implements CustomerService {
 			BeanUtils.copyProperties(cust, dto);
 			result.add(dto);
 		}
+		
+		// ----- set address -----
+		for (CustDTO cust : result) {
+			cust.setAddressList(findAddressByCustomerId(cust.getCustId()));
+		}
+		
+		// ----- prepare result page -----
 		Page<CustDTO> page = new Page<>();
 		page.setCurrent(req.getPage());
 		page.setResult(result);
 		page.setPageSize(req.getPageSize());
 		page.setTotal(searchResult.getTotal());
+		
 		return page;
 	}
 

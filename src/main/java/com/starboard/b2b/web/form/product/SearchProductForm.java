@@ -3,7 +3,7 @@ package com.starboard.b2b.web.form.product;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class SearchProductForm {
-	private int page;
+	private int page = 1;
 	private long brandId;
 
 	private String keyword;

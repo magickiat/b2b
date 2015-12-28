@@ -1,6 +1,5 @@
 package com.starboard.b2b.config;
 
-import com.starboard.b2b.security.CustomAccessDeniedHandler;
 import com.starboard.b2b.security.MD5;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +8,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -25,6 +22,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.sql.DataSource;
 
 @Configuration
@@ -38,7 +37,6 @@ excludeFilters = {
                 })
     })
 @EnableWebSecurity
-@PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private static final String ROLE_USER = "USER";
@@ -47,8 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserDetailsService userDetailsService;
 	@Autowired
 	private DataSource datasource;
-	@Autowired
-	private Environment env;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -67,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		filter.setForceEncoding(true);
 		http.addFilterBefore(filter, CsrfFilter.class);
 
-		http.authorizeRequests().antMatchers("/login/**").permitAll()
+		http.authorizeRequests().antMatchers("/login/**", "/gen_user", "/system/env").permitAll()
 				.antMatchers("/backend/**").hasRole(ROLE_ADMIN)
 				.antMatchers("/frontend/**").hasAnyRole(ROLE_USER, ROLE_ADMIN)
 				.antMatchers("/report/**").authenticated()
@@ -79,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 			    .and().rememberMe().rememberMeParameter("rememberMe").tokenRepository(persistentTokenRepository())
 				.authenticationSuccessHandler(new AuthenSuccessHandler(Integer.valueOf(env.getProperty("session.timeout"))))
-				.tokenValiditySeconds(86400).and().csrf()
+				.tokenValiditySeconds((int) TimeUnit.MILLISECONDS.convert(5L, TimeUnit.DAYS)).and().csrf()
 				.and().exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());
 	}
 

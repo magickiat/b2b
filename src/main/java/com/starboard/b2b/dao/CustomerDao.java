@@ -3,19 +3,19 @@ package com.starboard.b2b.dao;
 import java.util.List;
 
 import com.starboard.b2b.common.Pagination;
-import com.starboard.b2b.model.Customer;
+import com.starboard.b2b.model.Cust;
 
 public interface CustomerDao extends BaseDao {
-	Customer findById(Long id);
+	Cust findById(Long id);
 
-	Customer findByName(String name);
+	Cust findByName(String name);
 
-	List<Customer> list();
+	List<Cust> list();
 
-	List<Customer> list(Pagination page);
+	List<Cust> list(Pagination page);
 
-	void add(Customer customer);
+	void add(Cust customer);
 
-	void update(Customer customer);
+	void update(Cust customer);
 
 }

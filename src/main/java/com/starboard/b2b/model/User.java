@@ -2,6 +2,7 @@
 package com.starboard.b2b.model;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,6 +49,9 @@ public class User extends BaseModel implements UserDetails {
 
 	@Column(nullable = false)
 	private boolean enabled;
+	
+	@Column(name = "last_active")
+	private Date lastActive;
 
 	@Column(name = "account_non_expired", nullable = false)
 	private boolean accountNonExpired;
@@ -170,6 +174,14 @@ public class User extends BaseModel implements UserDetails {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Date getLastActive() {
+		return lastActive;
+	}
+
+	public void setLastActive(Date lastActive) {
+		this.lastActive = lastActive;
 	}
 
 }
