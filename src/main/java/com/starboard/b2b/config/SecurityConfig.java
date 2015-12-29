@@ -1,5 +1,6 @@
 package com.starboard.b2b.config;
 
+import com.starboard.b2b.security.CustomAccessDeniedHandler;
 import com.starboard.b2b.security.MD5;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -45,6 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserDetailsService userDetailsService;
 	@Autowired
 	private DataSource datasource;
+	@Autowired
+	private Environment env;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
