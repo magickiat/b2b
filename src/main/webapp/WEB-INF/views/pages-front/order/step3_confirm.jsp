@@ -19,7 +19,7 @@
 		<form id="submitOrderForm"
 			action='<c:url value="/frontend/order/step4/submit" />' method="post">
 			<div class="row">
-				<img alt="step 1"
+				<img
 					src='<c:url value="/images/pages-front/icon/step3.png" />'>
 			</div>
 
