@@ -17,7 +17,7 @@
 
 		<div class="col-md-12">
 			<div class="row">
-				<img alt="step 1"
+				<img
 					src='<c:url value="/images/pages-front/icon/step1.png" />'>
 			</div>
 			

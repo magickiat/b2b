@@ -19,7 +19,7 @@
 
 	<div class="container">
 		<div class="row">
-			<img alt="step 1"
+			<img
 				src='<c:url value="/images/pages-front/icon/step2.png" />'>
 		</div>
 		<div class="row">&nbsp;</div>
