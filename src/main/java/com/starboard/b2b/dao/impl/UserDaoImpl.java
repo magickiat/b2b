@@ -41,7 +41,9 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User findByUsername(String username) {
 		User user = (User) sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("username", username)).uniqueResult();
-		sessionFactory.getCurrentSession().evict(user);
+		if(user != null){
+			sessionFactory.getCurrentSession().evict(user);
+		}
 		return user;
 	}
 
