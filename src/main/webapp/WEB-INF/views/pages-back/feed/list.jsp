@@ -30,9 +30,7 @@
 					</form:form>
 				</div>
 				<%-- Upper Paging --%>
-				<div class="row">
-					<%@include file="/WEB-INF/views/include/paging.jspf" %>
-				</div>
+				<%@include file="/WEB-INF/views/include/paging.jspf" %>
 				<div class="row col-sm-12">
 					<table class="table table-hover">
 						<thead>
@@ -63,9 +61,7 @@
 					</table>
 				</div>
 				<%-- Lower Paging --%>
-				<div class="row">
-					<%@include file="/WEB-INF/views/include/paging.jspf" %>
-				</div>
+				<%@include file="/WEB-INF/views/include/paging.jspf" %>
 			</div>
 		</div>
 		<%@include file="/WEB-INF/views/include/common_js.jspf" %>
