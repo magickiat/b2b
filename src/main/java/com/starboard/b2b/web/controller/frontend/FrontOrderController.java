@@ -77,8 +77,8 @@ public class FrontOrderController {
 
 	@Autowired
 	private OrderService orderService;
-        
-    @Autowired
+
+	@Autowired
 	private Environment environment;
 
 	@SuppressWarnings("unchecked")
@@ -89,11 +89,11 @@ public class FrontOrderController {
 		// Create cart
 		if (model.asMap().get("cart") == null) {
 			model.addAttribute("cart", new HashMap<Long, ProductDTO>());
-		}else{
-			HashMap<Long, ProductDTO> cart = (HashMap<Long, ProductDTO>)model.asMap().get("cart");
-			if(!cart.isEmpty()){
+		} else {
+			HashMap<Long, ProductDTO> cart = (HashMap<Long, ProductDTO>) model.asMap().get("cart");
+			if (!cart.isEmpty()) {
 				log.info("Already selected product, redirect to quick order");
-				Long brandId = (Long)model.asMap().get("brandId");
+				Long brandId = (Long) model.asMap().get("brandId");
 				return step2SearchProduct(brandId, model);
 			}
 		}
@@ -104,18 +104,22 @@ public class FrontOrderController {
 	@RequestMapping(value = "step2/index", method = RequestMethod.GET)
 	String step2ChooseAddress(@RequestParam("brand_id") Long brandId, Model model) {
 		log.info("Brand id: " + brandId);
+		
+		if(brandId == null){
+			return step1(model);
+		}
 
-		if (model.asMap().get("cart") != null){
-			HashMap<Long, ProductDTO> cart = (HashMap<Long, ProductDTO>)model.asMap().get("cart");
-			if(!cart.isEmpty()){
-				if(model.containsAttribute("brandId") && model.asMap().get("brandId") != null){
-					brandId = (Long)model.asMap().get("brandId");
+		if (model.asMap().get("cart") != null) {
+			HashMap<Long, ProductDTO> cart = (HashMap<Long, ProductDTO>) model.asMap().get("cart");
+			if (!cart.isEmpty()) {
+				if (model.containsAttribute("brandId") && model.asMap().get("brandId") != null) {
+					brandId = (Long) model.asMap().get("brandId");
 				}
 			}
 		}
-		
+
 		model.addAttribute("brandId", brandId);
-		
+
 		return "pages-front/order/step2_address";
 	}
 
@@ -164,6 +168,24 @@ public class FrontOrderController {
 		return "pages-front/order/step2_search";
 	}
 
+	/**
+	 * View single product when search by list
+	 * 
+	 * @param productId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "step2/product/{productId}", method = RequestMethod.GET)
+	String viewSingleProduct(@PathVariable Long productId, Model model) {
+		// Show shopping cart
+		model.addAttribute("showShoppingCart", "true");
+
+		ProductDTO product = productService.findById(productId);
+		model.addAttribute("product", product);
+
+		return "pages-front/order/step2_view_single_product";
+	}
+
 	@RequestMapping(value = "step2/view", method = RequestMethod.GET)
 	String step2ModelDetail(@RequestParam String modelId, Model model) {
 		log.info("GET step2/view");
@@ -209,7 +231,7 @@ public class FrontOrderController {
 
 			model.addAttribute("noWithnoseTech", noWithnoseTech);
 			model.addAttribute("withnoseTech", withnoseTech);
-			
+
 			ArrayList<HashMap<String, List<ProductSearchResult>>> allTech = new ArrayList<>();
 			allTech.add(noWithnoseTech);
 			allTech.add(withnoseTech);
@@ -238,84 +260,85 @@ public class FrontOrderController {
 		model.addAttribute("productTechnology", productService.findAllProductTechnology());
 	}
 
-    /*
-     * download excel order
-     */
-    @RequestMapping(value = "download-template", method = RequestMethod.GET)
-    public void downloadExcelOrder(@RequestParam("brand_id") Long brandGroupId, HttpServletResponse response) throws IOException {
-        ProductTypeDTO parent = productService.getProductType(brandGroupId);
-        List<ProductTypeDTO> types = productService.getProductTypes(UserUtil.getCurrentUser().getCustomer().getCustId(), brandGroupId);
-        if (parent == null) {
-            throw new B2BException(String.format("brand not found for brand id [%s]", brandGroupId));
-        }
-        if (types == null || types.isEmpty()) {
-            throw new B2BException(String.format("product type not found for brand id [%s]", brandGroupId));
-        }
-        //
-        String rootPath = environment.getProperty("upload.path");
-        String parentPath = parent.getProductTypeName().toUpperCase().replaceAll(" ", "_").trim();
-        List<String> files = new ArrayList<>();
-        for (ProductTypeDTO type : types) {
-            String name = type.getProductTypeName().toUpperCase().replaceAll(" ", "_").trim();
-            files.add(String.format("%s/excel/%s/STB_ORDER_FORM_%s.xls", rootPath, name, name));
-        }
-        //
-        byte[] zip = ArchiveUtil.zip(files);
-        //
-        response.setContentType("application/octet-stream");
-        response.setHeader("Content-Disposition", String.format("attachment; filename=%s%s.zip", "STB_ORDER_FORM_", parentPath));
-        try (OutputStream output = response.getOutputStream()) {
-            output.write(zip);
-        }
-    }
+	/*
+	 * download excel order
+	 */
+	@RequestMapping(value = "download-template", method = RequestMethod.GET)
+	public void downloadExcelOrder(@RequestParam("brand_id") Long brandGroupId, HttpServletResponse response) throws IOException {
+		ProductTypeDTO parent = productService.getProductType(brandGroupId);
+		List<ProductTypeDTO> types = productService.getProductTypes(UserUtil.getCurrentUser().getCustomer().getCustId(), brandGroupId);
+		if (parent == null) {
+			throw new B2BException(String.format("brand not found for brand id [%s]", brandGroupId));
+		}
+		if (types == null || types.isEmpty()) {
+			throw new B2BException(String.format("product type not found for brand id [%s]", brandGroupId));
+		}
+		//
+		String rootPath = environment.getProperty("upload.path");
+		String parentPath = parent.getProductTypeName().toUpperCase().replaceAll(" ", "_").trim();
+		List<String> files = new ArrayList<>();
+		for (ProductTypeDTO type : types) {
+			String name = type.getProductTypeName().toUpperCase().replaceAll(" ", "_").trim();
+			files.add(String.format("%s/excel/%s/STB_ORDER_FORM_%s.xls", rootPath, name, name));
+		}
+		//
+		byte[] zip = ArchiveUtil.zip(files);
+		//
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-Disposition", String.format("attachment; filename=%s%s.zip", "STB_ORDER_FORM_", parentPath));
+		try (OutputStream output = response.getOutputStream()) {
+			output.write(zip);
+		}
+	}
 
-    /*
-     * upload excel order
-     */
-    @RequestMapping(value = "upload-orders", method = RequestMethod.POST)
-    public ModelAndView uploadExcelOrder(@RequestParam("file") MultipartFile file, @ModelAttribute("cart") Map<Long, ProductDTO> cart) {
-        try {
-            if (file.isEmpty()) {
-                throw new B2BException("excel order file are not present in this request");
-            }
-            //
-            List<ExcelOrderBean> orders = ExcelOrderUtil.parseOrder(file.getBytes());
-            //
-            if (orders == null) {
-                throw new B2BException("order are not found in this upload file");
-            }
-            //
-            List<ProductDTO> products = new ArrayList<>(orders.size());
-            for (ExcelOrderBean order : orders) {
-                ProductDTO product = productService.findByProductCode(order.getProductCode());
-                if (product.getProductCode() == null) {
-                    //throw new B2BException(String.format("product not found for product code %s", order.getProductCode()));
-                	continue;
-                }
-                product.setProductQuantity(order.getQuantity());
-                products.add(product);
-            }
-            //
-           if(!products.isEmpty()){
-        	   for (ProductDTO product : products) {
-                   if (cart.get(product.getProductId()) == null) {
-                       cart.put(product.getProductId(), product);
-                   } else {
-                       ProductDTO productInCart = cart.get(product.getProductId());
-                       productInCart.setProductQuantity(productInCart.getProductQuantity() + product.getProductQuantity());
-                   }
-               }
-           }
-            //
-            return new ModelAndView("redirect:step3/checkout");
-        } catch (IOException ex) {
-            throw new B2BException("could not read excel order file");
-        } catch (EncryptedDocumentException ex) {
-            throw new B2BException("excel order file has password protection");
-        } catch (InvalidFormatException ex) {
-            throw new B2BException("uploaded file are not an valid excel file format");
-        }
-    }
+	/*
+	 * upload excel order
+	 */
+	@RequestMapping(value = "upload-orders", method = RequestMethod.POST)
+	public ModelAndView uploadExcelOrder(@RequestParam("file") MultipartFile file, @ModelAttribute("cart") Map<Long, ProductDTO> cart) {
+		try {
+			if (file.isEmpty()) {
+				throw new B2BException("excel order file are not present in this request");
+			}
+			//
+			List<ExcelOrderBean> orders = ExcelOrderUtil.parseOrder(file.getBytes());
+			//
+			if (orders == null) {
+				throw new B2BException("order are not found in this upload file");
+			}
+			//
+			List<ProductDTO> products = new ArrayList<>(orders.size());
+			for (ExcelOrderBean order : orders) {
+				ProductDTO product = productService.findByProductCode(order.getProductCode());
+				if (product.getProductCode() == null) {
+					// throw new B2BException(String.format("product not found
+					// for product code %s", order.getProductCode()));
+					continue;
+				}
+				product.setProductQuantity(order.getQuantity());
+				products.add(product);
+			}
+			//
+			if (!products.isEmpty()) {
+				for (ProductDTO product : products) {
+					if (cart.get(product.getProductId()) == null) {
+						cart.put(product.getProductId(), product);
+					} else {
+						ProductDTO productInCart = cart.get(product.getProductId());
+						productInCart.setProductQuantity(productInCart.getProductQuantity() + product.getProductQuantity());
+					}
+				}
+			}
+			//
+			return new ModelAndView("redirect:step3/checkout");
+		} catch (IOException ex) {
+			throw new B2BException("could not read excel order file");
+		} catch (EncryptedDocumentException ex) {
+			throw new B2BException("excel order file has password protection");
+		} catch (InvalidFormatException ex) {
+			throw new B2BException("uploaded file are not an valid excel file format");
+		}
+	}
 
 	@RequestMapping(value = "add-to-cart", method = RequestMethod.POST)
 	public @ResponseBody List<ProductDTO> addToCart(@RequestParam Long productId, @RequestParam Long quantity,
@@ -502,8 +525,9 @@ public class FrontOrderController {
 	}
 
 	@RequestMapping(value = "step4/submit", method = RequestMethod.POST)
-	String submitOrder(@RequestParam Long invoiceTo, @RequestParam Long dispatchTo, @RequestParam String shippingType, @RequestParam String customerRemark, @RequestParam String paymentMethod,
-			@ModelAttribute("brandId") Long brandId, @ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model, SessionStatus session) {
+	String submitOrder(@RequestParam Long invoiceTo, @RequestParam Long dispatchTo, @RequestParam String shippingType,
+			@RequestParam String customerRemark, @RequestParam String paymentMethod, @ModelAttribute("brandId") Long brandId,
+			@ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model, SessionStatus session) {
 		log.info("----- step4/submit POST");
 		log.info("----- dispatchTo = " + dispatchTo);
 		log.info("----- shippingType = " + shippingType);
@@ -519,28 +543,23 @@ public class FrontOrderController {
 		model.addAttribute("brandId", null);
 		model.addAttribute("cart", null);
 		session.setComplete();
-		
-		
-		
-		
-		
+
 		final SearchOrderDTO orderReport = orderService.findOrderForReport(order.getOrderCode());
 		final List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(order.getOrderCode());
-		for(OrdAddressDTO ordAddress : ordAddresses){
+		for (OrdAddressDTO ordAddress : ordAddresses) {
 			log.info("received order address {} ", ordAddress);
-			if(ordAddress.getType() == AddressConstant.ORDER_INVOICE_TO){
+			if (ordAddress.getType() == AddressConstant.ORDER_INVOICE_TO) {
 				orderReport.setInvoiceToAddress(ordAddress);
 			}
-			if(ordAddress.getType() == AddressConstant.ORDER_DISPATCH_TO){
+			if (ordAddress.getType() == AddressConstant.ORDER_DISPATCH_TO) {
 				orderReport.setDispatchToAddress(ordAddress);
 			}
 		}
 		List<SearchOrderDetailDTO> orderDetails = orderService.searchOrderDetail(order.getOrderCode());
-		if(orderDetails != null && !orderDetails.isEmpty()){
+		if (orderDetails != null && !orderDetails.isEmpty()) {
 			orderReport.setOrderDetails(orderDetails);
 		}
 		model.addAttribute("orderReport", orderReport);
-		
 
 		return "pages-front/order/step4_submit";
 	}
@@ -555,60 +574,63 @@ public class FrontOrderController {
 		return "pages-front/order/create";
 	}
 
-    @RequestMapping(value = "summary", method = RequestMethod.GET)
-    String orderSummary(Model model) {
-    	log.info("summary GET");
+	@RequestMapping(value = "summary", method = RequestMethod.GET)
+	String orderSummary(Model model) {
+		log.info("summary GET");
 		final OrderSummaryForm form = new OrderSummaryForm();
 		form.setCustId(UserUtil.getCurrentUser().getCustomer().getCustId());
-        setOrderSummarySearchForm(form, model);
+		setOrderSummarySearchForm(form, model);
 		Page<SearchOrderDTO> resultPage = orderService.searchOrder(form);
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("orderSummaryForm", form);
-        return "pages-front/order/summary";
-    }
+		return "pages-front/order/summary";
+	}
 
-    @RequestMapping(value = "summary/search-action", method = RequestMethod.GET)
-    String orderSummarySearchAction(@ModelAttribute OrderSummaryForm form, Model model) {
-        log.info("search condition: " + form.toString());
-        setOrderSummarySearchForm(form, model);
+	@RequestMapping(value = "summary/search-action", method = RequestMethod.GET)
+	String orderSummarySearchAction(@ModelAttribute OrderSummaryForm form, Model model) {
+		log.info("search condition: " + form.toString());
+		setOrderSummarySearchForm(form, model);
 		Page<SearchOrderDTO> resultPage = orderService.searchOrder(form);
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("orderSummaryForm", form);
-        return "pages-front/order/summary";
-    }
+		return "pages-front/order/summary";
+	}
 
 	@RequestMapping(value = "summary/report/{orderCode}", method = RequestMethod.GET)
 	String orderSummaryReport(@ModelAttribute OrderSummaryForm form, Model model, @PathVariable final String orderCode) {
-		log.info("Report for order: {}",  orderCode);
+		log.info("Report for order: {}", orderCode);
 		final SearchOrderDTO orderReport = orderService.findOrderForReport(orderCode);
 		final List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(orderCode);
-		for(OrdAddressDTO ordAddress : ordAddresses){
+		for (OrdAddressDTO ordAddress : ordAddresses) {
 			log.info("received order address {} ", ordAddress);
-			if(ordAddress.getType().equals(AddressConstant.ORDER_INVOICE_TO)){
+			if (ordAddress.getType().equals(AddressConstant.ORDER_INVOICE_TO)) {
 				orderReport.setInvoiceToAddress(ordAddress);
 			}
-			if(ordAddress.getType().equals(AddressConstant.ORDER_DISPATCH_TO)){
+			if (ordAddress.getType().equals(AddressConstant.ORDER_DISPATCH_TO)) {
 				orderReport.setDispatchToAddress(ordAddress);
 			}
 		}
 		List<SearchOrderDetailDTO> orderDetails = orderService.searchOrderDetail(orderCode);
-		if(orderDetails != null && !orderDetails.isEmpty()){
+		if (orderDetails != null && !orderDetails.isEmpty()) {
 			orderReport.setOrderDetails(orderDetails);
 		}
 		model.addAttribute("orderReport", orderReport);
 		return "pages-front/order/report";
 	}
 
-    /**
-     * Set all required search condition for order summary page
-     * @param form Order Summary form
-     * @param model Model attributes
-     */
-    private void setOrderSummarySearchForm(final OrderSummaryForm form, final Model model){
-        final List<ProductTypeDTO> productTypes = productService.findProductTypeByBrandId(form.getBrandId());
-        model.addAttribute("productType", productTypes);
-        final List<OrderStatusDTO> orderStatus = orderService.findAllOrderStatus();
-        model.addAttribute("orderStatus", orderStatus);
-    }
+	/**
+	 * Set all required search condition for order summary page
+	 * 
+	 * @param form
+	 *            Order Summary form
+	 * @param model
+	 *            Model attributes
+	 */
+	private void setOrderSummarySearchForm(final OrderSummaryForm form, final Model model) {
+		final List<ProductTypeDTO> productTypes = productService.findProductTypeByBrandId(form.getBrandId());
+		model.addAttribute("productType", productTypes);
+		final List<OrderStatusDTO> orderStatus = orderService.findAllOrderStatus();
+		model.addAttribute("orderStatus", orderStatus);
+	}
 
 }

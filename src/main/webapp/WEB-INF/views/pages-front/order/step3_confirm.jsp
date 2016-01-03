@@ -6,9 +6,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<%@include file="/WEB-INF/views/include/common_meta.jspf" %>
-	<title>Starboard Windsurfing</title>
-	<%@include file="/WEB-INF/views/include/common_css.jspf"%>
+<%@include file="/WEB-INF/views/include/common_meta.jspf"%>
+<title>Starboard Windsurfing</title>
+<%@include file="/WEB-INF/views/include/common_css.jspf"%>
 </head>
 <body>
 
@@ -18,9 +18,15 @@
 
 		<form id="submitOrderForm"
 			action='<c:url value="/frontend/order/step4/submit" />' method="post">
+
+
+			<input type='hidden' id='params_' name='params' value='${params}' />
+			<input type="hidden" id="csrftoken_" name="${_csrf.parameterName}"
+				value="${_csrf.token}" />
+
+
 			<div class="row">
-				<img
-					src='<c:url value="/images/pages-front/icon/step3.png" />'>
+				<img src='<c:url value="/images/pages-front/icon/step3.png" />'>
 			</div>
 
 			<div class="row">
@@ -93,8 +99,8 @@
 						<div class="col-sm-10 text-right"></div>
 						<div class="col-sm-2 text-right">
 							<input type="button" id="btn-add" onclick="gotoCreateOrder()"
-								class="btn btn-success" value="ADD" /> <input type="button"
-								id="btn-upload" class="btn btn-success"
+								class="btn btn-success" value="ADD" />
+							<input type="button" id="btn-upload" class="btn btn-success"
 								onclick="gotoUploadOrder()" value="UPLOAD" />
 						</div>
 						<div class="row">&nbsp;</div>
@@ -125,29 +131,34 @@
 													<td>${rowCount.index + 1 }</td>
 													<td>${ product.productCode }</td>
 													<td>${ product.productNameEn }</td>
-													<td><input type="text"
-														id="quantity-${ rowCount.index }" name="quantity"
-														class="form-control numberOnly"
-														value="${ product.productQuantity }"
-														onblur="updateQuantity(${product.productId}, this)" /> <c:set
-															var="totalQuantity"
+													<td>
+														<input type="text" id="quantity-${ rowCount.index }"
+															name="quantity" class="form-control numberOnly"
+															value="${ product.productQuantity }"
+															onblur="updateQuantity(${product.productId}, this)" />
+														<c:set var="totalQuantity"
 															value="${ totalQuantity +  product.productQuantity }" />
 													</td>
 													<td>${ product.productUnitId }</td>
-													<td><input type="hidden" name="amount"
-														value="${ p.price.amount }" /> <c:choose>
+													<td>
+														<input type="hidden" name="amount"
+															value="${ p.price.amount }" />
+														<c:choose>
 															<c:when test="${ empty p.price }">
 																TBA
 															</c:when>
 															<c:otherwise>
-																<span id="amount-${ rowCount.index }"> 
-																<fmt:formatNumber pattern="#,###" maxIntegerDigits="12" value="${ p.price.amount }">
-																</fmt:formatNumber>
+																<span id="amount-${ rowCount.index }"> <fmt:formatNumber
+																		pattern="#,###" maxIntegerDigits="12"
+																		value="${ p.price.amount }">
+																	</fmt:formatNumber>
 																</span>
 															</c:otherwise>
-														</c:choose></td>
+														</c:choose>
+													</td>
 
-													<td><c:choose>
+													<td>
+														<c:choose>
 															<c:when test="${ empty p.price }">TBA</c:when>
 															<c:otherwise>
 																<span id="total-amount-${ rowCount.index }"> <fmt:formatNumber
@@ -159,21 +170,27 @@
 																<input type="hidden" name="totalProductAmount"
 																	value="${ totalAmount + (product.productQuantity * p.price.amount) }" />
 															</c:otherwise>
-														</c:choose></td>
+														</c:choose>
+													</td>
 													<td>${ product.productCurrency }</td>
-													<td class="text-center"><img class="img-btn-cursor"
-														src='<c:url value="/images/pages-front/icon/btn_remove.png" />'
-														onclick="confirmRemove(${product.productId}, '${ product.productCode }')">
+													<td class="text-center">
+														<img class="img-btn-cursor"
+															src='<c:url value="/images/pages-front/icon/btn_remove.png" />'
+															onclick="confirmRemove(${product.productId}, '${ product.productCode }')">
 													</td>
 												</tr>
 											</c:forEach>
 
 											<tr>
 												<td colspan="3" class="text-right">TOTAL</td>
-												<td><span id="totalQty"></span></td>
+												<td>
+													<span id="totalQty"></span>
+												</td>
 												<td></td>
 												<td></td>
-												<td><span id="totalAmount"></span></td>
+												<td>
+													<span id="totalAmount"></span>
+												</td>
 												<td></td>
 												<td></td>
 											</tr>
@@ -185,31 +202,34 @@
 												<td colspan="6">Shipping and Service Fee</td>
 											</tr>
 											<tr>
-												<td colspan="3"><textarea id="customerRemark"
-														name="customerRemark" rows="4" cols="50"
-														class="form-control"></textarea></td>
-												<td colspan="6"><label for="shippingType">Shipping
-														type</label> <select id="shippingType" name="shippingType"
-													class="form-control">
+												<td colspan="3">
+													<textarea id="customerRemark" name="customerRemark"
+														rows="4" cols="50" class="form-control"></textarea>
+												</td>
+												<td colspan="6">
+													<label for="shippingType">Shipping type</label> <select
+														id="shippingType" name="shippingType" class="form-control">
 														<c:forEach var="shippingType"
 															items="${ shippingTypeList }">
 															<option label="${shippingType.shippingTypeName }">${ shippingType.shippingTypeId }</option>
 														</c:forEach>
-												</select> <select id="paymentMethod" name="paymentMethod"
-													class="form-control" style="display: none;">
+													</select> <select id="paymentMethod" name="paymentMethod"
+														class="form-control" style="display: none;">
 														<c:forEach var="paymentMethod"
 															items="${ paymentMethodList }">
 															<option label="${paymentMethod.paymentMethodName }"
 																<c:if test="${ paymentMethod.paymentMethodId == 'T/T' }"> selected </c:if>>
 																${ paymentMethod.paymentMethodId }</option>
 														</c:forEach>
-												</select></td>
+													</select>
+												</td>
 											</tr>
 											<tr>
-												<td class="text-center" colspan="9"><input
-													type="button" id="confirm" name="confirm"
-													class="btn btn-success" value="CONFIRM"
-													onclick="return confirmOrder();" /></td>
+												<td class="text-center" colspan="9">
+													<input type="button" id="confirm" name="confirm"
+														class="btn btn-success" value="CONFIRM"
+														onclick="confirmOrder();" />
+												</td>
 											</tr>
 										</tbody>
 									</table>
@@ -222,7 +242,12 @@
 
 		</form>
 
-		<form id="remove-item" action='<c:url value="/frontend/order/step3/remove" />' method="post">
+		<form id="remove-item"
+			action='<c:url value="/frontend/order/step3/remove" />' method="post">
+
+			<input type='hidden' id='params_' name='params' value='${params}' />
+			<input type="hidden" id="csrftoken_" name="${_csrf.parameterName}"
+				value="${_csrf.token}" />
 			<input type="hidden" id="productId" name="productId" value="" />
 		</form>
 	</div>
@@ -230,7 +255,8 @@
 	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 
-	<c:url var="updateToCartUrl" value="/frontend/order/update-to-cart.json" />
+	<c:url var="updateToCartUrl"
+		value="/frontend/order/update-to-cart.json" />
 
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -348,6 +374,8 @@
 			}else{
 				console.log('go to RO page');
 				$('#submitOrderForm').submit();
+				/* $.post('<c:url value="/frontend/order/step4/submit" />').done(function() {
+				}); */
 			}
 		}
 		

@@ -5,15 +5,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<%@include file="/WEB-INF/views/include/common_meta.jspf" %>
-	<title>Starboard Windsurfing</title>
-    <%@include file="/WEB-INF/views/include/common_css.jspf" %>
+<%@include file="/WEB-INF/views/include/common_meta.jspf"%>
+<title>Starboard Windsurfing</title>
+<%@include file="/WEB-INF/views/include/common_css.jspf"%>
 </head>
 <body>
 	<div class="background">
 		<div class="first"
 			style="position: absolute; z-index: 100; width: 100%; top: 8%;">
-			<img src="<c:url value="/images/pages-front/icon/windsurf_banner.jpg" />"
+			<img
+				src="<c:url value="/images/pages-front/icon/windsurf_banner.jpg" />"
 				style="width: 100%;" />
 		</div>
 	</div>
@@ -44,21 +45,29 @@
 			style="background-color: rgba(238, 238, 238, 0.5); color: #000; height: 280px; width: 450px; position: relative; z-index: 9999"
 			id="shadow1">
 			<form action="<c:url value="FntLoginAction"/>" method="POST">
+
+				<input type='hidden' id='params_' name='params' value='${params}' />
+				<input type="hidden" id="csrftoken_" name="${_csrf.parameterName}"
+					value="${_csrf.token}" />
+
 				<input id="method" name="method" type="hidden" value="performLogin">
-				<table width="380px" border="0">
+				<table>
 					<tr>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 					</tr>
 					<tr>
 						<td>&nbsp;</td>
-						<td><span style="color: #d43f3a; font-weight: bold">${errormessage }</span></td>
+						<td>
+							<span style="color: #d43f3a; font-weight: bold">${errormessage }</span>
+						</td>
 					</tr>
 					<tr>
 						<td width="100px" style="font-size: 16px" class="fontface_log">USERNAME</td>
-						<td class="fontface_log"><input type="text"
-							class="form-control" placeholder="Username" name="username"
-							id="username" style="width: 87%"></td>
+						<td class="fontface_log">
+							<input type="text" class="form-control" placeholder="Username"
+								name="username" id="username" style="width: 87%">
+						</td>
 					</tr>
 					<tr>
 						<td width="100px">&nbsp;</td>
@@ -66,9 +75,10 @@
 					</tr>
 					<tr>
 						<td width="100px" style="font-size: 16px" class="fontface_log">PASSWORD</td>
-						<td class="fontface_log"><input type="password"
-							name="password" id="password" class="form-control"
-							placeholder="Password" style="width: 87%"></td>
+						<td class="fontface_log">
+							<input type="password" name="password" id="password"
+								class="form-control" placeholder="Password" style="width: 87%">
+						</td>
 					</tr>
 					<tr>
 						<td width="100px">&nbsp;</td>
@@ -76,9 +86,10 @@
 					</tr>
 					<tr>
 						<td width="100px">&nbsp;</td>
-						<td style="font-size: 14px"><input type="checkbox"
-							name="remem" value="remem" id="remem">&nbsp;&nbsp;REMEMBER
-							PASSWORD</td>
+						<td style="font-size: 14px">
+							<input type="checkbox" name="remem" value="remem" id="remem">
+							&nbsp;&nbsp;REMEMBER PASSWORD
+						</td>
 					</tr>
 					<tr>
 						<td width="100px">&nbsp;</td>
@@ -86,9 +97,11 @@
 					</tr>
 					<tr>
 						<td width="100px">&nbsp;</td>
-						<td><input type="submit" class="btnRG" id="loginicon"
-							value="LOGIN"> &nbsp;&nbsp; <input type="reset"
-							class="btnGG" id="cancelicon" value="CANCEL"></td>
+						<td>
+							<input type="submit" class="btnRG" id="loginicon" value="LOGIN">
+							&nbsp;&nbsp;
+							<input type="reset" class="btnGG" id="cancelicon" value="CANCEL">
+						</td>
 					</tr>
 					<tr>
 						<td width="100px">&nbsp;</td>

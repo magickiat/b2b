@@ -76,10 +76,7 @@
 						scrollZoom : true
 					});
 
-					$('#btn-previous').click(function() {
-						window.history.back();
-					});
-
+					
 					$('input[type=radio][name=withnose]').change(
 							function() {
 
@@ -188,41 +185,6 @@
 		function showLogCurrentProduct() {
 			console.log(' [currentProduct = ' + $('#currentProduct').val()
 					+ ']\t[currentTechId = ' + $('#currentTechId').val() + ']');
-		}
-
-		function addToCart() {
-
-			var quantity = $('#quantity').val();
-			console.log('quantity: ' + quantity);
-			if (isValidNumber(quantity)) {
-				if (quantity <= 0) {
-					alert('Quantity must greater than zero');
-					return;
-				}
-
-				var productId = $('#currentProduct').val();
-				var param = {
-					'productId' : productId,
-					'quantity' : quantity
-				};
-
-				console.log('productId = ' + productId);
-				$.post('${addToCartUrl}', param).done(function(response) {
-					renderToCart(response);
-					
-					showDialogAutoClose('Added to cart');
-					
-					//clear txt qty
-					$('#quantity').val('0')
-					
-				}).fail(function(result) {
-					alert(result.responseText);
-				});
-
-			} else {
-				alert('Please check Quantity.');
-			}
-
 		}
 
 		function clearzoom() {

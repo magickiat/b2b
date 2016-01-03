@@ -27,7 +27,7 @@
 	
 						<tr>
 							<td>${ rowBegin + (rowNum.index + 1) }</td>
-							<td>${ product.productCode }</td>
+							<td><a href='<c:url value="/frontend/order/step2/product/${ product.productId }" />'>${ product.productCode }</a></td>
 							<td>${ product.productNameEn }</td>
 							<td>
 								<c:choose>

@@ -5,15 +5,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<%@include file="/WEB-INF/views/include/common_meta.jspf" %>
-	<title>Starboard Windsurfing</title>
-	<%@include file="/WEB-INF/views/include/common_cssbackend.jspf"%>
-<link rel="stylesheet" href="<c:url value="/scripts/dropzone/dropzone.css" />">
+<%@include file="/WEB-INF/views/include/common_meta.jspf"%>
+<title>Starboard Windsurfing</title>
+<%@include file="/WEB-INF/views/include/common_cssbackend.jspf"%>
+<link rel="stylesheet"
+	href="<c:url value="/scripts/dropzone/dropzone.css" />">
 
 </head>
 <body>
 	<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
-	
+
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 bg_color">
@@ -25,8 +26,8 @@
 						Folder</button>
 					<button class="btn btn-default" onclick="back()">Back</button>
 				</div>
-				
-				
+
+
 			</div>
 		</div>
 		<%-- Folder --%>
@@ -54,8 +55,10 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th><input type="checkbox" id="checkAll" class="checkbox"
-							onclick="checkAll()" /></th>
+						<th>
+							<input type="checkbox" id="checkAll" class="checkbox"
+								onclick="checkAll()" />
+						</th>
 						<th>No</th>
 						<th>Sub folder</th>
 						<th>File name</th>
@@ -66,23 +69,29 @@
 
 					<c:forEach var="item" items="${ listFile }" varStatus="rowNum">
 						<tr>
-							<td align="center"><input type="checkbox"
-								id="${ item.nameWithPath }" name="selectFile" class="checkbox"
-								value="${ item.nameWithPath }" /></td>
+							<td align="center">
+								<input type="checkbox" id="${ item.nameWithPath }"
+									name="selectFile" class="checkbox"
+									value="${ item.nameWithPath }" />
+							</td>
 							<td>${ rowNum.index + 1 }</td>
 							<td>${ subFolder }</td>
-							<td><c:choose>
+							<td>
+								<c:choose>
 									<c:when test="${ item.folder }">
 										<a href="#" onclick="list('${ item.nameWithPath }')">${ item.name }</a>
 									</c:when>
 									<c:otherwise>
 										<a href='<c:url value="/upload/${ item.nameWithPath }" />'>${ item.name }</a>
 									</c:otherwise>
-								</c:choose></td>
-							<td><c:choose>
+								</c:choose>
+							</td>
+							<td>
+								<c:choose>
 									<c:when test="${ item.folder }"> Folder</c:when>
 									<c:otherwise>File</c:otherwise>
-								</c:choose></td>
+								</c:choose>
+							</td>
 						</tr>
 					</c:forEach>
 
@@ -99,10 +108,16 @@
 	<form id="newFolderForm"
 		action='<c:url value="/backend/admin/file/new-folder" />'
 		method="post" style="display: none;">
+
+		<input type='hidden' id='params_' name='params' value='${params}' />
+		<input type="hidden" id="csrftoken_" name="${_csrf.parameterName}"
+			value="${_csrf.token}" />
+
 		<input type="hidden" id="subFolder" name="subFolder"
 			value="${ subFolder }" />
 		<div>
-			Folder name: <input type="text" id="folderName" name="folderName" />
+			Folder name:
+			<input type="text" id="folderName" name="folderName" />
 		</div>
 	</form>
 
@@ -119,7 +134,14 @@
 					<div id='content' class="tab-content">
 						<div class="tab-pane active" id="uplod">
 							<form action="UploadImages" class="dropzone"
-								id="my-awesome-dropzone" enctype="multipart/form-data"></form>
+								id="my-awesome-dropzone" enctype="multipart/form-data">
+
+								<input type='hidden' id='params_' name='params'
+									value='${params}' />
+								<input type="hidden" id="csrftoken_"
+									name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+							</form>
 						</div>
 					</div>
 				</div>
@@ -151,8 +173,8 @@
 
 		function newFolder() {
 			$('#newFolderForm').dialog({
-				modal: true,
-				resizable: false,
+				modal : true,
+				resizable : false,
 				buttons : [ {
 					text : "Create",
 					click : function() {
@@ -202,45 +224,60 @@
 		}
 
 		function deleteFile() {
-			
-			$( "#dialog-confirm" ).dialog({
-		      resizable: false,
-		      height:140,
-		      modal: true,
-		      buttons: {
-		        "Delete": function() {
-		        	var subFolder = '${subFolder}';
-		        	
-		        	var files = [];
-					$('input[name=selectFile]:checked').each(function(index, value) {
-						files.push($(value).val());
-					});
-					
-					if(files.length > 0){
 
-						var param = {
-							'subFolder' : subFolder,
-							'files[]' : files
-						};
+			$("#dialog-confirm")
+					.dialog(
+							{
+								resizable : false,
+								height : 140,
+								modal : true,
+								buttons : {
+									"Delete" : function() {
+										var subFolder = '${subFolder}';
 
-						$.post('<c:url value="/backend/admin/file/delete.json" />', param)
-						.done(function(data, statusText) {
-							console.log('Delete ' + data + ' files');
-						})
-						.fail(function(xhr, textStatus, errorThrown) {
-							alert('Error occured, please contact Administrator\n' + xhr.responseText);
-						});
-					}
-					
-					list(subFolder);	
-					
-		          $( this ).dialog( "close" );
-		        },
-		        Cancel: function() {
-		          $( this ).dialog( "close" );
-		        }
-		      }
-		    });
+										var files = [];
+										$('input[name=selectFile]:checked')
+												.each(function(index, value) {
+													files.push($(value).val());
+												});
+
+										if (files.length > 0) {
+
+											var param = {
+												'subFolder' : subFolder,
+												'files[]' : files
+											};
+
+											$
+													.post(
+															'<c:url value="/backend/admin/file/delete.json" />',
+															param)
+													.done(
+															function(data,
+																	statusText) {
+																console
+																		.log('Delete '
+																				+ data
+																				+ ' files');
+															})
+													.fail(
+															function(xhr,
+																	textStatus,
+																	errorThrown) {
+																alert('Error occured, please contact Administrator\n'
+																		+ xhr.responseText);
+															});
+										}
+
+										list(subFolder);
+
+										$(this).dialog("close");
+									},
+									Cancel : function() {
+										$(this).dialog("close");
+									}
+								}
+							});
 		}
 	</script>
 </body>
