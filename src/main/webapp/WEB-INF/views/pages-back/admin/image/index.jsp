@@ -109,7 +109,6 @@
 		action='<c:url value="/backend/admin/file/new-folder" />'
 		method="post" style="display: none;">
 
-		<input type='hidden' id='params_' name='params' value='${params}' />
 		<input type="hidden" id="csrftoken_" name="${_csrf.parameterName}"
 			value="${_csrf.token}" />
 

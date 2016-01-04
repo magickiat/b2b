@@ -20,7 +20,6 @@
 			action='<c:url value="/frontend/order/step4/submit" />' method="post">
 
 
-			<input type='hidden' id='params_' name='params' value='${params}' />
 			<input type="hidden" id="csrftoken_" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />
 

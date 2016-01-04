@@ -69,7 +69,6 @@
 					<form id="upload-orders"
 						action="<c:url value="/frontend/order/upload-orders"/>"
 						method="post" enctype="multipart/form-data" role="form">
-						<input type='hidden' id='params_' name='params' value='${params}' />
 						<input type="hidden" id="csrftoken_" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
 						<div class="form-group">

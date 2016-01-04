@@ -46,7 +46,6 @@
 			id="shadow1">
 			<form action="<c:url value="FntLoginAction"/>" method="POST">
 
-				<input type='hidden' id='params_' name='params' value='${params}' />
 				<input type="hidden" id="csrftoken_" name="${_csrf.parameterName}"
 					value="${_csrf.token}" />
 

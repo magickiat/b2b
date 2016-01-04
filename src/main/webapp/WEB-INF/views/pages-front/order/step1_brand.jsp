@@ -25,8 +25,7 @@
 			
 			<div class="row bg_color">
 				
-				<div class="col-md-12">
-					<div class="row">
+				
 						<c:choose>
 							<c:when test="${empty brandGroupList }">
 								<h3>Not found any brand for this customer.</h3>
@@ -34,30 +33,30 @@
 							<c:otherwise>
 								<c:forEach items="${ brandGroupList }" var="brand" varStatus="rowCount">
 									<!-- Brand Logo -->
-									<div class="col-md-3 brand_logo">
+									<div class="col-md-3">
 										<a href='<c:url value="/frontend/order/step2/index?brand_id=${ brand.brandGroupId }" />'>
 											<c:choose>
 											<c:when test="${brand.brandGroupId == 10}">
-													<img
-														src='<c:url value="/images/pages-front/icon/starboard.png" />'
+													<img alt="starboard"
+														src='<c:url value="/upload/brand/logo/starboard.png" />'
 														id="starboardicon">
 												</c:when>
 												
 												<c:when test="${brand.brandGroupId == 30}">
-													<img
-														src='<c:url value="/images/pages-front/icon/airush.png" />'
+													<img alt="airush"
+														src='<c:url value="/upload/brand/logo/airush.png" />'
 														id="airushicon">
 												</c:when>
 												
 												<c:when test="${brand.brandGroupId == 40}">
-													<img
-														src='<c:url value="/images/pages-front/icon/severne.png" />'
+													<img alt="severne"
+														src='<c:url value="/upload/brand/logo/severne.png" />'
 														id="severneicon">
 												</c:when>
 			
 												<c:when test="${brand.brandGroupId == 50}">
-													<img
-														src='<c:url value="/images/b2b/brand/default_image.jpg" />'
+													<img alt="drake"
+														src='<c:url value="/upload/brand/logo/drake.png" />'
 														id="severneicon">
 												</c:when>
 											</c:choose>
@@ -68,8 +67,7 @@
 								</c:forEach>
 							</c:otherwise>
 						</c:choose>
-					</div>
-				</div>
+					
 			</div>			
 			
 		</div>
