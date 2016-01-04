@@ -23,10 +23,10 @@
 			
 			<div class="row">&nbsp;</div>
 			
-			<div class="row">
+			<div class="row bg_color">
 				
-				<div class="col-md-12 bg_color">
-					<div class="">
+				<div class="col-md-12">
+					<div class="row">
 						<c:choose>
 							<c:when test="${empty brandGroupList }">
 								<h3>Not found any brand for this customer.</h3>
@@ -34,7 +34,7 @@
 							<c:otherwise>
 								<c:forEach items="${ brandGroupList }" var="brand" varStatus="rowCount">
 									<!-- Brand Logo -->
-									<div class="col-md-4" style="margin-top: 30px;">
+									<div class="col-md-3 brand_logo">
 										<a href='<c:url value="/frontend/order/step2/index?brand_id=${ brand.brandGroupId }" />'>
 											<c:choose>
 											<c:when test="${brand.brandGroupId == 10}">
