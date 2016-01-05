@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.starboard</groupId>
 	<artifactId>b2b</artifactId>
-	<version>0.5.1</version>
+	<version>0.5.2</version>
 	<packaging>war</packaging>
 	<name>b2b</name>
 	<description>B2B Website</description>
@@ -66,7 +66,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>springloaded</artifactId>
-			<version>1.2.3.RELEASE</version>
+			<version>1.2.5.RELEASE</version>
 		</dependency>
 
 		<dependency>
