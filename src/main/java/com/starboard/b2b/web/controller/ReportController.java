@@ -1,22 +1,21 @@
 package com.starboard.b2b.web.controller;
 
-import com.starboard.b2b.dto.OrderDTO;
-import com.starboard.b2b.dto.OrderStatusDTO;
-import com.starboard.b2b.dto.ProductTypeDTO;
-import com.starboard.b2b.dto.SoDTO;
-import com.starboard.b2b.dto.SoDetailDTO;
-import com.starboard.b2b.dto.search.SearchOrderDTO;
-import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
-import com.starboard.b2b.service.CustomerService;
-import com.starboard.b2b.service.OrderService;
-import com.starboard.b2b.service.ProductService;
-import com.starboard.b2b.web.form.order.OrderSummaryForm;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -38,22 +37,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.sql.Connection;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import com.starboard.b2b.dto.OrderDTO;
+import com.starboard.b2b.dto.OrderStatusDTO;
+import com.starboard.b2b.dto.ProductTypeDTO;
+import com.starboard.b2b.dto.SoDTO;
+import com.starboard.b2b.dto.SoDetailDTO;
+import com.starboard.b2b.dto.search.SearchOrderDTO;
+import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
+import com.starboard.b2b.service.CustomerService;
+import com.starboard.b2b.service.OrderService;
+import com.starboard.b2b.service.ProductService;
+import com.starboard.b2b.web.form.order.OrderSummaryForm;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 @Controller
 @RequestMapping("/report")
@@ -63,9 +63,6 @@ public class ReportController {
 
 	@Autowired
 	private OrderService orderService;
-
-	@Autowired
-	private CustomerService customerService;
 
 	@Autowired
 	private ProductService productService;
@@ -187,10 +184,13 @@ public class ReportController {
 			workbook.close();
 			
 			// Set servlet response excel
-			
+			response.setContentLength(baos.size());
 			response.setContentType("application/vnd.ms-excel");
 			response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + ".xls\"");
-			response.setContentLength(baos.size());
+			response.setHeader("Cache-Control", "cache, must-revalidate");
+	        response.setHeader("Pragma", "public");
+			
+			
 			baos.writeTo(os);
 			
 		}catch(Exception e){
@@ -238,13 +238,13 @@ public class ReportController {
 	@RequestMapping(value = "order/pdf", method = RequestMethod.GET)
 	@Transactional
 	String generateOrderPDF(Long orderId, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		log.info("orderId = " + orderId);
 		Map<String, Object> params = new HashMap<>();
-
+		
 		Session session = sessionFactory.openSession();
 
 		Connection connection = null;
 		Transaction tx = null;
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		OutputStream outStream = response.getOutputStream();
 		try {
 			
@@ -255,27 +255,27 @@ public class ReportController {
 
 			params.put("orderId", orderId);
 			params.put("showcate", false);
-			
 			params.put("relativePage", 0);
-			
-			// params.put("productCurrency", "");
 			params.put("SUBREPORT_DIR", this.getClass().getResource("/report/").getPath());
 
 			InputStream jasperStream = this.getClass().getResourceAsStream("/report/ro.jasper");
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
 			
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, connection);
-			JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
+			byte[] exportReportToPdf = JasperExportManager.exportReportToPdf(jasperPrint);
+			log.info("byte size = " + exportReportToPdf.length);
 			
+			response.setContentLength(exportReportToPdf.length);
 			response.setContentType("application/x-pdf");
-			response.setHeader("Content-disposition", "inline; filename="+order.getOrderCode()+".pdf");
-			response.setContentLength(baos.size());
-			
-			baos.writeTo(outStream);
+			response.setHeader("Content-Disposition", "attachment; filename="+order.getOrderCode()+".pdf");
+			response.setHeader("Cache-Control", "cache, must-revalidate");
+	        response.setHeader("Pragma", "public");
+			outStream.write(exportReportToPdf);
 			
 			jasperStream.close();
 			tx.commit();
 		} catch (Exception e) {
+			log.error(e.toString(), e);
 			if (tx != null) {
 				tx.rollback();
 			}
@@ -284,9 +284,8 @@ public class ReportController {
 			if (connection != null) {
 				connection.close();
 			}
-			outStream.flush();
-			outStream.close();
-			baos.close();
+			
+//			baos.close();
 		}
 
 		return null;
@@ -322,9 +321,12 @@ public class ReportController {
 				final JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, connection);
 				JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
 
-				response.setContentType("application/x-pdf");
-				response.setHeader("Content-disposition", "inline; filename="+so.getSoNo()+".pdf");
 				response.setContentLength(baos.size());
+				response.setContentType("application/x-pdf");
+				response.setHeader("Content-Disposition", "inline; filename="+so.getSoNo()+".pdf");
+				response.setHeader("Cache-Control", "cache, must-revalidate");
+		        response.setHeader("Pragma", "public");
+				
 
 				baos.writeTo(outStream);
 
@@ -332,6 +334,7 @@ public class ReportController {
 				tx.commit();
 			}
 		} catch (Exception e) {
+			log.error(e.toString(), e);
 			if (tx != null) {
 				tx.rollback();
 			}
