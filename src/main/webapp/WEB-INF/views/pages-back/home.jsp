@@ -6,7 +6,7 @@
 <html>
 <head>
 	<%@include file="/WEB-INF/views/include/common_meta.jspf" %>
-	<title>Backend-Starboard Windsurfing</title>
+	<title>Starboard Windsurfing</title>
 	<%@include file="/WEB-INF/views/include/common_cssbackend.jspf"%>
 </head>
 <body>
@@ -17,6 +17,7 @@
 		<h2>Welcome Admin Home</h2>
 
 	</div>
+	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 </body>
 </html>
