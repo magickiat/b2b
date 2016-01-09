@@ -33,13 +33,52 @@
 
 
 		<div class="row bg_color">
-			<div class="col-sm-12">
-				<div class="col-sm-1">Search:</div>
-				<div class="col-sm-5">
-					<input type="text" id="keyword" name="keyword" class="form-control" />
+
+			<form:form name="searchForm"
+				servletRelativeAction="/backend/customer/search"
+				modelAttribute="searchForm" cssClass="form-horizontal" method="GET">
+
+				<%-- for paging --%>
+				<form:hidden path="page" />
+
+
+				<div class="col-sm-12">
+					<div class="col-sm-1">Search:</div>
+					<div class="col-sm-5">
+						<input type="text" id="keyword" name="keyword"
+							class="form-control" />
+					</div>
+
+					<div class="col-sm-6">
+						<input type="button" class="btn btn-success" value="SEARCH" />
+					</div>
 				</div>
-				
-				<div class="col-sm-6"><input type="button" class="btn btn-success" value="SEARCH" /></div>
+
+			</form:form>
+		</div>
+
+
+		<!-- Base URL for pagination -->
+		<c:set var="baseUrl" value="/backend/customer" />
+		<div class="row">
+			<%@include file="/WEB-INF/views/include/paging_submit.jspf"%>
+		</div>
+
+		<div class="row bg_color">
+			<div class="col-sm-12">
+				<c:choose>
+					<c:when test="${ searchResult != null }">
+						<c:forEach items="${ searchResult }" var="contact"
+							varStatus="rowNum">
+					${ rowNum.index } <br />
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						Not found contact us
+					</c:otherwise>
+				</c:choose>
+
+
 			</div>
 		</div>
 

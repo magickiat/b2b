@@ -2,7 +2,7 @@ package com.starboard.b2b.dao.impl;
 
 import com.starboard.b2b.dao.OrderDao;
 import com.starboard.b2b.dto.SoDTO;
-import com.starboard.b2b.dto.search.CommonSearchRequest;
+import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.OrdAddress;
@@ -59,7 +59,7 @@ public class OrderDaoImpl implements OrderDao {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public SearchResult<SearchOrderDTO> search(CommonSearchRequest<OrderSummaryForm> searchRequest) {
+	public SearchResult<SearchOrderDTO> search(SearchRequest<OrderSummaryForm> searchRequest) {
 
 		final String ordersQuery = "SELECT " +
 				" new com.starboard.b2b.dto.search.SearchOrderDTO( " +

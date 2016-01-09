@@ -1,6 +1,6 @@
 package com.starboard.b2b.dao;
 
-import com.starboard.b2b.dto.search.CommonSearchRequest;
+import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.OrdAddress;
@@ -31,7 +31,7 @@ public interface OrderDao {
 	 * @param searchRequest Search request
 	 * @return Search result
 	 */
-	SearchResult<SearchOrderDTO> search(CommonSearchRequest<OrderSummaryForm> searchRequest);
+	SearchResult<SearchOrderDTO> search(SearchRequest<OrderSummaryForm> searchRequest);
 	
 	// for generate excel in order summary page
 	List<SearchOrderDTO> searchOrderSummaryForReport(OrderSummaryForm searchRequest);

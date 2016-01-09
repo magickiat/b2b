@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.dao.ProductDao;
 import com.starboard.b2b.dto.ProductSearchResult;
-import com.starboard.b2b.dto.search.CommonSearchRequest;
+import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.Brand;
@@ -49,7 +49,7 @@ public class ProductDaoImpl implements ProductDao {
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
     @Transactional(readOnly = true)
-    public SearchResult<SearchProductModelDTO> search(CommonSearchRequest<SearchProductForm> req) {
+    public SearchResult<SearchProductModelDTO> search(SearchRequest<SearchProductForm> req) {
 
         StringBuilder sbQuery = new StringBuilder(
                 "SELECT new com.starboard.b2b.dto.search.SearchProductModelDTO(p.productId, p.productCode, p.productPictureMedium, p.productModelId, m.productModelName, p.productNameEn, p.productPrice, p.productUnitId, p.productCurrency, m.image, p.productPreintro) ");
