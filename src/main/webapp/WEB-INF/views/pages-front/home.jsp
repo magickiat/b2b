@@ -14,7 +14,7 @@
 			<div class="row">
 				<div class="col-md-8 bg_color showline">
 					<c:choose>
-						<c:when test="${fn:length(resultPage.result) gt 1}">
+						<c:when test="${fn:length(resultPage.result) gt 0}">
 							<%-- Upper Paging --%>
 							<%@include file="/WEB-INF/views/include/paging.jspf" %>
 							<div class="row">
