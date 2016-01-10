@@ -2,12 +2,12 @@ package com.starboard.b2b.dto.search;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-public class CommonSearchRequest<T> {
+public class SearchRequest<T> {
 	private int page;
 	private int size;
 	private T condition;
 
-	public CommonSearchRequest(Integer page, int size) {
+	public SearchRequest(Integer page, int size) {
 		setPage(page);
 		setPageSize(size);
 	}

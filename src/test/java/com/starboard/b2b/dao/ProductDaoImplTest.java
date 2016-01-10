@@ -12,7 +12,7 @@ import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.starboard.b2b.config.WebConfig;
-import com.starboard.b2b.dto.search.CommonSearchRequest;
+import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.web.form.product.SearchProductForm;
@@ -32,7 +32,7 @@ public class ProductDaoImplTest {
 		form.setPage(1);
 		form.setBrandId(10);
 
-		CommonSearchRequest<SearchProductForm> req = new CommonSearchRequest<>(form.getPage(), 12);
+		SearchRequest<SearchProductForm> req = new SearchRequest<>(form.getPage(), 12);
 		req.setCondition(form);
 
 		SearchResult<SearchProductModelDTO> search = productDao.search(req);
@@ -51,7 +51,7 @@ public class ProductDaoImplTest {
 		form.setBrandId(10);
 		form.setSelectedBrand("10");
 		
-		CommonSearchRequest<SearchProductForm> req = new CommonSearchRequest<>(form.getPage(), 12);
+		SearchRequest<SearchProductForm> req = new SearchRequest<>(form.getPage(), 12);
 		req.setCondition(form);
 		
 		SearchResult<SearchProductModelDTO> search = productDao.search(req);
@@ -68,7 +68,7 @@ public class ProductDaoImplTest {
 		form.setBrandId(10);
 
 		form.setKeyword("all star");
-		CommonSearchRequest<SearchProductForm> req = new CommonSearchRequest<>(form.getPage(), 12);
+		SearchRequest<SearchProductForm> req = new SearchRequest<>(form.getPage(), 12);
 		req.setCondition(form);
 		
 		SearchResult<SearchProductModelDTO> search = productDao.search(req);

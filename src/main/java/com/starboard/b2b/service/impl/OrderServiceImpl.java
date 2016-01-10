@@ -21,7 +21,7 @@ import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ShippingTypeDTO;
 import com.starboard.b2b.dto.SoDTO;
 import com.starboard.b2b.dto.SoDetailDTO;
-import com.starboard.b2b.dto.search.CommonSearchRequest;
+import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 import com.starboard.b2b.dto.search.SearchResult;
@@ -315,7 +315,7 @@ public class OrderServiceImpl implements OrderService {
 	@Transactional(readOnly = true)
 	public Page<SearchOrderDTO> searchOrder(final OrderSummaryForm orderSummaryForm) {
 		log.info("Search order summary form: {}",orderSummaryForm);
-		final CommonSearchRequest<OrderSummaryForm> req = new CommonSearchRequest<>(orderSummaryForm.getPage(), applicationConfig.getPageSize());
+		final SearchRequest<OrderSummaryForm> req = new SearchRequest<>(orderSummaryForm.getPage(), applicationConfig.getPageSize());
 		req.setCondition(orderSummaryForm);
 
 		// Find product model

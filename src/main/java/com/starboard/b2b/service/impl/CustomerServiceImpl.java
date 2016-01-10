@@ -1,6 +1,5 @@
 package com.starboard.b2b.service.impl;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,8 +29,8 @@ import com.starboard.b2b.dto.CountryDTO;
 import com.starboard.b2b.dto.CustBrandGroupDTO;
 import com.starboard.b2b.dto.CustDTO;
 import com.starboard.b2b.dto.MobileTypeDTO;
-import com.starboard.b2b.dto.search.CommonSearchRequest;
 import com.starboard.b2b.dto.search.SearchCustResult;
+import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.model.Addr;
 import com.starboard.b2b.model.Contact;
 import com.starboard.b2b.model.Cust;
@@ -183,7 +182,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public Page<CustDTO> listCust(SearchCustomerForm form) {
 		
 		// ----- set request ------
-		CommonSearchRequest<SearchCustomerForm> req = new CommonSearchRequest<SearchCustomerForm>(form.getPage(), applicationConfig.getPageSize());
+		SearchRequest<SearchCustomerForm> req = new SearchRequest<>(form.getPage(), applicationConfig.getPageSize());
 		req.setCondition(form);
 		SearchCustResult searchResult = custDao.listCust(req);
 		List<CustDTO> result = new ArrayList<>();

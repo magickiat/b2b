@@ -135,8 +135,6 @@
 							<form action="UploadImages" class="dropzone"
 								id="my-awesome-dropzone" enctype="multipart/form-data">
 
-								<input type='hidden' id='params_' name='params'
-									value='${params}' />
 								<input type="hidden" id="csrftoken_"
 									name="${_csrf.parameterName}" value="${_csrf.token}" />
 

@@ -3,7 +3,7 @@ package com.starboard.b2b.dao;
 import java.util.List;
 
 import com.starboard.b2b.dto.ProductSearchResult;
-import com.starboard.b2b.dto.search.CommonSearchRequest;
+import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.Product;
@@ -15,7 +15,7 @@ public interface ProductDao {
 
     List<Product> list(Integer brandId);
 
-    SearchResult<SearchProductModelDTO> search(CommonSearchRequest<SearchProductForm> req);
+    SearchResult<SearchProductModelDTO> search(SearchRequest<SearchProductForm> req);
 
     List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection);
 

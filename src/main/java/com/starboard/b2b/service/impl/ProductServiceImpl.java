@@ -36,7 +36,7 @@ import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.ProductTechnologyDTO;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.ProductYearDTO;
-import com.starboard.b2b.dto.search.CommonSearchRequest;
+import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.Product;
@@ -182,7 +182,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Page<SearchProductModelDTO> searchProduct(SearchProductForm form) {
 		log.info("form: " + form);
-		CommonSearchRequest<SearchProductForm> req = new CommonSearchRequest<>(form.getPage(), applicationConfig.getPageSize());
+		SearchRequest<SearchProductForm> req = new SearchRequest<>(form.getPage(), applicationConfig.getPageSize());
 		req.setCondition(form);
 
 		// Find product model
