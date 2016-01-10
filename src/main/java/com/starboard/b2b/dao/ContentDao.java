@@ -20,5 +20,9 @@ public interface ContentDao {
 
 	SearchContentResult listContent(SearchContentRequest req);
 
-    Content findById(int feedId);
+    Content findById(int contentId);
+
+    void remove(int contentId);
+
+    void update(Content content);
 }

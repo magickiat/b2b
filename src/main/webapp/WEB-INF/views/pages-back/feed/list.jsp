@@ -18,7 +18,6 @@
 		<!-- Base URL for pagination -->
 		<c:set var="baseUrl" value="/backend/feed-contents"/>
 		<div class="container">
-
 			<div class="row">
 				<div class="col-sm-10">
 					<h2>Feed Content</h2>
@@ -38,6 +37,7 @@
 								<th>Subject</th>
 								<th>Content</th>
 								<th>Create Date</th>
+								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -55,6 +55,15 @@
 										</div>
 									</td>
 									<td>${content.timeCreate}</td>
+									<td>
+										<div class="btn-group">
+											<a type="button" class="btn btn-warning" name="editBtn"
+											       href="<c:url value="/backend/feed-contents/edit/${content.id}"/>?currentPage=${resultPage.current}">Edit</a>
+											<a type="button" class="btn btn-danger" name="removeBtn"
+											       data-href="<c:url value="/backend/feed-contents/delete/${content.id}"/>?currentPage=${resultPage.current}"
+											       data-toggle="modal" data-target="#confirm-delete">Remove</a>
+										</div>
+									</td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -64,6 +73,27 @@
 				<%@include file="/WEB-INF/views/include/paging.jspf" %>
 			</div>
 		</div>
+		<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						Confirm delete?
+					</div>
+					<div class="modal-body">
+						Are you sure to delete this content?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<a class="btn btn-danger btn-ok">Delete</a>
+					</div>
+				</div>
+			</div>
+		</div>
 		<%@include file="/WEB-INF/views/include/common_js.jspf" %>
+		<script type="text/javascript">
+			$('#confirm-delete').on('show.bs.modal', function(e) {
+				$(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+			});
+		</script>
 	</body>
 </html>

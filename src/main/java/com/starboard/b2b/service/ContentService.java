@@ -18,4 +18,8 @@ public interface ContentService {
 	Page<ContentDTO> listCont(Integer pageIndex);
 
     Page<ContentDTO> content(int feedId);
+
+    void remove(int contentId);
+
+    void update(CreateFeedContentForm feedContentForm);
 }

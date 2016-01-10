@@ -63,7 +63,23 @@ public class ContentDaoImpl implements ContentDao {
 	}
 
 	@Override
-	public Content findById(int feedId) {
-		return (Content) sessionFactory.getCurrentSession().get(Content.class, feedId);
+	public Content findById(int contentId) {
+		return (Content) sessionFactory.getCurrentSession().get(Content.class, contentId);
+	}
+
+	@Override
+	public void remove(final int contentId) {
+		log.info("Removing content id {}", contentId);
+		final Content removeContent = new Content();
+		removeContent.setId(contentId);
+		sessionFactory.getCurrentSession().delete("", removeContent);
+		log.info("Removed content id {}", contentId);
+	}
+
+	@Override
+	public void update(final Content content){
+		log.info("Updating content id {} update time {}", content.getId(), content.getTimeUpdate());
+		sessionFactory.getCurrentSession().update(content);
+		log.info("Updated content id {}", content.getId());
 	}
 }

@@ -110,4 +110,19 @@ public class ContentServiceImpl implements ContentService {
         contentDao.add(content);
     }
 
+	@Override
+	public void remove(final int contentId) {
+		contentDao.remove(contentId);
+	}
+
+	@Override
+	public void update(CreateFeedContentForm feedContentForm){
+		Content content = contentDao.findById(feedContentForm.getId());
+		content.setTitle(feedContentForm.getTitle());
+		content.setContent(feedContentForm.getContent());
+		content.setUserUpdate(UserUtil.getCurrentUsername());
+		content.setTimeUpdate(new Date());
+		contentDao.update(content);
+	}
+
 }
