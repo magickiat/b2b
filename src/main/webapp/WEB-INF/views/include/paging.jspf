@@ -4,13 +4,12 @@
 <div class="row pull-right">
 	<div class="col-sm-12">
 		<c:choose>
-			<c:when test="${!empty resultPage.total and resultPage.total > 0}">
+			<c:when test="${not empty resultPage.total && resultPage.total > resultPage.pageSize}">
+			
 				<c:url var="firstUrl" value="${baseUrl}?page=1" />
 				<c:url var="lastUrl" value="${baseUrl}?page=${resultPage.totalPage}" />
-				<c:url var="prevUrl"
-					value="${baseUrl}?page=${resultPage.current - 1}" />
-				<c:url var="nextUrl"
-					value="${baseUrl}?page=${resultPage.current + 1}" />
+				<c:url var="prevUrl" value="${baseUrl}?page=${resultPage.current - 1}" />
+				<c:url var="nextUrl" value="${baseUrl}?page=${resultPage.current + 1}" />
 
 				<ul class="pagination">
 					<!-- Previous 5 page -->
