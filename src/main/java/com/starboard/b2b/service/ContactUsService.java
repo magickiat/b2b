@@ -13,4 +13,8 @@ public interface ContactUsService {
 	Page<ContactUsDTO> search(SearchContactUsForm form);
 
 	void save(CreateContactUsForm createForm);
+
+	void delete(long id);
+	
+	boolean existContact(long id);
 }

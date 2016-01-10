@@ -35,95 +35,137 @@
 
 
 		<div class="row bg_color">
-
-			<form:form name="searchForm"
-				servletRelativeAction="/backend/contactus/search"
-				modelAttribute="searchForm" cssClass="form-horizontal" method="GET">
-
-				<%-- for paging --%>
-				<form:hidden path="page" />
-
-
-				<div class="col-sm-12">
-					<div class="col-sm-1">Search:</div>
-					<div class="col-sm-5">
-						<input type="text" id="keyword" name="keyword"
-							class="form-control" />
-					</div>
-
-					<div class="col-sm-6">
-						<input type="button" class="btn btn-success" value="SEARCH" />
-					</div>
-				</div>
-
-			</form:form>
-		</div>
-
-
-		<!-- Base URL for pagination -->
-		<c:set var="baseUrl" value="/backend/contactus/search" />
-		<div class="row">
-			<%@include file="/WEB-INF/views/include/paging_submit.jspf"%>
-		</div>
-
-		<div class="row bg_color">
-
-			<c:set var="rowBegin"
-				value="${ (( resultPage.current - 1) * resultPage.pageSize) }"></c:set>
-
-
 			<div class="col-sm-12">
-				<c:choose>
-					<c:when test="${ not empty resultPage.result }">
+				<form:form name="searchForm"
+					servletRelativeAction="/backend/contactus/search"
+					modelAttribute="searchForm" cssClass="form form-horizontal"
+					method="GET">
 
-						<table class="table">
-							<thead>
-
-								<tr>
-									<th>No.</th>
-									<th>Title</th>
-									<th>Name</th>
-									<th>Email</th>
-									<th>Detail</th>
-									<th>Tel</th>
-									<th>&nbsp;</th>
-								</tr>
-							</thead>
-							<tbody>
+					<%-- for paging --%>
+					<form:hidden path="page" />
 
 
-								<c:forEach items="${ resultPage.result }" var="contact"
-									varStatus="rowNum">
+					<div class="col-sm-12">
+						<div class="col-sm-1">Search:</div>
+						<div class="col-sm-5">
+							<input type="text" id="keyword" name="keyword"
+								class="form-control" />
+						</div>
 
-									<tr>
-										<td>${ rowBegin + (rowNum.index + 1) }</td>
-										<td>${ contact.contactTitle }</td>
-										<td>${ contact.contactName }</td>
-										<td>${ contact.contactEmail }</td>
-										<td>${ contact.contactDetail }</td>
-										<td>${ contact.contactTel }</td>
-										<td>
-											<form></form>
-										</td>
+						<div class="col-sm-6">
+							<input type="button" class="btn btn-success" value="SEARCH" />
+						</div>
+					</div>
 
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-
-
-					</c:when>
-					<c:otherwise>
-						Not found contact us
-					</c:otherwise>
-				</c:choose>
-
-
+				</form:form>
 			</div>
 		</div>
 
+
+		<c:choose>
+			<c:when test="${ not empty resultPage.result }">
+
+
+				<!-- Base URL for pagination -->
+				<c:set var="baseUrl" value="/backend/contactus/search" />
+				<div class="row">
+					<%@include file="/WEB-INF/views/include/paging_submit.jspf"%>
+				</div>
+
+				<div class="row bg_color">
+
+					<c:set var="rowBegin"
+						value="${ (( resultPage.current - 1) * resultPage.pageSize) }"></c:set>
+
+
+					<table class="table table-hover">
+						<thead>
+
+							<tr>
+								<th>No.</th>
+								<th>Title</th>
+								<th>Name</th>
+								<th>Email</th>
+								<th>Detail</th>
+								<th>Tel</th>
+								<th>&nbsp;</th>
+							</tr>
+						</thead>
+						<tbody>
+
+
+							<c:forEach items="${ resultPage.result }" var="contact"
+								varStatus="rowNum">
+
+								<tr>
+									<td>${ rowBegin + (rowNum.index + 1) }</td>
+									<td>${ contact.contactTitle }</td>
+									<td>${ contact.contactName }</td>
+									<td>${ contact.contactEmail }</td>
+									<td>${ contact.contactDetail }</td>
+									<td>${ contact.contactTel }</td>
+									<td>
+										<form id="${ contact.contactId }"
+											action='<c:url value="/backend/contactus/delete" />'
+											method="post">
+											<input type="hidden" id="csrftoken_"
+												name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+											<input type="hidden" name="id" value="${ contact.contactId }" />
+											<input type="button" value="Delete"
+												onclick="return confirm(${ contact.contactId });">
+
+
+										</form>
+									</td>
+
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="rol">&nbsp;</div>
+				<div class="row bg_color">
+					<div class="col-sm-12">Not found contact us</div>
+				</div>
+			</c:otherwise>
+		</c:choose>
+
+
 	</div>
+
 	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
+
+	<script type="text/javascript">
+		function confirm(id) {
+			$('<div></div>').appendTo('body')
+			  .html('<div><h6>Do you want to delete contact?</h6></div>')
+			  .dialog({
+				dialogClass : 'style1',
+				modal : true,
+				title : 'message',
+				zIndex : 10000,
+				autoOpen : true,
+				width : 'auto',
+				resizable : false,
+				buttons : {
+					Yes : function() {
+						$('#' + id).submit();
+						$(this).dialog("close");
+					},
+					No : function() {
+						$(this).dialog("close");
+					}
+				},
+				close : function(event, ui) {
+					$(this).remove();
+				}
+			});
+		}
+	</script>
 </body>
 </html>

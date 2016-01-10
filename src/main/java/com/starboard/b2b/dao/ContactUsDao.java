@@ -9,4 +9,8 @@ public interface ContactUsDao {
 	SearchResult<Contactus> search(SearchRequest<SearchContactUsForm> req);
 
 	void save(Object contactUs);
+
+	Contactus findById(long id);
+
+	void delete(Contactus contactUs);
 }

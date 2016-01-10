@@ -28,6 +28,7 @@ public class ContactUsDaoImpl implements ContactUsDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public SearchResult<Contactus> search(SearchRequest<SearchContactUsForm> req) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Contactus.class);
@@ -65,6 +66,16 @@ public class ContactUsDaoImpl implements ContactUsDao {
 	@Override
 	public void save(Object contactUs) {
 		sessionFactory.getCurrentSession().save(contactUs);
+	}
+
+	@Override
+	public Contactus findById(long id) {
+		return (Contactus) sessionFactory.getCurrentSession().get(Contactus.class, id);
+	}
+
+	@Override
+	public void delete(Contactus contactUs) {
+		sessionFactory.getCurrentSession().delete(contactUs);
 	}
 
 }

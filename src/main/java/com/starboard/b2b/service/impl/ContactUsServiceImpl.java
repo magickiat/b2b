@@ -58,7 +58,7 @@ public class ContactUsServiceImpl implements ContactUsService {
 		page.setPageSize(req.getPageSize());
 		page.setTotal(searchResult.getTotal());
 
-		log.info("result size: " + (result == null? 0 : result.size()));
+		log.info("result size: " + (result == null ? 0 : result.size()));
 		return page;
 	}
 
@@ -75,6 +75,21 @@ public class ContactUsServiceImpl implements ContactUsService {
 		contactUs.setUserCreate(UserUtil.getCurrentUsername());
 
 		contactUsDao.save(contactUs);
+	}
+
+	@Override
+	@Transactional
+	public void delete(long id) {
+		Contactus contactUs = contactUsDao.findById(id);
+		if(contactUs != null && contactUs.getContactId() != null){
+			contactUsDao.delete(contactUs);
+		}
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public boolean existContact(long id) {
+		return contactUsDao.findById(id) != null;
 	}
 
 }

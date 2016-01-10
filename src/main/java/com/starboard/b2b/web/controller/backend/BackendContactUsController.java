@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dto.ContactUsDTO;
@@ -59,5 +60,11 @@ public class BackendContactUsController {
 		contactUsService.save(createForm);
 
 		return index(model);
+	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	String delete(@RequestParam("id") long id, Model model){
+		contactUsService.delete(id);
+		return search(new SearchContactUsForm(), model);
 	}
 }
