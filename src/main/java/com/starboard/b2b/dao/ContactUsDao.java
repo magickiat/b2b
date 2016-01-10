@@ -7,4 +7,6 @@ import com.starboard.b2b.web.form.SearchContactUsForm;
 
 public interface ContactUsDao {
 	SearchResult<Contactus> search(SearchRequest<SearchContactUsForm> req);
+
+	void save(Object contactUs);
 }

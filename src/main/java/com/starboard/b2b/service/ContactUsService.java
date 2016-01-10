@@ -2,6 +2,7 @@ package com.starboard.b2b.service;
 
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dto.ContactUsDTO;
+import com.starboard.b2b.web.form.CreateContactUsForm;
 import com.starboard.b2b.web.form.SearchContactUsForm;
 
 /**
@@ -10,4 +11,6 @@ import com.starboard.b2b.web.form.SearchContactUsForm;
 
 public interface ContactUsService {
 	Page<ContactUsDTO> search(SearchContactUsForm form);
+
+	void save(CreateContactUsForm createForm);
 }

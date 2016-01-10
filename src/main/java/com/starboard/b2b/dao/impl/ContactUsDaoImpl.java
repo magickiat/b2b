@@ -62,4 +62,9 @@ public class ContactUsDaoImpl implements ContactUsDao {
 		return result;
 	}
 
+	@Override
+	public void save(Object contactUs) {
+		sessionFactory.getCurrentSession().save(contactUs);
+	}
+
 }

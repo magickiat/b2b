@@ -22,7 +22,9 @@
 
 		<div class="row">
 			<div class="col-sm-12 text-right">
-				<input type="button" class="btn btn-default" value="ADD" />
+				<form action='<c:url value="/backend/contactus/add" />'>
+					<input type="submit" class="btn btn-default" value="ADD" />
+				</form>
 			</div>
 		</div>
 
@@ -35,7 +37,7 @@
 		<div class="row bg_color">
 
 			<form:form name="searchForm"
-				servletRelativeAction="/backend/customer/search"
+				servletRelativeAction="/backend/contactus/search"
 				modelAttribute="searchForm" cssClass="form-horizontal" method="GET">
 
 				<%-- for paging --%>
@@ -59,19 +61,57 @@
 
 
 		<!-- Base URL for pagination -->
-		<c:set var="baseUrl" value="/backend/customer" />
+		<c:set var="baseUrl" value="/backend/contactus/search" />
 		<div class="row">
 			<%@include file="/WEB-INF/views/include/paging_submit.jspf"%>
 		</div>
 
 		<div class="row bg_color">
+
+			<c:set var="rowBegin"
+				value="${ (( resultPage.current - 1) * resultPage.pageSize) }"></c:set>
+
+
 			<div class="col-sm-12">
 				<c:choose>
-					<c:when test="${ searchResult != null }">
-						<c:forEach items="${ searchResult }" var="contact"
-							varStatus="rowNum">
-					${ rowNum.index } <br />
-						</c:forEach>
+					<c:when test="${ not empty resultPage.result }">
+
+						<table class="table">
+							<thead>
+
+								<tr>
+									<th>No.</th>
+									<th>Title</th>
+									<th>Name</th>
+									<th>Email</th>
+									<th>Detail</th>
+									<th>Tel</th>
+									<th>&nbsp;</th>
+								</tr>
+							</thead>
+							<tbody>
+
+
+								<c:forEach items="${ resultPage.result }" var="contact"
+									varStatus="rowNum">
+
+									<tr>
+										<td>${ rowBegin + (rowNum.index + 1) }</td>
+										<td>${ contact.contactTitle }</td>
+										<td>${ contact.contactName }</td>
+										<td>${ contact.contactEmail }</td>
+										<td>${ contact.contactDetail }</td>
+										<td>${ contact.contactTel }</td>
+										<td>
+											<form></form>
+										</td>
+
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+
+
 					</c:when>
 					<c:otherwise>
 						Not found contact us
