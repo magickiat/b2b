@@ -19,8 +19,9 @@
 		<div class="row">
 			<div class="row">
 				<div class="col-md-12 bg_color">
+					<div class="row row-header2 header2 txtupper">search order</div>
 					<!-- Search section -->
-					<div>
+					<div style="">
 						<form:form id="searchForm" modelAttribute="searchOrderForm"
 							servletRelativeAction="/backend/order/search-action" method="get">
 							<form:hidden path="page" />

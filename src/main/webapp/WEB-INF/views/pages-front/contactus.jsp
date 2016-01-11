@@ -22,7 +22,7 @@
 						<div class="container" style="margin-top: 35px;">
 							
 							<!-- Timeline -->
-							<ul class="timeline" style="display: none;">
+							<ul class="timeline" style="">
 							
 								<li class="year top"><span class="txtupper">contact us</span></li>
 								
