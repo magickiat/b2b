@@ -25,15 +25,23 @@
 
 			<!-- Header -->
 			<div class="row bg_color">
-				<div class="col-sm-6">
-					<h1>${form.orderReport.orderCode}</h1>
+				<div class="col-sm-12">
+					<div class="row row-header2 header2 txtupper">view detail order</div>
 				</div>
-				<div class="col-sm-6 text-right">
-					<h1>${form.orderReport.orderStatus}</h1>
+				
+				<div class="">
+					<div class="col-sm-6 bg_color">
+						<h1>${form.orderReport.orderCode}</h1>
+					</div>
+					<div class="col-sm-6 text-right bg_color">
+						<h1>${form.orderReport.orderStatus}</h1>
+					</div>
 				</div>
+				
+				
 
 				<!-- Order info -->
-				<div class="col-sm-10">
+				<div class="col-sm-10 bg_color" style="margin-top: 10px;">
 					<table class="table">
 						<thead>
 							<tr>
@@ -67,9 +75,9 @@
 					</table>
 				</div>
 
-				<div class="col-sm-2 text-center">
-					<input type="button" id="btn-approve" class="btn btn-default" onclick="approve(${ ordDetail.orderDetailId })" value="Approve" />
-					<input type="button" id="btn-reject" class="btn btn-default" onclick="reject(${ ordDetail.orderDetailId })" value="Reject" />
+				<div class="col-sm-2 text-center bg_color" style="margin-top: 10px;">
+					<input type="button" id="btn-approve" class="btn btn-success" onclick="approve(${ ordDetail.orderDetailId })" value="Approve" />
+					<input type="button" id="btn-reject" class="btn btn-danger" onclick="reject(${ ordDetail.orderDetailId })" value="Reject" />
 				</div>
 				<!-- Order Address detail -->
 				<div class="col-sm-6">
