@@ -25,15 +25,21 @@
 
 			<!-- Header -->
 			<div class="row bg_color">
-				<div class="col-sm-6">
-					<h1>${form.orderReport.orderCode}</h1>
+				<div class="col-sm-12">
+					<div class="row row-header2 header2 txtupper">view detail order</div>
 				</div>
-				<div class="col-sm-6 text-right">
-					<h1>${form.orderReport.orderStatus}</h1>
+				
+				<div class="">
+					<div class="col-sm-6 bg_color">
+						<h1>${form.orderReport.orderCode}</h1>
+					</div>
+					<div class="col-sm-6 text-right bg_color">
+						<h1>${form.orderReport.orderStatus}</h1>
+					</div>
 				</div>
 
 				<!-- Order info -->
-				<div class="col-sm-10">
+				<div class="col-sm-12 bg_color" style="margin-top: 10px;">
 					<table class="table">
 						<thead>
 							<tr>
@@ -41,38 +47,34 @@
 								<td>Expected Shipping Date</td>
 								<td>Payment Term</td>
 								<td>Payment Method</td>
+								<th style="text-align: : right;">
+									<input type="button" id="btn-approve" class="btn btn-success" onclick="approve(${ ordDetail.orderDetailId })" value="Approve" />
+									<input type="button" id="btn-reject" class="btn btn-danger" onclick="reject(${ ordDetail.orderDetailId })" value="Reject" />
+								</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
 								<td>
-									<fmt:formatDate pattern="dd-MM-yyyy"
-										value="${form.orderReport.orderDate}" />
+									<fmt:formatDate pattern="dd-MM-yyyy" value="${form.orderReport.orderDate}" />
 								</td>
 								<td></td>
 								<td>
 									<form:select path="paymentTermId" cssClass="form-control">
-										<form:options items="${ form.paymentTermList }"
-											itemLabel="paymentTermName" itemValue="paymentTermId" />
+										<form:options items="${ form.paymentTermList }" itemLabel="paymentTermName" itemValue="paymentTermId" />
 									</form:select>
 								</td>
-								<td>
+								<td colspan="2">
 									<form:select path="paymentMethodId" cssClass="form-control">
-										<form:options items="${ form.paymentMethodList }"
-											itemLabel="paymentMethodName" itemValue="paymentMethodId" />
+										<form:options items="${ form.paymentMethodList }" itemLabel="paymentMethodName" itemValue="paymentMethodId" />
 									</form:select>
 								</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-
-				<div class="col-sm-2 text-center">
-					<input type="button" id="btn-approve" class="btn btn-default" onclick="approve(${ ordDetail.orderDetailId })" value="Approve" />
-					<input type="button" id="btn-reject" class="btn btn-default" onclick="reject(${ ordDetail.orderDetailId })" value="Reject" />
-				</div>
 				<!-- Order Address detail -->
-				<div class="col-sm-6">
+				<div class="col-sm-6 bg_color">
 					<div class="col-sm-12">Dispatch to:</div>
 					<div class="col-sm-12">
 						${form.orderReport.dispatchToAddress.orderAddr}</div>
@@ -80,29 +82,31 @@
 						${form.orderReport.dispatchToAddress.orderTel} Fax:
 						${form.orderReport.dispatchToAddress.fax}</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-sm-6 bg_color">
 					<div class="col-sm-12">Invoice to:</div>
+					<div class="col-sm-12">${form.orderReport.invoiceToAddress.orderAddr}</div>
 					<div class="col-sm-12">
-						${form.orderReport.invoiceToAddress.orderAddr}</div>
-					<div class="col-sm-12">Tel:
-						${form.orderReport.invoiceToAddress.orderTel} Fax:
-						${form.orderReport.invoiceToAddress.fax}</div>
+						Tel:
+						${form.orderReport.invoiceToAddress.orderTel} 
+						Fax:
+						${form.orderReport.invoiceToAddress.fax}
+					</div>
 
 				</div>
 				<!-- Order detail -->
 				<%@include file="order_detail.jspf"%>
 
 				<!-- Customer remark -->
-				<div class="col-sm-6">
-					<div class="row">Customer Remark</div>
-					<div class="row">
-						<textarea rows="5" cols="50">${ form.orderReport.remarkCustomer }</textarea>
+				<div class="col-sm-6 bg_color" style="padding-bottom: 10px;">
+					<div class="">Customer Remark</div>
+					<div class="">
+						<textarea class="form-control" rows="5" cols="50">${ form.orderReport.remarkCustomer }</textarea>
 					</div>
 				</div>
-				<div class="col-sm-6">
-					<div class="row">Shipping Type</div>
-					<div class="row">
-						<textarea rows="5" cols="50">${ form.orderReport.shippingType }</textarea>
+				<div class="col-sm-6 bg_color">
+					<div class="">Shipping Type</div>
+					<div class="" style="padding-bottom: 10px;">
+						<textarea class="form-control" rows="5" cols="50">${ form.orderReport.shippingType }</textarea>
 					</div>
 				</div>
 			</div>

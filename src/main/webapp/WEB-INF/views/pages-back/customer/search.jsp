@@ -12,19 +12,22 @@
 	<%@include file="/WEB-INF/views/include/common_cssbackend.jspf"%>
 </head>
 <body>
+
 	<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 	
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-10">
-				<h2>Customer</h2>
-			</div>
-			<div class="col-sm-2">
-				<form:form servletRelativeAction="/backend/customer/create"
-					method="get">
-					<input type="submit" value="Add Customer"
-						class="btn btn-default pull-right" />
-				</form:form>
+			<div class="col-md-12 bg_color">
+				<div class="col-sm-10">
+					<h2>Customer</h2>
+				</div>
+				<div class="col-sm-2">
+					<form:form servletRelativeAction="/backend/customer/create"
+						method="get">
+						<input type="submit" value="Add Customer"
+							class="btn btn-default pull-right" />
+					</form:form>
+				</div>
 			</div>
 		</div>
 

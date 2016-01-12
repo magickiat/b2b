@@ -13,6 +13,7 @@ import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ShippingTypeDTO;
 import com.starboard.b2b.dto.SoDTO;
 import com.starboard.b2b.dto.SoDetailDTO;
+import com.starboard.b2b.dto.UserDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
@@ -60,4 +61,6 @@ public interface OrderService {
 	SoDTO findSO(final long soId);
 
 	List<SoDetailDTO> findSoDetail(final long soId);
+	
+	UserDTO findUserByOrderCode(String orderCode);
 }
