@@ -1,5 +1,22 @@
 package com.starboard.b2b.service.impl;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.common.OrderConfig;
 import com.starboard.b2b.common.Page;
@@ -21,9 +38,10 @@ import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ShippingTypeDTO;
 import com.starboard.b2b.dto.SoDTO;
 import com.starboard.b2b.dto.SoDetailDTO;
-import com.starboard.b2b.dto.search.SearchRequest;
+import com.starboard.b2b.dto.UserDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
+import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.Addr;
 import com.starboard.b2b.model.OrdAddress;
@@ -39,23 +57,6 @@ import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 @Service("orderService")
 public class OrderServiceImpl implements OrderService {
@@ -393,5 +394,20 @@ public class OrderServiceImpl implements OrderService {
 	@Transactional(readOnly = true)
 	public List<PaymentTermDTO> findAllPaymentTerm() {
 		return paymentTermDao.list();
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public UserDTO findUserByOrderCode(String orderCode){
+		User user = orderDao.findUserByOrderCode(orderCode);
+		UserDTO userDTO = new UserDTO();
+		userDTO.setEmail(user.getEmail());
+		userDTO.setName(user.getName());
+//		try {
+//			BeanUtils.copyProperties(userDTO, user);
+//		} catch (IllegalAccessException | InvocationTargetException e) {
+//			log.error("Got problem while copying bean properties.. with error {}", e.getMessage(), e);
+//		}
+		return userDTO;
 	}
 }

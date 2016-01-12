@@ -7,5 +7,5 @@ import javax.mail.internet.AddressException;
 
 public interface EmailService {
 	void sendEmail(String from, String[] toAddresses, String[] ccAddresses, String[] bccAddresses, String subject, String content,
-			String[] attachments) throws AddressException, MessagingException, IOException;
+			String[] attachments, String type, String orderNum) throws AddressException, MessagingException, IOException;
 }
