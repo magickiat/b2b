@@ -61,6 +61,10 @@ public class User extends BaseModel implements UserDetails {
 
 	@Column(name = "credentials_non_expired", nullable = false)
 	private boolean credentialsNonExpired;
+	
+	@Column(name = "customer_cust_id", insertable = false, updatable = false)
+	private Long customerCustId;
+
 
 	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	private Set<Role> role = new HashSet<>();
@@ -182,6 +186,14 @@ public class User extends BaseModel implements UserDetails {
 
 	public void setLastActive(Date lastActive) {
 		this.lastActive = lastActive;
+	}
+	
+	public Long getCustomerCustId() {
+		return customerCustId;
+	}
+
+	public void setCustomerCustId(Long customerCustId) {
+		this.customerCustId = customerCustId;
 	}
 
 }

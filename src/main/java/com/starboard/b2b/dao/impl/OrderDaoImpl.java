@@ -9,9 +9,11 @@ import com.starboard.b2b.model.OrdAddress;
 import com.starboard.b2b.model.Orders;
 import com.starboard.b2b.model.So;
 import com.starboard.b2b.model.SoDetail;
+import com.starboard.b2b.model.User;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -234,5 +236,11 @@ public class OrderDaoImpl implements OrderDao {
 	public List<SoDetail> findSoDetailBySoId(long soId) {
 		return (List<SoDetail>) sessionFactory.getCurrentSession().createQuery("select sd from SoDetail sd where sd.soId = :soId")
 				.setLong("soId", soId).list();
+	}
+	
+	@Override
+	public User findUserByOrderCode(String orderCode) {
+		return (User) sessionFactory.getCurrentSession().createQuery("SELECT u FROM User u, Orders o WHERE u.customerCustId = o.custId AND o.orderCode = :orderCode")
+				.setString("orderCode", orderCode).list().get(0);
 	}
 }
