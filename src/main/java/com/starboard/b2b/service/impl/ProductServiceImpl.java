@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.common.Page;
+import com.starboard.b2b.dao.ProductBrandGroupDAO;
 import com.starboard.b2b.dao.ProductBuyerGroupDao;
 import com.starboard.b2b.dao.ProductCategoryDao;
 import com.starboard.b2b.dao.ProductDao;
@@ -36,8 +37,8 @@ import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.ProductTechnologyDTO;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.ProductYearDTO;
-import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
+import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.Product;
 import com.starboard.b2b.model.ProductBuyerGroup;
@@ -87,6 +88,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductPriceGroupDao productPriceGroupDao;
+
+	@Autowired
+	private ProductBrandGroupDAO productBrandGroupDAO;
 
 	@Override
 	@Transactional
@@ -431,8 +435,28 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional(readOnly = true)
 	public List<ProductTypeDTO> findAllProductType() {
 		List<ProductType> types = productTypeDao.findAll();
-		log.info("found " + (types == null? 0: types.size()));
+		log.info("found " + (types == null ? 0 : types.size()));
 		List<ProductTypeDTO> list = getProductTypeDTO(types);
 		return list;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<ProductTypeDTO> listProductBrandGroupForJson() {
+		ArrayList<ProductTypeDTO> result = new ArrayList<>();
+		List<ProductType> list = productTypeDao.listDistinctProductType();
+
+		if (list == null || list.isEmpty()) {
+			return result;
+		} else {
+			for (ProductType data : list) {
+				ProductTypeDTO dto = new ProductTypeDTO();
+				BeanUtils.copyProperties(data, dto);
+				result.add(dto);
+			}
+
+			return result;
+		}
+
 	}
 }

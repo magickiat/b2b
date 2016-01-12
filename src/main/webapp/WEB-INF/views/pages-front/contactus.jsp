@@ -13,6 +13,9 @@
 	<%@include file="/WEB-INF/views/pages-front/include/common_header.jspf"%>
 
 	<div class="container">
+		<div class="row row-header2 bg_color header2 txtupper">Contact
+			Us</div>
+		<div class="row">&nbsp;</div>
 		<div class="row showline2">
 			<div class="col-sm-12">
 				<c:choose>
@@ -26,18 +29,26 @@
 								</div>
 
 
-								<div class="col-sm-1"><strong>Name</strong></div>
+								<div class="col-sm-1">
+									<strong>Name</strong>
+								</div>
 								<div class="col-sm-11">${ contact.contactName }</div>
 
 
-								<div class="col-sm-1"><strong>Email</strong></div>
+								<div class="col-sm-1">
+									<strong>Email</strong>
+								</div>
 								<div class="col-sm-11">${ contact.contactEmail }</div>
 
 
-								<div class="col-sm-1"><strong>Detail</strong></div>
+								<div class="col-sm-1">
+									<strong>Detail</strong>
+								</div>
 								<div class="col-sm-11">${ contact.contactDetail }</div>
 
-								<div class="col-sm-1"><strong>Tel</strong></div>
+								<div class="col-sm-1">
+									<strong>Tel</strong>
+								</div>
 								<div class="col-sm-11">${ contact.contactTel }</div>
 
 

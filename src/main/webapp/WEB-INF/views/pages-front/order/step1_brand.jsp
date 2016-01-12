@@ -57,7 +57,7 @@
 												<c:when test="${brand.brandGroupId == 50}">
 													<img alt="drake"
 														src='<c:url value="/upload/brand/logo/drake.png" />'
-														id="severneicon">
+														id="drake">
 												</c:when>
 											</c:choose>
 										</a>

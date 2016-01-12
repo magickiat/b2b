@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.starboard.b2b.common.Page;
+import com.starboard.b2b.dto.ProductBrandGroupDTO;
 import com.starboard.b2b.dto.ProductBuyerGroupDTO;
 import com.starboard.b2b.dto.ProductCategoryDTO;
 import com.starboard.b2b.dto.ProductDTO;
@@ -20,6 +21,7 @@ import com.starboard.b2b.web.form.product.SearchProductForm;
 public interface ProductService {
 
 	List<ProductTypeDTO> findAllProductType();
+
 	// Query Brands by brandGroupId, if brandGroupId = 0 is query all
 	List<ProductTypeDTO> findProductTypeByBrandId(Long brandGroupId);
 
@@ -62,4 +64,6 @@ public interface ProductService {
 	List<ProductTypeDTO> getProductTypes(Long customerId, Long brandGroupId);
 
 	List<ProductPriceGroupDTO> listProductPriceGroup();
+	
+	List<ProductTypeDTO> listProductBrandGroupForJson();
 }

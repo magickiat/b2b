@@ -13,5 +13,5 @@ public interface BrandDao {
 
 	void addSelectedBrand(BrandForm form, List<Integer> selectedBrand);
 
-        public Brand getBrand(long brandId);
+	public Brand getBrand(long brandId);
 }
