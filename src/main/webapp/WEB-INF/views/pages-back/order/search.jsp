@@ -9,14 +9,14 @@
 <html>
 <head>
 	<%@include file="/WEB-INF/views/include/common_meta.jspf" %>
-	<title>Starboard Windsurfing</title>
+	<title>Order - Starboard Windsurfing</title>
 	<%@include file="/WEB-INF/views/include/common_cssbackend.jspf"%>
 </head>
 <body>
 	<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 
 	<div class="container">
-		<div class="row">
+		<div class="">
 			<div class="row">
 				<div class="col-md-12 bg_color">
 					<div class="row row-header2 header2 txtupper">search order</div>

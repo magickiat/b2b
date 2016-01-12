@@ -7,61 +7,69 @@
 <html>
 <head>
 	<%@include file="/WEB-INF/views/include/common_meta.jspf" %>
-	<title>Create Customer</title>
+	<title>Create Account - Starboard Windsurfing</title>
 	<%@include file="/WEB-INF/views/include/common_cssbackend.jspf"%>
 </head>
 <body>
 	<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 	<div class="container">
 		<div class="row">
-			<form:form servletRelativeAction="/backend/customer/createuser"
-				class="form-horizontal" modelAttribute="registerForm" method="post">
-
-				<form:errors path="*" cssClass="alert alert-danger" element="div" />
-
-				<form:hidden path="cusId" />
-				<form:hidden path="roles" value="ROLE_USER" />
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="name">Name:</label>
-					<div class="col-sm-4">
-						<form:input path="name" class="form-control"
-							placeholder="Enter Name" />
+			
+			<div class="col-sm-12 bg_color">
+				<div class="row row-header2 header2 txtupper">Create Account</div>
+				
+				<form:form servletRelativeAction="/backend/customer/createuser"
+					class="form-horizontal" modelAttribute="registerForm" method="post">
+	
+					<form:errors path="*" cssClass="alert alert-danger" element="div" />
+	
+					<form:hidden path="cusId" />
+					<form:hidden path="roles" value="ROLE_USER" />
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">Name:</label>
+						<div class="col-sm-4">
+							<form:input path="name" class="form-control"
+								placeholder="Enter Name" />
+						</div>
+						<label class="control-label col-sm-2" for="username">Username:</label>
+						<div class="col-sm-4">
+							<form:input path="username" class="form-control"
+								placeholder="Enter Username" />
+						</div>
 					</div>
-					<label class="control-label col-sm-2" for="username">Username:</label>
-					<div class="col-sm-4">
-						<form:input path="username" class="form-control"
-							placeholder="Enter Username" />
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="password">Password:</label>
+						<div class="col-sm-4">
+							<form:password class="form-control" path="password" id="password"
+								placeholder="Enter password" />
+						</div>
+						<label class="control-label col-sm-2" for="confirmPassword">Confirm
+							Password:</label>
+						<div class="col-sm-4">
+							<form:password class="form-control" path="confirmPassword"
+								id="confirmPassword" placeholder="Enter password" />
+						</div>
+	
 					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="password">Password:</label>
-					<div class="col-sm-4">
-						<form:password class="form-control" path="password" id="password"
-							placeholder="Enter password" />
+	
+					<div class="form-group">
+						<label class="control-label col-sm-2"> Contact Email:</label>
+						<div class="col-sm-10">
+							<form:input class="form-control" path="email"
+								placeholder="Enter Email" />
+						</div>
 					</div>
-					<label class="control-label col-sm-2" for="confirmPassword">Confirm
-						Password:</label>
-					<div class="col-sm-4">
-						<form:password class="form-control" path="confirmPassword"
-							id="confirmPassword" placeholder="Enter password" />
+	
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" class="btn btn-default">Submit</button>
+						</div>
 					</div>
-
-				</div>
-
-				<div class="form-group">
-					<label class="control-label col-sm-2"> Contact Email:</label>
-					<div class="col-sm-10">
-						<form:input class="form-control" path="email"
-							placeholder="Enter Email" />
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-						<button type="submit" class="btn btn-default">Submit</button>
-					</div>
-				</div>
-			</form:form>
+				</form:form>
+				
+			</div>
+			
+			
 		</div>
 	</div>
 
