@@ -6,7 +6,8 @@
 
 <div class="col-sm-12">&nbsp;</div>
 
-<div class="col-sm-12" style="border: 1;">
+<div class="col-sm-12 bg_color" style="border: 1;">
+	<div class="col-sm-12">&nbsp;</div>
 	<%-- Loop All Tech --%>
 	<form:form servletRelativeAction="/backend/customer/save_address" class="form-horizontal" modelAttribute="addressForm" method="post">
 		<div class="row">
@@ -22,14 +23,14 @@
 				Address
 			</div>
 			<div class="col-sm-4">
-				<textarea name="address" id="address" rows="4" cols="50">${addr.address }</textarea>
+				<textarea name="address" id="address" rows="4" cols="50" class="form-control">${addr.address }</textarea>
 			</div>
 			<div class="col-sm-1">
 				Country
 			</div>
 			<div class="col-sm-3">
 				<%-- <form:select path="regionCountryId" items="${ country }" itemLabel="countryName" itemValue="countryCode"></form:select> --%>
-				<select id="regionCountryId" name="regionCountryId">
+				<select id="regionCountryId" name="regionCountryId" class="form-control">
 					<c:forEach items="${country }" var="country">
 						<c:choose>
 							<c:when test="${country.countryCode eq addr.regionCountryId}" >
@@ -51,7 +52,7 @@
 				Telephone
 			</div>
 			<div class="col-sm-2">
-				<form:input path="tel1" value="${addr.tel1 }"/>
+				<form:input path="tel1" value="${addr.tel1 }" class="form-control"/>
 				<%-- <input type="text" id="tell" value="${addr.tel1 }"> --%>
 			</div>
 		</div>
@@ -60,14 +61,14 @@
 				PostCode
 			</div>
 			<div class="col-sm-3">
-				<form:input path="postCode" value="${addr.postCode }"/>
+				<form:input path="postCode" value="${addr.postCode }" class="form-control"/>
 				<%-- <input type="text" id="postCode" value="${addr.postCode }"> --%>
 			</div>
 			<div class="col-sm-1">
 				Fax
 			</div>
 			<div class="col-sm-2">
-				<form:input path="fax" value="${addr.fax }"/>
+				<form:input path="fax" value="${addr.fax }" class="form-control"/>
 				<%-- <input type="text" id="fax" value="${addr.fax }"> --%>
 			</div>
 		</div>
@@ -76,14 +77,14 @@
 				Email
 			</div>
 			<div class="col-sm-3">
-				<form:input path="email" value="${addr.email }"/>
+				<form:input path="email" value="${addr.email }" class="form-control"/>
 				<%-- <input type="text" id="email" value="${addr.email }"> --%>
 			</div>
 			<div class="col-sm-1">
 				Address Type
 			</div>
 			<div class="col-sm-2">
-				<select id="type" name="type">
+				<select id="type" name="type" class="form-control">
 					<c:forEach items="${ addressTypes }" var="addressType">
 						<c:choose>
 							<c:when test="${addressType.key eq addr.type}" >
@@ -98,11 +99,12 @@
 			</div>
 		</div>
 		<div class="formgroup">
-			<div class="col-sm-12" align="center">
-				<input type="submit" value="save"/>
-				<input type="reset" value="cancel"/>
+			<div class="col-sm-12">
+				<input type="submit" value="save" class="btn btn-default pull-right"/>
+				<input type="reset" value="cancel" class="btn btn-default pull-right" style="margin-right: 5px;"/>
 			</div>
 		</div>
+		
 	</form:form>
 </div>
 

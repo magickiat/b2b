@@ -8,7 +8,7 @@
 <html>
 <head>
 	<%@include file="/WEB-INF/views/include/common_meta.jspf" %>
-	<title>Customer</title>
+	<title>Customer - Starboard Windsurfing</title>
 	<%@include file="/WEB-INF/views/include/common_cssbackend.jspf"%>
 </head>
 <body>
@@ -16,18 +16,19 @@
 	<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 	
 	<div class="container">
+	
 		<div class="row">
 			<div class="col-md-12 bg_color">
-				<div class="col-sm-10">
-					<h2>Customer</h2>
-				</div>
-				<div class="col-sm-2">
+				<div class="row col-md-6 row-header2 header2 txtupper">Search Customer</div>
+				<div class="" style="margin-top:10px;">
 					<form:form servletRelativeAction="/backend/customer/create"
 						method="get">
 						<input type="submit" value="Add Customer"
-							class="btn btn-default pull-right" />
+							class="btn btn-primary pull-right"
+							style="width: 100px; " />
 					</form:form>
 				</div>
+				
 			</div>
 		</div>
 
@@ -42,8 +43,8 @@
 
 				<%-- for paging --%>
 				<form:hidden path="page" />
-
-				<div class="col-sm-5">
+				
+				<div class="col-md-3">
 					<div class="form-group">
 						<label class="col-sm-3 control-label">SEARCH:</label>
 						<div class="col-sm-9">
@@ -51,9 +52,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-2">
-
-					<div class="form-group">
+				
+				<div class="col-md-3">
+					<div class="">
 						<form:select path="selectedBrand" cssClass="form-control"
 							multiple="false">
 							<form:option value="" label="ALL BRAND GROUP" />
@@ -61,12 +62,10 @@
 								itemLabel="productTypeName" itemValue="productTypeId" />
 						</form:select>
 					</div>
-
 				</div>
 
-
-				<div class="col-sm-2">
-					<div class="form-group">
+				<div class="col-md-3">
+					<div class="">
 						<form:select path="selectedCountry" cssClass="form-control"
 							multiple="false">
 							<form:option value="" label="ALL COUNTRY" />
@@ -77,10 +76,11 @@
 				</div>
 
 				<div class="col-md-3">
-					<button class="btn btn-success" onclick="submitForm()"
+					<button class="btn btn-success pull-right" onclick="submitForm()"
 						style="width: 100px;">Search</button>
-					<button class="btn btn-default" onclick="exportExcel()"
-						style="width: 100px;">Excel</button>
+						
+					<button class="btn btn-default pull-right" onclick="exportExcel()"
+						style="width: 100px; margin-right: 10px;">Excel</button>
 				</div>
 			</form:form>
 
@@ -94,7 +94,7 @@
 			<%@include file="/WEB-INF/views/include/paging_submit.jspf"%>
 		</div>
 
-		<div class="row showline2">
+		<div class="row bg_color showline2">
 			<div class="col-sm-12">
 				<table class="table table-hover" id="list_customer">
 					<thead>
