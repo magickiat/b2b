@@ -56,10 +56,7 @@ public class FrontDownloadController {
 
 		log.info("product: " + filename);
 		log.info("zip size: " + zipImage);
-		if(zipImage.length == 0){
-			return "/pages-front/download/not_found";
-		}
-
+		
 		response.setContentType("application/octet-stream");
 		response.setHeader("Content-Disposition", String.format("attachment; filename=%s.zip", filename));
 		try (OutputStream output = response.getOutputStream()) {

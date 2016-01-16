@@ -66,7 +66,11 @@ public class FileServiceImpl implements FileService {
 		Set<String> files = new HashSet<>();
 		List<Product> productCodeList = productDao.findByBrandGroupId(productBrandGroup);
 		if (productCodeList == null || productCodeList.isEmpty()) {
-			return new byte[0];
+			File emptyFolder = new File(tempFolder, productTypeName);
+			if (!emptyFolder.exists() || !emptyFolder.isDirectory()) {
+				emptyFolder.mkdirs();
+			}
+			files.add(emptyFolder.getAbsolutePath());
 		} else {
 			for (Product product : productCodeList) {
 				String filename = String.format("%s%s%s", rootPath.get(B2BFileType.PRODUCT_IMAGE), product.getProductCode(), defaultImageFileType);
