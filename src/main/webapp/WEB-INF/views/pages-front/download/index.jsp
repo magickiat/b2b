@@ -65,7 +65,7 @@
 				function(data) {
 					var result = '<ul>';
 					$.each(data, function(key, value) {
-						result += '<li><a href="<c:url value="/frontend/download/image/' +value.productTypeId+'" />">' + value.productTypeName + '</a></li>';
+						result += '<li><a href="<c:url value="/frontend/download/product-image/' +value.productTypeId+'" />">' + value.productTypeName + '</a></li>';
 					});
 					result += '</ul>';
 					setDialogBody(result);

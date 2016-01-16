@@ -13,12 +13,14 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.starboard.b2b.common.WithnoseConstant;
+import com.starboard.b2b.config.SecurityConfig;
 import com.starboard.b2b.config.WebConfig;
 import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.ProductTypeDTO;
@@ -26,7 +28,7 @@ import com.starboard.b2b.service.ProductService;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = WebConfig.class, loader = AnnotationConfigWebContextLoader.class)
+@ContextConfiguration(classes = {SecurityConfig.class, WebConfig.class}, loader = AnnotationConfigWebContextLoader.class)
 public class ProductServiceImplTest {
 
 	private static final Logger log = LoggerFactory.getLogger(ProductServiceImplTest.class);
@@ -36,8 +38,7 @@ public class ProductServiceImplTest {
 
 	@Test
 	public void testFindProductModelStringString() {
-		List<ProductSearchResult> noWithnoseProducts = productService.findProductModel("ALLSTAR",
-				WithnoseConstant.NO_WITHNOSE_PROTECTION);
+		List<ProductSearchResult> noWithnoseProducts = productService.findProductModel("ALLSTAR", WithnoseConstant.NO_WITHNOSE_PROTECTION);
 		assertTrue(!noWithnoseProducts.isEmpty());
 		assertTrue(noWithnoseProducts.size() == 15);
 
@@ -46,8 +47,7 @@ public class ProductServiceImplTest {
 		assertNotNull(productBuyerGroupId);
 		assertFalse("WB".equals(productBuyerGroupId));
 
-		List<ProductSearchResult> withnoseProducts = productService.findProductModel("ALLSTAR",
-				WithnoseConstant.WITHNOSE_PROTECTION);
+		List<ProductSearchResult> withnoseProducts = productService.findProductModel("ALLSTAR", WithnoseConstant.WITHNOSE_PROTECTION);
 		assertTrue(withnoseProducts.isEmpty());
 	}
 
@@ -55,22 +55,18 @@ public class ProductServiceImplTest {
 	public void testGroupProductByTechnology() {
 		final int expectedProductFound = 18;
 
-		List<ProductSearchResult> noWithnoseProducts = productService.findProductModel("20861500",
-				WithnoseConstant.NO_WITHNOSE_PROTECTION);
+		List<ProductSearchResult> noWithnoseProducts = productService.findProductModel("20861500", WithnoseConstant.NO_WITHNOSE_PROTECTION);
 		assertTrue(!noWithnoseProducts.isEmpty());
 		assertTrue(noWithnoseProducts.size() == expectedProductFound);
 
-		HashMap<String, List<ProductSearchResult>> byTechnology = productService
-				.groupProductByTechnology(noWithnoseProducts);
+		HashMap<String, List<ProductSearchResult>> byTechnology = productService.groupProductByTechnology(noWithnoseProducts);
 
 		assertEquals(4, byTechnology.size());
 		assertTrue(byTechnology.containsKey("2PCSADJ"));
 		assertTrue(byTechnology.containsKey("3PCSADJ"));
 		assertTrue(byTechnology.containsKey("OVAL"));
 		assertTrue(byTechnology.containsKey("ROUND"));
-		
-		
-		
+
 		Set<Entry<String, List<ProductSearchResult>>> entrySet = byTechnology.entrySet();
 
 		int found = 0;
@@ -88,14 +84,19 @@ public class ProductServiceImplTest {
 		assertTrue(productLength.containsKey("XL"));
 
 	}
-        
-        @Test
-        public void testGetProductTypes() {
-            final long customerId = 1001L;
-            final long brandGroupId = 10L;
-            List<ProductTypeDTO> types = productService.getProductTypes(customerId, brandGroupId);
-            for(ProductTypeDTO type : types) {
-                System.out.println(type.getProductTypeName());
-            }
-        }
+
+	@Test
+	public void testGetProductTypes() {
+		final long customerId = 1001L;
+		final long brandGroupId = 10L;
+		List<ProductTypeDTO> types = productService.getProductTypes(customerId, brandGroupId);
+		for (ProductTypeDTO type : types) {
+			System.out.println(type.getProductTypeName());
+		}
+	}
+	
+	@Test
+	public void testDownloadProductImage(){
+		
+	}
 }
