@@ -1,11 +1,9 @@
 package com.starboard.b2b.dao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -16,10 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.dao.ProductDao;
 import com.starboard.b2b.dto.ProductSearchResult;
-import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
+import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchResult;
-import com.starboard.b2b.model.Brand;
 import com.starboard.b2b.model.Product;
 import com.starboard.b2b.web.form.product.SearchProductForm;
 
@@ -38,15 +35,6 @@ public class ProductDaoImpl implements ProductDao {
 		return sf.getCurrentSession().createCriteria(Product.class).list();
 	}
 
-	@Override
-	@SuppressWarnings("unchecked")
-	@Transactional(readOnly = true)
-	public List<Product> list(Integer brandId) {
-		Session session = sf.getCurrentSession();
-		Brand brand = (Brand) session.get(Brand.class, brandId);
-		return session.createCriteria(Product.class).add(Restrictions.eq("brand", brand)).list();
-	}
-
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	@Transactional(readOnly = true)
@@ -58,9 +46,7 @@ public class ProductDaoImpl implements ProductDao {
 		if ("image".equals(req.getCondition().getShowType())) {
 			sbTotal.append(" select count(distinct p.productModelId) ");
 		} else {
-			sbTotal.append(" select count(p.productId)  "); // when group by
-															// must count group,
-															// not first record
+			sbTotal.append(" select count(p.productId)  ");
 		}
 
 		// common query
@@ -209,6 +195,7 @@ public class ProductDaoImpl implements ProductDao {
 		return (Product) sf.getCurrentSession().get(Product.class, productId);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Product findByProductCode(String productCode) {
 		List<Product> result = sf.getCurrentSession().createCriteria(Product.class).add(Restrictions.eq("productCode", productCode)).list();
@@ -218,6 +205,7 @@ public class ProductDaoImpl implements ProductDao {
 		return result.get(0);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> findByBrandGroupId(long brandGroupId) {
 		String queryString = " from Product p";

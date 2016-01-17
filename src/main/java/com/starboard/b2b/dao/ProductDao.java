@@ -13,8 +13,6 @@ public interface ProductDao {
 
     List<Product> list();
 
-    List<Product> list(Integer brandId);
-
     SearchResult<SearchProductModelDTO> search(SearchRequest<SearchProductForm> req);
 
     List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection);

@@ -14,14 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.dao.AddrDao;
-import com.starboard.b2b.dao.BrandDao;
 import com.starboard.b2b.dao.ContactDao;
 import com.starboard.b2b.dao.CountryDao;
 import com.starboard.b2b.dao.CustBrandGroupDAO;
 import com.starboard.b2b.dao.CustDao;
 import com.starboard.b2b.dao.CustomerDao;
 import com.starboard.b2b.dao.MobileTypeDao;
-import com.starboard.b2b.dao.ProductBrandGroupDAO;
 import com.starboard.b2b.dao.ProductTypeDao;
 import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.ContactDTO;
@@ -57,26 +55,20 @@ public class CustomerServiceImpl implements CustomerService {
 	private CustDao custDao;
 
 	@Autowired
-	private BrandDao brandDao;
-	
-	@Autowired
 	private CountryDao countryDao;
-	
+
 	@Autowired
 	private AddrDao addrDao;
-	
+
 	@Autowired
 	private ContactDao contactDao;
-	
+
 	@Autowired
 	private CustBrandGroupDAO custBrandGroupDAO;
-	
+
 	@Autowired
-	private ProductBrandGroupDAO productBrandGroupDAO;
-	
-	@Autowired
-    private ProductTypeDao productTypeDao;
-	
+	private ProductTypeDao productTypeDao;
+
 	@Autowired
 	private MobileTypeDao mobileTypeDao;
 
@@ -84,10 +76,10 @@ public class CustomerServiceImpl implements CustomerService {
 	public CustDTO findById(Long id) {
 		Cust customer = customerDao.findById(id);
 		CustDTO cust = new CustDTO();
-		if(customer != null){
+		if (customer != null) {
 			BeanUtils.copyProperties(cust, customer);
 		}
-		
+
 		return cust;
 	}
 
@@ -95,10 +87,10 @@ public class CustomerServiceImpl implements CustomerService {
 	public CustDTO findByName(String name) {
 		Cust customer = customerDao.findByName(name);
 		CustDTO cust = new CustDTO();
-		if(customer != null){
+		if (customer != null) {
 			BeanUtils.copyProperties(cust, customer);
 		}
-		
+
 		return cust;
 	}
 
@@ -134,21 +126,20 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional
 	public void addBrand(BrandForm form) {
-		brandDao.addSelectedBrand(form, form.getSelectedBrand());
+		custBrandGroupDAO.addSelectedBrand(form, form.getSelectedBrand());
 	}
-
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<ProductType> getProductType() {
-		List<ProductType> listProduct =  productTypeDao.findAll();
+		List<ProductType> listProduct = productTypeDao.findAll();
 		return listProduct;
 	}
-	
+
 	@Override
 	@Transactional(readOnly = true)
 	public List<CustBrandGroupDTO> getCustBrandGroupById(Long custId) {
-		List<CustBrandGroupDTO>  listCustBrandGroup =  custBrandGroupDAO.findProductType(custId);
+		List<CustBrandGroupDTO> listCustBrandGroup = custBrandGroupDAO.findProductType(custId);
 		return listCustBrandGroup;
 	}
 
@@ -180,7 +171,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional(readOnly = true)
 	public Page<CustDTO> listCust(SearchCustomerForm form) {
-		
+
 		// ----- set request ------
 		SearchRequest<SearchCustomerForm> req = new SearchRequest<>(form.getPage(), applicationConfig.getPageSize());
 		req.setCondition(form);
@@ -191,19 +182,19 @@ public class CustomerServiceImpl implements CustomerService {
 			BeanUtils.copyProperties(cust, dto);
 			result.add(dto);
 		}
-		
+
 		// ----- set address -----
 		for (CustDTO cust : result) {
 			cust.setAddressList(findAddressByCustomerId(cust.getCustId()));
 		}
-		
+
 		// ----- prepare result page -----
 		Page<CustDTO> page = new Page<>();
 		page.setCurrent(req.getPage());
 		page.setResult(result);
 		page.setPageSize(req.getPageSize());
 		page.setTotal(searchResult.getTotal());
-		
+
 		return page;
 	}
 
@@ -233,18 +224,19 @@ public class CustomerServiceImpl implements CustomerService {
 	public List<CountryDTO> listCountry() {
 		return countryDao.findAll();
 	}
-	
+
 	@Override
 	@Transactional
-	public void saveAddress(Long addId,Long custId,String address,String regionCountryId,String tel1,String postCode,String fax,String email,String type) {
-		if(addId==null || addId==0){
+	public void saveAddress(Long addId, Long custId, String address, String regionCountryId, String tel1, String postCode, String fax, String email,
+			String type) {
+		if (addId == null || addId == 0) {
 			addId = addrDao.maxId();
-			if(addId == null){
+			if (addId == null) {
 				addId = 0L;
 			}
-			addId = addId+1;
+			addId = addId + 1;
 			addrDao.save(createAddress(addId, custId, address, regionCountryId, tel1, postCode, fax, email, type));
-		}else{
+		} else {
 			Addr addr = addrDao.findById(addId);
 			addr.setCustId(custId);
 			addr.setAddress(address);
@@ -255,10 +247,11 @@ public class CustomerServiceImpl implements CustomerService {
 			addr.setEmail(email);
 			addr.setType(type);
 		}
-		
+
 	}
-	
-	public Addr createAddress(Long addrId,Long custId,String address,String regionCountryId,String tel1,String postCode,String fax,String email,String type) {
+
+	public Addr createAddress(Long addrId, Long custId, String address, String regionCountryId, String tel1, String postCode, String fax,
+			String email, String type) {
 		Addr addr = new Addr();
 		addr.setAddrId(addrId);
 		addr.setCustId(custId);
@@ -271,7 +264,7 @@ public class CustomerServiceImpl implements CustomerService {
 		addr.setType(type);
 		return addr;
 	}
-	
+
 	@Override
 	@Transactional(readOnly = true)
 	public List<ContactDTO> findContactByCustomerId(Long custId) {
@@ -281,15 +274,16 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional
 	public void saveContact(Long contactId, Long custId, String nameEn, String nameNick, String position, Date birthDate, String address, String tel,
-			String email,String mobile, String mobileId, String fax, String skype, String facebook, String twitter) {
-		if(contactId==null || contactId==0){
-			//contactId = contactDao.maxId();
-			/*if(contactId == null){
-				contactId = 0L;
-			}*/
-			//contactId = contactId+1;
-			contactDao.save(createContact(contactId, custId, nameEn, nameNick, position, birthDate, address, tel, email, mobile, mobileId, fax, skype, facebook, twitter));
-		}else{
+			String email, String mobile, String mobileId, String fax, String skype, String facebook, String twitter) {
+		if (contactId == null || contactId == 0) {
+			// contactId = contactDao.maxId();
+			/*
+			 * if(contactId == null){ contactId = 0L; }
+			 */
+			// contactId = contactId+1;
+			contactDao.save(createContact(contactId, custId, nameEn, nameNick, position, birthDate, address, tel, email, mobile, mobileId, fax, skype,
+					facebook, twitter));
+		} else {
 			Contact contact = contactDao.findById(contactId);
 			contact.setContactId(contactId);
 			contact.setCustId(custId);
@@ -308,10 +302,11 @@ public class CustomerServiceImpl implements CustomerService {
 			contact.setFacebook(facebook);
 			contact.setTwitter(twitter);
 		}
-		
+
 	}
-	public Contact createContact(Long contactId, Long custId, String nameEn, String nameNick, String position, Date birthDate, String address, String tel,
-			String email,String mobile, String mobileId, String fax, String skype, String facebook, String twitter) {
+
+	public Contact createContact(Long contactId, Long custId, String nameEn, String nameNick, String position, Date birthDate, String address,
+			String tel, String email, String mobile, String mobileId, String fax, String skype, String facebook, String twitter) {
 		Contact contact = new Contact();
 		contact.setContactId(contactId);
 		contact.setCustId(custId);
