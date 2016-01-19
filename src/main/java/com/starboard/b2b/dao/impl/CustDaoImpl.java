@@ -7,6 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -54,6 +55,11 @@ public class CustDaoImpl implements CustDao {
 			criteriaTotal.add(rtCustCode);
 		}
 
+		// ----- Distinct cust_id -----
+		Projection distinct = Projections.distinct(Projections.projectionList().add(Projections.property("custId"), "custId"));
+		criteria.setProjection(distinct);
+		criteriaTotal.setProjection(distinct);
+		
 		// ----- Find records -----
 		List list = criteria.setFirstResult(req.getFirstResult()).setMaxResults(req.getPageSize()).list();
 		
