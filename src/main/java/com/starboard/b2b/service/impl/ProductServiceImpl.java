@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.common.Page;
-import com.starboard.b2b.dao.ProductBrandGroupDAO;
 import com.starboard.b2b.dao.ProductBuyerGroupDao;
 import com.starboard.b2b.dao.ProductCategoryDao;
 import com.starboard.b2b.dao.ProductDao;
@@ -88,9 +87,6 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductPriceGroupDao productPriceGroupDao;
-
-	@Autowired
-	private ProductBrandGroupDAO productBrandGroupDAO;
 
 	@Override
 	@Transactional
