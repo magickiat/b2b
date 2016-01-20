@@ -24,7 +24,7 @@ SELECT `product_model`.`product_model_id`,
     `product_model`.`image`,
     `product_model`.`header_text1`,
     `product_model`.`header_text2`
-FROM `stb`.`product_model`
+FROM `cube`.`product_model`
 
 where `product_model`.`product_model_id` is not null or `product_model`.`product_model_id` <> ''
 ;

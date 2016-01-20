@@ -20,4 +20,4 @@ SELECT `product_buyer_group`.`product_buyer_group_id`,
     `product_buyer_group`.`user_update`,
     `product_buyer_group`.`time_create`,
     `product_buyer_group`.`time_update`
-FROM `stb`.`product_buyer_group`;
+FROM `cube`.`product_buyer_group`;
