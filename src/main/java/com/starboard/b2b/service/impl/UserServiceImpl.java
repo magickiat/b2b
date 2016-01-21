@@ -14,11 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.starboard.b2b.common.Pagination;
+import com.starboard.b2b.dao.CustDao;
 import com.starboard.b2b.dao.UserDao;
 import com.starboard.b2b.model.Cust;
 import com.starboard.b2b.model.Role;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.security.MD5;
+import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.UserService;
 import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.UserUtil;
@@ -32,9 +34,13 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private CustDao custDao;
 
 	@Autowired
 	private PasswordEncoder encoder;
+	
 
 	@Transactional(readOnly = true)
 	public User findUserById(String id) {
@@ -57,6 +63,7 @@ public class UserServiceImpl implements UserService {
 		user.setName(form.getName());
 		user.setUsername(form.getUsername());
 		user.setPassword(encoder.encode(form.getPassword()));
+		user.setEmail(form.getEmail());
 		user.setEnabled(true);
 		user.setAccountNonExpired(true);
 		user.setAccountNonLocked(true);
@@ -71,8 +78,8 @@ public class UserServiceImpl implements UserService {
 		user.setRole(roles);
 
 		if (form.getCusId() != null) {
-			Cust customer = new Cust();
-			customer.setCustId(form.getCusId());
+			Cust customer = custDao.findById(form.getCusId());
+			log.info("customer id = " + form.getCusId());
 			user.setCustomer(customer);
 		}
 		userDao.add(user);

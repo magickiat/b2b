@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,34 +39,32 @@ public class CustDaoImpl implements CustDao {
 	public SearchCustResult listCust(SearchRequest<SearchCustomerForm> req) {
 		log.info("search request: " + req);
 
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Cust.class);
-		Criteria criteriaTotal = sessionFactory.getCurrentSession().createCriteria(Cust.class);
-
+		String queryString = "select distinct c from Cust c ";
+		String queryStringTotal = "select count(distinct c.custCode) from Cust c ";
 		// ----- Set criteria
-		Criterion rtCustCode = null;
+		String where = "";
 		if (req != null && req.getCondition() != null) {
 			if (StringUtils.isNotEmpty(req.getCondition().getKeyword())) {
-				rtCustCode = Restrictions.or(Restrictions.like("custCode", req.getCondition().getKeyword(), MatchMode.ANYWHERE),
-						Restrictions.like("nameEn", req.getCondition().getKeyword(), MatchMode.ANYWHERE));
+				where = " where c.custCode like :keyword or c.nameEn like :keyword ";
 			}
 		}
+		
+		queryString += where;
+		queryStringTotal += where;
 
-		if (rtCustCode != null) {
-			criteria.add(rtCustCode);
-			criteriaTotal.add(rtCustCode);
+		queryString += " group by c.custCode ";
+		
+		Query query = sessionFactory.getCurrentSession().createQuery(queryString);
+		Query queryTotal = sessionFactory.getCurrentSession().createQuery(queryStringTotal);
+		
+		if(StringUtils.isNotEmpty(where)){
+			query.setString("keyword", "%" + req.getCondition().getKeyword() + "%");
+			queryTotal.setString("keyword", "%" + req.getCondition().getKeyword() + "%");
 		}
-
-		// ----- Distinct cust_id -----
-		Projection distinct = Projections.distinct(Projections.projectionList().add(Projections.property("custId"), "custId"));
-		criteria.setProjection(distinct);
-		criteriaTotal.setProjection(distinct);
-		
-		// ----- Find records -----
-		List list = criteria.setFirstResult(req.getFirstResult()).setMaxResults(req.getPageSize()).list();
-		
+		List list = query.setFirstResult(req.getFirstResult()).setMaxResults(req.getPageSize()).list();
 		
 		// ----- Find total -----
-		Object totalRecord = criteriaTotal.setProjection(Projections.rowCount()).uniqueResult();
+		Object totalRecord = queryTotal.uniqueResult();
 
 		// ----- Set result -----
 		SearchCustResult result = new SearchCustResult();
@@ -107,19 +106,6 @@ public class CustDaoImpl implements CustDao {
 		sb.append(" group by b.id.brandGroupId");
 
 		return sessionFactory.getCurrentSession().createQuery(sb.toString()).setLong("custId", custId).list();
-	}
-
-	@Override
-	public List<CustPriceGroup> findCustPriceGroup(String custInvoiceNo) {
-		StringBuffer sb = new StringBuffer();
-		sb.append("select new com.starboard.b2b.dto.CustPriceGroupDTO");
-		return null;
-	}
-
-	@Override
-	public List<CustPriceGroup> findCustPriceGroup(Long custId) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**

@@ -115,10 +115,11 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Transactional
-	public void update(CustomerForm customerForm) {
+	public void update(CustDTO customerForm) {
 		Cust customer = customerDao.findById(customerForm.getCustId());
-		customer.setCustCode(customerForm.getCode());
-		customer.setNameEn(customerForm.getName());
+		log.info("Found " + customer);
+		customer.setCustCode(customerForm.getCustCode());
+		customer.setNameEn(customerForm.getNameEn());
 		customer.setTimeUpdate(DateTimeUtil.getCurrentDate());
 		customer.setUserUpdate(UserUtil.getCurrentUser().getName());
 	}

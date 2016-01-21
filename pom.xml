@@ -13,7 +13,7 @@
 		<java.version>1.7</java.version>
 		<springframework.version>4.2.2.RELEASE</springframework.version>
 		<springframework-security.version>4.0.3.RELEASE</springframework-security.version>
-
+		<dep.hibernate-core.version>5.0.7.Final</dep.hibernate-core.version>
 	</properties>
 
 	<dependencies>
@@ -131,7 +131,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>4.3.10.Final</version>
+			<version>${dep.hibernate-core.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.zaxxer</groupId>
