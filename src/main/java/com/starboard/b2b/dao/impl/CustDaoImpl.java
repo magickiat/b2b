@@ -39,8 +39,8 @@ public class CustDaoImpl implements CustDao {
 	public SearchCustResult listCust(SearchRequest<SearchCustomerForm> req) {
 		log.info("search request: " + req);
 
-		String queryString = "select distinct c from Cust c ";
-		String queryStringTotal = "select count(distinct c.custCode) from Cust c ";
+		String queryString = "from Cust c ";
+		String queryStringTotal = "select count(c.custCode) from Cust c ";
 		// ----- Set criteria
 		String where = "";
 		if (req != null && req.getCondition() != null) {
@@ -52,8 +52,6 @@ public class CustDaoImpl implements CustDao {
 		queryString += where;
 		queryStringTotal += where;
 
-		queryString += " group by c.custCode ";
-		
 		Query query = sessionFactory.getCurrentSession().createQuery(queryString);
 		Query queryTotal = sessionFactory.getCurrentSession().createQuery(queryStringTotal);
 		
