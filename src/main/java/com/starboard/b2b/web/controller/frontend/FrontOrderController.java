@@ -151,7 +151,7 @@ public class FrontOrderController {
 	}
 
 	@RequestMapping(value = "step2/search-action", method = RequestMethod.GET)
-	String step2SearchAction(@ModelAttribute SearchProductForm form, Model model) {
+	String step2SearchAction(@ModelAttribute("form") SearchProductForm form, Model model) {
 		log.info("search condition: " + form.toString());
 
 		// Show shopping cart
@@ -587,7 +587,7 @@ public class FrontOrderController {
 	}
 
 	@RequestMapping(value = "summary/search-action", method = RequestMethod.GET)
-	String orderSummarySearchAction(@ModelAttribute OrderSummaryForm form, Model model) {
+	String orderSummarySearchAction(@ModelAttribute("form") OrderSummaryForm form, Model model) {
 		log.info("search condition: " + form.toString());
 		setOrderSummarySearchForm(form, model);
 		Page<SearchOrderDTO> resultPage = orderService.searchOrder(form);
@@ -597,7 +597,7 @@ public class FrontOrderController {
 	}
 
 	@RequestMapping(value = "summary/report/{orderCode}", method = RequestMethod.GET)
-	String orderSummaryReport(@ModelAttribute OrderSummaryForm form, Model model, @PathVariable final String orderCode) {
+	String orderSummaryReport(@ModelAttribute("form") OrderSummaryForm form, Model model, @PathVariable final String orderCode) {
 		log.info("Report for order: {}", orderCode);
 		final SearchOrderDTO orderReport = orderService.findOrderForReport(orderCode);
 		final List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(orderCode);

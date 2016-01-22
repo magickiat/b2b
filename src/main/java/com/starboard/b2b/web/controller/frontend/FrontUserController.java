@@ -71,14 +71,14 @@ public class FrontUserController {
 	}
 
 	@RequestMapping("edit")
-	@ResponseBody String edit(@ModelAttribute UserForm userForm, Model model) {
+	@ResponseBody String edit(@ModelAttribute("userForm") UserForm userForm, Model model) {
 		// Update user detail
 		boolean isUpdateSuccess = userService.update(userForm);
 		return (isUpdateSuccess==true?"true":"false");
 	}
 	
 	@RequestMapping("address/edit")
-	@ResponseBody String editAddress2(@ModelAttribute UserForm userForm, Model model, @RequestParam(value = "addressId", required = false) long addressId) {
+	@ResponseBody String editAddress2(@ModelAttribute("userForm") UserForm userForm, Model model, @RequestParam(value = "addressId", required = false) long addressId) {
 		boolean isUpdateSuccess = false;
 		for (AddressForm addressForm : userForm.getAddresses()) {
 			if (addressForm.getAddrId() == addressId) {

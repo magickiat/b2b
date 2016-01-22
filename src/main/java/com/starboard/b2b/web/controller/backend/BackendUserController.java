@@ -36,7 +36,7 @@ public class BackendUserController {
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	String submit(@ModelAttribute UserRegisterForm registerForm,Model model, BindingResult binding) {
+	String submit(@ModelAttribute("registerForm") UserRegisterForm registerForm,Model model, BindingResult binding) {
 		log.info("/gen_user POST");
 		userService.add(registerForm);
 		return search(registerForm.getCusId(),model);

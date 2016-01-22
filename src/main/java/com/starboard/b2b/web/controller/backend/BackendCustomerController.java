@@ -64,7 +64,7 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "search", method = RequestMethod.GET)
-	String search(@ModelAttribute SearchCustomerForm searchForm, Model model) {
+	String search(@ModelAttribute("searchForm") SearchCustomerForm searchForm, Model model) {
 		searchForm.setCountryList(countryService.findAll());
 		searchForm.setProductTypeList(productService.findAllProductType());
 
@@ -132,7 +132,7 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	String update(@ModelAttribute @Valid CustDTO customerForm, BindingResult binding, RedirectAttributes attr, Model model) throws Exception {
+	String update(@ModelAttribute("customerForm") @Valid CustDTO customerForm, BindingResult binding, RedirectAttributes attr, Model model) throws Exception {
 		log.info("/update POST");
 		log.info("customer id: " + customerForm.getCustId());
 		if (binding.hasErrors()) {
@@ -198,7 +198,7 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "/add_brand", method = RequestMethod.POST)
-	String addBrandSubmit(@ModelAttribute BrandForm brandForm, Model model) throws Exception {
+	String addBrandSubmit(@ModelAttribute("brandForm") BrandForm brandForm, Model model) throws Exception {
 		log.info("/add_brand POST");
 		log.info("Selected brand id: " + brandForm);
 		User userAuthen = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

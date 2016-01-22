@@ -59,7 +59,7 @@ public class BackendOrderController {
 	}
 
 	@RequestMapping(value = "search-action", method = RequestMethod.GET)
-	String orderSummarySearchAction(@ModelAttribute OrderSummaryForm form, Model model) {
+	String orderSummarySearchAction(@ModelAttribute("form") OrderSummaryForm form, Model model) {
 		log.info("search condition: " + form.toString());
 
 		setForm(form, model);
