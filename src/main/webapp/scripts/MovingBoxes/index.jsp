@@ -1,4 +1,3 @@
-<%@include file="/WEB-INF/views/common/include.jsp" %>
 <html>
 <head>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/scripts/MovingBoxes/css/style.css" type="text/css"

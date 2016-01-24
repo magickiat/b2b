@@ -11,17 +11,21 @@ import com.starboard.b2b.web.form.product.SearchProductForm;
 
 public interface ProductDao {
 
-    List<Product> list();
+	List<Product> list();
 
-    SearchResult<SearchProductModelDTO> search(SearchRequest<SearchProductForm> req);
+	SearchResult<SearchProductModelDTO> search(SearchRequest<SearchProductForm> req);
 
-    List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection);
+	List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection);
 
-    List<ProductSearchResult> findProductModel(String modelId);
+	List<ProductSearchResult> findProductModel(String modelId);
 
-    Product findById(long productId);
+	Product findById(long productId);
 
-    Product findByProductCode(String productCode);
+	Product findByProductCode(String productCode);
 
 	List<Product> findByBrandGroupId(long brandGroupId);
+
+	void save(Product product);
+
+	void merge(Product product);
 }

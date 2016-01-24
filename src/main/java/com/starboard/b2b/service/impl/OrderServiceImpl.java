@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.common.AddressConstant;
-import com.starboard.b2b.common.OrderConfig;
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dao.AddrDao;
 import com.starboard.b2b.dao.OrderAddressDao;
@@ -51,7 +50,6 @@ import com.starboard.b2b.model.Orders;
 import com.starboard.b2b.model.So;
 import com.starboard.b2b.model.SoDetail;
 import com.starboard.b2b.model.User;
-import com.starboard.b2b.service.ConfigService;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.DateTimeUtil;
@@ -94,9 +92,6 @@ public class OrderServiceImpl implements OrderService {
 	private AddrDao addrDao;
 
 	@Autowired
-	private ConfigService configService;
-
-	@Autowired
 	private OrderStatusDao orderStatusDao;
 
 	@Override
@@ -125,7 +120,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional
-	public OrderDTO saveOrder(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod,
+	public OrderDTO newOrder(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod,
 			Map<Long, ProductDTO> cart) {
 		Addr invoiceToAddr = addrDao.findById(invoiceTo);
 		if (invoiceToAddr == null) {
@@ -136,10 +131,10 @@ public class OrderServiceImpl implements OrderService {
 		if (dispatchToAddr == null) {
 			throw new IllegalArgumentException("Address 'Dispatch To' is required");
 		}
-		// TODO Ask question when multiple brand is choosed
+		
 		Entry<Long, ProductDTO> firstProduct = cart.entrySet().iterator().next();
 		long brandGroupId = firstProduct.getValue().getProductTypeId();
-
+		
 		// Save Order
 		String orderCode = generateOrderCode();
 		log.info("\tGenerated orderCode = " + orderCode);
@@ -152,13 +147,13 @@ public class OrderServiceImpl implements OrderService {
 		order.setCustCode(user.getCustomer().getCustCode());
 		order.setCustUserId("" + user.getId());
 		order.setOrderCode(orderCode);
-		order.setOrderStatus(configService.getString(OrderConfig.KEY_DEFAULT_ORDER_STATUS));
+		order.setOrderStatus(applicationConfig.getOrderStatusNew());
 		order.setOrderDate(currentDate);
 		order.setBrandGroupId(brandGroupId);
 		order.setShippingId(shippingType);
 		order.setPaymentMethodId(paymentMethod);
 		order.setPaymentCurrencyId(user.getCustomer().getCurrency());
-		order.setPaymentTermId(configService.getString(OrderConfig.KEY_DEFAULT_PAYMENT_TERM_ID));
+		order.setPaymentTermId(applicationConfig.getNewOrderPaymentTermId());
 		order.setRemarkCustomer(customerRemark);
 		order.setTimeCreate(currentDate);
 		order.setUserCreate(user.getUsername());
@@ -171,13 +166,14 @@ public class OrderServiceImpl implements OrderService {
 			ProductDTO product = cart.get(key);
 			// Default currency
 			if (StringUtils.isEmpty(product.getProductCurrency())) {
-				product.setProductCurrency(configService.getString(OrderConfig.KEY_PRODUCT_PRICE_TBA));
+				product.setProductCurrency(applicationConfig.getDefaultProductCurrency());
 			}
 			// Default product unit id
 			if (StringUtils.isEmpty(product.getProductUnitId())) {
-				product.setProductUnitId(configService.getString(OrderConfig.KEY_DEFAULT_PRODUCT_UNIT_ID));
+				product.setProductUnitId(applicationConfig.getDefaultProductUnit());
 			}
 
+			// ----- Create order -----
 			OrdDetail orderDetail = new OrdDetail();
 			orderDetail.setOrderId(orderId);
 			orderDetail.setProductId(product.getProductId());
@@ -186,13 +182,7 @@ public class OrderServiceImpl implements OrderService {
 				orderDetail.setPrice(product.getProductPrice());
 			}
 			orderDetail.setProductCurrency(product.getProductCurrency());
-			if(StringUtils.isEmpty(product.getProductCurrency())){
-				orderDetail.setProductCurrency("TBA");
-			}
 			orderDetail.setProductUnitId(product.getProductUnitId());
-			if(product.getProductUnitId() == null){
-				orderDetail.setProductUnitId("PCS");
-			}
 			orderDetail.setProductBuyerGroupId(product.getProductBuyerGroupId());
 			orderDetail.setUserCreate(user.getUsername());
 			orderDetail.setTimeCreate(DateTimeUtil.getCurrentDate());

@@ -34,8 +34,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.starboard.b2b.bean.ExcelOrderBean;
 import com.starboard.b2b.common.AddressConstant;
+import com.starboard.b2b.common.B2BConstant;
 import com.starboard.b2b.common.Page;
-import com.starboard.b2b.common.WithnoseConstant;
 import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.OrdAddressDTO;
 import com.starboard.b2b.dto.OrderDTO;
@@ -54,7 +54,7 @@ import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.ArchiveUtil;
-import com.starboard.b2b.util.ExcelOrderUtil;
+import com.starboard.b2b.util.ExcelUtil;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
 import com.starboard.b2b.web.form.product.SearchProductForm;
@@ -201,8 +201,8 @@ public class FrontOrderController {
 		} else {
 
 			// Find product model
-			List<ProductSearchResult> productListNoWithnose = productService.findProductModel(modelId, WithnoseConstant.NO_WITHNOSE_PROTECTION);
-			List<ProductSearchResult> productListWithnose = productService.findProductModel(modelId, WithnoseConstant.WITHNOSE_PROTECTION);
+			List<ProductSearchResult> productListNoWithnose = productService.findProductModel(modelId, B2BConstant.NO_WITHNOSE_PROTECTION);
+			List<ProductSearchResult> productListWithnose = productService.findProductModel(modelId, B2BConstant.WITHNOSE_PROTECTION);
 
 			model.addAttribute("productListNoWithnose", productListNoWithnose);
 			model.addAttribute("productListWithnose", productListWithnose);
@@ -301,7 +301,7 @@ public class FrontOrderController {
 				throw new B2BException("excel order file are not present in this request");
 			}
 			//
-			List<ExcelOrderBean> orders = ExcelOrderUtil.parseOrder(file.getBytes());
+			List<ExcelOrderBean> orders = ExcelUtil.parseOrder(file.getBytes());
 			//
 			if (orders == null) {
 				throw new B2BException("order are not found in this upload file");
@@ -535,7 +535,7 @@ public class FrontOrderController {
 		log.info("----- paymentMethod = " + paymentMethod);
 		log.info("----- ----- cart size = " + cart.size());
 
-		OrderDTO order = orderService.saveOrder(invoiceTo, dispatchTo, shippingType, customerRemark, paymentMethod, cart);
+		OrderDTO order = orderService.newOrder(invoiceTo, dispatchTo, shippingType, customerRemark, paymentMethod, cart);
 		model.addAttribute("order", order);
 
 		// Clear Shopping Cart session

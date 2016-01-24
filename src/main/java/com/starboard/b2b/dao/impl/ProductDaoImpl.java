@@ -215,4 +215,14 @@ public class ProductDaoImpl implements ProductDao {
 
 		return (List<Product>) sf.getCurrentSession().createQuery(queryString).setLong("brandGroupId", brandGroupId).list();
 	}
+
+	@Override
+	public void save(Product product) {
+		sf.getCurrentSession().save(product);
+	}
+
+	@Override
+	public void merge(Product product) {
+		sf.getCurrentSession().merge(product);
+	}
 }

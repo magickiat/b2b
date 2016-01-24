@@ -66,4 +66,6 @@ public interface ProductService {
 	
 	List<ProductTypeDTO> listProductBrandGroupForJson();
 	
+	void updateProduct(List<ProductDTO> products);
+	
 }
