@@ -13,7 +13,6 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,9 +59,6 @@ import com.starboard.b2b.web.form.order.OrderSummaryForm;
 public class OrderServiceImpl implements OrderService {
 
 	private static final Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
-
-	@Value("${upload.path}")
-	private String uploadPath;
 
 	@Autowired
 	private ApplicationConfig applicationConfig;
