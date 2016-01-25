@@ -512,13 +512,6 @@ public class ProductServiceImpl implements ProductService {
 						}
 					}
 
-//					// MUST HAVE technology_id
-//					if (StringUtils.isEmpty(importProduct.getProductTechnologyId())) {
-//						
-//					}
-					
-					
-
 					product.setProductYearId(year);
 
 					log.info("merge product: " + product);
