@@ -32,7 +32,7 @@ import com.starboard.b2b.exception.B2BException;
  * @author MaGicBank <magicbank@gmail.com>
  */
 public class ExcelUtil {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ExcelUtil.class);
 
 	public static List<ExcelOrderBean> parseOrder(byte[] data) throws IOException, EncryptedDocumentException, InvalidFormatException {
@@ -84,36 +84,103 @@ public class ExcelUtil {
 		try {
 			workbook = new XSSFWorkbook(inputStream);
 			sheet = workbook.getSheetAt(0);
-			
+
 			if (sheet == null) {
 				throw new B2BException("no sheet present in this workbook");
 			}
-			
+
 			Iterator<Row> iterator = sheet.iterator();
 			while (iterator.hasNext()) {
 				Row row = (Row) iterator.next();
-				if(row == null){
+				if (row == null) {
 					continue;
 				}
 				log.info("row: " + row.getRowNum());
-				if(row.getRowNum() == 0){
+				if (row.getRowNum() == 0) {
 					continue;
 				}
-				//TODO get cell value
-				String buyerGroupId = StringUtil.removeSpecialChar(row.getCell(3).getStringCellValue());
-				Long typeId = Long.parseLong(row.getCell(0).getStringCellValue());
-				String code = StringUtil.removeSpecialChar(row.getCell(1).getStringCellValue());
-				String name = row.getCell(2).getStringCellValue();
-				String modelId = row.getCell(4).getStringCellValue();
-				
+				// ----- get cell value -----
+				Cell cellTypeId = row.getCell(0);
+				Cell cellCode = row.getCell(1);
+				Cell cellName = row.getCell(2);
+				Cell cellBuyerGroupId = row.getCell(3);
+				Cell cellModelId = row.getCell(4);
+				Cell cellTechnology = row.getCell(5);
+				Cell cellSize = row.getCell(6);
+
+				Long typeId = null;
+				String code = "";
+				String name = "";
+				String buyerGroupId = "";
+				String modelId = "";
+
+				// ----- validate and get value -----
+				if (cellTypeId == null) {
+					throw new B2BException("product_type_id is required");
+				} else if (cellTypeId.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+					typeId = Double.doubleToLongBits(Long.parseLong(cellTypeId.getStringCellValue().trim()));
+				} else if (cellTypeId.getCellType() == Cell.CELL_TYPE_STRING) {
+					typeId = Long.parseLong(cellTypeId.getStringCellValue());
+				} else {
+					throw new B2BException("product_type_id must be Text or Number");
+				}
+
+				if (cellCode == null) {
+					throw new B2BException("product_code is required");
+				} else if (cellCode.getCellType() == Cell.CELL_TYPE_STRING) {
+					code = StringUtil.removeSpecialChar(cellCode.getStringCellValue().trim());
+				} else {
+					throw new B2BException("product_code must be text");
+				}
+
+				if (cellName == null) {
+					throw new B2BException("product_name is required");
+				} else if (cellName.getCellType() == Cell.CELL_TYPE_STRING) {
+					name = cellName.getStringCellValue().trim();
+				} else {
+					throw new B2BException("product_name must be text");
+				}
+
+				if (cellBuyerGroupId == null) {
+					throw new B2BException("product_buyer_group_id is required");
+				} else if (cellBuyerGroupId.getCellType() == Cell.CELL_TYPE_STRING) {
+					buyerGroupId = StringUtil.removeSpecialChar(cellBuyerGroupId.getStringCellValue().trim());
+				} else {
+					throw new B2BException("product_buyer_group_id must be text");
+				}
+
+				if (cellModelId == null) {
+					throw new B2BException("product_model_id is required");
+				} else if (cellModelId.getCellType() == Cell.CELL_TYPE_STRING) {
+					modelId = cellModelId.getStringCellValue().trim();
+				} else {
+					throw new B2BException("product_model_id must be text");
+				}
+
+				String technology = "undefined";
+				if (cellTechnology != null && cellTechnology.getCellType() == Cell.CELL_TYPE_STRING) {
+					technology = StringUtil.removeSpecialChar(cellTechnology.getStringCellValue().trim());
+				}else{
+					throw new B2BException("technology must be text");
+				}
+
+				String size = "";
+				if (cellSize != null && cellSize.getCellType() == Cell.CELL_TYPE_STRING) {
+					size = cellSize.getStringCellValue();
+				}else{
+					throw new B2BException("size must be text");
+				}
+
 				ProductDTO product = new ProductDTO();
 				product.setProductTypeId(typeId);
 				product.setProductCode(code);
 				product.setProductNameEn(name);
 				product.setProductBuyerGroupId(buyerGroupId);
 				product.setProductModelId(modelId);
-				
-				log.info("productType = " + product.getProductTypeId());
+				product.setProductTechnologyId(technology);
+				product.setProductLength(size);
+
+				log.info("productType = " + product.getProductTypeId() + "\t technology = " + product.getProductTechnologyId());
 				result.add(product);
 			}
 		} finally {

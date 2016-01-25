@@ -12,9 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
 public class GlobalDefaultExceptionHandler {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(GlobalDefaultExceptionHandler.class);
-	
+
 	public static final String DEFAULT_ERROR_VIEW = "error";
 
 	@ExceptionHandler(value = Exception.class)

@@ -17,7 +17,7 @@
 	<div class="container">
 
 		<div class="row">
-			<div class="col-sm-12 header2 txtupper bg_color">Warning</div>
+			<div class="col-sm-12 header2 txtupper bg_color">Problem occured</div>
 			<div class="col-sm-12 bg_color">Please contact administrator
 				with this message</div>
 			<div class="col-sm-12 bg_color">${exception.message}</div>

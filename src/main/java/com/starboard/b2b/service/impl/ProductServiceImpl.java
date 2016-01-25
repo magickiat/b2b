@@ -476,6 +476,14 @@ public class ProductServiceImpl implements ProductService {
 						product.setTimeCreate(DateTimeUtil.getCurrentDate());
 						product.setUserCreate(B2BConstant.B2B_SYSTEM_NAME);
 					} else {
+						
+						product.setProductTypeId(importProduct.getProductTypeId());
+						product.setProductNameEn(importProduct.getProductNameEn());
+						product.setProductBuyerGroupId(importProduct.getProductBuyerGroupId());
+						product.setProductModelId(importProduct.getProductModelId());
+						product.setProductTechnologyId(importProduct.getProductTechnologyId());
+						product.setProductLength(importProduct.getProductLength());
+						
 						product.setTimeUpdate(DateTimeUtil.getCurrentDate());
 						product.setUserUpdate(B2BConstant.B2B_SYSTEM_NAME);
 					}
