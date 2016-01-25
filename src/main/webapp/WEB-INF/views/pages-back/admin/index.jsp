@@ -22,9 +22,7 @@
 			<div class="col-sm-12">
 				<a href='<c:url value="/backend/admin/file/list" />'>Upload image</a>
 			</div>
-			<div class="col-sm-12">
-				<a href='<c:url value="/backend/product/upload" />'>Upload product</a>
-			</div>
+			
 
 		</div>
 	</div>

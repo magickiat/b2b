@@ -37,6 +37,8 @@ public interface ProductService {
 	List<ProductBuyerGroupDTO> findProductBuyerGroupByProductType(List<ProductTypeDTO> productType);
 
 	Page<SearchProductModelDTO> searchProduct(SearchProductForm searchProductForm);
+	
+	Page<SearchProductModelDTO> searchProductBackend(SearchProductForm searchProductForm);
 
 	List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection);
 

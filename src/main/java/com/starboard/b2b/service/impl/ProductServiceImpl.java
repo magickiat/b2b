@@ -190,7 +190,7 @@ public class ProductServiceImpl implements ProductService {
 		req.setCondition(form);
 
 		// Find product model
-		SearchResult<SearchProductModelDTO> result = productDao.search(req);
+		SearchResult<SearchProductModelDTO> result = productDao.searchProductForFrontend(req);
 
 		// Validate has image exist
 		List<SearchProductModelDTO> resultList = result.getResult();
@@ -525,6 +525,30 @@ public class ProductServiceImpl implements ProductService {
 				}
 			}
 		}
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<SearchProductModelDTO> searchProductBackend(SearchProductForm form) {
+		log.info("form: " + form);
+		SearchRequest<SearchProductForm> req = new SearchRequest<>(form.getPage(), applicationConfig.getPageSize());
+		req.setCondition(form);
+
+		// Find product model
+		SearchResult<SearchProductModelDTO> result = productDao.searchProductForBackend(req);
+
+		// Validate has image exist
+		List<SearchProductModelDTO> resultList = result.getResult();
+		log.info("resultList size: " + (resultList == null ? 0 : resultList.size()));
+
+		// create result page object
+		Page<SearchProductModelDTO> page = new Page<>();
+		page.setCurrent(form.getPage());
+		log.info("current page: " + page.getCurrent());
+		page.setPageSize(req.getPageSize());
+		page.setTotal(result.getTotal());
+		page.setResult(result.getResult());
+		return page;
 	}
 
 }

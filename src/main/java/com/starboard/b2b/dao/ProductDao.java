@@ -13,7 +13,9 @@ public interface ProductDao {
 
 	List<Product> list();
 
-	SearchResult<SearchProductModelDTO> search(SearchRequest<SearchProductForm> req);
+	SearchResult<SearchProductModelDTO> searchProductForBackend(SearchRequest<SearchProductForm> req);
+
+	SearchResult<SearchProductModelDTO> searchProductForFrontend(SearchRequest<SearchProductForm> req);
 
 	List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection);
 

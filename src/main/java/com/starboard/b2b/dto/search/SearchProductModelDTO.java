@@ -14,6 +14,7 @@ public class SearchProductModelDTO {
 	private String productCurrency;
 	private String modelImage;
 	private String productPreintro;
+	private String isActive;
 
 	public SearchProductModelDTO(long productId, String productCode, String productPictureMedium, String productModelId, String productModelName,
 			String productNameEn, BigDecimal productPrice, String productUnitId, String productCurrency, String modelImage, String productPreintro) {
@@ -27,6 +28,22 @@ public class SearchProductModelDTO {
 		this.productUnitId = productUnitId;
 		this.modelImage = modelImage;
 		this.productPreintro = productPreintro;
+	}
+
+	public SearchProductModelDTO(long productId, String productCode, String productPictureMedium, String productModelId, String productModelName,
+			String productNameEn, BigDecimal productPrice, String productUnitId, String productCurrency, String modelImage, String productPreintro,
+			String isActive) {
+		this.productId = productId;
+		this.productCode = productCode;
+		this.productPictureMedium = productPictureMedium;
+		this.productModelId = productModelId;
+		this.productModelName = productModelName;
+		this.productNameEn = productNameEn;
+		this.productPrice = productPrice;
+		this.productUnitId = productUnitId;
+		this.modelImage = modelImage;
+		this.productPreintro = productPreintro;
+		this.isActive = isActive;
 	}
 
 	public long getProductId() {
@@ -115,6 +132,14 @@ public class SearchProductModelDTO {
 
 	public void setProductPreintro(String productPreintro) {
 		this.productPreintro = productPreintro;
+	}
+
+	public String getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(String isActive) {
+		this.isActive = isActive;
 	}
 
 }
