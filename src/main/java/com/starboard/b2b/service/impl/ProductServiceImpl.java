@@ -463,7 +463,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public void updateProduct(List<ProductDTO> products) {
-		if (products != null && products.isEmpty()) {
+		if (products != null && !products.isEmpty()) {
 
 			for (ProductDTO importProduct : products) {
 				if (StringUtils.isNotEmpty(importProduct.getProductCode())) {
@@ -503,13 +503,16 @@ public class ProductServiceImpl implements ProductService {
 						}
 					}
 
-					// MUST HAVE technology_id
-					if (StringUtils.isEmpty(importProduct.getProductTechnologyId())) {
-						
-					}
+//					// MUST HAVE technology_id
+//					if (StringUtils.isEmpty(importProduct.getProductTechnologyId())) {
+//						
+//					}
+					
+					
 
 					product.setProductYearId(year);
 
+					log.info("merge product: " + product);
 					productDao.merge(product);
 				}
 			}

@@ -92,11 +92,29 @@ public class ExcelUtil {
 			Iterator<Row> iterator = sheet.iterator();
 			while (iterator.hasNext()) {
 				Row row = (Row) iterator.next();
-				if(row == null || row.getRowNum() < 4){
+				if(row == null){
+					continue;
+				}
+				log.info("row: " + row.getRowNum());
+				if(row.getRowNum() == 0){
 					continue;
 				}
 				//TODO get cell value
-				log.info(row.getCell(1).getStringCellValue());
+				String buyerGroupId = StringUtil.removeSpecialChar(row.getCell(3).getStringCellValue());
+				Long typeId = Long.parseLong(row.getCell(0).getStringCellValue());
+				String code = StringUtil.removeSpecialChar(row.getCell(1).getStringCellValue());
+				String name = row.getCell(2).getStringCellValue();
+				String modelId = row.getCell(4).getStringCellValue();
+				
+				ProductDTO product = new ProductDTO();
+				product.setProductTypeId(typeId);
+				product.setProductCode(code);
+				product.setProductNameEn(name);
+				product.setProductBuyerGroupId(buyerGroupId);
+				product.setProductModelId(modelId);
+				
+				log.info("productType = " + product.getProductTypeId());
+				result.add(product);
 			}
 		} finally {
 			if (workbook != null) {
