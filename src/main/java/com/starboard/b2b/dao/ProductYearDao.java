@@ -8,4 +8,6 @@ public interface ProductYearDao {
 
 	List<ProductYear> findAll();
 
+	ProductYear findByYear(String year);
+
 }

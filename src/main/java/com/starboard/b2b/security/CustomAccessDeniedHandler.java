@@ -33,4 +33,5 @@ public class CustomAccessDeniedHandler extends AccessDeniedHandlerImpl {
 
 		request.getRequestDispatcher(errorPage).forward(request, response);
 	}
+	
 }

@@ -20,7 +20,7 @@
 						<a href='<c:url value="/backend/order/search" />'>Order</a>
 					</li>
 					<li>
-						<a href="#">Product</a>
+						<a href='<c:url value="/backend/product/index" />'>Product</a>
 					</li>
 					<li>
 						<a href='<c:url value="/backend/customer/" />'>Customer</a>

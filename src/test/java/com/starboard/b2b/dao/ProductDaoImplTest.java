@@ -35,7 +35,7 @@ public class ProductDaoImplTest {
 		SearchRequest<SearchProductForm> req = new SearchRequest<>(form.getPage(), 12);
 		req.setCondition(form);
 
-		SearchResult<SearchProductModelDTO> search = productDao.search(req);
+		SearchResult<SearchProductModelDTO> search = productDao.searchProductForFrontend(req);
 		assertNotNull(search.getResult());
 		assertTrue(search.getResult().size() == 12);
 
@@ -54,7 +54,7 @@ public class ProductDaoImplTest {
 		SearchRequest<SearchProductForm> req = new SearchRequest<>(form.getPage(), 12);
 		req.setCondition(form);
 		
-		SearchResult<SearchProductModelDTO> search = productDao.search(req);
+		SearchResult<SearchProductModelDTO> search = productDao.searchProductForFrontend(req);
 		
 		assertNotNull(search.getResult());
 		assertTrue(search.getResult().size() == 12);
@@ -71,7 +71,7 @@ public class ProductDaoImplTest {
 		SearchRequest<SearchProductForm> req = new SearchRequest<>(form.getPage(), 12);
 		req.setCondition(form);
 		
-		SearchResult<SearchProductModelDTO> search = productDao.search(req);
+		SearchResult<SearchProductModelDTO> search = productDao.searchProductForFrontend(req);
 		
 		assertNotNull(search.getResult());
 		assertTrue(search.getResult().size() == 1);

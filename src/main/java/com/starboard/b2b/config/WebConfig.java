@@ -30,7 +30,7 @@ import org.springframework.web.servlet.view.JstlView;
 @PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-	private final Logger log = LoggerFactory.getLogger(getClass());
+	private static final Logger log = LoggerFactory.getLogger(WebConfig.class);
 
 	@Value("${upload.path}")
 	private String uploadPath;
@@ -91,6 +91,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	 */
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+		log.info("Init propertySourcesPlaceholderConfigurer");
 		return new PropertySourcesPlaceholderConfigurer();
 	}
 

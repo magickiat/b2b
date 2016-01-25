@@ -16,17 +16,16 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
-import com.starboard.b2b.common.MailConfig;
 import com.starboard.b2b.dto.UserDTO;
-import com.starboard.b2b.service.ConfigService;
 import com.starboard.b2b.service.EmailService;
 import com.starboard.b2b.service.OrderService;
+import com.starboard.b2b.util.ApplicationConfig;
 
 @Service("emailService")
 public class EmailServiceImpl implements EmailService {
 
 	@Autowired
-	private ConfigService configService;
+	private ApplicationConfig applicationConfig;
 
 	@Autowired
 	private Environment env;
@@ -38,9 +37,9 @@ public class EmailServiceImpl implements EmailService {
 	public void sendEmail(String from, String[] toAddresses, String[] ccAddresses, String[] bccAddresses, String subject, String content,
 			String[] attachments, String type, String orderNum) throws AddressException, MessagingException, IOException {
 		// TODO Auto-generated method stub
-		Boolean enableSendMail = configService.getBoolean(MailConfig.ENABLE_SEND_EMAIL);
+		boolean enableSendMail = applicationConfig.getEnabledSendMail();
 		// Is disabled send email
-		if (enableSendMail != null && !enableSendMail.booleanValue()) {
+		if (!enableSendMail) {
 			return;
 		} else {
 			JavaMailSenderImpl mailSender = new JavaMailSenderImpl();

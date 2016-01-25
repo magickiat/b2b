@@ -1,29 +1,53 @@
 package com.starboard.b2b.util;
 
-import java.util.WeakHashMap;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
-import com.starboard.b2b.common.B2BConstant;
-import com.starboard.b2b.service.ConfigService;
-
 @Component
+@PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
 public class ApplicationConfig {
 
-    @Autowired
-    private ConfigService configService;
+	//TODO with replace properties file
+	
+//	@Value("${page.size}")
+	private String pageSize;
 
-    WeakHashMap<String, Object> cache = new WeakHashMap<>();
+//	@Value("${order.status.new}")
+	private String orderStatusNew;
 
-    public int getPageSize() {
-        Integer size = (Integer) cache.get(B2BConstant.KEY_PAGE_SIZE);
-        if (size == null) {
-            size = configService.getInt(B2BConstant.KEY_PAGE_SIZE);
-            if (size == null || size == 0) {
-                size = 20; // default size
-            }
-        }
-        return size;
-    }
+//	@Value("${default.new.order.payment.term.id}")
+	private String defaultPaymentTermId;
+
+//	@Value("${default.product.currency}")
+	private String defaultProductCurrency;
+
+//	@Value("${default.product.unit}")
+	private String defaultProductUnit;
+
+//	@Value("${enabled.send.mail}")
+	private String enableSendMail;
+
+	public int getPageSize() {
+		return 12;
+	}
+
+	public boolean getEnabledSendMail() {
+		return false;
+	}
+
+	public String getOrderStatusNew() {
+		return "10";
+	}
+
+	public String getNewOrderPaymentTermId() {
+		return "3070AP";
+	}
+
+	public String getDefaultProductCurrency() {
+		return "TBA";
+	}
+
+	public String getDefaultProductUnit() {
+		return "PCS";
+	}
 }
