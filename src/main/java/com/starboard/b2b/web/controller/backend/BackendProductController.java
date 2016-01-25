@@ -19,7 +19,6 @@ import com.starboard.b2b.dto.ProductBuyerGroupDTO;
 import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
-import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.ExcelUtil;
@@ -36,7 +35,12 @@ public class BackendProductController {
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	String index(Model model) {
-		SearchProductForm searchForm = new SearchProductForm();
+		return search(new SearchProductForm(), model);
+	}
+
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	String search(@ModelAttribute("searchForm") SearchProductForm searchForm, Model model) {
+		
 		List<ProductTypeDTO> productTypes = productService.findAllProductType();
 		model.addAttribute("productType", productTypes);
 
@@ -55,12 +59,7 @@ public class BackendProductController {
 		model.addAttribute("productTechnology", productService.findAllProductTechnology());
 
 		model.addAttribute("searchForm", searchForm);
-
-		return search(searchForm, model);
-	}
-
-	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	String search(@ModelAttribute("searchForm") SearchProductForm searchForm, Model model) {
+		
 		Page<SearchProductModelDTO> searchProduct = productService.searchProductBackend(searchForm);
 		model.addAttribute("resultPage", searchProduct);
 		model.addAttribute("searchForm", searchForm);

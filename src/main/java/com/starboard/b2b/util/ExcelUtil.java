@@ -107,18 +107,22 @@ public class ExcelUtil {
 				Cell cellModelId = row.getCell(4);
 				Cell cellTechnology = row.getCell(5);
 				Cell cellSize = row.getCell(6);
+				Cell cellActive = row.getCell(7);
 
 				Long typeId = null;
 				String code = "";
 				String name = "";
 				String buyerGroupId = "";
 				String modelId = "";
+				String technology = "undefined";
+				String size = "";
+				String active = "0";
 
 				// ----- validate and get value -----
 				if (cellTypeId == null) {
 					throw new B2BException("product_type_id is required");
 				} else if (cellTypeId.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-					typeId = Double.doubleToLongBits(Long.parseLong(cellTypeId.getStringCellValue().trim()));
+					typeId = new Long("" + cellTypeId.getNumericCellValue());
 				} else if (cellTypeId.getCellType() == Cell.CELL_TYPE_STRING) {
 					typeId = Long.parseLong(cellTypeId.getStringCellValue());
 				} else {
@@ -157,18 +161,26 @@ public class ExcelUtil {
 					throw new B2BException("product_model_id must be text");
 				}
 
-				String technology = "undefined";
 				if (cellTechnology != null && cellTechnology.getCellType() == Cell.CELL_TYPE_STRING) {
 					technology = StringUtil.removeSpecialChar(cellTechnology.getStringCellValue().trim());
-				}else{
+				} else {
 					throw new B2BException("technology must be text");
 				}
 
-				String size = "";
 				if (cellSize != null && cellSize.getCellType() == Cell.CELL_TYPE_STRING) {
 					size = cellSize.getStringCellValue();
-				}else{
+				} else {
 					throw new B2BException("size must be text");
+				}
+
+				log.info("cell active = " + cellActive.getStringCellValue());
+				if (cellActive != null) {
+					if (cellActive.getStringCellValue().trim().equalsIgnoreCase("yes")) {
+						active = "1";
+					}else{
+						active = "0";
+					}
+
 				}
 
 				ProductDTO product = new ProductDTO();
@@ -179,6 +191,7 @@ public class ExcelUtil {
 				product.setProductModelId(modelId);
 				product.setProductTechnologyId(technology);
 				product.setProductLength(size);
+				product.setIsActive(active);
 
 				log.info("productType = " + product.getProductTypeId() + "\t technology = " + product.getProductTechnologyId());
 				result.add(product);

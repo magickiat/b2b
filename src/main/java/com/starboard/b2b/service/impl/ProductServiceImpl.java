@@ -483,6 +483,7 @@ public class ProductServiceImpl implements ProductService {
 						product.setProductModelId(importProduct.getProductModelId());
 						product.setProductTechnologyId(importProduct.getProductTechnologyId());
 						product.setProductLength(importProduct.getProductLength());
+						product.setIsActive(importProduct.getIsActive());
 						
 						product.setTimeUpdate(DateTimeUtil.getCurrentDate());
 						product.setUserUpdate(B2BConstant.B2B_SYSTEM_NAME);

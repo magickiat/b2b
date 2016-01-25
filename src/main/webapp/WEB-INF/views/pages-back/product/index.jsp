@@ -184,5 +184,21 @@
 			showDialogAutoClose(msg);
 		</script>
 	</c:if>
+	
+	<script type="text/javascript">
+		function searchPage(page) {
+			$('#page').val(page);
+			$('#searchForm').submit();
+		}
+
+		function resetSearch() {
+			window.open('<c:url value="${baseUrl}" />?brand_id=${searchProductForm.brandId}', '_self');
+		}
+		
+		function loadBuyerGroup(brandId){
+			$('#searchProductModelForm').submit();
+		}
+
+	</script>
 </body>
 </html>
