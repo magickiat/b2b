@@ -122,7 +122,7 @@ public class ExcelUtil {
 				if (cellTypeId == null) {
 					throw new B2BException("product_type_id is required");
 				} else if (cellTypeId.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-					typeId = new Long("" + cellTypeId.getNumericCellValue());
+					typeId = (long) cellTypeId.getNumericCellValue();
 				} else if (cellTypeId.getCellType() == Cell.CELL_TYPE_STRING) {
 					typeId = Long.parseLong(cellTypeId.getStringCellValue());
 				} else {
