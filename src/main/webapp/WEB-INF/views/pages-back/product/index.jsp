@@ -21,13 +21,20 @@
 		</div>
 
 
-		<div class="row">
-			<div class="col-sm-12 bg_color text-right">
+		<div class="row bg_color">
+			<div class="col-sm-8">&nbsp;</div>
+
+			<div class="col-sm-2">
+				<a href='<c:url value="/backend/product/download" />' class="btn btn-default">Download Template</a>
+			</div>
+
+			<div class="col-sm-2">
 				<form id="uploadForm" action='<c:url value="/backend/product/upload" />' method="get">
 					<input type="hidden" id="csrftoken_" name="${_csrf.parameterName}" value="${_csrf.token}" />
-					<input type="submit" value="Upload Product" />
+					<input type="submit" value="Upload Product" class="btn btn-default" />
 				</form>
 			</div>
+
 		</div>
 
 		<div class="row">&nbsp;</div>
@@ -80,7 +87,7 @@
 
 					<div class="col-md-3">
 						<button type="button" class="btn btn-success" onclick="searchPage(1)">Submit</button>
-						<button type="button" class="btn" onclick="resetSearch()">Reset</button>
+						<button type="button" class="btn btn-default" onclick="resetSearch()">Reset</button>
 					</div>
 
 				</div>
@@ -148,7 +155,11 @@
 
 								<c:forEach items="${ resultPage.result }" var="product" varStatus="rowNum">
 									<td>${ rowBegin + (rowNum.index + 1) }</td>
-									<td>image</td>
+									<td>
+										<c:url var="productUrl"
+											value="/upload/product_image/Medium/${ product.productModelId }.jpg" />
+										<img alt="${ product.productModelName }" src="${ productUrl }" />
+									</td>
 									<td>${ product.productCode }</td>
 									<td>${ product.productNameEn }</td>
 									<td>
@@ -184,7 +195,7 @@
 			showDialogAutoClose(msg);
 		</script>
 	</c:if>
-	
+
 	<script type="text/javascript">
 		function searchPage(page) {
 			$('#page').val(page);
@@ -192,13 +203,15 @@
 		}
 
 		function resetSearch() {
-			window.open('<c:url value="${baseUrl}" />?brand_id=${searchProductForm.brandId}', '_self');
-		}
-		
-		function loadBuyerGroup(brandId){
-			$('#searchProductModelForm').submit();
+			window
+					.open(
+							'<c:url value="${baseUrl}" />?brand_id=${searchProductForm.brandId}',
+							'_self');
 		}
 
+		function loadBuyerGroup(brandId) {
+			$('#searchProductModelForm').submit();
+		}
 	</script>
 </body>
 </html>

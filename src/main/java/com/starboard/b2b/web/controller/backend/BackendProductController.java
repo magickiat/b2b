@@ -1,11 +1,20 @@
 package com.starboard.b2b.web.controller.backend;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,9 +35,13 @@ import com.starboard.b2b.web.form.product.SearchProductForm;
 
 @Controller
 @RequestMapping("/backend/product")
+@PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
 public class BackendProductController {
 
 	private static final Logger log = LoggerFactory.getLogger(BackendProductController.class);
+
+	@Value("${upload.path}")
+	private String uploadPath;
 
 	@Autowired
 	private ProductService productService;
@@ -40,7 +53,7 @@ public class BackendProductController {
 
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	String search(@ModelAttribute("searchForm") SearchProductForm searchForm, Model model) {
-		
+
 		List<ProductTypeDTO> productTypes = productService.findAllProductType();
 		model.addAttribute("productType", productTypes);
 
@@ -59,11 +72,30 @@ public class BackendProductController {
 		model.addAttribute("productTechnology", productService.findAllProductTechnology());
 
 		model.addAttribute("searchForm", searchForm);
-		
+
 		Page<SearchProductModelDTO> searchProduct = productService.searchProductBackend(searchForm);
 		model.addAttribute("resultPage", searchProduct);
 		model.addAttribute("searchForm", searchForm);
 		return "pages-back/product/index";
+	}
+
+	@RequestMapping(value = "download", method = RequestMethod.GET)
+	void download(HttpServletResponse response) throws IOException {
+		File template = new File(uploadPath, "/product/upload-product.xlsx");
+		if (!template.exists()) {
+			throw new FileNotFoundException(template.getName());
+		}
+		
+		byte[] byteArray = FileUtils.readFileToByteArray(template);
+		response.setContentLength(byteArray.length);
+		response.setContentType("application/vnd.ms-excel");
+		response.setHeader("Content-Disposition", "attachment; filename=upload-product.xls");
+		response.setHeader("Cache-Control", "cache, must-revalidate");
+		response.setHeader("Pragma", "public");
+
+		try (OutputStream output = response.getOutputStream()) {
+			output.write(byteArray);
+		}
 	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.GET)
