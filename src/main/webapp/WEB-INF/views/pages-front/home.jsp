@@ -5,6 +5,9 @@
 		<%@include file="/WEB-INF/views/include/common_meta.jspf" %>
 		<title>Starboard Windsurfing</title>
 		<%@include file="/WEB-INF/views/include/common_css.jspf" %>
+		<link rel="stylesheet" href="<c:url value="/css/eventCalendar/paragridma.css"/>">
+		<link rel="stylesheet" href="<c:url value="/css/eventCalendar/eventCalendar.css"/>">
+		<link rel="stylesheet" href="<c:url value="/css/eventCalendar/eventCalendar_theme_responsive.css"/>">
 	</head>
 	<body>
 		<%@include file="/WEB-INF/views/pages-front/include/common_header.jspf" %>
@@ -46,11 +49,20 @@
 				</div>
 				<div class="col-md-4 bg_color showline">
 					<div class="row row-header header1">CALENDAR</div>
-					<div style="min-height: 300px;"></div>
+					<div id="eventCalendar" style="min-height: 300px;"></div>
 				</div>
 			</div>
 		</div>
 		<%@include file="/WEB-INF/views/include/common_footer.jspf" %>
 		<%@include file="/WEB-INF/views/include/common_js.jspf" %>
+		<script src="<c:url value="/scripts/plugin/jquery.eventCalendar.min.js"/>"></script>
+		<script src="<c:url value="/scripts/assets/datepicker/moment.js"/>"></script>
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$.get('<c:url value="/event/list"/>', function(data){
+					$("#eventCalendar").eventCalendar({ jsonData: JSON.parse(data), eventsScrollable: true});
+				});
+			});
+		</script>
 	</body>
 </html>
