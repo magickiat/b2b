@@ -65,7 +65,7 @@ public class EventDaoImpl implements EventDao {
 
 	@Override
 	public Event findById(int eventId) {
-		return sessionFactory.getCurrentSession().get(Event.class, eventId);
+		return (Event) sessionFactory.getCurrentSession().get(Event.class, eventId);
 	}
 
 	@Override
