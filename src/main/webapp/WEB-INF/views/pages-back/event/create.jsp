@@ -60,6 +60,8 @@
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf" %>
 	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>
+	<script src="<c:url value="/scripts/assets/datepicker/moment-with-locales.js"/>"></script>
+	<script src="<c:url value="/scripts/assets/datepicker/bootstrap-datetimepicker.js"/>"></script>
 	<script src="<c:url value="/scripts/ckeditor/ckeditor.js"/>"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
