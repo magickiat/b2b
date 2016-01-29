@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.common.AddressConstant;
+import com.starboard.b2b.common.OrderStatusConfig;
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dao.AddrDao;
 import com.starboard.b2b.dao.OrderAddressDao;
@@ -27,6 +28,7 @@ import com.starboard.b2b.dao.OrdersIdRunningDao;
 import com.starboard.b2b.dao.PaymentMethodDao;
 import com.starboard.b2b.dao.PaymentTermDao;
 import com.starboard.b2b.dao.ShippingTypeDao;
+import com.starboard.b2b.dao.SoDao;
 import com.starboard.b2b.dto.OrdAddressDTO;
 import com.starboard.b2b.dto.OrderDTO;
 import com.starboard.b2b.dto.OrderStatusDTO;
@@ -41,6 +43,7 @@ import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchResult;
+import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.model.Addr;
 import com.starboard.b2b.model.OrdAddress;
 import com.starboard.b2b.model.OrdDetail;
@@ -49,6 +52,7 @@ import com.starboard.b2b.model.Orders;
 import com.starboard.b2b.model.So;
 import com.starboard.b2b.model.SoDetail;
 import com.starboard.b2b.model.User;
+import com.starboard.b2b.service.EmailService;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.DateTimeUtil;
@@ -68,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private PaymentMethodDao paymentMethodDao;
-	
+
 	@Autowired
 	private PaymentTermDao paymentTermDao;
 
@@ -89,6 +93,18 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private OrderStatusDao orderStatusDao;
+
+	@Autowired
+	private SoDao soDao;
+
+	@Autowired
+	private EmailService emailService;
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<SoDTO> listSO(long orderId) {
+		return soDao.findByOrderId(orderId);
+	}
 
 	@Override
 	@Transactional(readOnly = true)
@@ -127,10 +143,10 @@ public class OrderServiceImpl implements OrderService {
 		if (dispatchToAddr == null) {
 			throw new IllegalArgumentException("Address 'Dispatch To' is required");
 		}
-		
+
 		Entry<Long, ProductDTO> firstProduct = cart.entrySet().iterator().next();
 		long brandGroupId = firstProduct.getValue().getProductTypeId();
-		
+
 		// Save Order
 		String orderCode = generateOrderCode();
 		log.info("\tGenerated orderCode = " + orderCode);
@@ -219,7 +235,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional(readOnly = true)
 	public OrderDTO findOrder(Long orderId) {
-		if(orderId != null){
+		if (orderId != null) {
 			Orders order = orderDao.findById(orderId);
 			OrderDTO dto = new OrderDTO();
 			try {
@@ -258,18 +274,11 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<OrdAddressDTO> findOrderAddress(Long orderId) {
-
-		return null;
-	}
-
-	@Override
-	@Transactional(readOnly = true)
 	public List<OrdAddressDTO> findOrderAddress(final String orderCode) {
 		List<OrdAddress> ordAddresses = orderDao.findOrderAddress(orderCode);
 		List<OrdAddressDTO> ordAddressDTOs = new ArrayList<>();
-		if(ordAddresses != null && !ordAddresses.isEmpty()){
-			for(OrdAddress ordAddress : ordAddresses){
+		if (ordAddresses != null && !ordAddresses.isEmpty()) {
+			for (OrdAddress ordAddress : ordAddresses) {
 				try {
 					OrdAddressDTO ordAddressDTO = new OrdAddressDTO();
 					BeanUtils.copyProperties(ordAddressDTO, ordAddress);
@@ -301,7 +310,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional(readOnly = true)
 	public Page<SearchOrderDTO> searchOrder(final OrderSummaryForm orderSummaryForm) {
-		log.info("Search order summary form: {}",orderSummaryForm);
+		log.info("Search order summary form: {}", orderSummaryForm);
 		final SearchRequest<OrderSummaryForm> req = new SearchRequest<>(orderSummaryForm.getPage(), applicationConfig.getPageSize());
 		req.setCondition(orderSummaryForm);
 
@@ -315,7 +324,7 @@ public class OrderServiceImpl implements OrderService {
 		// create result page object
 		final Page<SearchOrderDTO> page = new Page<>();
 		page.setCurrent(orderSummaryForm.getPage());
-		log.info("current page: {}" , page.getCurrent());
+		log.info("current page: {}", page.getCurrent());
 		page.setPageSize(req.getPageSize());
 		page.setTotal(result.getTotal());
 		page.setResult(result.getResult());
@@ -364,7 +373,7 @@ public class OrderServiceImpl implements OrderService {
 	public List<SoDetailDTO> findSoDetail(long soId) {
 		List<SoDetail> so = orderDao.findSoDetailBySoId(soId);
 		List<SoDetailDTO> soDTOs = new ArrayList<>();
-		if(so != null && !so.isEmpty()){
+		if (so != null && !so.isEmpty()) {
 			try {
 				SoDetailDTO dto = new SoDetailDTO();
 				BeanUtils.copyProperties(dto, so);
@@ -381,19 +390,52 @@ public class OrderServiceImpl implements OrderService {
 	public List<PaymentTermDTO> findAllPaymentTerm() {
 		return paymentTermDao.list();
 	}
-	
+
 	@Override
 	@Transactional(readOnly = true)
-	public UserDTO findUserByOrderCode(String orderCode){
+	public UserDTO findUserByOrderCode(String orderCode) {
 		User user = orderDao.findUserByOrderCode(orderCode);
 		UserDTO userDTO = new UserDTO();
 		userDTO.setEmail(user.getEmail());
 		userDTO.setName(user.getName());
-//		try {
-//			BeanUtils.copyProperties(userDTO, user);
-//		} catch (IllegalAccessException | InvocationTargetException e) {
-//			log.error("Got problem while copying bean properties.. with error {}", e.getMessage(), e);
-//		}
 		return userDTO;
+	}
+
+	@Transactional
+	public void approve(long orderId) {
+
+		log.info("orderId = " + orderId);
+
+		Orders order = orderDao.findById(orderId);
+		if (order == null) {
+			throw new B2BException("Not found this order id: " + orderId);
+		}
+
+		Date expectShipDate = DateTimeUtil.generateExpectShipDate();
+
+		order.setExpectReceiptDate(expectShipDate);
+		order.setExpectShipmentDate(expectShipDate);
+		order.setOrderStatus(OrderStatusConfig.APPROVED);
+	}
+
+	@Override
+	@Transactional
+	public void approve(SearchOrderDTO orderDTO) {
+		if (orderDTO == null) {
+			throw new B2BException("Order is required");
+		}
+
+		log.info("orderId = " + orderDTO.getOrderId());
+
+		Orders order = orderDao.findById(orderDTO.getOrderId());
+		if (order == null) {
+			throw new B2BException("Not found this order id: " + orderDTO.getOrderId());
+		}
+
+		Date expectShipDate = DateTimeUtil.generateExpectShipDate();
+
+		order.setExpectReceiptDate(expectShipDate);
+		order.setExpectShipmentDate(expectShipDate);
+		order.setOrderStatus(OrderStatusConfig.APPROVED);
 	}
 }

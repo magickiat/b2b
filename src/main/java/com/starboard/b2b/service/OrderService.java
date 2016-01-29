@@ -44,8 +44,6 @@ public interface OrderService {
 
 	SearchOrderDTO findOrderForReport(String orderCode);
 
-	List<OrdAddressDTO> findOrderAddress(Long orderId);
-
 	List<OrdAddressDTO> findOrderAddress(String orderCode);
 
 	Page<SearchOrderDTO> searchOrder(OrderSummaryForm orderSummaryForm);
@@ -63,4 +61,11 @@ public interface OrderService {
 	List<SoDetailDTO> findSoDetail(final long soId);
 	
 	UserDTO findUserByOrderCode(String orderCode);
+
+	List<SoDTO> listSO(long orderId);
+
+	void approve(SearchOrderDTO orderReport);
+
+	void approve(long orderId);
+
 }

@@ -2,25 +2,29 @@ package com.starboard.b2b.web.form.order;
 
 import java.util.List;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 import com.starboard.b2b.dto.PaymentMethodDTO;
 import com.starboard.b2b.dto.PaymentTermDTO;
 import com.starboard.b2b.dto.ProductPriceGroupDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 
-public class ApproveRejectForm {
+public class OrderDecisionForm {
 	private SearchOrderDTO orderReport;
 
 	private boolean editMode;
 	private String paymentMethodId;
 	private String paymentTermId;
 
+	private String status;
+
 	private List<PaymentMethodDTO> paymentMethodList;
 	private List<PaymentTermDTO> paymentTermList;
 	private List<SearchOrderDetailDTO> orderDetails;
 	private List<ProductPriceGroupDTO> productPriceGroupList;
 
-	public ApproveRejectForm() {
+	public OrderDecisionForm() {
 	}
 
 	public SearchOrderDTO getOrderReport() {
@@ -85,5 +89,18 @@ public class ApproveRejectForm {
 
 	public void setProductPriceGroupList(List<ProductPriceGroupDTO> productPriceGroupList) {
 		this.productPriceGroupList = productPriceGroupList;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
 	}
 }

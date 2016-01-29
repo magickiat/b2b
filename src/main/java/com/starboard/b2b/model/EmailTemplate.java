@@ -16,7 +16,7 @@ import javax.persistence.TemporalType;
 @Table(name = "email_template")
 public class EmailTemplate implements java.io.Serializable {
 
-	private long id;
+	private String id;
 	private String subject;
 	private String body;
 	private String userCreate;
@@ -27,11 +27,11 @@ public class EmailTemplate implements java.io.Serializable {
 	public EmailTemplate() {
 	}
 
-	public EmailTemplate(long id) {
+	public EmailTemplate(String id) {
 		this.id = id;
 	}
 
-	public EmailTemplate(long id, String subject, String body, String userCreate, String userUpdate, Date timeCreate,
+	public EmailTemplate(String id, String subject, String body, String userCreate, String userUpdate, Date timeCreate,
 			Date timeUpdate) {
 		this.id = id;
 		this.subject = subject;
@@ -45,11 +45,11 @@ public class EmailTemplate implements java.io.Serializable {
 	@Id
 
 	@Column(name = "id", unique = true, nullable = false)
-	public long getId() {
+	public String getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

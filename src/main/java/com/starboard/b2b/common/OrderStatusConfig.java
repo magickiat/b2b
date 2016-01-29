@@ -1,6 +1,6 @@
 package com.starboard.b2b.common;
 
-public interface OrderStatus {
+public interface OrderStatusConfig {
 	String WAIT_FOR_APPROVE = "10";
 	String CANCELED = "20";
 	String APPROVED = "30";
