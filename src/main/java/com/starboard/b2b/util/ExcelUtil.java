@@ -8,6 +8,7 @@ package com.starboard.b2b.util;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -25,6 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import com.starboard.b2b.bean.ExcelOrderBean;
 import com.starboard.b2b.dto.ProductDTO;
+import com.starboard.b2b.dto.ProductPriceDTO;
 import com.starboard.b2b.exception.B2BException;
 
 /**
@@ -177,7 +179,7 @@ public class ExcelUtil {
 				if (cellActive != null) {
 					if (cellActive.getStringCellValue().trim().equalsIgnoreCase("yes")) {
 						active = "1";
-					}else{
+					} else {
 						active = "0";
 					}
 
@@ -195,6 +197,111 @@ public class ExcelUtil {
 
 				log.info("productType = " + product.getProductTypeId() + "\t technology = " + product.getProductTechnologyId());
 				result.add(product);
+			}
+		} finally {
+			if (workbook != null) {
+				workbook.close();
+			}
+		}
+
+		result.trimToSize();
+		return result;
+	}
+
+	public static List<ProductPriceDTO> parseProductPrice(InputStream inputStream) throws Exception {
+		ArrayList<ProductPriceDTO> result = new ArrayList<>();
+		XSSFWorkbook workbook = null;
+		XSSFSheet sheet = null;
+
+		try {
+			workbook = new XSSFWorkbook(inputStream);
+			sheet = workbook.getSheetAt(0);
+
+			if (sheet == null) {
+				throw new B2BException("no sheet present in this workbook");
+			}
+
+			Iterator<Row> iterator = sheet.iterator();
+			while (iterator.hasNext()) {
+				Row row = (Row) iterator.next();
+				if (row == null) {
+					continue;
+				}
+				log.info("row: " + row.getRowNum());
+
+				// ----- skip header -----
+				if (row.getRowNum() == 0) {
+					continue;
+				}
+
+				// ----- get cell value -----
+				Cell cellProductCode = row.getCell(0);
+				Cell cellPriceGroup = row.getCell(1);
+				Cell cellCurrency = row.getCell(2);
+				Cell cellAmount = row.getCell(3);
+				Cell cellMsrePrice = row.getCell(4);
+				Cell cellUnitId = row.getCell(5);
+
+				String productCode = "";
+				String priceGroup = "";
+				String currency = "";
+				BigDecimal amount = new BigDecimal(0);
+				BigDecimal msrePrice = new BigDecimal(0);
+				String unitId = "";
+
+				// ----- validate and get value -----
+
+				if (cellProductCode == null) {
+					throw new B2BException("product_code is required");
+				} else if (cellProductCode.getCellType() == Cell.CELL_TYPE_STRING) {
+					productCode = StringUtil.removeSpecialChar(cellProductCode.getStringCellValue().trim());
+				} else {
+					throw new B2BException("product_code must be text");
+				}
+
+				if (cellPriceGroup == null) {
+					throw new B2BException("Price group is required");
+				} else if (cellPriceGroup.getCellType() == Cell.CELL_TYPE_STRING) {
+					priceGroup = StringUtil.removeSpecialChar(cellPriceGroup.getStringCellValue().trim());
+				} else {
+					throw new B2BException("Price group must be text");
+				}
+
+				if (cellCurrency == null) {
+					throw new B2BException("Currency is required");
+				} else if (cellCurrency.getCellType() == Cell.CELL_TYPE_STRING) {
+					currency = StringUtil.removeSpecialChar(cellCurrency.getStringCellValue().trim());
+				} else {
+					throw new B2BException("Currency must be text");
+				}
+
+				if (cellAmount == null) {
+					throw new B2BException("Amount is required");
+				} else if (cellAmount.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+					amount = new BigDecimal(cellAmount.getNumericCellValue());
+				} else if (cellAmount.getCellType() == Cell.CELL_TYPE_STRING) {
+					amount = new BigDecimal(cellAmount.getStringCellValue());
+				} else {
+					throw new B2BException("Amount must be Text or Number");
+				}
+
+				if (cellMsrePrice != null) {
+					if (cellMsrePrice.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+						msrePrice = new BigDecimal(cellMsrePrice.getNumericCellValue());
+					} else if (cellMsrePrice.getCellType() == Cell.CELL_TYPE_STRING) {
+						msrePrice = new BigDecimal(cellMsrePrice.getStringCellValue());
+					} else {
+						throw new B2BException("MSRE price must be Text or Number");
+					}
+				}
+				
+				if (cellUnitId != null && cellUnitId.getCellType() == Cell.CELL_TYPE_STRING) {
+					unitId = StringUtil.removeSpecialChar(cellUnitId.getStringCellValue().trim());
+				} else {
+					throw new B2BException("Unit must be text");
+				}
+				
+				result.add( new ProductPriceDTO(productCode, priceGroup, currency, amount, unitId, msrePrice));
 			}
 		} finally {
 			if (workbook != null) {

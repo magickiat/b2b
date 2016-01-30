@@ -44,6 +44,8 @@ import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.Product;
 import com.starboard.b2b.model.ProductBuyerGroup;
 import com.starboard.b2b.model.ProductCategory;
+import com.starboard.b2b.model.ProductPrice;
+import com.starboard.b2b.model.ProductPriceId;
 import com.starboard.b2b.model.ProductTechnology;
 import com.starboard.b2b.model.ProductType;
 import com.starboard.b2b.model.ProductYear;
@@ -476,7 +478,7 @@ public class ProductServiceImpl implements ProductService {
 						product.setTimeCreate(DateTimeUtil.getCurrentDate());
 						product.setUserCreate(B2BConstant.B2B_SYSTEM_NAME);
 					} else {
-						
+
 						product.setProductTypeId(importProduct.getProductTypeId());
 						product.setProductNameEn(importProduct.getProductNameEn());
 						product.setProductBuyerGroupId(importProduct.getProductBuyerGroupId());
@@ -484,7 +486,7 @@ public class ProductServiceImpl implements ProductService {
 						product.setProductTechnologyId(importProduct.getProductTechnologyId());
 						product.setProductLength(importProduct.getProductLength());
 						product.setIsActive(importProduct.getIsActive());
-						
+
 						product.setTimeUpdate(DateTimeUtil.getCurrentDate());
 						product.setUserUpdate(B2BConstant.B2B_SYSTEM_NAME);
 					}
@@ -543,6 +545,40 @@ public class ProductServiceImpl implements ProductService {
 		page.setTotal(result.getTotal());
 		page.setResult(result.getResult());
 		return page;
+	}
+
+	@Override
+	@Transactional
+	public void updateProductPrice(List<ProductPriceDTO> productPrices) {
+		if (productPrices != null && !productPrices.isEmpty()) {
+			for (ProductPriceDTO dto : productPrices) {
+				boolean isNew = false;
+				ProductPriceId id = new ProductPriceId();
+				id.setProductCode(dto.getProductCode());
+				id.setProductCurrency(dto.getProductCurrency());
+				id.setProductPriceGroupId(dto.getProductPriceGroupId());
+				
+				ProductPrice price = productPriceDao.findById(id);
+				if(price == null){
+					isNew = true;
+					price = new ProductPrice();
+					price.setId(id);	
+					price.setTimeCreate(DateTimeUtil.getCurrentDate());
+					price.setUserCreate(B2BConstant.B2B_SYSTEM_NAME);
+				}else{
+					price.setTimeUpdate(DateTimeUtil.getCurrentDate());
+					price.setUserUpdate(B2BConstant.B2B_SYSTEM_NAME);
+				}
+				
+				price.setAmount(dto.getAmount());
+				price.setMsrePrice(dto.getMsrePrice());
+				price.setProductUnitId(dto.getProductUnitId());
+				
+				if(isNew){
+					productPriceDao.save(price);					
+				}
+			}
+		}
 	}
 
 }

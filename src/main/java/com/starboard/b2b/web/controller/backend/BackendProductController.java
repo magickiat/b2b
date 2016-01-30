@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dto.ProductBuyerGroupDTO;
 import com.starboard.b2b.dto.ProductDTO;
+import com.starboard.b2b.dto.ProductPriceDTO;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.exception.B2BException;
@@ -85,7 +86,7 @@ public class BackendProductController {
 		if (!template.exists()) {
 			throw new FileNotFoundException(template.getName());
 		}
-		
+
 		byte[] byteArray = FileUtils.readFileToByteArray(template);
 		response.setContentLength(byteArray.length);
 		response.setContentType("application/vnd.ms-excel");
@@ -99,8 +100,8 @@ public class BackendProductController {
 	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.GET)
-	String upload(Model model) {
-		return "pages-back/product/upload";
+	String upload() {
+		return "pages-back/product/upload/product";
 	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
@@ -113,7 +114,7 @@ public class BackendProductController {
 		List<ProductDTO> uploadProducts = ExcelUtil.parseProduct(file.getInputStream());
 
 		if (uploadProducts == null || uploadProducts.isEmpty()) {
-			throw new B2BException("Product not not found in this upload file");
+			throw new B2BException("Not found a product in this upload file");
 		}
 
 		log.info("uploadProducts size: " + uploadProducts.size());
@@ -121,7 +122,33 @@ public class BackendProductController {
 		productService.updateProduct(uploadProducts);
 
 		model.addAttribute("msg", "upload complete");
-		return "pages-back/product/upload";
+		return "pages-back/product/upload/product";
 	}
 
+	@RequestMapping(value = "/upload/product-price", method = RequestMethod.GET)
+	String uploadProductPrice() {
+		return "pages-back/product/upload/product-price";
+	}
+	
+	@RequestMapping(value = "/upload/product-price", method = RequestMethod.POST)
+	String uploadProductPrice(@RequestParam("file") MultipartFile file, Model model) throws Exception {
+
+		if (file.isEmpty()) {
+			throw new B2BException("excel product file are not present in this request");
+		}
+
+		List<ProductPriceDTO> uploadProductPrices = ExcelUtil.parseProductPrice(file.getInputStream());
+
+		if (uploadProductPrices == null || uploadProductPrices.isEmpty()) {
+			throw new B2BException("Product Price not found in this upload file");
+		}
+
+		log.info("uploadProducts size: " + uploadProductPrices.size());
+
+		productService.updateProductPrice(uploadProductPrices);
+
+		model.addAttribute("msg", "upload complete");
+		return "pages-back/product/upload/product-price";
+	}
+	
 }

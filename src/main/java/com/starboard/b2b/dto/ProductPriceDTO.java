@@ -12,13 +12,13 @@ public class ProductPriceDTO {
 	private String productCurrency;
 	private java.math.BigDecimal amount;
 	private String productUnitId;
-	private float msrePrice;
+	private BigDecimal msrePrice;
 	
 	public ProductPriceDTO() {
 	}
 
 	public ProductPriceDTO(String productCode, String productPriceGroupId, String productCurrency, BigDecimal amount,
-			String productUnitId, float msrePrice) {
+			String productUnitId, BigDecimal msrePrice) {
 		this.productCode = productCode;
 		this.productPriceGroupId = productPriceGroupId;
 		this.productCurrency = productCurrency;
@@ -67,11 +67,11 @@ public class ProductPriceDTO {
 		this.productUnitId = productUnitId;
 	}
 
-	public float getMsrePrice() {
+	public BigDecimal getMsrePrice() {
 		return msrePrice;
 	}
 
-	public void setMsrePrice(float msrePrice) {
+	public void setMsrePrice(BigDecimal msrePrice) {
 		this.msrePrice = msrePrice;
 	}
 	

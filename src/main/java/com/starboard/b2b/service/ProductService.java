@@ -9,6 +9,7 @@ import com.starboard.b2b.dto.ProductBuyerGroupDTO;
 import com.starboard.b2b.dto.ProductCategoryDTO;
 import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ProductModelDTO;
+import com.starboard.b2b.dto.ProductPriceDTO;
 import com.starboard.b2b.dto.ProductPriceGroupDTO;
 import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.ProductTechnologyDTO;
@@ -69,5 +70,7 @@ public interface ProductService {
 	List<ProductTypeDTO> listProductBrandGroupForJson();
 	
 	void updateProduct(List<ProductDTO> products);
+
+	void updateProductPrice(List<ProductPriceDTO> productPrices);
 	
 }

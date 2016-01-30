@@ -23,6 +23,9 @@
 				<a href='<c:url value="/backend/admin/file/list" />'>Upload image</a>
 			</div>
 			
+			<div class="col-sm-12">
+				<a href='<c:url value="/backend/product/upload/product-price" />'>Upload Product Price</a>
+			</div>
 
 		</div>
 	</div>

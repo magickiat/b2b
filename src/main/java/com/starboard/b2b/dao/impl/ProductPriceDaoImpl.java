@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.starboard.b2b.dao.ProductPriceDao;
 import com.starboard.b2b.dto.ProductPriceDTO;
+import com.starboard.b2b.model.ProductPrice;
+import com.starboard.b2b.model.ProductPriceId;
 
 @Repository("productPriceDao")
 public class ProductPriceDaoImpl implements ProductPriceDao {
@@ -30,4 +32,15 @@ public class ProductPriceDaoImpl implements ProductPriceDao {
 		return (ProductPriceDTO) sessionFactory.getCurrentSession().createQuery(sb.toString()).setString("productCode", productCode)
 				.setString("custInvoiceCode", custInvoiceCode).setMaxResults(1).uniqueResult();
 	}
+
+	@Override
+	public ProductPrice findById(ProductPriceId id) {
+		return (ProductPrice) sessionFactory.getCurrentSession().get(ProductPrice.class, id);
+	}
+
+	@Override
+	public void save(ProductPrice price) {
+		sessionFactory.getCurrentSession().save(price);
+	}
+
 }
