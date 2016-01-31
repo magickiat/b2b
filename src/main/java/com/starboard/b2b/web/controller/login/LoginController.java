@@ -23,7 +23,7 @@ public class LoginController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	String submit(@ModelAttribute LoginForm loginForm, BindingResult binding) {
+	String submit(@ModelAttribute("loginForm") LoginForm loginForm, BindingResult binding) {
 		log.info("/login POST");
 		return "login";
 	}

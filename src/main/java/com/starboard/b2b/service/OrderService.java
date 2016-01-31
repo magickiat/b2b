@@ -28,7 +28,7 @@ public interface OrderService {
 
 	long getNextRunningNo(int year);
 
-	OrderDTO saveOrder(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod, Map<Long, ProductDTO> cart);
+	OrderDTO newOrder(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod, Map<Long, ProductDTO> cart);
 
 	String generateOrderCode();
 
@@ -43,8 +43,6 @@ public interface OrderService {
 	SearchOrderDTO findOrderForReport(Long orderId);
 
 	SearchOrderDTO findOrderForReport(String orderCode);
-
-	List<OrdAddressDTO> findOrderAddress(Long orderId);
 
 	List<OrdAddressDTO> findOrderAddress(String orderCode);
 
@@ -63,4 +61,11 @@ public interface OrderService {
 	List<SoDetailDTO> findSoDetail(final long soId);
 	
 	UserDTO findUserByOrderCode(String orderCode);
+
+	List<SoDTO> listSO(long orderId);
+
+	void approve(SearchOrderDTO orderReport);
+
+	void approve(long orderId);
+
 }

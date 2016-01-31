@@ -26,18 +26,18 @@ public class ProductPrice implements java.io.Serializable {
 	private String userUpdate;
 	private Date timeCreate;
 	private Date timeUpdate;
-	private float msrePrice;
+	private BigDecimal msrePrice;
 
 	public ProductPrice() {
 	}
 
-	public ProductPrice(ProductPriceId id, float msrePrice) {
+	public ProductPrice(ProductPriceId id, BigDecimal msrePrice) {
 		this.id = id;
 		this.msrePrice = msrePrice;
 	}
 
 	public ProductPrice(ProductPriceId id, BigDecimal amount, String productUnitId, String userCreate,
-			String userUpdate, Date timeCreate, Date timeUpdate, float msrePrice) {
+			String userUpdate, Date timeCreate, Date timeUpdate, BigDecimal msrePrice) {
 		this.id = id;
 		this.amount = amount;
 		this.productUnitId = productUnitId;
@@ -118,12 +118,12 @@ public class ProductPrice implements java.io.Serializable {
 		this.timeUpdate = timeUpdate;
 	}
 
-	@Column(name = "msre_price", nullable = false, precision = 12, scale = 0)
-	public float getMsrePrice() {
+	@Column(name = "msre_price", nullable = false, precision = 20, scale = 10)
+	public BigDecimal getMsrePrice() {
 		return this.msrePrice;
 	}
 
-	public void setMsrePrice(float msrePrice) {
+	public void setMsrePrice(BigDecimal msrePrice) {
 		this.msrePrice = msrePrice;
 	}
 

@@ -67,6 +67,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		filter.setForceEncoding(true);
 		http.addFilterBefore(filter, CsrfFilter.class);
 
+//		http.headers().defaultsDisabled();
+		
 		http.authorizeRequests().antMatchers("/login/**", "/gen_user", "/system/env").permitAll()
 				.antMatchers("/backend/**").hasRole(ROLE_ADMIN)
 				.antMatchers("/frontend/**").hasAnyRole(ROLE_USER, ROLE_ADMIN)
@@ -79,7 +81,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 			    .and().rememberMe().rememberMeParameter("rememberMe").tokenRepository(persistentTokenRepository())
 				.authenticationSuccessHandler(new AuthenSuccessHandler(Integer.valueOf(env.getProperty("session.timeout"))))
-				.tokenValiditySeconds((int) TimeUnit.MILLISECONDS.convert(5L, TimeUnit.DAYS)).and().csrf()
+				.tokenValiditySeconds((int) TimeUnit.MILLISECONDS.convert(5L, TimeUnit.DAYS)).and()
+				.csrf().ignoringAntMatchers("/login")
 				.and().exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());
 	}
 

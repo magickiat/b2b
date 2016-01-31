@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.starboard.b2b.common.B2BConstant;
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dao.ProductBuyerGroupDao;
 import com.starboard.b2b.dao.ProductCategoryDao;
@@ -36,17 +38,21 @@ import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.ProductTechnologyDTO;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.ProductYearDTO;
-import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
+import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.Product;
 import com.starboard.b2b.model.ProductBuyerGroup;
 import com.starboard.b2b.model.ProductCategory;
+import com.starboard.b2b.model.ProductPrice;
+import com.starboard.b2b.model.ProductPriceId;
 import com.starboard.b2b.model.ProductTechnology;
 import com.starboard.b2b.model.ProductType;
 import com.starboard.b2b.model.ProductYear;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.ApplicationConfig;
+import com.starboard.b2b.util.DateTimeUtil;
+import com.starboard.b2b.util.ProductUtils;
 import com.starboard.b2b.web.form.product.SearchProductForm;
 
 @Service("productService")
@@ -186,7 +192,7 @@ public class ProductServiceImpl implements ProductService {
 		req.setCondition(form);
 
 		// Find product model
-		SearchResult<SearchProductModelDTO> result = productDao.search(req);
+		SearchResult<SearchProductModelDTO> result = productDao.searchProductForFrontend(req);
 
 		// Validate has image exist
 		List<SearchProductModelDTO> resultList = result.getResult();
@@ -431,8 +437,148 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional(readOnly = true)
 	public List<ProductTypeDTO> findAllProductType() {
 		List<ProductType> types = productTypeDao.findAll();
-		log.info("found " + (types == null? 0: types.size()));
+		log.info("found " + (types == null ? 0 : types.size()));
 		List<ProductTypeDTO> list = getProductTypeDTO(types);
 		return list;
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<ProductTypeDTO> listProductBrandGroupForJson() {
+		ArrayList<ProductTypeDTO> result = new ArrayList<>();
+		List<ProductType> list = productTypeDao.listDistinctProductType();
+
+		if (list == null || list.isEmpty()) {
+			return result;
+		} else {
+			for (ProductType data : list) {
+				ProductTypeDTO dto = new ProductTypeDTO();
+				BeanUtils.copyProperties(data, dto);
+				result.add(dto);
+			}
+
+			return result;
+		}
+
+	}
+
+	@Override
+	@Transactional
+	public void updateProduct(List<ProductDTO> products) {
+		if (products != null && !products.isEmpty()) {
+
+			for (ProductDTO importProduct : products) {
+				if (StringUtils.isNotEmpty(importProduct.getProductCode())) {
+
+					Product product = productDao.findByProductCode(importProduct.getProductCode());
+
+					if (product == null) {
+						product = new Product();
+						BeanUtils.copyProperties(importProduct, product);
+						product.setTimeCreate(DateTimeUtil.getCurrentDate());
+						product.setUserCreate(B2BConstant.B2B_SYSTEM_NAME);
+					} else {
+
+						product.setProductTypeId(importProduct.getProductTypeId());
+						product.setProductNameEn(importProduct.getProductNameEn());
+						product.setProductBuyerGroupId(importProduct.getProductBuyerGroupId());
+						product.setProductModelId(importProduct.getProductModelId());
+						product.setProductTechnologyId(importProduct.getProductTechnologyId());
+						product.setProductLength(importProduct.getProductLength());
+						product.setIsActive(importProduct.getIsActive());
+
+						product.setTimeUpdate(DateTimeUtil.getCurrentDate());
+						product.setUserUpdate(B2BConstant.B2B_SYSTEM_NAME);
+					}
+
+					// Set default to active if value is empty
+					if (StringUtils.isEmpty(importProduct.getIsActive())) {
+						product.setIsActive(B2BConstant.PRODUCT_FLAG_ACTIVE);
+					}
+
+					// ----- Transform data -----
+					// withnose protector
+					String flagWithNoseProduct = B2BConstant.NO_WITHNOSE_PROTECTION;
+					if (ProductUtils.isWithnoseProduct(product.getProductNameEn())) {
+						flagWithNoseProduct = B2BConstant.WITHNOSE_PROTECTION;
+					}
+					product.setProductPreintro(flagWithNoseProduct);
+
+					// Set year, use product_year_id from database
+					String year = ProductUtils.getProductYear(importProduct.getProductNameEn());
+					if (StringUtils.isNotEmpty(year)) {
+						// Get year id from database
+						ProductYear productYear = productYearDao.findByYear(year);
+						if (productYear != null) {
+							product.setProductYearId(productYear.getProductYearId());
+						}
+					}
+
+					product.setProductYearId(year);
+
+					log.info("merge product: " + product);
+					productDao.merge(product);
+				}
+			}
+		}
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<SearchProductModelDTO> searchProductBackend(SearchProductForm form) {
+		log.info("form: " + form);
+		SearchRequest<SearchProductForm> req = new SearchRequest<>(form.getPage(), applicationConfig.getPageSize());
+		req.setCondition(form);
+
+		// Find product model
+		SearchResult<SearchProductModelDTO> result = productDao.searchProductForBackend(req);
+
+		// Validate has image exist
+		List<SearchProductModelDTO> resultList = result.getResult();
+		log.info("resultList size: " + (resultList == null ? 0 : resultList.size()));
+
+		// create result page object
+		Page<SearchProductModelDTO> page = new Page<>();
+		page.setCurrent(form.getPage());
+		log.info("current page: " + page.getCurrent());
+		page.setPageSize(req.getPageSize());
+		page.setTotal(result.getTotal());
+		page.setResult(result.getResult());
+		return page;
+	}
+
+	@Override
+	@Transactional
+	public void updateProductPrice(List<ProductPriceDTO> productPrices) {
+		if (productPrices != null && !productPrices.isEmpty()) {
+			for (ProductPriceDTO dto : productPrices) {
+				boolean isNew = false;
+				ProductPriceId id = new ProductPriceId();
+				id.setProductCode(dto.getProductCode());
+				id.setProductCurrency(dto.getProductCurrency());
+				id.setProductPriceGroupId(dto.getProductPriceGroupId());
+				
+				ProductPrice price = productPriceDao.findById(id);
+				if(price == null){
+					isNew = true;
+					price = new ProductPrice();
+					price.setId(id);	
+					price.setTimeCreate(DateTimeUtil.getCurrentDate());
+					price.setUserCreate(B2BConstant.B2B_SYSTEM_NAME);
+				}else{
+					price.setTimeUpdate(DateTimeUtil.getCurrentDate());
+					price.setUserUpdate(B2BConstant.B2B_SYSTEM_NAME);
+				}
+				
+				price.setAmount(dto.getAmount());
+				price.setMsrePrice(dto.getMsrePrice());
+				price.setProductUnitId(dto.getProductUnitId());
+				
+				if(isNew){
+					productPriceDao.save(price);					
+				}
+			}
+		}
+	}
+
 }

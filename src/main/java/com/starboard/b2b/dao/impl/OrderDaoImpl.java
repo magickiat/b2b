@@ -43,7 +43,7 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public SearchOrderDTO findOrderForReport(Long orderId) {
-		String searchQuery = "SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(o.orderId, o.orderCode, c.nameEn, p.productTypeName, o.orderDate, o.expectShipmentDate, os.orderStatusName, o.paymentMethodId, o.shippingId, pt.description, o.remarkCustomer, pt.paymentTermId, o.orderStatus  )"
+		String searchQuery = "SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(o.orderId, o.orderCode, c.nameEn, p.productTypeName, o.orderDate, o.expectShipmentDate, os.orderStatusName, o.paymentMethodId, o.shippingId, pt.description, o.remarkCustomer, pt.paymentTermId, o.orderStatus, o.remarkOrders  )"
 				+ " FROM Orders o, ProductType p, Cust c, OrderStatus os, PaymentTerm pt "
 				+ " WHERE o.brandGroupId = p.productTypeId AND o.custId = c.custId and o.orderStatus = os.orderStatusId and o.paymentTermId = pt.paymentTermId "
 				+ " and o.orderId = :orderId ";
@@ -52,7 +52,7 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public SearchOrderDTO findOrderForReport(String orderCode) {
-		String searchQuery = "SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(o.orderId, o.orderCode, c.nameEn, p.productTypeName, o.orderDate, o.expectShipmentDate, os.orderStatusName, o.paymentMethodId, o.shippingId, pt.description, o.remarkCustomer, pt.paymentTermId, o.orderStatus  )"
+		String searchQuery = "SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(o.orderId, o.orderCode, c.nameEn, p.productTypeName, o.orderDate, o.expectShipmentDate, os.orderStatusName, o.paymentMethodId, o.shippingId, pt.description, o.remarkCustomer, pt.paymentTermId, o.orderStatus, o.remarkOrders  )"
 		+ " FROM Orders o, ProductType p, Cust c, OrderStatus os, PaymentTerm pt "
 		+ " WHERE o.brandGroupId = p.productTypeId AND o.custId = c.custId and o.orderStatus = os.orderStatusId  and o.paymentTermId = pt.paymentTermId "
 		+ " and o.orderCode = :orderCode ";
@@ -73,7 +73,7 @@ public class OrderDaoImpl implements OrderDao {
 				" o.expectShipmentDate, " +
 				" os.orderStatusName, " +
 				" o.paymentMethodId, " +
-				" o.shippingId, pt.description, o.remarkCustomer, pt.paymentTermId, o.orderStatus ) " +
+				" o.shippingId, pt.description, o.remarkCustomer, pt.paymentTermId, o.orderStatus, o.remarkOrders ) " +
 				"FROM Orders o, ProductType p, Cust c, OrderStatus os, PaymentTerm pt " +
 				"WHERE o.brandGroupId = p.productTypeId " +
 				"AND o.custId = c.custId " +
@@ -166,7 +166,7 @@ public class OrderDaoImpl implements OrderDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<SearchOrderDTO> findOrderForReport(Long[] ordersId) {
-		String searchQuery = "SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(o.orderId, o.orderCode, c.nameEn, p.productTypeName, o.orderDate, o.expectShipmentDate, os.orderStatusName, o.paymentMethodId, o.shippingId, pt.description, o.remarkCustomer, pt.paymentTermId, o.orderStatus  )"
+		String searchQuery = "SELECT  new com.starboard.b2b.dto.search.SearchOrderDTO(o.orderId, o.orderCode, c.nameEn, p.productTypeName, o.orderDate, o.expectShipmentDate, os.orderStatusName, o.paymentMethodId, o.shippingId, pt.description, o.remarkCustomer, pt.paymentTermId, o.orderStatus, o.remarkOrders  )"
 				+ " FROM Orders o, ProductType p, Cust c, OrderStatus os, PaymentTerm pt "
 				+ " WHERE o.brandGroupId = p.productTypeId AND o.custId = c.custId and o.orderStatus = os.orderStatusId"
 				+ " and o.orderId in (:orderId)  and o.paymentTermId = pt.paymentTermId  "
@@ -188,7 +188,7 @@ public class OrderDaoImpl implements OrderDao {
 				" o.expectShipmentDate, " +
 				" os.orderStatusName, " +
 				" o.paymentMethodId, " +
-				" o.shippingId, pt.description, o.remarkCustomer, pt.paymentTermId, o.orderStatus ) " +
+				" o.shippingId, pt.description, o.remarkCustomer, pt.paymentTermId, o.orderStatus, o.remarkOrders ) " +
 				"FROM Orders o, ProductType p, Cust c, OrderStatus os, PaymentTerm pt " +
 				"WHERE o.brandGroupId = p.productTypeId " +
 				"AND o.custId = c.custId " +

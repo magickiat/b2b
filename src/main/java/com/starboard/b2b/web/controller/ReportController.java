@@ -44,7 +44,6 @@ import com.starboard.b2b.dto.SoDTO;
 import com.starboard.b2b.dto.SoDetailDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
-import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
@@ -205,7 +204,7 @@ public class ReportController {
 	}
 	
 	@RequestMapping(value = "ordersummary/excel", method = RequestMethod.GET)
-	String generateOrderSummaryExcel(@ModelAttribute OrderSummaryForm form, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	String generateOrderSummaryExcel(@ModelAttribute("form") OrderSummaryForm form, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		log.info("search condition: " + form.toString());
         setOrderSummarySearchFrom(form, model);
 		List<SearchOrderDTO> list = orderService.searchOrderForReport(form);

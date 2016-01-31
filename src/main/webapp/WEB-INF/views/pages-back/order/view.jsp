@@ -1,6 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true"%>
 
@@ -8,7 +9,7 @@
 <html>
     <head>
         <%@include file="/WEB-INF/views/include/common_meta.jspf" %>
-        <title>Backend-Starboard Windsurfing</title>
+        <title><spring:message code="page.header"></spring:message></title>
         <%@include file="/WEB-INF/views/include/common_cssbackend.jspf"%>
     </head>
     <body>
@@ -16,31 +17,31 @@
 
         <div class="container">
 
-            <form:form modelAttribute="form" servletRelativeAction="/backend/order/approve-reject">
+            <form:form id="approveForm" name="approveForm" modelAttribute="approveForm"
+                       servletRelativeAction="/backend/order/approve" method="POST">
 
+                <form:hidden path="editMode" />
+                <input type="hidden" name="orderId" value="${ approveForm.orderReport.orderId }" />
                 <!-- Header -->
                 <div class="row bg_color">
-                    <div class="col-sm-12">
-                        <div class="row row-header2 header2 txtupper">view detail order</div>
-                    </div>
 
-                    <div>
-                        <div class="col-sm-6 bg_color">
-                            <h1 id="order-code">${form.orderReport.orderCode}</h1>
-                        </div>
-                        <div class="col-sm-6 text-right bg_color">
-                            <h1>${form.orderReport.orderStatus}</h1>
-                        </div>
+                    <div class="col-sm-6 bg_color">
+                        <h1 id="order-code">${approveForm.orderReport.orderCode}</h1>
+                    </div>
+                    <div class="col-sm-6 text-right bg_color">
+                        <h1>${approveForm.orderReport.orderStatus}</h1>
                     </div>
 
                     <!-- Button -->
                     <div class="col-sm-12 bg_color" style="margin-top: 10px;">
                         <div class="col-sm-6" style="padding: 20px 0px 10px 0px;">
-                            <div id="btn-save" class="btn btn-primary" data-id="${form.orderReport.orderId}">Save</div>
+                            <div id="btn-save" class="btn btn-primary" data-id="${ordDetail.orderDetailId}">Save</div>
                         </div>
                         <div class="col-sm-6 text-right" style="padding: 20px 0px 10px 0px;">
-                            <div id="btn-approve" class="btn btn-success" data-id="${form.orderReport.orderId}">Approve</div>
-                            <div id="btn-reject" class="btn btn-danger" data-id="${form.orderReport.orderId}">Reject</div>
+                            <input type="button" id="btn-approve" class="btn btn-success"
+                                   onclick="approve(${ ordDetail.orderDetailId })" value="Approve" />
+                            <input type="button" id="btn-reject" class="btn btn-danger"
+                                   onclick="reject(${ ordDetail.orderDetailId })" value="Reject" />
                         </div>
                     </div>
 
@@ -58,19 +59,19 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <fmt:formatDate pattern="dd-MM-yyyy" value="${form.orderReport.orderDate}" />
+                                        <fmt:formatDate pattern="dd-MM-yyyy" value="${approveForm.orderReport.orderDate}" />
                                     </td>
                                     <td>
-                                        <fmt:formatDate pattern="dd-MM-yyyy" value="${form.orderReport.expectShipmentDate}" />
+                                        <fmt:formatDate pattern="dd-MM-yyyy" value="${approveForm.orderReport.expectShipmentDate}" />
                                     </td>
                                     <td>
                                         <form:select path="paymentTermId" cssClass="form-control">
-                                            <form:options items="${ form.paymentTermList }" itemLabel="paymentTermName" itemValue="paymentTermId" />
+                                            <form:options items="${ approveForm.paymentTermList }" itemLabel="paymentTermName" itemValue="paymentTermId" />
                                         </form:select>
                                     </td>
                                     <td colspan="2">
                                         <form:select path="paymentMethodId" cssClass="form-control">
-                                            <form:options items="${ form.paymentMethodList }" itemLabel="paymentMethodName" itemValue="paymentMethodId" />
+                                            <form:options items="${ approveForm.paymentMethodList }" itemLabel="paymentMethodName" itemValue="paymentMethodId" />
                                         </form:select>
                                     </td>
                                 </tr>
@@ -80,23 +81,17 @@
                     <!-- Order Address detail -->
                     <div class="col-sm-6 bg_color">
                         <div class="col-sm-12">Dispatch to:</div>
-                        <div class="col-sm-12">
-                            ${form.orderReport.dispatchToAddress.orderAddr}</div>
-                        <div class="col-sm-12">Tel:
-                            ${form.orderReport.dispatchToAddress.orderTel} Fax:
-                            ${form.orderReport.dispatchToAddress.fax}</div>
+                        <div class="col-sm-12">${approveForm.orderReport.dispatchToAddress.orderAddr}</div>
+                        <div class="col-sm-12">Tel: ${approveForm.orderReport.dispatchToAddress.orderTel} Fax:
+                            ${approveForm.orderReport.dispatchToAddress.fax}</div>
                     </div>
                     <div class="col-sm-6 bg_color">
                         <div class="col-sm-12">Invoice to:</div>
-                        <div class="col-sm-12">${form.orderReport.invoiceToAddress.orderAddr}</div>
-                        <div class="col-sm-12">
-                            Tel:
-                            ${form.orderReport.invoiceToAddress.orderTel} 
-                            Fax:
-                            ${form.orderReport.invoiceToAddress.fax}
-                        </div>
-
+                        <div class="col-sm-12">${approveForm.orderReport.invoiceToAddress.orderAddr}</div>
+                        <div class="col-sm-12">Tel: ${approveForm.orderReport.invoiceToAddress.orderTel} Fax:
+                            ${approveForm.orderReport.invoiceToAddress.fax}</div>
                     </div>
+
                     <!-- Order detail -->
                     <div class="col-sm-12 bg_color">
                         <table class="table table-hover table-list">
@@ -124,14 +119,22 @@
                     <div class="col-sm-6 bg_color" style="padding-bottom: 10px;">
                         <div class="">Customer Remark</div>
                         <div class="">
-                            <textarea class="form-control" rows="5" cols="50">${ form.orderReport.remarkCustomer }</textarea>
+                            <textarea class="form-control" rows="5" cols="50">${ approveForm.orderReport.remarkCustomer }</textarea>
                         </div>
                     </div>
                     <div class="col-sm-6 bg_color">
                         <div class="">Shipping Type</div>
                         <div class="" style="padding-bottom: 10px;">
-                            <textarea class="form-control" rows="5" cols="50">${ form.orderReport.shippingType }</textarea>
+                            <textarea class="form-control" rows="5" cols="50">${ approveForm.orderReport.shippingType }</textarea>
                         </div>
+                    </div>
+
+                    <%-- Save, Cancel --%>
+                    <div class="col-sm-6 bg_color text-right">
+                        <input type="button" id="save" name="save" class="btn btn-default" value="Save" />
+                    </div>
+                    <div class="col-sm-6 bg_color">
+                        <input type="reset" id="cancel" name="cancel" class="btn btn-default" value="Cancel" />
                     </div>
                 </div>
             </form:form>
@@ -264,213 +267,225 @@
     </script>
 
     <script type="text/javascript">
+                                       /*
+                                        * data binding
+                                        */
+                                       var context = {
+                                           Items: [
+                                               //<c:forEach items="${form.orderReport.orderDetails}" var="item">
+                                               {
+                                                   ID: '${item.orderDetailId}',
+                                                   ProductCode: '${item.productCode}',
+                                                   ProductName: '${item.productName}',
+                                                   ProductUnit: '${item.productUnit}',
+                                                   Amount: ${item.amount},
+                                                   Price: ${item.unitPrice},
+                                                   Total: ${item.amount*item.unitPrice},
+                                                   HasItem: true,
+                                                   PriceGroups: [
+                                                       //<c:forEach items="${form.productPriceGroupList}" var="group">
+                                                       {
+                                                           PriceGroupID: '${group.productPriceGroupId}',
+                                                           PriceGroupName: '${group.productPriceGroupName}',
+                                                           HasMoreGroup: true
+                                                       },
+                                                       //</c:forEach>
+                                                       {}
+                                                   ]
+                                               },
+                                               //</c:forEach>
+                                               {}
+                                           ]
+                                       };
 
-/*
- * data binding
- */
-var context = {
-    Items: [
-        //<c:forEach items="${form.orderReport.orderDetails}" var="item">
-        {
-            ID: '${item.orderDetailId}',
-            ProductCode: '${item.productCode}',
-            ProductName: '${item.productName}',
-            ProductUnit: '${item.productUnit}',
-            Amount: ${item.amount},
-            Price: ${item.unitPrice},
-            Total: ${item.amount*item.unitPrice},
-            HasItem: true,
-            PriceGroups: [
-                //<c:forEach items="${form.productPriceGroupList}" var="group">
-                {
-                    PriceGroupID: '${group.productPriceGroupId}',
-                    PriceGroupName: '${group.productPriceGroupName}',
-                    HasMoreGroup: true
-                },
-                //</c:forEach>
-                {}
-            ]
-        },
-        //</c:forEach>
-        {}
-    ]
-};
+                                       /*
+                                        * application
+                                        */
+                                       var app = {
+                                           item: {
+                                               template: '',
+                                               render: function () {
+                                                   $('#item-list').html(Mark.up(app.item.template, context));
+                                               }
+                                           },
+                                           split: {
+                                               index: 0,
+                                               row: 0,
+                                               context: {
+                                                   Items: []
+                                               },
+                                               template: '',
+                                               amount: function () {
+                                                   var items = app.split.context.Items;
+                                                   var total = 0;
+                                                   for (var i = 0; i < items.length; i++) {
+                                                       total = total + Number(items[i].Amount);
+                                                   }
+                                                   return total;
+                                               },
+                                               render: function () {
+                                                   $('#amount-current').text(app.split.amount());
+                                                   $('#split-list').html(Mark.up(app.split.template, app.split.context));
+                                               }
+                                           },
+                                           init: function () {
+                                               $(document).on('change', '.price-group', function (event) {
+                                                   alert('change price group for item id -> ' + $(this).attr('data-item'));
+                                               });
+                                               //
+                                               $(document).on('click', '.item-remove', function (event) {
+                                                   var item = $(this).attr('data-item');
+                                                   context.Items.splice(item, 1);
+                                                   app.item.render();
+                                               });
+                                               //
+                                               $(document).on('click', '.item-split', function (event) {
+                                                   app.split.index = $(this).attr('data-item');
+                                                   $('#split-init input[name=row]').val(context.Items[app.split.index].Amount);
+                                                   $('#split-init').modal('toggle');
+                                               });
+                                               //
+                                               $(document).on('click', '#split-init button[name=split]', function (event) {
+                                                   var row = $('#split-init input[name=row]').val();
+                                                   if (row <= context.Items[app.split.index].Amount) {
+                                                       app.split.row = row;
+                                                       $('#split-init').modal('toggle');
+                                                   } else {
+                                                       $(this).notify('you can not split line more than amount', 'warn');
+                                                       app.split.index = 0;
+                                                       app.split.row = 0;
+                                                   }
+                                               });
+                                               //
+                                               $(document).on('click', '#split-detail button[name=done]', function (event) {
+                                                   if (context.Items[app.split.index].Amount === app.split.amount()) {
+                                                       context.Items.splice(app.split.index, 1);
+                                                       for (var i = 0; i < app.split.context.Items.length; i++) {
+                                                           context.Items.push(app.split.context.Items[i]);
+                                                       }
+                                                       app.item.render();
+                                                       $('#split-detail').modal('toggle');
+                                                   } else {
+                                                       $(this).notify('total split quantity not equals original quantity', 'warn');
+                                                   }
 
-/*
- * application
- */
-var app = {
-    item: {
-        template: '',
-        render: function () {
-            $('#item-list').html(Mark.up(app.item.template, context));
-        }
-    },
-    split: {
-        index: 0,
-        row: 0,
-        context: {
-            Items: []
-        },
-        template: '',
-        amount: function () {
-            var items = app.split.context.Items;
-            var total = 0;
-            for (var i = 0; i < items.length; i++) {
-                total = total + Number(items[i].Amount);
-            }
-            return total;
-        },
-        render: function () {
-            $('#amount-current').text(app.split.amount());
-            $('#split-list').html(Mark.up(app.split.template, app.split.context));
-        }
-    },
-    init: function () {
-        $(document).on('change', '.price-group', function (event) {
-            alert('change price group for item id -> ' + $(this).attr('data-item'));
-        });
-        //
-        $(document).on('click', '.item-remove', function (event) {
-            var item = $(this).attr('data-item');
-            context.Items.splice(item, 1);
-            app.item.render();
-        });
-        //
-        $(document).on('click', '.item-split', function (event) {
-            app.split.index = $(this).attr('data-item');
-            $('#split-init input[name=row]').val(context.Items[app.split.index].Amount);
-            $('#split-init').modal('toggle');
-        });
-        //
-        $(document).on('click', '#split-init button[name=split]', function (event) {
-            var row = $('#split-init input[name=row]').val();
-            if (row <= context.Items[app.split.index].Amount) {
-                app.split.row = row;
-                $('#split-init').modal('toggle');
-            } else {
-                $(this).notify('you can not split line more than amount', 'warn');
-                app.split.index = 0;
-                app.split.row = 0;
-            }
-        });
-        //
-        $(document).on('click', '#split-detail button[name=done]', function (event) {
-            if (context.Items[app.split.index].Amount === app.split.amount()) {
-                context.Items.splice(app.split.index, 1);
-                for (var i = 0; i < app.split.context.Items.length; i++) {
-                    context.Items.push(app.split.context.Items[i]);
-                }
-                app.item.render();
-                $('#split-detail').modal('toggle');
-            } else {
-                $(this).notify('total split quantity not equals original quantity', 'warn');
-            }
+                                               });
+                                               //
+                                               $(document).on('change', '#split-list input[name=amount]', function (event) {
+                                                   var master = context.Items[app.split.index];
+                                                   var quantity = $(this).val();
+                                                   var index = $(this).attr('data-index');
+                                                   var original = master.Amount;
+                                                   var current = app.split.context.Items[index].Amount;
+                                                   var total = app.split.amount() - current + Number(quantity);
+                                                   if (original >= total) {
+                                                       app.split.context.Items[index].Amount = quantity;
+                                                       app.split.context.Items[index].Total = quantity * master.Price;
+                                                       app.split.render();
+                                                   } else {
+                                                       $(this).notify('total split amount more than original amount', 'warn');
+                                                   }
+                                               });
+                                               //
+                                               $(document).on('shown.bs.modal', '#split-detail', function () {
+                                                   $('#amount-original').text(context.Items[app.split.index].Amount);
+                                                   app.split.render();
+                                               });
+                                               //
+                                               $(document).on('hidden.bs.modal', '#split-init', function () {
+                                                   var master = context.Items[app.split.index];
+                                                   if (app.split.row > 0) {
+                                                       for (var i = 0; i < app.split.row; i++) {
+                                                           app.split.context.Items.push({
+                                                               ID: 0,
+                                                               ProductCode: master.ProductCode,
+                                                               ProductName: master.ProductName,
+                                                               ProductUnit: master.ProductUnit,
+                                                               Amount: 1,
+                                                               Price: master.Price,
+                                                               Total: master.Price,
+                                                               HasItem: true,
+                                                               PriceGroups: master.PriceGroups
+                                                           });
+                                                       }
+                                                       $('#split-detail').modal('toggle');
+                                                   }
+                                               });
+                                               //
+                                               $(document).on('hidden.bs.modal', '#split-detail', function () {
+                                                   app.split.index = 0;
+                                                   app.split.row = 0;
+                                                   app.split.context.Items = [];
+                                               });
+                                               //
+                                               $('#btn-save').on('click', function (event) {
+                                                   var master = context.Items;
+                                                   var data = [];
+                                                   for (var i = 0; i < master.length; i++) {
+                                                       var obj = master[i];
+                                                       data.push({
+                                                           ProductCode: obj.ProductCode,
+                                                           Amount: obj.Amount
+                                                       });
+                                                   }
+                                                   $('#form-save input[name=Code]').val($('#order-code').text());
+                                                   $('#form-save input[name=Items]').val(JSON.stringify(data));
+                                               });
+                                               //
+                                               $('#btn-approve').on('click', function (event) {
+                                                   alert('approve order id -> ' + $(this).attr('data-id'));
+                                               });
+                                               //
+                                               $('#btn-reject').on('click', function (event) {
+                                                   alert('reject order id -> ' + $(this).attr('data-id'));
+                                               });
+                                               //
+                                               Mark.pipes.format = function (num, p) {
+                                                   return accounting.formatMoney(num, '', p);
+                                               };
+                                               //
+                                               app.split.template = $('#split-template').html();
+                                               app.item.template = $('#item-template').html();
+                                               app.item.render();
+                                           }
+                                       };
 
-        });
-        //
-        $(document).on('change', '#split-list input[name=amount]', function (event) {
-            var master = context.Items[app.split.index];
-            var quantity = $(this).val();
-            var index = $(this).attr('data-index');
-            var original = master.Amount;
-            var current = app.split.context.Items[index].Amount;
-            var total = app.split.amount() - current + Number(quantity);
-            if (original >= total) {
-                app.split.context.Items[index].Amount = quantity;
-                app.split.context.Items[index].Total = quantity * master.Price;
-                app.split.render();
-            } else {
-                $(this).notify('total split amount more than original amount', 'warn');
-            }
-        });
-        //
-        $(document).on('shown.bs.modal', '#split-detail', function () {
-            $('#amount-original').text(context.Items[app.split.index].Amount);
-            app.split.render();
-        });
-        //
-        $(document).on('hidden.bs.modal', '#split-init', function () {
-            var master = context.Items[app.split.index];
-            if (app.split.row > 0) {
-                for (var i = 0; i < app.split.row; i++) {
-                    app.split.context.Items.push({
-                        ID: 0,
-                        ProductCode: master.ProductCode,
-                        ProductName: master.ProductName,
-                        ProductUnit: master.ProductUnit,
-                        Amount: 1,
-                        Price: master.Price,
-                        Total: master.Price,
-                        HasItem: true,
-                        PriceGroups: master.PriceGroups
-                    });
-                }
-                $('#split-detail').modal('toggle');
-            }
-        });
-        //
-        $(document).on('hidden.bs.modal', '#split-detail', function () {
-            app.split.index = 0;
-            app.split.row = 0;
-            app.split.context.Items = [];
-        });
-        //
-        $('#btn-save').on('click', function (event) {
-            var master = context.Items;
-            var data = [];
-            for (var i = 0; i < master.length; i++) {
-                var obj = master[i];
-                data.push({
-                    ProductCode: obj.ProductCode,
-                    Amount: obj.Amount
-                });
-            }
-            $('#form-save input[name=Code]').val($('#order-code').text());
-            $('#form-save input[name=Items]').val(JSON.stringify(data));
-        });
-        //
-        $('#btn-approve').on('click', function (event) {
-            alert('approve order id -> ' + $(this).attr('data-id'));
-        });
-        //
-        $('#btn-reject').on('click', function (event) {
-            alert('reject order id -> ' + $(this).attr('data-id'));
-        });
-        //
-        Mark.pipes.format = function (num, p) {
-            return accounting.formatMoney(num, '', p);
-        };
-        //
-        app.split.template = $('#split-template').html();
-        app.item.template = $('#item-template').html();
-        app.item.render();
-    }
-};
+                                       function approve(orderId) {
+                                           /* disablePage(true); */
+                                           $('#approveForm').submit();
+                                       }
 
-$(function () {
-    var isEditMode = '${form.editMode}';
-//
-    if (isEditMode == 'true') {
-        $('#paymentMethodId').prop("disabled", false);
-        $('#paymentTermId').prop("disabled", false);
-        $('input[name=product-price-group]').prop("disabled", false);
-        $('button[name=btn-remove]').prop("disabled", false);
-        $('button[name=btn-split]').prop("disabled", false);
-        $('#btn-approve').prop("disabled", false);
-        $('#btn-reject').prop("disabled", false);
-    } else {
-        $('#paymentMethodId').prop("disabled", true);
-        $('#paymentTermId').prop("disabled", true);
-        $('select[name=product-price-group]').prop("disabled", true);
-        $('button[name=btn-remove]').prop("disabled", true);
-        $('button[name=btn-split]').prop("disabled", true);
-        $('#btn-approve').prop("disabled", true);
-        $('#btn-reject').prop("disabled", true);
-    }
-//
-    app.init();
-});
+                                       function reject(orderId) {
+                                       }
+
+                                       function disablePage(editMode) {
+                                           if (editMode == 'true') {
+                                               $('#paymentMethodId').prop("disabled", false);
+                                               $('#paymentTermId').prop("disabled", false);
+                                               $('input[name=product-price-group]').prop("disabled", false);
+                                               $('button[name=btn-remove]').prop("disabled", false);
+                                               $('button[name=btn-split]').prop("disabled", false);
+                                               $('#btn-approve').prop("disabled", false);
+                                               $('#btn-reject').prop("disabled", false);
+                                               $('#save').prop("disabled", false);
+                                           } else {
+                                               $('#paymentMethodId').prop("disabled", true);
+                                               $('#paymentTermId').prop("disabled", true);
+                                               $('select[name=product-price-group]').prop("disabled", true);
+                                               $('button[name=btn-remove]').prop("disabled", true);
+                                               $('button[name=btn-split]').prop("disabled", true);
+                                               $('#btn-approve').prop("disabled", true);
+                                               $('#btn-reject').prop("disabled", true);
+                                               $('#save').prop("disabled", true);
+                                           }
+                                       }
+
+                                       $(function () {
+                                           var isEditMode = '${approveForm.editMode}';
+                                           disablePage(isEditMode);
+                                           //
+                                           app.init();
+                                       });
     </script>
 </body>
 </html>

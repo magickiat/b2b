@@ -9,6 +9,7 @@ import com.starboard.b2b.dto.ProductBuyerGroupDTO;
 import com.starboard.b2b.dto.ProductCategoryDTO;
 import com.starboard.b2b.dto.ProductDTO;
 import com.starboard.b2b.dto.ProductModelDTO;
+import com.starboard.b2b.dto.ProductPriceDTO;
 import com.starboard.b2b.dto.ProductPriceGroupDTO;
 import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.ProductTechnologyDTO;
@@ -20,6 +21,7 @@ import com.starboard.b2b.web.form.product.SearchProductForm;
 public interface ProductService {
 
 	List<ProductTypeDTO> findAllProductType();
+
 	// Query Brands by brandGroupId, if brandGroupId = 0 is query all
 	List<ProductTypeDTO> findProductTypeByBrandId(Long brandGroupId);
 
@@ -36,6 +38,8 @@ public interface ProductService {
 	List<ProductBuyerGroupDTO> findProductBuyerGroupByProductType(List<ProductTypeDTO> productType);
 
 	Page<SearchProductModelDTO> searchProduct(SearchProductForm searchProductForm);
+	
+	Page<SearchProductModelDTO> searchProductBackend(SearchProductForm searchProductForm);
 
 	List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection);
 
@@ -62,4 +66,11 @@ public interface ProductService {
 	List<ProductTypeDTO> getProductTypes(Long customerId, Long brandGroupId);
 
 	List<ProductPriceGroupDTO> listProductPriceGroup();
+	
+	List<ProductTypeDTO> listProductBrandGroupForJson();
+	
+	void updateProduct(List<ProductDTO> products);
+
+	void updateProductPrice(List<ProductPriceDTO> productPrices);
+	
 }

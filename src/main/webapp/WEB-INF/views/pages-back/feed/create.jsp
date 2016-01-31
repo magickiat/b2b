@@ -28,33 +28,33 @@
 			<form:form class="form-horizontal" servletRelativeAction="/backend/feed-contents/create" method="post"
 	               modelAttribute="feedContentForm">
 	
-	        <div class="row">
-	            <div class="col-sm-12">
-	                <form:errors path="*" cssClass="alert alert-danger" element="div"/>
-	            </div>
-	        </div>
-	
-	        <div class="form-group">
-	            <label class="col-sm-1">Title:</label>
-	            <div class="col-sm-11">
-	                <form:input path="title" cssClass="form-control"></form:input>
-	            </div>
-	        </div>
-	
-	        <div class="form-group">
-	            <label class="col-sm-1">Content:</label>
-	            <div class="col-sm-11">
-	                <form:textarea path="content" rows="5" cols="30" cssClass="form-control"></form:textarea>
-	            </div>
-	        </div>
-	
-	        <div class="form-group">
-	            <div class="col-sm-12">
-	                <button type="submit" class="btn btn-primary pull-right">Submit</button>
-	            </div>
-	        </div>
-	
-	    </form:form>
+		        <div class="row">
+		            <div class="col-sm-12">
+		                <form:errors path="*" cssClass="alert alert-danger" element="div"/>
+		            </div>
+		        </div>
+		
+		        <div class="form-group">
+		            <label class="col-sm-1">Title:</label>
+		            <div class="col-sm-11">
+		                <form:input path="title" cssClass="form-control"></form:input>
+		            </div>
+		        </div>
+		
+		        <div class="form-group">
+		            <label class="col-sm-1">Content:</label>
+		            <div class="col-sm-11">
+		                <form:textarea path="content" rows="5" cols="30" cssClass="form-control"></form:textarea>
+		            </div>
+		        </div>
+		
+		        <div class="form-group">
+		            <div class="col-sm-12">
+		                <button type="submit" class="btn btn-primary pull-right">Submit</button>
+		            </div>
+		        </div>
+		
+		    </form:form>
 			
 		</div>
 		

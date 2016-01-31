@@ -1,3 +1,5 @@
+truncate table `b2b`.`cust`;
+
 INSERT INTO `b2b`.`cust`
 (`cust_id`,
 `cust_code`,

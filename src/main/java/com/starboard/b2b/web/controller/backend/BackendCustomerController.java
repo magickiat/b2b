@@ -36,7 +36,6 @@ import com.starboard.b2b.web.form.address.AddressForm;
 import com.starboard.b2b.web.form.brand.BrandForm;
 import com.starboard.b2b.web.form.contact.ContactForm;
 import com.starboard.b2b.web.form.customer.CreateCustomerForm;
-import com.starboard.b2b.web.form.customer.CustomerForm;
 import com.starboard.b2b.web.form.customer.SearchCustomerForm;
 import com.starboard.b2b.web.form.user.UserRegisterForm;
 
@@ -65,13 +64,13 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "search", method = RequestMethod.GET)
-	String search(@ModelAttribute SearchCustomerForm searchForm, Model model) {
+	String search(@ModelAttribute("searchForm") SearchCustomerForm searchForm, Model model) {
 		searchForm.setCountryList(countryService.findAll());
 		searchForm.setProductTypeList(productService.findAllProductType());
 
 		model.addAttribute("searchForm", searchForm);
 		model.addAttribute("resultPage", customerService.listCust(searchForm));
-		
+
 		return "pages-back/customer/search";
 	}
 
@@ -86,18 +85,18 @@ public class BackendCustomerController {
 	String createCustomerSubmit(@ModelAttribute("customerForm") @Valid CreateCustomerForm customerForm, BindingResult binding, Model model)
 			throws Exception {
 		log.info("/create POST");
-		
+
 		model.addAttribute("customerForm", customerForm);
 
 		if (binding.hasErrors()) {
 			log.warn("binding error: " + binding.hasErrors());
 			return "pages-back/customer/create";
 		}
-		if(customerService.isExistCustomerCode(customerForm.getCode())){
+		if (customerService.isExistCustomerCode(customerForm.getCode())) {
 			model.addAttribute("errorMsg", "Duplicate cutomer code");
 			return "pages-back/customer/create";
 		}
-		
+
 		customerService.add(customerForm);
 		return search(new SearchCustomerForm(), model);
 	}
@@ -107,15 +106,16 @@ public class BackendCustomerController {
 		log.info("/update GET");
 		log.info("id = " + id);
 
-		CustDTO custDto = new CustDTO();
 		List<User> users = new ArrayList<User>();
-		custDto = customerService.findCustById(id);
 		List<AddressDTO> listAddress = customerService.findAddressByCustomerId(id);
 		List<ContactDTO> listContact = customerService.findContactByCustomerId(id);
 		List<CountryDTO> listCountry = customerService.listCountry();
+
+		CustDTO custDto = customerService.findCustById(id);
 		if (custDto != null) {
 			users = userService.findUserByCustId(id);
 		}
+
 		ContactForm contactForm = new ContactForm();
 		AddressForm addrFrom = new AddressForm();
 		model.addAttribute("customerForm", custDto);
@@ -132,11 +132,11 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	String update(@ModelAttribute @Valid CustomerForm customerForm, BindingResult binding, RedirectAttributes attr, Model model) throws Exception {
+	String update(@ModelAttribute("customerForm") @Valid CustDTO customerForm, BindingResult binding, RedirectAttributes attr, Model model) throws Exception {
 		log.info("/update POST");
 		log.info("customer id: " + customerForm.getCustId());
 		if (binding.hasErrors()) {
-			return "redirect:update?id=" + customerForm.getCustId();
+			return "pages-back/customer/edit";
 		}
 		customerService.update(customerForm);
 		return update(customerForm.getCustId(), model);
@@ -152,7 +152,7 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "/createuser", method = RequestMethod.POST)
-	String createUser(@ModelAttribute @Valid UserRegisterForm registerForm, BindingResult binding, Model model) throws Exception {
+	String createUser(@ModelAttribute("registerForm") @Valid UserRegisterForm registerForm, BindingResult binding, Model model) throws Exception {
 		log.info("/gen_user POST");
 		if (!binding.hasErrors()) {
 			if (!userService.isExistUsername(registerForm.getUsername())) {
@@ -163,7 +163,7 @@ public class BackendCustomerController {
 			}
 
 		}
-		model.addAttribute("registerForm", registerForm);
+
 		return "pages-back/customer/createCustomerUser";
 	}
 
@@ -198,7 +198,7 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "/add_brand", method = RequestMethod.POST)
-	String addBrandSubmit(@ModelAttribute BrandForm brandForm, Model model) throws Exception {
+	String addBrandSubmit(@ModelAttribute("brandForm") BrandForm brandForm, Model model) throws Exception {
 		log.info("/add_brand POST");
 		log.info("Selected brand id: " + brandForm);
 		User userAuthen = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

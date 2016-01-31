@@ -1,5 +1,5 @@
 package com.starboard.b2b.model;
-// Generated Oct 12, 2015 10:55:07 PM by Hibernate Tools 4.3.1.Final
+// Generated Oct 25, 2015 1:54:35 PM by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
 import javax.persistence.Column;

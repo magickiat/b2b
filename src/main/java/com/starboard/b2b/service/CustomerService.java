@@ -27,7 +27,7 @@ public interface CustomerService {
 
 	void add(CreateCustomerForm customer);
 
-	void update(CustomerForm customer);
+	void update(CustDTO customer);
 
 	void addBrand(BrandForm brand);
 

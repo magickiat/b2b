@@ -1,7 +1,9 @@
 package com.starboard.b2b.dao.impl;
 
+import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -14,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.starboard.b2b.dao.CustBrandGroupDAO;
 import com.starboard.b2b.dto.CustBrandGroupDTO;
 import com.starboard.b2b.model.CustBrandGroup;
+import com.starboard.b2b.model.CustBrandGroupId;
+import com.starboard.b2b.web.form.brand.BrandForm;
 
 @Repository("custBrandGroupDAO")
 public class CustBrandGroupDAOImpl implements CustBrandGroupDAO {
@@ -41,4 +45,35 @@ public class CustBrandGroupDAOImpl implements CustBrandGroupDAO {
 
 				return sessionFactory.getCurrentSession().createQuery(searchOrderDetail).setLong("custId", custId).list();
 	}
+	
+
+	@Override
+	public void addSelectedBrand(BrandForm form, List<Integer> selectedBrand) {
+		/*CustBrandGroup custBrand = new CustBrandGroup();
+		CustBrandGroupId id = new CustBrandGroupId();
+		id.setCustId(form.getCustId());
+		custBrand.setId(id);
+		sessionFactory.getCurrentSession().delete(custBrand);
+		sessionFactory.getCurrentSession().flush();*/
+		
+		Session session = sessionFactory.getCurrentSession();
+		// ----- delete old data -----
+		int deleted = session.createQuery("delete from CustBrandGroup g where g.id.custId = :custId").setLong("custId", form.getCustId()).executeUpdate();
+		log.info("Deleted {} rows", deleted);
+		
+		
+		for (Integer brandId : selectedBrand) {
+			CustBrandGroup custBrandInsert = new CustBrandGroup();
+			CustBrandGroupId idInsert = new CustBrandGroupId();
+			idInsert.setCustId(form.getCustId());
+			idInsert.setBrandGroupId(brandId);
+			custBrandInsert.setId(idInsert);
+			custBrandInsert.setUserCreate(form.getUserCreate());
+			custBrandInsert.setUserUpdate(form.getUserUpdate());
+			custBrandInsert.setTimeCreate(new Date());
+			custBrandInsert.setTimeUpdate(new Date());
+			session.save(custBrandInsert);
+		}
+	}
+
 }

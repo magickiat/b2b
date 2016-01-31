@@ -6,7 +6,7 @@
 package com.starboard.b2b.util;
 
 import com.starboard.b2b.bean.ExcelOrderBean;
-import static com.starboard.b2b.util.ExcelOrderUtil.parseOrder;
+import static com.starboard.b2b.util.ExcelUtil.parseOrder;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;

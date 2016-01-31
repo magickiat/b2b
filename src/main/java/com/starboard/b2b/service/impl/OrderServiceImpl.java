@@ -13,12 +13,11 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.common.AddressConstant;
-import com.starboard.b2b.common.OrderConfig;
+import com.starboard.b2b.common.OrderStatusConfig;
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dao.AddrDao;
 import com.starboard.b2b.dao.OrderAddressDao;
@@ -29,6 +28,7 @@ import com.starboard.b2b.dao.OrdersIdRunningDao;
 import com.starboard.b2b.dao.PaymentMethodDao;
 import com.starboard.b2b.dao.PaymentTermDao;
 import com.starboard.b2b.dao.ShippingTypeDao;
+import com.starboard.b2b.dao.SoDao;
 import com.starboard.b2b.dto.OrdAddressDTO;
 import com.starboard.b2b.dto.OrderDTO;
 import com.starboard.b2b.dto.OrderStatusDTO;
@@ -43,6 +43,7 @@ import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchResult;
+import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.model.Addr;
 import com.starboard.b2b.model.OrdAddress;
 import com.starboard.b2b.model.OrdDetail;
@@ -51,7 +52,7 @@ import com.starboard.b2b.model.Orders;
 import com.starboard.b2b.model.So;
 import com.starboard.b2b.model.SoDetail;
 import com.starboard.b2b.model.User;
-import com.starboard.b2b.service.ConfigService;
+import com.starboard.b2b.service.EmailService;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.DateTimeUtil;
@@ -63,9 +64,6 @@ public class OrderServiceImpl implements OrderService {
 
 	private static final Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
 
-	@Value("${upload.path}")
-	private String uploadPath;
-
 	@Autowired
 	private ApplicationConfig applicationConfig;
 
@@ -74,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private PaymentMethodDao paymentMethodDao;
-	
+
 	@Autowired
 	private PaymentTermDao paymentTermDao;
 
@@ -94,10 +92,19 @@ public class OrderServiceImpl implements OrderService {
 	private AddrDao addrDao;
 
 	@Autowired
-	private ConfigService configService;
+	private OrderStatusDao orderStatusDao;
 
 	@Autowired
-	private OrderStatusDao orderStatusDao;
+	private SoDao soDao;
+
+	@Autowired
+	private EmailService emailService;
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<SoDTO> listSO(long orderId) {
+		return soDao.findByOrderId(orderId);
+	}
 
 	@Override
 	@Transactional(readOnly = true)
@@ -125,7 +132,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional
-	public OrderDTO saveOrder(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod,
+	public OrderDTO newOrder(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod,
 			Map<Long, ProductDTO> cart) {
 		Addr invoiceToAddr = addrDao.findById(invoiceTo);
 		if (invoiceToAddr == null) {
@@ -136,7 +143,7 @@ public class OrderServiceImpl implements OrderService {
 		if (dispatchToAddr == null) {
 			throw new IllegalArgumentException("Address 'Dispatch To' is required");
 		}
-		// TODO Ask question when multiple brand is choosed
+
 		Entry<Long, ProductDTO> firstProduct = cart.entrySet().iterator().next();
 		long brandGroupId = firstProduct.getValue().getProductTypeId();
 
@@ -152,13 +159,13 @@ public class OrderServiceImpl implements OrderService {
 		order.setCustCode(user.getCustomer().getCustCode());
 		order.setCustUserId("" + user.getId());
 		order.setOrderCode(orderCode);
-		order.setOrderStatus(configService.getString(OrderConfig.KEY_DEFAULT_ORDER_STATUS));
+		order.setOrderStatus(applicationConfig.getOrderStatusNew());
 		order.setOrderDate(currentDate);
 		order.setBrandGroupId(brandGroupId);
 		order.setShippingId(shippingType);
 		order.setPaymentMethodId(paymentMethod);
 		order.setPaymentCurrencyId(user.getCustomer().getCurrency());
-		order.setPaymentTermId(configService.getString(OrderConfig.KEY_DEFAULT_PAYMENT_TERM_ID));
+		order.setPaymentTermId(applicationConfig.getNewOrderPaymentTermId());
 		order.setRemarkCustomer(customerRemark);
 		order.setTimeCreate(currentDate);
 		order.setUserCreate(user.getUsername());
@@ -171,13 +178,14 @@ public class OrderServiceImpl implements OrderService {
 			ProductDTO product = cart.get(key);
 			// Default currency
 			if (StringUtils.isEmpty(product.getProductCurrency())) {
-				product.setProductCurrency(configService.getString(OrderConfig.KEY_PRODUCT_PRICE_TBA));
+				product.setProductCurrency(applicationConfig.getDefaultProductCurrency());
 			}
 			// Default product unit id
 			if (StringUtils.isEmpty(product.getProductUnitId())) {
-				product.setProductUnitId(configService.getString(OrderConfig.KEY_DEFAULT_PRODUCT_UNIT_ID));
+				product.setProductUnitId(applicationConfig.getDefaultProductUnit());
 			}
 
+			// ----- Create order -----
 			OrdDetail orderDetail = new OrdDetail();
 			orderDetail.setOrderId(orderId);
 			orderDetail.setProductId(product.getProductId());
@@ -186,13 +194,7 @@ public class OrderServiceImpl implements OrderService {
 				orderDetail.setPrice(product.getProductPrice());
 			}
 			orderDetail.setProductCurrency(product.getProductCurrency());
-			if(StringUtils.isEmpty(product.getProductCurrency())){
-				orderDetail.setProductCurrency("TBA");
-			}
 			orderDetail.setProductUnitId(product.getProductUnitId());
-			if(product.getProductUnitId() == null){
-				orderDetail.setProductUnitId("PCS");
-			}
 			orderDetail.setProductBuyerGroupId(product.getProductBuyerGroupId());
 			orderDetail.setUserCreate(user.getUsername());
 			orderDetail.setTimeCreate(DateTimeUtil.getCurrentDate());
@@ -233,7 +235,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional(readOnly = true)
 	public OrderDTO findOrder(Long orderId) {
-		if(orderId != null){
+		if (orderId != null) {
 			Orders order = orderDao.findById(orderId);
 			OrderDTO dto = new OrderDTO();
 			try {
@@ -272,18 +274,11 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<OrdAddressDTO> findOrderAddress(Long orderId) {
-
-		return null;
-	}
-
-	@Override
-	@Transactional(readOnly = true)
 	public List<OrdAddressDTO> findOrderAddress(final String orderCode) {
 		List<OrdAddress> ordAddresses = orderDao.findOrderAddress(orderCode);
 		List<OrdAddressDTO> ordAddressDTOs = new ArrayList<>();
-		if(ordAddresses != null && !ordAddresses.isEmpty()){
-			for(OrdAddress ordAddress : ordAddresses){
+		if (ordAddresses != null && !ordAddresses.isEmpty()) {
+			for (OrdAddress ordAddress : ordAddresses) {
 				try {
 					OrdAddressDTO ordAddressDTO = new OrdAddressDTO();
 					BeanUtils.copyProperties(ordAddressDTO, ordAddress);
@@ -315,7 +310,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional(readOnly = true)
 	public Page<SearchOrderDTO> searchOrder(final OrderSummaryForm orderSummaryForm) {
-		log.info("Search order summary form: {}",orderSummaryForm);
+		log.info("Search order summary form: {}", orderSummaryForm);
 		final SearchRequest<OrderSummaryForm> req = new SearchRequest<>(orderSummaryForm.getPage(), applicationConfig.getPageSize());
 		req.setCondition(orderSummaryForm);
 
@@ -329,7 +324,7 @@ public class OrderServiceImpl implements OrderService {
 		// create result page object
 		final Page<SearchOrderDTO> page = new Page<>();
 		page.setCurrent(orderSummaryForm.getPage());
-		log.info("current page: {}" , page.getCurrent());
+		log.info("current page: {}", page.getCurrent());
 		page.setPageSize(req.getPageSize());
 		page.setTotal(result.getTotal());
 		page.setResult(result.getResult());
@@ -378,7 +373,7 @@ public class OrderServiceImpl implements OrderService {
 	public List<SoDetailDTO> findSoDetail(long soId) {
 		List<SoDetail> so = orderDao.findSoDetailBySoId(soId);
 		List<SoDetailDTO> soDTOs = new ArrayList<>();
-		if(so != null && !so.isEmpty()){
+		if (so != null && !so.isEmpty()) {
 			try {
 				SoDetailDTO dto = new SoDetailDTO();
 				BeanUtils.copyProperties(dto, so);
@@ -395,19 +390,52 @@ public class OrderServiceImpl implements OrderService {
 	public List<PaymentTermDTO> findAllPaymentTerm() {
 		return paymentTermDao.list();
 	}
-	
+
 	@Override
 	@Transactional(readOnly = true)
-	public UserDTO findUserByOrderCode(String orderCode){
+	public UserDTO findUserByOrderCode(String orderCode) {
 		User user = orderDao.findUserByOrderCode(orderCode);
 		UserDTO userDTO = new UserDTO();
 		userDTO.setEmail(user.getEmail());
 		userDTO.setName(user.getName());
-//		try {
-//			BeanUtils.copyProperties(userDTO, user);
-//		} catch (IllegalAccessException | InvocationTargetException e) {
-//			log.error("Got problem while copying bean properties.. with error {}", e.getMessage(), e);
-//		}
 		return userDTO;
+	}
+
+	@Transactional
+	public void approve(long orderId) {
+
+		log.info("orderId = " + orderId);
+
+		Orders order = orderDao.findById(orderId);
+		if (order == null) {
+			throw new B2BException("Not found this order id: " + orderId);
+		}
+
+		Date expectShipDate = DateTimeUtil.generateExpectShipDate();
+
+		order.setExpectReceiptDate(expectShipDate);
+		order.setExpectShipmentDate(expectShipDate);
+		order.setOrderStatus(OrderStatusConfig.APPROVED);
+	}
+
+	@Override
+	@Transactional
+	public void approve(SearchOrderDTO orderDTO) {
+		if (orderDTO == null) {
+			throw new B2BException("Order is required");
+		}
+
+		log.info("orderId = " + orderDTO.getOrderId());
+
+		Orders order = orderDao.findById(orderDTO.getOrderId());
+		if (order == null) {
+			throw new B2BException("Not found this order id: " + orderDTO.getOrderId());
+		}
+
+		Date expectShipDate = DateTimeUtil.generateExpectShipDate();
+
+		order.setExpectReceiptDate(expectShipDate);
+		order.setExpectShipmentDate(expectShipDate);
+		order.setOrderStatus(OrderStatusConfig.APPROVED);
 	}
 }

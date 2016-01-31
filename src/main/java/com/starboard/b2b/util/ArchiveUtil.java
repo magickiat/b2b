@@ -28,13 +28,19 @@ public class ArchiveUtil {
                 if (!content.exists()) {
                     continue;
                 }
-                zip.putNextEntry(new ZipEntry(content.getName()));
-                try (FileInputStream input = new FileInputStream(content)) {
-                    byte[] data = new byte[input.available()];
-                    input.read(data);
-                    zip.write(data);
-                }
-                zip.closeEntry();
+                if(content.isDirectory()){
+					ZipEntry zipEntry = new ZipEntry(content.getName() + File.separator);
+					zipEntry.setSize(0);
+					zip.putNextEntry(zipEntry);
+				}else{
+					zip.putNextEntry(new ZipEntry(content.getName()));
+					try (FileInputStream input = new FileInputStream(content)) {
+						byte[] data = new byte[input.available()];
+						input.read(data);
+						zip.write(data);
+					}
+					zip.closeEntry();
+				}
             }
         }
         if (output.size() == 0) {

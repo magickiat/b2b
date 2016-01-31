@@ -2,6 +2,7 @@ package com.starboard.b2b.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -12,6 +13,7 @@ import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.dao.UserDao;
 import com.starboard.b2b.model.Cust;
 import com.starboard.b2b.model.User;
+import com.starboard.b2b.util.DateTimeUtil;
 
 @Repository("userDao")
 public class UserDaoImpl implements UserDao {
@@ -35,14 +37,18 @@ public class UserDaoImpl implements UserDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> findByCustId(Long id) {
-		return sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("customer.id", id)).list();
+		return sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("customer.custId", id)).list();
 	}
 
 	@Override
 	public User findByUsername(String username) {
+		Session session = sessionFactory.getCurrentSession();
 		User user = (User) sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("username", username)).uniqueResult();
 		if(user != null){
-			sessionFactory.getCurrentSession().evict(user);
+			user.setLastActive(DateTimeUtil.getCurrentDate());
+			session.update(user);
+			session.flush();
+			session.evict(user);
 		}
 		return user;
 	}
