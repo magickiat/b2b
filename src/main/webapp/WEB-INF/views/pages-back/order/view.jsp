@@ -2,150 +2,475 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" session="true"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true"%>
 
 <!DOCTYPE html>
 <html>
-<head>
-	<%@include file="/WEB-INF/views/include/common_meta.jspf" %>
-	<title>Backend-Starboard Windsurfing</title>
-	<%@include file="/WEB-INF/views/include/common_cssbackend.jspf"%>
-</head>
-<body>
-	<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
+    <head>
+        <%@include file="/WEB-INF/views/include/common_meta.jspf" %>
+        <title>Backend-Starboard Windsurfing</title>
+        <%@include file="/WEB-INF/views/include/common_cssbackend.jspf"%>
+    </head>
+    <body>
+        <%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 
-	<div class="container">
+        <div class="container">
 
+            <form:form modelAttribute="form" servletRelativeAction="/backend/order/approve-reject">
 
-		<form:form modelAttribute="form"
-			servletRelativeAction="/backend/order/approve-reject">
+                <!-- Header -->
+                <div class="row bg_color">
+                    <div class="col-sm-12">
+                        <div class="row row-header2 header2 txtupper">view detail order</div>
+                    </div>
 
+                    <div>
+                        <div class="col-sm-6 bg_color">
+                            <h1 id="order-code">${form.orderReport.orderCode}</h1>
+                        </div>
+                        <div class="col-sm-6 text-right bg_color">
+                            <h1>${form.orderReport.orderStatus}</h1>
+                        </div>
+                    </div>
 
-			<!-- Header -->
-			<div class="row bg_color">
-				<div class="col-sm-12">
-					<div class="row row-header2 header2 txtupper">view detail order</div>
-				</div>
-				
-				<div class="">
-					<div class="col-sm-6 bg_color">
-						<h1>${form.orderReport.orderCode}</h1>
-					</div>
-					<div class="col-sm-6 text-right bg_color">
-						<h1>${form.orderReport.orderStatus}</h1>
-					</div>
-				</div>
+                    <!-- Button -->
+                    <div class="col-sm-12 bg_color" style="margin-top: 10px;">
+                        <div class="col-sm-6" style="padding: 20px 0px 10px 0px;">
+                            <div id="btn-save" class="btn btn-primary" data-id="${form.orderReport.orderId}">Save</div>
+                        </div>
+                        <div class="col-sm-6 text-right" style="padding: 20px 0px 10px 0px;">
+                            <div id="btn-approve" class="btn btn-success" data-id="${form.orderReport.orderId}">Approve</div>
+                            <div id="btn-reject" class="btn btn-danger" data-id="${form.orderReport.orderId}">Reject</div>
+                        </div>
+                    </div>
 
-				<!-- Order info -->
-				<div class="col-sm-12 bg_color" style="margin-top: 10px;">
-					<table class="table">
-						<thead>
-							<tr>
-								<td>Order Date</td>
-								<td>Expected Shipping Date</td>
-								<td>Payment Term</td>
-								<td>Payment Method</td>
-								<th style="text-align: : right;">
-									<input type="button" id="btn-approve" class="btn btn-success" onclick="approve(${ ordDetail.orderDetailId })" value="Approve" />
-									<input type="button" id="btn-reject" class="btn btn-danger" onclick="reject(${ ordDetail.orderDetailId })" value="Reject" />
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>
-									<fmt:formatDate pattern="dd-MM-yyyy" value="${form.orderReport.orderDate}" />
-								</td>
-								<td></td>
-								<td>
-									<form:select path="paymentTermId" cssClass="form-control">
-										<form:options items="${ form.paymentTermList }" itemLabel="paymentTermName" itemValue="paymentTermId" />
-									</form:select>
-								</td>
-								<td colspan="2">
-									<form:select path="paymentMethodId" cssClass="form-control">
-										<form:options items="${ form.paymentMethodList }" itemLabel="paymentMethodName" itemValue="paymentMethodId" />
-									</form:select>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<!-- Order Address detail -->
-				<div class="col-sm-6 bg_color">
-					<div class="col-sm-12">Dispatch to:</div>
-					<div class="col-sm-12">
-						${form.orderReport.dispatchToAddress.orderAddr}</div>
-					<div class="col-sm-12">Tel:
-						${form.orderReport.dispatchToAddress.orderTel} Fax:
-						${form.orderReport.dispatchToAddress.fax}</div>
-				</div>
-				<div class="col-sm-6 bg_color">
-					<div class="col-sm-12">Invoice to:</div>
-					<div class="col-sm-12">${form.orderReport.invoiceToAddress.orderAddr}</div>
-					<div class="col-sm-12">
-						Tel:
-						${form.orderReport.invoiceToAddress.orderTel} 
-						Fax:
-						${form.orderReport.invoiceToAddress.fax}
-					</div>
+                    <!-- Order info -->
+                    <div class="col-sm-12 bg_color">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Order Date</th>
+                                    <th>Expected Shipping Date</th>
+                                    <th>Payment Term</th>
+                                    <th>Payment Method</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <fmt:formatDate pattern="dd-MM-yyyy" value="${form.orderReport.orderDate}" />
+                                    </td>
+                                    <td>
+                                        <fmt:formatDate pattern="dd-MM-yyyy" value="${form.orderReport.expectShipmentDate}" />
+                                    </td>
+                                    <td>
+                                        <form:select path="paymentTermId" cssClass="form-control">
+                                            <form:options items="${ form.paymentTermList }" itemLabel="paymentTermName" itemValue="paymentTermId" />
+                                        </form:select>
+                                    </td>
+                                    <td colspan="2">
+                                        <form:select path="paymentMethodId" cssClass="form-control">
+                                            <form:options items="${ form.paymentMethodList }" itemLabel="paymentMethodName" itemValue="paymentMethodId" />
+                                        </form:select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Order Address detail -->
+                    <div class="col-sm-6 bg_color">
+                        <div class="col-sm-12">Dispatch to:</div>
+                        <div class="col-sm-12">
+                            ${form.orderReport.dispatchToAddress.orderAddr}</div>
+                        <div class="col-sm-12">Tel:
+                            ${form.orderReport.dispatchToAddress.orderTel} Fax:
+                            ${form.orderReport.dispatchToAddress.fax}</div>
+                    </div>
+                    <div class="col-sm-6 bg_color">
+                        <div class="col-sm-12">Invoice to:</div>
+                        <div class="col-sm-12">${form.orderReport.invoiceToAddress.orderAddr}</div>
+                        <div class="col-sm-12">
+                            Tel:
+                            ${form.orderReport.invoiceToAddress.orderTel} 
+                            Fax:
+                            ${form.orderReport.invoiceToAddress.fax}
+                        </div>
 
-				</div>
-				<!-- Order detail -->
-				<%@include file="order_detail.jspf"%>
+                    </div>
+                    <!-- Order detail -->
+                    <div class="col-sm-12 bg_color">
+                        <table class="table table-hover table-list">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Product Code</th>
+                                    <th>Description</th>
+                                    <th>Price</th>
+                                    <th>Qty</th>
+                                    <th>Shipped</th>
+                                    <th>Pending</th>
+                                    <th>UOM</th>
+                                    <th>Unit Price</th>
+                                    <th>Amount</th>
+                                    <th>Remove</th>
+                                    <th>Split</th>
+                                </tr>
+                            </thead>
+                            <tbody id="item-list"></tbody>
+                        </table>
+                    </div>
 
-				<!-- Customer remark -->
-				<div class="col-sm-6 bg_color" style="padding-bottom: 10px;">
-					<div class="">Customer Remark</div>
-					<div class="">
-						<textarea class="form-control" rows="5" cols="50">${ form.orderReport.remarkCustomer }</textarea>
-					</div>
-				</div>
-				<div class="col-sm-6 bg_color">
-					<div class="">Shipping Type</div>
-					<div class="" style="padding-bottom: 10px;">
-						<textarea class="form-control" rows="5" cols="50">${ form.orderReport.shippingType }</textarea>
-					</div>
-				</div>
-			</div>
-		</form:form>
+                    <!-- Customer remark -->
+                    <div class="col-sm-6 bg_color" style="padding-bottom: 10px;">
+                        <div class="">Customer Remark</div>
+                        <div class="">
+                            <textarea class="form-control" rows="5" cols="50">${ form.orderReport.remarkCustomer }</textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 bg_color">
+                        <div class="">Shipping Type</div>
+                        <div class="" style="padding-bottom: 10px;">
+                            <textarea class="form-control" rows="5" cols="50">${ form.orderReport.shippingType }</textarea>
+                        </div>
+                    </div>
+                </div>
+            </form:form>
 
-	</div>
-	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
-	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>
+        </div>
 
-	<script type="text/javascript">
-		$(document).ready(function() {
-			
-			var isEditMode = '${form.editMode}';
-			console.log('is edit mode: ' + isEditMode);
-			
-			if (isEditMode == 'true') {
-				$('#paymentMethodId').prop("disabled", false);
-				$('#paymentTermId').prop("disabled", false);
-				$('input[name=product-price-group]').prop("disabled", false);
-				$('button[name=btn-remove]').prop("disabled", false);
-				$('button[name=btn-split]').prop("disabled", false);
-				$('#btn-approve').prop("disabled", false);
-				$('#btn-reject').prop("disabled", false);
-			} else {
-				$('#paymentMethodId').prop("disabled", true);
-				$('#paymentTermId').prop("disabled", true);
-				$('select[name=product-price-group]').prop("disabled", true);
-				$('button[name=btn-remove]').prop("disabled", true);
-				$('button[name=btn-split]').prop("disabled", true);
-				$('#btn-approve').prop("disabled", true);
-				$('#btn-reject').prop("disabled", true);
-			}
-		});
-		
-		function approve(orderId){
-		}
-		
-		function reject(orderId){
-		}
-	</script>
+        <!--
+        -- DIALOG TEMPLATE
+        -->
+        <div id="split-init" class="modal fade" role="dialog" data-backdrop="static">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Specify number of line</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <input type="text" name="row" class="form-control"/>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="text-right" style="padding: 0px;">
+                            <button type="button" class="btn btn-primary" name="split">Split</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="split-detail" class="modal fade" role="dialog" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Adjust item amount</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-hover table-list">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Product Code</th>
+                                            <th>Description</th>
+                                            <th>Price</th>
+                                            <th>Qty</th>
+                                            <th>UOM</th>
+                                            <th>Unit Price</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="split-list"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-sm-6 text-left" style="padding-left: 0px; padding-right: 0px;">
+                            Original amount is <span id="amount-original">0</span> items and current amount is <span id="amount-current">0</span> items.
+                        </div>
+                        <div class="col-sm-6 text-right" style="padding-left: 0px; padding-right: 0px;">
+                            <button type="button" class="btn btn-primary" name="done">Done</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form action="" method="post" id="form-save" style="display: none;">
+            <input type="hidden" name="Code"/>
+            <input type="hidden" name="Items"/>
+        </form>
+
+        <%@include file="/WEB-INF/views/include/common_js.jspf"%>
+        <%@include file="/WEB-INF/views/include/common_footer.jspf"%>
+        <script type="text/javascript" src="<c:url value="/scripts/backend/js/markup.min.js"/>"></script>
+        <script type="text/javascript" src="<c:url value="/scripts/backend/js/accounting.min.js"/>"></script>
+        <script type="text/javascript" src="<c:url value="/scripts/backend/js/notify.min.js"/>"></script>
+
+        <script type="text/html" id="item-template">
+            {{Items}}
+            {{if HasItem}}
+        <tr>
+            <td>{{##}}</td>
+            <td>{{ProductCode}}</td>
+            <td>{{ProductName}}</td>
+            <td>
+                <select name="product-price-group" class="form-control price-group" data-item="{{#}}">
+                    <option value="blank"></option>
+                    {{PriceGroups}}{{if HasMoreGroup}}<option value="{{PriceGroupID}}">{{PriceGroupName}}</option>{{/if}}{{/PriceGroups}}
+                </select>
+            </td>
+            <td class="text-right">{{Amount|format>0}}</td>
+            <td>Shipped</td>
+            <td>Pending</td>
+            <td>{{ProductUnit}}</td>
+            <td class="text-right">{{Price|format>2}}</td>
+            <td class="text-right">{{Total|format>2}}</td>
+            <td>
+                <div class="btn btn-default item-remove" data-item="{{#}}">Remove</div>
+            </td>
+            <td>
+                <div class="btn btn-default item-split" data-item="{{#}}">Split</div>
+            </td>
+        </tr>
+        {{/if}}
+        {{/Items}}
+    </script>
+    <script type="text/html" id="split-template">
+        {{Items}}
+        {{if HasItem}}
+        <tr>
+            <td>{{##}}</td>
+            <td>{{ProductCode}}</td>
+            <td>{{ProductName}}</td>
+            <td>
+                <select name="product-price-group" class="form-control price-group" data-item="{{#}}">
+                    <option value="blank"></option>
+                    {{PriceGroups}}{{if HasMoreGroup}}<option value="{{PriceGroupID}}">{{PriceGroupName}}</option>{{/if}}{{/PriceGroups}}
+                </select>
+            </td>
+            <td><input type="text" class="form-control" name="amount" value="{{Amount}}" data-index="{{#}}"/></td>
+            <td>{{ProductUnit}}</td>
+            <td class="text-right">{{Price|format>2}}</td>
+            <td class="text-right">{{Total|format>2}}</td>
+        </tr>
+        {{/if}}
+        {{/Items}}
+    </script>
+
+    <script type="text/javascript">
+
+/*
+ * data binding
+ */
+var context = {
+    Items: [
+        //<c:forEach items="${form.orderReport.orderDetails}" var="item">
+        {
+            ID: '${item.orderDetailId}',
+            ProductCode: '${item.productCode}',
+            ProductName: '${item.productName}',
+            ProductUnit: '${item.productUnit}',
+            Amount: ${item.amount},
+            Price: ${item.unitPrice},
+            Total: ${item.amount*item.unitPrice},
+            HasItem: true,
+            PriceGroups: [
+                //<c:forEach items="${form.productPriceGroupList}" var="group">
+                {
+                    PriceGroupID: '${group.productPriceGroupId}',
+                    PriceGroupName: '${group.productPriceGroupName}',
+                    HasMoreGroup: true
+                },
+                //</c:forEach>
+                {}
+            ]
+        },
+        //</c:forEach>
+        {}
+    ]
+};
+
+/*
+ * application
+ */
+var app = {
+    item: {
+        template: '',
+        render: function () {
+            $('#item-list').html(Mark.up(app.item.template, context));
+        }
+    },
+    split: {
+        index: 0,
+        row: 0,
+        context: {
+            Items: []
+        },
+        template: '',
+        amount: function () {
+            var items = app.split.context.Items;
+            var total = 0;
+            for (var i = 0; i < items.length; i++) {
+                total = total + Number(items[i].Amount);
+            }
+            return total;
+        },
+        render: function () {
+            $('#amount-current').text(app.split.amount());
+            $('#split-list').html(Mark.up(app.split.template, app.split.context));
+        }
+    },
+    init: function () {
+        $(document).on('change', '.price-group', function (event) {
+            alert('change price group for item id -> ' + $(this).attr('data-item'));
+        });
+        //
+        $(document).on('click', '.item-remove', function (event) {
+            var item = $(this).attr('data-item');
+            context.Items.splice(item, 1);
+            app.item.render();
+        });
+        //
+        $(document).on('click', '.item-split', function (event) {
+            app.split.index = $(this).attr('data-item');
+            $('#split-init input[name=row]').val(context.Items[app.split.index].Amount);
+            $('#split-init').modal('toggle');
+        });
+        //
+        $(document).on('click', '#split-init button[name=split]', function (event) {
+            var row = $('#split-init input[name=row]').val();
+            if (row <= context.Items[app.split.index].Amount) {
+                app.split.row = row;
+                $('#split-init').modal('toggle');
+            } else {
+                $(this).notify('you can not split line more than amount', 'warn');
+                app.split.index = 0;
+                app.split.row = 0;
+            }
+        });
+        //
+        $(document).on('click', '#split-detail button[name=done]', function (event) {
+            if (context.Items[app.split.index].Amount === app.split.amount()) {
+                context.Items.splice(app.split.index, 1);
+                for (var i = 0; i < app.split.context.Items.length; i++) {
+                    context.Items.push(app.split.context.Items[i]);
+                }
+                app.item.render();
+                $('#split-detail').modal('toggle');
+            } else {
+                $(this).notify('total split quantity not equals original quantity', 'warn');
+            }
+
+        });
+        //
+        $(document).on('change', '#split-list input[name=amount]', function (event) {
+            var master = context.Items[app.split.index];
+            var quantity = $(this).val();
+            var index = $(this).attr('data-index');
+            var original = master.Amount;
+            var current = app.split.context.Items[index].Amount;
+            var total = app.split.amount() - current + Number(quantity);
+            if (original >= total) {
+                app.split.context.Items[index].Amount = quantity;
+                app.split.context.Items[index].Total = quantity * master.Price;
+                app.split.render();
+            } else {
+                $(this).notify('total split amount more than original amount', 'warn');
+            }
+        });
+        //
+        $(document).on('shown.bs.modal', '#split-detail', function () {
+            $('#amount-original').text(context.Items[app.split.index].Amount);
+            app.split.render();
+        });
+        //
+        $(document).on('hidden.bs.modal', '#split-init', function () {
+            var master = context.Items[app.split.index];
+            if (app.split.row > 0) {
+                for (var i = 0; i < app.split.row; i++) {
+                    app.split.context.Items.push({
+                        ID: 0,
+                        ProductCode: master.ProductCode,
+                        ProductName: master.ProductName,
+                        ProductUnit: master.ProductUnit,
+                        Amount: 1,
+                        Price: master.Price,
+                        Total: master.Price,
+                        HasItem: true,
+                        PriceGroups: master.PriceGroups
+                    });
+                }
+                $('#split-detail').modal('toggle');
+            }
+        });
+        //
+        $(document).on('hidden.bs.modal', '#split-detail', function () {
+            app.split.index = 0;
+            app.split.row = 0;
+            app.split.context.Items = [];
+        });
+        //
+        $('#btn-save').on('click', function (event) {
+            var master = context.Items;
+            var data = [];
+            for (var i = 0; i < master.length; i++) {
+                var obj = master[i];
+                data.push({
+                    ProductCode: obj.ProductCode,
+                    Amount: obj.Amount
+                });
+            }
+            $('#form-save input[name=Code]').val($('#order-code').text());
+            $('#form-save input[name=Items]').val(JSON.stringify(data));
+        });
+        //
+        $('#btn-approve').on('click', function (event) {
+            alert('approve order id -> ' + $(this).attr('data-id'));
+        });
+        //
+        $('#btn-reject').on('click', function (event) {
+            alert('reject order id -> ' + $(this).attr('data-id'));
+        });
+        //
+        Mark.pipes.format = function (num, p) {
+            return accounting.formatMoney(num, '', p);
+        };
+        //
+        app.split.template = $('#split-template').html();
+        app.item.template = $('#item-template').html();
+        app.item.render();
+    }
+};
+
+$(function () {
+    var isEditMode = '${form.editMode}';
+//
+    if (isEditMode == 'true') {
+        $('#paymentMethodId').prop("disabled", false);
+        $('#paymentTermId').prop("disabled", false);
+        $('input[name=product-price-group]').prop("disabled", false);
+        $('button[name=btn-remove]').prop("disabled", false);
+        $('button[name=btn-split]').prop("disabled", false);
+        $('#btn-approve').prop("disabled", false);
+        $('#btn-reject').prop("disabled", false);
+    } else {
+        $('#paymentMethodId').prop("disabled", true);
+        $('#paymentTermId').prop("disabled", true);
+        $('select[name=product-price-group]').prop("disabled", true);
+        $('button[name=btn-remove]').prop("disabled", true);
+        $('button[name=btn-split]').prop("disabled", true);
+        $('#btn-approve').prop("disabled", true);
+        $('#btn-reject').prop("disabled", true);
+    }
+//
+    app.init();
+});
+    </script>
 </body>
 </html>
