@@ -25,7 +25,8 @@
 			<div class="col-sm-8">&nbsp;</div>
 
 			<div class="col-sm-2">
-				<a href='<c:url value="/upload/product/product.xlsx" />' class="btn btn-default">Download Template</a>
+				<a href='<c:url value="/upload/product/product.xlsx" />' class="btn btn-default">Download
+					Template</a>
 			</div>
 
 			<div class="col-sm-2">
@@ -146,6 +147,7 @@
 									<th>Image</th>
 									<th>Product Code</th>
 									<th>Product Name</th>
+									<th>Model</th>
 									<th>Active</th>
 									<th>&nbsp;</th>
 								</tr>
@@ -156,19 +158,28 @@
 								<c:forEach items="${ resultPage.result }" var="product" varStatus="rowNum">
 									<td>${ rowBegin + (rowNum.index + 1) }</td>
 									<td>
-										<c:url var="productUrl"
-											value="/upload/product_image/Medium/${ product.productModelId }.jpg" />
+										<c:url var="productUrl" value="/upload/product_image/Medium/${ product.productCode }.jpg" />
 										<img alt="${ product.productModelName }" src="${ productUrl }" />
 									</td>
 									<td>${ product.productCode }</td>
 									<td>${ product.productNameEn }</td>
+									<td>${ product.productModelName }</td>
+
 									<td>
 										<c:choose>
 											<c:when test="${ product.isActive == '1' }">Yes</c:when>
 											<c:otherwise>No</c:otherwise>
 										</c:choose>
 									</td>
-									<td></td>
+									<td>
+										<form id="product-${ product.productId }"
+											action='<c:url value="/backend/product/delete" />' method="post">
+											<input type="hidden" id="csrftoken_" name="${_csrf.parameterName}" value="${_csrf.token}" />
+											<input type="hidden" name="productId" value="${ product.productId }" />
+											<input type="button" value="Delete"
+												onclick="confirmDelete('${ product.productId }', '${ product.productCode }')" />
+										</form>
+									</td>
 								</c:forEach>
 							</tbody>
 						</table>
@@ -211,6 +222,22 @@
 
 		function loadBuyerGroup(brandId) {
 			$('#searchProductModelForm').submit();
+		}
+
+		function confirmDelete(productId, productCode) {
+			$("#dialog-confirm").dialog({
+				resizable : false,
+				height : 140,
+				modal : true,
+				buttons : {
+					"Delete" : function() {
+						$('#product-' + productId).submit();
+					},
+					Cancel : function() {
+						$(this).dialog("close");
+					}
+				}
+			});
 		}
 	</script>
 </body>

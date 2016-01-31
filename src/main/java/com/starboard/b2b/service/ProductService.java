@@ -72,5 +72,7 @@ public interface ProductService {
 	void updateProduct(List<ProductDTO> products);
 
 	void updateProductPrice(List<ProductPriceDTO> productPrices);
+
+	boolean delete(long productId);
 	
 }

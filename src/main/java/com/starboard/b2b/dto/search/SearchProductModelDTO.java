@@ -15,6 +15,8 @@ public class SearchProductModelDTO {
 	private String modelImage;
 	private String productPreintro;
 	private String isActive;
+	private String productTechnologyId;
+	private String year;
 
 	public SearchProductModelDTO(long productId, String productCode, String productPictureMedium, String productModelId, String productModelName,
 			String productNameEn, BigDecimal productPrice, String productUnitId, String productCurrency, String modelImage, String productPreintro) {
@@ -32,7 +34,7 @@ public class SearchProductModelDTO {
 
 	public SearchProductModelDTO(long productId, String productCode, String productPictureMedium, String productModelId, String productModelName,
 			String productNameEn, BigDecimal productPrice, String productUnitId, String productCurrency, String modelImage, String productPreintro,
-			String isActive) {
+			String isActive, String productTechnologyId, String year) {
 		this.productId = productId;
 		this.productCode = productCode;
 		this.productPictureMedium = productPictureMedium;
@@ -44,6 +46,8 @@ public class SearchProductModelDTO {
 		this.modelImage = modelImage;
 		this.productPreintro = productPreintro;
 		this.isActive = isActive;
+		this.productTechnologyId = productTechnologyId;
+		this.year = year;
 	}
 
 	public long getProductId() {
@@ -140,6 +144,22 @@ public class SearchProductModelDTO {
 
 	public void setIsActive(String isActive) {
 		this.isActive = isActive;
+	}
+
+	public String getProductTechnologyId() {
+		return productTechnologyId;
+	}
+
+	public void setProductTechnologyId(String productTechnologyId) {
+		this.productTechnologyId = productTechnologyId;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
 	}
 
 }

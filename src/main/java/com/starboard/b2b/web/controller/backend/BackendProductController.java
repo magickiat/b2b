@@ -11,6 +11,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,19 +30,25 @@ import com.starboard.b2b.web.form.product.SearchProductForm;
 
 @Controller
 @RequestMapping("/backend/product")
-@PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
 public class BackendProductController {
 
 	private static final Logger log = LoggerFactory.getLogger(BackendProductController.class);
-
-	@Value("${upload.path}")
-	private String uploadPath;
 
 	@Autowired
 	private ProductService productService;
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	String index(Model model) {
+		return search(new SearchProductForm(), model);
+	}
+
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	String deleteProduct(@ModelAttribute("productId") long productId, Model model) {
+		boolean delete = productService.delete(productId);
+		if (!delete) {
+			model.addAttribute("msg", "Cannot delete");
+		}
+
 		return search(new SearchProductForm(), model);
 	}
 
@@ -103,7 +110,7 @@ public class BackendProductController {
 	String uploadProductPrice() {
 		return "pages-back/product/upload/product-price";
 	}
-	
+
 	@RequestMapping(value = "/upload/product-price", method = RequestMethod.POST)
 	String uploadProductPrice(@RequestParam("file") MultipartFile file, Model model) throws Exception {
 
@@ -124,5 +131,5 @@ public class BackendProductController {
 		model.addAttribute("msg", "upload complete");
 		return "pages-back/product/upload/product-price";
 	}
-	
+
 }

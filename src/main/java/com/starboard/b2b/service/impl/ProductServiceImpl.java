@@ -571,4 +571,10 @@ public class ProductServiceImpl implements ProductService {
 		}
 	}
 
+	@Override
+	@Transactional
+	public boolean delete(long productId) {
+		return productDao.delete(productId);
+	}
+
 }

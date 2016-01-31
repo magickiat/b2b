@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -231,7 +232,7 @@ public class ProductDaoImpl implements ProductDao {
 	public SearchResult<SearchProductModelDTO> searchProductForBackend(SearchRequest<SearchProductForm> req) {
 
 		StringBuilder sbQuery = new StringBuilder(
-				"SELECT new com.starboard.b2b.dto.search.SearchProductModelDTO(p.productId, p.productCode, p.productPictureMedium, p.productModelId, m.productModelName, p.productNameEn, p.productPrice, p.productUnitId, p.productCurrency, m.image, p.productPreintro, p.isActive) ");
+				"SELECT new com.starboard.b2b.dto.search.SearchProductModelDTO(p.productId, p.productCode, p.productPictureMedium, p.productModelId, m.productModelName, p.productNameEn, p.productPrice, p.productUnitId, p.productCurrency, m.image, p.productPreintro, p.isActive, p.productTechnologyId, p.productYearId) ");
 		StringBuilder sbTotal = new StringBuilder("");
 		if ("image".equals(req.getCondition().getShowType())) {
 			sbTotal.append(" select count(distinct p.productModelId) ");
@@ -334,5 +335,18 @@ public class ProductDaoImpl implements ProductDao {
 		log.info("List size: " + (list != null ? list.size() : 0));
 		log.info("Total " + result.getTotal());
 		return result;
+	}
+
+	@Override
+	public boolean delete(long productId) {
+		Session session = sf.getCurrentSession();
+		Product product = (Product) session.get(Product.class, productId);
+		if(product == null){
+			return false;
+		}else{
+			session.delete(product);
+			return true;
+		}
+		
 	}
 }
