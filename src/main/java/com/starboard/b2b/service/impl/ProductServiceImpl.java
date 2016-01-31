@@ -495,7 +495,7 @@ public class ProductServiceImpl implements ProductService {
 					if (StringUtils.isEmpty(importProduct.getIsActive())) {
 						product.setIsActive(B2BConstant.PRODUCT_FLAG_ACTIVE);
 					}
-
+					
 					// ----- Transform data -----
 					// withnose protector
 					String flagWithNoseProduct = B2BConstant.NO_WITHNOSE_PROTECTION;
@@ -504,17 +504,7 @@ public class ProductServiceImpl implements ProductService {
 					}
 					product.setProductPreintro(flagWithNoseProduct);
 
-					// Set year, use product_year_id from database
-					String year = ProductUtils.getProductYear(importProduct.getProductNameEn());
-					if (StringUtils.isNotEmpty(year)) {
-						// Get year id from database
-						ProductYear productYear = productYearDao.findByYear(year);
-						if (productYear != null) {
-							product.setProductYearId(productYear.getProductYearId());
-						}
-					}
-
-					product.setProductYearId(year);
+					product.setProductYearId(importProduct.getProductYearId());
 
 					log.info("merge product: " + product);
 					productDao.merge(product);

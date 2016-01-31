@@ -1,14 +1,7 @@
 package com.starboard.b2b.web.controller.backend;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,25 +71,6 @@ public class BackendProductController {
 		model.addAttribute("resultPage", searchProduct);
 		model.addAttribute("searchForm", searchForm);
 		return "pages-back/product/index";
-	}
-
-	@RequestMapping(value = "download", method = RequestMethod.GET)
-	void download(HttpServletResponse response) throws IOException {
-		File template = new File(uploadPath, "/product/upload-product.xlsx");
-		if (!template.exists()) {
-			throw new FileNotFoundException(template.getName());
-		}
-
-		byte[] byteArray = FileUtils.readFileToByteArray(template);
-		response.setContentLength(byteArray.length);
-		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-Disposition", "attachment; filename=upload-product.xls");
-		response.setHeader("Cache-Control", "cache, must-revalidate");
-		response.setHeader("Pragma", "public");
-
-		try (OutputStream output = response.getOutputStream()) {
-			output.write(byteArray);
-		}
 	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.GET)

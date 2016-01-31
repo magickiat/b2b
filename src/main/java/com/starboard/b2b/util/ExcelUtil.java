@@ -110,6 +110,7 @@ public class ExcelUtil {
 				Cell cellTechnology = row.getCell(5);
 				Cell cellSize = row.getCell(6);
 				Cell cellActive = row.getCell(7);
+				Cell cellYear = row.getCell(8);
 
 				Long typeId = null;
 				String code = "";
@@ -119,6 +120,7 @@ public class ExcelUtil {
 				String technology = "undefined";
 				String size = "";
 				String active = "0";
+				String year = "";
 
 				// ----- validate and get value -----
 				if (cellTypeId == null) {
@@ -175,12 +177,19 @@ public class ExcelUtil {
 					throw new B2BException("size must be text");
 				}
 
-				log.info("cell active = " + cellActive.getStringCellValue());
 				if (cellActive != null) {
 					if (cellActive.getStringCellValue().trim().equalsIgnoreCase("yes")) {
 						active = "1";
 					} else {
 						active = "0";
+					}
+				}
+
+				if (cellYear != null) {
+					if (cellYear.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+						year = "" + (int) cellYear.getNumericCellValue();
+					} else if (cellYear.getCellType() == Cell.CELL_TYPE_STRING) {
+						year = cellYear.getStringCellValue().trim();
 					}
 
 				}
@@ -194,8 +203,9 @@ public class ExcelUtil {
 				product.setProductTechnologyId(technology);
 				product.setProductLength(size);
 				product.setIsActive(active);
+				product.setProductYearId(year);
 
-				log.info("productType = " + product.getProductTypeId() + "\t technology = " + product.getProductTechnologyId());
+				log.info("productType = " + product.getProductTypeId() + "\t technology = " + product.getProductTechnologyId() + "\tyear = " + year);
 				result.add(product);
 			}
 		} finally {
@@ -294,14 +304,14 @@ public class ExcelUtil {
 						throw new B2BException("MSRE price must be Text or Number");
 					}
 				}
-				
+
 				if (cellUnitId != null && cellUnitId.getCellType() == Cell.CELL_TYPE_STRING) {
 					unitId = StringUtil.removeSpecialChar(cellUnitId.getStringCellValue().trim());
 				} else {
 					throw new B2BException("Unit must be text");
 				}
-				
-				result.add( new ProductPriceDTO(productCode, priceGroup, currency, amount, unitId, msrePrice));
+
+				result.add(new ProductPriceDTO(productCode, priceGroup, currency, amount, unitId, msrePrice));
 			}
 		} finally {
 			if (workbook != null) {

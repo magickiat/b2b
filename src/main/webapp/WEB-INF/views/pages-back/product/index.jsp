@@ -25,7 +25,7 @@
 			<div class="col-sm-8">&nbsp;</div>
 
 			<div class="col-sm-2">
-				<a href='<c:url value="/backend/product/download" />' class="btn btn-default">Download Template</a>
+				<a href='<c:url value="/upload/product/product.xlsx" />' class="btn btn-default">Download Template</a>
 			</div>
 
 			<div class="col-sm-2">
