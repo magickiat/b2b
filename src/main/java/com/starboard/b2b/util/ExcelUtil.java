@@ -225,7 +225,7 @@ public class ExcelUtil {
 					result.add(product);
 				}
 			} else {
-				log.warn("Excel has only header row");
+				throw new B2BException("Excel has only header row");
 			}
 		} finally {
 			if (workbook != null) {
@@ -299,7 +299,7 @@ public class ExcelUtil {
 					result.add(new ProductPriceDTO(productCode, priceGroup, currency, amount, unitId, msrePrice));
 				}
 			} else {
-				log.warn("Excel has only header row");
+				throw new B2BException("Excel has only header row");
 			}
 
 		} finally {
