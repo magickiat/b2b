@@ -26,6 +26,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
 import com.starboard.b2b.bean.ExcelOrderBean;
 import com.starboard.b2b.dto.ProductDTO;
@@ -283,6 +284,10 @@ public class ExcelUtil {
 
 					// ----- validate and get value -----
 
+					if(StringUtils.isEmpty(productCode)){
+						throw new B2BException("Product code is required");
+					}
+					
 					if (cellAmount != null && cellAmount.getCellType() == Cell.CELL_TYPE_NUMERIC) {
 						amount = new BigDecimal(cellAmount.getNumericCellValue());
 					}
