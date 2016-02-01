@@ -199,11 +199,7 @@ public class ProductDaoImpl implements ProductDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Product findByProductCode(String productCode) {
-		List<Product> result = sf.getCurrentSession().createCriteria(Product.class).add(Restrictions.eq("productCode", productCode)).list();
-		if (result.isEmpty()) {
-			return null;
-		}
-		return result.get(0);
+		return (Product) sf.getCurrentSession().createCriteria(Product.class).add(Restrictions.eq("productCode", productCode)).uniqueResult();
 	}
 
 	@SuppressWarnings("unchecked")

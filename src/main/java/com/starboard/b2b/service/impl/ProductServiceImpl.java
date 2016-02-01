@@ -469,16 +469,16 @@ public class ProductServiceImpl implements ProductService {
 
 			for (ProductDTO importProduct : products) {
 				if (StringUtils.isNotEmpty(importProduct.getProductCode())) {
-
+					log.info("find by product code: " + importProduct.getProductCode());
 					Product product = productDao.findByProductCode(importProduct.getProductCode());
-
-					if (product == null) {
+					boolean isNull = product == null;
+					log.info("found: " + !isNull);
+					if (isNull) {
 						product = new Product();
 						BeanUtils.copyProperties(importProduct, product);
 						product.setTimeCreate(DateTimeUtil.getCurrentDate());
 						product.setUserCreate(B2BConstant.B2B_SYSTEM_NAME);
 					} else {
-
 						product.setProductTypeId(importProduct.getProductTypeId());
 						product.setProductNameEn(importProduct.getProductNameEn());
 						product.setProductBuyerGroupId(importProduct.getProductBuyerGroupId());
@@ -495,7 +495,7 @@ public class ProductServiceImpl implements ProductService {
 					if (StringUtils.isEmpty(importProduct.getIsActive())) {
 						product.setIsActive(B2BConstant.PRODUCT_FLAG_ACTIVE);
 					}
-					
+
 					// ----- Transform data -----
 					// withnose protector
 					String flagWithNoseProduct = B2BConstant.NO_WITHNOSE_PROTECTION;
@@ -506,8 +506,13 @@ public class ProductServiceImpl implements ProductService {
 
 					product.setProductYearId(importProduct.getProductYearId());
 
-					log.info("merge product: " + product);
-					productDao.merge(product);
+					if (isNull) {
+						log.info("save " + product.getProductCode());
+						productDao.save(product);
+					} else {
+						log.info("update " + product.getProductCode());
+						productDao.merge(product);
+					}
 				}
 			}
 		}
@@ -547,25 +552,25 @@ public class ProductServiceImpl implements ProductService {
 				id.setProductCode(dto.getProductCode());
 				id.setProductCurrency(dto.getProductCurrency());
 				id.setProductPriceGroupId(dto.getProductPriceGroupId());
-				
+
 				ProductPrice price = productPriceDao.findById(id);
-				if(price == null){
+				if (price == null) {
 					isNew = true;
 					price = new ProductPrice();
-					price.setId(id);	
+					price.setId(id);
 					price.setTimeCreate(DateTimeUtil.getCurrentDate());
 					price.setUserCreate(B2BConstant.B2B_SYSTEM_NAME);
-				}else{
+				} else {
 					price.setTimeUpdate(DateTimeUtil.getCurrentDate());
 					price.setUserUpdate(B2BConstant.B2B_SYSTEM_NAME);
 				}
-				
+
 				price.setAmount(dto.getAmount());
 				price.setMsrePrice(dto.getMsrePrice());
 				price.setProductUnitId(dto.getProductUnitId());
-				
-				if(isNew){
-					productPriceDao.save(price);					
+
+				if (isNew) {
+					productPriceDao.save(price);
 				}
 			}
 		}

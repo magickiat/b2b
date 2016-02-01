@@ -156,6 +156,7 @@
 								<c:set var="rowBegin" value="${ (( resultPage.current - 1) * resultPage.pageSize) }"></c:set>
 
 								<c:forEach items="${ resultPage.result }" var="product" varStatus="rowNum">
+								<tr>
 									<td>${ rowBegin + (rowNum.index + 1) }</td>
 									<td>
 										<c:url var="productUrl" value="/upload/product_image/Medium/${ product.productCode }.jpg" />
