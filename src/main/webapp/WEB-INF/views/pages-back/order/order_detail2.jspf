@@ -20,7 +20,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${ form.orderReport.orderDetails }" var="ordDetail"
+			<c:forEach items="${ approveForm.orderReport.orderDetails }" var="ordDetail"
 				varStatus="rowNum">
 
 				<tr>
@@ -34,7 +34,7 @@
 							onchange="changeProductPriceGroup(${ ordDetail.orderDetailId }, this)">
 							<option value="blank"></option>
 							<c:forEach var="priceGroup"
-								items="${ form.productPriceGroupList }">
+								items="${ approveForm.productPriceGroupList }">
 								<option value="${ priceGroup.productPriceGroupId }">${ priceGroup.productPriceGroupName }</option>
 							</c:forEach>
 						</select>
