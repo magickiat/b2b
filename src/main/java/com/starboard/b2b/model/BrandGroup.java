@@ -19,7 +19,6 @@ public class BrandGroup implements java.io.Serializable {
 	private long brandGroupId;
 	private String brandGroupName;
 	private String brandGroupDescription;
-	private String email;
 	private String userCreate;
 	private String userUpdate;
 	private Date timeCreate;
@@ -34,16 +33,9 @@ public class BrandGroup implements java.io.Serializable {
 
 	public BrandGroup(long brandGroupId, String brandGroupName, String brandGroupDescription, String userCreate,
 			String userUpdate, Date timeCreate, Date timeUpdate) {
-		this(brandGroupId, brandGroupName, brandGroupDescription, null, userCreate,
-				userUpdate, timeCreate, timeUpdate);
-	}
-	
-	public BrandGroup(long brandGroupId, String brandGroupName, String brandGroupDescription, String email, String userCreate,
-			String userUpdate, Date timeCreate, Date timeUpdate) {
 		this.brandGroupId = brandGroupId;
 		this.brandGroupName = brandGroupName;
 		this.brandGroupDescription = brandGroupDescription;
-		this.email = email;
 		this.userCreate = userCreate;
 		this.userUpdate = userUpdate;
 		this.timeCreate = timeCreate;
@@ -51,6 +43,7 @@ public class BrandGroup implements java.io.Serializable {
 	}
 
 	@Id
+
 	@Column(name = "brand_group_id", unique = true, nullable = false)
 	public long getBrandGroupId() {
 		return this.brandGroupId;
@@ -114,14 +107,6 @@ public class BrandGroup implements java.io.Serializable {
 
 	public void setTimeUpdate(Date timeUpdate) {
 		this.timeUpdate = timeUpdate;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 }
