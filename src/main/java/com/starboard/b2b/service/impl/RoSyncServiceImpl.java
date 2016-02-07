@@ -18,7 +18,6 @@ import com.starboard.b2b.model.sync.TmpRo;
 import com.starboard.b2b.service.RoSyncService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.CurrencyUtils;
-import com.starboard.b2b.util.DateTimeUtil;
 
 @Service("roSyncService")
 public class RoSyncServiceImpl implements RoSyncService {
@@ -102,7 +101,7 @@ public class RoSyncServiceImpl implements RoSyncService {
 		tmpRo.setSalesId(null);
 		tmpRo.setImportStatus(B2BConstant.ONE_IMPORT_STATUS);
 		tmpRo.setDtsSystem(B2BConstant.B2B_SYSTEM_NAME);
-		tmpRo.setDtsUpdate(DateTimeUtil.getCurrentDate());
+		tmpRo.setDtsUpdate(ordDetail.getTimeUpdate());
 	}
 
 	private String getCurrencyCode(String custAccount, String productCurrency, String productCategoryId) {

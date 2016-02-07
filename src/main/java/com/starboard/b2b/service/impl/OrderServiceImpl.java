@@ -164,6 +164,7 @@ public class OrderServiceImpl implements OrderService {
 		order.setRemarkCustomer(customerRemark);
 		order.setTimeCreate(currentDate);
 		order.setUserCreate(user.getUsername());
+		order.setTimeUpdate(currentDate);
 
 		long orderId = orderDao.save(order);
 
@@ -193,7 +194,8 @@ public class OrderServiceImpl implements OrderService {
 			orderDetail.setProductUnitId(product.getProductUnitId());
 			orderDetail.setProductBuyerGroupId(product.getProductBuyerGroupId());
 			orderDetail.setUserCreate(user.getUsername());
-			orderDetail.setTimeCreate(DateTimeUtil.getCurrentDate());
+			orderDetail.setTimeCreate(currentDate);
+			orderDetail.setTimeUpdate(currentDate);
 
 			orderDetailDao.save(orderDetail);
 		}

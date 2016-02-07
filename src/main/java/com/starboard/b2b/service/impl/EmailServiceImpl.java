@@ -1,35 +1,25 @@
 package com.starboard.b2b.service.impl;
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Properties;
 
-import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
 import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.starboard.b2b.dao.EmailTemplateDao;
-import com.starboard.b2b.dto.EmailTemplateDTO;
 import com.starboard.b2b.dto.OrderDTO;
-import com.starboard.b2b.dto.UserDTO;
 import com.starboard.b2b.exception.B2BException;
-import com.starboard.b2b.model.EmailTemplate;
 import com.starboard.b2b.service.EmailService;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.util.ApplicationConfig;
