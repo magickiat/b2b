@@ -51,6 +51,7 @@ import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.service.BrandService;
 import com.starboard.b2b.service.CustomerService;
+import com.starboard.b2b.service.EmailService;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.ArchiveUtil;
@@ -77,6 +78,9 @@ public class FrontOrderController {
 
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private EmailService emailService;
 
 	@Autowired
 	private Environment environment;
@@ -537,6 +541,13 @@ public class FrontOrderController {
 
 		OrderDTO order = orderService.newOrder(invoiceTo, dispatchTo, shippingType, customerRemark, paymentMethod, cart);
 		model.addAttribute("order", order);
+		
+		// ----- send mail -----
+		try {
+			emailService.sendEmailOrder(order);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
 
 		// Clear Shopping Cart session
 		// http://vard-lokkur.blogspot.com/2011/01/spring-mvc-session-attributes-handling.html

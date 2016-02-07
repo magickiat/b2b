@@ -64,8 +64,8 @@ public interface OrderService {
 
 	List<SoDTO> listSO(long orderId);
 
-	void approve(SearchOrderDTO orderReport);
+	void approve(OrderDTO orderReport);
 
-	void approve(long orderId);
+	void reject(OrderDTO order);
 
 }

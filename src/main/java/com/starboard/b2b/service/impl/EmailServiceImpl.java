@@ -123,7 +123,7 @@ public class EmailServiceImpl implements EmailService {
 			throw new B2BException("Invalid order status");
 		}
 		
-		
+		//TODO send email
 	}
 
 }

@@ -10,4 +10,9 @@ public interface B2BConstant {
 	String PRODUCT_FLAG_ACTIVE = "1";
 	String PRODUCT_FLAG_INACTIVE = "0";
 	
+	String CURRENCY_EUR = "EUR";
+	
+	String VO_NUMBER_SEQ_CODE = "OV";
+
+	long ONE_IMPORT_STATUS = 1;
 }
