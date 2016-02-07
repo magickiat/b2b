@@ -18,7 +18,7 @@ public class EventForm {
     @NotBlank(message = "Content is required.")
     private String content;
 
-    @DateTimeFormat(pattern = "YYYY-MM-DD HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date timeEvent;
 
     public int getId() {
