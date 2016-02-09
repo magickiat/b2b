@@ -12,4 +12,6 @@ public interface TmpRoDao {
 
 	TmpRo findById(long orderDetailId);
 
+	int deleteByOrderId(long orderId);
+
 }

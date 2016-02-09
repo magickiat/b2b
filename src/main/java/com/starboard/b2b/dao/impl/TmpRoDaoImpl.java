@@ -32,4 +32,10 @@ public class TmpRoDaoImpl implements TmpRoDao {
 		return (TmpRo) sessionFactory.getCurrentSession().get(TmpRo.class, orderDetailId);
 	}
 
+	@Override
+	public int deleteByOrderId(long orderId) {
+		String hql = "delete from TmpRo where orderId = :orderId";
+		return sessionFactory.getCurrentSession().createQuery(hql).setLong("orderId", orderId).executeUpdate();
+	}
+
 }

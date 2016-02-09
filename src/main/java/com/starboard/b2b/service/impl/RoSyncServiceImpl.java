@@ -46,16 +46,7 @@ public class RoSyncServiceImpl implements RoSyncService {
 		if (list != null && !list.isEmpty()) {
 			Orders order = orderDao.findById(orderId);
 			for (SearchOrderDetailReportResult ordDetail : list) {
-				TmpRo tmpRo = tmpRoDao.findById(ordDetail.getOrderDetailId());
-				if (tmpRo == null) {
-					tmpRoDao.save(createTmpRO(order, ordDetail));
-				} else {
-					if (ordDetail.getTimeUpdate() != null && tmpRo.getTimeUpdate() != null) {
-						if (tmpRo.getDtsUpdate().before(ordDetail.getTimeUpdate())) {
-							setTmpRo(order, ordDetail, tmpRo);
-						}
-					}
-				}
+				tmpRoDao.save(createTmpRO(order, ordDetail));
 			}
 		}
 	}
