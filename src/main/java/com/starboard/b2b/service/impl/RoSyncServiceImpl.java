@@ -24,6 +24,7 @@ public class RoSyncServiceImpl implements RoSyncService {
 
 	@Autowired
 	private ApplicationConfig applicationConfig;
+	
 	@Autowired
 	private OrderDetailDao orderDetailDao;
 

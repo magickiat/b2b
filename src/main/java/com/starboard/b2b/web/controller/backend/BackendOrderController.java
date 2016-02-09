@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.common.OrderStatusConfig;
@@ -20,6 +21,7 @@ import com.starboard.b2b.dto.OrderStatusDTO;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
+import com.starboard.b2b.dto.search.SearchOrderDetailReportResult;
 import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.service.EmailService;
 import com.starboard.b2b.service.OrderService;
@@ -31,6 +33,7 @@ import com.starboard.b2b.web.form.order.SearchOrderForm;
 
 @Controller
 @RequestMapping("/backend/order")
+@SessionAttributes(value = { "orderDetails" })
 public class BackendOrderController {
 
 	private static final Logger log = LoggerFactory.getLogger(BackendOrderController.class);
@@ -130,6 +133,7 @@ public class BackendOrderController {
 
 		if (dbOrderDetails != null && !dbOrderDetails.isEmpty()) {
 			orderReport.setOrderDetails(dbOrderDetails);
+			model.addAttribute("orderDetails", dbOrderDetails);
 		}
 
 		// ----- Find selling order -----
@@ -151,11 +155,22 @@ public class BackendOrderController {
 
 		// ----- approve -----
 		orderService.approve(order);
+		// TODO update order_detail from session when split function ready!!!
+		// 1. delete old order_detail by order_id
+		// 2. insert new order_detail
+
 		roSyncService.syncRoFromB2BtoAX(orderId);
 
-		// ----- send mail -----
+		// ----- send mail order -----
 		try {
 			emailService.sendEmailOrder(order);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+
+		// ----- send mail to staff -----
+		try {
+			emailService.sendEmailInternal(order);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -169,7 +184,7 @@ public class BackendOrderController {
 		if (order == null) {
 			throw new B2BException("Not found order " + orderId);
 		}
-		
+
 		// ----- reject -----
 		orderService.reject(order);
 

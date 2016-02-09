@@ -15,4 +15,6 @@ public interface B2BConstant {
 	String VO_NUMBER_SEQ_CODE = "OV";
 
 	long ONE_IMPORT_STATUS = 1;
+	
+	String EMAIL_TEMPLATE_NEW_ORDER_TO_SALE = "31";
 }

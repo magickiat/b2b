@@ -12,4 +12,6 @@ public interface EmailService {
 			String[] attachments) throws AddressException, MessagingException, IOException;
 
 	public void sendEmailOrder(OrderDTO order) throws Exception;
+
+	void sendEmailInternal(OrderDTO order) throws Exception;
 }
