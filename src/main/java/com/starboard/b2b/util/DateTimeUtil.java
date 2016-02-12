@@ -5,9 +5,11 @@ import java.util.Date;
 import java.util.Locale;
 
 public class DateTimeUtil {
+	
+	public static final Locale LOCALE = Locale.US;
 
 	public static Calendar getCalendar() {
-		return Calendar.getInstance(Locale.US);
+		return Calendar.getInstance(LOCALE);
 	}
 
 	public static Date getCurrentDate() {

@@ -2,14 +2,12 @@ package com.starboard.b2b.web.controller.backend;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,19 +16,24 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.common.OrderStatusConfig;
 import com.starboard.b2b.dto.OrdAddressDTO;
+import com.starboard.b2b.dto.OrderDTO;
 import com.starboard.b2b.dto.OrderStatusDTO;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
+import com.starboard.b2b.dto.search.SearchOrderDetailReportResult;
 import com.starboard.b2b.exception.B2BException;
+import com.starboard.b2b.service.EmailService;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ProductService;
+import com.starboard.b2b.service.RoSyncService;
 import com.starboard.b2b.web.form.order.OrderDecisionForm;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
 import com.starboard.b2b.web.form.order.SearchOrderForm;
 
 @Controller
 @RequestMapping("/backend/order")
+@SessionAttributes(value = { "orderDetails" })
 public class BackendOrderController {
 
 	private static final Logger log = LoggerFactory.getLogger(BackendOrderController.class);
@@ -42,6 +45,12 @@ public class BackendOrderController {
 
 	@Autowired
 	private OrderService orderService;
+
+	@Autowired
+	private EmailService emailService;
+
+	@Autowired
+	private RoSyncService roSyncService;
 
 	private void setForm(final OrderSummaryForm form, final Model model) {
 		final List<ProductTypeDTO> productTypes = productService.findProductTypeByBrandId(form.getBrandId());
@@ -92,9 +101,12 @@ public class BackendOrderController {
 			throw new B2BException("Not found order");
 		}
 
+		// set value form
 		form.setOrderReport(orderReport);
 		form.setPaymentTermId(orderReport.getPaymentTermId());
 		form.setPaymentMethodId(orderReport.getPaymentMethod());
+		form.setRemarkCustomer(orderReport.getRemarkCustomer());
+		form.setRemarkOrders(orderReport.getRemarkOrders());
 
 		log.info("order status = " + orderReport.getOrderStatus());
 		if (OrderStatusConfig.WAIT_FOR_APPROVE.equals(orderReport.getOrderStatusId())) {
@@ -124,6 +136,7 @@ public class BackendOrderController {
 
 		if (dbOrderDetails != null && !dbOrderDetails.isEmpty()) {
 			orderReport.setOrderDetails(dbOrderDetails);
+			model.addAttribute("orderDetails", dbOrderDetails);
 		}
 
 		// ----- Find selling order -----
@@ -137,17 +150,63 @@ public class BackendOrderController {
 	String approve(@ModelAttribute("approveForm") OrderDecisionForm form, long orderId, Model model) {
 		log.info(form.toString());
 		log.info("orderId: " + orderId);
-		orderService.approve(orderId);
+
+		OrderDTO order = orderService.findOrder(orderId);
+		if (order == null) {
+			throw new B2BException("Not found order " + orderId);
+		}
+
+		// ----- approve -----
+		orderService.approve(order);
+		// TODO update order_detail from session when split function ready!!!
+		// 1. delete old order_detail by order_id
+		// 2. insert new order_detail
+
+		roSyncService.syncRoFromB2BtoAX(orderId);
+
+		// ----- send mail order -----
+		try {
+			emailService.sendEmailOrder(order);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+
+		// ----- send mail to staff -----
+		try {
+			emailService.sendEmailInternal(order);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+
 		return viewOrder(orderId, FROM_SEARCH_PAGE, model);
 	}
 
 	@RequestMapping(value = "/reject", method = RequestMethod.POST)
-	String reject(@ModelAttribute("approveForm") OrderDecisionForm form, Model model) {
+	String reject(@ModelAttribute("approveForm") OrderDecisionForm form, long orderId, Model model) {
+		OrderDTO order = orderService.findOrder(orderId);
+		if (order == null) {
+			throw new B2BException("Not found order " + orderId);
+		}
+
+		// ----- reject -----
+		orderService.reject(order);
+
+		// ----- send mail -----
+		try {
+			emailService.sendEmailOrder(order);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+
 		return viewOrder(form.getOrderReport().getOrderId(), FROM_SEARCH_PAGE, model);
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	String save(@ModelAttribute("approveForm") OrderDecisionForm form, Model model) {
+		log.info("Form: " + form);
+		
+		orderService.updateOrder(form);
+		
 		return viewOrder(form.getOrderReport().getOrderId(), FROM_SEARCH_PAGE, model);
 	}
 }

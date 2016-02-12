@@ -29,7 +29,7 @@
 						<label for="file">Select Excel Product:</label>
 						<input type="file" name="file">
 					</div>
-					<input type="submit" value="Upload" />
+					<input type="submit" value="Upload" class="btn btn-success" />
 				</form>
 			</div>
 		</div>

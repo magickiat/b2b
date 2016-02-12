@@ -50,4 +50,12 @@ public class ApplicationConfig {
 	public String getDefaultProductUnit() {
 		return "PCS";
 	}
+	
+	public String getDefaultProductBuyerGroup(){
+		return "GROUP1";
+	}
+
+	public Long getDefaultOrderDetailStatus() {
+		return 0L;
+	}
 }

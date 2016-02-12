@@ -1,6 +1,5 @@
 package com.starboard.b2b.service.impl;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,10 +7,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +28,7 @@ import com.starboard.b2b.dao.PaymentMethodDao;
 import com.starboard.b2b.dao.PaymentTermDao;
 import com.starboard.b2b.dao.ShippingTypeDao;
 import com.starboard.b2b.dao.SoDao;
+import com.starboard.b2b.dto.CustPriceGroupDTO;
 import com.starboard.b2b.dto.OrdAddressDTO;
 import com.starboard.b2b.dto.OrderDTO;
 import com.starboard.b2b.dto.OrderStatusDTO;
@@ -49,14 +49,17 @@ import com.starboard.b2b.model.OrdAddress;
 import com.starboard.b2b.model.OrdDetail;
 import com.starboard.b2b.model.OrderStatus;
 import com.starboard.b2b.model.Orders;
+import com.starboard.b2b.model.ProductBuyerGroup;
 import com.starboard.b2b.model.So;
 import com.starboard.b2b.model.SoDetail;
 import com.starboard.b2b.model.User;
-import com.starboard.b2b.service.EmailService;
+import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.OrderService;
+import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.UserUtil;
+import com.starboard.b2b.web.form.order.OrderDecisionForm;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
 
 @Service("orderService")
@@ -96,9 +99,12 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private SoDao soDao;
-
+	
 	@Autowired
-	private EmailService emailService;
+	private ProductService productService;
+	
+	@Autowired
+	private CustomerService customerService;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -169,9 +175,12 @@ public class OrderServiceImpl implements OrderService {
 		order.setRemarkCustomer(customerRemark);
 		order.setTimeCreate(currentDate);
 		order.setUserCreate(user.getUsername());
+		order.setTimeUpdate(currentDate);
 
 		long orderId = orderDao.save(order);
 
+		CustPriceGroupDTO custPriceGroup = customerService.findCustPriceGroup(user.getCustomer().getCustCode(), brandGroupId);
+		
 		// Save Order Detail
 		Set<Long> keySet = cart.keySet();
 		for (Long key : keySet) {
@@ -193,11 +202,13 @@ public class OrderServiceImpl implements OrderService {
 			if (product.getProductPrice() != null && product.getProductPrice().intValue() >= 0) {
 				orderDetail.setPrice(product.getProductPrice());
 			}
+			orderDetail.setStatus(applicationConfig.getDefaultOrderDetailStatus());
 			orderDetail.setProductCurrency(product.getProductCurrency());
 			orderDetail.setProductUnitId(product.getProductUnitId());
-			orderDetail.setProductBuyerGroupId(product.getProductBuyerGroupId());
+			orderDetail.setProductBuyerGroupId(custPriceGroup.getProductBuyerGroupId());
 			orderDetail.setUserCreate(user.getUsername());
-			orderDetail.setTimeCreate(DateTimeUtil.getCurrentDate());
+			orderDetail.setTimeCreate(currentDate);
+			orderDetail.setTimeUpdate(currentDate);
 
 			orderDetailDao.save(orderDetail);
 		}
@@ -238,11 +249,7 @@ public class OrderServiceImpl implements OrderService {
 		if (orderId != null) {
 			Orders order = orderDao.findById(orderId);
 			OrderDTO dto = new OrderDTO();
-			try {
-				BeanUtils.copyProperties(dto, order);
-			} catch (IllegalAccessException | InvocationTargetException e) {
-				log.error(e.toString(), e);
-			}
+			BeanUtils.copyProperties(order, dto);
 			return dto;
 		}
 		return null;
@@ -279,13 +286,9 @@ public class OrderServiceImpl implements OrderService {
 		List<OrdAddressDTO> ordAddressDTOs = new ArrayList<>();
 		if (ordAddresses != null && !ordAddresses.isEmpty()) {
 			for (OrdAddress ordAddress : ordAddresses) {
-				try {
-					OrdAddressDTO ordAddressDTO = new OrdAddressDTO();
-					BeanUtils.copyProperties(ordAddressDTO, ordAddress);
-					ordAddressDTOs.add(ordAddressDTO);
-				} catch (IllegalAccessException | InvocationTargetException e) {
-					log.error("Got problem while copying bean properties.. with error {}", e.getMessage(), e);
-				}
+				OrdAddressDTO ordAddressDTO = new OrdAddressDTO();
+				BeanUtils.copyProperties(ordAddress, ordAddressDTO);
+				ordAddressDTOs.add(ordAddressDTO);
 			}
 		}
 		return ordAddressDTOs;
@@ -297,11 +300,7 @@ public class OrderServiceImpl implements OrderService {
 		final List<OrderStatusDTO> orderStatuses = new ArrayList<>();
 		for (OrderStatus status : orderStatusDao.findAll()) {
 			final OrderStatusDTO orderStatus = new OrderStatusDTO();
-			try {
-				BeanUtils.copyProperties(orderStatus, status);
-			} catch (IllegalAccessException | InvocationTargetException e) {
-				log.error("Got problem while copying bean properties.. with error {}", e.getMessage(), e);
-			}
+			BeanUtils.copyProperties(status, orderStatus);
 			orderStatuses.add(orderStatus);
 		}
 		return orderStatuses;
@@ -360,11 +359,7 @@ public class OrderServiceImpl implements OrderService {
 	public SoDTO findSO(long soId) {
 		So so = orderDao.findSoById(soId);
 		SoDTO dto = new SoDTO();
-		try {
-			BeanUtils.copyProperties(dto, so);
-		} catch (IllegalAccessException | InvocationTargetException e) {
-			log.error(e.toString(), e);
-		}
+		BeanUtils.copyProperties(so, dto);
 		return dto;
 	}
 
@@ -374,13 +369,9 @@ public class OrderServiceImpl implements OrderService {
 		List<SoDetail> so = orderDao.findSoDetailBySoId(soId);
 		List<SoDetailDTO> soDTOs = new ArrayList<>();
 		if (so != null && !so.isEmpty()) {
-			try {
-				SoDetailDTO dto = new SoDetailDTO();
-				BeanUtils.copyProperties(dto, so);
-				soDTOs.add(dto);
-			} catch (IllegalAccessException | InvocationTargetException e) {
-				log.error(e.toString(), e);
-			}
+			SoDetailDTO dto = new SoDetailDTO();
+			BeanUtils.copyProperties(so, dto);
+			soDTOs.add(dto);
 		}
 		return soDTOs;
 	}
@@ -401,26 +392,9 @@ public class OrderServiceImpl implements OrderService {
 		return userDTO;
 	}
 
-	@Transactional
-	public void approve(long orderId) {
-
-		log.info("orderId = " + orderId);
-
-		Orders order = orderDao.findById(orderId);
-		if (order == null) {
-			throw new B2BException("Not found this order id: " + orderId);
-		}
-
-		Date expectShipDate = DateTimeUtil.generateExpectShipDate();
-
-		order.setExpectReceiptDate(expectShipDate);
-		order.setExpectShipmentDate(expectShipDate);
-		order.setOrderStatus(OrderStatusConfig.APPROVED);
-	}
-
 	@Override
 	@Transactional
-	public void approve(SearchOrderDTO orderDTO) {
+	public void approve(OrderDTO orderDTO) {
 		if (orderDTO == null) {
 			throw new B2BException("Order is required");
 		}
@@ -438,4 +412,27 @@ public class OrderServiceImpl implements OrderService {
 		order.setExpectShipmentDate(expectShipDate);
 		order.setOrderStatus(OrderStatusConfig.APPROVED);
 	}
+
+	@Override
+	public void reject(OrderDTO orderDTO) {
+		if (orderDTO == null) {
+			throw new B2BException("Order is required");
+		}
+
+		log.info("orderId = " + orderDTO.getOrderId());
+
+		Orders order = orderDao.findById(orderDTO.getOrderId());
+		if (order == null) {
+			throw new B2BException("Not found this order id: " + orderDTO.getOrderId());
+		}
+
+		order.setOrderStatus(OrderStatusConfig.CANCELED);
+	}
+
+	@Override
+	public void updateOrder(OrderDecisionForm form) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

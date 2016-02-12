@@ -30,4 +30,6 @@ public interface ProductDao {
 	void save(Product product);
 
 	void merge(Product product);
+
+	boolean delete(long productId);
 }

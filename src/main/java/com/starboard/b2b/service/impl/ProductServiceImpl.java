@@ -28,6 +28,7 @@ import com.starboard.b2b.dao.ProductPriceGroupDao;
 import com.starboard.b2b.dao.ProductTechnologyDao;
 import com.starboard.b2b.dao.ProductTypeDao;
 import com.starboard.b2b.dao.ProductYearDao;
+import com.starboard.b2b.dto.CustPriceGroupDTO;
 import com.starboard.b2b.dto.ProductBuyerGroupDTO;
 import com.starboard.b2b.dto.ProductCategoryDTO;
 import com.starboard.b2b.dto.ProductDTO;
@@ -41,6 +42,7 @@ import com.starboard.b2b.dto.ProductYearDTO;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchResult;
+import com.starboard.b2b.model.CustPriceGroup;
 import com.starboard.b2b.model.Product;
 import com.starboard.b2b.model.ProductBuyerGroup;
 import com.starboard.b2b.model.ProductCategory;
@@ -469,16 +471,16 @@ public class ProductServiceImpl implements ProductService {
 
 			for (ProductDTO importProduct : products) {
 				if (StringUtils.isNotEmpty(importProduct.getProductCode())) {
-
+					log.info("find by product code: " + importProduct.getProductCode());
 					Product product = productDao.findByProductCode(importProduct.getProductCode());
-
-					if (product == null) {
+					boolean isNull = product == null;
+					log.info("found: " + !isNull);
+					if (isNull) {
 						product = new Product();
 						BeanUtils.copyProperties(importProduct, product);
 						product.setTimeCreate(DateTimeUtil.getCurrentDate());
 						product.setUserCreate(B2BConstant.B2B_SYSTEM_NAME);
 					} else {
-
 						product.setProductTypeId(importProduct.getProductTypeId());
 						product.setProductNameEn(importProduct.getProductNameEn());
 						product.setProductBuyerGroupId(importProduct.getProductBuyerGroupId());
@@ -504,20 +506,15 @@ public class ProductServiceImpl implements ProductService {
 					}
 					product.setProductPreintro(flagWithNoseProduct);
 
-					// Set year, use product_year_id from database
-					String year = ProductUtils.getProductYear(importProduct.getProductNameEn());
-					if (StringUtils.isNotEmpty(year)) {
-						// Get year id from database
-						ProductYear productYear = productYearDao.findByYear(year);
-						if (productYear != null) {
-							product.setProductYearId(productYear.getProductYearId());
-						}
+					product.setProductYearId(importProduct.getProductYearId());
+
+					if (isNull) {
+						log.info("save " + product.getProductCode());
+						productDao.save(product);
+					} else {
+						log.info("update " + product.getProductCode());
+						productDao.merge(product);
 					}
-
-					product.setProductYearId(year);
-
-					log.info("merge product: " + product);
-					productDao.merge(product);
 				}
 			}
 		}
@@ -557,28 +554,35 @@ public class ProductServiceImpl implements ProductService {
 				id.setProductCode(dto.getProductCode());
 				id.setProductCurrency(dto.getProductCurrency());
 				id.setProductPriceGroupId(dto.getProductPriceGroupId());
-				
+
 				ProductPrice price = productPriceDao.findById(id);
-				if(price == null){
+				if (price == null) {
 					isNew = true;
 					price = new ProductPrice();
-					price.setId(id);	
+					price.setId(id);
 					price.setTimeCreate(DateTimeUtil.getCurrentDate());
 					price.setUserCreate(B2BConstant.B2B_SYSTEM_NAME);
-				}else{
+				} else {
 					price.setTimeUpdate(DateTimeUtil.getCurrentDate());
 					price.setUserUpdate(B2BConstant.B2B_SYSTEM_NAME);
 				}
-				
+
 				price.setAmount(dto.getAmount());
 				price.setMsrePrice(dto.getMsrePrice());
 				price.setProductUnitId(dto.getProductUnitId());
-				
-				if(isNew){
-					productPriceDao.save(price);					
+
+				if (isNew) {
+					productPriceDao.save(price);
 				}
 			}
 		}
 	}
+
+	@Override
+	@Transactional
+	public boolean delete(long productId) {
+		return productDao.delete(productId);
+	}
+
 
 }

@@ -15,26 +15,35 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
-				<h2>Upload product price</h2>
+				<h2>Product price</h2>
 			</div>
 		</div>
 
+		<div>&nbsp;</div>
+
+		<div class="row bg_color">
+			<div class="col-sm-12">
+				<a href='<c:url value="/upload/product/product-price.xlsx" />' class="btn btn-default">Download Template</a>
+			</div>
+		</div>
+		
+		<div>&nbsp;</div>
 
 		<div class="row">
 			<div class="col-sm-12 bg_color showline2">
-				<form id="uploadForm" action='<c:url value="/backend/product/upload/product-price" />' method="post"
-					enctype="multipart/form-data" role="form">
+				<form id="uploadForm" action='<c:url value="/backend/product/upload/product-price" />'
+					method="post" enctype="multipart/form-data" role="form">
 					<input type="hidden" id="csrftoken_" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<div class="form-group">
 						<label for="file">Select Excel Product Price:</label>
 						<input type="file" name="file">
 					</div>
-					<input type="submit" value="Upload" />
+					<input type="submit" value="Upload" class="btn btn-success" />
 				</form>
 			</div>
 		</div>
 	</div>
-	
+
 	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 

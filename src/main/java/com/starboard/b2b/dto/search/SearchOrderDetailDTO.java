@@ -11,11 +11,12 @@ public class SearchOrderDetailDTO {
 	private long pending;
 	private String productUnit;
 	private BigDecimal unitPrice;
-
+	private String productBuyerGroupId;
+	
 	public SearchOrderDetailDTO() {
 	}
 
-	public SearchOrderDetailDTO(long orderDetailId, String productCode, String productName, long amount, long shiped, long pending, String productUnit, BigDecimal unitPrice) {
+	public SearchOrderDetailDTO(long orderDetailId, String productCode, String productName, long amount, long shiped, long pending, String productUnit, BigDecimal unitPrice, String productBuyerGroupId) {
 		this.orderDetailId = orderDetailId;
 		this.productCode = productCode;
 		this.productName = productName;
@@ -24,6 +25,7 @@ public class SearchOrderDetailDTO {
 		this.pending = pending;
 		this.productUnit = productUnit;
 		this.unitPrice = unitPrice;
+		this.productBuyerGroupId = productBuyerGroupId;
 	}
 
 	public String getProductCode() {
@@ -88,6 +90,14 @@ public class SearchOrderDetailDTO {
 
 	public void setOrderDetailId(long orderDetailId) {
 		this.orderDetailId = orderDetailId;
+	}
+
+	public String getProductBuyerGroupId() {
+		return productBuyerGroupId;
+	}
+
+	public void setProductBuyerGroupId(String productBuyerGroupId) {
+		this.productBuyerGroupId = productBuyerGroupId;
 	}
 
 }
