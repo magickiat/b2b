@@ -272,7 +272,7 @@
                                         */
                                        var context = {
                                            Items: [
-                                               //<c:forEach items="${form.orderReport.orderDetails}" var="item">
+                                               //<c:forEach items="${approveForm.orderReport.orderDetails}" var="item">
                                                {
                                                    ID: '${item.orderDetailId}',
                                                    ProductCode: '${item.productCode}',
@@ -283,7 +283,7 @@
                                                    Total: ${item.amount*item.unitPrice},
                                                    HasItem: true,
                                                    PriceGroups: [
-                                                       //<c:forEach items="${form.productPriceGroupList}" var="group">
+                                                       //<c:forEach items="${approveForm.productPriceGroupList}" var="group">
                                                        {
                                                            PriceGroupID: '${group.productPriceGroupId}',
                                                            PriceGroupName: '${group.productPriceGroupName}',
