@@ -34,7 +34,7 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 	public List<SearchOrderDetailDTO> searchOrderDetail(Long orderId) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(
-				" select new com.starboard.b2b.dto.search.SearchOrderDetailDTO(od.orderDetailId, p.productCode, p.productNameEn, od.amount, 0L, od.amount, od.productUnitId, od.price)");
+				" select new com.starboard.b2b.dto.search.SearchOrderDetailDTO(od.orderDetailId, p.productCode, p.productNameEn, od.amount, 0L, od.amount, od.productUnitId, od.price, od.productBuyerGroupId)");
 		sb.append(" FROM    OrdDetail od,    Product p ");
 		sb.append(" WHERE od.productId = p.productId");
 		sb.append(" and od.orderId = :orderId");
@@ -46,7 +46,7 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<SearchOrderDetailDTO> searchOrderDetail(String orderCode) {
-		String searchOrderDetail = " select new com.starboard.b2b.dto.search.SearchOrderDetailDTO(od.orderDetailId, p.productCode, p.productNameEn, od.amount, 0L, od.amount, od.productUnitId, od.price)"
+		String searchOrderDetail = " select new com.starboard.b2b.dto.search.SearchOrderDetailDTO(od.orderDetailId, p.productCode, p.productNameEn, od.amount, 0L, od.amount, od.productUnitId, od.price, od.productBuyerGroupId)"
 				+ " FROM    OrdDetail od, Orders r, Product p " + " WHERE od.productId = p.productId" + " and od.orderId = r.id"
 				+ " and r.orderCode = :orderCode" + " ORDER BY p.productCode ";
 
@@ -69,7 +69,7 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 	public List<SearchOrderDetailDTO> searchOrderDetail(Long[] ordersId) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(
-				" select new com.starboard.b2b.dto.search.SearchOrderDetailDTO(od.orderDetailId, p.productCode, p.productNameEn, od.amount, 0L, od.amount, od.productUnitId, od.price)");
+				" select new com.starboard.b2b.dto.search.SearchOrderDetailDTO(od.orderDetailId, p.productCode, p.productNameEn, od.amount, 0L, od.amount, od.productUnitId, od.price, od.productBuyerGroupId)");
 		sb.append(" FROM    OrdDetail od,    Product p ");
 		sb.append(" WHERE od.productId = p.productId");
 		sb.append(" and od.orderId in ( :orderId) ");

@@ -28,6 +28,7 @@ import com.starboard.b2b.dao.ProductPriceGroupDao;
 import com.starboard.b2b.dao.ProductTechnologyDao;
 import com.starboard.b2b.dao.ProductTypeDao;
 import com.starboard.b2b.dao.ProductYearDao;
+import com.starboard.b2b.dto.CustPriceGroupDTO;
 import com.starboard.b2b.dto.ProductBuyerGroupDTO;
 import com.starboard.b2b.dto.ProductCategoryDTO;
 import com.starboard.b2b.dto.ProductDTO;
@@ -41,6 +42,7 @@ import com.starboard.b2b.dto.ProductYearDTO;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchResult;
+import com.starboard.b2b.model.CustPriceGroup;
 import com.starboard.b2b.model.Product;
 import com.starboard.b2b.model.ProductBuyerGroup;
 import com.starboard.b2b.model.ProductCategory;
@@ -581,5 +583,6 @@ public class ProductServiceImpl implements ProductService {
 	public boolean delete(long productId) {
 		return productDao.delete(productId);
 	}
+
 
 }

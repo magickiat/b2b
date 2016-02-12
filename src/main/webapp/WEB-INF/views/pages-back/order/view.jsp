@@ -100,13 +100,13 @@
 				<div class="col-sm-6 bg_color" style="padding-bottom: 10px;">
 					<div class="">Customer Remark</div>
 					<div class="">
-						<textarea class="form-control" rows="5" cols="50">${ approveForm.orderReport.remarkCustomer }</textarea>
+						<textarea id="remarkCustomer" class="form-control" rows="5" cols="50">${ approveForm.remarkCustomer }</textarea>
 					</div>
 				</div>
 				<div class="col-sm-6 bg_color">
 					<div class="">Staff Remark</div>
 					<div class="" style="padding-bottom: 10px;">
-						<textarea class="form-control" rows="5" cols="50">${ approveForm.orderReport.remarkOrders }</textarea>
+						<textarea id="remarkOrders" class="form-control" rows="5" cols="50">${ approveForm.remarkOrders }</textarea>
 					</div>
 				</div>
 
@@ -153,6 +153,10 @@
 				$('#btn-approve').prop("disabled", false);
 				$('#btn-reject').prop("disabled", false);
 				$('#save').prop("disabled", false);
+				$('#remarkCustomer').prop("disabled", false);
+				$('#remarkOrders').prop("disabled", false);
+				$('input[name=btn-remove]').prop("disabled", false);
+				$('input[name=btn-split]').prop("disabled", false);
 			} else {
 				$('#paymentMethodId').prop("disabled", true);
 				$('#paymentTermId').prop("disabled", true);
@@ -162,6 +166,10 @@
 				$('#btn-approve').prop("disabled", true);
 				$('#btn-reject').prop("disabled", true);
 				$('#save').prop("disabled", true);
+				$('#remarkCustomer').prop("disabled", true);
+				$('#remarkOrders').prop("disabled", true);
+				$('input[name=btn-remove]').prop("disabled", true);
+				$('input[name=btn-split]').prop("disabled", true);
 			}
 		}
 	</script>

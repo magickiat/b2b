@@ -16,7 +16,9 @@ public class OrderDecisionForm {
 	private boolean editMode;
 	private String paymentMethodId;
 	private String paymentTermId;
-
+	
+	private String remarkCustomer; // Customer remark
+	private String remarkOrders; // Staff remark
 	private String status;
 
 	private List<PaymentMethodDTO> paymentMethodList;
@@ -102,5 +104,21 @@ public class OrderDecisionForm {
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
+	}
+
+	public String getRemarkCustomer() {
+		return remarkCustomer;
+	}
+
+	public void setRemarkCustomer(String remarkCustomer) {
+		this.remarkCustomer = remarkCustomer;
+	}
+
+	public String getRemarkOrders() {
+		return remarkOrders;
+	}
+
+	public void setRemarkOrders(String remarkOrders) {
+		this.remarkOrders = remarkOrders;
 	}
 }

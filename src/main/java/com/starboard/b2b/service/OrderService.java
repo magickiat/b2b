@@ -16,6 +16,7 @@ import com.starboard.b2b.dto.SoDetailDTO;
 import com.starboard.b2b.dto.UserDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
+import com.starboard.b2b.web.form.order.OrderDecisionForm;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
 
 public interface OrderService {
@@ -67,5 +68,7 @@ public interface OrderService {
 	void approve(OrderDTO orderReport);
 
 	void reject(OrderDTO order);
+
+	void updateOrder(OrderDecisionForm form);
 
 }

@@ -28,6 +28,7 @@ import com.starboard.b2b.dao.PaymentMethodDao;
 import com.starboard.b2b.dao.PaymentTermDao;
 import com.starboard.b2b.dao.ShippingTypeDao;
 import com.starboard.b2b.dao.SoDao;
+import com.starboard.b2b.dto.CustPriceGroupDTO;
 import com.starboard.b2b.dto.OrdAddressDTO;
 import com.starboard.b2b.dto.OrderDTO;
 import com.starboard.b2b.dto.OrderStatusDTO;
@@ -48,13 +49,17 @@ import com.starboard.b2b.model.OrdAddress;
 import com.starboard.b2b.model.OrdDetail;
 import com.starboard.b2b.model.OrderStatus;
 import com.starboard.b2b.model.Orders;
+import com.starboard.b2b.model.ProductBuyerGroup;
 import com.starboard.b2b.model.So;
 import com.starboard.b2b.model.SoDetail;
 import com.starboard.b2b.model.User;
+import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.OrderService;
+import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.UserUtil;
+import com.starboard.b2b.web.form.order.OrderDecisionForm;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
 
 @Service("orderService")
@@ -94,6 +99,12 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private SoDao soDao;
+	
+	@Autowired
+	private ProductService productService;
+	
+	@Autowired
+	private CustomerService customerService;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -168,6 +179,8 @@ public class OrderServiceImpl implements OrderService {
 
 		long orderId = orderDao.save(order);
 
+		CustPriceGroupDTO custPriceGroup = customerService.findCustPriceGroup(user.getCustomer().getCustCode(), brandGroupId);
+		
 		// Save Order Detail
 		Set<Long> keySet = cart.keySet();
 		for (Long key : keySet) {
@@ -192,7 +205,7 @@ public class OrderServiceImpl implements OrderService {
 			orderDetail.setStatus(applicationConfig.getDefaultOrderDetailStatus());
 			orderDetail.setProductCurrency(product.getProductCurrency());
 			orderDetail.setProductUnitId(product.getProductUnitId());
-			orderDetail.setProductBuyerGroupId(product.getProductBuyerGroupId());
+			orderDetail.setProductBuyerGroupId(custPriceGroup.getProductBuyerGroupId());
 			orderDetail.setUserCreate(user.getUsername());
 			orderDetail.setTimeCreate(currentDate);
 			orderDetail.setTimeUpdate(currentDate);
@@ -414,6 +427,12 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 		order.setOrderStatus(OrderStatusConfig.CANCELED);
+	}
+
+	@Override
+	public void updateOrder(OrderDecisionForm form) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -101,9 +101,12 @@ public class BackendOrderController {
 			throw new B2BException("Not found order");
 		}
 
+		// set value form
 		form.setOrderReport(orderReport);
 		form.setPaymentTermId(orderReport.getPaymentTermId());
 		form.setPaymentMethodId(orderReport.getPaymentMethod());
+		form.setRemarkCustomer(orderReport.getRemarkCustomer());
+		form.setRemarkOrders(orderReport.getRemarkOrders());
 
 		log.info("order status = " + orderReport.getOrderStatus());
 		if (OrderStatusConfig.WAIT_FOR_APPROVE.equals(orderReport.getOrderStatusId())) {
@@ -200,6 +203,10 @@ public class BackendOrderController {
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	String save(@ModelAttribute("approveForm") OrderDecisionForm form, Model model) {
+		log.info("Form: " + form);
+		
+		orderService.updateOrder(form);
+		
 		return viewOrder(form.getOrderReport().getOrderId(), FROM_SEARCH_PAGE, model);
 	}
 }

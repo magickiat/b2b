@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.starboard.b2b.common.Page;
+import com.starboard.b2b.dto.CustPriceGroupDTO;
 import com.starboard.b2b.dto.ProductBuyerGroupDTO;
 import com.starboard.b2b.dto.ProductCategoryDTO;
 import com.starboard.b2b.dto.ProductDTO;
@@ -74,5 +75,5 @@ public interface ProductService {
 	void updateProductPrice(List<ProductPriceDTO> productPrices);
 
 	boolean delete(long productId);
-	
+
 }
