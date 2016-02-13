@@ -65,374 +65,374 @@ import com.starboard.b2b.web.form.order.OrderSummaryForm;
 @Service("orderService")
 public class OrderServiceImpl implements OrderService {
 
-	private static final Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
 
-	@Autowired
-	private ApplicationConfig applicationConfig;
+    @Autowired
+    private ApplicationConfig applicationConfig;
 
-	@Autowired
-	private ShippingTypeDao shippingTypeDao;
+    @Autowired
+    private ShippingTypeDao shippingTypeDao;
 
-	@Autowired
-	private PaymentMethodDao paymentMethodDao;
+    @Autowired
+    private PaymentMethodDao paymentMethodDao;
 
-	@Autowired
-	private PaymentTermDao paymentTermDao;
+    @Autowired
+    private PaymentTermDao paymentTermDao;
 
-	@Autowired
-	private OrdersIdRunningDao ordersIdRunningDao;
+    @Autowired
+    private OrdersIdRunningDao ordersIdRunningDao;
 
-	@Autowired
-	private OrderDao orderDao;
+    @Autowired
+    private OrderDao orderDao;
 
-	@Autowired
-	private OrderAddressDao orderAddressDao;
+    @Autowired
+    private OrderAddressDao orderAddressDao;
 
-	@Autowired
-	private OrderDetailDao orderDetailDao;
+    @Autowired
+    private OrderDetailDao orderDetailDao;
 
-	@Autowired
-	private AddrDao addrDao;
+    @Autowired
+    private AddrDao addrDao;
 
-	@Autowired
-	private OrderStatusDao orderStatusDao;
+    @Autowired
+    private OrderStatusDao orderStatusDao;
 
-	@Autowired
-	private SoDao soDao;
-	
-	@Autowired
-	private ProductService productService;
-	
-	@Autowired
-	private CustomerService customerService;
+    @Autowired
+    private SoDao soDao;
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<SoDTO> listSO(long orderId) {
-		return soDao.findByOrderId(orderId);
-	}
+    @Autowired
+    private ProductService productService;
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<ShippingTypeDTO> findAllShippingType() {
-		return shippingTypeDao.findAll();
-	}
+    @Autowired
+    private CustomerService customerService;
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<PaymentMethodDTO> findAllPaymentMethod() {
-		return paymentMethodDao.list();
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<SoDTO> listSO(long orderId) {
+        return soDao.findByOrderId(orderId);
+    }
 
-	// ----- Generate Order Code [RO-Year-Running] -----
-	@Override
-	@Transactional
-	public String generateOrderCode() {
-		int year = DateTimeUtil.getCurrentYear();
-		long orderRunningNo = getNextRunningNo(year);
-		String runingNo = "" + orderRunningNo;
-		int size = runingNo.length() <= 4 ? 4 : runingNo.length();
-		String strRunningNo = StringUtils.leftPad(runingNo, size, "0");
-		return String.format("RO-%d-%s", year, strRunningNo);
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<ShippingTypeDTO> findAllShippingType() {
+        return shippingTypeDao.findAll();
+    }
 
-	@Override
-	@Transactional
-	public OrderDTO newOrder(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod,
-			Map<Long, ProductDTO> cart) {
-		Addr invoiceToAddr = addrDao.findById(invoiceTo);
-		if (invoiceToAddr == null) {
-			throw new IllegalArgumentException("Address 'Invoice To' is required");
-		}
+    @Override
+    @Transactional(readOnly = true)
+    public List<PaymentMethodDTO> findAllPaymentMethod() {
+        return paymentMethodDao.list();
+    }
 
-		Addr dispatchToAddr = addrDao.findById(dispatchTo);
-		if (dispatchToAddr == null) {
-			throw new IllegalArgumentException("Address 'Dispatch To' is required");
-		}
+    // ----- Generate Order Code [RO-Year-Running] -----
+    @Override
+    @Transactional
+    public String generateOrderCode() {
+        int year = DateTimeUtil.getCurrentYear();
+        long orderRunningNo = getNextRunningNo(year);
+        String runingNo = "" + orderRunningNo;
+        int size = runingNo.length() <= 4 ? 4 : runingNo.length();
+        String strRunningNo = StringUtils.leftPad(runingNo, size, "0");
+        return String.format("RO-%d-%s", year, strRunningNo);
+    }
 
-		Entry<Long, ProductDTO> firstProduct = cart.entrySet().iterator().next();
-		long brandGroupId = firstProduct.getValue().getProductTypeId();
+    @Override
+    @Transactional
+    public OrderDTO newOrder(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod,
+            Map<Long, ProductDTO> cart) {
+        Addr invoiceToAddr = addrDao.findById(invoiceTo);
+        if (invoiceToAddr == null) {
+            throw new IllegalArgumentException("Address 'Invoice To' is required");
+        }
 
-		// Save Order
-		String orderCode = generateOrderCode();
-		log.info("\tGenerated orderCode = " + orderCode);
+        Addr dispatchToAddr = addrDao.findById(dispatchTo);
+        if (dispatchToAddr == null) {
+            throw new IllegalArgumentException("Address 'Dispatch To' is required");
+        }
 
-		Date currentDate = DateTimeUtil.getCurrentDate();
-		User user = UserUtil.getCurrentUser();
+        Entry<Long, ProductDTO> firstProduct = cart.entrySet().iterator().next();
+        long brandGroupId = firstProduct.getValue().getProductTypeId();
 
-		Orders order = new Orders();
-		order.setCustId(user.getCustomer().getCustId());
-		order.setCustCode(user.getCustomer().getCustCode());
-		order.setCustUserId("" + user.getId());
-		order.setOrderCode(orderCode);
-		order.setOrderStatus(applicationConfig.getOrderStatusNew());
-		order.setOrderDate(currentDate);
-		order.setBrandGroupId(brandGroupId);
-		order.setShippingId(shippingType);
-		order.setPaymentMethodId(paymentMethod);
-		order.setPaymentCurrencyId(user.getCustomer().getCurrency());
-		order.setPaymentTermId(applicationConfig.getNewOrderPaymentTermId());
-		order.setRemarkCustomer(customerRemark);
-		order.setTimeCreate(currentDate);
-		order.setUserCreate(user.getUsername());
-		order.setTimeUpdate(currentDate);
+        // Save Order
+        String orderCode = generateOrderCode();
+        log.info("\tGenerated orderCode = " + orderCode);
 
-		long orderId = orderDao.save(order);
+        Date currentDate = DateTimeUtil.getCurrentDate();
+        User user = UserUtil.getCurrentUser();
 
-		CustPriceGroupDTO custPriceGroup = customerService.findCustPriceGroup(user.getCustomer().getCustCode(), brandGroupId);
-		
-		// Save Order Detail
-		Set<Long> keySet = cart.keySet();
-		for (Long key : keySet) {
-			ProductDTO product = cart.get(key);
-			// Default currency
-			if (StringUtils.isEmpty(product.getProductCurrency())) {
-				product.setProductCurrency(applicationConfig.getDefaultProductCurrency());
-			}
-			// Default product unit id
-			if (StringUtils.isEmpty(product.getProductUnitId())) {
-				product.setProductUnitId(applicationConfig.getDefaultProductUnit());
-			}
+        Orders order = new Orders();
+        order.setCustId(user.getCustomer().getCustId());
+        order.setCustCode(user.getCustomer().getCustCode());
+        order.setCustUserId("" + user.getId());
+        order.setOrderCode(orderCode);
+        order.setOrderStatus(applicationConfig.getOrderStatusNew());
+        order.setOrderDate(currentDate);
+        order.setBrandGroupId(brandGroupId);
+        order.setShippingId(shippingType);
+        order.setPaymentMethodId(paymentMethod);
+        order.setPaymentCurrencyId(user.getCustomer().getCurrency());
+        order.setPaymentTermId(applicationConfig.getNewOrderPaymentTermId());
+        order.setRemarkCustomer(customerRemark);
+        order.setTimeCreate(currentDate);
+        order.setUserCreate(user.getUsername());
+        order.setTimeUpdate(currentDate);
 
-			// ----- Create order -----
-			OrdDetail orderDetail = new OrdDetail();
-			orderDetail.setOrderId(orderId);
-			orderDetail.setProductId(product.getProductId());
-			orderDetail.setAmount(product.getProductQuantity());
-			if (product.getProductPrice() != null && product.getProductPrice().intValue() >= 0) {
-				orderDetail.setPrice(product.getProductPrice());
-			}
-			orderDetail.setStatus(applicationConfig.getDefaultOrderDetailStatus());
-			orderDetail.setProductCurrency(product.getProductCurrency());
-			orderDetail.setProductUnitId(product.getProductUnitId());
-			orderDetail.setProductBuyerGroupId(custPriceGroup.getProductBuyerGroupId());
-			orderDetail.setUserCreate(user.getUsername());
-			orderDetail.setTimeCreate(currentDate);
-			orderDetail.setTimeUpdate(currentDate);
+        long orderId = orderDao.save(order);
 
-			orderDetailDao.save(orderDetail);
-		}
+        CustPriceGroupDTO custPriceGroup = customerService.findCustPriceGroup(user.getCustomer().getCustCode(), brandGroupId);
 
-		// Save Order address
-		orderAddressDao.save(createOrderAddress(invoiceToAddr, orderId, AddressConstant.ORDER_INVOICE_TO));
-		orderAddressDao.save(createOrderAddress(dispatchToAddr, orderId, AddressConstant.ORDER_DISPATCH_TO));
+        // Save Order Detail
+        Set<Long> keySet = cart.keySet();
+        for (Long key : keySet) {
+            ProductDTO product = cart.get(key);
+            // Default currency
+            if (StringUtils.isEmpty(product.getProductCurrency())) {
+                product.setProductCurrency(applicationConfig.getDefaultProductCurrency());
+            }
+            // Default product unit id
+            if (StringUtils.isEmpty(product.getProductUnitId())) {
+                product.setProductUnitId(applicationConfig.getDefaultProductUnit());
+            }
 
-		// For generate report
-		OrderDTO dto = new OrderDTO();
-		dto.setOrderId(orderId);
-		dto.setOrderCode(orderCode);
-		return dto;
-	}
+            // ----- Create order -----
+            OrdDetail orderDetail = new OrdDetail();
+            orderDetail.setOrderId(orderId);
+            orderDetail.setProductId(product.getProductId());
+            orderDetail.setAmount(product.getProductQuantity());
+            orderDetail.setStatus(applicationConfig.getDefaultOrderDetailStatus());
+            orderDetail.setProductCurrency(product.getProductCurrency());
+            orderDetail.setProductUnitId(product.getProductUnitId());
+            if (product.getProductPrice() != null && product.getProductPrice().intValue() >= 0) {
+                orderDetail.setPrice(product.getProductPrice());
+            }
+            orderDetail.setProductBuyerGroupId(custPriceGroup.getProductBuyerGroupId());
+            orderDetail.setUserCreate(user.getUsername());
+            orderDetail.setTimeCreate(currentDate);
+            orderDetail.setTimeUpdate(currentDate);
 
-	public OrdAddress createOrderAddress(Addr addr, Long orderId, Long addressType) {
-		OrdAddress address = new OrdAddress();
-		address.setOrderId(orderId);
-		address.setOrderAddr(addr.getAddress());
-		address.setOrderTel(addr.getTel1());
-		address.setFax(addr.getFax());
-		address.setEmail(addr.getEmail());
-		address.setType(addressType);
-		address.setOrderFname("");
-		address.setOrderLname("");
-		return address;
-	}
+            orderDetailDao.save(orderDetail);
+        }
 
-	@Override
-	@Transactional
-	public long getNextRunningNo(int year) {
-		return ordersIdRunningDao.generateRunning(year);
-	}
+        // Save Order address
+        orderAddressDao.save(createOrderAddress(invoiceToAddr, orderId, AddressConstant.ORDER_INVOICE_TO));
+        orderAddressDao.save(createOrderAddress(dispatchToAddr, orderId, AddressConstant.ORDER_DISPATCH_TO));
 
-	@Override
-	@Transactional(readOnly = true)
-	public OrderDTO findOrder(Long orderId) {
-		if (orderId != null) {
-			Orders order = orderDao.findById(orderId);
-			OrderDTO dto = new OrderDTO();
-			BeanUtils.copyProperties(order, dto);
-			return dto;
-		}
-		return null;
-	}
+        // For generate report
+        OrderDTO dto = new OrderDTO();
+        dto.setOrderId(orderId);
+        dto.setOrderCode(orderCode);
+        return dto;
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<SearchOrderDetailDTO> searchOrderDetail(Long orderId) {
-		return orderDetailDao.searchOrderDetail(orderId);
-	}
+    public OrdAddress createOrderAddress(Addr addr, Long orderId, Long addressType) {
+        OrdAddress address = new OrdAddress();
+        address.setOrderId(orderId);
+        address.setOrderAddr(addr.getAddress());
+        address.setOrderTel(addr.getTel1());
+        address.setFax(addr.getFax());
+        address.setEmail(addr.getEmail());
+        address.setType(addressType);
+        address.setOrderFname("");
+        address.setOrderLname("");
+        return address;
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<SearchOrderDetailDTO> searchOrderDetail(String orderCode) {
-		return orderDetailDao.searchOrderDetail(orderCode);
-	}
+    @Override
+    @Transactional
+    public long getNextRunningNo(int year) {
+        return ordersIdRunningDao.generateRunning(year);
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public SearchOrderDTO findOrderForReport(Long orderId) {
-		return orderDao.findOrderForReport(orderId);
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public OrderDTO findOrder(Long orderId) {
+        if (orderId != null) {
+            Orders order = orderDao.findById(orderId);
+            OrderDTO dto = new OrderDTO();
+            BeanUtils.copyProperties(order, dto);
+            return dto;
+        }
+        return null;
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public SearchOrderDTO findOrderForReport(String orderCode) {
-		return orderDao.findOrderForReport(orderCode);
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<SearchOrderDetailDTO> searchOrderDetail(Long orderId) {
+        return orderDetailDao.searchOrderDetail(orderId);
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<OrdAddressDTO> findOrderAddress(final String orderCode) {
-		List<OrdAddress> ordAddresses = orderDao.findOrderAddress(orderCode);
-		List<OrdAddressDTO> ordAddressDTOs = new ArrayList<>();
-		if (ordAddresses != null && !ordAddresses.isEmpty()) {
-			for (OrdAddress ordAddress : ordAddresses) {
-				OrdAddressDTO ordAddressDTO = new OrdAddressDTO();
-				BeanUtils.copyProperties(ordAddress, ordAddressDTO);
-				ordAddressDTOs.add(ordAddressDTO);
-			}
-		}
-		return ordAddressDTOs;
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<SearchOrderDetailDTO> searchOrderDetail(String orderCode) {
+        return orderDetailDao.searchOrderDetail(orderCode);
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<OrderStatusDTO> findAllOrderStatus() {
-		final List<OrderStatusDTO> orderStatuses = new ArrayList<>();
-		for (OrderStatus status : orderStatusDao.findAll()) {
-			final OrderStatusDTO orderStatus = new OrderStatusDTO();
-			BeanUtils.copyProperties(status, orderStatus);
-			orderStatuses.add(orderStatus);
-		}
-		return orderStatuses;
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public SearchOrderDTO findOrderForReport(Long orderId) {
+        return orderDao.findOrderForReport(orderId);
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public Page<SearchOrderDTO> searchOrder(final OrderSummaryForm orderSummaryForm) {
-		log.info("Search order summary form: {}", orderSummaryForm);
-		final SearchRequest<OrderSummaryForm> req = new SearchRequest<>(orderSummaryForm.getPage(), applicationConfig.getPageSize());
-		req.setCondition(orderSummaryForm);
+    @Override
+    @Transactional(readOnly = true)
+    public SearchOrderDTO findOrderForReport(String orderCode) {
+        return orderDao.findOrderForReport(orderCode);
+    }
 
-		// Find product model
-		final SearchResult<SearchOrderDTO> result = orderDao.search(req);
+    @Override
+    @Transactional(readOnly = true)
+    public List<OrdAddressDTO> findOrderAddress(final String orderCode) {
+        List<OrdAddress> ordAddresses = orderDao.findOrderAddress(orderCode);
+        List<OrdAddressDTO> ordAddressDTOs = new ArrayList<>();
+        if (ordAddresses != null && !ordAddresses.isEmpty()) {
+            for (OrdAddress ordAddress : ordAddresses) {
+                OrdAddressDTO ordAddressDTO = new OrdAddressDTO();
+                BeanUtils.copyProperties(ordAddress, ordAddressDTO);
+                ordAddressDTOs.add(ordAddressDTO);
+            }
+        }
+        return ordAddressDTOs;
+    }
 
-		// Validate has image exist
-		final List<SearchOrderDTO> resultList = result.getResult();
-		log.info("resultList size: {}", (resultList == null ? 0 : resultList.size()));
+    @Override
+    @Transactional(readOnly = true)
+    public List<OrderStatusDTO> findAllOrderStatus() {
+        final List<OrderStatusDTO> orderStatuses = new ArrayList<>();
+        for (OrderStatus status : orderStatusDao.findAll()) {
+            final OrderStatusDTO orderStatus = new OrderStatusDTO();
+            BeanUtils.copyProperties(status, orderStatus);
+            orderStatuses.add(orderStatus);
+        }
+        return orderStatuses;
+    }
 
-		// create result page object
-		final Page<SearchOrderDTO> page = new Page<>();
-		page.setCurrent(orderSummaryForm.getPage());
-		log.info("current page: {}", page.getCurrent());
-		page.setPageSize(req.getPageSize());
-		page.setTotal(result.getTotal());
-		page.setResult(result.getResult());
-		return page;
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public Page<SearchOrderDTO> searchOrder(final OrderSummaryForm orderSummaryForm) {
+        log.info("Search order summary form: {}", orderSummaryForm);
+        final SearchRequest<OrderSummaryForm> req = new SearchRequest<>(orderSummaryForm.getPage(), applicationConfig.getPageSize());
+        req.setCondition(orderSummaryForm);
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<String> findAllOrderCurrency(Long orderId) {
-		return orderDetailDao.findAllOrderCurrency(orderId);
-	}
+        // Find product model
+        final SearchResult<SearchOrderDTO> result = orderDao.search(req);
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<SearchOrderDTO> findOrderForReport(Long[] ordersId) {
-		return orderDao.findOrderForReport(ordersId);
-	}
+        // Validate has image exist
+        final List<SearchOrderDTO> resultList = result.getResult();
+        log.info("resultList size: {}", (resultList == null ? 0 : resultList.size()));
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<SearchOrderDetailDTO> searchOrderDetail(Long[] ordersId) {
-		return orderDetailDao.searchOrderDetail(ordersId);
-	}
+        // create result page object
+        final Page<SearchOrderDTO> page = new Page<>();
+        page.setCurrent(orderSummaryForm.getPage());
+        log.info("current page: {}", page.getCurrent());
+        page.setPageSize(req.getPageSize());
+        page.setTotal(result.getTotal());
+        page.setResult(result.getResult());
+        return page;
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<SearchOrderDTO> searchOrderForReport(OrderSummaryForm orderSummaryForm) {
-		return orderDao.searchOrderSummaryForReport(orderSummaryForm);
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<String> findAllOrderCurrency(Long orderId) {
+        return orderDetailDao.findAllOrderCurrency(orderId);
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public SoDTO findSO(long soId) {
-		So so = orderDao.findSoById(soId);
-		SoDTO dto = new SoDTO();
-		BeanUtils.copyProperties(so, dto);
-		return dto;
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<SearchOrderDTO> findOrderForReport(Long[] ordersId) {
+        return orderDao.findOrderForReport(ordersId);
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<SoDetailDTO> findSoDetail(long soId) {
-		List<SoDetail> so = orderDao.findSoDetailBySoId(soId);
-		List<SoDetailDTO> soDTOs = new ArrayList<>();
-		if (so != null && !so.isEmpty()) {
-			SoDetailDTO dto = new SoDetailDTO();
-			BeanUtils.copyProperties(so, dto);
-			soDTOs.add(dto);
-		}
-		return soDTOs;
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<SearchOrderDetailDTO> searchOrderDetail(Long[] ordersId) {
+        return orderDetailDao.searchOrderDetail(ordersId);
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<PaymentTermDTO> findAllPaymentTerm() {
-		return paymentTermDao.list();
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<SearchOrderDTO> searchOrderForReport(OrderSummaryForm orderSummaryForm) {
+        return orderDao.searchOrderSummaryForReport(orderSummaryForm);
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public UserDTO findUserByOrderCode(String orderCode) {
-		User user = orderDao.findUserByOrderCode(orderCode);
-		UserDTO userDTO = new UserDTO();
-		userDTO.setEmail(user.getEmail());
-		userDTO.setName(user.getName());
-		return userDTO;
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public SoDTO findSO(long soId) {
+        So so = orderDao.findSoById(soId);
+        SoDTO dto = new SoDTO();
+        BeanUtils.copyProperties(so, dto);
+        return dto;
+    }
 
-	@Override
-	@Transactional
-	public void approve(OrderDTO orderDTO) {
-		if (orderDTO == null) {
-			throw new B2BException("Order is required");
-		}
+    @Override
+    @Transactional(readOnly = true)
+    public List<SoDetailDTO> findSoDetail(long soId) {
+        List<SoDetail> so = orderDao.findSoDetailBySoId(soId);
+        List<SoDetailDTO> soDTOs = new ArrayList<>();
+        if (so != null && !so.isEmpty()) {
+            SoDetailDTO dto = new SoDetailDTO();
+            BeanUtils.copyProperties(so, dto);
+            soDTOs.add(dto);
+        }
+        return soDTOs;
+    }
 
-		log.info("orderId = " + orderDTO.getOrderId());
+    @Override
+    @Transactional(readOnly = true)
+    public List<PaymentTermDTO> findAllPaymentTerm() {
+        return paymentTermDao.list();
+    }
 
-		Orders order = orderDao.findById(orderDTO.getOrderId());
-		if (order == null) {
-			throw new B2BException("Not found this order id: " + orderDTO.getOrderId());
-		}
+    @Override
+    @Transactional(readOnly = true)
+    public UserDTO findUserByOrderCode(String orderCode) {
+        User user = orderDao.findUserByOrderCode(orderCode);
+        UserDTO userDTO = new UserDTO();
+        userDTO.setEmail(user.getEmail());
+        userDTO.setName(user.getName());
+        return userDTO;
+    }
 
-		Date expectShipDate = DateTimeUtil.generateExpectShipDate();
+    @Override
+    @Transactional
+    public void approve(OrderDTO orderDTO) {
+        if (orderDTO == null) {
+            throw new B2BException("Order is required");
+        }
 
-		order.setExpectReceiptDate(expectShipDate);
-		order.setExpectShipmentDate(expectShipDate);
-		order.setOrderStatus(OrderStatusConfig.APPROVED);
-	}
+        log.info("orderId = " + orderDTO.getOrderId());
 
-	@Override
-	public void reject(OrderDTO orderDTO) {
-		if (orderDTO == null) {
-			throw new B2BException("Order is required");
-		}
+        Orders order = orderDao.findById(orderDTO.getOrderId());
+        if (order == null) {
+            throw new B2BException("Not found this order id: " + orderDTO.getOrderId());
+        }
 
-		log.info("orderId = " + orderDTO.getOrderId());
+        Date expectShipDate = DateTimeUtil.generateExpectShipDate();
 
-		Orders order = orderDao.findById(orderDTO.getOrderId());
-		if (order == null) {
-			throw new B2BException("Not found this order id: " + orderDTO.getOrderId());
-		}
+        order.setExpectReceiptDate(expectShipDate);
+        order.setExpectShipmentDate(expectShipDate);
+        order.setOrderStatus(OrderStatusConfig.APPROVED);
+    }
 
-		order.setOrderStatus(OrderStatusConfig.CANCELED);
-	}
+    @Override
+    public void reject(OrderDTO orderDTO) {
+        if (orderDTO == null) {
+            throw new B2BException("Order is required");
+        }
 
-	@Override
-	public void updateOrder(OrderDecisionForm form) {
-		// TODO Auto-generated method stub
-		
-	}
+        log.info("orderId = " + orderDTO.getOrderId());
+
+        Orders order = orderDao.findById(orderDTO.getOrderId());
+        if (order == null) {
+            throw new B2BException("Not found this order id: " + orderDTO.getOrderId());
+        }
+
+        order.setOrderStatus(OrderStatusConfig.CANCELED);
+    }
+
+    @Override
+    @Transactional
+    public void updateOrder(OrderDecisionForm form) {
+        
+    }
 
 }

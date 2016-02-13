@@ -10,6 +10,8 @@ import java.util.List;
 public interface OrderDetailDao {
 
 	Serializable save(OrdDetail detail);
+        
+        int purge(Long orderId);
 
 	List<SearchOrderDetailDTO> searchOrderDetail(Long orderId);
 

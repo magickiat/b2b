@@ -8,117 +8,66 @@ import com.starboard.b2b.dto.PaymentMethodDTO;
 import com.starboard.b2b.dto.PaymentTermDTO;
 import com.starboard.b2b.dto.ProductPriceGroupDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
-import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 
 public class OrderDecisionForm {
-	private SearchOrderDTO orderReport;
 
-	private boolean editMode;
-	private String paymentMethodId;
-	private String paymentTermId;
-	
-	private String remarkCustomer; // Customer remark
-	private String remarkOrders; // Staff remark
-	private String status;
+    private boolean editMode;
+    private String splitItems;
+    private SearchOrderDTO orderReport;
+    private List<PaymentMethodDTO> paymentMethodList;
+    private List<PaymentTermDTO> paymentTermList;
+    private List<ProductPriceGroupDTO> productPriceGroupList;
 
-	private List<PaymentMethodDTO> paymentMethodList;
-	private List<PaymentTermDTO> paymentTermList;
-	private List<SearchOrderDetailDTO> orderDetails;
-	private List<ProductPriceGroupDTO> productPriceGroupList;
+    public boolean isEditMode() {
+        return editMode;
+    }
 
-	public OrderDecisionForm() {
-	}
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
+    }
 
-	public SearchOrderDTO getOrderReport() {
-		return orderReport;
-	}
+    public String getSplitItems() {
+        return splitItems;
+    }
 
-	public void setOrderReport(SearchOrderDTO orderReport) {
-		this.orderReport = orderReport;
-	}
+    public void setSplitItems(String splitItems) {
+        this.splitItems = splitItems;
+    }
 
-	public List<PaymentMethodDTO> getPaymentMethodList() {
-		return paymentMethodList;
-	}
+    public SearchOrderDTO getOrderReport() {
+        return orderReport;
+    }
 
-	public void setPaymentMethodList(List<PaymentMethodDTO> paymentMethodList) {
-		this.paymentMethodList = paymentMethodList;
-	}
+    public void setOrderReport(SearchOrderDTO orderReport) {
+        this.orderReport = orderReport;
+    }
 
-	public List<PaymentTermDTO> getPaymentTermList() {
-		return paymentTermList;
-	}
+    public List<PaymentMethodDTO> getPaymentMethodList() {
+        return paymentMethodList;
+    }
 
-	public void setPaymentTermList(List<PaymentTermDTO> paymentTermList) {
-		this.paymentTermList = paymentTermList;
-	}
+    public void setPaymentMethodList(List<PaymentMethodDTO> paymentMethodList) {
+        this.paymentMethodList = paymentMethodList;
+    }
 
-	public String getPaymentMethodId() {
-		return paymentMethodId;
-	}
+    public List<PaymentTermDTO> getPaymentTermList() {
+        return paymentTermList;
+    }
 
-	public void setPaymentMethodId(String paymentMethodId) {
-		this.paymentMethodId = paymentMethodId;
-	}
+    public void setPaymentTermList(List<PaymentTermDTO> paymentTermList) {
+        this.paymentTermList = paymentTermList;
+    }
 
-	public String getPaymentTermId() {
-		return paymentTermId;
-	}
+    public List<ProductPriceGroupDTO> getProductPriceGroupList() {
+        return productPriceGroupList;
+    }
 
-	public void setPaymentTermId(String paymentTermId) {
-		this.paymentTermId = paymentTermId;
-	}
+    public void setProductPriceGroupList(List<ProductPriceGroupDTO> productPriceGroupList) {
+        this.productPriceGroupList = productPriceGroupList;
+    }
 
-	public boolean isEditMode() {
-		return editMode;
-	}
-
-	public void setEditMode(boolean editMode) {
-		this.editMode = editMode;
-	}
-
-	public List<SearchOrderDetailDTO> getOrderDetails() {
-		return orderDetails;
-	}
-
-	public void setOrderDetails(List<SearchOrderDetailDTO> orderDetails) {
-		this.orderDetails = orderDetails;
-	}
-
-	public List<ProductPriceGroupDTO> getProductPriceGroupList() {
-		return productPriceGroupList;
-	}
-
-	public void setProductPriceGroupList(List<ProductPriceGroupDTO> productPriceGroupList) {
-		this.productPriceGroupList = productPriceGroupList;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
-	}
-
-	public String getRemarkCustomer() {
-		return remarkCustomer;
-	}
-
-	public void setRemarkCustomer(String remarkCustomer) {
-		this.remarkCustomer = remarkCustomer;
-	}
-
-	public String getRemarkOrders() {
-		return remarkOrders;
-	}
-
-	public void setRemarkOrders(String remarkOrders) {
-		this.remarkOrders = remarkOrders;
-	}
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 }

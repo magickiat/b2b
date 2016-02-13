@@ -8,218 +8,214 @@ import java.util.List;
 
 public class SearchOrderDTO {
 
-	private long orderId;
-	private String orderCode;
-	private String customerName;
-	private String productTypeName;
-	private Date orderDate;
-	private Date expectShipmentDate;
-	private String orderStatus;
-	private String orderStatusId;
-	private String paymentMethod;
-	private String shippingType;
+    private long orderId;
+    private String orderCode;
+    private String customerName;
+    private String productTypeName;
+    private Date orderDate;
+    private Date expectShipmentDate;
+    private String orderStatus;
+    private String orderStatusId;
+    private String paymentMethod;
+    private String shippingType;
+    private String paymentTermId;
+    private String paymentTermDescription;
+    private String remarkCustomer; // Customer remark
+    private String remarkOrders; // Staff remark
+    private OrdAddressDTO dispatchToAddress;
+    private OrdAddressDTO invoiceToAddress;
+    private List<SearchOrderDetailDTO> orderDetails;
+    private List<SoDTO> salesOrders;
+    private List<String> documents;
 
-	private String paymentTermId;
+    public SearchOrderDTO() {
+    }
 
-	private String paymentTermDescription;
-	private String remarkCustomer; // Customer remark
-	private String remarkOrders; // Staff remark
+    public SearchOrderDTO(String orderCode, String customerName, String productTypeName, Date orderDate, Date expectShipmentDate, String orderStatus,
+            String paymentMethod, String shippingType, String paymentTermDescription, String remarkCustomer, String paymentTermId, String orderStatusId) {
+        super();
+        this.orderCode = orderCode;
+        this.customerName = customerName;
+        this.productTypeName = productTypeName;
+        this.orderDate = orderDate;
+        this.expectShipmentDate = expectShipmentDate;
+        this.orderStatus = orderStatus;
+        this.paymentMethod = paymentMethod;
+        this.shippingType = shippingType;
+        this.paymentTermDescription = paymentTermDescription;
+        this.remarkCustomer = remarkCustomer;
+        this.paymentTermId = paymentTermId;
+        this.orderStatusId = orderStatusId;
+    }
 
-	private OrdAddressDTO dispatchToAddress;
-	private OrdAddressDTO invoiceToAddress;
+    public SearchOrderDTO(long orderId, String orderCode, String customerName, String productTypeName, Date orderDate, Date expectShipmentDate,
+            String orderStatus, String paymentMethod, String shippingType, String paymentTermDescription, String remarkCustomer,
+            String paymentTermId, String orderStatusId, String remarkOrders) {
+        this.orderId = orderId;
+        this.orderCode = orderCode;
+        this.customerName = customerName;
+        this.productTypeName = productTypeName;
+        this.orderDate = orderDate;
+        this.expectShipmentDate = expectShipmentDate;
+        this.orderStatus = orderStatus;
+        this.paymentMethod = paymentMethod;
+        this.shippingType = shippingType;
+        this.paymentTermDescription = paymentTermDescription;
+        this.remarkCustomer = remarkCustomer;
+        this.paymentTermId = paymentTermId;
+        this.orderStatusId = orderStatusId;
+        this.remarkOrders = remarkOrders;
+    }
 
-	private List<SearchOrderDetailDTO> orderDetails;
-	private List<SoDTO> salesOrders;
-	private List<String> documents;
+    public long getOrderId() {
+        return orderId;
+    }
 
-	public SearchOrderDTO() {
-	}
+    public void setOrderId(long orderId) {
+        this.orderId = orderId;
+    }
 
-	public SearchOrderDTO(String orderCode, String customerName, String productTypeName, Date orderDate, Date expectShipmentDate, String orderStatus,
-			String paymentMethod, String shippingType, String paymentTermDescription, String remarkCustomer, String paymentTermId, String orderStatusId) {
-		super();
-		this.orderCode = orderCode;
-		this.customerName = customerName;
-		this.productTypeName = productTypeName;
-		this.orderDate = orderDate;
-		this.expectShipmentDate = expectShipmentDate;
-		this.orderStatus = orderStatus;
-		this.paymentMethod = paymentMethod;
-		this.shippingType = shippingType;
-		this.paymentTermDescription = paymentTermDescription;
-		this.remarkCustomer = remarkCustomer;
-		this.paymentTermId = paymentTermId;
-		this.orderStatusId = orderStatusId;
-	}
+    public String getOrderCode() {
+        return orderCode;
+    }
 
-	public SearchOrderDTO(long orderId, String orderCode, String customerName, String productTypeName, Date orderDate, Date expectShipmentDate,
-			String orderStatus, String paymentMethod, String shippingType, String paymentTermDescription, String remarkCustomer,
-			String paymentTermId, String orderStatusId, String remarkOrders) {
-		this.orderId = orderId;
-		this.orderCode = orderCode;
-		this.customerName = customerName;
-		this.productTypeName = productTypeName;
-		this.orderDate = orderDate;
-		this.expectShipmentDate = expectShipmentDate;
-		this.orderStatus = orderStatus;
-		this.paymentMethod = paymentMethod;
-		this.shippingType = shippingType;
-		this.paymentTermDescription = paymentTermDescription;
-		this.remarkCustomer = remarkCustomer;
-		this.paymentTermId = paymentTermId;
-		this.orderStatusId = orderStatusId;
-		this.remarkOrders = remarkOrders;
-	}
+    public void setOrderCode(String orderCode) {
+        this.orderCode = orderCode;
+    }
 
-	public long getOrderId() {
-		return orderId;
-	}
+    public String getCustomerName() {
+        return customerName;
+    }
 
-	public void setOrderId(long orderId) {
-		this.orderId = orderId;
-	}
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 
-	public String getOrderCode() {
-		return orderCode;
-	}
+    public String getProductTypeName() {
+        return productTypeName;
+    }
 
-	public void setOrderCode(String orderCode) {
-		this.orderCode = orderCode;
-	}
+    public void setProductTypeName(String productTypeName) {
+        this.productTypeName = productTypeName;
+    }
 
-	public String getCustomerName() {
-		return customerName;
-	}
+    public Date getOrderDate() {
+        return orderDate;
+    }
 
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
-	}
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
 
-	public String getProductTypeName() {
-		return productTypeName;
-	}
+    public Date getExpectShipmentDate() {
+        return expectShipmentDate;
+    }
 
-	public void setProductTypeName(String productTypeName) {
-		this.productTypeName = productTypeName;
-	}
+    public void setExpectShipmentDate(Date expectShipmentDate) {
+        this.expectShipmentDate = expectShipmentDate;
+    }
 
-	public Date getOrderDate() {
-		return orderDate;
-	}
+    public String getOrderStatus() {
+        return orderStatus;
+    }
 
-	public void setOrderDate(Date orderDate) {
-		this.orderDate = orderDate;
-	}
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
 
-	public Date getExpectShipmentDate() {
-		return expectShipmentDate;
-	}
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
 
-	public void setExpectShipmentDate(Date expectShipmentDate) {
-		this.expectShipmentDate = expectShipmentDate;
-	}
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
 
-	public String getOrderStatus() {
-		return orderStatus;
-	}
+    public OrdAddressDTO getDispatchToAddress() {
+        return dispatchToAddress;
+    }
 
-	public void setOrderStatus(String orderStatus) {
-		this.orderStatus = orderStatus;
-	}
+    public void setDispatchToAddress(OrdAddressDTO dispatchToAddress) {
+        this.dispatchToAddress = dispatchToAddress;
+    }
 
-	public String getPaymentMethod() {
-		return paymentMethod;
-	}
+    public OrdAddressDTO getInvoiceToAddress() {
+        return invoiceToAddress;
+    }
 
-	public void setPaymentMethod(String paymentMethod) {
-		this.paymentMethod = paymentMethod;
-	}
+    public void setInvoiceToAddress(OrdAddressDTO invoiceToAddress) {
+        this.invoiceToAddress = invoiceToAddress;
+    }
 
-	public OrdAddressDTO getDispatchToAddress() {
-		return dispatchToAddress;
-	}
+    public String getShippingType() {
+        return shippingType;
+    }
 
-	public void setDispatchToAddress(OrdAddressDTO dispatchToAddress) {
-		this.dispatchToAddress = dispatchToAddress;
-	}
+    public void setShippingType(String shippingType) {
+        this.shippingType = shippingType;
+    }
 
-	public OrdAddressDTO getInvoiceToAddress() {
-		return invoiceToAddress;
-	}
+    public List<SearchOrderDetailDTO> getOrderDetails() {
+        return orderDetails;
+    }
 
-	public void setInvoiceToAddress(OrdAddressDTO invoiceToAddress) {
-		this.invoiceToAddress = invoiceToAddress;
-	}
+    public void setOrderDetails(List<SearchOrderDetailDTO> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
 
-	public String getShippingType() {
-		return shippingType;
-	}
+    public List<SoDTO> getSalesOrders() {
+        return salesOrders;
+    }
 
-	public void setShippingType(String shippingType) {
-		this.shippingType = shippingType;
-	}
+    public void setSalesOrders(List<SoDTO> salesOrders) {
+        this.salesOrders = salesOrders;
+    }
 
-	public List<SearchOrderDetailDTO> getOrderDetails() {
-		return orderDetails;
-	}
+    public List<String> getDocuments() {
+        return documents;
+    }
 
-	public void setOrderDetails(List<SearchOrderDetailDTO> orderDetails) {
-		this.orderDetails = orderDetails;
-	}
+    public void setDocuments(List<String> documents) {
+        this.documents = documents;
+    }
 
-	public List<SoDTO> getSalesOrders() {
-		return salesOrders;
-	}
+    public String getPaymentTermDescription() {
+        return paymentTermDescription;
+    }
 
-	public void setSalesOrders(List<SoDTO> salesOrders) {
-		this.salesOrders = salesOrders;
-	}
+    public void setPaymentTermDescription(String paymentTermDescription) {
+        this.paymentTermDescription = paymentTermDescription;
+    }
 
-	public List<String> getDocuments() {
-		return documents;
-	}
+    public String getRemarkCustomer() {
+        return remarkCustomer;
+    }
 
-	public void setDocuments(List<String> documents) {
-		this.documents = documents;
-	}
+    public void setRemarkCustomer(String remarkCustomer) {
+        this.remarkCustomer = remarkCustomer;
+    }
 
-	public String getPaymentTermDescription() {
-		return paymentTermDescription;
-	}
+    public String getPaymentTermId() {
+        return paymentTermId;
+    }
 
-	public void setPaymentTermDescription(String paymentTermDescription) {
-		this.paymentTermDescription = paymentTermDescription;
-	}
+    public void setPaymentTermId(String paymentTermId) {
+        this.paymentTermId = paymentTermId;
+    }
 
-	public String getRemarkCustomer() {
-		return remarkCustomer;
-	}
+    public String getOrderStatusId() {
+        return orderStatusId;
+    }
 
-	public void setRemarkCustomer(String remarkCustomer) {
-		this.remarkCustomer = remarkCustomer;
-	}
+    public void setOrderStatusId(String orderStatusId) {
+        this.orderStatusId = orderStatusId;
+    }
 
-	public String getPaymentTermId() {
-		return paymentTermId;
-	}
+    public String getRemarkOrders() {
+        return remarkOrders;
+    }
 
-	public void setPaymentTermId(String paymentTermId) {
-		this.paymentTermId = paymentTermId;
-	}
-
-	public String getOrderStatusId() {
-		return orderStatusId;
-	}
-
-	public void setOrderStatusId(String orderStatusId) {
-		this.orderStatusId = orderStatusId;
-	}
-
-	public String getRemarkOrders() {
-		return remarkOrders;
-	}
-
-	public void setRemarkOrders(String remarkOrders) {
-		this.remarkOrders = remarkOrders;
-	}
+    public void setRemarkOrders(String remarkOrders) {
+        this.remarkOrders = remarkOrders;
+    }
 }

@@ -3,101 +3,111 @@ package com.starboard.b2b.dto.search;
 import java.math.BigDecimal;
 
 public class SearchOrderDetailDTO {
-	private long orderDetailId;
-	private String productCode;
-	private String productName;
-	private long amount;
-	private long shiped;
-	private long pending;
-	private String productUnit;
-	private BigDecimal unitPrice;
-	private String productBuyerGroupId;
-	
-	public SearchOrderDetailDTO() {
-	}
 
-	public SearchOrderDetailDTO(long orderDetailId, String productCode, String productName, long amount, long shiped, long pending, String productUnit, BigDecimal unitPrice, String productBuyerGroupId) {
-		this.orderDetailId = orderDetailId;
-		this.productCode = productCode;
-		this.productName = productName;
-		this.amount = amount;
-		this.shiped = shiped;
-		this.pending = pending;
-		this.productUnit = productUnit;
-		this.unitPrice = unitPrice;
-		this.productBuyerGroupId = productBuyerGroupId;
-	}
+    private long orderDetailId;
+    private long productId;
+    private String productCode;
+    private String productName;
+    private long amount;
+    private long shiped;
+    private long pending;
+    private String productUnit;
+    private BigDecimal unitPrice;
+    private String productBuyerGroupId;
 
-	public String getProductCode() {
-		return productCode;
-	}
+    public SearchOrderDetailDTO() {
+    }
 
-	public void setProductCode(String productCode) {
-		this.productCode = productCode;
-	}
+    public SearchOrderDetailDTO(long orderDetailId, long productId, String productCode, String productName, long amount, long shiped, long pending, String productUnit, BigDecimal unitPrice, String productBuyerGroupId) {
+        this.orderDetailId = orderDetailId;
+        this.productId = productId;
+        this.productCode = productCode;
+        this.productName = productName;
+        this.amount = amount;
+        this.shiped = shiped;
+        this.pending = pending;
+        this.productUnit = productUnit;
+        this.unitPrice = unitPrice;
+        this.productBuyerGroupId = productBuyerGroupId;
+    }
 
-	public String getProductName() {
-		return productName;
-	}
+    public long getOrderDetailId() {
+        return orderDetailId;
+    }
 
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
+    public void setOrderDetailId(long orderDetailId) {
+        this.orderDetailId = orderDetailId;
+    }
 
-	public long getAmount() {
-		return amount;
-	}
+    public long getProductId() {
+        return productId;
+    }
 
-	public void setAmount(long amount) {
-		this.amount = amount;
-	}
+    public void setProductId(long productId) {
+        this.productId = productId;
+    }
 
-	public long getShiped() {
-		return shiped;
-	}
+    public String getProductCode() {
+        return productCode;
+    }
 
-	public void setShiped(long shiped) {
-		this.shiped = shiped;
-	}
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
+    }
 
-	public long getPending() {
-		return pending;
-	}
+    public String getProductName() {
+        return productName;
+    }
 
-	public void setPending(long pending) {
-		this.pending = pending;
-	}
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
 
-	public String getProductUnit() {
-		return productUnit;
-	}
+    public long getAmount() {
+        return amount;
+    }
 
-	public void setProductUnit(String productUnit) {
-		this.productUnit = productUnit;
-	}
+    public void setAmount(long amount) {
+        this.amount = amount;
+    }
 
-	public BigDecimal getUnitPrice() {
-		return unitPrice;
-	}
+    public long getShiped() {
+        return shiped;
+    }
 
-	public void setUnitPrice(BigDecimal unitPrice) {
-		this.unitPrice = unitPrice;
-	}
+    public void setShiped(long shiped) {
+        this.shiped = shiped;
+    }
 
-	public long getOrderDetailId() {
-		return orderDetailId;
-	}
+    public long getPending() {
+        return pending;
+    }
 
-	public void setOrderDetailId(long orderDetailId) {
-		this.orderDetailId = orderDetailId;
-	}
+    public void setPending(long pending) {
+        this.pending = pending;
+    }
 
-	public String getProductBuyerGroupId() {
-		return productBuyerGroupId;
-	}
+    public String getProductUnit() {
+        return productUnit;
+    }
 
-	public void setProductBuyerGroupId(String productBuyerGroupId) {
-		this.productBuyerGroupId = productBuyerGroupId;
-	}
+    public void setProductUnit(String productUnit) {
+        this.productUnit = productUnit;
+    }
 
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(BigDecimal unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public String getProductBuyerGroupId() {
+        return productBuyerGroupId;
+    }
+
+    public void setProductBuyerGroupId(String productBuyerGroupId) {
+        this.productBuyerGroupId = productBuyerGroupId;
+    }
 }

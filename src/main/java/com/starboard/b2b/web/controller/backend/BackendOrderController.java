@@ -21,7 +21,6 @@ import com.starboard.b2b.dto.OrderStatusDTO;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
-import com.starboard.b2b.dto.search.SearchOrderDetailReportResult;
 import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.service.EmailService;
 import com.starboard.b2b.service.OrderService;
@@ -33,180 +32,129 @@ import com.starboard.b2b.web.form.order.SearchOrderForm;
 
 @Controller
 @RequestMapping("/backend/order")
-@SessionAttributes(value = { "orderDetails" })
+@SessionAttributes(value = {"orderDetails"})
 public class BackendOrderController {
 
-	private static final Logger log = LoggerFactory.getLogger(BackendOrderController.class);
+    private static final Logger log = LoggerFactory.getLogger(BackendOrderController.class);
 
-	private static final String FROM_SEARCH_PAGE = "search";
+    @Autowired
+    private ProductService productService;
 
-	@Autowired
-	private ProductService productService;
+    @Autowired
+    private OrderService orderService;
 
-	@Autowired
-	private OrderService orderService;
+    @Autowired
+    private EmailService emailService;
 
-	@Autowired
-	private EmailService emailService;
+    @Autowired
+    private RoSyncService roSyncService;
 
-	@Autowired
-	private RoSyncService roSyncService;
+    private void setForm(final OrderSummaryForm form, final Model model) {
+        final List<ProductTypeDTO> productTypes = productService.findProductTypeByBrandId(form.getBrandId());
+        model.addAttribute("productType", productTypes);
+        final List<OrderStatusDTO> orderStatus = orderService.findAllOrderStatus();
+        model.addAttribute("orderStatus", orderStatus);
+    }
 
-	private void setForm(final OrderSummaryForm form, final Model model) {
-		final List<ProductTypeDTO> productTypes = productService.findProductTypeByBrandId(form.getBrandId());
-		model.addAttribute("productType", productTypes);
-		final List<OrderStatusDTO> orderStatus = orderService.findAllOrderStatus();
-		model.addAttribute("orderStatus", orderStatus);
-	}
+    @RequestMapping(value = "search", method = RequestMethod.GET)
+    String search(Model model) {
+        OrderSummaryForm form = new OrderSummaryForm();
+        setForm(form, model);
+        model.addAttribute("resultPage", orderService.searchOrder(form));
+        model.addAttribute("searchOrderForm", new SearchOrderForm());
+        return "pages-back/order/search";
+    }
 
-	@RequestMapping(value = "search", method = RequestMethod.GET)
-	String search(Model model) {
-		log.info("GET search");
+    @RequestMapping(value = "search-action", method = RequestMethod.GET)
+    String orderSummarySearchAction(@ModelAttribute("form") OrderSummaryForm form, Model model) {
+        setForm(form, model);
+        model.addAttribute("resultPage", orderService.searchOrder(form));
+        model.addAttribute("searchOrderForm", new SearchOrderForm());
+        return "pages-back/order/search";
+    }
 
-		OrderSummaryForm form = new OrderSummaryForm();
-		setForm(form, model);
+    @RequestMapping(value = "/view", method = RequestMethod.GET)
+    String viewOrder(@RequestParam(name = "orderId") Long orderId, Model model) {
+        if (orderId == null) {
+            throw new B2BException("Order ID not found");
+        }
+        OrderDecisionForm form = new OrderDecisionForm();
+        SearchOrderDTO orderReport = orderService.findOrderForReport(orderId);
+        if (orderReport == null) {
+            throw new B2BException("Order not found");
+        }
+        // find order address
+        final List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(orderReport.getOrderCode());
+        for (OrdAddressDTO ordAddress : ordAddresses) {
+            if (ordAddress.getType().equals(AddressConstant.ORDER_INVOICE_TO)) {
+                orderReport.setInvoiceToAddress(ordAddress);
+            }
+            if (ordAddress.getType().equals(AddressConstant.ORDER_DISPATCH_TO)) {
+                orderReport.setDispatchToAddress(ordAddress);
+            }
+        }
+        // find order detail
+        List<SearchOrderDetailDTO> dbOrderDetails = orderService.searchOrderDetail(orderReport.getOrderId());
+        if (dbOrderDetails != null && !dbOrderDetails.isEmpty()) {
+            orderReport.setOrderDetails(dbOrderDetails);
+        }
+        // Find selling order
+        orderReport.setSalesOrders(orderService.listSO(orderReport.getOrderId()));
 
-		model.addAttribute("resultPage", orderService.searchOrder(form));
-		model.addAttribute("searchOrderForm", new SearchOrderForm());
+        if (OrderStatusConfig.WAIT_FOR_APPROVE.equals(orderReport.getOrderStatusId())) {
+            form.setEditMode(true);
+        } else {
+            form.setEditMode(false);
+        }
+        //
+        form.setPaymentMethodList(orderService.findAllPaymentMethod());
+        form.setPaymentTermList(orderService.findAllPaymentTerm());
+        form.setProductPriceGroupList(productService.listProductPriceGroup());
+        //
+        form.setOrderReport(orderReport);
+        model.addAttribute("approveForm", form);
+        return "pages-back/order/view";
+    }
 
-		return "pages-back/order/search";
-	}
+    @RequestMapping(value = "/approve", method = RequestMethod.GET)
+    String approve(@RequestParam(name = "orderId", defaultValue = "0", required = true) Long orderId, Model model) {
+        OrderDTO order = orderService.findOrder(orderId);
+        if (order == null) {
+            throw new B2BException("Not found order " + orderId);
+        }
+        orderService.approve(order);
+        roSyncService.syncRoFromB2BtoAX(orderId);
+        try {
+            emailService.sendEmailOrder(order);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        try {
+            emailService.sendEmailInternal(order);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        return viewOrder(orderId, model);
+    }
 
-	@RequestMapping(value = "search-action", method = RequestMethod.GET)
-	String orderSummarySearchAction(@ModelAttribute("form") OrderSummaryForm form, Model model) {
-		log.info("search condition: " + form.toString());
+    @RequestMapping(value = "/reject", method = RequestMethod.GET)
+    String reject(@RequestParam(name = "orderId", defaultValue = "0", required = true) Long orderId, Model model) {
+        OrderDTO order = orderService.findOrder(orderId);
+        if (order == null) {
+            throw new B2BException("Not found order " + orderId);
+        }
+        orderService.reject(order);
+        try {
+            emailService.sendEmailOrder(order);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        return viewOrder(orderId, model);
+    }
 
-		setForm(form, model);
-		model.addAttribute("resultPage", orderService.searchOrder(form));
-		model.addAttribute("searchOrderForm", new SearchOrderForm());
-
-		return "pages-back/order/search";
-	}
-
-	@RequestMapping(value = "/view", method = RequestMethod.GET)
-	String viewOrder(@RequestParam(name = "orderId") Long orderId, @RequestParam(name = "from", required = false) String from, Model model) {
-		log.info("Report for order: {}", orderId);
-
-		OrderDecisionForm form = new OrderDecisionForm();
-		// ----- find order -----
-		SearchOrderDTO orderReport = null;
-
-		if (orderId != null) {
-			orderReport = orderService.findOrderForReport(orderId);
-		} else {
-			// orderReport = order;
-		}
-
-		if (orderReport == null) {
-			throw new B2BException("Not found order");
-		}
-
-		// set value form
-		form.setOrderReport(orderReport);
-		form.setPaymentTermId(orderReport.getPaymentTermId());
-		form.setPaymentMethodId(orderReport.getPaymentMethod());
-		form.setRemarkCustomer(orderReport.getRemarkCustomer());
-		form.setRemarkOrders(orderReport.getRemarkOrders());
-
-		log.info("order status = " + orderReport.getOrderStatus());
-		if (OrderStatusConfig.WAIT_FOR_APPROVE.equals(orderReport.getOrderStatusId())) {
-			form.setEditMode(true);
-		} else {
-			form.setEditMode(false);
-		}
-
-		form.setPaymentMethodList(orderService.findAllPaymentMethod());
-		form.setPaymentTermList(orderService.findAllPaymentTerm());
-		form.setProductPriceGroupList(productService.listProductPriceGroup());
-
-		// ---- find order address -----
-		final List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(orderReport.getOrderCode());
-		for (OrdAddressDTO ordAddress : ordAddresses) {
-			log.info("received order address {} ", ordAddress);
-			if (ordAddress.getType().equals(AddressConstant.ORDER_INVOICE_TO)) {
-				orderReport.setInvoiceToAddress(ordAddress);
-			}
-			if (ordAddress.getType().equals(AddressConstant.ORDER_DISPATCH_TO)) {
-				orderReport.setDispatchToAddress(ordAddress);
-			}
-		}
-
-		// ----- find order detail -----
-		List<SearchOrderDetailDTO> dbOrderDetails = orderService.searchOrderDetail(orderReport.getOrderCode());
-
-		if (dbOrderDetails != null && !dbOrderDetails.isEmpty()) {
-			orderReport.setOrderDetails(dbOrderDetails);
-			model.addAttribute("orderDetails", dbOrderDetails);
-		}
-
-		// ----- Find selling order -----
-		orderReport.setSalesOrders(orderService.listSO(orderReport.getOrderId()));
-
-		model.addAttribute("approveForm", form);
-		return "pages-back/order/view";
-	}
-
-	@RequestMapping(value = "/approve", method = RequestMethod.POST)
-	String approve(@ModelAttribute("approveForm") OrderDecisionForm form, long orderId, Model model) {
-		log.info(form.toString());
-		log.info("orderId: " + orderId);
-
-		OrderDTO order = orderService.findOrder(orderId);
-		if (order == null) {
-			throw new B2BException("Not found order " + orderId);
-		}
-
-		// ----- approve -----
-		orderService.approve(order);
-		// TODO update order_detail from session when split function ready!!!
-		// 1. delete old order_detail by order_id
-		// 2. insert new order_detail
-
-		roSyncService.syncRoFromB2BtoAX(orderId);
-
-		// ----- send mail order -----
-		try {
-			emailService.sendEmailOrder(order);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-		}
-
-		// ----- send mail to staff -----
-		try {
-			emailService.sendEmailInternal(order);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-		}
-
-		return viewOrder(orderId, FROM_SEARCH_PAGE, model);
-	}
-
-	@RequestMapping(value = "/reject", method = RequestMethod.POST)
-	String reject(@ModelAttribute("approveForm") OrderDecisionForm form, long orderId, Model model) {
-		OrderDTO order = orderService.findOrder(orderId);
-		if (order == null) {
-			throw new B2BException("Not found order " + orderId);
-		}
-
-		// ----- reject -----
-		orderService.reject(order);
-
-		// ----- send mail -----
-		try {
-			emailService.sendEmailOrder(order);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-		}
-
-		return viewOrder(form.getOrderReport().getOrderId(), FROM_SEARCH_PAGE, model);
-	}
-
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	String save(@ModelAttribute("approveForm") OrderDecisionForm form, Model model) {
-		log.info("Form: " + form);
-		
-		orderService.updateOrder(form);
-		
-		return viewOrder(form.getOrderReport().getOrderId(), FROM_SEARCH_PAGE, model);
-	}
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    String save(@ModelAttribute("approveForm") OrderDecisionForm form, Model model) {
+        orderService.updateOrder(form);
+        return viewOrder(form.getOrderReport().getOrderId(), model);
+    }
 }
