@@ -352,7 +352,7 @@ var app = {
         //
         $(document).on('change', '#split-list input[name=amount]', function (event) {
             var master = context.Items[app.split.index];
-            var quantity = $(this).val();
+            var quantity = Number($(this).val());
             var index = $(this).attr('data-index');
             var original = master.Amount;
             var current = app.split.context.Items[index].Amount;
