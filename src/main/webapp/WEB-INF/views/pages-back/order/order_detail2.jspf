@@ -20,55 +20,69 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${ approveForm.orderReport.orderDetails }" var="ordDetail" varStatus="rowNum">
 
-				<tr>
-					<td>${ rowNum.index + 1 }</td>
-					<td>${ ordDetail.productCode }</td>
-					<td>${ ordDetail.productName }</td>
+			<c:choose>
+				<c:when test="${ not empty orderDetails }">
 
-					<td>
-						<select id="product-price-${ ordDetail.orderDetailId }" name="product-price-group"
-							class="form-control" onchange="changeProductPriceGroup(${ ordDetail.orderDetailId }, this)">
-							<option value="blank"></option>
-							<c:forEach var="priceGroup" items="${ approveForm.productPriceGroupList }">
-								<c:set var="selected" value="" />
-								<c:if test="${ priceGroup.productPriceGroupId eq  ordDetail.productBuyerGroupId}">
-									<c:set var="selected" value="selected='selected'" />
-								</c:if>
-								<option value="${ priceGroup.productPriceGroupId }" ${ selected }>${ priceGroup.productPriceGroupName }</option>
-							</c:forEach>
-						</select>
-					</td>
+					<c:forEach items="${ orderDetails }" var="ordDetail" varStatus="rowNum">
 
-					<td>${ ordDetail.amount }</td>
+						<tr>
+							<td>${ rowNum.index + 1 }</td>
+							<td>${ ordDetail.productCode }</td>
+							<td>${ ordDetail.productName }</td>
 
-					<td>Shipped</td>
-					<td>Pending</td>
+							<td>
+								<select id="product-price-${ ordDetail.orderDetailId }" name="product-price-group"
+									class="form-control" onchange="changeProductPriceGroup(${ ordDetail.orderDetailId }, this)">
+									<option value="blank"></option>
+									<c:forEach var="priceGroup" items="${ approveForm.productPriceGroupList }">
+										<c:set var="selected" value="" />
+										<c:if test="${ priceGroup.productPriceGroupId eq  ordDetail.productBuyerGroupId}">
+											<c:set var="selected" value="selected='selected'" />
+										</c:if>
+										<option value="${ priceGroup.productPriceGroupId }" ${ selected }>${ priceGroup.productPriceGroupName }</option>
+									</c:forEach>
+								</select>
+							</td>
 
-					<td>${ ordDetail.productUnit }</td>
-					<td>
-						<fmt:formatNumber pattern="#,###" maxIntegerDigits="12" value="${ ordDetail.unitPrice }">
-						</fmt:formatNumber>
-					</td>
-					<td>
-						<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
-							value="${ ordDetail.amount * ordDetail.unitPrice }">
-						</fmt:formatNumber>
-					</td>
+							<td>${ ordDetail.amount }</td>
+
+							<td>Shipped</td>
+							<td>Pending</td>
+
+							<td>${ ordDetail.productUnit }</td>
+							<td>
+								<fmt:formatNumber pattern="#,###" maxIntegerDigits="12" value="${ ordDetail.unitPrice }">
+								</fmt:formatNumber>
+							</td>
+							<td>
+								<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
+									value="${ ordDetail.amount * ordDetail.unitPrice }">
+								</fmt:formatNumber>
+							</td>
 
 
-					<td>
-						<input type="button" id="btn-remove-${ ordDetail.orderDetailId }" name="btn-remove"
-							class="btn btn-default" onclick="removeOrder(${ ordDetail.orderDetailId })" value="Remove" />
-					</td>
-					<td>
-						<input type="button" id="btn-split-${ ordDetail.orderDetailId }" name="btn-split"
-							class="btn btn-default" onclick="splitOrder(${ ordDetail.orderDetailId })" value="Split" />
-					</td>
-				</tr>
+							<td>
+								<input type="button" id="btn-remove-${ ordDetail.orderDetailId }" name="btn-remove"
+									class="btn btn-default" onclick="removeOrder(${ ordDetail.orderDetailId })" value="Remove" />
+							</td>
+							<td>
+								<input type="button" id="btn-split-${ ordDetail.orderDetailId }" name="btn-split"
+									class="btn btn-default" onclick="splitOrder(${ ordDetail.orderDetailId })" value="Split" />
+							</td>
+						</tr>
 
-			</c:forEach>
+					</c:forEach>
+
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="12">Not found order details</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+
+
 		</tbody>
 	</table>
 </div>
