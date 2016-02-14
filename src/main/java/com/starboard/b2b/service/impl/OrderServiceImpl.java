@@ -1,5 +1,6 @@
 package com.starboard.b2b.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +27,7 @@ import com.starboard.b2b.dao.OrderStatusDao;
 import com.starboard.b2b.dao.OrdersIdRunningDao;
 import com.starboard.b2b.dao.PaymentMethodDao;
 import com.starboard.b2b.dao.PaymentTermDao;
+import com.starboard.b2b.dao.ProductPriceDao;
 import com.starboard.b2b.dao.ShippingTypeDao;
 import com.starboard.b2b.dao.SoDao;
 import com.starboard.b2b.dto.CustPriceGroupDTO;
@@ -35,6 +37,7 @@ import com.starboard.b2b.dto.OrderStatusDTO;
 import com.starboard.b2b.dto.PaymentMethodDTO;
 import com.starboard.b2b.dto.PaymentTermDTO;
 import com.starboard.b2b.dto.ProductDTO;
+import com.starboard.b2b.dto.ProductPriceDTO;
 import com.starboard.b2b.dto.ShippingTypeDTO;
 import com.starboard.b2b.dto.SoDTO;
 import com.starboard.b2b.dto.SoDetailDTO;
@@ -100,6 +103,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private CustomerService customerService;
+
+	@Autowired
+	private ProductPriceDao productPriceDao;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -180,6 +186,9 @@ public class OrderServiceImpl implements OrderService {
 		Set<Long> keySet = cart.keySet();
 		for (Long key : keySet) {
 			ProductDTO product = cart.get(key);
+
+			ProductPriceDTO productPrice = productPriceDao.findProductPrice(product.getProductCode(), user.getCustomer().getInvoiceCode(),
+					product.getProductPreintro());
 			// Default currency
 			if (StringUtils.isEmpty(product.getProductCurrency())) {
 				product.setProductCurrency(applicationConfig.getDefaultProductCurrency());
@@ -190,12 +199,13 @@ public class OrderServiceImpl implements OrderService {
 			}
 
 			// ----- Create order -----
+
 			OrdDetail orderDetail = new OrdDetail();
 			orderDetail.setOrderId(orderId);
 			orderDetail.setProductId(product.getProductId());
 			orderDetail.setAmount(product.getProductQuantity());
-			if (product.getProductPrice() != null && product.getProductPrice().intValue() >= 0) {
-				orderDetail.setPrice(product.getProductPrice());
+			if (productPrice != null && product.getProductQuantity() > 0) {
+				orderDetail.setPrice(productPrice.getAmount().multiply(new BigDecimal(product.getProductQuantity())));
 			}
 			orderDetail.setStatus(applicationConfig.getDefaultOrderDetailStatus());
 			orderDetail.setProductCurrency(product.getProductCurrency());
