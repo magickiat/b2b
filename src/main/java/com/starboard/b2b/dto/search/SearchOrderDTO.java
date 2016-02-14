@@ -8,7 +8,7 @@ import java.util.List;
 
 public class SearchOrderDTO {
 
-    private long orderId;
+    private Long orderId;
     private String orderCode;
     private String customerName;
     private String productTypeName;
@@ -48,7 +48,7 @@ public class SearchOrderDTO {
         this.orderStatusId = orderStatusId;
     }
 
-    public SearchOrderDTO(long orderId, String orderCode, String customerName, String productTypeName, Date orderDate, Date expectShipmentDate,
+    public SearchOrderDTO(Long orderId, String orderCode, String customerName, String productTypeName, Date orderDate, Date expectShipmentDate,
             String orderStatus, String paymentMethod, String shippingType, String paymentTermDescription, String remarkCustomer,
             String paymentTermId, String orderStatusId, String remarkOrders) {
         this.orderId = orderId;
@@ -67,11 +67,11 @@ public class SearchOrderDTO {
         this.remarkOrders = remarkOrders;
     }
 
-    public long getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(long orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 

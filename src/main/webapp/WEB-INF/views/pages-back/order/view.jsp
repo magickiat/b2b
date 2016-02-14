@@ -16,7 +16,7 @@
         <div class="container">
             <form:form id="approveForm" name="approveForm" modelAttribute="approveForm" servletRelativeAction="/backend/order/save" method="POST">
                 <input type="hidden" id="orderId" name="orderReport.orderId" value="${approveForm.orderReport.orderId}" />
-                <input type="hidden" id="splitItems" name="orderReport.splitItems" value=""/>
+                <input type="hidden" id="splitItems" name="splitItems" value=""/>
                 <!-- Header -->
                 <div class="row bg_color">
                     <div class="col-sm-6 bg_color">
@@ -248,6 +248,7 @@ var context = {
             ProductCode: '${item.productCode}',
             ProductName: '${item.productName}',
             ProductUnit: '${item.productUnit}',
+            ProductCurrency: '${item.productCurrency}',
             Amount: ${item.amount},
             Price: ${item.unitPrice},
             Total: ${item.amount*item.unitPrice},
@@ -380,6 +381,7 @@ var app = {
                         ProductCode: master.ProductCode,
                         ProductName: master.ProductName,
                         ProductUnit: master.ProductUnit,
+                        ProductCurrency: master.ProductCurrency,
                         Amount: 1,
                         Price: master.Price,
                         Total: master.Price,
@@ -409,11 +411,14 @@ var app = {
                 data.push({
                     ProductID: obj.ProductID,
                     ProductUnit: obj.ProductUnit,
+                    ProductCurrency: obj.ProductCurrency,
                     Amount: obj.Amount,
+                    Price: obj.Price,
                     BuyerGroupID: obj.BuyerGroupID
                 });
             }
             $('#splitItems').val(JSON.stringify(data));
+            $('#approveForm').submit();
         });
         //
         $('#btn-approve').on('click', function (event) {

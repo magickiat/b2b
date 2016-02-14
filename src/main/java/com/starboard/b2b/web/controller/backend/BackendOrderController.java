@@ -155,6 +155,6 @@ public class BackendOrderController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     String save(@ModelAttribute("approveForm") OrderDecisionForm form, Model model) {
         orderService.updateOrder(form);
-        return viewOrder(form.getOrderReport().getOrderId(), model);
+        return "redirect:/backend/order/view?orderId=" + form.getOrderReport().getOrderId();
     }
 }

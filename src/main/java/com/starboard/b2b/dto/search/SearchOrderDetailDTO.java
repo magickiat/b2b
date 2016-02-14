@@ -12,13 +12,14 @@ public class SearchOrderDetailDTO {
     private long shiped;
     private long pending;
     private String productUnit;
+    private String productCurrency;
     private BigDecimal unitPrice;
     private String productBuyerGroupId;
 
     public SearchOrderDetailDTO() {
     }
 
-    public SearchOrderDetailDTO(long orderDetailId, long productId, String productCode, String productName, long amount, long shiped, long pending, String productUnit, BigDecimal unitPrice, String productBuyerGroupId) {
+    public SearchOrderDetailDTO(long orderDetailId, long productId, String productCode, String productName, long amount, long shiped, long pending, String productUnit, String productCurrency, BigDecimal unitPrice, String productBuyerGroupId) {
         this.orderDetailId = orderDetailId;
         this.productId = productId;
         this.productCode = productCode;
@@ -27,6 +28,7 @@ public class SearchOrderDetailDTO {
         this.shiped = shiped;
         this.pending = pending;
         this.productUnit = productUnit;
+        this.productCurrency = productCurrency;
         this.unitPrice = unitPrice;
         this.productBuyerGroupId = productBuyerGroupId;
     }
@@ -93,6 +95,14 @@ public class SearchOrderDetailDTO {
 
     public void setProductUnit(String productUnit) {
         this.productUnit = productUnit;
+    }
+
+    public String getProductCurrency() {
+        return productCurrency;
+    }
+
+    public void setProductCurrency(String productCurrency) {
+        this.productCurrency = productCurrency;
     }
 
     public BigDecimal getUnitPrice() {

@@ -41,7 +41,7 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
     @Override
     public List<SearchOrderDetailDTO> searchOrderDetail(Long orderId) {
         StringBuilder sb = new StringBuilder();
-        sb.append("select new com.starboard.b2b.dto.search.SearchOrderDetailDTO(o.orderDetailId, p.productId, p.productCode, p.productNameEn, o.amount, 0L, o.amount, o.productUnitId, o.price, o.productBuyerGroupId) ");
+        sb.append("select new com.starboard.b2b.dto.search.SearchOrderDetailDTO(o.orderDetailId, p.productId, p.productCode, p.productNameEn, o.amount, 0L, o.amount, o.productUnitId, o.productCurrency, o.price, o.productBuyerGroupId) ");
         sb.append("FROM OrdDetail o, Product p ");
         sb.append("WHERE o.productId = p.productId ");
         sb.append("and o.orderId = :orderId ");
@@ -52,9 +52,10 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
     @SuppressWarnings("unchecked")
     @Override
     public List<SearchOrderDetailDTO> searchOrderDetail(String orderCode) {
-        String searchOrderDetail = " select new com.starboard.b2b.dto.search.SearchOrderDetailDTO(od.orderDetailId, p.productCode, p.productNameEn, od.amount, 0L, od.amount, od.productUnitId, od.price, od.productBuyerGroupId)"
-                + " FROM    OrdDetail od, Orders r, Product p " + " WHERE od.productId = p.productId" + " and od.orderId = r.id"
-                + " and r.orderCode = :orderCode" + " ORDER BY p.productCode ";
+        String searchOrderDetail = "select new com.starboard.b2b.dto.search.SearchOrderDetailDTO(d.orderDetailId, p.productId, p.productCode, p.productNameEn, d.amount, 0L, d.amount, d.productUnitId, d.productCurrency, d.price, d.productBuyerGroupId) "
+                + "FROM OrdDetail d, Orders o, Product p "
+                + "WHERE d.productId = p.productId and d.orderId = o.id and o.orderCode = :orderCode "
+                + "ORDER BY p.productCode ";
 
         return sessionFactory.getCurrentSession().createQuery(searchOrderDetail).setString("orderCode", orderCode).list();
     }

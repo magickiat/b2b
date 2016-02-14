@@ -1,5 +1,8 @@
 package com.starboard.b2b.service.impl;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -49,7 +52,6 @@ import com.starboard.b2b.model.OrdAddress;
 import com.starboard.b2b.model.OrdDetail;
 import com.starboard.b2b.model.OrderStatus;
 import com.starboard.b2b.model.Orders;
-import com.starboard.b2b.model.ProductBuyerGroup;
 import com.starboard.b2b.model.So;
 import com.starboard.b2b.model.SoDetail;
 import com.starboard.b2b.model.User;
@@ -61,6 +63,8 @@ import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.order.OrderDecisionForm;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
+import java.lang.reflect.Type;
+import java.math.BigDecimal;
 
 @Service("orderService")
 public class OrderServiceImpl implements OrderService {
@@ -432,7 +436,53 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public void updateOrder(OrderDecisionForm form) {
-        
+        if (form.getOrderReport().getOrderId() == null) {
+            throw new B2BException("order id not specify");
+        }
+        //
+        Orders order = orderDao.findById(form.getOrderReport().getOrderId());
+        order.setPaymentTermId(form.getOrderReport().getPaymentTermId());
+        order.setPaymentMethodId(form.getOrderReport().getPaymentMethod());
+        order.setRemarkCustomer(form.getOrderReport().getRemarkCustomer());
+        //
+        Type type = new TypeToken<List<Map<String, Object>>>() {
+        }.getType();
+        Gson gson = new GsonBuilder()
+                .serializeNulls()
+                .disableHtmlEscaping()
+                .create();
+        Date currentDate = DateTimeUtil.getCurrentDate();
+        User user = UserUtil.getCurrentUser();
+        //
+        orderDetailDao.purge(form.getOrderReport().getOrderId());
+        //
+        List<Map<String, Object>> splits = gson.fromJson(form.getSplitItems(), type);
+        for (Map<String, Object> split : splits) {
+            if (split.get("ProductID") == null) {
+                continue;
+            }
+            String ProductID = String.class.cast(split.get("ProductID"));
+            String ProductUnit = String.class.cast(split.get("ProductUnit"));
+            String ProductCurrency = String.class.cast(split.get("ProductCurrency"));
+            Double Amount = Double.class.cast(split.get("Amount"));
+            Double Price = Double.class.cast(split.get("Price"));
+            String BuyerGroupID = String.class.cast(split.get("BuyerGroupID"));
+            //
+            OrdDetail orderDetail = new OrdDetail();
+            orderDetail.setOrderId(form.getOrderReport().getOrderId());
+            orderDetail.setProductId(Long.parseLong(ProductID));
+            orderDetail.setAmount(Amount.longValue());
+            orderDetail.setStatus(applicationConfig.getDefaultOrderDetailStatus());
+            orderDetail.setProductCurrency(ProductCurrency);
+            orderDetail.setProductUnitId(ProductUnit);
+            orderDetail.setPrice(new BigDecimal(Price));
+            orderDetail.setProductBuyerGroupId(BuyerGroupID);
+            orderDetail.setUserCreate(user.getUsername());
+            orderDetail.setTimeCreate(currentDate);
+            orderDetail.setTimeUpdate(currentDate);
+            //
+            orderDetailDao.save(orderDetail);
+        }
     }
 
 }
