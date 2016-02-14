@@ -107,6 +107,7 @@ public class BackendOrderController {
 		form.setPaymentMethodId(orderReport.getPaymentMethod());
 		form.setRemarkCustomer(orderReport.getRemarkCustomer());
 		form.setRemarkOrders(orderReport.getRemarkOrders());
+		form.setOrderId(orderId);
 
 		log.info("order status = " + orderReport.getOrderStatus());
 		if (OrderStatusConfig.WAIT_FOR_APPROVE.equals(orderReport.getOrderStatusId())) {
@@ -204,9 +205,13 @@ public class BackendOrderController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	String save(@ModelAttribute("approveForm") OrderDecisionForm form, Model model) {
 		log.info("Form: " + form);
-		
-		orderService.updateOrder(form);
-		
-		return viewOrder(form.getOrderReport().getOrderId(), FROM_SEARCH_PAGE, model);
+
+		if (form.isEditMode()) {
+			orderService.updateOrder(form);
+		}else{
+			throw new B2BException("Not save because it not edit mode");
+		}
+
+		return viewOrder(form.getOrderId(), FROM_SEARCH_PAGE, model);
 	}
 }

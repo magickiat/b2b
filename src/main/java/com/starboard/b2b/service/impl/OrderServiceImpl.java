@@ -430,8 +430,17 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	@Transactional
 	public void updateOrder(OrderDecisionForm form) {
-		// TODO Auto-generated method stub
+		Orders order = orderDao.findById(form.getOrderId());
+		if(order == null){
+			throw new B2BException("Not found order: " + form.getOrderId());
+		}
+		
+		order.setRemarkCustomer(form.getRemarkCustomer());
+		order.setRemarkOrders(form.getRemarkOrders());
+		order.setPaymentTermId(form.getPaymentTermId());
+		order.setPaymentMethodId(form.getPaymentMethodId());
 		
 	}
 

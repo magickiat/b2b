@@ -100,13 +100,13 @@
 				<div class="col-sm-6 bg_color" style="padding-bottom: 10px;">
 					<div class="">Customer Remark</div>
 					<div class="">
-						<textarea id="remarkCustomer" class="form-control" rows="5" cols="50">${ approveForm.remarkCustomer }</textarea>
+						<textarea id="remarkCustomer" name="remarkCustomer" class="form-control" rows="5" cols="50">${ approveForm.remarkCustomer }</textarea>
 					</div>
 				</div>
 				<div class="col-sm-6 bg_color">
 					<div class="">Staff Remark</div>
 					<div class="" style="padding-bottom: 10px;">
-						<textarea id="remarkOrders" class="form-control" rows="5" cols="50">${ approveForm.remarkOrders }</textarea>
+						<textarea id="remarkOrders" name="remarkOrders" class="form-control" rows="5" cols="50">${ approveForm.remarkOrders }</textarea>
 					</div>
 				</div>
 
@@ -114,7 +114,7 @@
 
 				<%-- Save, Cancel --%>
 				<div class="col-sm-6 bg_color text-right">
-					<input type="button" id="save" name="save" class="btn btn-default" value="Save" />
+					<input type="button" id="save" name="save" class="btn btn-default" value="Save" onclick="saveOrder()" />
 				</div>
 				<div class="col-sm-6 bg_color">
 					<input type="reset" id="cancel" name="cancel" class="btn btn-default" value="Cancel" />
@@ -171,6 +171,12 @@
 				$('input[name=btn-remove]').prop("disabled", true);
 				$('input[name=btn-split]').prop("disabled", true);
 			}
+		}
+		
+		function saveOrder(){
+			var form = $('#approveForm');
+			form.attr('action', '<c:url value="/backend/order/save" />');
+			form.submit();
 		}
 	</script>
 </body>
