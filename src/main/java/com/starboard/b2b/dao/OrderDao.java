@@ -15,6 +15,8 @@ import com.starboard.b2b.web.form.order.OrderSummaryForm;
 public interface OrderDao {
 
 	long save(Orders order);
+        
+        void update(Orders order);
 
 	Orders findById(Long orderId);
 

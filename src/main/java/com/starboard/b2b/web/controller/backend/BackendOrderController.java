@@ -134,7 +134,7 @@ public class BackendOrderController {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
-        return viewOrder(orderId, model);
+        return "redirect:/backend/order/view?orderId=" + orderId;
     }
 
     @RequestMapping(value = "/reject", method = RequestMethod.GET)
@@ -149,7 +149,7 @@ public class BackendOrderController {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
-        return viewOrder(orderId, model);
+        return "redirect:/backend/order/view?orderId=" + orderId;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)

@@ -31,8 +31,8 @@
                             <div id="btn-save" class="btn btn-primary">Save</div>
                         </div>
                         <div class="col-sm-6 text-right" style="padding: 20px 0px 10px 0px;">
-                            <div id="btn-approve" class="btn btn-success">Approve</div>
-                            <div id="btn-reject" class="btn btn-danger">Reject</div>
+                            <a href="<c:url value="/backend/order/approve"><c:param name="orderId" value="${approveForm.orderReport.orderId}"/></c:url>" id="btn-approve" class="btn btn-success">Approve</a>
+                            <a href="<c:url value="/backend/order/reject"><c:param name="orderId" value="${approveForm.orderReport.orderId}"/></c:url>" id="btn-reject" class="btn btn-danger">Reject</a>
                         </div>
                     </div>
                     <!-- Order info -->
@@ -105,7 +105,7 @@
                     <div class="col-sm-6 bg_color" style="padding-bottom: 10px;">
                         <div class="">Customer Remark</div>
                         <div class="">
-                            <textarea class="form-control" rows="5" cols="50">${approveForm.orderReport.remarkCustomer}</textarea>
+                            <textarea class="form-control" name="orderReport.remarkCustomer" rows="5" cols="50">${approveForm.orderReport.remarkCustomer}</textarea>
                         </div>
                     </div>
                     <div class="col-sm-6 bg_color">
@@ -423,16 +423,22 @@ var app = {
         //
         $('#btn-approve').on('click', function (event) {
             if (!app.editable) {
-                return;
+                return false;
             }
-            alert('approve order id -> ' + $(this).attr('data-id'));
+            if(confirm('Are you sure want to approve order: ${approveForm.orderReport.orderCode}')) {
+                return true;
+            }
+            return false;
         });
         //
         $('#btn-reject').on('click', function (event) {
             if (!app.editable) {
-                return;
+                return false;
             }
-            alert('reject order id -> ' + $(this).attr('data-id'));
+            if(confirm('Are you sure want to reject order: ${approveForm.orderReport.orderCode}')) {
+                return true;
+            }
+            return false;
         });
         //
         Mark.pipes.format = function (num, p) {

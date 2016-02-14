@@ -444,6 +444,7 @@ public class OrderServiceImpl implements OrderService {
         order.setPaymentTermId(form.getOrderReport().getPaymentTermId());
         order.setPaymentMethodId(form.getOrderReport().getPaymentMethod());
         order.setRemarkCustomer(form.getOrderReport().getRemarkCustomer());
+        orderDao.update(order);
         //
         Type type = new TypeToken<List<Map<String, Object>>>() {
         }.getType();
