@@ -49,13 +49,11 @@ import com.starboard.b2b.model.OrdAddress;
 import com.starboard.b2b.model.OrdDetail;
 import com.starboard.b2b.model.OrderStatus;
 import com.starboard.b2b.model.Orders;
-import com.starboard.b2b.model.ProductBuyerGroup;
 import com.starboard.b2b.model.So;
 import com.starboard.b2b.model.SoDetail;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.OrderService;
-import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.UserUtil;
@@ -99,10 +97,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private SoDao soDao;
-	
-	@Autowired
-	private ProductService productService;
-	
+
 	@Autowired
 	private CustomerService customerService;
 
@@ -180,7 +175,7 @@ public class OrderServiceImpl implements OrderService {
 		long orderId = orderDao.save(order);
 
 		CustPriceGroupDTO custPriceGroup = customerService.findCustPriceGroup(user.getCustomer().getCustCode(), brandGroupId);
-		
+
 		// Save Order Detail
 		Set<Long> keySet = cart.keySet();
 		for (Long key : keySet) {
@@ -414,6 +409,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	@Transactional
 	public void reject(OrderDTO orderDTO) {
 		if (orderDTO == null) {
 			throw new B2BException("Order is required");
@@ -432,16 +428,34 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional
 	public void updateOrder(OrderDecisionForm form) {
+
+		// ----- Order -----
 		Orders order = orderDao.findById(form.getOrderId());
-		if(order == null){
+		if (order == null) {
 			throw new B2BException("Not found order: " + form.getOrderId());
 		}
-		
+
 		order.setRemarkCustomer(form.getRemarkCustomer());
 		order.setRemarkOrders(form.getRemarkOrders());
 		order.setPaymentTermId(form.getPaymentTermId());
 		order.setPaymentMethodId(form.getPaymentMethodId());
-		
+
+		log.info("Updated order " + order.getOrderCode());
+
+		// ----- Order Details -----
+		List<SearchOrderDetailDTO> orderDetails = form.getOrderDetails();
+		if (orderDetails != null && !orderDetails.isEmpty()) {
+			int deleted = orderDetailDao.deleteByOrderId(order.getOrderId());
+			log.info("Delete order details " + deleted + " items.");
+
+			for (SearchOrderDetailDTO dto : orderDetails) {
+				OrdDetail detail = new OrdDetail();
+				BeanUtils.copyProperties(dto, detail);
+				orderDetailDao.save(detail);
+			}
+		} else {
+			log.warn("This order hasn't order details");
+		}
 	}
 
 }

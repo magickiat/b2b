@@ -22,4 +22,8 @@ public interface OrderDetailDao {
 	List<OrdDetail> findByOrderId(long orderId);
 	
 	List<SearchOrderDetailReportResult> findOrderDetailByOrderId(long orderId);
+
+	OrdDetail findById(long orderDetailId);
+
+	int deleteByOrderId(long orderId);
 }

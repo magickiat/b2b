@@ -136,8 +136,8 @@ public class BackendOrderController {
 		List<SearchOrderDetailDTO> dbOrderDetails = orderService.searchOrderDetail(orderReport.getOrderCode());
 
 		if (dbOrderDetails != null && !dbOrderDetails.isEmpty()) {
-			orderReport.setOrderDetails(dbOrderDetails);
-			model.addAttribute("orderDetails", dbOrderDetails);
+//			orderReport.setOrderDetails(dbOrderDetails);
+			form.setOrderDetails(dbOrderDetails);
 		}
 
 		// ----- Find selling order -----
@@ -179,7 +179,7 @@ public class BackendOrderController {
 			log.error(e.getMessage(), e);
 		}
 
-		return viewOrder(orderId, FROM_SEARCH_PAGE, model);
+		return viewOrder(orderId, null, model);
 	}
 
 	@RequestMapping(value = "/reject", method = RequestMethod.POST)
@@ -199,19 +199,19 @@ public class BackendOrderController {
 			log.error(e.getMessage(), e);
 		}
 
-		return viewOrder(form.getOrderReport().getOrderId(), FROM_SEARCH_PAGE, model);
+		return viewOrder(form.getOrderReport().getOrderId(), null, model);
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	String save(@ModelAttribute("approveForm") OrderDecisionForm form, Model model) {
 		log.info("Form: " + form);
-
+		log.info("orderDtails: " + form.getOrderDetails());
 		if (form.isEditMode()) {
 			orderService.updateOrder(form);
 		}else{
 			throw new B2BException("Not save because it not edit mode");
 		}
-
-		return viewOrder(form.getOrderId(), FROM_SEARCH_PAGE, model);
+		
+		return viewOrder(form.getOrderId(), null, model);
 	}
 }

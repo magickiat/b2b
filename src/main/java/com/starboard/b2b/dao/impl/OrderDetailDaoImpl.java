@@ -34,7 +34,7 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 	public List<SearchOrderDetailDTO> searchOrderDetail(Long orderId) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(
-				" select new com.starboard.b2b.dto.search.SearchOrderDetailDTO(od.orderDetailId, p.productCode, p.productNameEn, od.amount, 0L, od.amount, od.productUnitId, od.price, od.productBuyerGroupId)");
+				" select new com.starboard.b2b.dto.search.SearchOrderDetailDTO(od.orderDetailId, p.productCode, p.productNameEn, od.amount, 0L, od.amount, od.productUnitId, od.price, od.productBuyerGroupId, od.orderId, p.productId, od.status, od.price, od.productUnitId, od.productCurrency)");
 		sb.append(" FROM    OrdDetail od,    Product p ");
 		sb.append(" WHERE od.productId = p.productId");
 		sb.append(" and od.orderId = :orderId");
@@ -46,7 +46,7 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<SearchOrderDetailDTO> searchOrderDetail(String orderCode) {
-		String searchOrderDetail = " select new com.starboard.b2b.dto.search.SearchOrderDetailDTO(od.orderDetailId, p.productCode, p.productNameEn, od.amount, 0L, od.amount, od.productUnitId, od.price, od.productBuyerGroupId)"
+		String searchOrderDetail = " select new com.starboard.b2b.dto.search.SearchOrderDetailDTO(od.orderDetailId, p.productCode, p.productNameEn, od.amount, 0L, od.amount, od.productUnitId, od.price, od.productBuyerGroupId, od.orderId, p.productId, od.status, od.price, od.productUnitId, od.productCurrency)"
 				+ " FROM    OrdDetail od, Orders r, Product p " + " WHERE od.productId = p.productId" + " and od.orderId = r.id"
 				+ " and r.orderCode = :orderCode" + " ORDER BY p.productCode ";
 
@@ -69,7 +69,7 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 	public List<SearchOrderDetailDTO> searchOrderDetail(Long[] ordersId) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(
-				" select new com.starboard.b2b.dto.search.SearchOrderDetailDTO(od.orderDetailId, p.productCode, p.productNameEn, od.amount, 0L, od.amount, od.productUnitId, od.price, od.productBuyerGroupId)");
+				" select new com.starboard.b2b.dto.search.SearchOrderDetailDTO(od.orderDetailId, p.productCode, p.productNameEn, od.amount, 0L, od.amount, od.productUnitId, od.price, od.productBuyerGroupId, od.orderId, p.productId, od.status, od.price, od.productUnitId, od.productCurrency)");
 		sb.append(" FROM    OrdDetail od,    Product p ");
 		sb.append(" WHERE od.productId = p.productId");
 		sb.append(" and od.orderId in ( :orderId) ");
@@ -132,12 +132,12 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 			Object[] objects = (Object[]) iter.next();
 			SearchOrderDetailReportResult detail = new SearchOrderDetailReportResult();
 			detail.setOrderDetailId(((BigInteger) objects[0]).longValue());
-			
+
 			if (objects[1] != null) {
 				detail.setOrderId(((BigInteger) objects[1]).longValue());
 			}
 			detail.setOrderCode((String) objects[2]);
-			
+
 			if (objects[3] != null) {
 				detail.setProductId(((BigInteger) objects[3]).longValue());
 			}
@@ -145,7 +145,7 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 			detail.setProductNameEn((String) objects[5]);
 			detail.setCustCode((String) objects[6]);
 			detail.setNameEn((String) objects[7]);
-			
+
 			if (objects[8] != null) {
 				detail.setAmount(((BigInteger) objects[8]).longValue());
 			}
@@ -173,5 +173,16 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 
 		orderDetails.trimToSize();
 		return orderDetails;
+	}
+
+	@Override
+	public OrdDetail findById(long orderDetailId) {
+		return (OrdDetail) sessionFactory.getCurrentSession().get(OrdDetail.class, orderDetailId);
+	}
+
+	@Override
+	public int deleteByOrderId(long orderId) {
+		return sessionFactory.getCurrentSession().createQuery("delete from OrdDetail od where od.orderId = :orderId").setLong("orderId", orderId)
+				.executeUpdate();
 	}
 }
