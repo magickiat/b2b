@@ -57,6 +57,7 @@ import com.starboard.b2b.model.SoDetail;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.OrderService;
+import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.UserUtil;
@@ -103,6 +104,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private CustomerService customerService;
+
+	@Autowired
+	private ProductService productService;
 
 	@Autowired
 	private ProductPriceDao productPriceDao;
@@ -213,7 +217,6 @@ public class OrderServiceImpl implements OrderService {
 			orderDetail.setProductBuyerGroupId(custPriceGroup.getProductBuyerGroupId());
 			orderDetail.setUserCreate(user.getUsername());
 			orderDetail.setTimeCreate(currentDate);
-			orderDetail.setTimeUpdate(currentDate);
 
 			orderDetailDao.save(orderDetail);
 		}
@@ -454,13 +457,29 @@ public class OrderServiceImpl implements OrderService {
 
 		// ----- Order Details -----
 		List<SearchOrderDetailDTO> orderDetails = form.getOrderDetails();
+		User user = UserUtil.getCurrentUser();
 		if (orderDetails != null && !orderDetails.isEmpty()) {
 			int deleted = orderDetailDao.deleteByOrderId(order.getOrderId());
 			log.info("Delete order details " + deleted + " items.");
 
 			for (SearchOrderDetailDTO dto : orderDetails) {
+				ProductPriceDTO productPrice = null;
+				ProductDTO product = productService.findById(dto.getProductId());
+				if (product != null) {
+					productPrice = productPriceDao.findProductPrice(dto.getProductCode(), order.getCustCode(),
+							product.getProductPreintro());
+				}
+
 				OrdDetail detail = new OrdDetail();
 				BeanUtils.copyProperties(dto, detail);
+				if(productPrice != null && detail.getAmount() > 0){
+					// productPrice's amount = product price per unit
+					detail.setPrice(productPrice.getAmount().multiply(new BigDecimal(detail.getAmount())));
+				}
+				
+				detail.setTimeUpdate(DateTimeUtil.getCurrentDate());
+				detail.setUserUpdate(user.getName());
+				
 				orderDetailDao.save(detail);
 			}
 		} else {

@@ -89,11 +89,19 @@ public class RoSyncServiceImpl implements RoSyncService {
 		tmpRo.setTimeCreate(ordDetail.getTimeCreate());
 		tmpRo.setTimeUpdate(ordDetail.getTimeUpdate());
 		tmpRo.setRunningNumber(0L);
+		
+		tmpRo.setCategory(ordDetail.getSaleOrderCat());
+		tmpRo.setWarehouse(ordDetail.getWarehouse());
+		tmpRo.setSite(ordDetail.getSite());
+		
 		tmpRo.setImportDateTime(null);
 		tmpRo.setSalesId(null);
 		tmpRo.setImportStatus(B2BConstant.ONE_IMPORT_STATUS);
 		tmpRo.setDtsSystem(B2BConstant.B2B_SYSTEM_NAME);
 		tmpRo.setDtsUpdate(ordDetail.getTimeUpdate());
+		
+		
+		
 	}
 
 	private String getCurrencyCode(String custAccount, String productCurrency, String productCategoryId) {

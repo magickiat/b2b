@@ -16,4 +16,4 @@ SELECT `shipping_type`.`shipping_type_id`,
     `shipping_type`.`user_update`,
     `shipping_type`.`time_create`,
     `shipping_type`.`time_update`
-FROM `stb`.`shipping_type`;
+FROM `cube`.`shipping_type`;

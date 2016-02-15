@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -26,7 +27,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 
 import com.starboard.b2b.bean.ExcelOrderBean;
 import com.starboard.b2b.dto.ProductDTO;
@@ -101,7 +101,7 @@ public class ExcelUtil {
 			result = new ArrayList<>(numberOfRows);
 
 			if (numberOfRows > 1) {
-
+				final DataFormatter fmt = new DataFormatter();
 				for (int i = 0; i < numberOfRows; i++) {
 					XSSFRow row = sheet.getRow(i);
 
@@ -122,6 +122,7 @@ public class ExcelUtil {
 					Cell cellSize = row.getCell(6);
 					Cell cellActive = row.getCell(7);
 					Cell cellYear = row.getCell(8);
+					Cell cellVendor = row.getCell(9);
 
 					Long typeId = null;
 					String code = "";
@@ -132,96 +133,97 @@ public class ExcelUtil {
 					String size = "";
 					String active = "0";
 					String year = "";
+					String vendor = null;
 
 					// ----- validate and get value -----
+					// --------------------------------------------------
 					if (cellTypeId == null) {
-						throw new B2BException("product_type_id is required");
-					} else if (cellTypeId.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-						typeId = (long) cellTypeId.getNumericCellValue();
+//						throw new B2BException("Row " + (i+1) + " product_type_id is required");
+						continue;
 					} else if (cellTypeId.getCellType() == Cell.CELL_TYPE_STRING) {
-						typeId = Long.parseLong(cellTypeId.getStringCellValue());
+						typeId = new BigDecimal(fmt.formatCellValue(cellTypeId)).longValue();
+					} else if (cellTypeId.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+						typeId = ((Number) cellTypeId.getNumericCellValue()).longValue();
 					} else {
-						throw new B2BException("product_type_id must be Text or Number");
+						throw new B2BException("Row " + (i+1) + " product_type_id must be Number");
 					}
 
+					// --------------------------------------------------
 					if (cellCode == null) {
-						throw new B2BException("product_code is required");
-					} else if (cellCode.getCellType() == Cell.CELL_TYPE_STRING) {
-						code = StringUtil.removeSpecialChar(cellCode.getStringCellValue().trim());
-					} else {
-						throw new B2BException("product_code must be text");
+						throw new B2BException("Row " + (i+1) + " product code is required");
+					} else{
+						code = fmt.formatCellValue(cellCode);
 					}
 
+					// --------------------------------------------------
 					if (cellName == null) {
-						throw new B2BException("product_name is required");
-					} else if (cellName.getCellType() == Cell.CELL_TYPE_STRING) {
-						name = cellName.getStringCellValue().trim();
-					} else {
-						throw new B2BException("product_name must be text");
+						throw new B2BException("Row " + (i+1) + " product name is required");
+					} else{
+						name = fmt.formatCellValue(cellName);
 					}
 
+					// --------------------------------------------------
 					if (cellBuyerGroupId == null) {
-						throw new B2BException("product_buyer_group_id is required");
-					} else if (cellBuyerGroupId.getCellType() == Cell.CELL_TYPE_STRING) {
-						buyerGroupId = StringUtil.removeSpecialChar(cellBuyerGroupId.getStringCellValue().trim());
+						throw new B2BException("Row " + (i+1) + " product buyer group is required");
 					} else {
-						throw new B2BException("product_buyer_group_id must be text");
+						buyerGroupId = fmt.formatCellValue(cellBuyerGroupId);
 					}
 
+					// --------------------------------------------------
 					if (cellModelId == null) {
-						throw new B2BException("product_model_id is required");
-					} else if (cellModelId.getCellType() == Cell.CELL_TYPE_STRING) {
-						modelId = cellModelId.getStringCellValue().trim();
+						throw new B2BException("Row " + (i+1) + " product model id is required");
 					} else {
-						throw new B2BException("product_model_id must be text");
+						modelId = fmt.formatCellValue(cellModelId);
 					}
 
-					if (cellTechnology != null && cellTechnology.getCellType() == Cell.CELL_TYPE_STRING) {
-						technology = StringUtil.removeSpecialChar(cellTechnology.getStringCellValue().trim());
-					} else {
-						throw new B2BException("technology must be text");
+					// --------------------------------------------------
+					if(cellTechnology == null){
+						throw new B2BException("Row " + (i+1) + " product technology is required");
+					}else{
+						technology = fmt.formatCellValue(cellTechnology);
 					}
 
+					// --------------------------------------------------
 					if (cellSize != null) {
-						if (cellSize.getCellType() == Cell.CELL_TYPE_STRING) {
-							size = cellSize.getStringCellValue();
-						} else if (cellSize.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-							size = "" + cellSize.getNumericCellValue();
-						} else {
-							throw new B2BException("size must be text");
-						}
+						size = fmt.formatCellValue(cellSize);
+					}else{
+						size = "Undefined";
 					}
 
+					// --------------------------------------------------
 					if (cellActive != null) {
 						if (cellActive.getStringCellValue().trim().equalsIgnoreCase("yes")) {
 							active = "1";
 						} else {
 							active = "0";
 						}
+					}else{
+						active = "1";
 					}
 
+					// --------------------------------------------------
 					if (cellYear != null) {
-						if (cellYear.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-							year = "" + (int) cellYear.getNumericCellValue();
-						} else if (cellYear.getCellType() == Cell.CELL_TYPE_STRING) {
-							year = cellYear.getStringCellValue().trim();
-						}
-
+						year = fmt.formatCellValue(cellYear);
+					}
+					
+					// --------------------------------------------------
+					if(cellVendor != null){
+						vendor = fmt.formatCellValue(cellVendor);
 					}
 
 					ProductDTO product = new ProductDTO();
 					product.setProductTypeId(typeId);
-					product.setProductCode(code);
-					product.setProductNameEn(name);
-					product.setProductBuyerGroupId(buyerGroupId);
-					product.setProductModelId(modelId);
-					product.setProductTechnologyId(technology);
-					product.setProductLength(size);
+					product.setProductCode(StringUtils.trim(code));
+					product.setProductNameEn(StringUtils.trim(name));
+					product.setProductBuyerGroupId(StringUtils.trim(buyerGroupId));
+					product.setProductModelId(StringUtils.trim(modelId));
+					product.setProductTechnologyId(StringUtils.trim(technology));
+					product.setProductLength(StringUtils.trim(size));
 					product.setIsActive(active);
-					product.setProductYearId(year);
+					product.setProductYearId(StringUtils.trim(year));
+					product.setVendor(StringUtils.trim(vendor));
 
-					log.info("productType = " + product.getProductTypeId() + "\t technology = " + product.getProductTechnologyId() + "\tyear = "
-							+ year);
+					log.info("productType = " + product.getProductTypeId() + "\tproductCode = " + product.getProductCode());
 					result.add(product);
 				}
 			} else {
@@ -284,10 +286,10 @@ public class ExcelUtil {
 
 					// ----- validate and get value -----
 
-					if(StringUtils.isEmpty(productCode)){
+					if (StringUtils.isEmpty(productCode)) {
 						throw new B2BException("Product code is required");
 					}
-					
+
 					if (cellAmount != null && cellAmount.getCellType() == Cell.CELL_TYPE_NUMERIC) {
 						amount = new BigDecimal(cellAmount.getNumericCellValue());
 					}

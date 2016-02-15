@@ -357,7 +357,7 @@ public class Product implements java.io.Serializable {
 		this.productItemGroupId = productItemGroupId;
 	}
 
-	@Column(name = "vendor", length = 32)
+	@Column(name = "vendor", length = 100)
 	public String getVendor() {
 		return this.vendor;
 	}
@@ -393,7 +393,7 @@ public class Product implements java.io.Serializable {
 		this.searchName = searchName;
 	}
 
-	@Column(name = "product_technology_id", length = 16)
+	@Column(name = "product_technology_id", length = 100)
 	public String getProductTechnologyId() {
 		return this.productTechnologyId;
 	}
@@ -429,7 +429,7 @@ public class Product implements java.io.Serializable {
 		this.productWidth = productWidth;
 	}
 
-	@Column(name = "product_length", length = 11)
+	@Column(name = "product_length", length = 100)
 	public String getProductLength() {
 		return this.productLength;
 	}

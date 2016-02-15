@@ -58,4 +58,8 @@ public class ApplicationConfig {
 	public Long getDefaultOrderDetailStatus() {
 		return 0L;
 	}
+	
+	public String getDefaultProductLength(){
+		return "Undefined";
+	}
 }

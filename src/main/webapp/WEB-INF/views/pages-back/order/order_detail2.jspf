@@ -46,8 +46,6 @@
 							<form:input type="hidden" path="orderDetails[${ rowNum.index }].price" />
 							<form:input type="hidden" path="orderDetails[${ rowNum.index }].productUnitId" />
 							<form:input type="hidden" path="orderDetails[${ rowNum.index }].productCurrency" />
-							
-							
 
 
 							<td>${ rowNum.index + 1 }</td>
