@@ -44,27 +44,27 @@ public class B2BFileUtil {
 		}
 
 		File[] listFiles = folder.listFiles(new FilenameFilter() {
-			
+
 			@Override
 			public boolean accept(File dir, String name) {
-				if(name.equalsIgnoreCase(".DS_Store") || name.contains(".db")){
+				if (name.equalsIgnoreCase(".DS_Store") || name.contains(".db")) {
 					return false;
 				}
 				return true;
 			}
 		});
-		if(listFiles != null && listFiles.length > 0){
+		if (listFiles != null && listFiles.length > 0) {
 			for (File file : listFiles) {
 				B2BFile f = new B2BFile();
 				f.setName(file.getName());
 				f.setNameWithPath(file.getAbsolutePath().substring(rootFolder.length()));
 				f.setFullPath(file.getAbsolutePath());
 				f.setFolder(file.isDirectory());
-//				f.setContentType(contentType); // Find content type before set
+				// f.setContentType(contentType); // Find content type before
+				// set
 				files.add(f);
 			}
 		}
-		
 
 		return files;
 	}
@@ -75,30 +75,31 @@ public class B2BFileUtil {
 
 	public static void saveFileToLocalDisk(String root, String folder, MultipartFile uploadFile) throws IOException {
 		File parent = new File(root, folder);
-		if(parent.exists() && parent.isDirectory()){
+		if (!parent.exists() || !parent.isDirectory()) {
+			parent.mkdirs();
+		}
+
+		if (parent.exists() && parent.isDirectory()) {
 			File dest = new File(parent.getAbsolutePath(), uploadFile.getOriginalFilename());
 			FileUtils.writeByteArrayToFile(dest, uploadFile.getBytes(), false);
-		}else{
-			throw new FileNotFoundException("Parent folder not found: " + folder);
 		}
 	}
-	
-	public static int delete(String root, String[] files){
+
+	public static int delete(String root, String[] files) {
 		int deleted = 0;
-		
-		if(files != null && files.length > 0){
+
+		if (files != null && files.length > 0) {
 			for (String filename : files) {
 				File file = new File(root, filename);
-				if(file.exists() && file.delete()){
+				if (file.exists() && file.delete()) {
 					deleted++;
 				}
 			}
 		}
-		
+
 		return deleted;
 	}
-	
-	
+
 	public static HSSFWorkbook createExcelOrder(Long[] orderId, OrderService orderService) {
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		// ----- Create header row sheet "order" -----
@@ -112,9 +113,9 @@ public class B2BFileUtil {
 		rowHeadOrder.createCell(5).setCellValue("Status");
 
 		if (orderId != null && orderId.length > 0) {
-			
+
 			List<SearchOrderDTO> orderList = orderService.findOrderForReport(orderId);
-			log.info("order size: " + (orderList == null? 0 : orderList.size()));
+			log.info("order size: " + (orderList == null ? 0 : orderList.size()));
 			if (orderList != null && orderList.size() > 0) {
 
 				// ----- Create order detail row
@@ -139,7 +140,7 @@ public class B2BFileUtil {
 					orderRow1.createCell(5).setCellValue(StringUtils.isEmpty(order.getOrderStatus()) ? "" : order.getOrderStatus());
 
 				}
-				
+
 				// ----- resize column -----
 				sheetOrder.autoSizeColumn(0);
 				sheetOrder.autoSizeColumn(1);

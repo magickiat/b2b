@@ -32,7 +32,7 @@
 					</h3>
 
 					<img class="product zoomImg"
-						src='<c:url value="/upload/product_image/BIG/${ product.productCode }.jpg" />'
+						src='<c:url value="/upload/product_image/Big/${ product.productCode }.jpg" />'
 						data-zoom-image='<c:url value="${ imageUrl }" />'
 						style="width: 475px;"></img>
 				</div>
@@ -41,7 +41,7 @@
 					<div class="row product-img-big-view">
 						<h3>TECHNOLOGY</h3>
 						<c:url var="jpgImgTechUrl"
-							value="/upload/product_image/Technology/${ product.productModelId }/${ product.productTechnologyId }.jpg" />
+							value="/upload/product_image/Thumbnail/${ product.productModelId }/${ product.productTechnologyId }.jpg" />
 
 						<div>
 							<img class="tech-img" src="${ jpgImgTechUrl }" />

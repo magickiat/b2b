@@ -19,6 +19,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.starboard.b2b.common.B2BConstant;
 import com.starboard.b2b.common.B2BFileType;
 import com.starboard.b2b.dao.ProductDao;
 import com.starboard.b2b.exception.B2BException;
@@ -51,7 +52,7 @@ public class FileServiceImpl implements FileService {
 			throw new B2BException("Not found upload path");
 		}
 
-		rootPath.put(B2BFileType.PRODUCT_IMAGE, uploadPath + File.separator + "product_image" + File.separator + "big" + File.separator);
+		rootPath.put(B2BFileType.PRODUCT_IMAGE, uploadPath + File.separator + B2BConstant.PRODUCT_IMAGE_FOLDER + File.separator + B2BConstant.PRODUCT_IMAGE_BIG + File.separator);
 
 		// ----- create temp folder -----
 		tempFolder = new File(uploadPath, "temp");

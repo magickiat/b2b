@@ -199,25 +199,6 @@ public class ProductServiceImpl implements ProductService {
 		List<SearchProductModelDTO> resultList = result.getResult();
 		log.info("resultList size: " + (resultList == null ? 0 : resultList.size()));
 
-		// Use model name convention to map image
-		// Format: /upload/product_image/Medium/{model_id}.jpg
-		//
-		// for (SearchProductModelDTO dto : resultList) {
-		// // log.info("" + dto.getProductModelName());
-		// if (StringUtils.isNotEmpty(dto.getModelImage())) {
-		// String filename = dto.getModelImage();
-		// if (filename.startsWith("/upload/")) {
-		// filename = filename.substring("/upload/".length());
-		// }
-		//
-		// // When not found, set null to use default image
-		// File img = new File(uploadPath, filename);
-		// if (!img.exists()) {
-		// dto.setModelImage(null);
-		// }
-		// }
-		// }
-
 		// create result page object
 		Page<SearchProductModelDTO> page = new Page<>();
 		page.setCurrent(form.getPage());

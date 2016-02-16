@@ -159,7 +159,7 @@
 								<tr>
 									<td>${ rowBegin + (rowNum.index + 1) }</td>
 									<td>
-										<c:url var="productUrl" value="/upload/product_image/Medium/${ product.productCode }.jpg" />
+										<c:url var="productUrl" value="/upload/product_image/Category/${ product.productCode }.jpg" />
 										<img alt="${ product.productModelName }" src="${ productUrl }" />
 									</td>
 									<td>${ product.productCode }</td>

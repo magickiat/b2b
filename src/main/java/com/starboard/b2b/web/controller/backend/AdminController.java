@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.starboard.b2b.common.B2BConstant;
 import com.starboard.b2b.dto.B2BFile;
 import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.util.B2BFileUtil;
@@ -51,14 +52,14 @@ public class AdminController {
 		// List folder
 		ArrayList<String> files = new ArrayList<>();
 		files.add("BIG");
-		files.add("Medium");
-		files.add("Technology");
+		files.add("Category");
+		files.add("Thumbnail");
 
 		model.addAttribute("folders", files);
 
 		String selectedFolder = folder;
 		if (StringUtils.isNotEmpty(folder)) {
-			if (folder.startsWith("product_image")) {
+			if (folder.startsWith(B2BConstant.PRODUCT_IMAGE_FOLDER)) {
 				selectedFolder = folder.split("/")[1];
 			}
 		}
@@ -69,9 +70,9 @@ public class AdminController {
 
 			String subFolder = "";
 			if (StringUtils.isEmpty(folder)) {
-				subFolder = "product_image" + File.separator + files.get(0);
-			} else if (!folder.startsWith("product_image")) {
-				subFolder = "product_image" + File.separator + folder;
+				subFolder = B2BConstant.PRODUCT_IMAGE_FOLDER + File.separator + files.get(0);
+			} else if (!folder.startsWith(B2BConstant.PRODUCT_IMAGE_FOLDER)) {
+				subFolder = B2BConstant.PRODUCT_IMAGE_FOLDER + File.separator + folder;
 			} else {
 				subFolder = folder;
 			}
@@ -103,7 +104,8 @@ public class AdminController {
 
 		File rootFolder = new File(rootPath, subFolder);
 		if (!rootFolder.isDirectory()) {
-			throw new B2BException("Invalid path");
+			rootFolder.mkdirs();
+//			throw new B2BException("Invalid path");
 		}
 
 		File newFolder = new File(rootFolder.getAbsolutePath(), folderName);
@@ -168,12 +170,13 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/file/delete")
-	@ResponseBody int  deleteFile(@RequestParam("subFolder") String subFolder, @RequestParam("files[]") String[] files, Model model) {
+	@ResponseBody
+	int deleteFile(@RequestParam("subFolder") String subFolder, @RequestParam("files[]") String[] files, Model model) {
 		String rootPath = env.getProperty("upload.path");
 		if (rootPath == null) {
 			throw new B2BException("Not found upload path");
 		}
-		
+
 		int deletedFile = B2BFileUtil.delete(rootPath, files);
 		log.info("Deleted {} files", deletedFile);
 		return deletedFile;

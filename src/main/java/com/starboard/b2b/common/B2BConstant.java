@@ -17,4 +17,10 @@ public interface B2BConstant {
 	long ONE_IMPORT_STATUS = 1;
 	
 	String EMAIL_TEMPLATE_NEW_ORDER_TO_SALE = "31";
+
+	String PRODUCT_IMAGE_FOLDER = "product_image";
+
+	String PRODUCT_IMAGE_BIG = "Big";
+	
+	String PRODUCT_IMAGE_THUMBNAIL = "Thumbnail";
 }
