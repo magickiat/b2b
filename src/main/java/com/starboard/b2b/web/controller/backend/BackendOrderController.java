@@ -21,7 +21,6 @@ import com.starboard.b2b.dto.OrderStatusDTO;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
-import com.starboard.b2b.dto.search.SearchOrderDetailReportResult;
 import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.service.EmailService;
 import com.starboard.b2b.service.OrderService;
@@ -37,8 +36,6 @@ import com.starboard.b2b.web.form.order.SearchOrderForm;
 public class BackendOrderController {
 
 	private static final Logger log = LoggerFactory.getLogger(BackendOrderController.class);
-
-	private static final String FROM_SEARCH_PAGE = "search";
 
 	@Autowired
 	private ProductService productService;
@@ -93,8 +90,6 @@ public class BackendOrderController {
 
 		if (orderId != null) {
 			orderReport = orderService.findOrderForReport(orderId);
-		} else {
-			// orderReport = order;
 		}
 
 		if (orderReport == null) {
@@ -116,35 +111,46 @@ public class BackendOrderController {
 			form.setEditMode(false);
 		}
 
-		form.setPaymentMethodList(orderService.findAllPaymentMethod());
-		form.setPaymentTermList(orderService.findAllPaymentTerm());
-		form.setProductPriceGroupList(productService.listProductPriceGroup());
-
-		// ---- find order address -----
-		final List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(orderReport.getOrderCode());
-		for (OrdAddressDTO ordAddress : ordAddresses) {
-			log.info("received order address {} ", ordAddress);
-			if (ordAddress.getType().equals(AddressConstant.ORDER_INVOICE_TO)) {
-				orderReport.setInvoiceToAddress(ordAddress);
-			}
-			if (ordAddress.getType().equals(AddressConstant.ORDER_DISPATCH_TO)) {
-				orderReport.setDispatchToAddress(ordAddress);
-			}
-		}
-
 		// ----- find order detail -----
 		List<SearchOrderDetailDTO> dbOrderDetails = orderService.searchOrderDetail(orderReport.getOrderCode());
 
 		if (dbOrderDetails != null && !dbOrderDetails.isEmpty()) {
-//			orderReport.setOrderDetails(dbOrderDetails);
+			// orderReport.setOrderDetails(dbOrderDetails);
 			form.setOrderDetails(dbOrderDetails);
 		}
 
-		// ----- Find selling order -----
-		orderReport.setSalesOrders(orderService.listSO(orderReport.getOrderId()));
+		setOrderFormValue(form);
 
 		model.addAttribute("approveForm", form);
 		return "pages-back/order/view";
+	}
+
+	private void setOrderFormValue(OrderDecisionForm form) {
+
+		form.setPaymentMethodList(orderService.findAllPaymentMethod());
+		form.setPaymentTermList(orderService.findAllPaymentTerm());
+		form.setProductPriceGroupList(productService.listProductPriceGroup());
+
+		// ----- find order -----
+		if (form.getOrderReport() == null) {
+			form.setOrderReport(orderService.findOrderForReport(form.getOrderId()));
+		}
+
+		// ---- find order address -----
+		final List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(form.getOrderReport().getOrderCode());
+		for (OrdAddressDTO ordAddress : ordAddresses) {
+			log.info("received order address {} ", ordAddress);
+			if (ordAddress.getType().equals(AddressConstant.ORDER_INVOICE_TO)) {
+				form.getOrderReport().setInvoiceToAddress(ordAddress);
+			}
+			if (ordAddress.getType().equals(AddressConstant.ORDER_DISPATCH_TO)) {
+				form.getOrderReport().setDispatchToAddress(ordAddress);
+			}
+		}
+
+		// ----- Find selling order -----
+		form.getOrderReport().setSalesOrders(orderService.listSO(form.getOrderReport().getOrderId()));
+
 	}
 
 	@RequestMapping(value = "/approve", method = RequestMethod.POST)
@@ -159,10 +165,6 @@ public class BackendOrderController {
 
 		// ----- approve -----
 		orderService.approve(order);
-		// TODO update order_detail from session when split function ready!!!
-		// 1. delete old order_detail by order_id
-		// 2. insert new order_detail
-
 		roSyncService.syncRoFromB2BtoAX(orderId);
 
 		// ----- send mail order -----
@@ -208,10 +210,19 @@ public class BackendOrderController {
 		log.info("orderDtails: " + form.getOrderDetails());
 		if (form.isEditMode()) {
 			orderService.updateOrder(form);
-		}else{
+		} else {
 			throw new B2BException("Not save because it not edit mode");
 		}
-		
+
 		return viewOrder(form.getOrderId(), null, model);
+	}
+
+	@RequestMapping(value = "/change-price-group", method = RequestMethod.POST)
+	String changePriceGroup(@ModelAttribute("approveForm") OrderDecisionForm form, Model model) {
+		log.info("Change price group");
+		log.info("Form: " + form);
+		setOrderFormValue(form);
+		model.addAttribute("approveForm", form);
+		return "pages-back/order/view";
 	}
 }
