@@ -117,12 +117,12 @@ public class ExcelUtil {
 					Cell cellCode = row.getCell(1);
 					Cell cellName = row.getCell(2);
 					Cell cellBuyerGroupId = row.getCell(3);
-					Cell cellModelId = row.getCell(4);
+					Cell cellModelId = row.getCell(9);
 					Cell cellTechnology = row.getCell(5);
 					Cell cellSize = row.getCell(6);
 					Cell cellActive = row.getCell(7);
-					Cell cellYear = row.getCell(8);
-					Cell cellVendor = row.getCell(9);
+					Cell cellYear = row.getCell(4); //20160216 - Model = Year
+					Cell cellVendor = row.getCell(8);
 
 					Long typeId = null;
 					String code = "";
