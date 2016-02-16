@@ -47,10 +47,18 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<td>Order Date</td>
-								<td>Expected Shipping Date</td>
-								<td>Payment Term</td>
-								<td>Payment Method</td>
+								<td>
+									<b>Order Date</b>
+								</td>
+								<td>
+									<b>Expected Shipping Date</b>
+								</td>
+								<td>
+									<b>Payment Term</b>
+								</td>
+								<td>
+									<b>Payment Method</b>
+								</td>
 								<td></td>
 							</tr>
 						</thead>
@@ -59,7 +67,7 @@
 								<td>
 									<fmt:formatDate pattern="dd-MM-yyyy" value="${approveForm.orderReport.orderDate}" />
 								</td>
-								<td></td>
+								<td>${ approveForm.orderReport.expectShipmentDate }</td>
 								<td>
 									<form:select path="paymentTermId" cssClass="form-control">
 										<form:options items="${ approveForm.paymentTermList }" itemLabel="paymentTermName"
@@ -114,7 +122,8 @@
 
 				<%-- Save, Cancel --%>
 				<div class="col-sm-6 bg_color text-right">
-					<input type="button" id="save" name="save" class="btn btn-default" value="Save" onclick="saveOrder()" />
+					<input type="button" id="save" name="save" class="btn btn-default" value="Save"
+						onclick="saveOrder()" />
 				</div>
 				<div class="col-sm-6 bg_color">
 					<input type="reset" id="cancel" name="cancel" class="btn btn-default" value="Cancel" />
