@@ -227,8 +227,7 @@ public class OrderServiceImpl implements OrderService {
 
 		// For generate report
 		OrderDTO dto = new OrderDTO();
-		dto.setOrderId(orderId);
-		dto.setOrderCode(orderCode);
+		BeanUtils.copyProperties(order, dto);
 		return dto;
 	}
 
@@ -456,12 +455,16 @@ public class OrderServiceImpl implements OrderService {
 		log.info("Updated order " + order.getOrderCode());
 
 		// ----- Order Details -----
+		
+		// clear order detail
+		int deleted = orderDetailDao.deleteByOrderId(order.getOrderId());
+		log.info("Delete order details " + deleted + " items.");
+		
 		List<SearchOrderDetailDTO> orderDetails = form.getOrderDetails();
+
 		User user = UserUtil.getCurrentUser();
 		if (orderDetails != null && !orderDetails.isEmpty()) {
-			int deleted = orderDetailDao.deleteByOrderId(order.getOrderId());
-			log.info("Delete order details " + deleted + " items.");
-
+			
 			for (SearchOrderDetailDTO dto : orderDetails) {
 				ProductPriceDTO productPrice = null;
 				ProductDTO product = productService.findById(dto.getProductId());

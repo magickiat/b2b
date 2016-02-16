@@ -586,21 +586,25 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional(readOnly = true)
 	public void findOrderPriceList(List<SearchOrderDetailDTO> orderDetails) {
-		for (SearchOrderDetailDTO result : orderDetails) {
-			Product product = productDao.findById(result.getProductId());
-			if(product == null){
-				continue;
+		if(orderDetails != null && !orderDetails.isEmpty()){
+			for (SearchOrderDetailDTO result : orderDetails) {
+				Product product = productDao.findById(result.getProductId());
+				if(product == null){
+					continue;
+				}
+				
+				ProductPriceDTO price = productPriceDao.findProductPriceWithPriceGroup(result.getProductCode(), result.getProductBuyerGroupId(), product.getProductPreintro());
+				log.info("prict: " + price);
+				if (price != null) {
+					result.setUnitPrice(price.getAmount());
+					result.setProductCurrency(price.getProductCurrency());
+					result.setProductUnitId(price.getProductUnitId());
+				} else {
+					result.setUnitPrice(null);
+				}
 			}
-			
-			ProductPriceDTO price = productPriceDao.findProductPriceWithPriceGroup(result.getProductCode(), result.getProductBuyerGroupId(), product.getProductPreintro());
-			log.info("prict: " + price);
-			if (price != null) {
-				result.setUnitPrice(price.getAmount());
-				result.setProductCurrency(price.getProductCurrency());
-				result.setProductUnitId(price.getProductUnitId());
-			} else {
-				result.setUnitPrice(null);
-			}
+		}else{
+			log.warn("orderDetails is empty!");
 		}
 	}
 

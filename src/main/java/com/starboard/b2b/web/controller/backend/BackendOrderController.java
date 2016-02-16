@@ -1,7 +1,9 @@
 package com.starboard.b2b.web.controller.backend;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -221,12 +223,21 @@ public class BackendOrderController {
 	String changePriceGroup(@ModelAttribute("approveForm") OrderDecisionForm form, Model model) {
 		log.info("Change price group");
 		log.info("Form: " + form);
-		
+
 		// ----- set require list form -----
 		setOrderFormValue(form);
-		
+
 		// ----- find new price group -----
-		if(form.getOrderDetails() != null && !form.getOrderDetails().isEmpty()){
+		if (form.getOrderDetails() != null && !form.getOrderDetails().isEmpty()) {
+			List<SearchOrderDetailDTO> orderDetails = new ArrayList<>();
+
+			for (SearchOrderDetailDTO dto : form.getOrderDetails()) {
+				if (StringUtils.isNotEmpty(dto.getProductCode())) {
+					orderDetails.add(dto);
+				}
+			}
+
+			form.setOrderDetails(orderDetails);
 			productService.findOrderPriceList(form.getOrderDetails());
 		}
 		return "pages-back/order/view";
