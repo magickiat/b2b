@@ -221,8 +221,14 @@ public class BackendOrderController {
 	String changePriceGroup(@ModelAttribute("approveForm") OrderDecisionForm form, Model model) {
 		log.info("Change price group");
 		log.info("Form: " + form);
+		
+		// ----- set require list form -----
 		setOrderFormValue(form);
-		model.addAttribute("approveForm", form);
+		
+		// ----- find new price group -----
+		if(form.getOrderDetails() != null && !form.getOrderDetails().isEmpty()){
+			productService.findOrderPriceList(form.getOrderDetails());
+		}
 		return "pages-back/order/view";
 	}
 }

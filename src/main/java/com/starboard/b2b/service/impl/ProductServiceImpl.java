@@ -28,7 +28,6 @@ import com.starboard.b2b.dao.ProductPriceGroupDao;
 import com.starboard.b2b.dao.ProductTechnologyDao;
 import com.starboard.b2b.dao.ProductTypeDao;
 import com.starboard.b2b.dao.ProductYearDao;
-import com.starboard.b2b.dto.CustPriceGroupDTO;
 import com.starboard.b2b.dto.ProductBuyerGroupDTO;
 import com.starboard.b2b.dto.ProductCategoryDTO;
 import com.starboard.b2b.dto.ProductDTO;
@@ -39,10 +38,10 @@ import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.ProductTechnologyDTO;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.ProductYearDTO;
+import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchResult;
-import com.starboard.b2b.model.CustPriceGroup;
 import com.starboard.b2b.model.Product;
 import com.starboard.b2b.model.ProductBuyerGroup;
 import com.starboard.b2b.model.ProductCategory;
@@ -582,6 +581,27 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional
 	public boolean delete(long productId) {
 		return productDao.delete(productId);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public void findOrderPriceList(List<SearchOrderDetailDTO> orderDetails) {
+		for (SearchOrderDetailDTO result : orderDetails) {
+			Product product = productDao.findById(result.getProductId());
+			if(product == null){
+				continue;
+			}
+			
+			ProductPriceDTO price = productPriceDao.findProductPriceWithPriceGroup(result.getProductCode(), result.getProductBuyerGroupId(), product.getProductPreintro());
+			log.info("prict: " + price);
+			if (price != null) {
+				result.setUnitPrice(price.getAmount());
+				result.setProductCurrency(price.getProductCurrency());
+				result.setProductUnitId(price.getProductUnitId());
+			} else {
+				result.setUnitPrice(null);
+			}
+		}
 	}
 
 
