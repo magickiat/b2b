@@ -45,6 +45,7 @@ import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.Product;
 import com.starboard.b2b.model.ProductBuyerGroup;
 import com.starboard.b2b.model.ProductCategory;
+import com.starboard.b2b.model.ProductModel;
 import com.starboard.b2b.model.ProductPrice;
 import com.starboard.b2b.model.ProductPriceId;
 import com.starboard.b2b.model.ProductTechnology;
@@ -54,6 +55,7 @@ import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.ProductUtils;
+import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.product.SearchProductForm;
 
 @Service("productService")
@@ -237,8 +239,14 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<ProductSearchResult> findProductModel(String modelId) {
-		return productDao.findProductModel(modelId);
+	public ProductModelDTO findProductModel(String modelId) {
+		ProductModelDTO dto = null;
+		ProductModel productModel = productModelDao.findProductModel(modelId);
+		if(productModel != null){
+			dto = new ProductModelDTO();
+			BeanUtils.copyProperties(productModel, dto);
+		}
+		return dto;
 	}
 
 	@Override
@@ -567,14 +575,15 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional(readOnly = true)
 	public void findOrderPriceList(List<SearchOrderDetailDTO> orderDetails) {
-		if(orderDetails != null && !orderDetails.isEmpty()){
+		if (orderDetails != null && !orderDetails.isEmpty()) {
 			for (SearchOrderDetailDTO result : orderDetails) {
 				Product product = productDao.findById(result.getProductId());
-				if(product == null){
+				if (product == null) {
 					continue;
 				}
-				
-				ProductPriceDTO price = productPriceDao.findProductPriceWithPriceGroup(result.getProductCode(), result.getProductBuyerGroupId(), product.getProductPreintro());
+
+				ProductPriceDTO price = productPriceDao.findProductPriceWithPriceGroup(result.getProductCode(), result.getProductBuyerGroupId(),
+						product.getProductPreintro());
 				log.info("prict: " + price);
 				if (price != null) {
 					result.setUnitPrice(price.getAmount());
@@ -584,10 +593,16 @@ public class ProductServiceImpl implements ProductService {
 					result.setUnitPrice(null);
 				}
 			}
-		}else{
+		} else {
 			log.warn("orderDetails is empty!");
 		}
 	}
 
+	@Override
+	@Transactional
+	public void createNewModel(String modelId) {
+		productModelDao.save(new ProductModel(modelId, modelId, "Created when not found model id", B2BConstant.B2B_SYSTEM_NAME, null,
+				DateTimeUtil.getCurrentDate(), null, "default", B2BConstant.B2B_SYSTEM_NAME, B2BConstant.B2B_SYSTEM_NAME));
+	}
 
 }

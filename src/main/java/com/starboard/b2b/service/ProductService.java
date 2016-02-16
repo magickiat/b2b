@@ -44,7 +44,7 @@ public interface ProductService {
 
 	List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection);
 
-	List<ProductSearchResult> findProductModel(String modelId);
+	ProductModelDTO findProductModel(String modelId);
 
 	HashMap<String, ProductSearchResult> findProductLength(List<ProductSearchResult> productListNoWithnose);
 
@@ -77,5 +77,7 @@ public interface ProductService {
 	boolean delete(long productId);
 
 	void findOrderPriceList(List<SearchOrderDetailDTO> orderDetails);
+
+	void createNewModel(String modelId);
 
 }

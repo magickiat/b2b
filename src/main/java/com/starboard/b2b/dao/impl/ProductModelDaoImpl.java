@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.starboard.b2b.dao.ProductModelDao;
 import com.starboard.b2b.dto.ProductModelDTO;
+import com.starboard.b2b.model.ProductModel;
 
 @Repository("productModelDao")
 public class ProductModelDaoImpl implements ProductModelDao {
@@ -23,5 +24,15 @@ public class ProductModelDaoImpl implements ProductModelDao {
 				" select new com.starboard.b2b.dto.ProductModelDTO(p.productModelId,p.productModelName,p.description,p.image,p.headerText1,p.headerText2) ");
 		sb.append(" from ProductModel p order by p.productModelId ");
 		return sf.getCurrentSession().createQuery(sb.toString()).list();
+	}
+
+	@Override
+	public void save(ProductModel productModel) {
+		sf.getCurrentSession().save(productModel);
+	}
+
+	@Override
+	public ProductModel findProductModel(String modelId) {
+		return (ProductModel) sf.getCurrentSession().get(ProductModel.class, modelId);
 	}
 }

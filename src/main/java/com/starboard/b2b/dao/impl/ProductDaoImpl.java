@@ -196,7 +196,6 @@ public class ProductDaoImpl implements ProductDao {
 		return (Product) sf.getCurrentSession().get(Product.class, productId);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Product findByProductCode(String productCode) {
 		return (Product) sf.getCurrentSession().createCriteria(Product.class).add(Restrictions.eq("productCode", productCode)).uniqueResult();

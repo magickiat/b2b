@@ -6,12 +6,9 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -92,7 +89,7 @@ public class BackendProductController {
 			throw new B2BException("excel product file are not present in this request");
 		}
 
-		List<ProductDTO> uploadProducts = ExcelUtil.parseProduct(file.getInputStream());
+		List<ProductDTO> uploadProducts = ExcelUtil.parseProduct(productService, file.getInputStream());
 
 		if (uploadProducts == null || uploadProducts.isEmpty()) {
 			throw new B2BException("Not found a product in this upload file");

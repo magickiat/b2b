@@ -29,9 +29,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.starboard.b2b.bean.ExcelOrderBean;
+import com.starboard.b2b.common.B2BConstant;
 import com.starboard.b2b.dto.ProductDTO;
+import com.starboard.b2b.dto.ProductModelDTO;
 import com.starboard.b2b.dto.ProductPriceDTO;
 import com.starboard.b2b.exception.B2BException;
+import com.starboard.b2b.service.ProductService;
 
 /**
  *
@@ -84,7 +87,7 @@ public class ExcelUtil {
 		return list;
 	}
 
-	public static List<ProductDTO> parseProduct(InputStream inputStream) throws Exception {
+	public static List<ProductDTO> parseProduct(ProductService productService, InputStream inputStream) throws Exception {
 		ArrayList<ProductDTO> result = null;
 		XSSFWorkbook workbook = null;
 		XSSFSheet sheet = null;
@@ -117,13 +120,13 @@ public class ExcelUtil {
 					Cell cellCode = row.getCell(1);
 					Cell cellName = row.getCell(2);
 					Cell cellBuyerGroupId = row.getCell(3);
-					Cell cellModelId = row.getCell(9);
+					Cell cellYear = row.getCell(4); //20160216 - Model = Year
 					Cell cellTechnology = row.getCell(5);
 					Cell cellSize = row.getCell(6);
 					Cell cellActive = row.getCell(7);
-					Cell cellYear = row.getCell(4); //20160216 - Model = Year
 					Cell cellVendor = row.getCell(8);
-
+					Cell cellModelId = row.getCell(9); //20160216 - Category = Model
+					
 					Long typeId = null;
 					String code = "";
 					String name = "";
@@ -170,10 +173,10 @@ public class ExcelUtil {
 					}
 
 					// --------------------------------------------------
-					if (cellModelId == null) {
-						throw new B2BException("Row " + (i+1) + " product model id is required");
-					} else {
+					if (cellModelId != null) {
 						modelId = fmt.formatCellValue(cellModelId);
+					}else{
+						modelId = B2BConstant.UNDEFINED;
 					}
 
 					// --------------------------------------------------
@@ -187,15 +190,14 @@ public class ExcelUtil {
 					if (cellSize != null) {
 						size = fmt.formatCellValue(cellSize);
 					}else{
-						size = "Undefined";
+						size = B2BConstant.UNDEFINED;
 					}
 
 					// --------------------------------------------------
 					if (cellActive != null) {
-						if (cellActive.getStringCellValue().trim().equalsIgnoreCase("yes")) {
+//						active = "" + cellActive.getNumericCellValue();
+						if(cellActive.getNumericCellValue() == 1 || cellActive.getNumericCellValue() == 3){
 							active = "1";
-						} else {
-							active = "0";
 						}
 					}else{
 						active = "1";
@@ -209,6 +211,13 @@ public class ExcelUtil {
 					// --------------------------------------------------
 					if(cellVendor != null){
 						vendor = fmt.formatCellValue(cellVendor);
+					}
+					
+					
+					// ----- 2016/02/16 ----- insert product_model when not found
+					ProductModelDTO productModel = productService.findProductModel(modelId);
+					if(productModel == null){
+						productService.createNewModel(modelId);
 					}
 
 					ProductDTO product = new ProductDTO();

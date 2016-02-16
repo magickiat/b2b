@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -53,7 +54,11 @@ public class B2BFileUtil {
 				return true;
 			}
 		});
+		
 		if (listFiles != null && listFiles.length > 0) {
+			// ----- Sort -----
+			Arrays.sort(listFiles);
+			
 			for (File file : listFiles) {
 				B2BFile f = new B2BFile();
 				f.setName(file.getName());
