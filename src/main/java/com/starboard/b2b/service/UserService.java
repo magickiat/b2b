@@ -3,9 +3,12 @@ package com.starboard.b2b.service;
 import java.util.List;
 
 import com.starboard.b2b.common.Pagination;
+import com.starboard.b2b.dto.UserDTO;
+import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.web.form.user.UserForm;
 import com.starboard.b2b.web.form.user.UserRegisterForm;
+import com.starboard.b2b.web.form.user.UserSearchForm;
 
 public interface UserService {
 
@@ -22,4 +25,6 @@ public interface UserService {
 	boolean update(UserForm userForm);
 
 	boolean isExistUsername(String username);
+
+	SearchResult<UserDTO> search(UserSearchForm userSearchForm);
 }

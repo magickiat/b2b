@@ -2,6 +2,7 @@ package com.starboard.b2b.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
@@ -11,9 +12,15 @@ import org.springframework.stereotype.Repository;
 
 import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.dao.UserDao;
+import com.starboard.b2b.dto.UserDTO;
+import com.starboard.b2b.dto.search.SearchProductModelDTO;
+import com.starboard.b2b.dto.search.SearchRequest;
+import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.Cust;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.util.DateTimeUtil;
+import com.starboard.b2b.web.form.product.SearchProductForm;
+import com.starboard.b2b.web.form.user.UserSearchForm;
 
 @Repository("userDao")
 public class UserDaoImpl implements UserDao {
@@ -44,7 +51,7 @@ public class UserDaoImpl implements UserDao {
 	public User findByUsername(String username) {
 		Session session = sessionFactory.getCurrentSession();
 		User user = (User) sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("username", username)).uniqueResult();
-		if(user != null){
+		if (user != null) {
 			user.setLastActive(DateTimeUtil.getCurrentDate());
 			session.update(user);
 			session.flush();
@@ -79,6 +86,24 @@ public class UserDaoImpl implements UserDao {
 		Number result = (Number) sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq(identifierKey, identifierValue))
 				.setProjection(Projections.rowCount()).uniqueResult();
 		return result.longValue() > 0;
+	}
+
+	@Override
+	public SearchResult<UserDTO> search(SearchRequest<UserSearchForm> req) {
+		String sql = "from User u";
+		String sqlTotal = "select count(i.id) from User u";
+
+		Query queryTotal = sessionFactory.getCurrentSession().createQuery(sqlTotal);
+		Query query = sessionFactory.getCurrentSession().createQuery(sql);
+
+		// query
+		Object total = queryTotal.uniqueResult();
+		List list = query.setFirstResult(req.getFirstResult()).setMaxResults(req.getPageSize()).list();
+
+		SearchResult<UserDTO> result = new SearchResult<>();
+		result.setTotal(total == null ? 0 : (long) total);
+		result.setResult(list);
+		return result;
 	}
 
 }

@@ -16,16 +16,20 @@ import org.springframework.util.StringUtils;
 import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.dao.CustDao;
 import com.starboard.b2b.dao.UserDao;
+import com.starboard.b2b.dto.UserDTO;
+import com.starboard.b2b.dto.search.SearchRequest;
+import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.Cust;
 import com.starboard.b2b.model.Role;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.security.MD5;
-import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.UserService;
+import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.user.UserForm;
 import com.starboard.b2b.web.form.user.UserRegisterForm;
+import com.starboard.b2b.web.form.user.UserSearchForm;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -33,14 +37,16 @@ public class UserServiceImpl implements UserService {
 	private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
 	@Autowired
+	private ApplicationConfig applicationConfig;
+
+	@Autowired
 	private UserDao userDao;
-	
+
 	@Autowired
 	private CustDao custDao;
 
 	@Autowired
 	private PasswordEncoder encoder;
-	
 
 	@Transactional(readOnly = true)
 	public User findUserById(String id) {
@@ -96,7 +102,7 @@ public class UserServiceImpl implements UserService {
 	public boolean update(UserForm userForm) {
 		boolean isSuccess = false;
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if(!StringUtils.isEmpty(userForm.getPassword())){
+		if (!StringUtils.isEmpty(userForm.getPassword())) {
 			user.setPassword(new MD5().encode(userForm.getPassword()));
 		}
 		user.setEmail(userForm.getEmail());
@@ -107,6 +113,14 @@ public class UserServiceImpl implements UserService {
 	@Transactional(readOnly = true)
 	public boolean isExistUsername(String username) {
 		return userDao.exist("username", username);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public SearchResult<UserDTO> search(UserSearchForm form) {
+		SearchRequest<UserSearchForm> req = new SearchRequest<>(form.getPage(), applicationConfig.getPageSize());
+		req.setCondition(form);
+		return userDao.search(req);
 	}
 
 }
