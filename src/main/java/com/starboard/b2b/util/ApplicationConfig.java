@@ -7,24 +7,24 @@ import org.springframework.stereotype.Component;
 @PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
 public class ApplicationConfig {
 
-	//TODO with replace properties file
-	
-//	@Value("${page.size}")
+	// TODO with replace properties file
+
+	// @Value("${page.size}")
 	private String pageSize;
 
-//	@Value("${order.status.new}")
+	// @Value("${order.status.new}")
 	private String orderStatusNew;
 
-//	@Value("${default.new.order.payment.term.id}")
+	// @Value("${default.new.order.payment.term.id}")
 	private String defaultPaymentTermId;
 
-//	@Value("${default.product.currency}")
+	// @Value("${default.product.currency}")
 	private String defaultProductCurrency;
 
-//	@Value("${default.product.unit}")
+	// @Value("${default.product.unit}")
 	private String defaultProductUnit;
 
-//	@Value("${enabled.send.mail}")
+	// @Value("${enabled.send.mail}")
 	private String enableSendMail;
 
 	public int getPageSize() {
@@ -32,7 +32,7 @@ public class ApplicationConfig {
 	}
 
 	public boolean getEnabledSendMail() {
-		return false;
+		return true;
 	}
 
 	public String getOrderStatusNew() {
@@ -50,16 +50,30 @@ public class ApplicationConfig {
 	public String getDefaultProductUnit() {
 		return "PCS";
 	}
-	
-	public String getDefaultProductBuyerGroup(){
+
+	public String getDefaultProductBuyerGroup() {
 		return "GROUP1";
 	}
 
 	public Long getDefaultOrderDetailStatus() {
 		return 0L;
 	}
-	
-	public String getDefaultProductLength(){
+
+	public String getDefaultProductLength() {
 		return "Undefined";
+	}
+
+	public String[] getMailApprover() {
+		return new String[] { "magicalcyber@gmail.com" };
+	}
+
+	public String[] getMailBCCApprover() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String[] getMailCCApprover() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

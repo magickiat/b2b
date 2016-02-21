@@ -169,19 +169,19 @@ public class BackendOrderController {
 		orderService.approve(order);
 		roSyncService.syncRoFromB2BtoAX(orderId);
 
-		// ----- send mail order -----
-		try {
-			emailService.sendEmailOrder(order);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-		}
-
-		// ----- send mail to staff -----
-		try {
-			emailService.sendEmailInternal(order);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-		}
+//		// ----- send mail order -----
+//		try {
+//			emailService.sendEmailOrder(order);
+//		} catch (Exception e) {
+//			log.error(e.getMessage(), e);
+//		}
+//
+//		// ----- send mail to staff -----
+//		try {
+//			emailService.sendEmailInternal(order);
+//		} catch (Exception e) {
+//			log.error(e.getMessage(), e);
+//		}
 
 		return viewOrder(orderId, null, model);
 	}
@@ -196,12 +196,12 @@ public class BackendOrderController {
 		// ----- reject -----
 		orderService.reject(order);
 
-		// ----- send mail -----
-		try {
-			emailService.sendEmailOrder(order);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-		}
+//		// ----- send mail -----
+//		try {
+//			emailService.sendEmailOrder(order);
+//		} catch (Exception e) {
+//			log.error(e.getMessage(), e);
+//		}
 
 		return viewOrder(form.getOrderReport().getOrderId(), null, model);
 	}

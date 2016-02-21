@@ -544,7 +544,7 @@ public class FrontOrderController {
 		
 		// ----- send mail -----
 		try {
-			emailService.sendEmailOrder(order);
+			emailService.notifyWaitForApproveOrder(order);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
