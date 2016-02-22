@@ -11,6 +11,7 @@ import javax.mail.internet.MimeMessage;
 import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.common.EmailTemplateConfig;
+import com.starboard.b2b.common.OrderStatusConfig;
 import com.starboard.b2b.dao.BrandGroupDao;
+import com.starboard.b2b.dao.EmailStaffDao;
 import com.starboard.b2b.dao.EmailTemplateDao;
 import com.starboard.b2b.dao.OrderDetailDao;
 import com.starboard.b2b.dao.ProductDao;
@@ -64,9 +67,13 @@ public class EmailServiceImpl implements EmailService {
 
 	@Autowired
 	private BrandGroupDao brandGroupDao;
+	
+	@Autowired
+	private EmailStaffDao emailStaffDao;
 
 	@Autowired
 	private ReportService reportService;
+	
 
 	private void sendEmail(String from, String[] toAddresses, String[] ccAddresses, String[] bccAddresses, String subject, String content,
 			String[] attachments) throws AddressException, MessagingException, IOException {
@@ -95,6 +102,7 @@ public class EmailServiceImpl implements EmailService {
 		boolean enableSendMail = applicationConfig.getEnabledSendMail();
 		// Is disabled send email
 		if (!enableSendMail) {
+			log.info("");
 			return;
 		}
 
@@ -129,26 +137,32 @@ public class EmailServiceImpl implements EmailService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public void sendEmailOrderToCustomer(OrderDTO order) throws Exception {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void sendEmailOrderToStaff(OrderDTO order) throws Exception {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	@Transactional(readOnly = true)
-	public void notifyWaitForApproveOrder(OrderDTO order) throws Exception {
-		log.info("notifyWaitForApproveOrder");
-		EmailTemplate template = emailTemplateDao.getTemplate(EmailTemplateConfig.WAIT_FOR_APPROVE);
+	public void sendEmailOrderToStaff(OrderDTO order, String host) throws Exception {
+		log.info("sendEmailOrderToStaff");
+		
+		// Notification when new order
+		String emailTemplateId = order.getOrderStatus();
+		if(order.getOrderStatus() == OrderStatusConfig.WAIT_FOR_APPROVE){
+			emailTemplateId = EmailTemplateConfig.TEMPLATE_NEW_ORDER_FOR_SALE;
+		}
+		
+		EmailTemplate template = emailTemplateDao.getTemplate(emailTemplateId);
 		if (template == null) {
-			throw new B2BException("Not found email template: " + EmailTemplateConfig.WAIT_FOR_APPROVE);
+			throw new B2BException("Not found email template: " + emailTemplateId);
 		}
 
+		// ----- If order status = wait_for_approve, set url for approve ----
+		String url = host + "/backend/order/view?orderId="+ order.getOrderId();
+		
+		
 		// ----- gen pdf report -----
 		byte[] report = reportService.generateRoPDF(order.getOrderId());
 
@@ -158,13 +172,17 @@ public class EmailServiceImpl implements EmailService {
 
 		VelocityContext contextMsg = new VelocityContext();
 		contextMsg.put("order", order);
+		contextMsg.put("serverPath", url);
 
 		VelocityEngine ve = new VelocityEngine();
+		ve.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS, "org.apache.velocity.runtime.log.Log4JLogChute" );
+		ve.setProperty("runtime.log.logsystem.log4j.logger","velocity");
 		ve.init();
+		
 		ve.evaluate(contextMsg, outputSubject, "emailMessage", template.getSubject());
 		ve.evaluate(contextMsg, outputBody, "emailMessage", template.getBody());
 
-		String from = env.getProperty("email.username");
+		String from = applicationConfig.getMailFrom(); // Overrided to account loged in at runtime
 		String[] to = applicationConfig.getMailApprover();
 		String[] cc = applicationConfig.getMailCCApprover();
 		String[] bcc = applicationConfig.getMailBCCApprover();
@@ -173,8 +191,8 @@ public class EmailServiceImpl implements EmailService {
 		String attachFilename = order.getOrderCode() + ".pdf";
 
 		sendEmail(from, to, cc, bcc, subject, body, report, attachFilename);
-
 	}
+
 
 	private Properties getMailProperties() {
 		Properties props = new Properties();

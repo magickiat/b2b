@@ -62,7 +62,7 @@ public class ProductPrice implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "amount", precision = 20, scale = 10)
+	@Column(name = "amount", precision = 20, scale = 2)
 	public BigDecimal getAmount() {
 		return this.amount;
 	}
@@ -118,7 +118,7 @@ public class ProductPrice implements java.io.Serializable {
 		this.timeUpdate = timeUpdate;
 	}
 
-	@Column(name = "msre_price", nullable = false, precision = 20, scale = 10)
+	@Column(name = "msre_price", precision = 20, scale = 2)
 	public BigDecimal getMsrePrice() {
 		return this.msrePrice;
 	}

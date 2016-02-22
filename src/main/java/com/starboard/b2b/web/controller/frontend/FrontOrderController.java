@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
@@ -78,7 +79,7 @@ public class FrontOrderController {
 
 	@Autowired
 	private OrderService orderService;
-	
+
 	@Autowired
 	private EmailService emailService;
 
@@ -108,8 +109,8 @@ public class FrontOrderController {
 	@RequestMapping(value = "step2/index", method = RequestMethod.GET)
 	String step2ChooseAddress(@RequestParam("brand_id") Long brandId, Model model) {
 		log.info("Brand id: " + brandId);
-		
-		if(brandId == null){
+
+		if (brandId == null) {
 			return step1(model);
 		}
 
@@ -531,7 +532,7 @@ public class FrontOrderController {
 	@RequestMapping(value = "step4/submit", method = RequestMethod.POST)
 	String submitOrder(@RequestParam Long invoiceTo, @RequestParam Long dispatchTo, @RequestParam String shippingType,
 			@RequestParam String customerRemark, @RequestParam String paymentMethod, @ModelAttribute("brandId") Long brandId,
-			@ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model, SessionStatus session) {
+			@ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model, SessionStatus session, HttpServletRequest request) {
 		log.info("----- step4/submit POST");
 		log.info("----- dispatchTo = " + dispatchTo);
 		log.info("----- shippingType = " + shippingType);
@@ -541,10 +542,21 @@ public class FrontOrderController {
 
 		OrderDTO order = orderService.newOrder(invoiceTo, dispatchTo, shippingType, customerRemark, paymentMethod, cart);
 		model.addAttribute("order", order);
-		
-		// ----- send mail -----
+
+		// ----- send mail to Sales -----
 		try {
-			emailService.notifyWaitForApproveOrder(order);
+			String host = request.getScheme() + "://" + // "http" + "://
+					request.getServerName() + // "myhost"
+					":" + // ":"
+					request.getServerPort() + request.getContextPath();
+			emailService.sendEmailOrderToStaff(order, host);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+
+		// ----- send mail to Customer -----
+		try {
+			emailService.sendEmailOrderToCustomer(order);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}

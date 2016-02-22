@@ -76,4 +76,8 @@ public class ApplicationConfig {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public String getMailFrom() {
+		return "b2b@star-board.com";
+	}
 }
