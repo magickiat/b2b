@@ -164,7 +164,6 @@
 	 		var addressId 		= $("#addressId"+row).val();
 	 		var isUpdateSuccess = false;
 	 		
-	 		
 	 		/* if(!validateTelephone($("#tel1"+row).val())){
 	 			alert("Telephone is invalid! Please try again.");
 	 			$("#tel1"+row).focus();
@@ -233,6 +232,24 @@
 	 	}
 	 	
 	 	function saveUser(){
+	 		if($('#password').val() == null || $('#password').val() == ''){
+	 			alert('Password is required');
+	 			$('#password').focus();
+	 			return false;
+	 		}
+	 		
+	 		if($('#confirmPassword').val() == null || $('#confirmPassword').val() == ''){
+	 			alert('Confirm Password is required');
+	 			$('#confirmPassword').focus();
+	 			return false;
+	 		}
+	 		
+	 		if($('#password').val() != $('#confirmPassword').val()){
+	 			alert('Password not match with Confirm password');
+	 			$('#password').focus();
+	 			return false;
+	 		}
+	 		
 	 		if(!validateEmail($("#userEmail").val())){
 	 			alert("User's email is invalid! Please try again.");
 	 			$("#userEmail").focus();
@@ -250,7 +267,7 @@
 	            	console.log("save complete");
 					if(data == "true"){
 						$('<div></div>').appendTo('body')
-						  .html('<div><h6>User has been updated successfully.</h6></div>')
+						  .html('<div><h6>User has been updated successfully<br/>Please logout and login again.</h6></div>')
 						  .dialog({
 						      modal: true, title: 'message', zIndex: 10000, autoOpen: true,
 						      width: '300', resizable: false,

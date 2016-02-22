@@ -38,6 +38,8 @@ import com.starboard.b2b.service.EmailService;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ReportService;
 import com.starboard.b2b.util.ApplicationConfig;
+import com.starboard.b2b.util.EmailUtils;
+import com.starboard.b2b.util.UserUtil;
 
 @Service("emailService")
 public class EmailServiceImpl implements EmailService {
@@ -67,13 +69,12 @@ public class EmailServiceImpl implements EmailService {
 
 	@Autowired
 	private BrandGroupDao brandGroupDao;
-	
+
 	@Autowired
 	private EmailStaffDao emailStaffDao;
 
 	@Autowired
 	private ReportService reportService;
-	
 
 	private void sendEmail(String from, String[] toAddresses, String[] ccAddresses, String[] bccAddresses, String subject, String content,
 			String[] attachments) throws AddressException, MessagingException, IOException {
@@ -102,7 +103,7 @@ public class EmailServiceImpl implements EmailService {
 		boolean enableSendMail = applicationConfig.getEnabledSendMail();
 		// Is disabled send email
 		if (!enableSendMail) {
-			log.info("");
+			log.info("Disabled sending email. If you want to send mail, please enable it");
 			return;
 		}
 
@@ -139,30 +140,71 @@ public class EmailServiceImpl implements EmailService {
 	@Override
 	@Transactional(readOnly = true)
 	public void sendEmailOrderToCustomer(OrderDTO order) throws Exception {
-		// TODO Auto-generated method stub
+		log.info("send Email Order To Customer");
 
+		// ----- get customer user email -----
+		String custEmail = UserUtil.getCurrentUser().getEmail();
+		if (StringUtils.isEmpty(custEmail)) {
+			return;
+		}
+
+		// Notification when new order
+		EmailTemplate template = emailTemplateDao.getTemplate(order.getOrderStatus());
+		if (template == null) {
+			throw new B2BException("Not found email template: " + order.getOrderStatus());
+		}
+
+		// ----- gen pdf report -----
+		byte[] report = reportService.generateRoPDF(order.getOrderId());
+
+		// ----- evaluate email template -----
+		StringWriter outputSubject = new StringWriter();
+		StringWriter outputBody = new StringWriter();
+
+		VelocityContext contextMsg = new VelocityContext();
+		contextMsg.put("order", order);
+
+		VelocityEngine ve = new VelocityEngine();
+		ve.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS, "org.apache.velocity.runtime.log.Log4JLogChute");
+		ve.setProperty("runtime.log.logsystem.log4j.logger", "velocity");
+		ve.init();
+
+		ve.evaluate(contextMsg, outputSubject, "emailMessage", template.getSubject());
+		ve.evaluate(contextMsg, outputBody, "emailMessage", template.getBody());
+
+		String from = applicationConfig.getMailFrom(); // Overrided to account
+														// loged in at runtime
+		String[] to = EmailUtils.split(custEmail);
+		String[] cc = applicationConfig.getMailCCApprover();
+		String[] bcc = applicationConfig.getMailBCCApprover();
+		String subject = outputSubject.toString();
+		String body = outputBody.toString();
+		String attachFilename = order.getOrderCode() + ".pdf";
+
+		log.info("email to: " + to.length);
+		log.info("mail: " + to[0]);
+		sendEmail(from, to, cc, bcc, subject, body, report, attachFilename);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public void sendEmailOrderToStaff(OrderDTO order, String host) throws Exception {
 		log.info("sendEmailOrderToStaff");
-		
+
 		// Notification when new order
 		String emailTemplateId = order.getOrderStatus();
-		if(order.getOrderStatus() == OrderStatusConfig.WAIT_FOR_APPROVE){
+		if (order.getOrderStatus() == OrderStatusConfig.WAIT_FOR_APPROVE) {
 			emailTemplateId = EmailTemplateConfig.TEMPLATE_NEW_ORDER_FOR_SALE;
 		}
-		
+
 		EmailTemplate template = emailTemplateDao.getTemplate(emailTemplateId);
 		if (template == null) {
 			throw new B2BException("Not found email template: " + emailTemplateId);
 		}
 
 		// ----- If order status = wait_for_approve, set url for approve ----
-		String url = host + "/backend/order/view?orderId="+ order.getOrderId();
-		
-		
+		String url = host + "/backend/order/view?orderId=" + order.getOrderId();
+
 		// ----- gen pdf report -----
 		byte[] report = reportService.generateRoPDF(order.getOrderId());
 
@@ -175,14 +217,15 @@ public class EmailServiceImpl implements EmailService {
 		contextMsg.put("serverPath", url);
 
 		VelocityEngine ve = new VelocityEngine();
-		ve.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS, "org.apache.velocity.runtime.log.Log4JLogChute" );
-		ve.setProperty("runtime.log.logsystem.log4j.logger","velocity");
+		ve.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS, "org.apache.velocity.runtime.log.Log4JLogChute");
+		ve.setProperty("runtime.log.logsystem.log4j.logger", "velocity");
 		ve.init();
-		
+
 		ve.evaluate(contextMsg, outputSubject, "emailMessage", template.getSubject());
 		ve.evaluate(contextMsg, outputBody, "emailMessage", template.getBody());
 
-		String from = applicationConfig.getMailFrom(); // Overrided to account loged in at runtime
+		String from = applicationConfig.getMailFrom(); // Overrided to account
+														// loged in at runtime
 		String[] to = applicationConfig.getMailApprover();
 		String[] cc = applicationConfig.getMailCCApprover();
 		String[] bcc = applicationConfig.getMailBCCApprover();
@@ -192,7 +235,6 @@ public class EmailServiceImpl implements EmailService {
 
 		sendEmail(from, to, cc, bcc, subject, body, report, attachFilename);
 	}
-
 
 	private Properties getMailProperties() {
 		Properties props = new Properties();

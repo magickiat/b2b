@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.dao.UserDao;
 import com.starboard.b2b.model.User;
+import com.starboard.b2b.util.DateTimeUtil;
 
 @Component("userDetailsService")
 public class SecurityUserDetailService implements UserDetailsService {
@@ -23,11 +24,12 @@ public class SecurityUserDetailService implements UserDetailsService {
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		log.info("loadUserByUsername: " + username);
-		User user = userDao.findByUsername(username);
+		User user = userDao.login(username);
 		log.debug("user: " + user);
 		if (user == null) {
 			throw new UsernameNotFoundException(username);
 		}
+		user.setLastActive(DateTimeUtil.getCurrentDate());
 		return user;
 	}
 

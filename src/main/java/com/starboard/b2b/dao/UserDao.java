@@ -15,6 +15,8 @@ public interface UserDao extends BaseDao {
 	List<User> findByCustId(Long id);
 
 	User findByUsername(String username);
+	
+	User login(String username);
 
 	List<User> list();
 	

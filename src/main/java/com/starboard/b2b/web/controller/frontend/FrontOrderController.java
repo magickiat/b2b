@@ -545,10 +545,7 @@ public class FrontOrderController {
 
 		// ----- send mail to Sales -----
 		try {
-			String host = request.getScheme() + "://" + // "http" + "://
-					request.getServerName() + // "myhost"
-					":" + // ":"
-					request.getServerPort() + request.getContextPath();
+			String host = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 			emailService.sendEmailOrderToStaff(order, host);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

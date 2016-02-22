@@ -49,15 +49,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public User findByUsername(String username) {
-		Session session = sessionFactory.getCurrentSession();
-		User user = (User) sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("username", username)).uniqueResult();
-		if (user != null) {
-			user.setLastActive(DateTimeUtil.getCurrentDate());
-			session.update(user);
-			session.flush();
-			session.evict(user);
-		}
-		return user;
+		return (User) sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("username", username)).uniqueResult();
 	}
 
 	@Override
@@ -104,6 +96,18 @@ public class UserDaoImpl implements UserDao {
 		result.setTotal(total == null ? 0 : (long) total);
 		result.setResult(list);
 		return result;
+	}
+
+	@Override
+	public User login(String username) {
+		Session session = sessionFactory.getCurrentSession();
+		User user = (User) sessionFactory.getCurrentSession().createCriteria(User.class).add(Restrictions.eq("username", username)).uniqueResult();
+		if (user != null) {
+			session.update(user);
+			session.flush();
+			session.evict(user);
+		}
+		return user;
 	}
 
 }

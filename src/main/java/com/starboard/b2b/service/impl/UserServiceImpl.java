@@ -100,13 +100,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public boolean update(UserForm userForm) {
-		boolean isSuccess = false;
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userDao.findByUsername(UserUtil.getCurrentUsername());
 		if (!StringUtils.isEmpty(userForm.getPassword())) {
 			user.setPassword(new MD5().encode(userForm.getPassword()));
 		}
 		user.setEmail(userForm.getEmail());
-		return isSuccess;
+		return true;
 	}
 
 	@Override
