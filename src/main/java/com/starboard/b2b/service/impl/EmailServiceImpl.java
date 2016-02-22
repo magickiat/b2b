@@ -15,6 +15,7 @@ import org.apache.velocity.runtime.RuntimeConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.SimpleMailMessage;
@@ -25,23 +26,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.common.EmailTemplateConfig;
 import com.starboard.b2b.common.OrderStatusConfig;
-import com.starboard.b2b.dao.BrandGroupDao;
-import com.starboard.b2b.dao.EmailStaffDao;
 import com.starboard.b2b.dao.EmailTemplateDao;
-import com.starboard.b2b.dao.OrderDetailDao;
-import com.starboard.b2b.dao.ProductDao;
-import com.starboard.b2b.dao.ProductSoCategoryDao;
 import com.starboard.b2b.dto.OrderDTO;
 import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.model.EmailTemplate;
 import com.starboard.b2b.service.EmailService;
-import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ReportService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.EmailUtils;
 import com.starboard.b2b.util.UserUtil;
 
 @Service("emailService")
+@PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
 public class EmailServiceImpl implements EmailService {
 
 	private static final Logger log = LoggerFactory.getLogger(EmailServiceImpl.class);
@@ -53,25 +49,7 @@ public class EmailServiceImpl implements EmailService {
 	private Environment env;
 
 	@Autowired
-	private OrderService orderService;
-
-	@Autowired
-	private OrderDetailDao orderDetailDao;
-
-	@Autowired
 	private EmailTemplateDao emailTemplateDao;
-
-	@Autowired
-	private ProductDao productDao;
-
-	@Autowired
-	private ProductSoCategoryDao productSoCategoryDao;
-
-	@Autowired
-	private BrandGroupDao brandGroupDao;
-
-	@Autowired
-	private EmailStaffDao emailStaffDao;
 
 	@Autowired
 	private ReportService reportService;
@@ -181,8 +159,6 @@ public class EmailServiceImpl implements EmailService {
 		String body = outputBody.toString();
 		String attachFilename = order.getOrderCode() + ".pdf";
 
-		log.info("email to: " + to.length);
-		log.info("mail: " + to[0]);
 		sendEmail(from, to, cc, bcc, subject, body, report, attachFilename);
 	}
 

@@ -1,13 +1,23 @@
 package com.starboard.b2b.util;
 
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("applicationConfig")
 @PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
 public class ApplicationConfig {
 
+	private static final Logger log = LoggerFactory.getLogger(ApplicationConfig.class);
 	// TODO with replace properties file
+	
+	@Autowired
+	private Environment env;
 
 	// @Value("${page.size}")
 	private String pageSize;
@@ -24,15 +34,12 @@ public class ApplicationConfig {
 	// @Value("${default.product.unit}")
 	private String defaultProductUnit;
 
-	// @Value("${enabled.send.mail}")
-	private String enableSendMail;
-
 	public int getPageSize() {
-		return 12;
+		return Integer.parseInt(env.getProperty("page.size"));
 	}
 
 	public boolean getEnabledSendMail() {
-		return true;
+		return Boolean.parseBoolean(env.getProperty("enabled.send.mail"));
 	}
 
 	public String getOrderStatusNew() {
@@ -64,7 +71,7 @@ public class ApplicationConfig {
 	}
 
 	public String[] getMailApprover() {
-		return new String[] { "magicalcyber@gmail.com" };
+		return EmailUtils.split(env.getProperty("email.sales"));
 	}
 
 	public String[] getMailBCCApprover() {

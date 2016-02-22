@@ -29,6 +29,13 @@ public class EmailUtils {
 	}
 
 	public static String[] split(String emails) {
-		return emails.split(emails);
+		if (StringUtils.isNotEmpty(emails)) {
+			if (emails.contains(";") || emails.contains(",")) {
+				return emails.split(emails);
+			} else {
+				return new String[] { emails.trim() };
+			}
+		}
+		return null;
 	}
 }
