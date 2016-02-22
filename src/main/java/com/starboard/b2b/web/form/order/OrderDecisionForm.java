@@ -17,6 +17,8 @@ public class OrderDecisionForm {
 	private String paymentMethodId;
 	private String paymentTermId;
 	
+	private String splitOrderDetailId;
+	
 	private String remarkCustomer; // Customer remark
 	private String remarkOrders; // Staff remark
 	private String status;
@@ -129,5 +131,13 @@ public class OrderDecisionForm {
 
 	public void setOrderId(long orderId) {
 		this.orderId = orderId;
+	}
+
+	public String getSplitOrderDetailId() {
+		return splitOrderDetailId;
+	}
+
+	public void setSplitOrderDetailId(String splitOrderDetailId) {
+		this.splitOrderDetailId = splitOrderDetailId;
 	}
 }

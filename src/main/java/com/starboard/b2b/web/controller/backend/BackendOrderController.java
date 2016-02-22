@@ -34,7 +34,7 @@ import com.starboard.b2b.web.form.order.SearchOrderForm;
 
 @Controller
 @RequestMapping("/backend/order")
-@SessionAttributes(value = { "orderDetails" })
+@SessionAttributes(value = { "approveForm" })
 public class BackendOrderController {
 
 	private static final Logger log = LoggerFactory.getLogger(BackendOrderController.class);
@@ -241,5 +241,13 @@ public class BackendOrderController {
 			productService.findOrderPriceList(form.getOrderDetails());
 		}
 		return "pages-back/order/view";
+	}
+	
+	@RequestMapping(value = "/split", method = RequestMethod.POST)
+	String split(@ModelAttribute("approveForm") OrderDecisionForm form, Model model) {
+		log.info("split");
+		log.info("Form: " + form);
+
+		return "pages-back/order/split";
 	}
 }

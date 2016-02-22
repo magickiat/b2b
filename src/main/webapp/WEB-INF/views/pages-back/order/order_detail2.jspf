@@ -25,6 +25,7 @@
 			<c:choose>
 				<c:when test="${ not empty approveForm.orderDetails }">
 
+					<form:hidden path="splitOrderDetailId"/>
 					<c:forEach items="${ approveForm.orderDetails }" var="ordDetail" varStatus="rowNum">
 
 						<tr id="${ ordDetail.orderDetailId }">
@@ -140,6 +141,10 @@
 	}
 	
 	function splitOrder(orderDetailId){
-		window.location.href = '<c:url value="/backend/order/split" />?orderDetailId='+orderDetailId;
+		$('#splitOrderDetailId').val(orderDetailId);
+		var form = $('#approveForm');
+		form.attr('action', '<c:url value="/backend/order/split" />');
+		form.submit();
+		
 	}
 </script>
