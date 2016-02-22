@@ -50,7 +50,7 @@ public class FrontUserController {
 	String view(Model model) {
 		log.info("view ");
 		final UserForm userForm = new UserForm();
-		final User userAuthen = UserUtil.getCurrentUser();
+		final User userAuthen = userService.findByUsername(UserUtil.getCurrentUsername());
 		final Map<String, String> countries = getCountries();
 		final Map<Long, String> addressTypes = getAddressConstant();
 		final List<AddressForm> addressForms = new ArrayList<>();

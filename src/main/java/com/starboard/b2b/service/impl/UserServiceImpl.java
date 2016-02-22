@@ -101,6 +101,7 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public boolean update(UserForm userForm) {
 		User user = userDao.findByUsername(UserUtil.getCurrentUsername());
+		log.info("User: " + user);
 		if (!StringUtils.isEmpty(userForm.getPassword())) {
 			user.setPassword(new MD5().encode(userForm.getPassword()));
 		}
