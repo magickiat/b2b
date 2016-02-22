@@ -249,6 +249,7 @@ public class ExcelUtil {
 	}
 
 	public static List<ProductPriceDTO> parseProductPrice(InputStream inputStream) throws Exception {
+		log.info("parsing Product Price");
 		ArrayList<ProductPriceDTO> result = null;
 		XSSFWorkbook workbook = null;
 		XSSFSheet sheet = null;
@@ -271,7 +272,7 @@ public class ExcelUtil {
 					if (row == null) {
 						continue;
 					}
-					log.info("row: " + row.getRowNum());
+					log.debug("row: " + row.getRowNum());
 
 					// ----- skip header -----
 					if (row.getRowNum() == 0) {
@@ -289,8 +290,8 @@ public class ExcelUtil {
 					String productCode = formatter.formatCellValue(cellProductCode);
 					String priceGroup = formatter.formatCellValue(cellPriceGroup);
 					String currency = formatter.formatCellValue(cellCurrency);
-					BigDecimal amount = new BigDecimal(0);
-					BigDecimal msrePrice = new BigDecimal(0);
+					BigDecimal amount = null;
+					BigDecimal msrePrice = null;
 					String unitId = formatter.formatCellValue(cellUnitId);
 
 					// ----- validate and get value -----
@@ -301,10 +302,14 @@ public class ExcelUtil {
 
 					if (cellAmount != null && cellAmount.getCellType() == Cell.CELL_TYPE_NUMERIC) {
 						amount = new BigDecimal(cellAmount.getNumericCellValue());
+						log.debug(amount.toPlainString());
+						amount = amount.setScale(2, BigDecimal.ROUND_DOWN);
 					}
 
 					if (cellMsrePrice != null && cellMsrePrice.getCellType() == Cell.CELL_TYPE_NUMERIC) {
 						msrePrice = new BigDecimal(cellMsrePrice.getNumericCellValue());
+						log.debug(msrePrice.toPlainString());
+						msrePrice = msrePrice.setScale(2, BigDecimal.ROUND_DOWN);
 					}
 
 					result.add(new ProductPriceDTO(productCode, priceGroup, currency, amount, unitId, msrePrice));
