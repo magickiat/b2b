@@ -140,6 +140,6 @@
 	}
 	
 	function splitOrder(orderDetailId){
-		alert('popup split order ' + orderDetailId);
+		window.location.href = '<c:url value="/backend/order/split" />?orderDetailId='+orderDetailId;
 	}
 </script>
