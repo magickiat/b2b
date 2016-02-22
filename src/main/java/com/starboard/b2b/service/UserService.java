@@ -11,7 +11,7 @@ public interface UserService {
 
 	List<User> list(Pagination page);
 
-	User findUserById(String id);
+	User findUserById(Integer id);
 	
 	List<User> findUserByCustId(Long cusId);
 	
@@ -22,4 +22,6 @@ public interface UserService {
 	boolean update(UserForm userForm);
 
 	boolean isExistUsername(String username);
+	
+	boolean delete(UserForm userForm);
 }

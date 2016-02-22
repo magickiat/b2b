@@ -11,6 +11,8 @@ public class UserForm {
 	private String confirmPassword;
 	private String email;
 	private long custId;
+	private String name;
+	private boolean enable;
 
 	private List<AddressForm> addresses = new ArrayList<AddressForm>();
 
@@ -68,5 +70,21 @@ public class UserForm {
 
 	public void setCustId(long custId) {
 		this.custId = custId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public boolean isEnable() {
+		return enable;
+	}
+
+	public void setEnable(boolean enable) {
+		this.enable = enable;
 	}
 }

@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 	
 
 	@Transactional(readOnly = true)
-	public User findUserById(String id) {
+	public User findUserById(Integer id) {
 		return userDao.findById(id);
 	}
 
@@ -95,11 +95,19 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public boolean update(UserForm userForm) {
 		boolean isSuccess = false;
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if(!StringUtils.isEmpty(userForm.getPassword())){
-			user.setPassword(new MD5().encode(userForm.getPassword()));
-		}
+//		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		if(!StringUtils.isEmpty(userForm.getPassword())){
+//			user.setPassword(new MD5().encode(userForm.getPassword()));
+//		}
+		User user = userDao.findById(Integer.parseInt(userForm.getId()));
 		user.setEmail(userForm.getEmail());
+		
+		try{
+			userDao.update(user);
+			isSuccess = true;
+		}catch(Exception e){
+			isSuccess = false;
+		}
 		return isSuccess;
 	}
 
@@ -107,6 +115,24 @@ public class UserServiceImpl implements UserService {
 	@Transactional(readOnly = true)
 	public boolean isExistUsername(String username) {
 		return userDao.exist("username", username);
+	}
+
+	@Override
+	@Transactional
+	public boolean delete(UserForm userForm) {
+		boolean isSuccess = false;
+//		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		if(!StringUtils.isEmpty(userForm.getPassword())){
+//			user.setPassword(new MD5().encode(userForm.getPassword()));
+//		}
+		User user = userDao.findById(Integer.parseInt(userForm.getId()));
+		try{
+			userDao.delete(user);
+			isSuccess = true;
+		}catch(Exception e){
+			isSuccess = false;
+		}
+		return isSuccess;
 	}
 
 }

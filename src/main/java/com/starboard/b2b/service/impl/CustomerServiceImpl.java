@@ -209,7 +209,9 @@ public class CustomerServiceImpl implements CustomerService {
 	public CustDTO findCustById(Long custId) {
 		Cust cust = custDao.findById(custId);
 		CustDTO dto = new CustDTO();
-		BeanUtils.copyProperties(cust, dto);
+		if(cust != null){
+			BeanUtils.copyProperties(cust, dto);
+		}		
 		return dto;
 	}
 
