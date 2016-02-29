@@ -37,7 +37,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User findById(String id) {
+	public User findById(Integer id) {
 		return (User) sessionFactory.getCurrentSession().get(User.class, id);
 	}
 
@@ -108,6 +108,11 @@ public class UserDaoImpl implements UserDao {
 			session.evict(user);
 		}
 		return user;
+	}
+	
+	@Override
+	public void delete(User user) {
+		sessionFactory.getCurrentSession().delete(user);		
 	}
 
 }

@@ -16,6 +16,8 @@ public class UserRegisterForm {
 	private String email;
 	private Long cusId;
 	private Set<String> roles = new HashSet<>();
+	private Boolean enable;
+	private Integer userId;
 
 	public String getUsername() {
 		return username;
@@ -71,6 +73,22 @@ public class UserRegisterForm {
 
 	public void setCusId(Long cusId) {
 		this.cusId = cusId;
+	}
+
+	public Boolean getEnable() {
+		return enable;
+	}
+
+	public void setEnable(Boolean enable) {
+		this.enable = enable;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 
