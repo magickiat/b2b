@@ -545,7 +545,8 @@ public class FrontOrderController {
 
 		// ----- send mail to Sales -----
 		try {
-			String host = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+//			String host = request.getScheme() + "://" + Find remote address + ":" + request.getServerPort() + request.getContextPath();
+			String host = "";//TODO read url config
 			emailService.sendEmailOrderToStaff(order, host);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

@@ -53,7 +53,7 @@ public class ProductModel implements java.io.Serializable {
 
 	@Id
 
-	@Column(name = "product_model_id", unique = true, nullable = false, length = 16)
+	@Column(name = "product_model_id", unique = true, nullable = false, length = 100)
 	public String getProductModelId() {
 		return this.productModelId;
 	}

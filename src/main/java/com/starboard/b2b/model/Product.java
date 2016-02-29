@@ -465,7 +465,7 @@ public class Product implements java.io.Serializable {
 		this.productCategoryId = productCategoryId;
 	}
 
-	@Column(name = "product_model_id", length = 16)
+	@Column(name = "product_model_id", length = 100)
 	public String getProductModelId() {
 		return this.productModelId;
 	}
