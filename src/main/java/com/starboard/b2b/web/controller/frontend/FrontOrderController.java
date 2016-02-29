@@ -156,7 +156,7 @@ public class FrontOrderController {
 	}
 
 	@RequestMapping(value = "step2/search-action", method = RequestMethod.GET)
-	String step2SearchAction(@ModelAttribute("form") SearchProductForm form, Model model) {
+	String step2SearchAction(@ModelAttribute("searchProductForm") SearchProductForm form, Model model) {
 		log.info("search condition: " + form.toString());
 
 		// Show shopping cart
