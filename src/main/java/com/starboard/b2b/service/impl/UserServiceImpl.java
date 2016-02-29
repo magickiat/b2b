@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 	private PasswordEncoder encoder;
 
 	@Transactional(readOnly = true)
-	public User findUserById(String id) {
+	public User findUserById(Integer id) {
 		return userDao.findById(id);
 	}
 
@@ -100,13 +100,24 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public boolean update(UserForm userForm) {
-		User user = userDao.findByUsername(UserUtil.getCurrentUsername());
-		log.info("User: " + user);
-		if (!StringUtils.isEmpty(userForm.getPassword())) {
-			user.setPassword(new MD5().encode(userForm.getPassword()));
+		boolean isSuccess = false;
+//		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		if(!StringUtils.isEmpty(userForm.getPassword())){
+//			user.setPassword(new MD5().encode(userForm.getPassword()));
+//		}
+		User user = userDao.findById(Integer.parseInt(userForm.getId()));
+		user.setName(userForm.getName());
+		user.setUsername(userForm.getUsername());
+		user.setEmail(userForm.getEmail());		
+		user.setEnabled(userForm.isEnable());
+		
+		try{
+			userDao.update(user);
+			isSuccess = true;
+		}catch(Exception e){
+			isSuccess = false;
 		}
-		user.setEmail(userForm.getEmail());
-		return true;
+		return isSuccess;
 	}
 
 	@Override
@@ -121,6 +132,24 @@ public class UserServiceImpl implements UserService {
 		SearchRequest<UserSearchForm> req = new SearchRequest<>(form.getPage(), applicationConfig.getPageSize());
 		req.setCondition(form);
 		return userDao.search(req);
+	}
+	
+	@Override
+	@Transactional
+	public boolean delete(UserForm userForm) {
+		boolean isSuccess = false;
+//		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		if(!StringUtils.isEmpty(userForm.getPassword())){
+//			user.setPassword(new MD5().encode(userForm.getPassword()));
+//		}
+		User user = userDao.findById(Integer.parseInt(userForm.getId()));
+		try{
+			userDao.delete(user);
+			isSuccess = true;
+		}catch(Exception e){
+			isSuccess = false;
+		}
+		return isSuccess;
 	}
 
 }

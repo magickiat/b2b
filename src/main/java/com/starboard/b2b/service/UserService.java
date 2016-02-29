@@ -14,7 +14,7 @@ public interface UserService {
 
 	List<User> list(Pagination page);
 
-	User findUserById(String id);
+	User findUserById(Integer id);
 	
 	List<User> findUserByCustId(Long cusId);
 	
@@ -27,4 +27,6 @@ public interface UserService {
 	boolean isExistUsername(String username);
 
 	SearchResult<UserDTO> search(UserSearchForm userSearchForm);
+	
+	boolean delete(UserForm userForm);
 }

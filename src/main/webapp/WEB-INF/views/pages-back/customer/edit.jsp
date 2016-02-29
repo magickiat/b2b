@@ -97,7 +97,15 @@
 										<td>${ user.email }</td>
 										<td>${user.enabled }</td>
 										<td>${user.lastActive }</td>
-										<td></td>
+										<td>
+											<div class="btn-group">
+												<a type="button" class="btn btn-warning"
+													href="<c:url value="/backend/customer/edituser?userId=${ user.id }" />">Edit</a>
+												<a type="button" class="btn btn-danger" name="removeBtn"
+                                                   data-href="<c:url value="/backend/customer/deleteuser?userId=${ user.id }"/>"
+                                                   data-toggle="modal" data-target="#confirm-delete">Delete</a>
+											</div>
+										</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -200,16 +208,32 @@
 						</table>
 					</div>
 				</div>
-
 			</div>
-
 		</div>
-
+	</div>
+	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">Confirm delete?</div>
+				<div class="modal-body">Are you sure to delete this user?</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<a class="btn btn-danger btn-ok">Delete</a>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>
 	<script type="text/javascript"
 		src='<c:url value="/scripts/js_back_end/customer/edit.js" />'></script>
+	<script>	
+		$('#confirm-delete').on('show.bs.modal', function(e) {
+	        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+	    });
+	 	
+	</script>
 </body>
 </html>
