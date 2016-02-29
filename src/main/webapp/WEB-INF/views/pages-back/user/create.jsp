@@ -7,7 +7,7 @@
 <html>
 <head>
 	<%@include file="/WEB-INF/views/include/common_meta.jspf" %>
-	<title>Create Customer</title>
+	<title><spring:message code="page.header"></spring:message></title>
 	<%@include file="/WEB-INF/views/include/common_cssbackend.jspf"%>
 </head>
 <body>
