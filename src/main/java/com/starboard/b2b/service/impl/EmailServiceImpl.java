@@ -180,7 +180,7 @@ public class EmailServiceImpl implements EmailService {
 
 		// ----- If order status = wait_for_approve, set url for approve ----
 		String url = host + "/backend/order/view?orderId=" + order.getOrderId();
-
+		log.info("URL: " + url);
 		// ----- gen pdf report -----
 		byte[] report = reportService.generateRoPDF(order.getOrderId());
 
@@ -201,8 +201,9 @@ public class EmailServiceImpl implements EmailService {
 		ve.evaluate(contextMsg, outputBody, "emailMessage", template.getBody());
 
 		String from = applicationConfig.getMailFrom(); // Overrided to account
-														// loged in at runtime
+		log.info("---> From: " + from);
 		String[] to = applicationConfig.getMailApprover();
+		log.info("---> To: " + to);
 		String[] cc = applicationConfig.getMailCCApprover();
 		String[] bcc = applicationConfig.getMailBCCApprover();
 		String subject = outputSubject.toString();
