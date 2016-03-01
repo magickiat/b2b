@@ -28,7 +28,7 @@
 					<form:hidden path="splitOrderDetailId"/>
 					<c:forEach items="${ approveForm.orderDetails }" var="ordDetail" varStatus="rowNum">
 
-						<tr id="${ ordDetail.orderDetailId }">
+						<tr id="row${ ordDetail.orderDetailId }">
 							<!-- Save value for passed to controller -->
 							<form:input type="hidden" path="orderDetails[${ rowNum.index }].orderDetailId" />
 							<form:input type="hidden" path="orderDetails[${ rowNum.index }].orderId" />
@@ -130,10 +130,8 @@
 	}
 	
 	function removeOrder(orderDetailId){
-		
-		
-		console.log('removed ' + orderDetailId);
-		$('#'+orderDetailId).remove();
+		$("#row"+orderDetailId).remove();
+		console.log('removed ' + orderDetailId);		
 		
 		var form = $('#approveForm');
 		form.attr('action', '<c:url value="/backend/order/change-price-group" />');

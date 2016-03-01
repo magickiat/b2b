@@ -34,7 +34,7 @@ import com.starboard.b2b.web.form.order.SearchOrderForm;
 
 @Controller
 @RequestMapping("/backend/order")
-@SessionAttributes(value = { "approveForm" })
+//@SessionAttributes(value = { "orderDetails" })
 public class BackendOrderController {
 
 	private static final Logger log = LoggerFactory.getLogger(BackendOrderController.class);
