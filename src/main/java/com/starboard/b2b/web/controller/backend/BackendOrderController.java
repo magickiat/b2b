@@ -120,8 +120,8 @@ public class BackendOrderController {
 		List<SearchOrderDetailDTO> dbOrderDetails = orderService.searchOrderDetail(orderReport.getOrderCode());
 
 		if (dbOrderDetails != null && !dbOrderDetails.isEmpty()) {
-			// orderReport.setOrderDetails(dbOrderDetails);
 			form.setOrderDetails(dbOrderDetails);
+			log.info("form.getOrderDetails() size: " + form.getOrderDetails().size());
 		}
 
 		setOrderFormValue(form);
@@ -138,6 +138,7 @@ public class BackendOrderController {
 
 		// ----- find order -----
 		if (form.getOrderReport() == null) {
+			log.info("form.getOrderReport() == null");
 			form.setOrderReport(orderService.findOrderForReport(form.getOrderId()));
 		}
 
@@ -242,13 +243,12 @@ public class BackendOrderController {
 	@RequestMapping(value = "/change-price-group", method = RequestMethod.POST)
 	String changePriceGroup(@ModelAttribute("approveForm") OrderDecisionForm form, Model model) {
 		log.info("Change price group");
-		log.info("Form: " + form);
-
 		// ----- set require list form -----
 		setOrderFormValue(form);
 
 		// ----- find new price group -----
 		if (form.getOrderDetails() != null && !form.getOrderDetails().isEmpty()) {
+			log.info("form.getOrderDetails() size: " + form.getOrderDetails().size());
 			List<SearchOrderDetailDTO> orderDetails = new ArrayList<>();
 
 			for (SearchOrderDetailDTO dto : form.getOrderDetails()) {
