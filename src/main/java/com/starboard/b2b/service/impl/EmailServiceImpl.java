@@ -179,7 +179,10 @@ public class EmailServiceImpl implements EmailService {
 		}
 
 		// ----- If order status = wait_for_approve, set url for approve ----
-		String url = host + "/backend/order/view?orderId=" + order.getOrderId();
+		if(!host.endsWith("/")){
+			host += "/";
+		}
+		String url = host + "backend/order/view?orderId=" + order.getOrderId();
 		log.info("URL: " + url);
 		// ----- gen pdf report -----
 		byte[] report = reportService.generateRoPDF(order.getOrderId());
@@ -203,7 +206,7 @@ public class EmailServiceImpl implements EmailService {
 		String from = applicationConfig.getMailFrom(); // Overrided to account
 		log.info("---> From: " + from);
 		String[] to = applicationConfig.getMailApprover();
-		log.info("---> To: " + to);
+		log.info("---> To: " + to[0]);
 		String[] cc = applicationConfig.getMailCCApprover();
 		String[] bcc = applicationConfig.getMailBCCApprover();
 		String subject = outputSubject.toString();
