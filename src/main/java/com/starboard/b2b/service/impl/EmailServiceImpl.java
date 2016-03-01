@@ -27,9 +27,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.starboard.b2b.common.EmailTemplateConfig;
 import com.starboard.b2b.common.OrderStatusConfig;
 import com.starboard.b2b.dao.EmailTemplateDao;
+import com.starboard.b2b.dao.UserDao;
 import com.starboard.b2b.dto.OrderDTO;
 import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.model.EmailTemplate;
+import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.EmailService;
 import com.starboard.b2b.service.ReportService;
 import com.starboard.b2b.util.ApplicationConfig;
@@ -53,6 +55,9 @@ public class EmailServiceImpl implements EmailService {
 
 	@Autowired
 	private ReportService reportService;
+	
+	@Autowired
+	private UserDao userDao;
 
 	private void sendEmail(String from, String[] toAddresses, String[] ccAddresses, String[] bccAddresses, String subject, String content,
 			String[] attachments) throws AddressException, MessagingException, IOException {
@@ -117,12 +122,14 @@ public class EmailServiceImpl implements EmailService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public void sendEmailOrderToCustomer(OrderDTO order) throws Exception {
+	public void sendEmailOrderToCustomer(OrderDTO order, String host) throws Exception {
 		log.info("send Email Order To Customer");
 
 		// ----- get customer user email -----
-		String custEmail = UserUtil.getCurrentUser().getEmail();
+		
+		String custEmail = getCustomerEmail(order);
 		if (StringUtils.isEmpty(custEmail)) {
+			log.warn("Customer email is required.");
 			return;
 		}
 
@@ -131,6 +138,13 @@ public class EmailServiceImpl implements EmailService {
 		if (template == null) {
 			throw new B2BException("Not found email template: " + order.getOrderStatus());
 		}
+
+		// ----- If order status = wait_for_approve, set url for approve ----
+		if (!host.endsWith("/")) {
+			host += "/";
+		}
+		String url = host + "frontend/order/summary/report/" + order.getOrderId();
+		log.info("URL: " + url);
 
 		// ----- gen pdf report -----
 		byte[] report = reportService.generateRoPDF(order.getOrderId());
@@ -141,6 +155,7 @@ public class EmailServiceImpl implements EmailService {
 
 		VelocityContext contextMsg = new VelocityContext();
 		contextMsg.put("order", order);
+		contextMsg.put("serverPath", url);
 
 		VelocityEngine ve = new VelocityEngine();
 		ve.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS, "org.apache.velocity.runtime.log.Log4JLogChute");
@@ -152,7 +167,9 @@ public class EmailServiceImpl implements EmailService {
 
 		String from = applicationConfig.getMailFrom(); // Overrided to account
 														// loged in at runtime
+		log.info("---> From: " + from);
 		String[] to = EmailUtils.split(custEmail);
+		log.info("---> To: " + to[0]);
 		String[] cc = applicationConfig.getMailCCApprover();
 		String[] bcc = applicationConfig.getMailBCCApprover();
 		String subject = outputSubject.toString();
@@ -160,6 +177,14 @@ public class EmailServiceImpl implements EmailService {
 		String attachFilename = order.getOrderCode() + ".pdf";
 
 		sendEmail(from, to, cc, bcc, subject, body, report, attachFilename);
+	}
+
+	private String getCustomerEmail(OrderDTO order) {
+		User user = userDao.findByUsername(order.getUserCreate());
+		if(user == null){
+			throw new B2BException("Cannot found user: " + order.getUserCreate());
+		}
+		return user.getEmail();
 	}
 
 	@Override
@@ -179,7 +204,7 @@ public class EmailServiceImpl implements EmailService {
 		}
 
 		// ----- If order status = wait_for_approve, set url for approve ----
-		if(!host.endsWith("/")){
+		if (!host.endsWith("/")) {
 			host += "/";
 		}
 		String url = host + "backend/order/view?orderId=" + order.getOrderId();

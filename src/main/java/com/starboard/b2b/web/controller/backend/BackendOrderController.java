@@ -7,13 +7,13 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.common.OrderStatusConfig;
@@ -34,10 +34,13 @@ import com.starboard.b2b.web.form.order.SearchOrderForm;
 
 @Controller
 @RequestMapping("/backend/order")
-//@SessionAttributes(value = { "orderDetails" })
+// @SessionAttributes(value = { "orderDetails" })
 public class BackendOrderController {
 
 	private static final Logger log = LoggerFactory.getLogger(BackendOrderController.class);
+
+	@Autowired
+	private Environment environment;
 
 	@Autowired
 	private ProductService productService;
@@ -169,19 +172,24 @@ public class BackendOrderController {
 		orderService.approve(order);
 		roSyncService.syncRoFromB2BtoAX(orderId);
 
-//		// ----- send mail order -----
-//		try {
-//			emailService.sendEmailOrder(order);
-//		} catch (Exception e) {
-//			log.error(e.getMessage(), e);
-//		}
-//
-//		// ----- send mail to staff -----
-//		try {
-//			emailService.sendEmailInternal(order);
-//		} catch (Exception e) {
-//			log.error(e.getMessage(), e);
-//		}
+		// ----- send mail order -----
+		String host = environment.getProperty("base.url");
+		if (StringUtils.isEmpty(host)) {
+			throw new B2BException("Not found host config");
+		}
+
+		try {
+			emailService.sendEmailOrderToCustomer(order, host);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+
+		// ----- send mail to staff -----
+		try {
+			emailService.sendEmailOrderToStaff(order, host);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
 
 		return viewOrder(orderId, null, model);
 	}
@@ -196,14 +204,26 @@ public class BackendOrderController {
 		// ----- reject -----
 		orderService.reject(order);
 
-//		// ----- send mail -----
-//		try {
-//			emailService.sendEmailOrder(order);
-//		} catch (Exception e) {
-//			log.error(e.getMessage(), e);
-//		}
+		// ----- send mail order -----
+		String host = environment.getProperty("base.url");
+		if (StringUtils.isEmpty(host)) {
+			throw new B2BException("Not found host config");
+		}
 
-		return viewOrder(form.getOrderReport().getOrderId(), null, model);
+		try {
+			emailService.sendEmailOrderToCustomer(order, host);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+
+		// ----- send mail to staff -----
+		try {
+			emailService.sendEmailOrderToStaff(order, host);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+
+		return viewOrder(orderId, null, model);
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -242,7 +262,7 @@ public class BackendOrderController {
 		}
 		return "pages-back/order/view";
 	}
-	
+
 	@RequestMapping(value = "/split", method = RequestMethod.POST)
 	String split(@ModelAttribute("approveForm") OrderDecisionForm form, Model model) {
 		log.info("split");

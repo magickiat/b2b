@@ -418,6 +418,8 @@ public class OrderServiceImpl implements OrderService {
 		order.setExpectReceiptDate(expectShipDate);
 		order.setExpectShipmentDate(expectShipDate);
 		order.setOrderStatus(OrderStatusConfig.APPROVED);
+		
+		orderDTO.setOrderStatus(OrderStatusConfig.APPROVED);
 	}
 
 	@Override
@@ -435,6 +437,8 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 		order.setOrderStatus(OrderStatusConfig.CANCELED);
+		
+		orderDTO.setOrderStatus(OrderStatusConfig.CANCELED);
 	}
 
 	@Override

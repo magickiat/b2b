@@ -544,12 +544,12 @@ public class FrontOrderController {
 		model.addAttribute("order", order);
 
 		// ----- send mail to Sales -----
+		String host = environment.getProperty("base.url");
+		if(StringUtils.isEmpty(host)){
+			throw new B2BException("Not found host config");
+		}
+		
 		try {
-//			String host = request.getScheme() + "://" + Find remote address + ":" + request.getServerPort() + request.getContextPath();
-			String host = environment.getProperty("base.url");
-			if(StringUtils.isEmpty(host)){
-				throw new B2BException("Not found host config");
-			}
 			emailService.sendEmailOrderToStaff(order, host);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -557,7 +557,7 @@ public class FrontOrderController {
 
 		// ----- send mail to Customer -----
 		try {
-			emailService.sendEmailOrderToCustomer(order);
+			emailService.sendEmailOrderToCustomer(order, host);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -619,12 +619,12 @@ public class FrontOrderController {
 		model.addAttribute("orderSummaryForm", form);
 		return "pages-front/order/summary";
 	}
-
-	@RequestMapping(value = "summary/report/{orderCode}", method = RequestMethod.GET)
-	String orderSummaryReport(@ModelAttribute("form") OrderSummaryForm form, Model model, @PathVariable final String orderCode) {
-		log.info("Report for order: {}", orderCode);
-		final SearchOrderDTO orderReport = orderService.findOrderForReport(orderCode);
-		final List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(orderCode);
+	
+	@RequestMapping(value = "summary/report/{orderId}", method = RequestMethod.GET)
+	String viewOrderSummary(@PathVariable Long orderId, Model model) {
+		log.info("Report for order: {}", orderId);
+		final SearchOrderDTO orderReport = orderService.findOrderForReport(orderId);
+		final List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(orderReport.getOrderCode());
 		for (OrdAddressDTO ordAddress : ordAddresses) {
 			log.info("received order address {} ", ordAddress);
 			if (ordAddress.getType().equals(AddressConstant.ORDER_INVOICE_TO)) {
@@ -634,7 +634,7 @@ public class FrontOrderController {
 				orderReport.setDispatchToAddress(ordAddress);
 			}
 		}
-		List<SearchOrderDetailDTO> orderDetails = orderService.searchOrderDetail(orderCode);
+		List<SearchOrderDetailDTO> orderDetails = orderService.searchOrderDetail(orderId);
 		if (orderDetails != null && !orderDetails.isEmpty()) {
 			orderReport.setOrderDetails(orderDetails);
 		}

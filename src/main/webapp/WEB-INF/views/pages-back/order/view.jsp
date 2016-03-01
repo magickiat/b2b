@@ -126,7 +126,7 @@
 						onclick="saveOrder()" />
 				</div>
 				<div class="col-sm-6 bg_color">
-					<input type="reset" id="cancel" name="cancel" class="btn btn-default" value="Cancel" />
+					<input type="button" id="cancel" name="cancel" class="btn btn-default" value="Cancel" onclick="back()" />
 				</div>
 			</div>
 		</form:form>
@@ -149,7 +149,14 @@
 			$('#approveForm').submit();
 		}
 		
+		function back(){
+			window.location.href= '<c:url value="/backend/order/search" />';
+		}
+		
 		function reject(orderId){
+			var form = $('#approveForm');
+			form.attr('action', '<c:url value="/backend/order/reject" />');
+			form.submit();
 		}
 		
 		function disablePage(editMode){
