@@ -546,7 +546,10 @@ public class FrontOrderController {
 		// ----- send mail to Sales -----
 		try {
 //			String host = request.getScheme() + "://" + Find remote address + ":" + request.getServerPort() + request.getContextPath();
-			String host = "";//TODO read url config
+			String host = environment.getProperty("base.url");
+			if(StringUtils.isEmpty(host)){
+				throw new B2BException("Not found host config");
+			}
 			emailService.sendEmailOrderToStaff(order, host);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
