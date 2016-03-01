@@ -243,7 +243,7 @@ public class EmailServiceImpl implements EmailService {
 
 	private Properties getMailProperties() {
 		Properties props = new Properties();
-
+		props.put("mail.smtp.ssl.trust", env.getProperty("email.host"));
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.auth", "true");
 		return props;
