@@ -50,7 +50,7 @@
 								<tr>
 									<td>
 									${ rowTech.key }
-									<input type="hidden" name="tech" value="${ withnose }-${ rowTech.key }" />
+									<input type="hidden" name="tech" value="${ withnose }-${ stringUtil.removeSpecialChar(rowTech.key) }" />
 									</td>
 									<td>
 	
@@ -68,14 +68,14 @@
 											<tr>
 												<c:forEach var="p" items="${rowTech.value}" varStatus="rowNumProduct">
 													<td align="center">
-														<input type="text" id="${ p.product.productId }" name="product-order-number" class="form-control input-multiple numberOnly ${ withnose}-${ rowTech.key }" onblur="updateTotal()" />
+														<input type="text" id="${ p.product.productId }" name="product-order-number" class="form-control input-multiple numberOnly ${ withnose}-${ stringUtil.removeSpecialChar(rowTech.key) }" onblur="updateTotal()" />
 													</td>
 												</c:forEach>
 											</tr>
 										</table>
 									</td>
 									<td>
-										<span id="${ withnose}-${ rowTech.key }">0</span>
+										<span id="${ withnose}-${ stringUtil.removeSpecialChar(rowTech.key) }">0</span>
 									</td>
 							</c:forEach>
 						</tbody>

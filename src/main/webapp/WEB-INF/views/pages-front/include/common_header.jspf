@@ -1,7 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@page session="true"%>
 
 <jsp:useBean id="stringUtil" class="com.starboard.b2b.util.StringUtil" scope="request"></jsp:useBean>
@@ -18,13 +18,25 @@
 	<div class="container">
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li><a href="<c:url value="/" />">Home</a></li>
-				<li><a href="<c:url value="/frontend/order/index" />">Create Order</a></li>
-				<li><a href="<c:url value="/frontend/order/summary" />">Order Summary</a></li>
-				<li><a href="<c:url value="/frontend/download/index" />">Download</a></li>
-				<li><a href="<c:url value="/frontend/user/view" />">Profile</a></li>
+				<li>
+					<a href="<c:url value="/" />">Home</a>
+				</li>
+				<li>
+					<a href="<c:url value="/frontend/order/index" />">Create Order</a>
+				</li>
+				<li>
+					<a href="<c:url value="/frontend/order/summary" />">Order Summary</a>
+				</li>
+				<li>
+					<a href="<c:url value="/frontend/download/index" />">Download</a>
+				</li>
+				<li>
+					<a href="<c:url value="/frontend/user/view" />">Profile</a>
+				</li>
 				<!-- <li><a href="#">Accounting</a></li> -->
-				<li><a href="<c:url value="/frontend/contactus" />">Contact us</a></li>
+				<li>
+					<a href="<c:url value="/frontend/contactus" />">Contact us</a>
+				</li>
 				<li>
 					<sec:authorize access="isAuthenticated()">
 						<a onclick="logout()">Log out</a>
@@ -34,11 +46,8 @@
 		</div>
 	</div>
 </nav>
-<form id="logoutForm" action="<c:url value="/logout"/>"
-      method="post">
-	<input type="hidden"
-	       name="${_csrf.parameterName}"
-	       value="${_csrf.token}"/>
+<form id="logoutForm" action="<c:url value="/logout"/>" method="post">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>
 <%-- Welcome bar --%>
 <sec:authorize access="isAuthenticated()">
@@ -55,21 +64,26 @@
 				<input type="hidden" id="totalQuantity" value="0" />
 				<div id="cartItems">
 					<c:if test="${ not empty showShoppingCart }">
-					
+
 						<%-- Set total quantity: (no_of_item) items --%>
 						<c:set var="totalQuantity" value="0" />
-						
-						<div id="cartDetails" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
+
+						<div id="cartDetails" class="modal fade" tabindex="-1" role="dialog"
+							aria-labelledby="myLargeModalLabel" style="display: none;">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
-						            	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-						            	<h5 class="modal-title" id="important-msg-label">
-						            		<img src="<c:url value="/images/pages-front/icon/ico_cart.png" />" />  &nbsp; MY CART
-						            	</h5>
-						          	</div>
+										<button type="button" class="close" data-dismiss="modal">
+											<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+										</button>
+										<h5 class="modal-title" id="important-msg-label">
+											<img src="<c:url value="/images/pages-front/icon/ico_cart.png" />" />
+											&nbsp; MY CART
+										</h5>
+									</div>
 									<div class="modal-body">
-										<div class="row" style="font-family: 'francois_oneregular'; border-bottom: dashed 1px #ccc;">
+										<div class="row"
+											style="font-family: 'francois_oneregular'; border-bottom: dashed 1px #ccc;">
 											<div class="col-sm-1">No</div>
 											<div class="col-sm-7">Product Name</div>
 											<div class="col-sm-2">Order</div>
@@ -84,35 +98,40 @@
 												<c:otherwise>
 													<c:forEach var="product" items="${ cart }" varStatus="rowNum">
 														<c:set var="totalQuantity" value="${ totalQuantity + product.value.productQuantity }" />
-														<div class="row product-item-${ product.key }" style="font-family: 'francois_oneregular'; border-bottom: dashed 1px #ccc;">
+														<div class="row product-item-${ product.key }"
+															style="font-family: 'francois_oneregular'; border-bottom: dashed 1px #ccc;">
 															<div class="col-sm-1">${ rowNum.index + 1 }</div>
 															<div class="col-sm-7">${ product.value.productNameEn }</div>
 															<div class="col-sm-2">${ product.value.productQuantity }</div>
-															<div class="col-sm-2">${ product.value.productUnitId }</div>
+															<div class="col-sm-2">
+																<c:choose>
+																	<c:when test="${ not empty product.value.productUnitId }">product.value.productUnitId</c:when>
+																	<c:otherwise>PCS</c:otherwise>
+																</c:choose>
+															</div>
 														</div>
 													</c:forEach>
 												</c:otherwise>
 											</c:choose>
 										</div>
 									</div>
-						          	<div class="modal-footer">
-						            	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						            	<button type="button" class="btn btn-success" id="dont-show-again" onclick="checkout()">CHECK OUT</button>
-						            </div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										<button type="button" class="btn btn-success" id="dont-show-again" onclick="checkout()">CHECK
+											OUT</button>
+									</div>
 								</div>
 							</div>
 						</div>
-						
-						<span onclick="showCartDetails()" style="cursor: pointer; float: right;">
-							<span>(</span>
-							<span id="numOfProduct">${ totalQuantity }</span>
-							<span>) items</span>
+
+						<span onclick="showCartDetails()" style="cursor: pointer; float: right;"> <span>(</span>
+							<span id="numOfProduct">${ totalQuantity }</span> <span>) items</span>
 						</span>
-						
-						<img alt="shopping cart" id="shoppingCart" onclick="showCartDetails()" 
-							class="img-btn-cursor" style="float: right; margin-right: 5px;"
+
+						<img alt="shopping cart" id="shoppingCart" onclick="showCartDetails()" class="img-btn-cursor"
+							style="float: right; margin-right: 5px;"
 							src='<c:url value="/images/pages-front/icon/ico_cart.png" />' />
-						
+
 					</c:if>
 				</div>
 			</div>
@@ -132,10 +151,9 @@
 		//	width : 'auto'
 		//});
 		var total_qty = $("#numOfProduct").text();
-		if(total_qty > 0){
+		if (total_qty > 0) {
 			$('#dont-show-again').show();
-		}
-		else{
+		} else {
 			$('#dont-show-again').hide();
 		}
 		$("#cartDetails").modal();
@@ -147,5 +165,4 @@
 			window.location.replace('<c:url value="/" />');
 		});*/
 	}
-	
 </script>
