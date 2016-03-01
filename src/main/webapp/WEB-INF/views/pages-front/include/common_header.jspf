@@ -105,7 +105,7 @@
 															<div class="col-sm-2">${ product.value.productQuantity }</div>
 															<div class="col-sm-2">
 																<c:choose>
-																	<c:when test="${ not empty product.value.productUnitId }">product.value.productUnitId</c:when>
+																	<c:when test="${ not empty product.value.productUnitId }">${ product.value.productUnitId }</c:when>
 																	<c:otherwise>PCS</c:otherwise>
 																</c:choose>
 															</div>
