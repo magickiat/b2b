@@ -27,7 +27,7 @@
 					<div class="col-sm-3">
 						<%-- Image --%>
 						<div>
-							<img class="tech-img" src="${ jpgImgTechUrl }" />
+							<img class="tech-img" src="${ jpgImgTechUrl }" onerror="getDefaultFileImageName(this)"/>
 						</div>
 						<%-- Text --%>
 						<div class="text-center">

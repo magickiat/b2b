@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <!DOCTYPE html>
@@ -33,8 +32,8 @@
 
 					<img class="product zoomImg"
 						src='<c:url value="/upload/product_image/Big/${ product.productCode }.jpg" />'
-						data-zoom-image='<c:url value="${ imageUrl }" />'
-						style="width: 475px;"></img>
+						data-zoom-image='<c:url value="${ imageUrl }" />' style="width: 475px;"
+						onerror="getDefaultFileImageName(this)" />
 				</div>
 				<div class="col-sm-4">
 					<%-- Technology --%>
@@ -44,7 +43,7 @@
 							value="/upload/product_image/Thumbnail/${ product.productModelId }/${ product.productTechnologyId }.jpg" />
 
 						<div>
-							<img class="tech-img" src="${ jpgImgTechUrl }" />
+							<img class="tech-img" src="${ jpgImgTechUrl }" onerror="getDefaultFileImageName(this)" />
 
 							<div>
 								<c:out value="${ product.productTechnologyId }"></c:out>

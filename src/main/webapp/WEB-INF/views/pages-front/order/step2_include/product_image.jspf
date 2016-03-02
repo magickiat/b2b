@@ -17,7 +17,7 @@
 					<div class="col-md-3 col-sm-6 hero-feature" style="<c:if test="${ rowNum.index % 4 == 0 }">clear: left;</c:if>">
 				        <div class="thumbnail">
 				        	<a href='<c:url value="/frontend/order/step2/view?modelId=${ product.productModelId }" />'>
-								<img alt="${ product.productModelName }" src="${ productUrl }" />
+								<img alt="${ product.productModelName }" src="${ productUrl }" onerror="getDefaultFileImageName(this)" />
 							</a>
 				            <div class="caption">
 				                <p>

@@ -39,7 +39,7 @@
 
 						<img class="product zoomImg" src='<c:url value="/upload/product_image/BIG/${ p.product.productCode }.jpg" />'
 							data-zoom-image='<c:url value="${ imageUrl }" />'
-							style="width: 475px;"></img>
+							style="width: 475px;" onerror="getDefaultFileImageName(this)" />
 					</div>
 				</c:forEach>
 			</div>
