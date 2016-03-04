@@ -16,9 +16,9 @@ public class OrderDecisionForm {
 	private boolean editMode;
 	private String paymentMethodId;
 	private String paymentTermId;
-	
-	private String splitOrderDetailId;
-	
+
+	private long splitOrderDetailId;
+
 	private String remarkCustomer; // Customer remark
 	private String remarkOrders; // Staff remark
 	private String status;
@@ -133,11 +133,11 @@ public class OrderDecisionForm {
 		this.orderId = orderId;
 	}
 
-	public String getSplitOrderDetailId() {
+	public long getSplitOrderDetailId() {
 		return splitOrderDetailId;
 	}
 
-	public void setSplitOrderDetailId(String splitOrderDetailId) {
+	public void setSplitOrderDetailId(long splitOrderDetailId) {
 		this.splitOrderDetailId = splitOrderDetailId;
 	}
 }

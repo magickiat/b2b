@@ -3,6 +3,7 @@ package com.starboard.b2b.security;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,10 +26,15 @@ public class SecurityUserDetailService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		log.info("loadUserByUsername: " + username);
 		User user = userDao.login(username);
-		log.debug("user: " + user);
 		if (user == null) {
+			log.info("Not found user: " + username);
 			throw new UsernameNotFoundException(username);
 		}
+		
+		if(!user.isEnabled()){
+			 throw new DisabledException("This account has inactive");
+		}
+		
 		user.setLastActive(DateTimeUtil.getCurrentDate());
 		return user;
 	}

@@ -7,7 +7,6 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -101,22 +100,14 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public boolean update(UserForm userForm) {
 		boolean isSuccess = false;
-//		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		if(!StringUtils.isEmpty(userForm.getPassword())){
-//			user.setPassword(new MD5().encode(userForm.getPassword()));
-//		}
+		
 		User user = userDao.findById(Integer.parseInt(userForm.getId()));
 		user.setName(userForm.getName());
 		user.setUsername(userForm.getUsername());
 		user.setEmail(userForm.getEmail());		
 		user.setEnabled(userForm.isEnable());
+		user.setPassword(new MD5().encode(userForm.getPassword()));
 		
-		try{
-			userDao.update(user);
-			isSuccess = true;
-		}catch(Exception e){
-			isSuccess = false;
-		}
 		return isSuccess;
 	}
 
@@ -138,10 +129,6 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public boolean delete(UserForm userForm) {
 		boolean isSuccess = false;
-//		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		if(!StringUtils.isEmpty(userForm.getPassword())){
-//			user.setPassword(new MD5().encode(userForm.getPassword()));
-//		}
 		User user = userDao.findById(Integer.parseInt(userForm.getId()));
 		try{
 			userDao.delete(user);

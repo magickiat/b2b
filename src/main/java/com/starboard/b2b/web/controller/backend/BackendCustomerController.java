@@ -319,7 +319,7 @@ public class BackendCustomerController {
 		form.setName(user.getName());
 		form.setUsername(user.getUsername());
 		form.setEnable(user.isEnabled());
-		form.setCusId(user.getCustomerCustId());
+		form.setCusId(user.getCustomer().getCustId());
 		model.addAttribute("registerForm", form);
 		return "pages-back/customer/editCustomerUser";
 	}
@@ -328,21 +328,26 @@ public class BackendCustomerController {
 	String edituser(@ModelAttribute("registerForm") @Valid UserRegisterForm registerForm, BindingResult binding, Model model) throws Exception {
 		log.info("/edit_user POST");
 		if (!binding.hasErrors()) {
+			if(!registerForm.getPassword().trim().equals(registerForm.getConfirmPassword())){
+				model.addAttribute("errorMsg", "Password does not match with Confirm Password.");
+				return "pages-back/customer/editCustomerUser";
+			}
+			
 			User user = userService.findUserById(registerForm.getUserId());
+			
 			if (user.getUsername().equals(registerForm.getUsername()) || !userService.isExistUsername(registerForm.getUsername())) {
 				UserForm userForm = new UserForm();
-				if (!registerForm.getEmail().isEmpty()) {
-					userForm.setEmail(registerForm.getEmail());
-				}
-				if (!registerForm.getName().isEmpty()) {
-					userForm.setName(registerForm.getName());
-				}
+				
 				userForm.setUsername(registerForm.getUsername());
+				userForm.setPassword(registerForm.getPassword());
 				userForm.setEnable(registerForm.getEnable());
 				userForm.setCustId(registerForm.getCusId());
 				userForm.setId(registerForm.getUserId().toString());
 				userForm.setEnable(registerForm.getEnable());
-				boolean isSuccess = userService.update(userForm);
+				userForm.setEmail(registerForm.getEmail());
+				userForm.setName(registerForm.getName());
+				
+				userService.update(userForm);
 				return update(registerForm.getCusId(), model);
 			} else {
 				model.addAttribute("errorMsg", "Exist username: " + registerForm.getUsername());
@@ -358,32 +363,11 @@ public class BackendCustomerController {
 		UserForm userForm = new UserForm();
 		userForm.setId(userId.toString());
 		User user = userService.findUserById(userId);
-		long custId = user.getCustomerCustId();
 		boolean isDeleteSuccess = userService.delete(userForm);
-		List<User> users = new ArrayList<User>();
-		List<AddressDTO> listAddress = customerService.findAddressByCustomerId(custId);
-		List<ContactDTO> listContact = customerService.findContactByCustomerId(custId);
-		List<CountryDTO> listCountry = customerService.listCountry();
-
-		CustDTO custDto = customerService.findCustById(custId);
-
-		if (custDto != null && custDto.getCustId() != 0) {
-			users = userService.findUserByCustId(custId);
+		
+		if(!isDeleteSuccess){
+			model.addAttribute("errorMsg", "Cannot delete user: " + user.getName());
 		}
-
-		ContactForm contactForm = new ContactForm();
-		AddressForm addrFrom = new AddressForm();
-		model.addAttribute("customerForm", custDto);
-		model.addAttribute("users", users);
-		model.addAttribute("selectedBrand", customerService.getCustBrandGroupById(custId));
-		model.addAttribute("listAddr", listAddress);
-		model.addAttribute("addressTypes", getAddressConstant());
-		model.addAttribute("listMobileType", customerService.getMobileType());
-		model.addAttribute("country", listCountry);
-		model.addAttribute("addressForm", addrFrom);
-		model.addAttribute("contactForm", contactForm);
-		model.addAttribute("listContact", listContact);
-		model.addAttribute("id", userId);
-		return "pages-back/customer/edit";
+		return update(user.getCustomer().getCustId(), model);
 	}
 }

@@ -1,7 +1,8 @@
 package com.starboard.b2b.web.controller.backend;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -37,7 +38,11 @@ import com.starboard.b2b.web.form.order.SearchOrderForm;
 // @SessionAttributes(value = { "orderDetails" })
 public class BackendOrderController {
 
+	private static final String ORDER_DETAIL = "orderDetail";
+
 	private static final Logger log = LoggerFactory.getLogger(BackendOrderController.class);
+
+	private static final String SESSION_ORDER_DETAILS_FORM = "orderDetailsForm";
 
 	@Autowired
 	private Environment environment;
@@ -86,7 +91,7 @@ public class BackendOrderController {
 	}
 
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
-	String viewOrder(@RequestParam(name = "orderId") Long orderId, @RequestParam(name = "from", required = false) String from, Model model) {
+	String viewOrder(@RequestParam(name = "orderId") Long orderId, Model model, HttpServletRequest request) {
 		log.info("Report for order: {}", orderId);
 
 		OrderDecisionForm form = new OrderDecisionForm();
@@ -122,11 +127,15 @@ public class BackendOrderController {
 		if (dbOrderDetails != null && !dbOrderDetails.isEmpty()) {
 			form.setOrderDetails(dbOrderDetails);
 			log.info("form.getOrderDetails() size: " + form.getOrderDetails().size());
+		} else {
+			request.getSession().removeAttribute(SESSION_ORDER_DETAILS_FORM);
 		}
 
 		setOrderFormValue(form);
 
 		model.addAttribute("approveForm", form);
+		request.getSession().setAttribute(SESSION_ORDER_DETAILS_FORM, form);
+
 		return "pages-back/order/view";
 	}
 
@@ -160,7 +169,7 @@ public class BackendOrderController {
 	}
 
 	@RequestMapping(value = "/approve", method = RequestMethod.POST)
-	String approve(@ModelAttribute("approveForm") OrderDecisionForm form, long orderId, Model model) {
+	String approve(@ModelAttribute("approveForm") OrderDecisionForm form, long orderId, Model model, HttpServletRequest request) {
 		log.info(form.toString());
 		log.info("orderId: " + orderId);
 
@@ -192,11 +201,11 @@ public class BackendOrderController {
 			log.error(e.getMessage(), e);
 		}
 
-		return viewOrder(orderId, null, model);
+		return viewOrder(orderId, model, request);
 	}
 
 	@RequestMapping(value = "/reject", method = RequestMethod.POST)
-	String reject(@ModelAttribute("approveForm") OrderDecisionForm form, long orderId, Model model) {
+	String reject(@ModelAttribute("approveForm") OrderDecisionForm form, long orderId, Model model, HttpServletRequest request) {
 		OrderDTO order = orderService.findOrder(orderId);
 		if (order == null) {
 			throw new B2BException("Not found order " + orderId);
@@ -224,11 +233,11 @@ public class BackendOrderController {
 			log.error(e.getMessage(), e);
 		}
 
-		return viewOrder(orderId, null, model);
+		return viewOrder(orderId, model, request);
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	String save(@ModelAttribute("approveForm") OrderDecisionForm form, Model model) {
+	String save(@ModelAttribute("approveForm") OrderDecisionForm form, Model model, HttpServletRequest request) {
 		log.info("Form: " + form);
 		log.info("orderDtails: " + form.getOrderDetails());
 		if (form.isEditMode()) {
@@ -237,36 +246,51 @@ public class BackendOrderController {
 			throw new B2BException("Not save because it not edit mode");
 		}
 
-		return viewOrder(form.getOrderId(), null, model);
+		return viewOrder(form.getOrderId(), model, request);
 	}
 
 	@RequestMapping(value = "/change-price-group", method = RequestMethod.POST)
-	String changePriceGroup(@ModelAttribute("approveForm") OrderDecisionForm form, Model model) {
-		log.info("Change price group");
+	String changePriceGroup(@ModelAttribute("approveForm") OrderDecisionForm form, Model model, HttpServletRequest request) {
+		log.info("Change price group: " + form);
 		// ----- set require list form -----
 		setOrderFormValue(form);
 
 		// ----- find new price group -----
 		if (form.getOrderDetails() != null && !form.getOrderDetails().isEmpty()) {
 			log.info("form.getOrderDetails() size: " + form.getOrderDetails().size());
-			List<SearchOrderDetailDTO> orderDetails = new ArrayList<>();
-
-			for (SearchOrderDetailDTO dto : form.getOrderDetails()) {
-				if (StringUtils.isNotEmpty(dto.getProductCode())) {
-					orderDetails.add(dto);
-				}
-			}
-
-			form.setOrderDetails(orderDetails);
 			productService.findOrderPriceList(form.getOrderDetails());
 		}
+
+		request.getSession().setAttribute(SESSION_ORDER_DETAILS_FORM, form);
+
 		return "pages-back/order/view";
 	}
 
 	@RequestMapping(value = "/split", method = RequestMethod.POST)
-	String split(@ModelAttribute("approveForm") OrderDecisionForm form, Model model) {
+	String split(@ModelAttribute("approveForm") OrderDecisionForm form, Model model, HttpServletRequest request) {
 		log.info("split");
 		log.info("Form: " + form);
+
+		List<SearchOrderDetailDTO> orderDetails = form.getOrderDetails();
+		
+		SearchOrderDetailDTO orderDetail = null;
+		for (SearchOrderDetailDTO dto : orderDetails) {
+			if(dto.getOrderDetailId() == form.getSplitOrderDetailId()){
+				orderDetail = dto;
+				break;
+			}
+		}
+		
+		if(orderDetail == null){
+			throw new B2BException("Not found order detail id: " + form.getSplitOrderDetailId());
+		}
+		if(orderDetail.getAmount() <= 0){
+			throw new B2BException("Order detail id: " + form.getSplitOrderDetailId() + " not have any quantity");
+		}
+		
+		request.getSession().setAttribute(ORDER_DETAIL, orderDetail);
+		request.getSession().setAttribute(SESSION_ORDER_DETAILS_FORM, form);
+		
 
 		return "pages-back/order/split";
 	}

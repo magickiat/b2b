@@ -31,6 +31,7 @@ import com.starboard.b2b.dto.CustPriceGroupDTO;
 import com.starboard.b2b.dto.MobileTypeDTO;
 import com.starboard.b2b.dto.search.SearchCustResult;
 import com.starboard.b2b.dto.search.SearchRequest;
+import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.model.Addr;
 import com.starboard.b2b.model.Contact;
 import com.starboard.b2b.model.Cust;
@@ -207,7 +208,12 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional(readOnly = true)
 	public CustDTO findCustById(Long custId) {
+		log.info("findCustById " + custId);
+		
 		Cust cust = custDao.findById(custId);
+		if(cust == null){
+			throw new B2BException("Cannot found customer id " + custId );
+		}
 		CustDTO dto = new CustDTO();
 		BeanUtils.copyProperties(cust, dto);
 		return dto;
