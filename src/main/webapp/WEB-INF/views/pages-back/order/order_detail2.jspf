@@ -39,9 +39,6 @@
 							<form:input type="hidden" path="orderDetails[${ rowNum.index }].pending" />
 							<form:input type="hidden" path="orderDetails[${ rowNum.index }].productUnit" />
 							<form:input type="hidden" path="orderDetails[${ rowNum.index }].unitPrice" />
-							
-							
-							<form:input type="hidden" path="orderDetails[${ rowNum.index }].orderId" />
 							<form:input type="hidden" path="orderDetails[${ rowNum.index }].productId" />
 							<form:input type="hidden" path="orderDetails[${ rowNum.index }].status" />
 							<form:input type="hidden" path="orderDetails[${ rowNum.index }].price" />
