@@ -71,7 +71,7 @@
 </div>
 
 <c:if test="${!empty errorMsg }">
-	<div class="row text-danger bg_color">
+	<div class="row alert alert-danger">
 		<div class="col-sm-12 text-center">${ errorMsg }</div>
 	</div>
 	<div class="row">&nbsp;</div>
