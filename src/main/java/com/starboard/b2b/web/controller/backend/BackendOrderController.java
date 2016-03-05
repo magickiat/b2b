@@ -1,5 +1,6 @@
 package com.starboard.b2b.web.controller.backend;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,17 +33,17 @@ import com.starboard.b2b.service.RoSyncService;
 import com.starboard.b2b.web.form.order.OrderDecisionForm;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
 import com.starboard.b2b.web.form.order.SearchOrderForm;
+import com.starboard.b2b.web.form.order.SplitOrderForm;
 
 @Controller
 @RequestMapping("/backend/order")
 // @SessionAttributes(value = { "orderDetails" })
 public class BackendOrderController {
 
-	private static final String ORDER_DETAIL = "orderDetail";
-
 	private static final Logger log = LoggerFactory.getLogger(BackendOrderController.class);
 
 	private static final String SESSION_ORDER_DETAILS_FORM = "orderDetailsForm";
+	private static final String SPLIT_FORM = "splitForm";
 
 	@Autowired
 	private Environment environment;
@@ -272,25 +273,61 @@ public class BackendOrderController {
 		log.info("Form: " + form);
 
 		List<SearchOrderDetailDTO> orderDetails = form.getOrderDetails();
-		
+
 		SearchOrderDetailDTO orderDetail = null;
 		for (SearchOrderDetailDTO dto : orderDetails) {
-			if(dto.getOrderDetailId() == form.getSplitOrderDetailId()){
+			if (dto.getOrderDetailId() == form.getSplitOrderDetailId()) {
 				orderDetail = dto;
 				break;
 			}
 		}
-		
-		if(orderDetail == null){
+
+		log.info("Order Detail: " + orderDetail);
+		if (orderDetail == null) {
 			throw new B2BException("Not found order detail id: " + form.getSplitOrderDetailId());
 		}
-		if(orderDetail.getAmount() <= 0){
+		if (orderDetail.getAmount() <= 0) {
 			throw new B2BException("Order detail id: " + form.getSplitOrderDetailId() + " not have any quantity");
 		}
-		
-		request.getSession().setAttribute(ORDER_DETAIL, orderDetail);
+
+		// ----- set form -----
+		List<SearchOrderDetailDTO> splitOrderDetails = new ArrayList<>();
+		splitOrderDetails.add(orderDetail);
+
+		SplitOrderForm splitForm = new SplitOrderForm();
+		splitForm.setSplitNum(1);
+		splitForm.setOrderDetail(orderDetail);
+		splitForm.setSplitOrderDetails(splitOrderDetails);
+
+		form.setPaymentMethodList(orderService.findAllPaymentMethod());
+		form.setPaymentTermList(orderService.findAllPaymentTerm());
+		form.setProductPriceGroupList(productService.listProductPriceGroup());
+
+		model.addAttribute(SPLIT_FORM, splitForm);
 		request.getSession().setAttribute(SESSION_ORDER_DETAILS_FORM, form);
+
+		return "pages-back/order/split";
+	}
+
+	@RequestMapping(value = "/split-action", method = RequestMethod.POST)
+	String splitOrderDetail(@ModelAttribute("splitForm") SplitOrderForm form, Model model, HttpServletRequest request) {
+		log.info("Split order form: " + form);
 		
+		if (form.getSplitNum() <= 0) {
+			model.addAttribute("errorMsg", "Invalid number of split");
+		} else if (form.getSplitNum() > form.getOrderDetail().getAmount()) {
+			model.addAttribute("errorMsg", "Maximum split line is " + form.getOrderDetail().getAmount());
+		}else{
+			List<SearchOrderDetailDTO> splitOrderDetails = new ArrayList<>();
+			
+			for(int i = 0; i< form.getSplitNum(); i++){
+				SearchOrderDetailDTO orderDetail = form.getOrderDetail();
+				orderDetail.setAmount(0);
+				splitOrderDetails.add(orderDetail);
+			}
+			
+			form.setSplitOrderDetails(splitOrderDetails);
+		}
 
 		return "pages-back/order/split";
 	}

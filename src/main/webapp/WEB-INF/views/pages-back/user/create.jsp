@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -15,7 +15,7 @@
 			
 	<div class="container">
 		<div class="row">
-			<form:form servletRelativeAction="/backend/user/create" class="form-horizontal"
+			<form:form servletRelativeAction="/backend/user/create" cssClass="form-horizontal"
 			commandName="registerForm" method="post" onsubmit="return validateForm()">
 			<form:hidden path="cusId"/>
 			<form:hidden path="roles" value="ROLE_USER"/>
