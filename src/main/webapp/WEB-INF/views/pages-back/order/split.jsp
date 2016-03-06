@@ -17,7 +17,7 @@
 	<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 
 	<div class="container">
-		<form:form modelAttribute="splitForm" servletRelativeAction="/backend/order/split-action"
+		<form:form id="splitOrderDetailForm" modelAttribute="splitForm" servletRelativeAction="/backend/order/split-action"
 			cssClass="form-horizontal">
 
 			<div class="row bg_color">
@@ -70,7 +70,7 @@
 									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].orderId" />
 									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productCode" />
 									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productName" />
-									<%-- <form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].amount" /> --%>
+									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].amount" />
 									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].shiped" />
 									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].pending" />
 									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productUnit" />
@@ -88,7 +88,7 @@
 									<td>${ ordDetail.productName }</td>
 
 									<td>
-										<select id="splitForm.splitOrderDetails[${ rowNum.index }].productBuyerGroupId" name="splitForm.splitOrderDetails[${ rowNum.index }].productBuyerGroupId"
+										<select id="splitOrderDetails[${ rowNum.index }].productBuyerGroupId" name="splitOrderDetails[${ rowNum.index }].productBuyerGroupId"
 											class="form-control" onchange="changePriceGroup(${ splitForm.splitOrderDetails[rowNum.index].orderDetailId }, this)">
 											<option value=""></option>
 											<c:forEach var="pg" varStatus="pgRow" items="${ orderDetailsForm.productPriceGroupList }">
@@ -176,6 +176,13 @@
 			
 			$('#totalQty').text(total);
 			$('#totalSplitQty').val(total);
+		}
+		
+		function changePriceGroup(id, objSelect){
+			console.log(id + '\t' +$(objSelect).val());
+			var form = $('#splitOrderDetailForm');
+			form.attr('action', '<c:url value="/backend/order/change-price-group-for-split" />');
+			form.submit();
 		}
 		
 		function confirmSplitOrder(){

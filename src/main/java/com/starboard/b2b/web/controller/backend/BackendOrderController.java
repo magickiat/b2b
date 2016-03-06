@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -312,22 +313,35 @@ public class BackendOrderController {
 	@RequestMapping(value = "/split-action", method = RequestMethod.POST)
 	String splitOrderDetail(@ModelAttribute("splitForm") SplitOrderForm form, Model model, HttpServletRequest request) {
 		log.info("Split order form: " + form);
-		
+
 		if (form.getSplitNum() <= 0) {
 			model.addAttribute("errorMsg", "Invalid number of split");
 		} else if (form.getSplitNum() > form.getOrderDetail().getAmount()) {
 			model.addAttribute("errorMsg", "Maximum split line is " + form.getOrderDetail().getAmount());
-		}else{
+		} else {
 			List<SearchOrderDetailDTO> splitOrderDetails = new ArrayList<>();
-			
-			for(int i = 0; i< form.getSplitNum(); i++){
-				SearchOrderDetailDTO orderDetail = form.getOrderDetail();
-				orderDetail.setAmount(0);
-				splitOrderDetails.add(orderDetail);
+			SearchOrderDetailDTO original = form.getOrderDetail();
+			for (int i = 0; i < form.getSplitNum(); i++) {
+				SearchOrderDetailDTO dto = new SearchOrderDetailDTO();
+				BeanUtils.copyProperties(original, dto);
+				dto.setAmount(1);
+				splitOrderDetails.add(dto);
 			}
-			
+
 			form.setSplitOrderDetails(splitOrderDetails);
+			changePriceGroupForSplit(form, model, request);
 		}
+
+		return "pages-back/order/split";
+	}
+	
+	@RequestMapping(value = "/change-price-group-for-split", method = RequestMethod.POST)
+	String changePriceGroupForSplit(@ModelAttribute("splitForm") SplitOrderForm form, Model model, HttpServletRequest request) {
+		log.info("Change price group for split: " + form);
+
+		// ----- find new price group -----
+		log.info("form.getSplitOrderDetails() size: " + form.getSplitOrderDetails().size());
+		productService.findOrderPriceList(form.getSplitOrderDetails());
 
 		return "pages-back/order/split";
 	}
