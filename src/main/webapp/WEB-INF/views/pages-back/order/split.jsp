@@ -17,8 +17,8 @@
 	<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 
 	<div class="container">
-		<form:form id="splitOrderDetailForm" modelAttribute="splitForm" servletRelativeAction="/backend/order/split-action"
-			cssClass="form-horizontal">
+		<form:form id="splitOrderDetailForm" modelAttribute="splitForm"
+			servletRelativeAction="/backend/order/split-action" cssClass="form-horizontal">
 
 			<div class="row bg_color">
 				<div class="col-sm-12">
@@ -88,12 +88,14 @@
 									<td>${ ordDetail.productName }</td>
 
 									<td>
-										<select id="splitOrderDetails[${ rowNum.index }].productBuyerGroupId" name="splitOrderDetails[${ rowNum.index }].productBuyerGroupId"
-											class="form-control" onchange="changePriceGroup(${ splitForm.splitOrderDetails[rowNum.index].orderDetailId }, this)">
+										<select id="splitOrderDetails[${ rowNum.index }].productBuyerGroupId"
+											name="splitOrderDetails[${ rowNum.index }].productBuyerGroupId" class="form-control"
+											onchange="changePriceGroup(${ splitForm.splitOrderDetails[rowNum.index].orderDetailId }, this)">
 											<option value=""></option>
 											<c:forEach var="pg" varStatus="pgRow" items="${ orderDetailsForm.productPriceGroupList }">
 												<c:set var="selected" value="" />
-												<c:if test="${ pg.productPriceGroupId eq  splitForm.splitOrderDetails[rowNum.index].productBuyerGroupId}">
+												<c:if
+													test="${ pg.productPriceGroupId eq  splitForm.splitOrderDetails[rowNum.index].productBuyerGroupId}">
 													<c:set var="selected" value="selected='selected'" />
 												</c:if>
 												<option value="${ pg.productPriceGroupId }" ${ selected }>${ pg.productPriceGroupName }</option>
@@ -117,16 +119,16 @@
 										</c:choose>
 									</td>
 									<td>
-
-										<c:choose>
-											<c:when test="${ ordDetail.unitPrice == null }">TBA</c:when>
-											<c:otherwise>
-												<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
-													value="${ ordDetail.amount * ordDetail.unitPrice }">
-												</fmt:formatNumber>
-											</c:otherwise>
-										</c:choose>
-
+										<div id="splitOrderDetails${ rowNum.index }.totalAmount">
+											<c:choose>
+												<c:when test="${ ordDetail.unitPrice == null }">TBA</c:when>
+												<c:otherwise>
+													<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
+														value="${ ordDetail.amount * ordDetail.unitPrice }">
+													</fmt:formatNumber>
+												</c:otherwise>
+											</c:choose>
+										</div>
 									</td>
 
 								</tr>
@@ -136,7 +138,7 @@
 							<tr>
 								<td colspan="4" align="right">Total Qty</td>
 								<td colspan="1">
-									<form:hidden path="totalSplitQty"/>
+									<form:hidden path="totalSplitQty" />
 									<div id="totalQty"></div>
 								</td>
 								<td colspan="3" align="right">Maximum Qty: ${ splitForm.orderDetail.amount }</td>
@@ -174,8 +176,31 @@
 				}
 			});
 			
-			$('#totalQty').text(total);
+			$('#totalQty').text(formatNumber(total));
 			$('#totalSplitQty').val(total);
+			
+			updateSplitAmount();
+		}
+		
+		function updateSplitAmount(){
+			console.log('Summary Split Amount');
+			
+			var row = -1;
+			$('.splitqty').each(function() {
+				row++;
+				console.log('row ' + row);
+				if ($(this).val()) {
+					
+					var objUnitPrice = $('#splitOrderDetails' + row + '\\.unitPrice');
+					console.log('\tunitAmt ' + objUnitPrice.val());
+					if(objUnitPrice && objUnitPrice.val() && objUnitPrice.val() != 'TBA'){
+						var qty = parseInt($(this).val());
+						var unitPrice = parseInt(objUnitPrice.val());
+						$('#splitOrderDetails'+ row +'\\.totalAmount').text(formatNumber(qty * unitPrice));
+					}
+				}
+			});
+			
 		}
 		
 		function changePriceGroup(id, objSelect){
