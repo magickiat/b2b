@@ -13,11 +13,11 @@
 		
 				<c:forEach items="${ resultPage.result }" var="product" varStatus="rowNum">
 					<%-- Check if not found image, use default image --%>
-					<c:url var="productUrl" value="/upload/product_image/Medium/${ product.productModelId }.jpg" />
+					<c:url var="productUrl" value="/upload/product_image/Category/${ product.productModelId }.jpg" />
 					<div class="col-md-3 col-sm-6 hero-feature" style="<c:if test="${ rowNum.index % 4 == 0 }">clear: left;</c:if>">
 				        <div class="thumbnail">
 				        	<a href='<c:url value="/frontend/order/step2/view?modelId=${ product.productModelId }" />'>
-								<img alt="${ product.productModelName }" src="${ productUrl }" />
+								<img alt="${ product.productModelName }" src="${ productUrl }" onerror="getDefaultFileImageName(this)" />
 							</a>
 				            <div class="caption">
 				                <p>

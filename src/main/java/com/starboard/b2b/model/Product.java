@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -138,7 +140,7 @@ public class Product implements java.io.Serializable {
 	}
 
 	@Id
-
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "product_id", unique = true, nullable = false)
 	public long getProductId() {
 		return this.productId;
@@ -355,7 +357,7 @@ public class Product implements java.io.Serializable {
 		this.productItemGroupId = productItemGroupId;
 	}
 
-	@Column(name = "vendor", length = 32)
+	@Column(name = "vendor", length = 100)
 	public String getVendor() {
 		return this.vendor;
 	}
@@ -391,7 +393,7 @@ public class Product implements java.io.Serializable {
 		this.searchName = searchName;
 	}
 
-	@Column(name = "product_technology_id", length = 16)
+	@Column(name = "product_technology_id", length = 100)
 	public String getProductTechnologyId() {
 		return this.productTechnologyId;
 	}
@@ -427,7 +429,7 @@ public class Product implements java.io.Serializable {
 		this.productWidth = productWidth;
 	}
 
-	@Column(name = "product_length", length = 11)
+	@Column(name = "product_length", length = 100)
 	public String getProductLength() {
 		return this.productLength;
 	}
@@ -463,7 +465,7 @@ public class Product implements java.io.Serializable {
 		this.productCategoryId = productCategoryId;
 	}
 
-	@Column(name = "product_model_id", length = 16)
+	@Column(name = "product_model_id", length = 100)
 	public String getProductModelId() {
 		return this.productModelId;
 	}

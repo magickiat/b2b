@@ -2,12 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
 <%@include file="/WEB-INF/views/include/common_meta.jspf"%>
-<title>Starboard Windsurfing</title>
+<title><spring:message code="page.header"></spring:message></title>
 <%@include file="/WEB-INF/views/include/common_css.jspf"%>
 </head>
 <body>

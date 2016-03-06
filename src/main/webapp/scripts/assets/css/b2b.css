@@ -35,7 +35,6 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 	height: 100%;
 	margin-top: 30px;
 	margin-bottom: 30px;
-	
 }
 
 .bottom-align-text {
@@ -543,4 +542,9 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 
 .clear-block {
 	display: block;
+}
+
+.default-thumbnail {
+	 max-width: 221px;
+	 max-height: 220px;
 }

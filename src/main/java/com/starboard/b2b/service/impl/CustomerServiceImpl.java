@@ -18,6 +18,7 @@ import com.starboard.b2b.dao.ContactDao;
 import com.starboard.b2b.dao.CountryDao;
 import com.starboard.b2b.dao.CustBrandGroupDAO;
 import com.starboard.b2b.dao.CustDao;
+import com.starboard.b2b.dao.CustPriceGroupDao;
 import com.starboard.b2b.dao.CustomerDao;
 import com.starboard.b2b.dao.MobileTypeDao;
 import com.starboard.b2b.dao.ProductTypeDao;
@@ -26,12 +27,15 @@ import com.starboard.b2b.dto.ContactDTO;
 import com.starboard.b2b.dto.CountryDTO;
 import com.starboard.b2b.dto.CustBrandGroupDTO;
 import com.starboard.b2b.dto.CustDTO;
+import com.starboard.b2b.dto.CustPriceGroupDTO;
 import com.starboard.b2b.dto.MobileTypeDTO;
 import com.starboard.b2b.dto.search.SearchCustResult;
 import com.starboard.b2b.dto.search.SearchRequest;
+import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.model.Addr;
 import com.starboard.b2b.model.Contact;
 import com.starboard.b2b.model.Cust;
+import com.starboard.b2b.model.CustPriceGroup;
 import com.starboard.b2b.model.ProductType;
 import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.util.ApplicationConfig;
@@ -39,7 +43,6 @@ import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.brand.BrandForm;
 import com.starboard.b2b.web.form.customer.CreateCustomerForm;
-import com.starboard.b2b.web.form.customer.CustomerForm;
 import com.starboard.b2b.web.form.customer.SearchCustomerForm;
 
 @Service("customerService")
@@ -71,6 +74,9 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	private MobileTypeDao mobileTypeDao;
+
+	@Autowired
+	private CustPriceGroupDao custPriceGroupDao;
 
 	@Transactional(readOnly = true)
 	public CustDTO findById(Long id) {
@@ -202,7 +208,12 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional(readOnly = true)
 	public CustDTO findCustById(Long custId) {
+		log.info("findCustById " + custId);
+		
 		Cust cust = custDao.findById(custId);
+		if(cust == null){
+			throw new B2BException("Cannot found customer id " + custId );
+		}
 		CustDTO dto = new CustDTO();
 		BeanUtils.copyProperties(cust, dto);
 		return dto;
@@ -332,5 +343,13 @@ public class CustomerServiceImpl implements CustomerService {
 	@Transactional(readOnly = true)
 	public List<MobileTypeDTO> getMobileType() {
 		return mobileTypeDao.findAll();
+	}
+
+	@Override
+	public CustPriceGroupDTO findCustPriceGroup(String custCode, long productType) {
+		CustPriceGroup priceGroup = custPriceGroupDao.findByCustCode(custCode, productType);
+		CustPriceGroupDTO dto = new CustPriceGroupDTO();
+		BeanUtils.copyProperties(priceGroup, dto);
+		return dto;
 	}
 }

@@ -1,38 +1,45 @@
 package com.starboard.b2b.util;
 
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("applicationConfig")
 @PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
 public class ApplicationConfig {
 
-	//TODO with replace properties file
+	private static final Logger log = LoggerFactory.getLogger(ApplicationConfig.class);
+	// TODO with replace properties file
 	
-//	@Value("${page.size}")
+	@Autowired
+	private Environment env;
+
+	// @Value("${page.size}")
 	private String pageSize;
 
-//	@Value("${order.status.new}")
+	// @Value("${order.status.new}")
 	private String orderStatusNew;
 
-//	@Value("${default.new.order.payment.term.id}")
+	// @Value("${default.new.order.payment.term.id}")
 	private String defaultPaymentTermId;
 
-//	@Value("${default.product.currency}")
+	// @Value("${default.product.currency}")
 	private String defaultProductCurrency;
 
-//	@Value("${default.product.unit}")
+	// @Value("${default.product.unit}")
 	private String defaultProductUnit;
 
-//	@Value("${enabled.send.mail}")
-	private String enableSendMail;
-
 	public int getPageSize() {
-		return 12;
+		return Integer.parseInt(env.getProperty("page.size"));
 	}
 
 	public boolean getEnabledSendMail() {
-		return false;
+		return Boolean.parseBoolean(env.getProperty("enabled.send.mail"));
 	}
 
 	public String getOrderStatusNew() {
@@ -49,5 +56,35 @@ public class ApplicationConfig {
 
 	public String getDefaultProductUnit() {
 		return "PCS";
+	}
+
+	public String getDefaultProductBuyerGroup() {
+		return "GROUP1";
+	}
+
+	public Long getDefaultOrderDetailStatus() {
+		return 0L;
+	}
+
+	public String getDefaultProductLength() {
+		return "Undefined";
+	}
+
+	public String[] getMailApprover() {
+		return EmailUtils.split(env.getProperty("email.sales"));
+	}
+
+	public String[] getMailBCCApprover() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String[] getMailCCApprover() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getMailFrom() {
+		return "b2b@star-board.com";
 	}
 }

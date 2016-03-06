@@ -1,12 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <%@include file="/WEB-INF/views/include/common_meta.jspf"%>
-<title>Starboard Windsurfing</title>
+<title><spring:message code="page.header"></spring:message></title>
 <%@include file="/WEB-INF/views/include/common_cssbackend.jspf"%>
 </head>
 <body>
@@ -32,19 +31,19 @@
 					</h3>
 
 					<img class="product zoomImg"
-						src='<c:url value="/upload/product_image/BIG/${ product.productCode }.jpg" />'
-						data-zoom-image='<c:url value="${ imageUrl }" />'
-						style="width: 475px;"></img>
+						src='<c:url value="/upload/product_image/Big/${ product.productCode }.jpg" />'
+						data-zoom-image='<c:url value="${ imageUrl }" />' style="width: 475px;"
+						onerror="getDefaultFileImageName(this)" />
 				</div>
 				<div class="col-sm-4">
 					<%-- Technology --%>
 					<div class="row product-img-big-view">
 						<h3>TECHNOLOGY</h3>
 						<c:url var="jpgImgTechUrl"
-							value="/upload/product_image/Technology/${ product.productModelId }/${ product.productTechnologyId }.jpg" />
+							value="/upload/product_image/Thumbnail/${ product.productModelId }/${ product.productTechnologyId }.jpg" />
 
 						<div>
-							<img class="tech-img" src="${ jpgImgTechUrl }" />
+							<img class="tech-img" src="${ jpgImgTechUrl }" onerror="getDefaultFileImageName(this)" />
 
 							<div>
 								<c:out value="${ product.productTechnologyId }"></c:out>

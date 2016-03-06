@@ -38,7 +38,7 @@
 						<a href='<c:url value="/backend/admin/index" />'>Admin</a>
 					</li>
 					<li>
-						<a href="#">User management</a>
+						<a href='<c:url value="/backend/user/search" />'>User management</a>
 					</li>
 					<li>
 						<a href="#">My Information</a>
@@ -71,7 +71,7 @@
 </div>
 
 <c:if test="${!empty errorMsg }">
-	<div class="row text-danger bg_color">
+	<div class="row alert alert-danger">
 		<div class="col-sm-12 text-center">${ errorMsg }</div>
 	</div>
 	<div class="row">&nbsp;</div>

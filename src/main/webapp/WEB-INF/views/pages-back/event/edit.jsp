@@ -1,3 +1,4 @@
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%--
   Created by IntelliJ IDEA.
   User: Thanakit Jumparuang
@@ -14,7 +15,7 @@
 <html>
 <head>
     <%@include file="/WEB-INF/views/include/common_meta.jspf" %>
-    <title>Backend-Edit Feed Content</title>
+    <title><spring:message code="page.header"></spring:message></title>
     <%@include file="/WEB-INF/views/include/common_cssbackend.jspf"%>
     <link rel="stylesheet" href="<c:url value="/scripts/assets/datepicker/bootstrap-datetimepicker.css"/>" media="screen">
 </head>

@@ -17,7 +17,12 @@ public class OrderDecisionForm {
 	private String paymentMethodId;
 	private String paymentTermId;
 
+	private long splitOrderDetailId;
+
+	private String remarkCustomer; // Customer remark
+	private String remarkOrders; // Staff remark
 	private String status;
+	private long orderId;
 
 	private List<PaymentMethodDTO> paymentMethodList;
 	private List<PaymentTermDTO> paymentTermList;
@@ -102,5 +107,37 @@ public class OrderDecisionForm {
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
+	}
+
+	public String getRemarkCustomer() {
+		return remarkCustomer;
+	}
+
+	public void setRemarkCustomer(String remarkCustomer) {
+		this.remarkCustomer = remarkCustomer;
+	}
+
+	public String getRemarkOrders() {
+		return remarkOrders;
+	}
+
+	public void setRemarkOrders(String remarkOrders) {
+		this.remarkOrders = remarkOrders;
+	}
+
+	public long getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(long orderId) {
+		this.orderId = orderId;
+	}
+
+	public long getSplitOrderDetailId() {
+		return splitOrderDetailId;
+	}
+
+	public void setSplitOrderDetailId(long splitOrderDetailId) {
+		this.splitOrderDetailId = splitOrderDetailId;
 	}
 }

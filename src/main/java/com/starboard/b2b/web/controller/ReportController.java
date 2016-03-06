@@ -46,6 +46,7 @@ import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ProductService;
+import com.starboard.b2b.util.B2BFileUtil;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
 
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -76,105 +77,7 @@ public class ReportController {
 		
 		log.info("Generate excel order report: orderId = " + orderId);
 		String filename = "excel_order_list";
-		HSSFWorkbook workbook = new HSSFWorkbook();
-		// ----- Create header row sheet "order" -----
-		HSSFSheet sheetOrder = workbook.createSheet("order");
-		HSSFRow rowHeadOrder = sheetOrder.createRow(0);
-		rowHeadOrder.createCell(0).setCellValue("Request ID");
-		rowHeadOrder.createCell(1).setCellValue("Customer");
-		rowHeadOrder.createCell(2).setCellValue("Brand");
-		rowHeadOrder.createCell(3).setCellValue("Order Date");
-		rowHeadOrder.createCell(4).setCellValue("Expected Shipment Date");
-		rowHeadOrder.createCell(5).setCellValue("Status");
-
-		if (orderId != null && orderId.length > 0) {
-			
-			List<SearchOrderDTO> orderList = orderService.findOrderForReport(orderId);
-			log.info("order size: " + (orderList == null? 0 : orderList.size()));
-			if (orderList != null && orderList.size() > 0) {
-
-				// ----- Create order detail row
-				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY", Locale.US);
-				int orderRow = 1;
-				for (SearchOrderDTO order : orderList) {
-					HSSFRow orderRow1 = sheetOrder.createRow(orderRow++);
-					orderRow1.createCell(0).setCellValue(StringUtils.isEmpty(order.getOrderCode()) ? "" : order.getOrderCode());
-					orderRow1.createCell(1).setCellValue(StringUtils.isEmpty(order.getCustomerName()) ? "" : order.getCustomerName());
-					orderRow1.createCell(2).setCellValue(StringUtils.isEmpty(order.getProductTypeName()) ? "" : order.getProductTypeName());
-					if (order.getOrderDate() == null) {
-						orderRow1.createCell(3).setCellValue("");
-					} else {
-						orderRow1.createCell(3).setCellValue(sdf.format(order.getOrderDate()));
-					}
-					if (order.getExpectShipmentDate() == null) {
-						orderRow1.createCell(4).setCellValue("");
-					} else {
-						orderRow1.createCell(4).setCellValue(sdf.format(order.getExpectShipmentDate()));
-					}
-
-					orderRow1.createCell(5).setCellValue(StringUtils.isEmpty(order.getOrderStatus()) ? "" : order.getOrderStatus());
-
-				}
-				
-				// ----- resize column -----
-				sheetOrder.autoSizeColumn(0);
-				sheetOrder.autoSizeColumn(1);
-				sheetOrder.autoSizeColumn(2);
-				sheetOrder.autoSizeColumn(3);
-				sheetOrder.autoSizeColumn(4);
-				sheetOrder.autoSizeColumn(5);
-
-				// ----- Create orderline sheet -----
-				HSSFSheet sheetOrderLine = workbook.createSheet("orderline");
-				HSSFRow rowHeadOrderLine = sheetOrderLine.createRow(0);
-				rowHeadOrderLine.createCell(0).setCellValue("Product Code");
-				rowHeadOrderLine.createCell(1).setCellValue("Description");
-				rowHeadOrderLine.createCell(2).setCellValue("Shiped");
-				rowHeadOrderLine.createCell(3).setCellValue("Pending");
-				rowHeadOrderLine.createCell(4).setCellValue("UOM");
-				rowHeadOrderLine.createCell(5).setCellValue("Unit Price");
-				rowHeadOrderLine.createCell(6).setCellValue("Amount");
-
-				List<SearchOrderDetailDTO> orderDetails = orderService.searchOrderDetail(orderId);
-				if (orderDetails != null && !orderDetails.isEmpty()) {
-					int row = 1;
-					DecimalFormat df = new DecimalFormat("#,##0.00");
-					BigDecimal totalPrice = new BigDecimal(0);
-					for (SearchOrderDetailDTO detail : orderDetails) {
-						HSSFRow detailRow = sheetOrderLine.createRow(row++);
-						detailRow.createCell(0).setCellValue(StringUtils.isEmpty(detail.getProductCode()) ? "" : detail.getProductCode());
-						detailRow.createCell(1).setCellValue(StringUtils.isEmpty(detail.getProductName()) ? "" : detail.getProductName());
-						detailRow.createCell(2).setCellValue(detail.getShiped());
-						detailRow.createCell(3).setCellValue(detail.getPending());
-						detailRow.createCell(4).setCellValue(StringUtils.isEmpty(detail.getProductUnit()) ? "" : detail.getProductUnit());
-						detailRow.createCell(5).setCellValue(0.00);
-						detailRow.createCell(6).setCellValue(0.00);
-						if (detail.getUnitPrice() != null) {
-							detailRow.createCell(5).setCellValue(df.format(detail.getUnitPrice()));
-							BigDecimal amount = detail.getUnitPrice().multiply(BigDecimal.valueOf(detail.getAmount()));
-							detailRow.createCell(6).setCellValue(df.format(amount));
-							totalPrice = totalPrice.add(amount);
-						}
-					}
-					HSSFRow totalPriceRow = sheetOrderLine.createRow(row);
-					totalPriceRow.createCell(6).setCellValue(df.format(totalPrice));
-
-					sheetOrderLine.autoSizeColumn(0);
-					sheetOrderLine.autoSizeColumn(1);
-					sheetOrderLine.autoSizeColumn(2);
-					sheetOrderLine.autoSizeColumn(3);
-					sheetOrderLine.autoSizeColumn(4);
-					sheetOrderLine.autoSizeColumn(5);
-					sheetOrderLine.autoSizeColumn(6);
-				}
-
-			} else {
-				log.info("Not found order");
-			}
-
-		} else {
-			log.warn("Required orderId");
-		}
+		HSSFWorkbook workbook = B2BFileUtil.createExcelOrder(orderId, orderService);
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ServletOutputStream os = response.getOutputStream();
@@ -202,6 +105,8 @@ public class ReportController {
 
 		return null;
 	}
+
+	
 	
 	@RequestMapping(value = "ordersummary/excel", method = RequestMethod.GET)
 	String generateOrderSummaryExcel(@ModelAttribute("form") OrderSummaryForm form, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {

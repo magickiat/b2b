@@ -24,6 +24,7 @@ public class SearchOrderDTO {
 	private String paymentTermDescription;
 	private String remarkCustomer; // Customer remark
 	private String remarkOrders; // Staff remark
+	private String custCode;
 
 	private OrdAddressDTO dispatchToAddress;
 	private OrdAddressDTO invoiceToAddress;
@@ -37,7 +38,6 @@ public class SearchOrderDTO {
 
 	public SearchOrderDTO(String orderCode, String customerName, String productTypeName, Date orderDate, Date expectShipmentDate, String orderStatus,
 			String paymentMethod, String shippingType, String paymentTermDescription, String remarkCustomer, String paymentTermId, String orderStatusId) {
-		super();
 		this.orderCode = orderCode;
 		this.customerName = customerName;
 		this.productTypeName = productTypeName;
@@ -54,7 +54,7 @@ public class SearchOrderDTO {
 
 	public SearchOrderDTO(long orderId, String orderCode, String customerName, String productTypeName, Date orderDate, Date expectShipmentDate,
 			String orderStatus, String paymentMethod, String shippingType, String paymentTermDescription, String remarkCustomer,
-			String paymentTermId, String orderStatusId, String remarkOrders) {
+			String paymentTermId, String orderStatusId, String remarkOrders, String custCode) {
 		this.orderId = orderId;
 		this.orderCode = orderCode;
 		this.customerName = customerName;
@@ -69,6 +69,7 @@ public class SearchOrderDTO {
 		this.paymentTermId = paymentTermId;
 		this.orderStatusId = orderStatusId;
 		this.remarkOrders = remarkOrders;
+		this.custCode = custCode;
 	}
 
 	public long getOrderId() {
@@ -221,5 +222,13 @@ public class SearchOrderDTO {
 
 	public void setRemarkOrders(String remarkOrders) {
 		this.remarkOrders = remarkOrders;
+	}
+
+	public String getCustCode() {
+		return custCode;
+	}
+
+	public void setCustCode(String custCode) {
+		this.custCode = custCode;
 	}
 }

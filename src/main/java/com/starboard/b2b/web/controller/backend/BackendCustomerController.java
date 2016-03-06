@@ -37,6 +37,7 @@ import com.starboard.b2b.web.form.brand.BrandForm;
 import com.starboard.b2b.web.form.contact.ContactForm;
 import com.starboard.b2b.web.form.customer.CreateCustomerForm;
 import com.starboard.b2b.web.form.customer.SearchCustomerForm;
+import com.starboard.b2b.web.form.user.UserForm;
 import com.starboard.b2b.web.form.user.UserRegisterForm;
 
 @Controller
@@ -132,7 +133,8 @@ public class BackendCustomerController {
 	}
 
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	String update(@ModelAttribute("customerForm") @Valid CustDTO customerForm, BindingResult binding, RedirectAttributes attr, Model model) throws Exception {
+	String update(@ModelAttribute("customerForm") @Valid CustDTO customerForm, BindingResult binding, RedirectAttributes attr, Model model)
+			throws Exception {
 		log.info("/update POST");
 		log.info("customer id: " + customerForm.getCustId());
 		if (binding.hasErrors()) {
@@ -303,5 +305,69 @@ public class BackendCustomerController {
 		addresses.put(AddressConstant.USER_INVOICE_TO, "Invoice To");
 		addresses.put(AddressConstant.USER_DISPATCH_TO, "Dispatch To");
 		return addresses;
+	}
+
+	@RequestMapping(value = "/edituser", method = RequestMethod.GET)
+	String editUser(@RequestParam(value = "userId", required = true) Integer userId, Model model) {
+		log.info("/edituser GET");
+
+		User user = userService.findUserById(userId);
+
+		UserRegisterForm form = new UserRegisterForm();
+		form.setUserId(userId);
+		form.setEmail(user.getEmail());
+		form.setName(user.getName());
+		form.setUsername(user.getUsername());
+		form.setEnable(user.isEnabled());
+		form.setCusId(user.getCustomer().getCustId());
+		model.addAttribute("registerForm", form);
+		return "pages-back/customer/editCustomerUser";
+	}
+
+	@RequestMapping(value = "/edituser", method = RequestMethod.POST)
+	String edituser(@ModelAttribute("registerForm") @Valid UserRegisterForm registerForm, BindingResult binding, Model model) throws Exception {
+		log.info("/edit_user POST");
+		if (!binding.hasErrors()) {
+			if(!registerForm.getPassword().trim().equals(registerForm.getConfirmPassword())){
+				model.addAttribute("errorMsg", "Password does not match with Confirm Password.");
+				return "pages-back/customer/editCustomerUser";
+			}
+			
+			User user = userService.findUserById(registerForm.getUserId());
+			
+			if (user.getUsername().equals(registerForm.getUsername()) || !userService.isExistUsername(registerForm.getUsername())) {
+				UserForm userForm = new UserForm();
+				
+				userForm.setUsername(registerForm.getUsername());
+				userForm.setPassword(registerForm.getPassword());
+				userForm.setEnable(registerForm.getEnable());
+				userForm.setCustId(registerForm.getCusId());
+				userForm.setId(registerForm.getUserId().toString());
+				userForm.setEnable(registerForm.getEnable());
+				userForm.setEmail(registerForm.getEmail());
+				userForm.setName(registerForm.getName());
+				
+				userService.update(userForm);
+				return update(registerForm.getCusId(), model);
+			} else {
+				model.addAttribute("errorMsg", "Exist username: " + registerForm.getUsername());
+			}
+		}
+
+		return "pages-back/customer/editCustomerUser";
+	}
+
+	@RequestMapping(value = "/deleteuser", method = RequestMethod.GET)
+	String deleteUser(@RequestParam(value = "userId", required = true) Integer userId, Model model) throws Exception {
+		log.info("/delete_user POST");
+		UserForm userForm = new UserForm();
+		userForm.setId(userId.toString());
+		User user = userService.findUserById(userId);
+		boolean isDeleteSuccess = userService.delete(userForm);
+		
+		if(!isDeleteSuccess){
+			model.addAttribute("errorMsg", "Cannot delete user: " + user.getName());
+		}
+		return update(user.getCustomer().getCustId(), model);
 	}
 }

@@ -14,31 +14,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.starboard.b2b.service.SecurityService;
 import com.starboard.b2b.service.UserService;
 import com.starboard.b2b.web.form.user.UserRegisterForm;
+import com.starboard.b2b.web.form.user.UserSearchForm;
 
 @Controller
 @RequestMapping("/backend/user")
 public class BackendUserController {
 	private static final Logger log = LoggerFactory.getLogger(BackendUserController.class);
-	
+
 	@Autowired
 	private SecurityService securityService;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	String search(@RequestParam(value = "id", required = false) Long id ,Model model) {
+	String create(@RequestParam(value = "id", required = false) Long id, Model model) {
 		model.addAttribute("roles", securityService.listRole());
 		UserRegisterForm form = new UserRegisterForm();
 		form.setCusId(id);
 		model.addAttribute("registerForm", form);
 		return "pages-back/user/create";
 	}
-	
+
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	String submit(@ModelAttribute("registerForm") UserRegisterForm registerForm,Model model, BindingResult binding) {
+	String submit(@ModelAttribute("registerForm") UserRegisterForm registerForm, Model model, BindingResult binding) {
 		log.info("/gen_user POST");
 		userService.add(registerForm);
-		return search(registerForm.getCusId(),model);
+		return create(registerForm.getCusId(), model);
+	}
+
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	String search(Model model) {
+		model.addAttribute("users", userService.search(new UserSearchForm()));
+		return "pages-back/user/create";
 	}
 }

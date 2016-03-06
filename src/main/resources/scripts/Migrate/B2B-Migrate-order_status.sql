@@ -17,4 +17,4 @@ SELECT `order_status`.`order_status_id`,
     `order_status`.`user_update`,
     `order_status`.`time_create`,
     `order_status`.`time_update`
-FROM `stb`.`order_status`;
+FROM `cube`.`order_status`;

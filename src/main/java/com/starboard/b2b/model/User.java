@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,7 +31,7 @@ public class User extends BaseModel implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = true)
+	@ManyToOne(fetch = FetchType.EAGER, optional = true)
 	private Cust customer;
 
 	@Column(length = 100, nullable = false)
@@ -62,11 +61,7 @@ public class User extends BaseModel implements UserDetails {
 	@Column(name = "credentials_non_expired", nullable = false)
 	private boolean credentialsNonExpired;
 	
-	@Column(name = "customer_cust_id", insertable = false, updatable = false)
-	private Long customerCustId;
-
-
-	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Role> role = new HashSet<>();
 
 	public User() {
@@ -188,12 +183,4 @@ public class User extends BaseModel implements UserDetails {
 		this.lastActive = lastActive;
 	}
 	
-	public Long getCustomerCustId() {
-		return customerCustId;
-	}
-
-	public void setCustomerCustId(Long customerCustId) {
-		this.customerCustId = customerCustId;
-	}
-
 }

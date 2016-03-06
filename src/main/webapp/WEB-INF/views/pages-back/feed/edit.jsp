@@ -3,11 +3,12 @@
 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
 	<%@include file="/WEB-INF/views/include/common_meta.jspf" %>
-	<title>Backend-Edit Feed Content</title>
+	<title><spring:message code="page.header"></spring:message></title>
 	<%@include file="/WEB-INF/views/include/common_cssbackend.jspf"%>
 </head>
 <body>

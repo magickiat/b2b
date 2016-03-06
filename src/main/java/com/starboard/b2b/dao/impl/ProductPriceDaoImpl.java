@@ -43,4 +43,14 @@ public class ProductPriceDaoImpl implements ProductPriceDao {
 		sessionFactory.getCurrentSession().save(price);
 	}
 
+	@Override
+	public ProductPriceDTO findProductPriceWithPriceGroup(String productCode, String productBuyerGroupId, String productPreintro) {
+		String sql = " select new com.starboard.b2b.dto.ProductPriceDTO(p.id.productCode, p.id.productPriceGroupId, p.id.productCurrency, p.amount,p.productUnitId, p.msrePrice)  from ProductPrice p";
+		sql += " where p.id.productCode = :productCode";
+		sql += " and p.id.productPriceGroupId = :productBuyerGroupId";
+		sql += " order by p.amount ";
+		return (ProductPriceDTO) sessionFactory.getCurrentSession().createQuery(sql).setString("productCode", productCode)
+				.setString("productBuyerGroupId", productBuyerGroupId).setMaxResults(1).uniqueResult();
+	}
+
 }

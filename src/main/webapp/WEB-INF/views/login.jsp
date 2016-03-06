@@ -33,12 +33,13 @@
                     		</div>
                         </div>
                         <div class="form-bottom">
-                       		<c:if test="${param.error != null}">
-								<div class="alert alert-danger">Invalid UserName and Password.</div>
+                        
+                        	<c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
+							      <div class="alert alert-danger">
+							        	<c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.
+							      </div>
 							</c:if>
-							<c:if test="${param.logout != null}">
-								<div class="alert alert-success">You have been logged out.</div>
-							</c:if>
+                       		
                         	<form:form servletRelativeAction="/login" class="login-form"
 								modelAttribute="loginForm" method="post">
 		                   

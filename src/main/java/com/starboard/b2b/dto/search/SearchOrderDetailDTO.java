@@ -2,6 +2,8 @@ package com.starboard.b2b.dto.search;
 
 import java.math.BigDecimal;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 public class SearchOrderDetailDTO {
 	private long orderDetailId;
 	private String productCode;
@@ -11,11 +13,21 @@ public class SearchOrderDetailDTO {
 	private long pending;
 	private String productUnit;
 	private BigDecimal unitPrice;
+	private String productBuyerGroupId;
+	private Long orderId;
+
+	private Long productId;
+	private Long status;
+	private BigDecimal price;
+	private String productUnitId;
+	private String productCurrency;
 
 	public SearchOrderDetailDTO() {
 	}
 
-	public SearchOrderDetailDTO(long orderDetailId, String productCode, String productName, long amount, long shiped, long pending, String productUnit, BigDecimal unitPrice) {
+	public SearchOrderDetailDTO(long orderDetailId, String productCode, String productName, long amount, long shiped, long pending,
+			String productUnit, BigDecimal unitPrice, String productBuyerGroupId, Long orderId, Long productId, Long status, BigDecimal price,
+			String productUnitId, String productCurrency) {
 		this.orderDetailId = orderDetailId;
 		this.productCode = productCode;
 		this.productName = productName;
@@ -24,6 +36,14 @@ public class SearchOrderDetailDTO {
 		this.pending = pending;
 		this.productUnit = productUnit;
 		this.unitPrice = unitPrice;
+		this.productBuyerGroupId = productBuyerGroupId;
+		this.orderId = orderId;
+
+		this.productId = productId;
+		this.status = status;
+		this.price = price;
+		this.productUnitId = productUnitId;
+		this.productCurrency = productCurrency;
 	}
 
 	public String getProductCode() {
@@ -90,4 +110,64 @@ public class SearchOrderDetailDTO {
 		this.orderDetailId = orderDetailId;
 	}
 
+	public String getProductBuyerGroupId() {
+		return productBuyerGroupId;
+	}
+
+	public void setProductBuyerGroupId(String productBuyerGroupId) {
+		this.productBuyerGroupId = productBuyerGroupId;
+	}
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
+
+	public Long getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(Long orderId) {
+		this.orderId = orderId;
+	}
+
+	public Long getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Long productId) {
+		this.productId = productId;
+	}
+
+	public Long getStatus() {
+		return status;
+	}
+
+	public void setStatus(Long status) {
+		this.status = status;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	public String getProductUnitId() {
+		return productUnitId;
+	}
+
+	public void setProductUnitId(String productUnitId) {
+		this.productUnitId = productUnitId;
+	}
+
+	public String getProductCurrency() {
+		return productCurrency;
+	}
+
+	public void setProductCurrency(String productCurrency) {
+		this.productCurrency = productCurrency;
+	}
 }

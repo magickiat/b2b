@@ -12,19 +12,22 @@
 <script src="<c:url value="/scripts/assets/js/scripts.js"/>"></script>
 
 <%-- Message dialog --%>
-<div id="b2b-dialog" style="display:none;"></div>
+<div id="b2b-dialog" style="display: none;"></div>
 
 <script type="text/javascript">
+	$(document)
+			.ready(
+					function() {
 
-	$(document).ready(function() {
-		
-		$.backstretch("<c:url value="/scripts/assets/img/backgrounds/starboardbg.jpg"/>");
-		
-		$('nav > ul.nav > li').click(function(e) {
-			$('ul.nav > li').removeClass('active');
-			$(this).addClass('active');
-		});
-	});
+						$
+								.backstretch('<c:url value="/scripts/assets/img/backgrounds/starboardbg.jpg"/>');
+
+						$('nav > ul.nav > li').click(function(e) {
+							$('ul.nav > li').removeClass('active');
+							$(this).addClass('active');
+						});
+
+					});
 <%-- http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript --%>
 	function formatNumber(num) {
 		return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
@@ -45,7 +48,7 @@
 
 		// Header
 		var row = '';
-		
+
 		/*
 		comment by nui 2015-12-10 20:51 for new in layout medal popup
 		row += '<div class="row">';
@@ -67,43 +70,49 @@
 		row += '</div>'
 
 		row += '</div>';
-		*/
-		$.each(data,function(index, item) {
-					var productName = item.productNameEn;
-					var quantity = item.productQuantity;
-					var productUnitId = item.productUnitId;
+		 */
+		$
+				.each(
+						data,
+						function(index, item) {
+							var productName = item.productNameEn;
+							var quantity = item.productQuantity;
+							var productUnitId = item.productUnitId;
 
-					row += '<div class="row product-item-'+ item.productId +'" style="font-family: francois_oneregular; border-bottom: dashed 1px #ccc;">';
+							row += '<div class="row product-item-'+ item.productId +'" style="font-family: francois_oneregular; border-bottom: dashed 1px #ccc;">';
 
-					row += '<div class="col-sm-1">';
-					row += (index + 1);
-					row += '</div>'
+							row += '<div class="col-sm-1">';
+							row += (index + 1);
+							row += '</div>'
 
-					row += '<div class="col-sm-7">';
-					row += escapeHtml(productName);
-					row += '</div>';
+							row += '<div class="col-sm-7">';
+							row += escapeHtml(productName);
+							row += '</div>';
 
-					row += '<div class="col-sm-2">';
-					row += quantity;
-					row += '</div>'
+							row += '<div class="col-sm-2">';
+							row += quantity;
+							row += '</div>'
 
-					row += '<div class="col-sm-2">';
-					row += productUnitId;
-					row += '</div>'
+							row += '<div class="col-sm-2">';
+							if (productUnitId) {
+								row += productUnitId;
+							} else {
+								row += 'PCS';
+							}
+							row += '</div>'
 
-					row += '</div>';
+							row += '</div>';
 
-					totalQuantity = totalQuantity + (+quantity);
-				});
-		
+							totalQuantity = totalQuantity + (+quantity);
+						});
+
 		//begin comment by nui 2015-12-10 20:51, new in layout modal popup 
 		//row += '<div class="row text-center"><input type="button" class="btn btn-success" value="CHECK OUT" onclick="checkout()" /></div>';
 		//$('#cartDetails').html(row);
 		$('#cartDetails_List').html(row);
-		if(totalQuantity > 0){
+		if (totalQuantity > 0) {
 			$('#dont-show-again').show();
-		}
-		else{
+		} else {
 			$('#dont-show-again').hide();
 		}
 		//end comment by nui 2015-12-10 20:51, new in layout modal popup
@@ -117,60 +126,79 @@
 		$('#numOfProduct').text(num);
 		$('#totalQuantity').val(quantity);
 	}
-	
+
 	$('.numberOnly').keypress(function(e) {
 		return e.charCode === 0 || /\d/.test(String.fromCharCode(e.charCode));
 	}).on("cut copy paste", function(e) {
 		e.preventDefault();
 	});
-	
+
 	function checkout() {
-		window.open('<c:url value="/frontend/order/step3/checkout" />',
-				'_self');
+		window
+				.open('<c:url value="/frontend/order/step3/checkout" />',
+						'_self');
 	}
-	
-	function gotoCreateOrder(){
+
+	function gotoCreateOrder() {
 		gotoPage('<c:url value="/frontend/order/index" />');
 	}
-	function gotoUploadOrder(){
+	function gotoUploadOrder() {
 		gotoPage('<c:url value="/frontend/order/step2/index" />?brand_id=');
 	}
-	
-	function gotoPage(url){
-		window.location.href=url;
-	}
-	
 
-	function showDialogAutoClose(msg){
-		<%-- http://stackoverflow.com/questions/10179040/jquery-dialog-open-and-automatically-close-after-3-seconds --%>
-			/* console.log('begin animate'); */
-			$('#b2b-dialog').html('<div class="text-center">' + escapeHtml(msg) + '</div>');
-			$('#b2b-dialog').dialog({
-				dialogClass: 'style1',
-			    autoOpen: true,
-			    show: "blind",
-			    hide: "fadeOut",
-			    modal: true,
-			    open: function(event, ui) {
-			        setTimeout(function(){
-			            $('#b2b-dialog').dialog('close');                
-			        }, 2000);
-			    }
-			});
+	function gotoPage(url) {
+		window.location.href = url;
+	}
+
+	function showDialog(msg) {
+<%-- http://stackoverflow.com/questions/10179040/jquery-dialog-open-and-automatically-close-after-3-seconds --%>
+	$('#b2b-dialog').html(
+				'<div class="text-center">' + escapeHtml(msg) + '</div>');
+		$('#b2b-dialog').dialog({
+			dialogClass : 'style1',
+			autoOpen : true,
+			show : "blind",
+			hide : "fadeOut",
+			modal : true,
+			buttons : {
+				Ok : function() {
+					$(this).dialog("close");
+				}
+			}
+		});
+	}
+
+	function showDialogAutoClose(msg) {
+<%-- http://stackoverflow.com/questions/10179040/jquery-dialog-open-and-automatically-close-after-3-seconds --%>
+	/* console.log('begin animate'); */
+		$('#b2b-dialog').html(
+				'<div class="text-center">' + escapeHtml(msg) + '</div>');
+		$('#b2b-dialog').dialog({
+			dialogClass : 'style1',
+			autoOpen : true,
+			show : "blind",
+			hide : "fadeOut",
+			modal : true,
+			open : function(event, ui) {
+				setTimeout(function() {
+					$('#b2b-dialog').dialog('close');
+				}, 2000);
+			}
+		});
 	}
 	//Apply CSRF token to every calls
-	$(function () {
+	$(function() {
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$(document).ajaxSend(function(e, xhr, options) {
 			xhr.setRequestHeader(header, token);
 		});
 	});
-	
+
 	$('#btn-previous').click(function() {
 		window.history.back();
 	});
-	
+
 	function addToCart() {
 
 		var quantity = $('#quantity').val();
@@ -183,7 +211,7 @@
 
 			var productId = $('#currentProduct').val();
 			console.log('product: ' + productId);
-			
+
 			var param = {
 				'productId' : productId,
 				'quantity' : quantity
@@ -191,12 +219,12 @@
 
 			$.post('${addToCartUrl}', param).done(function(response) {
 				renderToCart(response);
-				
+
 				showDialogAutoClose('Added to cart');
-				
+
 				//clear txt qty
 				$('#quantity').val('0')
-				
+
 			}).fail(function(result) {
 				alert(result.responseText);
 			});
@@ -206,5 +234,4 @@
 		}
 
 	}
-
 </script>

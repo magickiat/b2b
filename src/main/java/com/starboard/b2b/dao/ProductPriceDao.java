@@ -12,4 +12,6 @@ public interface ProductPriceDao {
 
 	ProductPrice findById(ProductPriceId id);
 
+	ProductPriceDTO findProductPriceWithPriceGroup(String productCode, String productBuyerGroupId, String productPreintro);
+
 }

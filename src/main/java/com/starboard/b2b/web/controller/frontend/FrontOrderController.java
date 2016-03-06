@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
@@ -51,6 +52,7 @@ import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.service.BrandService;
 import com.starboard.b2b.service.CustomerService;
+import com.starboard.b2b.service.EmailService;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.ArchiveUtil;
@@ -79,6 +81,9 @@ public class FrontOrderController {
 	private OrderService orderService;
 
 	@Autowired
+	private EmailService emailService;
+
+	@Autowired
 	private Environment environment;
 
 	@SuppressWarnings("unchecked")
@@ -104,8 +109,8 @@ public class FrontOrderController {
 	@RequestMapping(value = "step2/index", method = RequestMethod.GET)
 	String step2ChooseAddress(@RequestParam("brand_id") Long brandId, Model model) {
 		log.info("Brand id: " + brandId);
-		
-		if(brandId == null){
+
+		if (brandId == null) {
 			return step1(model);
 		}
 
@@ -151,7 +156,7 @@ public class FrontOrderController {
 	}
 
 	@RequestMapping(value = "step2/search-action", method = RequestMethod.GET)
-	String step2SearchAction(@ModelAttribute("form") SearchProductForm form, Model model) {
+	String step2SearchAction(@ModelAttribute("searchProductForm") SearchProductForm form, Model model) {
 		log.info("search condition: " + form.toString());
 
 		// Show shopping cart
@@ -527,7 +532,7 @@ public class FrontOrderController {
 	@RequestMapping(value = "step4/submit", method = RequestMethod.POST)
 	String submitOrder(@RequestParam Long invoiceTo, @RequestParam Long dispatchTo, @RequestParam String shippingType,
 			@RequestParam String customerRemark, @RequestParam String paymentMethod, @ModelAttribute("brandId") Long brandId,
-			@ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model, SessionStatus session) {
+			@ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model, SessionStatus session, HttpServletRequest request) {
 		log.info("----- step4/submit POST");
 		log.info("----- dispatchTo = " + dispatchTo);
 		log.info("----- shippingType = " + shippingType);
@@ -537,6 +542,25 @@ public class FrontOrderController {
 
 		OrderDTO order = orderService.newOrder(invoiceTo, dispatchTo, shippingType, customerRemark, paymentMethod, cart);
 		model.addAttribute("order", order);
+
+		// ----- send mail to Sales -----
+		String host = environment.getProperty("base.url");
+		if(StringUtils.isEmpty(host)){
+			throw new B2BException("Not found host config");
+		}
+		
+		try {
+			emailService.sendEmailOrderToStaff(order, host);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+
+		// ----- send mail to Customer -----
+		try {
+			emailService.sendEmailOrderToCustomer(order, host);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
 
 		// Clear Shopping Cart session
 		// http://vard-lokkur.blogspot.com/2011/01/spring-mvc-session-attributes-handling.html
@@ -595,12 +619,12 @@ public class FrontOrderController {
 		model.addAttribute("orderSummaryForm", form);
 		return "pages-front/order/summary";
 	}
-
-	@RequestMapping(value = "summary/report/{orderCode}", method = RequestMethod.GET)
-	String orderSummaryReport(@ModelAttribute("form") OrderSummaryForm form, Model model, @PathVariable final String orderCode) {
-		log.info("Report for order: {}", orderCode);
-		final SearchOrderDTO orderReport = orderService.findOrderForReport(orderCode);
-		final List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(orderCode);
+	
+	@RequestMapping(value = "summary/report/{orderId}", method = RequestMethod.GET)
+	String viewOrderSummary(@PathVariable Long orderId, Model model) {
+		log.info("Report for order: {}", orderId);
+		final SearchOrderDTO orderReport = orderService.findOrderForReport(orderId);
+		final List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(orderReport.getOrderCode());
 		for (OrdAddressDTO ordAddress : ordAddresses) {
 			log.info("received order address {} ", ordAddress);
 			if (ordAddress.getType().equals(AddressConstant.ORDER_INVOICE_TO)) {
@@ -610,7 +634,7 @@ public class FrontOrderController {
 				orderReport.setDispatchToAddress(ordAddress);
 			}
 		}
-		List<SearchOrderDetailDTO> orderDetails = orderService.searchOrderDetail(orderCode);
+		List<SearchOrderDetailDTO> orderDetails = orderService.searchOrderDetail(orderId);
 		if (orderDetails != null && !orderDetails.isEmpty()) {
 			orderReport.setOrderDetails(orderDetails);
 		}

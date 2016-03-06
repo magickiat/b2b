@@ -38,12 +38,14 @@ import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.ProductTechnologyDTO;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.ProductYearDTO;
+import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.Product;
 import com.starboard.b2b.model.ProductBuyerGroup;
 import com.starboard.b2b.model.ProductCategory;
+import com.starboard.b2b.model.ProductModel;
 import com.starboard.b2b.model.ProductPrice;
 import com.starboard.b2b.model.ProductPriceId;
 import com.starboard.b2b.model.ProductTechnology;
@@ -53,6 +55,7 @@ import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.ProductUtils;
+import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.product.SearchProductForm;
 
 @Service("productService")
@@ -198,25 +201,6 @@ public class ProductServiceImpl implements ProductService {
 		List<SearchProductModelDTO> resultList = result.getResult();
 		log.info("resultList size: " + (resultList == null ? 0 : resultList.size()));
 
-		// Use model name convention to map image
-		// Format: /upload/product_image/Medium/{model_id}.jpg
-		//
-		// for (SearchProductModelDTO dto : resultList) {
-		// // log.info("" + dto.getProductModelName());
-		// if (StringUtils.isNotEmpty(dto.getModelImage())) {
-		// String filename = dto.getModelImage();
-		// if (filename.startsWith("/upload/")) {
-		// filename = filename.substring("/upload/".length());
-		// }
-		//
-		// // When not found, set null to use default image
-		// File img = new File(uploadPath, filename);
-		// if (!img.exists()) {
-		// dto.setModelImage(null);
-		// }
-		// }
-		// }
-
 		// create result page object
 		Page<SearchProductModelDTO> page = new Page<>();
 		page.setCurrent(form.getPage());
@@ -255,8 +239,14 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<ProductSearchResult> findProductModel(String modelId) {
-		return productDao.findProductModel(modelId);
+	public ProductModelDTO findProductModel(String modelId) {
+		ProductModelDTO dto = null;
+		ProductModel productModel = productModelDao.findProductModel(modelId);
+		if(productModel != null){
+			dto = new ProductModelDTO();
+			BeanUtils.copyProperties(productModel, dto);
+		}
+		return dto;
 	}
 
 	@Override
@@ -297,7 +287,7 @@ public class ProductServiceImpl implements ProductService {
 		for (ProductSearchResult result : productList) {
 			ProductPriceDTO price = productPriceDao.findProductPrice(result.getProduct().getProductCode(), custInvoiceCode,
 					result.getProduct().getProductPreintro());
-			log.info("prict: " + price);
+//			log.info("prict: " + price);
 			result.setPrice(price);
 		}
 	}
@@ -469,16 +459,16 @@ public class ProductServiceImpl implements ProductService {
 
 			for (ProductDTO importProduct : products) {
 				if (StringUtils.isNotEmpty(importProduct.getProductCode())) {
-
+					log.info("find by product code: " + importProduct.getProductCode());
 					Product product = productDao.findByProductCode(importProduct.getProductCode());
-
-					if (product == null) {
+					boolean isNull = product == null;
+					log.info("found: " + !isNull);
+					if (isNull) {
 						product = new Product();
 						BeanUtils.copyProperties(importProduct, product);
 						product.setTimeCreate(DateTimeUtil.getCurrentDate());
 						product.setUserCreate(B2BConstant.B2B_SYSTEM_NAME);
 					} else {
-
 						product.setProductTypeId(importProduct.getProductTypeId());
 						product.setProductNameEn(importProduct.getProductNameEn());
 						product.setProductBuyerGroupId(importProduct.getProductBuyerGroupId());
@@ -495,7 +485,7 @@ public class ProductServiceImpl implements ProductService {
 					if (StringUtils.isEmpty(importProduct.getIsActive())) {
 						product.setIsActive(B2BConstant.PRODUCT_FLAG_ACTIVE);
 					}
-					
+
 					// ----- Transform data -----
 					// withnose protector
 					String flagWithNoseProduct = B2BConstant.NO_WITHNOSE_PROTECTION;
@@ -506,8 +496,13 @@ public class ProductServiceImpl implements ProductService {
 
 					product.setProductYearId(importProduct.getProductYearId());
 
-					log.info("merge product: " + product);
-					productDao.merge(product);
+					if (isNull) {
+						log.info("save " + product.getProductCode());
+						productDao.save(product);
+					} else {
+						log.info("update " + product.getProductCode());
+						productDao.merge(product);
+					}
 				}
 			}
 		}
@@ -547,25 +542,25 @@ public class ProductServiceImpl implements ProductService {
 				id.setProductCode(dto.getProductCode());
 				id.setProductCurrency(dto.getProductCurrency());
 				id.setProductPriceGroupId(dto.getProductPriceGroupId());
-				
+
 				ProductPrice price = productPriceDao.findById(id);
-				if(price == null){
+				if (price == null) {
 					isNew = true;
 					price = new ProductPrice();
-					price.setId(id);	
+					price.setId(id);
 					price.setTimeCreate(DateTimeUtil.getCurrentDate());
 					price.setUserCreate(B2BConstant.B2B_SYSTEM_NAME);
-				}else{
+				} else {
 					price.setTimeUpdate(DateTimeUtil.getCurrentDate());
 					price.setUserUpdate(B2BConstant.B2B_SYSTEM_NAME);
 				}
-				
+
 				price.setAmount(dto.getAmount());
 				price.setMsrePrice(dto.getMsrePrice());
 				price.setProductUnitId(dto.getProductUnitId());
-				
-				if(isNew){
-					productPriceDao.save(price);					
+
+				if (isNew) {
+					productPriceDao.save(price);
 				}
 			}
 		}
@@ -575,6 +570,39 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional
 	public boolean delete(long productId) {
 		return productDao.delete(productId);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public void findOrderPriceList(List<SearchOrderDetailDTO> orderDetails) {
+		if (orderDetails != null && !orderDetails.isEmpty()) {
+			for (SearchOrderDetailDTO result : orderDetails) {
+				Product product = productDao.findById(result.getProductId());
+				if (product == null) {
+					continue;
+				}
+
+				ProductPriceDTO price = productPriceDao.findProductPriceWithPriceGroup(result.getProductCode(), result.getProductBuyerGroupId(),
+						product.getProductPreintro());
+				log.info("prict: " + price);
+				if (price != null) {
+					result.setUnitPrice(price.getAmount());
+					result.setProductCurrency(price.getProductCurrency());
+					result.setProductUnitId(price.getProductUnitId());
+				} else {
+					result.setUnitPrice(null);
+				}
+			}
+		} else {
+			log.warn("orderDetails is empty!");
+		}
+	}
+
+	@Override
+	@Transactional
+	public void createNewModel(String modelId) {
+		productModelDao.save(new ProductModel(modelId, modelId, "Created when not found model id", B2BConstant.B2B_SYSTEM_NAME, null,
+				DateTimeUtil.getCurrentDate(), null, "default", B2BConstant.B2B_SYSTEM_NAME, B2BConstant.B2B_SYSTEM_NAME));
 	}
 
 }
