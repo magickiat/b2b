@@ -93,8 +93,7 @@
 											<option value=""></option>
 											<c:forEach var="pg" varStatus="pgRow" items="${ orderDetailsForm.productPriceGroupList }">
 												<c:set var="selected" value="" />
-												//TODO compare price group
-												<c:if test="${ pg.productPriceGroupId eq  splitOrderDetails[rowNum.index].productBuyerGroupId}">
+												<c:if test="${ pg.productPriceGroupId eq  splitForm.splitOrderDetails[rowNum.index].productBuyerGroupId}">
 													<c:set var="selected" value="selected='selected'" />
 												</c:if>
 												<option value="${ pg.productPriceGroupId }" ${ selected }>${ pg.productPriceGroupName }</option>
