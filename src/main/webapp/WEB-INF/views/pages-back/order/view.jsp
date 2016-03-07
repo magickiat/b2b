@@ -23,7 +23,19 @@
 			servletRelativeAction="/backend/order/approve" method="POST">
 
 			<form:hidden path="editMode" />
-			<input type="hidden" name="orderId" value="${ approveForm.orderReport.orderId }" />
+			
+			<form:hidden path="orderReport.orderId" />
+			<form:hidden path="orderReport.orderCode" />
+			<form:hidden path="orderReport.orderStatus" />
+			<form:hidden path="orderReport.orderDate" />
+			<form:hidden path="orderReport.expectShipmentDate" />
+			<form:hidden path="orderReport.dispatchToAddress.orderAddr" />
+			<form:hidden path="orderReport.dispatchToAddress.orderTel" />
+			<form:hidden path="orderReport.dispatchToAddress.fax" />
+			<form:hidden path="orderReport.invoiceToAddress.orderAddr" />
+			<form:hidden path="orderReport.invoiceToAddress.orderTel" />
+			<form:hidden path="orderReport.invoiceToAddress.fax" />
+
 			<!-- Header -->
 			<div class="row bg_color">
 
@@ -31,15 +43,16 @@
 					<h1>${approveForm.orderReport.orderCode}</h1>
 				</div>
 				<div class="col-sm-6 text-right bg_color">
+
 					<h1>${approveForm.orderReport.orderStatus}</h1>
 				</div>
 
 
 				<div class="col-sm-12 bg_color text-right" style="margin: 10px 0px;">
 					<input type="button" id="btn-approve" class="btn btn-success"
-						onclick="approve(${ ordDetail.orderDetailId })" value="Approve" />
+						onclick="approve()" value="Approve" />
 					<input type="button" id="btn-reject" class="btn btn-danger"
-						onclick="reject(${ ordDetail.orderDetailId })" value="Reject" />
+						onclick="reject()" value="Reject" />
 				</div>
 
 				<!-- Order info -->
@@ -67,6 +80,8 @@
 								<td>
 									<fmt:formatDate pattern="dd-MM-yyyy" value="${approveForm.orderReport.orderDate}" />
 								</td>
+
+
 								<td>${ approveForm.orderReport.expectShipmentDate }</td>
 								<td>
 									<form:select path="paymentTermId" cssClass="form-control">
@@ -95,6 +110,8 @@
 				</div>
 				<div class="col-sm-6 bg_color">
 					<div class="col-sm-12">Invoice to:</div>
+
+
 					<div class="col-sm-12">${approveForm.orderReport.invoiceToAddress.orderAddr}</div>
 					<div class="col-sm-12">Tel: ${approveForm.orderReport.invoiceToAddress.orderTel} Fax:
 						${approveForm.orderReport.invoiceToAddress.fax}</div>
@@ -126,7 +143,8 @@
 						onclick="saveOrder()" />
 				</div>
 				<div class="col-sm-6 bg_color">
-					<input type="button" id="cancel" name="cancel" class="btn btn-default" value="Cancel" onclick="back()" />
+					<input type="button" id="cancel" name="cancel" class="btn btn-default" value="Cancel"
+						onclick="back()" />
 				</div>
 			</div>
 		</form:form>
@@ -144,7 +162,7 @@
 			disablePage(isEditMode);
 		});
 		
-		function approve(orderId){
+		function approve(){
 			/* disablePage(true); */
 			$('#approveForm').submit();
 		}
@@ -153,7 +171,7 @@
 			window.location.href= '<c:url value="/backend/order/search" />';
 		}
 		
-		function reject(orderId){
+		function reject(){
 			var form = $('#approveForm');
 			form.attr('action', '<c:url value="/backend/order/reject" />');
 			form.submit();

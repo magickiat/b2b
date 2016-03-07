@@ -211,7 +211,49 @@
 		}
 		
 		function confirmSplitOrder(){
+			// re-cal
+			summarySplitQty();
 			
+			var totalQty = $('#totalSplitQty').val();
+			var maxAmount = $('#orderDetail\\.amount').val();
+			
+			// validate maximum amount
+			if(totalQty != maxAmount){
+				showDialog('Total Qty must same as Maximum Qty');
+				return;
+			}
+			
+			// validate same qty but have empty or zero some order detail
+			if(isQtyHaveNotValue()){
+				showDialog("Some order details hasn't Qty");
+				return;
+			}
+			
+			// save split order
+			console.log('save split order');
+			var form = $('#splitOrderDetailForm');
+			form.attr('action', '<c:url value="/backend/order/save-split-order" />');
+			form.submit();
+		}
+		
+		function isQtyHaveNotValue(){
+			var found = false;
+			$('.splitqty').each(function() {
+				console.log("qty: " + $(this).val());
+				if (!$(this).val()) {
+					console.log('Not found value');
+					found = true;
+					return;
+				}
+
+				if (parseInt($(this).val()) <= 0) {
+					console.log('value less than zero');
+					found = true;
+					return;
+				}
+			});
+			
+			return found;
 		}
 
 	</script>

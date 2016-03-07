@@ -446,9 +446,9 @@ public class OrderServiceImpl implements OrderService {
 	public void updateOrder(OrderDecisionForm form) {
 
 		// ----- Order -----
-		Orders order = orderDao.findById(form.getOrderId());
+		Orders order = orderDao.findById(form.getOrderReport().getOrderId());
 		if (order == null) {
-			throw new B2BException("Not found order: " + form.getOrderId());
+			throw new B2BException("Not found order: " + form.getOrderReport().getOrderId());
 		}
 
 		order.setRemarkCustomer(form.getRemarkCustomer());
