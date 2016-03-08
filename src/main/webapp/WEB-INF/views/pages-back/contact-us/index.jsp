@@ -104,7 +104,7 @@
 													name="${_csrf.parameterName}" value="${_csrf.token}" />
 	
 												<input type="hidden" name="id" value="${ contact.contactId }" />
-												<input type="button" value="Delete" class="btn btn-default pull-right"
+												<input type="button" value="Delete" class="btn btn-danger btn-xs pull-right"
 													onclick="return confirm(${ contact.contactId });">
 	
 	

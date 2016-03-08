@@ -63,13 +63,13 @@
 													</div>
 												</td>
 												<td>${content.timeCreate}</td>
-												<td style="text-align: right;">
-													<div class="btn-group">
-														<a type="button" class="btn btn-warning" name="editBtn"
+												<td style="">
+													<div class="btn-group pull-right">
+														<a type="button" class="btn btn-warning btn-xs" name="editBtn"
 														       href="<c:url value="/backend/feed-contents/edit/${content.id}"/>?currentPage=${resultPage.current}">Edit</a>
-														<a type="button" class="btn btn-danger" name="removeBtn"
+														<a type="button" class="btn btn-danger btn-xs" name="removeBtn"
 														       data-href="<c:url value="/backend/feed-contents/delete/${content.id}"/>?currentPage=${resultPage.current}"
-														       data-toggle="modal" data-target="#confirm-delete">Remove</a>
+														       data-toggle="modal" data-target="#confirm-delete">Delete</a>
 													</div>
 												</td>
 											</tr>

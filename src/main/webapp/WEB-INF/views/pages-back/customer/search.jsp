@@ -31,66 +31,67 @@
 							style="width: 100px; " />
 					</form:form>
 				</div>
-				
+				<div class="row"></div>
+				<%-- Search condition --%>
+				<div class="" style="margin-top : 10px;">
+		
+					<%-- form name must be "searchForm" --%>
+					<form:form name="searchForm"
+						servletRelativeAction="/backend/customer/search"
+						modelAttribute="searchForm" cssClass="form-horizontal" method="GET">
+		
+						<form:errors path="*" cssClass="alert alert-danger" element="div" />
+						
+						<%-- for paging --%>
+						<form:hidden path="page" />
+						
+						<div class="col-md-3">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">SEARCH:</label>
+								<div class="col-sm-9">
+									<form:input path="keyword" cssClass="form-control" />
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-md-3">
+							<div class="">
+								<form:select path="selectedBrand" cssClass="form-control"
+									multiple="false">
+									<form:option value="" label="ALL BRAND GROUP" />
+									<form:options items="${searchForm.productTypeList}"
+										itemLabel="productTypeName" itemValue="productTypeId" />
+								</form:select>
+							</div>
+						</div>
+		
+						<div class="col-md-3">
+							<div class="">
+								<form:select path="selectedCountry" cssClass="form-control"
+									multiple="false">
+									<form:option value="" label="ALL COUNTRY" />
+									<form:options items="${searchForm.countryList}"
+										itemLabel="countryName" itemValue="countryCode" />
+								</form:select>
+							</div>
+						</div>
+		
+						<div class="col-md-3">
+							<button class="btn btn-success pull-right" onclick="submitForm()"
+								style="width: 100px;">Search</button>
+								
+							<button class="btn btn-default pull-right" onclick="exportExcel()"
+								style="width: 100px; margin-right: 10px;">Excel</button>
+						</div>
+						
+					</form:form>
+		
+				</div>
 			</div>
 		</div>
 
 
-		<%-- Search condition --%>
-		<div class="row bg_color">
-
-			<%-- form name must be "searchForm" --%>
-			<form:form name="searchForm"
-				servletRelativeAction="/backend/customer/search"
-				modelAttribute="searchForm" cssClass="form-horizontal" method="GET">
-
-				<form:errors path="*" cssClass="alert alert-danger" element="div" />
-				
-				<%-- for paging --%>
-				<form:hidden path="page" />
-				
-				<div class="col-md-3">
-					<div class="form-group">
-						<label class="col-sm-3 control-label">SEARCH:</label>
-						<div class="col-sm-9">
-							<form:input path="keyword" cssClass="form-control" />
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-md-3">
-					<div class="">
-						<form:select path="selectedBrand" cssClass="form-control"
-							multiple="false">
-							<form:option value="" label="ALL BRAND GROUP" />
-							<form:options items="${searchForm.productTypeList}"
-								itemLabel="productTypeName" itemValue="productTypeId" />
-						</form:select>
-					</div>
-				</div>
-
-				<div class="col-md-3">
-					<div class="">
-						<form:select path="selectedCountry" cssClass="form-control"
-							multiple="false">
-							<form:option value="" label="ALL COUNTRY" />
-							<form:options items="${searchForm.countryList}"
-								itemLabel="countryName" itemValue="countryCode" />
-						</form:select>
-					</div>
-				</div>
-
-				<div class="col-md-3">
-					<button class="btn btn-success pull-right" onclick="submitForm()"
-						style="width: 100px;">Search</button>
-						
-					<button class="btn btn-default pull-right" onclick="exportExcel()"
-						style="width: 100px; margin-right: 10px;">Excel</button>
-				</div>
-				
-			</form:form>
-
-		</div>
+		
 
 		<div class="row">&nbsp;</div>
 

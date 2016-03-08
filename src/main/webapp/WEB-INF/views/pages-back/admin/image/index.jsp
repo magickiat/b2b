@@ -35,7 +35,7 @@
 			<div class="col-sm-12">
 				<label for="selectedFolder">Image Path:</label>
 				<c:if test="${ not empty folders }">
-					<select id="selectedFolder" name="selectedFolder"
+					<select id="selectedFolder" name="selectedFolder" style="width : 200px;"
 						class="form-control" onchange="list(this)">
 						<c:forEach var="folder" items="${ folders }">
 							<c:set var="selected" value="" />
