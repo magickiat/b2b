@@ -35,7 +35,7 @@
 	
 				</div>
 	
-				<div class="col-sm-12 bg_color">
+				<div class="col-sm-12 bg_color" style="overflow:scroll;">
 	
 					<table class="table">
 						<thead>
