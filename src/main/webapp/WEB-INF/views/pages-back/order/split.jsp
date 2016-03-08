@@ -60,6 +60,7 @@
 								<th>UOM</th>
 								<th>Unit Price</th>
 								<th>Amount</th>
+								<th>Currency</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -130,17 +131,28 @@
 											</c:choose>
 										</div>
 									</td>
-
+									<td>
+										<c:choose>
+											<c:when test="${empty ordDetail.productCurrency }">TBA</c:when>
+											<c:otherwise>
+											${ ordDetail.productCurrency }
+											</c:otherwise>
+										</c:choose>
+									</td>
 								</tr>
 							</c:forEach>
 							<%-- Summary row --%>
 							<tr class="bg-info">
-								<td colspan="4" align="right"><b>Total Qty:</b></td>
+								<td colspan="4" align="right">
+									<b>Total Qty:</b>
+								</td>
 								<td colspan="1">
 									<form:hidden path="totalSplitQty" />
 									<div id="totalQty"></div>
 								</td>
-								<td colspan="3" align="left"><b>Maximum Qty:</b> ${ splitForm.orderDetail.amount }</td>
+								<td colspan="4" align="left">
+									<b>Maximum Qty:</b> ${ splitForm.orderDetail.amount }
+								</td>
 							</tr>
 						</tbody>
 					</table>

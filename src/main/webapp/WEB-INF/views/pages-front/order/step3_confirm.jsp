@@ -171,7 +171,7 @@
 															</c:otherwise>
 														</c:choose>
 													</td>
-													<td>${ product.productCurrency }</td>
+													<td>${ p.price.productCurrency }</td>
 													<td class="text-center">
 														<img class="img-btn-cursor"
 															src='<c:url value="/images/pages-front/icon/btn_remove.png" />'

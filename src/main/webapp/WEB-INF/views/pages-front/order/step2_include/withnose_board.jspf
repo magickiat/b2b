@@ -17,19 +17,15 @@
 
 <div class="col-sm-12">
 	<%-- Loop All Tech --%>
-	<c:forEach var="rowAllTech" items="${ allTech }"
-		varStatus="rowNumAllTech">
+	<c:forEach var="rowAllTech" items="${ allTech }" varStatus="rowNumAllTech">
 		<div class="withnose${ rowNumAllTech.index }"
 			<c:if test="${ rowNumAllTech.index  > 0}">style="display:none;"</c:if>>
-			<c:forEach var="rowTech" items="${ rowAllTech }"
-				varStatus="rowNumTech">
+			<c:forEach var="rowTech" items="${ rowAllTech }" varStatus="rowNumTech">
 				<div
 					class="withnose${ rowNumAllTech.index }-tech withnose${ rowNumAllTech.index }-${stringUtil.removeSpecialChar(rowTech.key)}"
 					<c:if test="${ rowNumTech.index  > 0}">style="display:none;"</c:if>>
-					<c:forEach var="p" items="${rowTech.value}"
-						varStatus="rowNumProduct">
-						<div
-							class="product-price product-price-${ p.product.productId } row"
+					<c:forEach var="p" items="${rowTech.value}" varStatus="rowNumProduct">
+						<div class="product-price product-price-${ p.product.productId } row"
 							<c:if test="${ rowNumProduct.index  > 0}">style="display:none;"</c:if>>
 
 							<%-- PRICE --%>
@@ -43,10 +39,10 @@
 									</c:when>
 									<c:otherwise>
 										<h4>
-											<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
-												value="${ p.price.amount }" minIntegerDigits="1">
+											<fmt:formatNumber pattern="#,###" maxIntegerDigits="12" value="${ p.price.amount }"
+												minIntegerDigits="1">
 											</fmt:formatNumber>
-											${ p.product.productCurrency }
+											${ p.price.productCurrency }
 										</h4>
 									</c:otherwise>
 								</c:choose>
@@ -63,10 +59,10 @@
 									</c:when>
 									<c:otherwise>
 										<h4>
-											<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
-												value="${ p.price.msrePrice }" minIntegerDigits="1">
+											<fmt:formatNumber pattern="#,###" maxIntegerDigits="12" value="${ p.price.msrePrice }"
+												minIntegerDigits="1">
 											</fmt:formatNumber>
-											${ p.product.productCurrency }
+											${ p.price.productCurrency }
 										</h4>
 									</c:otherwise>
 								</c:choose>

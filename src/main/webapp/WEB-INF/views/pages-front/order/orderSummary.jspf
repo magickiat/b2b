@@ -80,6 +80,7 @@
 					<th>UOM</th>
 					<th>Unit Price</th>
 					<th>Amount</th>
+					<th>Currency</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -100,6 +101,7 @@
 								value="${ ordDetail.amount * ordDetail.unitPrice }">
 							</fmt:formatNumber>
 						</td>
+						<td>${ ordDetail.productCurrency }</td>
 					</tr>
 
 				</c:forEach>

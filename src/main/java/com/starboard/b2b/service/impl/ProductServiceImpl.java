@@ -593,6 +593,8 @@ public class ProductServiceImpl implements ProductService {
 					result.setProductUnitId(price.getProductUnitId());
 				} else {
 					result.setUnitPrice(null);
+					result.setProductCurrency(null);
+					result.setProductUnitId(applicationConfig.getDefaultProductUnit());
 				}
 			}
 		} else {

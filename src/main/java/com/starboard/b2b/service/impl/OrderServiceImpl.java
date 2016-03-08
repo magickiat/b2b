@@ -195,7 +195,11 @@ public class OrderServiceImpl implements OrderService {
 					product.getProductPreintro());
 			// Default currency
 			if (StringUtils.isEmpty(product.getProductCurrency())) {
-				product.setProductCurrency(applicationConfig.getDefaultProductCurrency());
+				String currency = productPrice.getProductCurrency();
+				if(StringUtils.isEmpty(currency)){
+					currency = applicationConfig.getDefaultProductCurrency();
+				}
+				product.setProductCurrency(currency);
 			}
 			// Default product unit id
 			if (StringUtils.isEmpty(product.getProductUnitId())) {
