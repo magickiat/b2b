@@ -482,6 +482,7 @@ public class OrderServiceImpl implements OrderService {
 				if(productPrice != null && detail.getAmount() > 0){
 					// productPrice's amount = product price per unit
 					detail.setPrice(productPrice.getAmount().multiply(new BigDecimal(detail.getAmount())));
+					detail.setProductCurrency(productPrice.getProductCurrency());
 				}
 				
 				detail.setTimeUpdate(DateTimeUtil.getCurrentDate());

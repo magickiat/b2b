@@ -23,7 +23,7 @@
 			servletRelativeAction="/backend/order/approve" method="POST">
 
 			<form:hidden path="editMode" />
-			
+
 			<form:hidden path="orderReport.orderId" />
 			<form:hidden path="orderReport.orderCode" />
 			<form:hidden path="orderReport.orderStatus" />
@@ -49,10 +49,9 @@
 
 
 				<div class="col-sm-12 bg_color text-right" style="margin: 10px 0px;">
-					<input type="button" id="btn-approve" class="btn btn-success"
-						onclick="approve()" value="Approve" />
-					<input type="button" id="btn-reject" class="btn btn-danger"
-						onclick="reject()" value="Reject" />
+					<input type="button" id="btn-approve" class="btn btn-success" onclick="approve()"
+						value="Approve" />
+					<input type="button" id="btn-reject" class="btn btn-danger" onclick="reject()" value="Reject" />
 				</div>
 
 				<!-- Order info -->
@@ -64,6 +63,9 @@
 									<b>Order Date</b>
 								</td>
 								<td>
+									<b>Shipping Type</b>
+								</td>
+								<td>
 									<b>Expected Shipping Date</b>
 								</td>
 								<td>
@@ -72,7 +74,7 @@
 								<td>
 									<b>Payment Method</b>
 								</td>
-								<td></td>
+
 							</tr>
 						</thead>
 						<tbody>
@@ -81,7 +83,7 @@
 									<fmt:formatDate pattern="dd-MM-yyyy" value="${approveForm.orderReport.orderDate}" />
 								</td>
 
-
+								<td>${ approveForm.orderReport.shippingType }</td>
 								<td>${ approveForm.orderReport.expectShipmentDate }</td>
 								<td>
 									<form:select path="paymentTermId" cssClass="form-control">
@@ -89,12 +91,13 @@
 											itemValue="paymentTermId" />
 									</form:select>
 								</td>
-								<td colspan="2">
+								<td>
 									<form:select path="paymentMethodId" cssClass="form-control">
 										<form:options items="${ approveForm.paymentMethodList }" itemLabel="paymentMethodName"
 											itemValue="paymentMethodId" />
 									</form:select>
 								</td>
+
 							</tr>
 						</tbody>
 					</table>
@@ -155,29 +158,29 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			
+
 			var isEditMode = '${approveForm.editMode}';
 			console.log('is edit mode: ' + isEditMode);
-			
+
 			disablePage(isEditMode);
 		});
-		
-		function approve(){
+
+		function approve() {
 			/* disablePage(true); */
 			$('#approveForm').submit();
 		}
-		
-		function back(){
-			window.location.href= '<c:url value="/backend/order/search" />';
+
+		function back() {
+			window.location.href = '<c:url value="/backend/order/search" />';
 		}
-		
-		function reject(){
+
+		function reject() {
 			var form = $('#approveForm');
 			form.attr('action', '<c:url value="/backend/order/reject" />');
 			form.submit();
 		}
-		
-		function disablePage(editMode){
+
+		function disablePage(editMode) {
 			if (editMode == 'true') {
 				$('#paymentMethodId').prop("disabled", false);
 				$('#paymentTermId').prop("disabled", false);
@@ -187,10 +190,12 @@
 				$('#btn-approve').prop("disabled", false);
 				$('#btn-reject').prop("disabled", false);
 				$('#save').prop("disabled", false);
-				$('#remarkCustomer').prop("disabled", false);
 				$('#remarkOrders').prop("disabled", false);
 				$('input[name=btn-remove]').prop("disabled", false);
 				$('input[name=btn-split]').prop("disabled", false);
+				$('#remarkCustomer').prop("disabled", false);
+				
+				togglePriceGroup(false);
 			} else {
 				$('#paymentMethodId').prop("disabled", true);
 				$('#paymentTermId').prop("disabled", true);
@@ -200,14 +205,22 @@
 				$('#btn-approve').prop("disabled", true);
 				$('#btn-reject').prop("disabled", true);
 				$('#save').prop("disabled", true);
-				$('#remarkCustomer').prop("disabled", true);
 				$('#remarkOrders').prop("disabled", true);
 				$('input[name=btn-remove]').prop("disabled", true);
 				$('input[name=btn-split]').prop("disabled", true);
+				$('#remarkCustomer').prop("disabled", true);
+				
+				togglePriceGroup(true);
 			}
 		}
 		
-		function saveOrder(){
+		function togglePriceGroup(disabled){
+			$('.price-group').each(function() {
+				$(this).prop("disabled", disabled);
+			});
+		}
+
+		function saveOrder() {
 			var form = $('#approveForm');
 			form.attr('action', '<c:url value="/backend/order/save" />');
 			form.submit();

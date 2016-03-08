@@ -105,6 +105,8 @@
 	}
 	
 	function updateTotal(){
+		$('#addListToCart').prop("disabled", true);
+		console.log('Disable add button ' + $('#addListToCart').prop("disabled"));
 		$('input[name=tech]').each(function() {
 			if ($(this).val()) {
 				/* console.log($(this).val()); */
@@ -117,6 +119,8 @@
 				$('#'+ $(this).val()).text(formatNumber(sum));
 			}
 		});
+		$('#addListToCart').prop("disabled", false);
+		console.log('Disable add button ' + $('#addListToCart').prop("disabled"));
 	}
 	
 	function addMultipleOrderToCart(){

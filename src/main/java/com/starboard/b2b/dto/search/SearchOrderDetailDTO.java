@@ -1,10 +1,13 @@
 package com.starboard.b2b.dto.search;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-public class SearchOrderDetailDTO {
+import com.starboard.b2b.dto.BaseDTO;
+
+public class SearchOrderDetailDTO extends BaseDTO {
 	private long orderDetailId;
 	private String productCode;
 	private String productName;
@@ -27,7 +30,7 @@ public class SearchOrderDetailDTO {
 
 	public SearchOrderDetailDTO(long orderDetailId, String productCode, String productName, long amount, long shiped, long pending,
 			String productUnit, BigDecimal unitPrice, String productBuyerGroupId, Long orderId, Long productId, Long status, BigDecimal price,
-			String productUnitId, String productCurrency) {
+			String productUnitId, String productCurrency, String userCreate, String userUpdate, Date timeCreate, Date timeUpdate) {
 		this.orderDetailId = orderDetailId;
 		this.productCode = productCode;
 		this.productName = productName;
@@ -44,6 +47,11 @@ public class SearchOrderDetailDTO {
 		this.price = price;
 		this.productUnitId = productUnitId;
 		this.productCurrency = productCurrency;
+		
+		this.userCreate = userCreate;
+		this.userUpdate = userUpdate;
+		this.timeCreate = timeCreate;
+		this.timeUpdate = timeUpdate;
 	}
 
 	public String getProductCode() {

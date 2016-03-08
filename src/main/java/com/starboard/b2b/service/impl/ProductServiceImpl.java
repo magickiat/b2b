@@ -288,6 +288,7 @@ public class ProductServiceImpl implements ProductService {
 			ProductPriceDTO price = productPriceDao.findProductPrice(result.getProduct().getProductCode(), custInvoiceCode,
 					result.getProduct().getProductPreintro());
 //			log.info("prict: " + price);
+//TODO			set product currency
 			result.setPrice(price);
 		}
 	}
@@ -305,6 +306,7 @@ public class ProductServiceImpl implements ProductService {
 				result.setProductUnitId(price.getProductUnitId());
 			} else {
 				result.setProductPrice(null);
+//TODO				set product currency = null
 			}
 		}
 	}
@@ -373,6 +375,7 @@ public class ProductServiceImpl implements ProductService {
 		for (Long key : keySet) {
 			ProductDTO productInCart = cart.get(key);
 			ProductSearchResult product = new ProductSearchResult(productInCart);
+//TODO			set product currency with customer's currency
 			ProductPriceDTO price = productPriceDao.findProductPrice(productInCart.getProductCode(), invoiceCode, productInCart.getProductPreintro());
 			product.setPrice(price);
 			if (price != null) {

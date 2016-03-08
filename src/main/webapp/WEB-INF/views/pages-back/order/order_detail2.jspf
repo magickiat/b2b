@@ -52,7 +52,7 @@
 
 							<td>
 								<select id="orderDetails[${ rowNum.index }].productBuyerGroupId"
-									name="orderDetails[${ rowNum.index }].productBuyerGroupId" class="form-control"
+									name="orderDetails[${ rowNum.index }].productBuyerGroupId" class="form-control price-group"
 									onchange="changePriceGroup(${ ordDetail.orderDetailId }, this)">
 									<option value=""></option>
 									<c:forEach var="priceGroup" items="${ approveForm.productPriceGroupList }">

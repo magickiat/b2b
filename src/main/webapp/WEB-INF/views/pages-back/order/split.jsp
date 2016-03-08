@@ -70,9 +70,9 @@
 									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].orderId" />
 									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productCode" />
 									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productName" />
-									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].amount" />
-									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].shiped" />
-									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].pending" />
+									<%-- <form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].amount" /> --%>
+									<%-- <form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].shiped" /> --%>
+									<%-- <form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].pending" /> --%>
 									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productUnit" />
 									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].unitPrice" />
 									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productId" />

@@ -36,6 +36,8 @@ import com.starboard.b2b.service.EmailService;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.service.RoSyncService;
+import com.starboard.b2b.util.DateTimeUtil;
+import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.order.OrderDecisionForm;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
 import com.starboard.b2b.web.form.order.SearchOrderForm;
@@ -186,6 +188,7 @@ public class BackendOrderController {
 		}
 
 		// ----- approve -----
+		orderService.updateOrder(form);
 		orderService.approve(order);
 		roSyncService.syncRoFromB2BtoAX(form.getOrderReport().getOrderId());
 
@@ -212,10 +215,10 @@ public class BackendOrderController {
 	}
 
 	@RequestMapping(value = "/reject", method = RequestMethod.POST)
-	String reject(@ModelAttribute("approveForm") OrderDecisionForm form, long orderId, Model model, HttpServletRequest request) {
-		OrderDTO order = orderService.findOrder(orderId);
+	String reject(@ModelAttribute("approveForm") OrderDecisionForm form, Model model, HttpServletRequest request) {
+		OrderDTO order = orderService.findOrder(form.getOrderReport().getOrderId());
 		if (order == null) {
-			throw new B2BException("Not found order " + orderId);
+			throw new B2BException("Not found order " + form.getOrderReport().getOrderId());
 		}
 
 		// ----- reject -----
@@ -240,7 +243,7 @@ public class BackendOrderController {
 			log.error(e.getMessage(), e);
 		}
 
-		return viewOrder(orderId, model, request);
+		return viewOrder(form.getOrderReport().getOrderId(), model, request);
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -386,7 +389,11 @@ public class BackendOrderController {
 		// ----- Reset shiped item-----
 		List<SearchOrderDetailDTO> splitOrderDetails = form.getSplitOrderDetails();
 		for (SearchOrderDetailDTO dto : splitOrderDetails) {
-			dto.setShiped(dto.getAmount());
+			dto.setShiped(0);
+			dto.setUserCreate(UserUtil.getCurrentUsername());
+			dto.setTimeCreate(DateTimeUtil.getCurrentDate());
+			dto.setUserUpdate(null);
+			dto.setTimeUpdate(null);
 		}
 
 		// ----- Set new split order details -----
