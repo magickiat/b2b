@@ -14,23 +14,19 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-12">
-				<h2>Product price</h2>
-			</div>
-		</div>
-
-		<div>&nbsp;</div>
-
-		<div class="row bg_color">
-			<div class="col-sm-12">
-				<a href='<c:url value="/upload/product/product-price.xlsx" />' class="btn btn-default">Download Template</a>
+			<div class="col-sm-12 bg_color">
+				<div class="col-md-6 row row-header2 header2 txtupper">Product price</div>
+				<div class="" style="margin-top: 15px;">
+					<a href='<c:url value="/upload/product/product-price.xlsx" />' class="pull-right btn btn-primary">Download Template</a>
+				</div>
 			</div>
 		</div>
 		
-		<div>&nbsp;</div>
+		<div class="row">&nbsp;</div>
 
 		<div class="row">
 			<div class="col-sm-12 bg_color showline2">
+				<div class="row">&nbsp;</div>
 				<form id="uploadForm" action='<c:url value="/backend/product/upload/product-price" />'
 					method="post" enctype="multipart/form-data" role="form">
 					<input type="hidden" id="csrftoken_" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -40,6 +36,8 @@
 					</div>
 					<input type="submit" value="Upload" class="btn btn-success" />
 				</form>
+				<div class="row">&nbsp;</div>
+				
 			</div>
 		</div>
 	</div>

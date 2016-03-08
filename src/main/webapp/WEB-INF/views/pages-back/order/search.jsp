@@ -76,7 +76,7 @@
 								<div class="col-md-2">
 									<div id="dateToPicker" class="input-group date">
 										<form:input path="dateTo" cssClass="form-control" />
-										<span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span>
+										<span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span> 
 										</span>
 									</div>
 								</div>

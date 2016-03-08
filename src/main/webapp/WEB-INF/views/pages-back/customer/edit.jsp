@@ -81,7 +81,7 @@
 									<th>Email</th>
 									<th>Active</th>
 									<th>Active Time</th>
-									<th>Function</th>
+									<th style="text-align: right;">Function</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -98,10 +98,10 @@
 										</td>
 										<td>${user.lastActive }</td>
 										<td>
-											<div class="btn-group">
-												<a type="button" class="btn btn-warning"
+											<div class="btn-group pull-right">
+												<a type="button" class="btn btn-warning btn-xs"
 													href="<c:url value="/backend/customer/edituser?userId=${ user.id }" />">Edit</a>
-												<a type="button" class="btn btn-danger"
+												<a type="button" class="btn btn-danger btn-xs"
 													data-href="<c:url value="/backend/customer/deleteuser?userId=${ user.id }"/>"
 													data-toggle="modal" data-target="#confirm-delete">Delete</a>
 											</div>

@@ -18,15 +18,12 @@
 		</div>
 		<div class="row">&nbsp;</div>
 		<div class="row bg_color showline2" style="min-height: 300px;">
-
+			<div class="row">&nbsp;</div>
 			<div class="col-sm-12">
-				<a href='<c:url value="/backend/admin/file/list" />'>Upload image</a>
+				<a class="btn btn-primary pull-right " href='<c:url value="/backend/admin/file/list" />'>Upload image</a>
+				<a class="btn btn-primary pull-right" style="margin-right:10px;" href='<c:url value="/backend/product/upload/product-price" />'>Upload Product Price</a>
 			</div>
 			
-			<div class="col-sm-12">
-				<a href='<c:url value="/backend/product/upload/product-price" />'>Upload Product Price</a>
-			</div>
-
 		</div>
 	</div>
 
