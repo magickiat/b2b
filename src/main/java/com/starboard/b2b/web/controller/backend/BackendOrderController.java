@@ -68,13 +68,6 @@ public class BackendOrderController {
 	@Autowired
 	private RoSyncService roSyncService;
 
-	@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-		dateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-	}
-
 	private void setForm(final OrderSummaryForm form, final Model model) {
 		final List<ProductTypeDTO> productTypes = productService.findProductTypeByBrandId(form.getBrandId());
 		model.addAttribute("productType", productTypes);
