@@ -390,6 +390,7 @@ public class BackendOrderController {
 		List<SearchOrderDetailDTO> splitOrderDetails = form.getSplitOrderDetails();
 		for (SearchOrderDetailDTO dto : splitOrderDetails) {
 			dto.setShiped(0);
+			dto.setPending(dto.getAmount());
 			dto.setUserCreate(UserUtil.getCurrentUsername());
 			dto.setTimeCreate(DateTimeUtil.getCurrentDate());
 			dto.setUserUpdate(null);
