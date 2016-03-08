@@ -42,13 +42,13 @@
 							<tr>
 								<th class="txtupper">technology</th>
 								<th class="txtupper">size</th>
-								<th class="txtupper">quantity totals</th>
+								<th class="txtupper" nowrap="nowrap">quantity totals</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach var="rowTech" items="${ rowAllTech }" varStatus="rowNumTech">
 								<tr>
-									<td>
+									<td nowrap="nowrap">
 									${ rowTech.key }
 									<input type="hidden" name="tech" value="${ withnose }-${ stringUtil.removeSpecialChar(rowTech.key) }" />
 									</td>
@@ -74,7 +74,7 @@
 											</tr>
 										</table>
 									</td>
-									<td>
+									<td class="text-right">
 										<span id="${ withnose}-${ stringUtil.removeSpecialChar(rowTech.key) }">0</span>
 									</td>
 							</c:forEach>

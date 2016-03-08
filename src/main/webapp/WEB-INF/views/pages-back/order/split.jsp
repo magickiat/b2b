@@ -133,15 +133,14 @@
 
 								</tr>
 							</c:forEach>
-
 							<%-- Summary row --%>
-							<tr>
-								<td colspan="4" align="right">Total Qty</td>
+							<tr class="bg-info">
+								<td colspan="4" align="right"><b>Total Qty:</b></td>
 								<td colspan="1">
 									<form:hidden path="totalSplitQty" />
 									<div id="totalQty"></div>
 								</td>
-								<td colspan="3" align="right">Maximum Qty: ${ splitForm.orderDetail.amount }</td>
+								<td colspan="3" align="left"><b>Maximum Qty:</b> ${ splitForm.orderDetail.amount }</td>
 							</tr>
 						</tbody>
 					</table>
@@ -150,6 +149,7 @@
 				<div class="col-sm-12">&nbsp;</div>
 				<div class="col-sm-12 text-right">
 					<input type="button" value="Confirm" onclick="confirmSplitOrder()" class="btn btn-success" />
+					<input type="button" value="Cancel" onclick="back()" class="btn btn-default" />
 				</div>
 				<div class="col-sm-12">&nbsp;</div>
 			</div>
@@ -254,6 +254,10 @@
 			});
 			
 			return found;
+		}
+		
+		function back(){
+			window.location.href = '<c:url value="/backend/order/view?orderId=" />' + $('#orderDetail\\.orderId').val();
 		}
 
 	</script>
