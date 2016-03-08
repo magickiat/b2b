@@ -6,13 +6,17 @@ import com.starboard.b2b.dto.SoDTO;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class SearchOrderDTO {
 
 	private long orderId;
 	private String orderCode;
 	private String customerName;
 	private String productTypeName;
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
 	private Date orderDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
 	private Date expectShipmentDate;
 	private String orderStatus;
 	private String orderStatusId;

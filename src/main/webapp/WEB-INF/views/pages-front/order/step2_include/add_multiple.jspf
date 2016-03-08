@@ -35,20 +35,20 @@
 	
 				</div>
 	
-				<div class="col-sm-12 bg_color">
+				<div class="col-sm-12 bg_color" style="overflow:scroll;">
 	
 					<table class="table">
 						<thead>
 							<tr>
 								<th class="txtupper">technology</th>
 								<th class="txtupper">size</th>
-								<th class="txtupper">quantity totals</th>
+								<th class="txtupper" nowrap="nowrap">quantity totals</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach var="rowTech" items="${ rowAllTech }" varStatus="rowNumTech">
 								<tr>
-									<td>
+									<td nowrap="nowrap">
 									${ rowTech.key }
 									<input type="hidden" name="tech" value="${ withnose }-${ stringUtil.removeSpecialChar(rowTech.key) }" />
 									</td>
@@ -74,7 +74,7 @@
 											</tr>
 										</table>
 									</td>
-									<td>
+									<td class="text-right">
 										<span id="${ withnose}-${ stringUtil.removeSpecialChar(rowTech.key) }">0</span>
 									</td>
 							</c:forEach>
@@ -105,6 +105,8 @@
 	}
 	
 	function updateTotal(){
+		$('#addListToCart').prop("disabled", true);
+		console.log('Disable add button ' + $('#addListToCart').prop("disabled"));
 		$('input[name=tech]').each(function() {
 			if ($(this).val()) {
 				/* console.log($(this).val()); */
@@ -117,6 +119,8 @@
 				$('#'+ $(this).val()).text(formatNumber(sum));
 			}
 		});
+		$('#addListToCart').prop("disabled", false);
+		console.log('Disable add button ' + $('#addListToCart').prop("disabled"));
 	}
 	
 	function addMultipleOrderToCart(){

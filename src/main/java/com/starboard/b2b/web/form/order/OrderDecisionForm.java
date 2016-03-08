@@ -22,7 +22,6 @@ public class OrderDecisionForm {
 	private String remarkCustomer; // Customer remark
 	private String remarkOrders; // Staff remark
 	private String status;
-	private long orderId;
 
 	private List<PaymentMethodDTO> paymentMethodList;
 	private List<PaymentTermDTO> paymentTermList;
@@ -123,14 +122,6 @@ public class OrderDecisionForm {
 
 	public void setRemarkOrders(String remarkOrders) {
 		this.remarkOrders = remarkOrders;
-	}
-
-	public long getOrderId() {
-		return orderId;
-	}
-
-	public void setOrderId(long orderId) {
-		this.orderId = orderId;
 	}
 
 	public long getSplitOrderDetailId() {

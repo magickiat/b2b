@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,8 @@ import com.starboard.b2b.service.EmailService;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.service.RoSyncService;
+import com.starboard.b2b.util.DateTimeUtil;
+import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.order.OrderDecisionForm;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
 import com.starboard.b2b.web.form.order.SearchOrderForm;
@@ -113,7 +116,6 @@ public class BackendOrderController {
 		form.setPaymentMethodId(orderReport.getPaymentMethod());
 		form.setRemarkCustomer(orderReport.getRemarkCustomer());
 		form.setRemarkOrders(orderReport.getRemarkOrders());
-		form.setOrderId(orderId);
 
 		log.info("order status = " + orderReport.getOrderStatus());
 		if (OrderStatusConfig.WAIT_FOR_APPROVE.equals(orderReport.getOrderStatusId())) {
@@ -146,12 +148,6 @@ public class BackendOrderController {
 		form.setPaymentTermList(orderService.findAllPaymentTerm());
 		form.setProductPriceGroupList(productService.listProductPriceGroup());
 
-		// ----- find order -----
-		if (form.getOrderReport() == null) {
-			log.info("form.getOrderReport() == null");
-			form.setOrderReport(orderService.findOrderForReport(form.getOrderId()));
-		}
-
 		// ---- find order address -----
 		final List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(form.getOrderReport().getOrderCode());
 		for (OrdAddressDTO ordAddress : ordAddresses) {
@@ -170,18 +166,19 @@ public class BackendOrderController {
 	}
 
 	@RequestMapping(value = "/approve", method = RequestMethod.POST)
-	String approve(@ModelAttribute("approveForm") OrderDecisionForm form, long orderId, Model model, HttpServletRequest request) {
+	String approve(@ModelAttribute("approveForm") OrderDecisionForm form, Model model, HttpServletRequest request) {
 		log.info(form.toString());
-		log.info("orderId: " + orderId);
+		log.info("orderId: " + form.getOrderReport().getOrderId());
 
-		OrderDTO order = orderService.findOrder(orderId);
+		OrderDTO order = orderService.findOrder(form.getOrderReport().getOrderId());
 		if (order == null) {
-			throw new B2BException("Not found order " + orderId);
+			throw new B2BException("Not found order " + form.getOrderReport().getOrderId());
 		}
 
 		// ----- approve -----
+		orderService.updateOrder(form);
 		orderService.approve(order);
-		roSyncService.syncRoFromB2BtoAX(orderId);
+		roSyncService.syncRoFromB2BtoAX(form.getOrderReport().getOrderId());
 
 		// ----- send mail order -----
 		String host = environment.getProperty("base.url");
@@ -202,14 +199,14 @@ public class BackendOrderController {
 			log.error(e.getMessage(), e);
 		}
 
-		return viewOrder(orderId, model, request);
+		return viewOrder(form.getOrderReport().getOrderId(), model, request);
 	}
 
 	@RequestMapping(value = "/reject", method = RequestMethod.POST)
-	String reject(@ModelAttribute("approveForm") OrderDecisionForm form, long orderId, Model model, HttpServletRequest request) {
-		OrderDTO order = orderService.findOrder(orderId);
+	String reject(@ModelAttribute("approveForm") OrderDecisionForm form, Model model, HttpServletRequest request) {
+		OrderDTO order = orderService.findOrder(form.getOrderReport().getOrderId());
 		if (order == null) {
-			throw new B2BException("Not found order " + orderId);
+			throw new B2BException("Not found order " + form.getOrderReport().getOrderId());
 		}
 
 		// ----- reject -----
@@ -234,7 +231,7 @@ public class BackendOrderController {
 			log.error(e.getMessage(), e);
 		}
 
-		return viewOrder(orderId, model, request);
+		return viewOrder(form.getOrderReport().getOrderId(), model, request);
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -247,7 +244,7 @@ public class BackendOrderController {
 			throw new B2BException("Not save because it not edit mode");
 		}
 
-		return viewOrder(form.getOrderId(), model, request);
+		return viewOrder(form.getOrderReport().getOrderId(), model, request);
 	}
 
 	@RequestMapping(value = "/change-price-group", method = RequestMethod.POST)
@@ -255,6 +252,14 @@ public class BackendOrderController {
 		log.info("Change price group: " + form);
 		// ----- set require list form -----
 		setOrderFormValue(form);
+		
+		// ----- remove order details when click remove -----
+		for(SearchOrderDetailDTO dto : form.getOrderDetails()){
+			if(dto.getProductId() == null){
+				form.getOrderDetails().remove(dto);
+				break;
+			}
+		}
 
 		// ----- find new price group -----
 		if (form.getOrderDetails() != null && !form.getOrderDetails().isEmpty()) {
@@ -262,6 +267,7 @@ public class BackendOrderController {
 			productService.findOrderPriceList(form.getOrderDetails());
 		}
 
+		model.addAttribute("approveForm", form);
 		request.getSession().setAttribute(SESSION_ORDER_DETAILS_FORM, form);
 
 		return "pages-back/order/view";
@@ -312,23 +318,76 @@ public class BackendOrderController {
 	@RequestMapping(value = "/split-action", method = RequestMethod.POST)
 	String splitOrderDetail(@ModelAttribute("splitForm") SplitOrderForm form, Model model, HttpServletRequest request) {
 		log.info("Split order form: " + form);
-		
+
 		if (form.getSplitNum() <= 0) {
 			model.addAttribute("errorMsg", "Invalid number of split");
 		} else if (form.getSplitNum() > form.getOrderDetail().getAmount()) {
 			model.addAttribute("errorMsg", "Maximum split line is " + form.getOrderDetail().getAmount());
-		}else{
+		} else {
 			List<SearchOrderDetailDTO> splitOrderDetails = new ArrayList<>();
-			
-			for(int i = 0; i< form.getSplitNum(); i++){
-				SearchOrderDetailDTO orderDetail = form.getOrderDetail();
-				orderDetail.setAmount(0);
-				splitOrderDetails.add(orderDetail);
+			SearchOrderDetailDTO original = form.getOrderDetail();
+			for (int i = 0; i < form.getSplitNum(); i++) {
+				SearchOrderDetailDTO dto = new SearchOrderDetailDTO();
+				BeanUtils.copyProperties(original, dto);
+				dto.setAmount(1);
+				dto.setShiped(0);
+				dto.setPending(1);
+				splitOrderDetails.add(dto);
 			}
-			
+
 			form.setSplitOrderDetails(splitOrderDetails);
+			changePriceGroupForSplit(form, model, request);
 		}
 
 		return "pages-back/order/split";
+	}
+
+	@RequestMapping(value = "/change-price-group-for-split", method = RequestMethod.POST)
+	String changePriceGroupForSplit(@ModelAttribute("splitForm") SplitOrderForm form, Model model, HttpServletRequest request) {
+		log.info("Change price group for split: " + form);
+
+		// ----- find new price group -----
+		log.info("form.getSplitOrderDetails() size: " + form.getSplitOrderDetails().size());
+		productService.findOrderPriceList(form.getSplitOrderDetails());
+
+		return "pages-back/order/split";
+	}
+
+	// save-split-order
+	@RequestMapping(value = "/save-split-order", method = RequestMethod.POST)
+	String saveSplitOrder(@ModelAttribute("splitForm") SplitOrderForm form, Model model, HttpServletRequest request) {
+		log.info("Save split order: " + form);
+
+		OrderDecisionForm orderDetailForm = (OrderDecisionForm) request.getSession().getAttribute(SESSION_ORDER_DETAILS_FORM);
+		if (orderDetailForm == null) {
+			throw new B2BException("Not found any session for Split Order");
+		}
+
+		// ----- Remove original order detail from session -----
+		log.info("Remove original order detail from session");
+		List<SearchOrderDetailDTO> orderDetails = orderDetailForm.getOrderDetails();
+		for (SearchOrderDetailDTO dto : orderDetails) {
+			if (dto.getOrderDetailId() == form.getOrderDetail().getOrderDetailId()) {
+				log.info("Remove : " + dto);
+				orderDetails.remove(dto);
+				break;
+			}
+		}
+
+		// ----- Reset shiped item-----
+		List<SearchOrderDetailDTO> splitOrderDetails = form.getSplitOrderDetails();
+		for (SearchOrderDetailDTO dto : splitOrderDetails) {
+			dto.setShiped(0);
+			dto.setPending(dto.getAmount());
+			dto.setUserCreate(UserUtil.getCurrentUsername());
+			dto.setTimeCreate(DateTimeUtil.getCurrentDate());
+			dto.setUserUpdate(null);
+			dto.setTimeUpdate(null);
+		}
+
+		// ----- Set new split order details -----
+		orderDetails.addAll(form.getSplitOrderDetails());
+
+		return changePriceGroup(orderDetailForm, model, request);
 	}
 }

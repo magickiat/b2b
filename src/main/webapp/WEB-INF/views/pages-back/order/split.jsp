@@ -17,8 +17,8 @@
 	<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 
 	<div class="container">
-		<form:form modelAttribute="splitForm" servletRelativeAction="/backend/order/split-action"
-			cssClass="form-horizontal">
+		<form:form id="splitOrderDetailForm" modelAttribute="splitForm"
+			servletRelativeAction="/backend/order/split-action" cssClass="form-horizontal">
 
 			<div class="row bg_color">
 				<div class="col-sm-12">
@@ -71,8 +71,8 @@
 									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productCode" />
 									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productName" />
 									<%-- <form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].amount" /> --%>
-									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].shiped" />
-									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].pending" />
+									<%-- <form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].shiped" /> --%>
+									<%-- <form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].pending" /> --%>
 									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productUnit" />
 									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].unitPrice" />
 									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productId" />
@@ -88,12 +88,14 @@
 									<td>${ ordDetail.productName }</td>
 
 									<td>
-										<select id="splitForm.splitOrderDetails[${ rowNum.index }].productBuyerGroupId" name="splitForm.splitOrderDetails[${ rowNum.index }].productBuyerGroupId"
-											class="form-control" onchange="changePriceGroup(${ splitForm.splitOrderDetails[rowNum.index].orderDetailId }, this)">
+										<select id="splitOrderDetails[${ rowNum.index }].productBuyerGroupId"
+											name="splitOrderDetails[${ rowNum.index }].productBuyerGroupId" class="form-control"
+											onchange="changePriceGroup(${ splitForm.splitOrderDetails[rowNum.index].orderDetailId }, this)">
 											<option value=""></option>
 											<c:forEach var="pg" varStatus="pgRow" items="${ orderDetailsForm.productPriceGroupList }">
 												<c:set var="selected" value="" />
-												<c:if test="${ pg.productPriceGroupId eq  splitForm.splitOrderDetails[rowNum.index].productBuyerGroupId}">
+												<c:if
+													test="${ pg.productPriceGroupId eq  splitForm.splitOrderDetails[rowNum.index].productBuyerGroupId}">
 													<c:set var="selected" value="selected='selected'" />
 												</c:if>
 												<option value="${ pg.productPriceGroupId }" ${ selected }>${ pg.productPriceGroupName }</option>
@@ -117,29 +119,28 @@
 										</c:choose>
 									</td>
 									<td>
-
-										<c:choose>
-											<c:when test="${ ordDetail.unitPrice == null }">TBA</c:when>
-											<c:otherwise>
-												<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
-													value="${ ordDetail.amount * ordDetail.unitPrice }">
-												</fmt:formatNumber>
-											</c:otherwise>
-										</c:choose>
-
+										<div id="splitOrderDetails${ rowNum.index }.totalAmount">
+											<c:choose>
+												<c:when test="${ ordDetail.unitPrice == null }">TBA</c:when>
+												<c:otherwise>
+													<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
+														value="${ ordDetail.amount * ordDetail.unitPrice }">
+													</fmt:formatNumber>
+												</c:otherwise>
+											</c:choose>
+										</div>
 									</td>
 
 								</tr>
 							</c:forEach>
-
 							<%-- Summary row --%>
-							<tr>
-								<td colspan="4" align="right">Total Qty</td>
+							<tr class="bg-info">
+								<td colspan="4" align="right"><b>Total Qty:</b></td>
 								<td colspan="1">
-									<form:hidden path="totalSplitQty"/>
+									<form:hidden path="totalSplitQty" />
 									<div id="totalQty"></div>
 								</td>
-								<td colspan="3" align="right">Maximum Qty: ${ splitForm.orderDetail.amount }</td>
+								<td colspan="3" align="left"><b>Maximum Qty:</b> ${ splitForm.orderDetail.amount }</td>
 							</tr>
 						</tbody>
 					</table>
@@ -148,6 +149,7 @@
 				<div class="col-sm-12">&nbsp;</div>
 				<div class="col-sm-12 text-right">
 					<input type="button" value="Confirm" onclick="confirmSplitOrder()" class="btn btn-success" />
+					<input type="button" value="Cancel" onclick="back()" class="btn btn-default" />
 				</div>
 				<div class="col-sm-12">&nbsp;</div>
 			</div>
@@ -174,12 +176,88 @@
 				}
 			});
 			
-			$('#totalQty').text(total);
+			$('#totalQty').text(formatNumber(total));
 			$('#totalSplitQty').val(total);
+			
+			updateSplitAmount();
+		}
+		
+		function updateSplitAmount(){
+			console.log('Summary Split Amount');
+			
+			var row = -1;
+			$('.splitqty').each(function() {
+				row++;
+				console.log('row ' + row);
+				if ($(this).val()) {
+					
+					var objUnitPrice = $('#splitOrderDetails' + row + '\\.unitPrice');
+					console.log('\tunitAmt ' + objUnitPrice.val());
+					if(objUnitPrice && objUnitPrice.val() && objUnitPrice.val() != 'TBA'){
+						var qty = parseInt($(this).val());
+						var unitPrice = parseInt(objUnitPrice.val());
+						$('#splitOrderDetails'+ row +'\\.totalAmount').text(formatNumber(qty * unitPrice));
+					}
+				}
+			});
+			
+		}
+		
+		function changePriceGroup(id, objSelect){
+			console.log(id + '\t' +$(objSelect).val());
+			var form = $('#splitOrderDetailForm');
+			form.attr('action', '<c:url value="/backend/order/change-price-group-for-split" />');
+			form.submit();
 		}
 		
 		function confirmSplitOrder(){
+			// re-cal
+			summarySplitQty();
 			
+			var totalQty = $('#totalSplitQty').val();
+			var maxAmount = $('#orderDetail\\.amount').val();
+			
+			// validate maximum amount
+			if(totalQty != maxAmount){
+				showDialog('Total Qty must same as Maximum Qty');
+				return;
+			}
+			
+			// validate same qty but have empty or zero some order detail
+			if(isQtyHaveNotValue()){
+				showDialog("Some order details hasn't Qty");
+				return;
+			}
+			
+			// save split order
+			console.log('save split order');
+			var form = $('#splitOrderDetailForm');
+			form.attr('action', '<c:url value="/backend/order/save-split-order" />');
+			form.submit();
+		}
+		
+		function isQtyHaveNotValue(){
+			var found = false;
+			$('.splitqty').each(function() {
+				console.log("qty: " + $(this).val());
+				if (!$(this).val()) {
+					console.log('Not found value');
+					found = true;
+					return;
+				}
+
+				if (parseInt($(this).val()) <= 0) {
+					console.log('value less than zero');
+					found = true;
+					return;
+				}
+			});
+			
+			return found;
+		}
+		
+		function back(){
+			window.location.href = '<c:url value="/backend/order/view?orderId=" />' + $('#orderDetail\\.orderId').val();
 		}
 
 	</script>

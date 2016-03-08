@@ -3,13 +3,11 @@ package com.starboard.b2b.config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -75,15 +73,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	public Validator getValidator() {
 		return new LocalValidatorFactoryBean();
 	}
-
-	@Bean
-	public MessageSource messageSource() {
-		ResourceBundleMessageSource source = new ResourceBundleMessageSource();
-		source.setBasename("messages");
-		source.setUseCodeAsDefaultMessage(true);
-		return source;
-	}
-
+	
 	/*
 	 * PropertySourcesPlaceHolderConfigurer Bean only required for @Value("{}")
 	 * annotations. Remove this bean if you are not using @Value annotations for
@@ -91,7 +81,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	 */
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-		log.info("Init propertySourcesPlaceholderConfigurer");
 		return new PropertySourcesPlaceholderConfigurer();
 	}
 

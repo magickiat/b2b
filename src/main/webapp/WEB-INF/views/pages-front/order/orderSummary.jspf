@@ -23,8 +23,9 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td><fmt:formatDate pattern="dd-MM-yyyy"
-							value="${orderReport.orderDate}" /></td>
+					<td>
+						<fmt:formatDate pattern="dd-MM-yyyy" value="${orderReport.orderDate}" />
+					</td>
 					<td></td>
 					<td>${orderReport.paymentTermDescription}</td>
 					<td>${orderReport.paymentMethod}</td>
@@ -37,30 +38,35 @@
 <div class="row">
 	<div class="col-sm-6">
 		<div class="row">
-			<div class="col-sm-12">Dispatch to:
-				${orderReport.dispatchToAddress.orderAddr}</div>
+			<div class="col-sm-12">
+				<b>Dispatch to:</b> ${orderReport.dispatchToAddress.orderAddr}
+			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-12">Tel:
-				${orderReport.dispatchToAddress.orderTel} Fax:
-				${orderReport.dispatchToAddress.fax}</div>
+			<div class="col-sm-12">
+				<b>Tel:</b> ${orderReport.dispatchToAddress.orderTel} <b>Fax:</b>
+				${orderReport.dispatchToAddress.fax}
+			</div>
 		</div>
 
 	</div>
 	<div class="col-sm-6">
 
 		<div class="row">
-			<div class="col-sm-12">Invoice to:
-				${orderReport.invoiceToAddress.orderAddr}</div>
+			<div class="col-sm-12">
+				<b>Invoice to:</b> ${orderReport.invoiceToAddress.orderAddr}
+			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-12">Tel:
-				${orderReport.invoiceToAddress.orderTel} Fax:
-				${orderReport.invoiceToAddress.fax}</div>
+			<div class="col-sm-12">
+				<b>Tel:</b> ${orderReport.invoiceToAddress.orderTel} <b>Fax:</b>
+				${orderReport.invoiceToAddress.fax}
+			</div>
 		</div>
 
 	</div>
 </div>
+<div class="row">&nbsp;</div>
 <!-- Order detail -->
 <div class="row">
 	<div class="col-sm-12">
@@ -77,8 +83,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${ orderReport.orderDetails }" var="ordDetail"
-					varStatus="rowNum">
+				<c:forEach items="${ orderReport.orderDetails }" var="ordDetail" varStatus="rowNum">
 
 					<tr>
 						<td>${ rowNum.index + 1 }</td>
@@ -86,30 +91,50 @@
 						<td>${ ordDetail.productName }</td>
 						<td>${ ordDetail.amount }</td>
 						<td>${ ordDetail.productUnit }</td>
-						<td><fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
-								value="${ ordDetail.unitPrice }">
-							</fmt:formatNumber></td>
-						<td><fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
+						<td>
+							<fmt:formatNumber pattern="#,###" maxIntegerDigits="12" value="${ ordDetail.unitPrice }">
+							</fmt:formatNumber>
+						</td>
+						<td>
+							<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
 								value="${ ordDetail.amount * ordDetail.unitPrice }">
-							</fmt:formatNumber></td>
+							</fmt:formatNumber>
+						</td>
 					</tr>
 
 				</c:forEach>
 			</tbody>
 		</table>
-		
-		<!-- Customer remark -->		
+
+		<div class="col-sm-12">&nbsp;</div>
+		<!-- Customer remark -->
 		<div class="col-sm-6">
-			<div class="row">Customer Remark</div>
+			<div class="row">
+				<b>Customer Remark</b>
+			</div>
 			<div class="row">${ orderReport.remarkCustomer }</div>
 		</div>
+
 		<div class="col-sm-6">
-			<div class="row">Shipping Type</div>
+			<div class="row">
+				<b>Shipping Type</b>
+			</div>
 			<div class="row">${ orderReport.shippingType }</div>
 		</div>
-		
+
+
+		<!-- Staff remark -->
+		<c:if test="${ not empty orderReport.remarkOrders }">
+			<div class="col-sm-12">&nbsp;</div>
+			<div class="col-sm-12">
+				<div class="row">
+					<b>Staff Remark</b>
+				</div>
+				<div class="row">${ orderReport.remarkOrders }</div>
+			</div>
+		</c:if>
 	</div>
-	
-	
-	
+
+	<div class="col-sm-12">&nbsp;</div>
+
 </div>

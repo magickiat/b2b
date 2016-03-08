@@ -33,8 +33,7 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 	@Override
 	public List<SearchOrderDetailDTO> searchOrderDetail(Long orderId) {
 		StringBuffer sb = new StringBuffer();
-		sb.append(
-				" select new com.starboard.b2b.dto.search.SearchOrderDetailDTO(od.orderDetailId, p.productCode, p.productNameEn, od.amount, 0L, od.amount, od.productUnitId, od.price, od.productBuyerGroupId, od.orderId, p.productId, od.status, od.price, od.productUnitId, od.productCurrency)");
+		sb.append(" select new " + getSearchOrderDetailDTOConstructor());
 		sb.append(" FROM    OrdDetail od,    Product p ");
 		sb.append(" WHERE od.productId = p.productId");
 		sb.append(" and od.orderId = :orderId");
@@ -43,12 +42,17 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 		return sessionFactory.getCurrentSession().createQuery(sb.toString()).setLong("orderId", orderId).list();
 	}
 
+	private String getSearchOrderDetailDTOConstructor() {
+		return "com.starboard.b2b.dto.search.SearchOrderDetailDTO(od.orderDetailId, p.productCode, p.productNameEn, od.amount, 0L, "
+				+ "od.amount, od.productUnitId, od.price, od.productBuyerGroupId, od.orderId, p.productId, od.status, od.price, od.productUnitId, "
+				+ "od.productCurrency, od.userCreate, od.userUpdate, od.timeCreate, od.timeUpdate)";
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<SearchOrderDetailDTO> searchOrderDetail(String orderCode) {
-		String searchOrderDetail = " select new com.starboard.b2b.dto.search.SearchOrderDetailDTO(od.orderDetailId, p.productCode, p.productNameEn, od.amount, 0L, od.amount, od.productUnitId, od.price, od.productBuyerGroupId, od.orderId, p.productId, od.status, od.price, od.productUnitId, od.productCurrency)"
-				+ " FROM    OrdDetail od, Orders r, Product p " + " WHERE od.productId = p.productId" + " and od.orderId = r.id"
-				+ " and r.orderCode = :orderCode" + " ORDER BY p.productCode ";
+		String searchOrderDetail = " select new " + getSearchOrderDetailDTOConstructor() + " FROM    OrdDetail od, Orders r, Product p "
+				+ " WHERE od.productId = p.productId" + " and od.orderId = r.id" + " and r.orderCode = :orderCode" + " ORDER BY p.productCode ";
 
 		return sessionFactory.getCurrentSession().createQuery(searchOrderDetail).setString("orderCode", orderCode).list();
 	}
@@ -68,8 +72,7 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 	@Override
 	public List<SearchOrderDetailDTO> searchOrderDetail(Long[] ordersId) {
 		StringBuffer sb = new StringBuffer();
-		sb.append(
-				" select new com.starboard.b2b.dto.search.SearchOrderDetailDTO(od.orderDetailId, p.productCode, p.productNameEn, od.amount, 0L, od.amount, od.productUnitId, od.price, od.productBuyerGroupId, od.orderId, p.productId, od.status, od.price, od.productUnitId, od.productCurrency)");
+		sb.append(" select new " + getSearchOrderDetailDTOConstructor());
 		sb.append(" FROM    OrdDetail od,    Product p ");
 		sb.append(" WHERE od.productId = p.productId");
 		sb.append(" and od.orderId in ( :orderId) ");
