@@ -122,7 +122,7 @@ public class FrontOrderController {
 				}
 			}
 		}
-
+		
 		model.addAttribute("brandId", brandId);
 
 		return "pages-front/order/step2_address";
@@ -156,7 +156,7 @@ public class FrontOrderController {
 	}
 
 	@RequestMapping(value = "step2/search-action", method = RequestMethod.GET)
-	String step2SearchAction(@ModelAttribute("searchProductForm") SearchProductForm form, Model model) {
+	String step2SearchAction(@ModelAttribute("searchProductForm") SearchProductForm form, @ModelAttribute("brandId") Long brandId, Model model) {
 		log.info("search condition: " + form.toString());
 
 		// Show shopping cart
@@ -166,7 +166,7 @@ public class FrontOrderController {
 		Page<SearchProductModelDTO> resultPage = productService.searchProduct(form);
 		if ("list".equals(form.getShowType())) {
 			log.info("Find product price, search type 'List'");
-			productService.findProductPriceList(resultPage.getResult(), UserUtil.getCurrentUser().getCustomer().getInvoiceCode());
+			productService.findProductPriceList(resultPage.getResult(), brandId);
 		}
 		model.addAttribute("resultPage", resultPage);
 
@@ -192,7 +192,7 @@ public class FrontOrderController {
 	}
 
 	@RequestMapping(value = "step2/view", method = RequestMethod.GET)
-	String step2ModelDetail(@RequestParam String modelId, Model model) {
+	String step2ModelDetail(@RequestParam String modelId, @ModelAttribute("brandId") Long brandId, Model model) {
 		log.info("GET step2/view");
 		log.info("modelId = " + modelId);
 
@@ -218,13 +218,11 @@ public class FrontOrderController {
 			}
 
 			// Find product price
-			String invoiceCode = UserUtil.getCurrentUser().getCustomer().getInvoiceCode();
-
 			if (!productListNoWithnose.isEmpty()) {
-				productService.findProductPrice(productListNoWithnose, invoiceCode);
+				productService.findProductPrice(productListNoWithnose, brandId);
 			}
 			if (productListWithnose != null && !productListWithnose.isEmpty()) {
-				productService.findProductPrice(productListWithnose, invoiceCode);
+				productService.findProductPrice(productListWithnose, brandId);
 			}
 
 			// find product size (productLength)
@@ -487,10 +485,9 @@ public class FrontOrderController {
 	// return result;
 	// }
 	@RequestMapping(value = "step3/checkout", method = RequestMethod.GET)
-	String checkout(@ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model) {
+	String checkout(@ModelAttribute("cart") Map<Long, ProductDTO> cart, @ModelAttribute("brandId") Long brandId, Model model) {
 		// ----- Find product's price in cart ------
-		String invoiceCode = UserUtil.getCurrentUser().getCustomer().getInvoiceCode();
-		List<ProductSearchResult> products = productService.findProductPrice(cart, invoiceCode);
+		List<ProductSearchResult> products = productService.findProductPrice(cart, brandId);
 		model.addAttribute("products", products);
 
 		// ----- Find Invoice Address ------
@@ -517,7 +514,7 @@ public class FrontOrderController {
 	}
 
 	@RequestMapping(value = "step3/remove", method = RequestMethod.POST)
-	String removeFromCart(@RequestParam Long productId, @ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model) {
+	String removeFromCart(@RequestParam Long productId, @ModelAttribute("cart") Map<Long, ProductDTO> cart, @ModelAttribute("brandId") Long brandId, Model model) {
 		log.info("/step3/remove POST");
 		log.info("product id = " + productId);
 		if (cart != null) {
@@ -526,7 +523,7 @@ public class FrontOrderController {
 		} else {
 			log.warn("Not found shopping cart");
 		}
-		return checkout(cart, model);
+		return checkout(cart, brandId, model);
 	}
 
 	@RequestMapping(value = "step4/submit", method = RequestMethod.POST)

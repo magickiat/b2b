@@ -34,7 +34,7 @@
 							</div>
 							<div class="col-sm-4">
 								<c:choose>
-									<c:when test="${ empty p.price }">
+									<c:when test="${ empty p.price.amount }">
 										<h4>TBA</h4>
 									</c:when>
 									<c:otherwise>
@@ -54,7 +54,7 @@
 							</div>
 							<div class="col-sm-4 price-msrp">
 								<c:choose>
-									<c:when test="${ empty p.price }">
+									<c:when test="${ empty p.price.msrePrice }">
 										<h4>TBA</h4>
 									</c:when>
 									<c:otherwise>

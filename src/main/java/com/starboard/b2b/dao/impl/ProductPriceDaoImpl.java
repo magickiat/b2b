@@ -10,27 +10,31 @@ import com.starboard.b2b.dao.ProductPriceDao;
 import com.starboard.b2b.dto.ProductPriceDTO;
 import com.starboard.b2b.model.ProductPrice;
 import com.starboard.b2b.model.ProductPriceId;
+import com.starboard.b2b.model.User;
 
 @Repository("productPriceDao")
 public class ProductPriceDaoImpl implements ProductPriceDao {
 
-	private static final Logger log = LoggerFactory.getLogger(ProductDaoImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(ProductPriceDaoImpl.class);
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Override
-	public ProductPriceDTO findProductPrice(String productCode, String custInvoiceCode, String preIntro) {
-		log.info("productCode = " + productCode + "\tcustInvoiceCode = " + custInvoiceCode);
-		StringBuffer sb = new StringBuffer();
-		sb.append(
-				" select new com.starboard.b2b.dto.ProductPriceDTO(p.id.productCode, p.id.productPriceGroupId, p.id.productCurrency, p.amount,p.productUnitId, p.msrePrice)  from ProductPrice p");
-		sb.append(" where p.id.productCode = :productCode");
-		sb.append(
-				" and p.id.productPriceGroupId in (select distinct productBuyerGroupId from CustPriceGroup cpg where cpg.custCode = :custInvoiceCode)");
-		sb.append(" order by p.amount ");
-		return (ProductPriceDTO) sessionFactory.getCurrentSession().createQuery(sb.toString()).setString("productCode", productCode)
-				.setString("custInvoiceCode", custInvoiceCode).setMaxResults(1).uniqueResult();
+	public ProductPriceDTO findProductPrice(String productCode, Long productTypeId, User user) {
+		log.info(
+				"productCode = " + productCode + "\tcustInvoiceCode = " + user.getCustomer().getInvoiceCode() + "\tproductTypeId = " + productTypeId + "\tuser.getCustomer().getCurrency() = " + user.getCustomer().getCurrency());
+		String sb = " select new com.starboard.b2b.dto.ProductPriceDTO(p.id.productCode, p.id.productPriceGroupId, p.id.productCurrency, p.amount,p.productUnitId, p.msrePrice)  from ProductPrice p";
+		sb += " where p.id.productCode = :productCode";
+		sb += " and p.id.productCurrency = :productCurrency ";
+		sb += " and p.id.productPriceGroupId = ";
+		sb += "	(select productBuyerGroupId from CustPriceGroup cpg where cpg.custCode = :custInvoiceCode and cpg.productTypeId = :productTypeId)";
+		return (ProductPriceDTO) sessionFactory.getCurrentSession().createQuery(sb.toString())
+				.setString("productCode", productCode)
+				.setString("custInvoiceCode", user.getCustomer().getInvoiceCode())
+				.setString("productCurrency", user.getCustomer().getCurrency())
+				.setLong("productTypeId", productTypeId)
+				.uniqueResult();
 	}
 
 	@Override

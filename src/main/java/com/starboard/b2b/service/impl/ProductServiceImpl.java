@@ -51,10 +51,12 @@ import com.starboard.b2b.model.ProductPriceId;
 import com.starboard.b2b.model.ProductTechnology;
 import com.starboard.b2b.model.ProductType;
 import com.starboard.b2b.model.ProductYear;
+import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.ProductUtils;
+import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.product.SearchProductForm;
 
 @Service("productService")
@@ -241,7 +243,7 @@ public class ProductServiceImpl implements ProductService {
 	public ProductModelDTO findProductModel(String modelId) {
 		ProductModelDTO dto = null;
 		ProductModel productModel = productModelDao.findProductModel(modelId);
-		if(productModel != null){
+		if (productModel != null) {
 			dto = new ProductModelDTO();
 			BeanUtils.copyProperties(productModel, dto);
 		}
@@ -281,23 +283,22 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public void findProductPrice(List<ProductSearchResult> productList, String custInvoiceCode) {
+	public void findProductPrice(List<ProductSearchResult> productList, Long productTypeId) {
 		log.info("findProductPrice:");
+		User currentUser = UserUtil.getCurrentUser();
 		for (ProductSearchResult result : productList) {
-			ProductPriceDTO price = productPriceDao.findProductPrice(result.getProduct().getProductCode(), custInvoiceCode,
-					result.getProduct().getProductPreintro());
-//			log.info("prict: " + price);
-//TODO			set product currency
+			ProductPriceDTO price = productPriceDao.findProductPrice(result.getProduct().getProductCode(), productTypeId, currentUser);
 			result.setPrice(price);
 		}
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public void findProductPriceList(List<SearchProductModelDTO> productList, String custInvoiceCode) {
+	public void findProductPriceList(List<SearchProductModelDTO> productList, Long productTypeId) {
 		log.info("findProductPrice:");
+		User currentUser = UserUtil.getCurrentUser();
 		for (SearchProductModelDTO result : productList) {
-			ProductPriceDTO price = productPriceDao.findProductPrice(result.getProductCode(), custInvoiceCode, result.getProductPreintro());
+			ProductPriceDTO price = productPriceDao.findProductPrice(result.getProductCode(), productTypeId, currentUser);
 			log.info("prict: " + price);
 			if (price != null) {
 				result.setProductPrice(price.getAmount());
@@ -305,7 +306,8 @@ public class ProductServiceImpl implements ProductService {
 				result.setProductUnitId(price.getProductUnitId());
 			} else {
 				result.setProductPrice(null);
-//TODO				set product currency = null
+				result.setProductCurrency(null);
+				result.setProductUnitId(null);
 			}
 		}
 	}
@@ -368,14 +370,14 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<ProductSearchResult> findProductPrice(Map<Long, ProductDTO> cart, String invoiceCode) {
+	public List<ProductSearchResult> findProductPrice(Map<Long, ProductDTO> cart, Long productTypeId) {
 		ArrayList<ProductSearchResult> result = new ArrayList<>();
 		Set<Long> keySet = cart.keySet();
+
 		for (Long key : keySet) {
 			ProductDTO productInCart = cart.get(key);
 			ProductSearchResult product = new ProductSearchResult(productInCart);
-//TODO			set product currency with customer's currency
-			ProductPriceDTO price = productPriceDao.findProductPrice(productInCart.getProductCode(), invoiceCode, productInCart.getProductPreintro());
+			ProductPriceDTO price = productPriceDao.findProductPrice(productInCart.getProductCode(), productTypeId, UserUtil.getCurrentUser());
 			product.setPrice(price);
 			if (price != null) {
 				productInCart.setProductPrice(price.getAmount());

@@ -50,9 +50,9 @@ public interface ProductService {
 
 	HashMap<String, List<ProductSearchResult>> groupProductByTechnology(List<ProductSearchResult> productList);
 
-	void findProductPrice(List<ProductSearchResult> productList, String custInvoiceCode);
+	void findProductPrice(List<ProductSearchResult> productList, Long productTypeId);
 
-	void findProductPriceList(List<SearchProductModelDTO> productList, String custInvoiceCode);
+	void findProductPriceList(List<SearchProductModelDTO> productList, Long productTypeId);
 
 	String findProductUnit(long productId);
 
@@ -60,7 +60,7 @@ public interface ProductService {
 
 	ProductDTO findByProductCode(String productCode);
 
-	List<ProductSearchResult> findProductPrice(Map<Long, ProductDTO> cart, String invoiceCode);
+	List<ProductSearchResult> findProductPrice(Map<Long, ProductDTO> cart, Long productTypeId);
 
 	ProductTypeDTO getProductType(Long brandGroupId);
 

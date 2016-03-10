@@ -58,6 +58,7 @@ import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ProductService;
+import com.starboard.b2b.service.UserService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.UserUtil;
@@ -110,6 +111,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private ProductPriceDao productPriceDao;
+	
+	@Autowired
+	private UserService userService;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -191,8 +195,7 @@ public class OrderServiceImpl implements OrderService {
 		for (Long key : keySet) {
 			ProductDTO product = cart.get(key);
 
-			ProductPriceDTO productPrice = productPriceDao.findProductPrice(product.getProductCode(), user.getCustomer().getInvoiceCode(),
-					product.getProductPreintro());
+			ProductPriceDTO productPrice = productPriceDao.findProductPrice(product.getProductCode(), brandGroupId, user);
 			// Default currency
 			if (StringUtils.isEmpty(product.getProductCurrency())) {
 				String currency = productPrice.getProductCurrency();
@@ -206,14 +209,14 @@ public class OrderServiceImpl implements OrderService {
 				product.setProductUnitId(applicationConfig.getDefaultProductUnit());
 			}
 
-			// ----- Create order -----
+			// ----- Create order detail-----
 
 			OrdDetail orderDetail = new OrdDetail();
 			orderDetail.setOrderId(orderId);
 			orderDetail.setProductId(product.getProductId());
 			orderDetail.setAmount(product.getProductQuantity());
 			if (productPrice != null && product.getProductQuantity() > 0) {
-				orderDetail.setPrice(productPrice.getAmount().multiply(new BigDecimal(product.getProductQuantity())));
+				orderDetail.setPrice(productPrice.getAmount());
 			}
 			orderDetail.setStatus(applicationConfig.getDefaultOrderDetailStatus());
 			orderDetail.setProductCurrency(product.getProductCurrency());
@@ -470,27 +473,25 @@ public class OrderServiceImpl implements OrderService {
 		
 		List<SearchOrderDetailDTO> orderDetails = form.getOrderDetails();
 
-		User user = UserUtil.getCurrentUser();
 		if (orderDetails != null && !orderDetails.isEmpty()) {
-			
+			User custUser = userService.findByUsername(order.getUserCreate());
 			for (SearchOrderDetailDTO dto : orderDetails) {
 				ProductPriceDTO productPrice = null;
 				ProductDTO product = productService.findById(dto.getProductId());
 				if (product != null) {
-					productPrice = productPriceDao.findProductPrice(dto.getProductCode(), order.getCustCode(),
-							product.getProductPreintro());
+					productPrice = productPriceDao.findProductPrice(dto.getProductCode(), order.getBrandGroupId(), custUser);
 				}
 
 				OrdDetail detail = new OrdDetail();
 				BeanUtils.copyProperties(dto, detail);
 				if(productPrice != null && detail.getAmount() > 0){
 					// productPrice's amount = product price per unit
-					detail.setPrice(productPrice.getAmount().multiply(new BigDecimal(detail.getAmount())));
+					detail.setPrice(productPrice.getAmount());
 					detail.setProductCurrency(productPrice.getProductCurrency());
 				}
 				
 				detail.setTimeUpdate(DateTimeUtil.getCurrentDate());
-				detail.setUserUpdate(user.getName());
+				detail.setUserUpdate(UserUtil.getCurrentUsername());
 				
 				orderDetailDao.save(detail);
 			}
