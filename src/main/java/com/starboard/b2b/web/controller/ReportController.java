@@ -3,23 +3,16 @@ package com.starboard.b2b.web.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.sql.Connection;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -43,7 +36,6 @@ import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.SoDTO;
 import com.starboard.b2b.dto.SoDetailDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
-import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.B2BFileUtil;
@@ -140,7 +132,7 @@ public class ReportController {
 
 
 	@RequestMapping(value = "order/pdf", method = RequestMethod.GET)
-	@Transactional
+	@Transactional(readOnly = true)
 	String generateOrderPDF(Long orderId, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		log.info("orderId = " + orderId);
 		Map<String, Object> params = new HashMap<>();
@@ -196,7 +188,7 @@ public class ReportController {
 	}
 
 	@RequestMapping(value = "so/pdf", method = RequestMethod.GET)
-	@Transactional
+	@Transactional(readOnly = true)
 	String generateSOPDF(final Long soId, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		final Map<String, Object> params = new HashMap<>();
 		final Session session = sessionFactory.openSession();

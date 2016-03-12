@@ -85,7 +85,6 @@
 			</thead>
 			<tbody>
 				<c:forEach items="${ orderReport.orderDetails }" var="ordDetail" varStatus="rowNum">
-
 					<tr>
 						<td>${ rowNum.index + 1 }</td>
 						<td>${ ordDetail.productCode }</td>
@@ -93,17 +92,29 @@
 						<td>${ ordDetail.amount }</td>
 						<td>${ ordDetail.productUnit }</td>
 						<td>
-							<fmt:formatNumber pattern="#,###" maxIntegerDigits="12" value="${ ordDetail.unitPrice }">
-							</fmt:formatNumber>
+							<c:choose>
+								<c:when test="${ empty ordDetail.unitPrice }">TBA</c:when>
+								<c:otherwise>
+									<fmt:formatNumber pattern="#,###" maxIntegerDigits="12" value="${ ordDetail.unitPrice }" />
+								</c:otherwise>
+							</c:choose>
 						</td>
 						<td>
-							<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
-								value="${ ordDetail.amount * ordDetail.unitPrice }">
-							</fmt:formatNumber>
+							<c:choose>
+								<c:when test="${ empty ordDetail.unitPrice }">TBA</c:when>
+								<c:otherwise>
+									<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
+										value="${ ordDetail.amount * ordDetail.unitPrice }" />
+								</c:otherwise>
+							</c:choose>
 						</td>
-						<td>${ ordDetail.productCurrency }</td>
+						<td>
+							<c:choose>
+								<c:when test="${ empty ordDetail.productCurrency }">TBA</c:when>
+								<c:otherwise>${ ordDetail.productCurrency }</c:otherwise>
+							</c:choose>
+						</td>
 					</tr>
-
 				</c:forEach>
 			</tbody>
 		</table>

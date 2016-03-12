@@ -27,7 +27,6 @@ import java.util.List;
  * Created by Ken on 9/29/2015.
  */
 @Service("contentService")
-@Transactional
 public class ContentServiceImpl implements ContentService {
 	private static final Logger log = LoggerFactory.getLogger(ContentServiceImpl.class);
 	private static final int maxContentLength = 1700;

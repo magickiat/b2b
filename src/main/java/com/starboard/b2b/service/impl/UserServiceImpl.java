@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.dao.CustDao;
@@ -62,7 +61,7 @@ public class UserServiceImpl implements UserService {
 		return userDao.findByUsername(username);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void add(UserRegisterForm form) {
 		User user = new User();
 		user.setName(form.getName());
@@ -91,13 +90,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<User> list(Pagination page) {
 		return userDao.list(page);
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public boolean update(UserForm userForm) {
 		boolean isSuccess = false;
 		
@@ -126,7 +125,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public boolean delete(UserForm userForm) {
 		boolean isSuccess = false;
 		User user = userDao.findById(Integer.parseInt(userForm.getId()));

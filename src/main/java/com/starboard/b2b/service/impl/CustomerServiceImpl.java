@@ -110,7 +110,7 @@ public class CustomerServiceImpl implements CustomerService {
 		return copyCustomerToDTO(customerDao.list(page));
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void add(CreateCustomerForm form) {
 		Cust customer = new Cust();
 		customer.setCustCode(form.getCode());
@@ -120,7 +120,7 @@ public class CustomerServiceImpl implements CustomerService {
 		customerDao.add(customer);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void update(CustDTO customerForm) {
 		Cust customer = customerDao.findById(customerForm.getCustId());
 		log.info("Found " + customer);
@@ -131,7 +131,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void addBrand(BrandForm form) {
 		custBrandGroupDAO.addSelectedBrand(form, form.getSelectedBrand());
 	}
@@ -238,7 +238,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void saveAddress(Long addId, Long custId, String address, String regionCountryId, String tel1, String postCode, String fax, String email,
 			String type) {
 		if (addId == null || addId == 0) {
@@ -284,7 +284,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void saveContact(Long contactId, Long custId, String nameEn, String nameNick, String position, Date birthDate, String address, String tel,
 			String email, String mobile, String mobileId, String fax, String skype, String facebook, String twitter) {
 		if (contactId == null || contactId == 0) {

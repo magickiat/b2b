@@ -1,6 +1,5 @@
 package com.starboard.b2b.service.impl;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -135,7 +134,7 @@ public class OrderServiceImpl implements OrderService {
 
 	// ----- Generate Order Code [RO-Year-Running] -----
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public String generateOrderCode() {
 		int year = DateTimeUtil.getCurrentYear();
 		long orderRunningNo = getNextRunningNo(year);
@@ -146,7 +145,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public OrderDTO newOrder(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod,
 			Map<Long, ProductDTO> cart) {
 		Addr invoiceToAddr = addrDao.findById(invoiceTo);
@@ -197,12 +196,14 @@ public class OrderServiceImpl implements OrderService {
 
 			ProductPriceDTO productPrice = productPriceDao.findProductPrice(product.getProductCode(), brandGroupId, user);
 			// Default currency
-			if (StringUtils.isEmpty(product.getProductCurrency())) {
-				String currency = productPrice.getProductCurrency();
-				if(StringUtils.isEmpty(currency)){
-					currency = applicationConfig.getDefaultProductCurrency();
+			if(productPrice != null){
+				if (StringUtils.isEmpty(product.getProductCurrency())) {
+					String currency = productPrice.getProductCurrency();
+					if(StringUtils.isEmpty(currency)){
+						currency = applicationConfig.getDefaultProductCurrency();
+					}
+					product.setProductCurrency(currency);
 				}
-				product.setProductCurrency(currency);
 			}
 			// Default product unit id
 			if (StringUtils.isEmpty(product.getProductUnitId())) {
@@ -252,7 +253,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public long getNextRunningNo(int year) {
 		return ordersIdRunningDao.generateRunning(year);
 	}
@@ -407,7 +408,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void approve(OrderDTO orderDTO) {
 		if (orderDTO == null) {
 			throw new B2BException("Order is required");
@@ -430,7 +431,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void reject(OrderDTO orderDTO) {
 		if (orderDTO == null) {
 			throw new B2BException("Order is required");
@@ -449,7 +450,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void updateOrder(OrderDecisionForm form) {
 
 		// ----- Order -----
@@ -489,7 +490,11 @@ public class OrderServiceImpl implements OrderService {
 					detail.setPrice(productPrice.getAmount());
 					detail.setProductCurrency(productPrice.getProductCurrency());
 				}
-				
+				if(StringUtils.isEmpty(detail.getProductUnitId())){
+					detail.setProductUnitId(applicationConfig.getDefaultProductUnit());
+				}
+				detail.setUserCreate(order.getUserCreate());
+				detail.setTimeCreate(DateTimeUtil.getCurrentDate());
 				detail.setTimeUpdate(DateTimeUtil.getCurrentDate());
 				detail.setUserUpdate(UserUtil.getCurrentUsername());
 				

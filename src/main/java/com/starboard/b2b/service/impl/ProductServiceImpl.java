@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.common.B2BConstant;
 import com.starboard.b2b.common.Page;
+import com.starboard.b2b.dao.OrderDao;
 import com.starboard.b2b.dao.ProductBuyerGroupDao;
 import com.starboard.b2b.dao.ProductCategoryDao;
 import com.starboard.b2b.dao.ProductDao;
@@ -28,6 +29,7 @@ import com.starboard.b2b.dao.ProductPriceGroupDao;
 import com.starboard.b2b.dao.ProductTechnologyDao;
 import com.starboard.b2b.dao.ProductTypeDao;
 import com.starboard.b2b.dao.ProductYearDao;
+import com.starboard.b2b.dao.UserDao;
 import com.starboard.b2b.dto.ProductBuyerGroupDTO;
 import com.starboard.b2b.dto.ProductCategoryDTO;
 import com.starboard.b2b.dto.ProductDTO;
@@ -42,6 +44,7 @@ import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchResult;
+import com.starboard.b2b.model.Orders;
 import com.starboard.b2b.model.Product;
 import com.starboard.b2b.model.ProductBuyerGroup;
 import com.starboard.b2b.model.ProductCategory;
@@ -97,9 +100,15 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductPriceGroupDao productPriceGroupDao;
+	
+	@Autowired
+	private UserDao userDao;
+	
+	@Autowired
+	private OrderDao orderDao;
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<ProductCategoryDTO> findAllProductCategory() {
 		ArrayList<ProductCategoryDTO> result = new ArrayList<>();
 		List<ProductCategory> list = productCategoryDao.findAll();
@@ -112,13 +121,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<ProductModelDTO> findAllProductModel() {
 		return productModelDao.findAll();
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<ProductYearDTO> findAllProductYear() {
 		List<ProductYearDTO> result = new ArrayList<>();
 		List<ProductYear> productYears = productYearDao.findAll();
@@ -131,7 +140,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<ProductTechnologyDTO> findAllProductTechnology() {
 		List<ProductTechnologyDTO> result = new ArrayList<>();
 		List<ProductTechnology> technologies = productTechnologyDao.findAll();
@@ -144,7 +153,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<ProductBuyerGroupDTO> findProductBuyerGroupByBrandId(Long brandId) {
 		List<ProductBuyerGroupDTO> result = new ArrayList<>();
 
@@ -164,7 +173,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<ProductTypeDTO> findProductTypeByBrandId(Long brandGroupId) {
 		log.info("findAllProductType brandGroupId: " + brandGroupId);
 
@@ -189,7 +198,8 @@ public class ProductServiceImpl implements ProductService {
 		return result;
 	}
 
-	@Override
+	@Override()
+	@Transactional(readOnly = true)
 	public Page<SearchProductModelDTO> searchProduct(SearchProductForm form) {
 		log.info("form: " + form);
 		SearchRequest<SearchProductForm> req = new SearchRequest<>(form.getPage(), applicationConfig.getPageSize());
@@ -457,7 +467,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void updateProduct(List<ProductDTO> products) {
 		if (products != null && !products.isEmpty()) {
 
@@ -537,7 +547,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void updateProductPrice(List<ProductPriceDTO> productPrices) {
 		if (productPrices != null && !productPrices.isEmpty()) {
 			for (ProductPriceDTO dto : productPrices) {
@@ -571,23 +581,25 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public boolean delete(long productId) {
 		return productDao.delete(productId);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public void findOrderPriceList(List<SearchOrderDetailDTO> orderDetails) {
+	public void findOrderPriceList(List<SearchOrderDetailDTO> orderDetails, Long orderId) {
 		if (orderDetails != null && !orderDetails.isEmpty()) {
+			Orders ord = orderDao.findById(orderId);
+			User orderUser = userDao.findByUsername(ord.getUserCreate());
+			
 			for (SearchOrderDetailDTO result : orderDetails) {
 				Product product = productDao.findById(result.getProductId());
 				if (product == null) {
 					continue;
 				}
 
-				ProductPriceDTO price = productPriceDao.findProductPriceWithPriceGroup(result.getProductCode(), result.getProductBuyerGroupId(),
-						product.getProductPreintro());
+				ProductPriceDTO price = productPriceDao.findProductPrice(result.getProductCode(), ord.getBrandGroupId(), orderUser);
 				log.info("prict: " + price);
 				if (price != null) {
 					result.setUnitPrice(price.getAmount());
@@ -596,7 +608,7 @@ public class ProductServiceImpl implements ProductService {
 				} else {
 					result.setUnitPrice(null);
 					result.setProductCurrency(null);
-					result.setProductUnitId(applicationConfig.getDefaultProductUnit());
+					result.setProductUnitId(null);
 				}
 			}
 		} else {
@@ -605,7 +617,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void createNewModel(String modelId) {
 		productModelDao.save(new ProductModel(modelId, modelId, "Created when not found model id", B2BConstant.B2B_SYSTEM_NAME, null,
 				DateTimeUtil.getCurrentDate(), null, "default", B2BConstant.B2B_SYSTEM_NAME, B2BConstant.B2B_SYSTEM_NAME));

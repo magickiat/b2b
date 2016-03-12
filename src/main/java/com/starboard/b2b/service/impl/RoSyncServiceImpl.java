@@ -12,8 +12,10 @@ import com.starboard.b2b.common.B2BConstant;
 import com.starboard.b2b.dao.OrderDao;
 import com.starboard.b2b.dao.OrderDetailDao;
 import com.starboard.b2b.dao.TmpRoDao;
+import com.starboard.b2b.dao.UserDao;
 import com.starboard.b2b.dto.search.SearchOrderDetailReportResult;
 import com.starboard.b2b.model.Orders;
+import com.starboard.b2b.model.User;
 import com.starboard.b2b.model.sync.TmpRo;
 import com.starboard.b2b.service.RoSyncService;
 import com.starboard.b2b.util.ApplicationConfig;
@@ -27,6 +29,9 @@ public class RoSyncServiceImpl implements RoSyncService {
 	
 	@Autowired
 	private OrderDetailDao orderDetailDao;
+	
+	@Autowired
+	private UserDao userDao;
 
 	@Autowired
 	private OrderDao orderDao;
@@ -35,19 +40,24 @@ public class RoSyncServiceImpl implements RoSyncService {
 	private TmpRoDao tmpRoDao;
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void syncProduct() {
 		throw new UnsupportedOperationException("Not implement yet");
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void syncRoFromB2BtoAX(long orderId) {
 		List<SearchOrderDetailReportResult> list = orderDetailDao.findOrderDetailByOrderId(orderId);
 		if (list != null && !list.isEmpty()) {
+			Orders ord = orderDao.findById(orderId);
+			User orderUser = userDao.findByUsername(ord.getUserCreate());
+			String saleId = orderUser.getCustomer().getSaleId();
 			Orders order = orderDao.findById(orderId);
 			for (SearchOrderDetailReportResult ordDetail : list) {
-				tmpRoDao.save(createTmpRO(order, ordDetail));
+				TmpRo tmpRo = createTmpRO(order, ordDetail);
+				tmpRo.setSalesId(saleId);
+				tmpRoDao.save(tmpRo);
 			}
 		}
 	}
@@ -84,10 +94,6 @@ public class RoSyncServiceImpl implements RoSyncService {
 
 		tmpRo.setCurrencyCode(getCurrencyCode(tmpRo.getCustAccount(), ordDetail.getProductCurrency(), ordDetail.getProductCategoryId()));
 		tmpRo.setTermCode(ordDetail.getPaymentTermId());
-		tmpRo.setUserCreate(ordDetail.getUserCreate());
-		tmpRo.setUserUpdate(ordDetail.getUserUpdate());
-		tmpRo.setTimeCreate(ordDetail.getTimeCreate());
-		tmpRo.setTimeUpdate(ordDetail.getTimeUpdate());
 		tmpRo.setRunningNumber(0L);
 		
 		tmpRo.setCategory(ordDetail.getSaleOrderCat());
@@ -100,7 +106,10 @@ public class RoSyncServiceImpl implements RoSyncService {
 		tmpRo.setDtsSystem(B2BConstant.B2B_SYSTEM_NAME);
 		tmpRo.setDtsUpdate(ordDetail.getTimeUpdate());
 		
-		
+		tmpRo.setUserCreate(ordDetail.getUserCreate());
+		tmpRo.setUserUpdate(ordDetail.getUserUpdate());
+		tmpRo.setTimeCreate(ordDetail.getTimeCreate());
+		tmpRo.setTimeUpdate(ordDetail.getTimeUpdate());
 		
 	}
 

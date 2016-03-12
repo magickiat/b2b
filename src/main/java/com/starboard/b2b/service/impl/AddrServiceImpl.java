@@ -59,7 +59,7 @@ public class AddrServiceImpl implements AddrService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public boolean update(AddressForm addressForm) {
 		boolean isSuccess = false;
 		Addr addr = addrDao.findById(addressForm.getAddrId());

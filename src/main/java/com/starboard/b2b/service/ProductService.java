@@ -76,7 +76,7 @@ public interface ProductService {
 
 	boolean delete(long productId);
 
-	void findOrderPriceList(List<SearchOrderDetailDTO> orderDetails);
+	void findOrderPriceList(List<SearchOrderDetailDTO> orderDetails, Long orderId);
 
 	void createNewModel(String modelId);
 

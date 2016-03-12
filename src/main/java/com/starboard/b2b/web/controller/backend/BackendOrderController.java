@@ -264,7 +264,7 @@ public class BackendOrderController {
 		// ----- find new price group -----
 		if (form.getOrderDetails() != null && !form.getOrderDetails().isEmpty()) {
 			log.info("form.getOrderDetails() size: " + form.getOrderDetails().size());
-			productService.findOrderPriceList(form.getOrderDetails());
+			productService.findOrderPriceList(form.getOrderDetails(), form.getOrderReport().getOrderId());
 		}
 
 		model.addAttribute("approveForm", form);
@@ -348,7 +348,7 @@ public class BackendOrderController {
 
 		// ----- find new price group -----
 		log.info("form.getSplitOrderDetails() size: " + form.getSplitOrderDetails().size());
-		productService.findOrderPriceList(form.getSplitOrderDetails());
+		productService.findOrderPriceList(form.getSplitOrderDetails(), form.getOrderDetail().getOrderId());
 
 		return "pages-back/order/split";
 	}

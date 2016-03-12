@@ -34,7 +34,7 @@ public class ContactUsServiceImpl implements ContactUsService {
 	private ContactUsDao contactUsDao;
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public Page<ContactUsDTO> search(SearchContactUsForm form) {
 		// ----- set request ------
 		SearchRequest<SearchContactUsForm> req = new SearchRequest<>(form.getPage(), applicationConfig.getPageSize());
@@ -63,7 +63,7 @@ public class ContactUsServiceImpl implements ContactUsService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void save(CreateContactUsForm form) {
 		Contactus contactUs = new Contactus();
 		contactUs.setContactTitle(form.getTitle());
@@ -78,7 +78,7 @@ public class ContactUsServiceImpl implements ContactUsService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void delete(long id) {
 		Contactus contactUs = contactUsDao.findById(id);
 		if(contactUs != null && contactUs.getContactId() != null){

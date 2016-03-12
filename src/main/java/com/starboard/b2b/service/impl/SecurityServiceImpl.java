@@ -17,7 +17,7 @@ public class SecurityServiceImpl implements SecurityService {
 	private RoleDao roleDao;
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void addRole(String roleId) {
 		roleDao.addRole(new Role(roleId));
 	}
