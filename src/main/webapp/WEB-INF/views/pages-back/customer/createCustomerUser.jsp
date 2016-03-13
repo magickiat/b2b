@@ -13,7 +13,9 @@
 <body>
 	<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 	<div class="container">
-		<div class="row">
+		
+		<div class="col-md-12">
+		
 			
 			<div class="col-sm-12 bg_color">
 				<div class="row row-header2 header2 txtupper">Create Account</div>

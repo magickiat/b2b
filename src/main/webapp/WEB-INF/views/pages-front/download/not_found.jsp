@@ -12,11 +12,17 @@
 	<%@include file="/WEB-INF/views/pages-front/include/common_header.jspf"%>
 
 	<div class="container">
-
-		<div class="row">
-			<div class="col-md-12 bg_color" style="padding-bottom: 50px;">
-				Not found any product image.</div>
+	
+		<div class="col-md-12">
+			
+			<div class="row">
+				<div class="col-md-12 bg_color" style="padding-bottom: 50px;">
+					Not found any product image.</div>
+			</div>
+		
 		</div>
+
+		
 
 	</div>
 

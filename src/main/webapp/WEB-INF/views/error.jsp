@@ -15,20 +15,26 @@
 <body>
 
 	<div class="container">
-
-		<div class="row">
-			<div class="col-sm-12 header2 txtupper bg_color">Problem occured</div>
-			<div class="col-sm-12 bg_color">Please contact administrator
-				with this message</div>
-			<div class="col-sm-12 bg_color">${exception.message}</div>
-
-			<!-- PLEASE DON'T REMOVE THIS COMMENT
-		    Failed URL: ${url}
-		    Exception:  ${exception.message}
-		        <c:forEach items="${exception.stackTrace}" var="ste">    ${ste} 
-		    </c:forEach>
-		    -->
+	
+		<div class="col-md-12">
+			
+			<div class="row">
+				<div class="col-sm-12 header2 txtupper bg_color">Problem occured</div>
+				<div class="col-sm-12 bg_color">Please contact administrator
+					with this message</div>
+				<div class="col-sm-12 bg_color">${exception.message}</div>
+	
+				<!-- PLEASE DON'T REMOVE THIS COMMENT
+			    Failed URL: ${url}
+			    Exception:  ${exception.message}
+			        <c:forEach items="${exception.stackTrace}" var="ste">    ${ste} 
+			    </c:forEach>
+			    -->
+			</div>
+			
 		</div>
+
+		
 	</div>
 
 	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>

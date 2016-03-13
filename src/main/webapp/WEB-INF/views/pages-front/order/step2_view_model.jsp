@@ -18,48 +18,58 @@
 	<input type="hidden" id="withnoseFlag" value="0" />
 
 	<div class="container">
-		<div class="row">
-			<img
-				src='<c:url value="/images/pages-front/icon/step2.png" />'>
-		</div>
-		<div class="row">&nbsp;</div>
-		<div class="row">
-			<div class="col-md-12 bg_color" style="padding-bottom: 50px;">
-				<div class="row-header2 header2 txtupper">product</div>
-				<div class="col-sm-8 text-center product-img-big-view">
-					<%-- Product Model Picture --%>
-					<%@include file="step2_include/view_image.jspf"%>
-				</div>
-				<div class="col-sm-4">
-					<%-- Technology --%>
-					<div class="row product-img-big-view">
-						<%@include file="step2_include/technology.jspf"%>
-					</div>
 	
-					<%-- SIZE (Product length) --%>
-					<div class="row product-img-big-view">
-						<%@include file="step2_include/size.jspf"%>
+		<div class="col-md-12">
+		
+			<div class="row">
+				<img
+					src='<c:url value="/images/pages-front/icon/step2.png" />'>
+			</div>
+			<div class="row">&nbsp;</div>
+			<div class="row">
+				<div class="col-md-12 bg_color" style="padding-bottom: 50px;">
+					<div class="row-header2 header2 txtupper">product</div>
+					<div class="col-sm-8 text-center product-img-big-view">
+						<%-- Product Model Picture --%>
+						<%@include file="step2_include/view_image.jspf"%>
 					</div>
-	
-					<%-- Withnose board --%>
-					<div class="row product-img-big-view">
-						<%@include file="step2_include/withnose_board.jspf"%>
-					</div>
-	
-					<%-- Quantity --%>
-					<div class="row product-img-big-view">
-						<%@include file="step2_include/quantity.jspf"%>
-					</div>
-	
-					<%-- Button --%>
-					<div class="row product-img-big-view">
-						<%@include file="step2_include/button.jspf"%>
+					<div class="col-sm-4">
+						<%-- Technology --%>
+						<div class="row product-img-big-view">
+							<%@include file="step2_include/technology.jspf"%>
+						</div>
+		
+						<%-- SIZE (Product length) --%>
+						<div class="row product-img-big-view">
+							<%@include file="step2_include/size.jspf"%>
+						</div>
+		
+						<%-- Withnose board --%>
+						<div class="row product-img-big-view">
+							<%@include file="step2_include/withnose_board.jspf"%>
+						</div>
+		
+						<%-- Quantity --%>
+						<div class="row product-img-big-view">
+							<%@include file="step2_include/quantity.jspf"%>
+						</div>
+		
+						<%-- Button --%>
+						<div class="row product-img-big-view">
+							<%@include file="step2_include/button.jspf"%>
+						</div>
 					</div>
 				</div>
 			</div>
+	
+			<%@include file="step2_include/add_multiple.jspf"%>
+			
+		
+		
 		</div>
-
-		<%@include file="step2_include/add_multiple.jspf"%>
+	
+	
+		
 		
 	</div>
 	

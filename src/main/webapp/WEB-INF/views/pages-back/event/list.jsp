@@ -18,76 +18,83 @@
 <%@include file="/WEB-INF/views/pages-back/include/common_header.jspf" %>
 <!-- Base URL for pagination -->
 <c:set var="baseUrl" value="/backend/event"/>
+
 <div class="container">
-    <div class="row">
-        <div class="">
-            <div class="col-sm-12 bg_color">
-                <div class="row">
-                    <div class=" col-sm-9">
-                        <div class="row row-header2 header2 txtupper">Event</div>
-                    </div>
-                    <div class="col-sm-3" style="margin-top: 10px;">
-                        <form:form servletRelativeAction="/backend/event/create" method="get">
-                            <input type="submit" value="Add Event"
-                                   class="btn btn-default pull-right"/>
-                        </form:form>
-                    </div>
-                </div>
 
-                <div class="">
-                    <div class="bg_color">
-                        <%-- Upper Paging --%>
-                        <%@include file="/WEB-INF/views/include/paging.jspf" %>
-                        <div class="col-sm-12 bg_color">
-                            <table class="table table-hover">
-                                <thead>
-                                <tr>
-                                    <th>Subject</th>
-                                    <th>Content</th>
-                                    <th>Event Date</th>
-                                    <th>Create Date</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <c:forEach items="${resultPage.result}" var="event">
-                                    <tr>
-                                        <td><a href="<c:url value="/event"/>?eventId=${event.id}&side=back">${event.title}</a></td>
-                                        <td>
-                                            <div class="clear-block">
-                                                <div>${event.content}</div>
-                                                <c:if test="${event.isMore}">
-                                                    <div class="feed-footer">
-                                                        <span class="read_more">Read more</span>
-                                                        <span class="read_more"><a href="<c:url value="/event"/>?eventId=${event.id}&side=back">Read more</a></span>
-                                                    </div>
-                                                </c:if>
-                                            </div>
-                                        </td>
-                                        <td>${event.timeEvent}</td>
-                                        <td>${event.timeCreate}</td>
-                                        <td style="width: 100px;">
-                                            <div class="btn-group pull-right">
-                                                <a type="button" class="btn btn-warning btn-xs" name="editBtn"
-                                                   href="<c:url value="/backend/event/edit/${event.id}"/>?currentPage=${resultPage.current}">Edit</a>
-                                                <a type="button" class="btn btn-danger btn-xs" name="removeBtn"
-                                                   data-href="<c:url value="/backend/event/delete/${event.id}"/>?currentPage=${resultPage.current}"
-                                                   data-toggle="modal" data-target="#confirm-delete">Delete</a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-                        <%-- Lower Paging --%>
-                        <%@include file="/WEB-INF/views/include/paging.jspf" %>
-                    </div>
-                </div>
-            </div>
-        </div>
+	<div class="col-md-12">
 
+	    <div class="row">
+	        <div class="">
+	            <div class="col-sm-12 bg_color">
+	                <div class="row">
+	                    <div class=" col-sm-9">
+	                        <div class="row row-header2 header2 txtupper">Event</div>
+	                    </div>
+	                    <div class="col-sm-3" style="margin-top: 10px;">
+	                        <form:form servletRelativeAction="/backend/event/create" method="get">
+	                            <input type="submit" value="Add Event"
+	                                   class="btn btn-default pull-right"/>
+	                        </form:form>
+	                    </div>
+	                </div>
+	
+	                <div class="">
+	                    <div class="bg_color">
+	                        <%-- Upper Paging --%>
+	                        <%@include file="/WEB-INF/views/include/paging.jspf" %>
+	                        <div class="col-sm-12 bg_color">
+	                            <table class="table table-hover">
+	                                <thead>
+	                                <tr>
+	                                    <th>Subject</th>
+	                                    <th>Content</th>
+	                                    <th>Event Date</th>
+	                                    <th>Create Date</th>
+	                                    <th></th>
+	                                </tr>
+	                                </thead>
+	                                <tbody>
+	                                <c:forEach items="${resultPage.result}" var="event">
+	                                    <tr>
+	                                        <td><a href="<c:url value="/event"/>?eventId=${event.id}&side=back">${event.title}</a></td>
+	                                        <td>
+	                                            <div class="clear-block">
+	                                                <div>${event.content}</div>
+	                                                <c:if test="${event.isMore}">
+	                                                    <div class="feed-footer">
+	                                                        <span class="read_more">Read more</span>
+	                                                        <span class="read_more"><a href="<c:url value="/event"/>?eventId=${event.id}&side=back">Read more</a></span>
+	                                                    </div>
+	                                                </c:if>
+	                                            </div>
+	                                        </td>
+	                                        <td>${event.timeEvent}</td>
+	                                        <td>${event.timeCreate}</td>
+	                                        <td style="width: 100px;">
+	                                            <div class="btn-group pull-right">
+	                                                <a type="button" class="btn btn-warning btn-xs" name="editBtn"
+	                                                   href="<c:url value="/backend/event/edit/${event.id}"/>?currentPage=${resultPage.current}">Edit</a>
+	                                                <a type="button" class="btn btn-danger btn-xs" name="removeBtn"
+	                                                   data-href="<c:url value="/backend/event/delete/${event.id}"/>?currentPage=${resultPage.current}"
+	                                                   data-toggle="modal" data-target="#confirm-delete">Delete</a>
+	                                            </div>
+	                                        </td>
+	                                    </tr>
+	                                </c:forEach>
+	                                </tbody>
+	                            </table>
+	                        </div>
+	                        <%-- Lower Paging --%>
+	                        <%@include file="/WEB-INF/views/include/paging.jspf" %>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	
+	    </div>
+    
     </div>
+    
 </div>
 <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">

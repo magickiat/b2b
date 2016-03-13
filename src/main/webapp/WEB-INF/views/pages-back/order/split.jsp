@@ -17,156 +17,163 @@
 	<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 
 	<div class="container">
-		<form:form id="splitOrderDetailForm" modelAttribute="splitForm"
-			servletRelativeAction="/backend/order/split-action" cssClass="form-horizontal">
-
-			<div class="row bg_color">
-				<div class="col-sm-12">
-					<label for="splitNum" class="control-label col-sm-2">Split Product To :</label>
-					<form:input path="splitNum" cssClass="numberOnly" />
-					Line
-					<input type="submit" id="btnSplit" class="btn btn-default" value="Split" />
+	
+		<div class="col-md-12">
+		
+			<form:form id="splitOrderDetailForm" modelAttribute="splitForm"
+				servletRelativeAction="/backend/order/split-action" cssClass="form-horizontal">
+	
+				<div class="row bg_color">
+					<div class="col-sm-12">
+						<label for="splitNum" class="control-label col-sm-2">Split Product To :</label>
+						<form:input path="splitNum" cssClass="numberOnly" />
+						Line
+						<input type="submit" id="btnSplit" class="btn btn-default" value="Split" />
+					</div>
 				</div>
-			</div>
-			<div class="row">&nbsp;</div>
-			<div class="row showline2">
-				<div class="col-sm-12">&nbsp;</div>
-				<div class="col-sm-12">
-					<!-- Save value for passed to controller -->
-					<form:input type="hidden" path="orderDetail.orderDetailId" />
-					<form:input type="hidden" path="orderDetail.orderId" />
-					<form:input type="hidden" path="orderDetail.productCode" />
-					<form:input type="hidden" path="orderDetail.productName" />
-					<form:input type="hidden" path="orderDetail.amount" />
-					<form:input type="hidden" path="orderDetail.shiped" />
-					<form:input type="hidden" path="orderDetail.pending" />
-					<form:input type="hidden" path="orderDetail.productUnit" />
-					<form:input type="hidden" path="orderDetail.unitPrice" />
-					<form:input type="hidden" path="orderDetail.productId" />
-					<form:input type="hidden" path="orderDetail.status" />
-					<form:input type="hidden" path="orderDetail.price" />
-					<form:input type="hidden" path="orderDetail.productUnitId" />
-					<form:input type="hidden" path="orderDetail.productCurrency" />
-					<form:input type="hidden" path="orderDetail.productBuyerGroupId" />
-
-					<table class="table table-hover table-list">
-						<thead>
-							<tr>
-								<th>No</th>
-								<th>Product Code</th>
-								<th>Description</th>
-								<th>Price</th>
-								<th>Qty</th>
-								<th>UOM</th>
-								<th>Unit Price</th>
-								<th>Amount</th>
-								<th>Currency</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="ordDetail" varStatus="rowNum" items="${ splitForm.splitOrderDetails }">
-								<tr id="row${ rowNum.index }">
-									<!-- Save value for passed to controller -->
-									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].orderDetailId" />
-									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].orderId" />
-									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productCode" />
-									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productName" />
-									<%-- <form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].amount" /> --%>
-									<%-- <form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].shiped" /> --%>
-									<%-- <form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].pending" /> --%>
-									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productUnit" />
-									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].unitPrice" />
-									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productId" />
-									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].status" />
-									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].price" />
-									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productUnitId" />
-									<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productCurrency" />
-									<%-- <form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productBuyerGroupId" /> --%>
-
-
-									<td>${ rowNum.index + 1 }</td>
-									<td>${ ordDetail.productCode }</td>
-									<td>${ ordDetail.productName }</td>
-
-									<td>
-										<select id="splitOrderDetails[${ rowNum.index }].productBuyerGroupId"
-											name="splitOrderDetails[${ rowNum.index }].productBuyerGroupId" class="form-control"
-											onchange="changePriceGroup(${ splitForm.splitOrderDetails[rowNum.index].orderDetailId }, this)">
-											<option value=""></option>
-											<c:forEach var="pg" varStatus="pgRow" items="${ orderDetailsForm.productPriceGroupList }">
-												<c:set var="selected" value="" />
-												<c:if
-													test="${ pg.productPriceGroupId eq  splitForm.splitOrderDetails[rowNum.index].productBuyerGroupId}">
-													<c:set var="selected" value="selected='selected'" />
-												</c:if>
-												<option value="${ pg.productPriceGroupId }" ${ selected }>${ pg.productPriceGroupName }</option>
-											</c:forEach>
-										</select>
-									</td>
-
-									<td>
-										<form:input path="splitOrderDetails[${ rowNum.index }].amount"
-											cssClass="numberOnly splitqty" onblur="summarySplitQty()" />
-									</td>
-									<td>${ ordDetail.productUnit }</td>
-
-									<td>
-										<c:choose>
-											<c:when test="${ ordDetail.unitPrice == null }">TBA</c:when>
-											<c:otherwise>
-												<fmt:formatNumber pattern="#,###" maxIntegerDigits="12" value="${ ordDetail.unitPrice }">
-												</fmt:formatNumber>
-											</c:otherwise>
-										</c:choose>
-									</td>
-									<td>
-										<div id="splitOrderDetails${ rowNum.index }.totalAmount">
+				<div class="row">&nbsp;</div>
+				<div class="row showline2">
+					<div class="col-sm-12">&nbsp;</div>
+					<div class="col-sm-12">
+						<!-- Save value for passed to controller -->
+						<form:input type="hidden" path="orderDetail.orderDetailId" />
+						<form:input type="hidden" path="orderDetail.orderId" />
+						<form:input type="hidden" path="orderDetail.productCode" />
+						<form:input type="hidden" path="orderDetail.productName" />
+						<form:input type="hidden" path="orderDetail.amount" />
+						<form:input type="hidden" path="orderDetail.shiped" />
+						<form:input type="hidden" path="orderDetail.pending" />
+						<form:input type="hidden" path="orderDetail.productUnit" />
+						<form:input type="hidden" path="orderDetail.unitPrice" />
+						<form:input type="hidden" path="orderDetail.productId" />
+						<form:input type="hidden" path="orderDetail.status" />
+						<form:input type="hidden" path="orderDetail.price" />
+						<form:input type="hidden" path="orderDetail.productUnitId" />
+						<form:input type="hidden" path="orderDetail.productCurrency" />
+						<form:input type="hidden" path="orderDetail.productBuyerGroupId" />
+	
+						<table class="table table-hover table-list">
+							<thead>
+								<tr>
+									<th>No</th>
+									<th>Product Code</th>
+									<th>Description</th>
+									<th>Price</th>
+									<th>Qty</th>
+									<th>UOM</th>
+									<th>Unit Price</th>
+									<th>Amount</th>
+									<th>Currency</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="ordDetail" varStatus="rowNum" items="${ splitForm.splitOrderDetails }">
+									<tr id="row${ rowNum.index }">
+										<!-- Save value for passed to controller -->
+										<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].orderDetailId" />
+										<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].orderId" />
+										<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productCode" />
+										<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productName" />
+										<%-- <form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].amount" /> --%>
+										<%-- <form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].shiped" /> --%>
+										<%-- <form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].pending" /> --%>
+										<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productUnit" />
+										<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].unitPrice" />
+										<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productId" />
+										<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].status" />
+										<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].price" />
+										<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productUnitId" />
+										<form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productCurrency" />
+										<%-- <form:input type="hidden" path="splitOrderDetails[${ rowNum.index }].productBuyerGroupId" /> --%>
+	
+	
+										<td>${ rowNum.index + 1 }</td>
+										<td>${ ordDetail.productCode }</td>
+										<td>${ ordDetail.productName }</td>
+	
+										<td>
+											<select id="splitOrderDetails[${ rowNum.index }].productBuyerGroupId"
+												name="splitOrderDetails[${ rowNum.index }].productBuyerGroupId" class="form-control"
+												onchange="changePriceGroup(${ splitForm.splitOrderDetails[rowNum.index].orderDetailId }, this)">
+												<option value=""></option>
+												<c:forEach var="pg" varStatus="pgRow" items="${ orderDetailsForm.productPriceGroupList }">
+													<c:set var="selected" value="" />
+													<c:if
+														test="${ pg.productPriceGroupId eq  splitForm.splitOrderDetails[rowNum.index].productBuyerGroupId}">
+														<c:set var="selected" value="selected='selected'" />
+													</c:if>
+													<option value="${ pg.productPriceGroupId }" ${ selected }>${ pg.productPriceGroupName }</option>
+												</c:forEach>
+											</select>
+										</td>
+	
+										<td>
+											<form:input path="splitOrderDetails[${ rowNum.index }].amount"
+												cssClass="numberOnly splitqty" onblur="summarySplitQty()" />
+										</td>
+										<td>${ ordDetail.productUnit }</td>
+	
+										<td>
 											<c:choose>
 												<c:when test="${ ordDetail.unitPrice == null }">TBA</c:when>
 												<c:otherwise>
-													<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
-														value="${ ordDetail.amount * ordDetail.unitPrice }">
+													<fmt:formatNumber pattern="#,###" maxIntegerDigits="12" value="${ ordDetail.unitPrice }">
 													</fmt:formatNumber>
 												</c:otherwise>
 											</c:choose>
-										</div>
+										</td>
+										<td>
+											<div id="splitOrderDetails${ rowNum.index }.totalAmount">
+												<c:choose>
+													<c:when test="${ ordDetail.unitPrice == null }">TBA</c:when>
+													<c:otherwise>
+														<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
+															value="${ ordDetail.amount * ordDetail.unitPrice }">
+														</fmt:formatNumber>
+													</c:otherwise>
+												</c:choose>
+											</div>
+										</td>
+										<td>
+											<c:choose>
+												<c:when test="${empty ordDetail.productCurrency }">TBA</c:when>
+												<c:otherwise>
+												${ ordDetail.productCurrency }
+												</c:otherwise>
+											</c:choose>
+										</td>
+									</tr>
+								</c:forEach>
+								<%-- Summary row --%>
+								<tr class="bg-info">
+									<td colspan="4" align="right">
+										<b>Total Qty:</b>
 									</td>
-									<td>
-										<c:choose>
-											<c:when test="${empty ordDetail.productCurrency }">TBA</c:when>
-											<c:otherwise>
-											${ ordDetail.productCurrency }
-											</c:otherwise>
-										</c:choose>
+									<td colspan="1">
+										<form:hidden path="totalSplitQty" />
+										<div id="totalQty"></div>
+									</td>
+									<td colspan="4" align="left">
+										<b>Maximum Qty:</b> ${ splitForm.orderDetail.amount }
 									</td>
 								</tr>
-							</c:forEach>
-							<%-- Summary row --%>
-							<tr class="bg-info">
-								<td colspan="4" align="right">
-									<b>Total Qty:</b>
-								</td>
-								<td colspan="1">
-									<form:hidden path="totalSplitQty" />
-									<div id="totalQty"></div>
-								</td>
-								<td colspan="4" align="left">
-									<b>Maximum Qty:</b> ${ splitForm.orderDetail.amount }
-								</td>
-							</tr>
-						</tbody>
-					</table>
+							</tbody>
+						</table>
+					</div>
+	
+					<div class="col-sm-12">&nbsp;</div>
+					<div class="col-sm-12 text-right">
+						<input type="button" value="Confirm" onclick="confirmSplitOrder()" class="btn btn-success" />
+						<input type="button" value="Cancel" onclick="back()" class="btn btn-default" />
+					</div>
+					<div class="col-sm-12">&nbsp;</div>
 				</div>
-
-				<div class="col-sm-12">&nbsp;</div>
-				<div class="col-sm-12 text-right">
-					<input type="button" value="Confirm" onclick="confirmSplitOrder()" class="btn btn-success" />
-					<input type="button" value="Cancel" onclick="back()" class="btn btn-default" />
-				</div>
-				<div class="col-sm-12">&nbsp;</div>
-			</div>
-
-		</form:form>
+	
+			</form:form>
+		
+		</div>
+	
+		
 
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>

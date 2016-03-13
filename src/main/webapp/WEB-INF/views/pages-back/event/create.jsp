@@ -21,7 +21,7 @@
 <body>
 	<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 	<div class="container">
-		<div class="col-sm-12 bg_color">
+		<div class="col-md-12 bg_color">
 			<div class="row row-header2 header2 txtupper">Event</div>
 			<form:form class="form-horizontal" servletRelativeAction="/backend/event/create" method="post"
 	               modelAttribute="eventForm">

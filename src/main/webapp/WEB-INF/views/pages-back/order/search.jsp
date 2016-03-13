@@ -16,7 +16,8 @@
 	<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 
 	<div class="container">
-		<div class="">
+	
+		<div class="col-md-12">
 			<div class="row">
 				<div class="col-md-12 bg_color">
 					<div class="row row-header2 header2 txtupper">search order</div>
@@ -149,6 +150,7 @@
 				</c:otherwise>
 			</c:choose>
 		</div>
+		
 	</div>
 
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>

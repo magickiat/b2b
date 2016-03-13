@@ -13,8 +13,10 @@
 	<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 	
 	<div class="container">
-
-		<h2>Welcome Admin Home</h2>
+	
+		<div class="col-md-12">
+			<h2>Welcome Admin Home</h2>
+		</div>
 
 	</div>
 	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>

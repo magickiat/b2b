@@ -14,34 +14,40 @@
 	<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 
 	<div class="container">
-		<div class="row">
-			<div class="col-sm-10">
-				<h2>User</h2>
+	
+		<div class="col-md-12">
+	
+			<div class="row">
+				<div class="col-sm-10">
+					<h2>User</h2>
+				</div>
+				<%-- <div class="col-sm-2">
+					<form:form servletRelativeAction="/backend/customer/create"
+						method="get">
+						<input type="submit" value="Add Customer"
+							class="btn btn-default pull-right" />
+					</form:form>
+				</div> --%>
 			</div>
-			<%-- <div class="col-sm-2">
-				<form:form servletRelativeAction="/backend/customer/create"
-					method="get">
-					<input type="submit" value="Add Customer"
-						class="btn btn-default pull-right" />
-				</form:form>
-			</div> --%>
-		</div>
-		<div class="row">
-			<table class="table table-hover" id="list_user">
-				<thead>
-					<tr>
-						<th>User Name</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${users }" var="user">
-						<tr style="cursor: pointer;">
-							<td>${user.name }</td>
+			<div class="row">
+				<table class="table table-hover" id="list_user">
+					<thead>
+						<tr>
+							<th>User Name</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						<c:forEach items="${users }" var="user">
+							<tr style="cursor: pointer;">
+								<td>${user.name }</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		
 		</div>
+		
 	</div>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>

@@ -11,8 +11,10 @@
 </head>
 <body>
 	<div class="container">
+	
 		<%@include
 			file="/WEB-INF/views/pages-front/include/common_header.jspf"%>
+			
 		<div class="row">
 			<h2>Create Order</h2>
 		</div>
