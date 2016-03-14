@@ -69,6 +69,7 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Page<ContentDTO> content(int feedId) {
 		Page<ContentDTO> page = new Page<>();
 		Content content = contentDao.findById(feedId);
