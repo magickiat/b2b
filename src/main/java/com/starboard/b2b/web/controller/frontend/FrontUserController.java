@@ -50,18 +50,17 @@ public class FrontUserController {
 	String view(Model model) {
 		log.info("view ");
 		final UserForm userForm = new UserForm();
-		final User userAuthen = userService.findByUsername(UserUtil.getCurrentUsername());
 		final Map<String, String> countries = getCountries();
 		final Map<Long, String> addressTypes = getAddressConstant();
 		final List<AddressForm> addressForms = new ArrayList<>();
 		try {
-			final User user = userService.findByUsername(userAuthen.getUsername());
-			userForm.setId(userAuthen.getId().toString());
-			userForm.setUsername(userAuthen.getUsername());
-			userForm.setEmail(userAuthen.getEmail());
-			addressForms.addAll(addrService.findByCustId(user.getCustomer().getCustId()));
+			userForm.setId(UserUtil.getCurrentUser().getId().toString());
+			userForm.setName(UserUtil.getCurrentUser().getName());
+			userForm.setUsername(UserUtil.getCurrentUsername());
+			userForm.setEmail(UserUtil.getCurrentUser().getEmail());
+			addressForms.addAll(addrService.findByCustId(UserUtil.getCurrentUser().getCustomer().getCustId()));
 			userForm.setAddresses(addressForms);
-			userForm.setCustId(user.getCustomer().getCustId());
+			userForm.setCustId(UserUtil.getCurrentUser().getCustomer().getCustId());
 		} catch (Exception e) {
 			log.error("Got problem while finding address.");
 		}
@@ -75,6 +74,8 @@ public class FrontUserController {
 	@RequestMapping("edit")
 	@ResponseBody String edit(@ModelAttribute("userForm") UserForm userForm, Model model) {
 		log.info("Update user detail");
+		log.info("Form: " + userForm);
+		userForm.setEnable(true);
 		boolean isUpdateSuccess = userService.update(userForm);
 		return (isUpdateSuccess==true?"true":"false");
 	}

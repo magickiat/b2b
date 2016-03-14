@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,16 +99,17 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public boolean update(UserForm userForm) {
-		boolean isSuccess = false;
 		
 		User user = userDao.findById(Integer.parseInt(userForm.getId()));
 		user.setName(userForm.getName());
 		user.setUsername(userForm.getUsername());
 		user.setEmail(userForm.getEmail());		
 		user.setEnabled(userForm.isEnable());
-		user.setPassword(new MD5().encode(userForm.getPassword()));
+		if(StringUtils.isNotEmpty(userForm.getPassword())){
+			user.setPassword(new MD5().encode(userForm.getPassword()));
+		}
 		
-		return isSuccess;
+		return true;
 	}
 
 	@Override
