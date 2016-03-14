@@ -30,7 +30,7 @@ import com.starboard.b2b.web.form.user.UserForm;
 @RequestMapping("/frontend/user")
 public class FrontUserController {
 
-	private static final Logger log = LoggerFactory.getLogger(FrontOrderController.class);
+	private static final Logger log = LoggerFactory.getLogger(FrontUserController.class);
 
 	@Autowired
 	private UserService userService;
