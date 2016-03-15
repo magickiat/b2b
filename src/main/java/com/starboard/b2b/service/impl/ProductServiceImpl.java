@@ -629,4 +629,21 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.findByBrandGroupId(brandGroupId);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<ProductTypeDTO> getProductTypes(Long customerId) {
+		List<ProductTypeDTO> result = new ArrayList<>();
+		List<ProductType> productTypeList = productTypeDao.findByCustomer(customerId);
+
+		if (productTypeList != null && productTypeList.size() > 0) {
+			for (ProductType productType : productTypeList) {
+				ProductTypeDTO dto = new ProductTypeDTO();
+				BeanUtils.copyProperties(productType, dto);
+				result.add(dto);
+			}
+		}
+
+		return result;
+	}
+
 }

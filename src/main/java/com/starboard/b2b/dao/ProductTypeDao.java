@@ -15,4 +15,6 @@ public interface ProductTypeDao {
 	public List<ProductType> findByCustomerAndBrand(Long customerId, Long brandGroupId);
 	
 	public List<ProductType> listDistinctProductType();
+
+	public List<ProductType> findByCustomer(Long customerId);
 }

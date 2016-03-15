@@ -40,7 +40,7 @@ public interface ProductService {
 	List<ProductBuyerGroupDTO> findProductBuyerGroupByProductType(List<ProductTypeDTO> productType);
 
 	Page<SearchProductModelDTO> searchProduct(SearchProductForm searchProductForm);
-	
+
 	Page<SearchProductModelDTO> searchProductBackend(SearchProductForm searchProductForm);
 
 	List<ProductSearchResult> findProductModel(String modelId, String withnoseProtection);
@@ -67,10 +67,12 @@ public interface ProductService {
 
 	List<ProductTypeDTO> getProductTypes(Long customerId, Long brandGroupId);
 
+	List<ProductTypeDTO> getProductTypes(Long customerId);
+
 	List<ProductPriceGroupDTO> listProductPriceGroup();
-	
+
 	List<ProductTypeDTO> listProductBrandGroupForJson();
-	
+
 	void updateProduct(List<ProductDTO> products);
 
 	void updateProductPrice(List<ProductPriceDTO> productPrices);

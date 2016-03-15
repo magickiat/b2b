@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.service.FileService;
 import com.starboard.b2b.service.ProductService;
+import com.starboard.b2b.util.UserUtil;
 
 @Controller
 @RequestMapping("/frontend/download")
@@ -39,7 +40,7 @@ public class FrontDownloadController {
 	@RequestMapping("/list-brand")
 	@ResponseBody
 	List<ProductTypeDTO> listBrand() {
-		return productService.listProductBrandGroupForJson();
+		return productService.getProductTypes(UserUtil.getCurrentUser().getCustomer().getCustId());
 	}
 
 	@RequestMapping(value = "/product-image/{productBrandGroup}")
@@ -55,8 +56,7 @@ public class FrontDownloadController {
 		}
 
 		log.info("product: " + filename);
-		log.info("zip size: " + zipImage);
-		
+
 		response.setContentType("application/octet-stream");
 		response.setHeader("Content-Disposition", String.format("attachment; filename=%s.zip", filename));
 		try (OutputStream output = response.getOutputStream()) {

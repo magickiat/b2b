@@ -2,8 +2,6 @@ package com.starboard.b2b.service.impl;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -25,7 +23,6 @@ import com.starboard.b2b.dao.ProductDao;
 import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.model.Product;
 import com.starboard.b2b.service.FileService;
-import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.ArchiveUtil;
 
 @Service("fileService")
