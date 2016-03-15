@@ -1,7 +1,6 @@
 package com.starboard.b2b.util;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -9,6 +8,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -22,9 +22,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.starboard.b2b.dto.B2BFile;
+import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
+import com.starboard.b2b.exception.B2BException;
+import com.starboard.b2b.model.Product;
 import com.starboard.b2b.service.OrderService;
+import com.starboard.b2b.service.ProductService;
 
 public class B2BFileUtil {
 
@@ -54,11 +58,11 @@ public class B2BFileUtil {
 				return true;
 			}
 		});
-		
+
 		if (listFiles != null && listFiles.length > 0) {
 			// ----- Sort -----
 			Arrays.sort(listFiles);
-			
+
 			for (File file : listFiles) {
 				B2BFile f = new B2BFile();
 				f.setName(file.getName());
@@ -103,6 +107,52 @@ public class B2BFileUtil {
 		}
 
 		return deleted;
+	}
+
+	public static byte[] createExcelTemplateForOrder(ApplicationConfig config, Long brandGroupId, ProductService productService) throws IOException {
+		log.info("Brand Group ID: " + brandGroupId);
+
+		List<ProductTypeDTO> brands = productService.getProductTypes(UserUtil.getCurrentUser().getCustomer().getCustId(), brandGroupId);
+
+		if (brands.size() == 0) {
+			throw new B2BException("Not found any brand");
+		}
+
+		HashMap<String, HSSFWorkbook> excelMap = new HashMap<>();
+
+		for (ProductTypeDTO brand : brands) {
+			log.info("Brand: " + brand.getProductTypeName());
+			HSSFWorkbook workbook = new HSSFWorkbook();
+			HSSFSheet sheetProduct = workbook.createSheet("Products");
+			HSSFRow rowHeader = sheetProduct.createRow(0);
+
+			rowHeader.createCell(0).setCellValue("Description");
+			rowHeader.createCell(1).setCellValue("Product Code");
+			rowHeader.createCell(2).setCellValue("Unit");
+			rowHeader.createCell(3).setCellValue("Qty");
+
+			List<Product> products = productService.findProductByBrandId(brandGroupId);
+
+			if (products.size() > 0) {
+				for (int i = 0; i < products.size(); i++) {
+					Product product = products.get(i);
+					HSSFRow productRow = sheetProduct.createRow(i + 1);
+					productRow.createCell(0).setCellValue(StringUtils.defaultIfEmpty(product.getProductNameEn(), ""));
+					productRow.createCell(1).setCellValue(StringUtils.defaultIfEmpty(product.getProductCode(), ""));
+					productRow.createCell(2).setCellValue(StringUtils.defaultIfEmpty(product.getProductUnitId(), config.getDefaultProductUnit()));
+					productRow.createCell(2).setCellValue("");
+				}
+			}
+
+			sheetProduct.autoSizeColumn(0);
+			sheetProduct.autoSizeColumn(1);
+			sheetProduct.autoSizeColumn(2);
+			sheetProduct.autoSizeColumn(3);
+
+			excelMap.put(StringUtil.removeSpecialChar(brand.getProductTypeName().replaceAll(" ", "_")), workbook);
+		}
+
+		return ArchiveUtil.zipExcel(excelMap);
 	}
 
 	public static HSSFWorkbook createExcelOrder(Long[] orderId, OrderService orderService) {

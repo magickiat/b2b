@@ -55,7 +55,8 @@ import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.EmailService;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ProductService;
-import com.starboard.b2b.util.ArchiveUtil;
+import com.starboard.b2b.util.ApplicationConfig;
+import com.starboard.b2b.util.B2BFileUtil;
 import com.starboard.b2b.util.ExcelUtil;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
@@ -85,6 +86,9 @@ public class FrontOrderController {
 
 	@Autowired
 	private Environment environment;
+
+	@Autowired
+	private ApplicationConfig applicationConfig;
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "index", method = RequestMethod.GET)
@@ -122,7 +126,7 @@ public class FrontOrderController {
 				}
 			}
 		}
-		
+
 		model.addAttribute("brandId", brandId);
 
 		return "pages-front/order/step2_address";
@@ -268,27 +272,10 @@ public class FrontOrderController {
 	 */
 	@RequestMapping(value = "download-template", method = RequestMethod.GET)
 	public void downloadExcelOrder(@RequestParam("brand_id") Long brandGroupId, HttpServletResponse response) throws IOException {
-		ProductTypeDTO parent = productService.getProductType(brandGroupId);
-		List<ProductTypeDTO> types = productService.getProductTypes(UserUtil.getCurrentUser().getCustomer().getCustId(), brandGroupId);
-		if (parent == null) {
-			throw new B2BException(String.format("brand not found for brand id [%s]", brandGroupId));
-		}
-		if (types == null || types.isEmpty()) {
-			throw new B2BException(String.format("product type not found for brand id [%s]", brandGroupId));
-		}
-		//
-		String rootPath = environment.getProperty("upload.path");
-		String parentPath = parent.getProductTypeName().toUpperCase().replaceAll(" ", "_").trim();
-		List<String> files = new ArrayList<>();
-		for (ProductTypeDTO type : types) {
-			String name = type.getProductTypeName().toUpperCase().replaceAll(" ", "_").trim();
-			files.add(String.format("%s/excel/%s/STB_ORDER_FORM_%s.xls", rootPath, name, name));
-		}
-		//
-		byte[] zip = ArchiveUtil.zip(files);
-		//
+		byte[] zip = B2BFileUtil.createExcelTemplateForOrder(applicationConfig, brandGroupId, productService);
+
 		response.setContentType("application/octet-stream");
-		response.setHeader("Content-Disposition", String.format("attachment; filename=%s%s.zip", "STB_ORDER_FORM_", parentPath));
+		response.setHeader("Content-Disposition", "attachment; filename=STB_ORDER_FORM.zip");
 		try (OutputStream output = response.getOutputStream()) {
 			output.write(zip);
 		}
@@ -306,29 +293,32 @@ public class FrontOrderController {
 			//
 			List<ExcelOrderBean> orders = ExcelUtil.parseOrder(file.getBytes());
 			//
-			if (orders == null) {
-				throw new B2BException("order are not found in this upload file");
-			}
+//			if (orders == null) {
+//				throw new B2BException("order are not found in this upload file");
+//			}
 			//
-			List<ProductDTO> products = new ArrayList<>(orders.size());
-			for (ExcelOrderBean order : orders) {
-				ProductDTO product = productService.findByProductCode(order.getProductCode());
-				if (product.getProductCode() == null) {
-					// throw new B2BException(String.format("product not found
-					// for product code %s", order.getProductCode()));
-					continue;
+			int orderSize = orders == null ? 0 : orders.size();
+			if(orderSize > 0){
+				List<ProductDTO> products = new ArrayList<>(orderSize);
+				for (ExcelOrderBean order : orders) {
+					ProductDTO product = productService.findByProductCode(order.getProductCode());
+					if (product.getProductCode() == null) {
+						// throw new B2BException(String.format("product not found
+						// for product code %s", order.getProductCode()));
+						continue;
+					}
+					product.setProductQuantity(order.getQuantity());
+					products.add(product);
 				}
-				product.setProductQuantity(order.getQuantity());
-				products.add(product);
-			}
-			//
-			if (!products.isEmpty()) {
-				for (ProductDTO product : products) {
-					if (cart.get(product.getProductId()) == null) {
-						cart.put(product.getProductId(), product);
-					} else {
-						ProductDTO productInCart = cart.get(product.getProductId());
-						productInCart.setProductQuantity(productInCart.getProductQuantity() + product.getProductQuantity());
+				//
+				if (!products.isEmpty()) {
+					for (ProductDTO product : products) {
+						if (cart.get(product.getProductId()) == null) {
+							cart.put(product.getProductId(), product);
+						} else {
+							ProductDTO productInCart = cart.get(product.getProductId());
+							productInCart.setProductQuantity(productInCart.getProductQuantity() + product.getProductQuantity());
+						}
 					}
 				}
 			}
@@ -514,7 +504,8 @@ public class FrontOrderController {
 	}
 
 	@RequestMapping(value = "step3/remove", method = RequestMethod.POST)
-	String removeFromCart(@RequestParam Long productId, @ModelAttribute("cart") Map<Long, ProductDTO> cart, @ModelAttribute("brandId") Long brandId, Model model) {
+	String removeFromCart(@RequestParam Long productId, @ModelAttribute("cart") Map<Long, ProductDTO> cart, @ModelAttribute("brandId") Long brandId,
+			Model model) {
 		log.info("/step3/remove POST");
 		log.info("product id = " + productId);
 		if (cart != null) {
@@ -542,10 +533,10 @@ public class FrontOrderController {
 
 		// ----- send mail to Sales -----
 		String host = environment.getProperty("base.url");
-		if(StringUtils.isEmpty(host)){
+		if (StringUtils.isEmpty(host)) {
 			throw new B2BException("Not found host config");
 		}
-		
+
 		try {
 			emailService.sendEmailOrderToStaff(order, host);
 		} catch (Exception e) {
@@ -616,7 +607,7 @@ public class FrontOrderController {
 		model.addAttribute("orderSummaryForm", form);
 		return "pages-front/order/summary";
 	}
-	
+
 	@RequestMapping(value = "summary/report/{orderId}", method = RequestMethod.GET)
 	String viewOrderSummary(@PathVariable Long orderId, Model model) {
 		log.info("Report for order: {}", orderId);

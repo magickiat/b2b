@@ -53,16 +53,13 @@ public class ExcelUtil {
 		}
 		Iterator<Row> rows = sheet.iterator();
 		List<ExcelOrderBean> list = new ArrayList<>();
+		rows.next();// skip header
 		while (rows.hasNext()) {
 			Row row = rows.next();
-			if (row.getRowNum() < 4) {
-				continue;
-			}
-			//
-			Cell productCodeCell = row.getCell(3);
-			Cell quantityCell = row.getCell(5);
-			Cell remarkCell = row.getCell(6);
-			//
+			
+			Cell productCodeCell = row.getCell(1);
+			Cell quantityCell = row.getCell(3);
+			
 			if (productCodeCell == null || productCodeCell.getCellType() != Cell.CELL_TYPE_STRING) {
 				continue;
 			}
@@ -73,12 +70,10 @@ public class ExcelUtil {
 			if (quantity == 0) {
 				continue;
 			}
-			String remark = remarkCell == null || remarkCell.getCellType() != Cell.CELL_TYPE_STRING ? "" : remarkCell.getStringCellValue();
-			//
+			
 			ExcelOrderBean order = new ExcelOrderBean();
 			order.setProductCode(productCodeCell.getStringCellValue());
 			order.setQuantity(quantity);
-			order.setRemark(remark);
 			list.add(order);
 		}
 		if (list.isEmpty()) {

@@ -17,6 +17,7 @@ import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.ProductYearDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
+import com.starboard.b2b.model.Product;
 import com.starboard.b2b.web.form.product.SearchProductForm;
 
 public interface ProductService {
@@ -79,5 +80,7 @@ public interface ProductService {
 	void findOrderPriceList(List<SearchOrderDetailDTO> orderDetails, Long orderId);
 
 	void createNewModel(String modelId);
+
+	List<Product> findProductByBrandId(Long brandGroupId);
 
 }

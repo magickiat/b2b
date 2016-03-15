@@ -100,10 +100,10 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductPriceGroupDao productPriceGroupDao;
-	
+
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Autowired
 	private OrderDao orderDao;
 
@@ -592,7 +592,7 @@ public class ProductServiceImpl implements ProductService {
 		if (orderDetails != null && !orderDetails.isEmpty()) {
 			Orders ord = orderDao.findById(orderId);
 			User orderUser = userDao.findByUsername(ord.getUserCreate());
-			
+
 			for (SearchOrderDetailDTO result : orderDetails) {
 				Product product = productDao.findById(result.getProductId());
 				if (product == null) {
@@ -621,6 +621,12 @@ public class ProductServiceImpl implements ProductService {
 	public void createNewModel(String modelId) {
 		productModelDao.save(new ProductModel(modelId, modelId, "Created when not found model id", B2BConstant.B2B_SYSTEM_NAME, null,
 				DateTimeUtil.getCurrentDate(), null, "default", B2BConstant.B2B_SYSTEM_NAME, B2BConstant.B2B_SYSTEM_NAME));
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Product> findProductByBrandId(Long brandGroupId) {
+		return productDao.findByBrandGroupId(brandGroupId);
 	}
 
 }
