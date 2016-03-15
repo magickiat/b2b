@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -15,24 +14,21 @@
 	<%@include file="/WEB-INF/views/pages-front/include/common_header.jspf"%>
 
 	<div class="container">
-	
+
 		<div class="col-md-12">
-			
-			<form id="submitOrderForm"
-				action='<c:url value="/frontend/order/step4/submit" />' method="post">
-	
-	
-				<input type="hidden" id="csrftoken_" name="${_csrf.parameterName}"
-					value="${_csrf.token}" />
-	
-	
+
+			<form id="submitOrderForm" action='<c:url value="/frontend/order/step4/submit" />' method="post">
+
+
+				<input type="hidden" id="csrftoken_" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+
 				<div class="row">
 					<img src='<c:url value="/images/pages-front/icon/step3.png" />'>
 				</div>
-	
+
 				<div class="row">
-					<div class="col-md-12 bg_color showline2"
-						style="padding-bottom: 50px;">
+					<div class="col-md-12 bg_color showline2" style="padding-bottom: 50px;">
 						<div class="row row-header header1 txtupper">confirm</div>
 						<div class="row">&nbsp;</div>
 						<div class="row">
@@ -43,15 +39,12 @@
 									</div>
 								</div>
 								<div class="row">
-									<input type="hidden" name="invoiceTo"
-										value="${invoiceToAddress.addrId }" />
-	
+									<input type="hidden" name="invoiceTo" value="${invoiceToAddress.addrId }" />
+
 									<div class="col-sm-12">${ invoiceToAddress.address }</div>
 									<div class="col-sm-12">
-										TELEPHONE: <span class="telephone"><c:out
-												value="${invoiceToAddress.tel1 }" /></span> FAX: <span
-											class="telephone"><c:out
-												value="${invoiceToAddress.fax }" /></span>
+										TELEPHONE: <span class="telephone"><c:out value="${invoiceToAddress.tel1 }" /></span>
+										FAX: <span class="telephone"><c:out value="${invoiceToAddress.fax }" /></span>
 									</div>
 								</div>
 							</div>
@@ -61,37 +54,33 @@
 										<h4>DISPATCH TO</h4>
 									</div>
 									<div class="col-sm-8">
-	
+
 										<c:if test="${ not empty dispatchToAddress }">
 											<select id="dispatchTo" name="dispatchTo" class="form-control"
 												onchange="changeDispatchTo(this)">
-												<c:forEach var="dispatchTo" items="${ dispatchToAddress }"
-													varStatus="rowCount">
-	
+												<c:forEach var="dispatchTo" items="${ dispatchToAddress }" varStatus="rowCount">
+
 													<option value="${ dispatchTo.addrId }">${ dispatchTo.address }</option>
-	
+
 												</c:forEach>
 											</select>
 										</c:if>
 									</div>
 								</div>
-	
+
 								<c:if test="${ not empty dispatchToAddress }">
-	
-									<c:forEach var="addr" items="${ dispatchToAddress }"
-										varStatus="rowCount">
-										<div id="address-${ addr.addrId }"
-											class="row dispatch-to-address"
+
+									<c:forEach var="addr" items="${ dispatchToAddress }" varStatus="rowCount">
+										<div id="address-${ addr.addrId }" class="row dispatch-to-address"
 											<c:if test="${ rowCount.index > 0 }"> style="display: none;" </c:if>>
 											<div class="col-sm-12">${ addr.address }</div>
 											<div class="col-sm-12">
-												TELEPHONE: <span class="telephone"><c:out
-														value="${addr.tel1 }" /></span> FAX: <span class="telephone"><c:out
-														value="${addr.fax }" /></span>
+												TELEPHONE: <span class="telephone"><c:out value="${addr.tel1 }" /></span> FAX: <span
+													class="telephone"><c:out value="${addr.fax }" /></span>
 											</div>
 										</div>
 									</c:forEach>
-	
+
 								</c:if>
 							</div>
 						</div>
@@ -99,10 +88,10 @@
 						<div class="">
 							<div class="col-sm-10 text-right"></div>
 							<div class="col-sm-2 text-right">
-								<input type="button" id="btn-add" onclick="gotoCreateOrder()"
-									class="btn btn-success" value="ADD" />
-								<input type="button" id="btn-upload" class="btn btn-success"
-									onclick="gotoUploadOrder()" value="UPLOAD" />
+								<input type="button" id="btn-add" onclick="gotoCreateOrder()" class="btn btn-success"
+									value="ADD" />
+								<input type="button" id="btn-upload" class="btn btn-success" onclick="gotoUploadOrder()"
+									value="UPLOAD" />
 							</div>
 							<div class="row">&nbsp;</div>
 							<div class="">
@@ -133,39 +122,34 @@
 														<td>${ product.productCode }</td>
 														<td>${ product.productNameEn }</td>
 														<td>
-															<input type="text" id="quantity-${ rowCount.index }"
-																name="quantity" class="form-control numberOnly"
-																value="${ product.productQuantity }"
+															<input type="text" id="quantity-${ rowCount.index }" name="quantity"
+																class="form-control numberOnly" value="${ product.productQuantity }"
 																onblur="updateQuantity(${product.productId}, this)" />
-															<c:set var="totalQuantity"
-																value="${ totalQuantity +  product.productQuantity }" />
+															<c:set var="totalQuantity" value="${ totalQuantity +  product.productQuantity }" />
 														</td>
 														<td>${ product.productUnitId }</td>
 														<td>
-															<input type="hidden" name="amount"
-																value="${ p.price.amount }" />
+															<input type="hidden" name="amount" value="${ p.price.amount }" />
 															<c:choose>
 																<c:when test="${ empty p.price }">
 																	TBA
 																</c:when>
 																<c:otherwise>
-																	<span id="amount-${ rowCount.index }"> <fmt:formatNumber
-																			pattern="#,###" maxIntegerDigits="12"
-																			value="${ p.price.amount }">
+																	<span id="amount-${ rowCount.index }"> <fmt:formatNumber pattern="#,###"
+																			maxIntegerDigits="12" value="${ p.price.amount }">
 																		</fmt:formatNumber>
 																	</span>
 																</c:otherwise>
 															</c:choose>
 														</td>
-	
+
 														<td>
 															<c:choose>
 																<c:when test="${ empty p.price }">TBA</c:when>
 																<c:otherwise>
 																	<span id="total-amount-${ rowCount.index }"> <fmt:formatNumber
 																			pattern="#,###" maxIntegerDigits="12"
-																			value="${ product.productQuantity * p.price.amount }"
-																			minIntegerDigits="1">
+																			value="${ product.productQuantity * p.price.amount }" minIntegerDigits="1">
 																		</fmt:formatNumber>
 																	</span>
 																	<input type="hidden" name="totalProductAmount"
@@ -173,7 +157,13 @@
 																</c:otherwise>
 															</c:choose>
 														</td>
-														<td>${ p.price.productCurrency }</td>
+														<td>
+															<c:choose>
+																<c:when test="${ empty p.price }">TBA</c:when>
+																<c:otherwise>${ p.price.productCurrency }
+																</c:otherwise>
+															</c:choose>
+														</td>
 														<td class="text-center">
 															<img class="img-btn-cursor"
 																src='<c:url value="/images/pages-front/icon/btn_remove.png" />'
@@ -181,7 +171,7 @@
 														</td>
 													</tr>
 												</c:forEach>
-	
+
 												<tr>
 													<td colspan="3" class="text-right">TOTAL</td>
 													<td>
@@ -204,20 +194,18 @@
 												</tr>
 												<tr>
 													<td colspan="3">
-														<textarea id="customerRemark" name="customerRemark"
-															rows="4" cols="50" class="form-control"></textarea>
+														<textarea id="customerRemark" name="customerRemark" rows="4" cols="50"
+															class="form-control"></textarea>
 													</td>
 													<td colspan="6">
-														<label for="shippingType">Shipping type</label> <select
-															id="shippingType" name="shippingType" class="form-control">
-															<c:forEach var="shippingType"
-																items="${ shippingTypeList }">
+														<label for="shippingType">Shipping type</label> <select id="shippingType"
+															name="shippingType" class="form-control">
+															<c:forEach var="shippingType" items="${ shippingTypeList }">
 																<option label="${shippingType.shippingTypeName }">${ shippingType.shippingTypeId }</option>
 															</c:forEach>
-														</select> <select id="paymentMethod" name="paymentMethod"
-															class="form-control" style="display: none;">
-															<c:forEach var="paymentMethod"
-																items="${ paymentMethodList }">
+														</select> <select id="paymentMethod" name="paymentMethod" class="form-control"
+															style="display: none;">
+															<c:forEach var="paymentMethod" items="${ paymentMethodList }">
 																<option label="${paymentMethod.paymentMethodName }"
 																	<c:if test="${ paymentMethod.paymentMethodId == 'T/T' }"> selected </c:if>>
 																	${ paymentMethod.paymentMethodId }</option>
@@ -227,9 +215,8 @@
 												</tr>
 												<tr>
 													<td class="text-center" colspan="9">
-														<input type="button" id="confirm" name="confirm"
-															class="btn btn-success" value="CONFIRM"
-															onclick="confirmOrder();" />
+														<input type="button" id="confirm" name="confirm" class="btn btn-success"
+															value="CONFIRM" onclick="confirmOrder();" />
 													</td>
 												</tr>
 											</tbody>
@@ -240,28 +227,25 @@
 						</div>
 					</div>
 				</div>
-	
+
 			</form>
-	
-			<form id="remove-item"
-				action='<c:url value="/frontend/order/step3/remove" />' method="post">
-	
+
+			<form id="remove-item" action='<c:url value="/frontend/order/step3/remove" />' method="post">
+
 				<input type='hidden' id='params_' name='params' value='${params}' />
-				<input type="hidden" id="csrftoken_" name="${_csrf.parameterName}"
-					value="${_csrf.token}" />
+				<input type="hidden" id="csrftoken_" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<input type="hidden" id="productId" name="productId" value="" />
 			</form>
-			
+
 		</div>
 
-		
+
 	</div>
 
 	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 
-	<c:url var="updateToCartUrl"
-		value="/frontend/order/update-to-cart.json" />
+	<c:url var="updateToCartUrl" value="/frontend/order/update-to-cart.json" />
 
 	<script type="text/javascript">
 		$(document).ready(function() {
