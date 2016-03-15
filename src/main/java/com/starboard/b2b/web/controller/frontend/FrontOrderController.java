@@ -249,7 +249,7 @@ public class FrontOrderController {
 	}
 
 	private void setSearchCondition(SearchProductForm form, Model model) {
-		List<ProductTypeDTO> productTypes = productService.findProductTypeByBrandId(form.getBrandId());
+		List<ProductTypeDTO> productTypes = productService.getProductTypes(UserUtil.getCurrentUser().getCustomer().getCustId());
 		model.addAttribute("productType", productTypes);
 
 		// when all product type, find with relate product type
