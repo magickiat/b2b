@@ -140,7 +140,7 @@ public class B2BFileUtil {
 					productRow.createCell(0).setCellValue(StringUtils.defaultIfEmpty(product.getProductNameEn(), ""));
 					productRow.createCell(1).setCellValue(StringUtils.defaultIfEmpty(product.getProductCode(), ""));
 					productRow.createCell(2).setCellValue(StringUtils.defaultIfEmpty(product.getProductUnitId(), config.getDefaultProductUnit()));
-					productRow.createCell(2).setCellValue("");
+					productRow.createCell(3).setCellValue("");
 				}
 			}
 
