@@ -12,65 +12,66 @@
 	<%@include file="/WEB-INF/views/pages-front/include/common_header.jspf"%>
 
 	<div class="container">
-		<div class="row row-header2 bg_color header2 txtupper">
-			<div class="col-sm-12">Contact Us</div>
-		</div>
-		
-		<div class="row">&nbsp;</div>
-		
-		<div class="row showline2">
+		<div class="col-sm-12 bg_color showline2">
 
-			<c:choose>
+			<div class="row row-header2 header2 txtupper">Contact Us</div>
 
-				<c:when test="${ not empty resultPage.result  }">
-					<c:forEach items="${ resultPage.result }" var="contact" varStatus="rowNum">
-						<div class="">
+			<div class="row">&nbsp;</div>
+
+			<div class="row">
+
+				<c:choose>
+
+					<c:when test="${ not empty resultPage.result  }">
+						<c:forEach items="${ resultPage.result }" var="contact" varStatus="rowNum">
+							<div class="">
+								<div class="col-sm-12">
+									<h3>${ contact.contactTitle }</h3>
+								</div>
+
+								<div class="col-sm-1">
+									<strong>Name</strong>
+								</div>
+
+								<div class="col-sm-11">${ contact.contactName }</div>
+
+
+								<div class="col-sm-1">
+									<strong>Email</strong>
+								</div>
+
+								<div class="col-sm-11">${ contact.contactEmail }</div>
+
+
+								<div class="col-sm-1">
+									<strong>Detail</strong>
+								</div>
+
+								<div class="col-sm-11">${ contact.contactDetail }</div>
+
+								<div class="col-sm-1">
+									<strong>Tel</strong>
+								</div>
+
+								<div class="col-sm-11">${ contact.contactTel }</div>
+							</div>
 							<div class="col-sm-12">
-								<h3>${ contact.contactTitle }</h3>
+								<hr />
 							</div>
+						</c:forEach>
 
+					</c:when>
 
-							<div class="col-sm-1">
-								<strong>Name</strong>
-							</div>
-
-							<div class="col-sm-11">${ contact.contactName }</div>
-
-
-							<div class="col-sm-1">
-								<strong>Email</strong>
-							</div>
-
-							<div class="col-sm-11">${ contact.contactEmail }</div>
-
-
-							<div class="col-sm-1">
-								<strong>Detail</strong>
-							</div>
-
-							<div class="col-sm-11">${ contact.contactDetail }</div>
-
-							<div class="col-sm-1">
-								<strong>Tel</strong>
-							</div>
-
-							<div class="col-sm-11">${ contact.contactTel }</div>
+					<c:otherwise>
+						<div class="col-sm-12">
+							<h4>Not found contact</h4>
 						</div>
-					</c:forEach>
-
-				</c:when>
-
-				<c:otherwise>
-					<div class="col-sm-12">
-						<h4>Not found contact</h4>
-					</div>
-				</c:otherwise>
-			</c:choose>
+					</c:otherwise>
+				</c:choose>
 
 
+			</div>
 		</div>
-
-
 
 
 	</div>

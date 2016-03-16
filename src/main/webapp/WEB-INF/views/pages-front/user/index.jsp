@@ -13,168 +13,169 @@
 	<%@include file="/WEB-INF/views/pages-front/include/common_header.jspf"%>
 
 	<div class="container">
+		<div class="col-sm-12">
+			<form:form id="userForm" onsubmit="return saveUser()" servletRelativeAction="/frontend/user/edit"
+				class="form-horizontal" commandName="userForm" method="post">
 
-		<form:form id="userForm" onsubmit="return saveUser()" servletRelativeAction="/frontend/user/edit"
-			class="form-horizontal" commandName="userForm" method="post">
+				<form:hidden path="id" class="form-control" value="${ userForm.id }" />
+				<form:hidden path="custId" value="${ userForm.custId }" />
 
-			<form:hidden path="id" class="form-control" value="${ userForm.id }" />
-			<form:hidden path="custId" value="${ userForm.custId }" />
+				<div class="row">
+					<div class="col-md-12 bg_color showline2">
+						<div class="row row-header2 header2 txtupper">Profile</div>
 
-			<div class="row">
-				<div class="col-md-12 bg_color showline2">
-					<div class="row row-header header1">Profile</div>
+						<div class="col-md-8">
 
-					<div class="col-md-8">
-
-						<div class="form-group">
-							<label class="col-sm-3 control-label" for="name">Full Name</label>
-							<div class="col-sm-9">
-								<form:input path="name" class="form-control" value="${ userForm.name }" />
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="name">Full Name</label>
+								<div class="col-sm-9">
+									<form:input path="name" class="form-control" value="${ userForm.name }" />
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group">
-							<label class="col-sm-3 control-label" for="username">User Name</label>
-							<div class="col-sm-9">
-								<form:input path="username" class="form-control" value="${ userForm.username }" />
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="username">User Name</label>
+								<div class="col-sm-9">
+									<form:input path="username" class="form-control" value="${ userForm.username }" />
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group">
-							<label class="col-sm-3 control-label" for="password">Password</label>
-							<div class="col-sm-9">
-								<form:password path="password" class="form-control" value="${ userForm.password }" />
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="password">Password</label>
+								<div class="col-sm-9">
+									<form:password path="password" class="form-control" value="${ userForm.password }" />
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group">
-							<label class="col-sm-3 control-label" for="confirmPassword">Confirm Password</label>
-							<div class="col-sm-9">
-								<form:password path="confirmPassword" class="form-control"
-									value="${ userForm.confirmPassword }" />
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="confirmPassword">Confirm Password</label>
+								<div class="col-sm-9">
+									<form:password path="confirmPassword" class="form-control"
+										value="${ userForm.confirmPassword }" />
+								</div>
 							</div>
-						</div>
 
-						<div class="form-group">
-							<label class="col-sm-3 control-label" for="userEmail">Email</label>
-							<div class="col-sm-9">
-								<form:input id="userEmail" path="email" class="form-control" value="${ userForm.email }" />
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="userEmail">Email</label>
+								<div class="col-sm-9">
+									<form:input id="userEmail" path="email" class="form-control" value="${ userForm.email }" />
+								</div>
 							</div>
-						</div>
 
-						<!-- 
+							<!-- 
 				          <div class="form-group">
 				          	<label class="col-sm-4 control-label" for="userEmail">Active Time</label>
 				            <div class="col-sm-8"></div>
 				          </div>
 				           -->
 
-						<div class="form-group">
-							<div class="col-sm-offset-3 col-sm-9">
-								<div class="pull-right">
-									<button type="button" class="btn btn-success" onclick="saveUser()">Save</button>
-								</div>
-							</div>
-						</div>
-
-					</div>
-					<div class="col-md-4"></div>
-				</div>
-			</div>
-			<div class="row">&nbsp;</div>
-			<div class="row">
-				<div class="col-md-12 bg_color showline2">
-					<div class="row row-header header1">Address</div>
-
-					<c:forEach items="${ userForm.addresses }" var="address" varStatus="row">
-						<form:hidden class="form-control" id="addressId${row.index}"
-							path="addresses[${row.index}].addrId" value="${ address.addrId }" />
-
-						<div class="col-md-12">
-							<div style="height: 1px; border-bottom: solid 1px #ccc;"></div>
-						</div>
-						<div class="col-md-12">&nbsp;</div>
-						<div class="col-md-8">
 							<div class="form-group">
-								<label class="col-sm-3 control-label" for="addresses[${row.index}].address">Address
-									:</label>
-								<div class="col-sm-9">
-									<textarea id="address${row.index}" name="addresses[${row.index}].address" rows="4"
-										cols="50" class="form-control">${ address.address }</textarea>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-3 control-label" for="addresses[${row.index}].regionCountryId">Country
-									:</label>
-								<div class="col-sm-3">
-									<select id="country${row.index}" name="addresses[${row.index}].regionCountryId"
-										class="form-control">
-										<option value="" disabled="disabled">---please select---</option>
-										<c:forEach items="${ countries }" var="country">
-											<option value="${ country.key }"
-												${country.key==address.regionCountryId?'selected="selected"':''}>${ country.value }</option>
-										</c:forEach>
-									</select>
-								</div>
-
-								<label class="col-sm-3 control-label" for="addresses[${row.index}].tel1">Telephone :</label>
-								<div class="col-sm-3">
-									<form:input id="tel1${row.index}" path="addresses[${row.index}].tel1" class="form-control"
-										value="${ address.tel1 }" />
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-3 control-label" for="addresses[${row.index}].postCode">PostCode
-									:</label>
-								<div class="col-sm-3">
-									<form:input id="postcode${row.index}" path="addresses[${row.index}].postCode" maxlength="5"
-										class="form-control" value="${ address.postCode }" />
-								</div>
-
-								<label class="col-sm-3 control-label" for="addresses[${row.index}].email">Email :</label>
-								<div class="col-sm-3">
-									<form:input id="addressEmail${row.index}" path="addresses[${row.index}].email"
-										class="form-control" value="${ address.email }" />
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-3 control-label" for="addresses[${row.index}].type">Address
-									Type :</label>
-								<div class="col-sm-3">
-									<select id="addressType${row.index}" name="addresses[${row.index}].type"
-										class="form-control">
-										<option value="" disabled="disabled">---please select---</option>
-										<c:forEach items="${ addressTypes }" var="addressType">
-											<option value="${ addressType.key }"
-												${addressType.key==address.type?'selected="selected"':''}>${ addressType.value }</option>
-										</c:forEach>
-									</select>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="col-sm-offset-2 col-sm-10">
+								<div class="col-sm-offset-3 col-sm-9">
 									<div class="pull-right">
-										<button type="button" class="btn btn-success" onclick="saveAddress(${row.index})">SAVE</button>
-										<button type="button" class="btn btn-default"
-											onclick="cancel(${ row.index }, '${ address.address}', '${ address.regionCountryId}', '${ address.tel1 }', 
-												'${ address.postCode }', '${ address.fax }', '${ address.email }', '${ address.type }', '${ address}')">CANCEL</button>
+										<button type="button" class="btn btn-success" onclick="saveUser()">Save</button>
 									</div>
 								</div>
 							</div>
 
 						</div>
 						<div class="col-md-4"></div>
-					</c:forEach>
-
-
+					</div>
 				</div>
-			</div>
-		</form:form>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-md-12 bg_color showline2">
+						<div class="row row-header2 header2 txtupper">Address</div>
 
+						<c:forEach items="${ userForm.addresses }" var="address" varStatus="row">
+							<form:hidden class="form-control" id="addressId${row.index}"
+								path="addresses[${row.index}].addrId" value="${ address.addrId }" />
+
+							<div class="col-md-12">
+								<div style="height: 1px; border-bottom: solid 1px #ccc;"></div>
+							</div>
+							<div class="col-md-12">&nbsp;</div>
+							<div class="col-md-8">
+								<div class="form-group">
+									<label class="col-sm-3 control-label" for="addresses[${row.index}].address">Address
+										:</label>
+									<div class="col-sm-9">
+										<textarea id="address${row.index}" name="addresses[${row.index}].address" rows="4"
+											cols="50" class="form-control">${ address.address }</textarea>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-3 control-label" for="addresses[${row.index}].regionCountryId">Country
+										:</label>
+									<div class="col-sm-3">
+										<select id="country${row.index}" name="addresses[${row.index}].regionCountryId"
+											class="form-control">
+											<option value="" disabled="disabled">---please select---</option>
+											<c:forEach items="${ countries }" var="country">
+												<option value="${ country.key }"
+													${country.key==address.regionCountryId?'selected="selected"':''}>${ country.value }</option>
+											</c:forEach>
+										</select>
+									</div>
+
+									<label class="col-sm-3 control-label" for="addresses[${row.index}].tel1">Telephone
+										:</label>
+									<div class="col-sm-3">
+										<form:input id="tel1${row.index}" path="addresses[${row.index}].tel1" class="form-control"
+											value="${ address.tel1 }" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-3 control-label" for="addresses[${row.index}].postCode">PostCode
+										:</label>
+									<div class="col-sm-3">
+										<form:input id="postcode${row.index}" path="addresses[${row.index}].postCode"
+											maxlength="5" class="form-control" value="${ address.postCode }" />
+									</div>
+
+									<label class="col-sm-3 control-label" for="addresses[${row.index}].email">Email :</label>
+									<div class="col-sm-3">
+										<form:input id="addressEmail${row.index}" path="addresses[${row.index}].email"
+											class="form-control" value="${ address.email }" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-3 control-label" for="addresses[${row.index}].type">Address
+										Type :</label>
+									<div class="col-sm-3">
+										<select id="addressType${row.index}" name="addresses[${row.index}].type"
+											class="form-control">
+											<option value="" disabled="disabled">---please select---</option>
+											<c:forEach items="${ addressTypes }" var="addressType">
+												<option value="${ addressType.key }"
+													${addressType.key==address.type?'selected="selected"':''}>${ addressType.value }</option>
+											</c:forEach>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+										<div class="pull-right">
+											<button type="button" class="btn btn-success" onclick="saveAddress(${row.index})">SAVE</button>
+											<button type="button" class="btn btn-default"
+												onclick="cancel(${ row.index }, '${ address.address}', '${ address.regionCountryId}', '${ address.tel1 }', 
+												'${ address.postCode }', '${ address.fax }', '${ address.email }', '${ address.type }', '${ address}')">CANCEL</button>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<div class="col-md-4"></div>
+						</c:forEach>
+
+
+					</div>
+				</div>
+			</form:form>
+		</div>
 	</div>
 
 	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>

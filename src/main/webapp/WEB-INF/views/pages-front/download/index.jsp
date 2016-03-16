@@ -11,22 +11,22 @@
 	<%@include file="/WEB-INF/views/pages-front/include/common_header.jspf"%>
 
 	<div class="container">
-
-		<div class="row bg_color showline2">
-			<div class="col-md-12" style="padding-bottom: 50px;">
-				<div class="row row-header2 header2 txtupper">Download</div>
-				<div class="row">&nbsp;</div>
-				<div class="row">
-					<div class="col-sm-2">
-						<img alt="download product image"
-							src='<c:url value="/images/pages-front/icon/download-productimage.png" />'
-							onclick="popupDownloadProductImage()" data-toggle="modal" data-target="#display">
+		<div class="col-sm-12">
+			<div class="row bg_color showline2">
+				<div class="col-md-12" style="padding-bottom: 50px;">
+					<div class="row row-header2 header2 txtupper">Download</div>
+					<div class="row">&nbsp;</div>
+					<div class="row">
+						<div class="col-sm-2">
+							<img alt="download product image"
+								src='<c:url value="/images/pages-front/icon/download-productimage.png" />'
+								onclick="popupDownloadProductImage()" data-toggle="modal" data-target="#display">
+						</div>
+						<div class="col-sm-10"></div>
 					</div>
-					<div class="col-sm-10"></div>
 				</div>
 			</div>
 		</div>
-
 	</div>
 
 	<div id="display" class="modal fade" role="dialog">

@@ -13,7 +13,6 @@
 	<%@include file="/WEB-INF/views/pages-front/include/common_header.jspf"%>
 
 	<div class="container">
-
 		<div class="col-md-12">
 			<div class="row">
 				<img src='<c:url value="/images/pages-front/icon/step1.png" />' />
@@ -63,7 +62,6 @@
 				</c:choose>
 
 			</div>
-
 		</div>
 
 	</div>
