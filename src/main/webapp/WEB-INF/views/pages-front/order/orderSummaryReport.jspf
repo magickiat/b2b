@@ -36,7 +36,7 @@
 </div>
 <!-- Order Address detail -->
 <div class="row">
-	<div class="col-sm-6">
+	<div class="col-sm-6 border">
 		<div class="row">
 			<div class="col-sm-12">
 				<b>Dispatch to:</b> ${orderReport.dispatchToAddress.orderAddr}
@@ -50,7 +50,7 @@
 		</div>
 
 	</div>
-	<div class="col-sm-6">
+	<div class="col-sm-6 border">
 
 		<div class="row">
 			<div class="col-sm-12">
