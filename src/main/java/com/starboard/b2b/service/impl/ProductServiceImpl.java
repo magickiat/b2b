@@ -200,13 +200,13 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override()
 	@Transactional(readOnly = true)
-	public Page<SearchProductModelDTO> searchProduct(SearchProductForm form) {
+	public Page<SearchProductModelDTO> searchProduct(SearchProductForm form, Long custId) {
 		log.info("form: " + form);
 		SearchRequest<SearchProductForm> req = new SearchRequest<>(form.getPage(), applicationConfig.getPageSize());
 		req.setCondition(form);
 
 		// Find product model
-		SearchResult<SearchProductModelDTO> result = productDao.searchProductForFrontend(req);
+		SearchResult<SearchProductModelDTO> result = productDao.searchProductForFrontend(req, custId);
 
 		// Validate has image exist
 		List<SearchProductModelDTO> resultList = result.getResult();

@@ -39,7 +39,7 @@ public interface ProductService {
 
 	List<ProductBuyerGroupDTO> findProductBuyerGroupByProductType(List<ProductTypeDTO> productType);
 
-	Page<SearchProductModelDTO> searchProduct(SearchProductForm searchProductForm);
+	Page<SearchProductModelDTO> searchProduct(SearchProductForm searchProductForm, Long custId);
 
 	Page<SearchProductModelDTO> searchProductBackend(SearchProductForm searchProductForm);
 

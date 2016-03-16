@@ -39,7 +39,7 @@ public class ProductDaoImpl implements ProductDao {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	@Transactional(readOnly = true)
-	public SearchResult<SearchProductModelDTO> searchProductForFrontend(SearchRequest<SearchProductForm> req) {
+	public SearchResult<SearchProductModelDTO> searchProductForFrontend(SearchRequest<SearchProductForm> req, Long custId) {
 
 		StringBuilder sbQuery = new StringBuilder(
 				"SELECT new com.starboard.b2b.dto.search.SearchProductModelDTO(p.productId, p.productCode, p.productPictureMedium, p.productModelId, m.productModelName, p.productNameEn, p.productPrice, p.productUnitId, p.productCurrency, m.image, p.productPreintro) ");
@@ -63,7 +63,7 @@ public class ProductDaoImpl implements ProductDao {
 				sb.append("and p.productTypeId = :productTypeId ");
 			} else {
 				sb.append(
-						"and p.productTypeId in (select a.productTypeId from ProductType as a , ProductBrandGroup b where a.productTypeId = b.id.productTypeId and b.id.brandGroupId = :brandGroupId) ");
+						"and p.productTypeId in (select a.productTypeId from ProductType as a , CustBrandGroup b where a.productTypeId = b.id.brandGroupId and b.id.custId = :custId) ");
 			}
 
 			if (StringUtils.isNotEmpty(condition.getSelectedBuyerGroup())) {
@@ -112,8 +112,8 @@ public class ProductDaoImpl implements ProductDao {
 				query.setString("productTypeId", condition.getSelectedBrand());
 				queryTotal.setString("productTypeId", condition.getSelectedBrand());
 			} else {
-				query.setLong("brandGroupId", condition.getBrandId());
-				queryTotal.setLong("brandGroupId", condition.getBrandId());
+				query.setLong("custId", custId);
+				queryTotal.setLong("custId", custId);
 			}
 
 			if (StringUtils.isNotEmpty(condition.getSelectedBuyerGroup())) {

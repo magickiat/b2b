@@ -24,6 +24,8 @@ public class ProductDaoImplTest {
 
 	@Autowired
 	private ProductDao productDao;
+	
+	private long custId = 1011;
 
 	@Test
 	public void testDefaultSearch() {
@@ -35,7 +37,7 @@ public class ProductDaoImplTest {
 		SearchRequest<SearchProductForm> req = new SearchRequest<>(form.getPage(), 12);
 		req.setCondition(form);
 
-		SearchResult<SearchProductModelDTO> search = productDao.searchProductForFrontend(req);
+		SearchResult<SearchProductModelDTO> search = productDao.searchProductForFrontend(req, custId);
 		assertNotNull(search.getResult());
 		assertTrue(search.getResult().size() == 12);
 
@@ -54,7 +56,7 @@ public class ProductDaoImplTest {
 		SearchRequest<SearchProductForm> req = new SearchRequest<>(form.getPage(), 12);
 		req.setCondition(form);
 		
-		SearchResult<SearchProductModelDTO> search = productDao.searchProductForFrontend(req);
+		SearchResult<SearchProductModelDTO> search = productDao.searchProductForFrontend(req, custId);
 		
 		assertNotNull(search.getResult());
 		assertTrue(search.getResult().size() == 12);
@@ -71,7 +73,7 @@ public class ProductDaoImplTest {
 		SearchRequest<SearchProductForm> req = new SearchRequest<>(form.getPage(), 12);
 		req.setCondition(form);
 		
-		SearchResult<SearchProductModelDTO> search = productDao.searchProductForFrontend(req);
+		SearchResult<SearchProductModelDTO> search = productDao.searchProductForFrontend(req, custId);
 		
 		assertNotNull(search.getResult());
 		assertTrue(search.getResult().size() == 1);

@@ -153,7 +153,7 @@ public class FrontOrderController {
 
 		setSearchCondition(form, model);
 
-		Page<SearchProductModelDTO> resultPage = productService.searchProduct(form);
+		Page<SearchProductModelDTO> resultPage = productService.searchProduct(form, UserUtil.getCurrentUser().getCustomer().getCustId());
 		model.addAttribute("resultPage", resultPage);
 
 		return "pages-front/order/step2_search";
@@ -167,7 +167,7 @@ public class FrontOrderController {
 		model.addAttribute("showShoppingCart", "true");
 
 		setSearchCondition(form, model);
-		Page<SearchProductModelDTO> resultPage = productService.searchProduct(form);
+		Page<SearchProductModelDTO> resultPage = productService.searchProduct(form, UserUtil.getCurrentUser().getCustomer().getCustId());
 		if ("list".equals(form.getShowType())) {
 			log.info("Find product price, search type 'List'");
 			productService.findProductPriceList(resultPage.getResult(), brandId);
