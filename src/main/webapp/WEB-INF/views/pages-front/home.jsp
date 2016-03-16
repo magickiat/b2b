@@ -20,7 +20,7 @@
 		<div class="col-md-12">
 
 			<div class="row">
-				<div class="col-md-8 bg_color showline">
+				<div class="col-md-8 bg_color showline2">
 					<c:choose>
 						<c:when test="${fn:length(resultPage.result) gt 0}">
 							<%-- Upper Paging --%>
