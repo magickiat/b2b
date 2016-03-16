@@ -25,15 +25,15 @@
 	
 			<div class="row">
 				<div class="col-md-12 bg_color">
-					<div class="row col-md-6 row-header2 header2 txtupper">Search Customer</div>
-					<div class="" style="margin-top:10px;">
+					<div class="row row-header2 header2 txtupper">Search Customer</div>
+					<%-- <div class="" style="margin-top:10px;">
 						<form:form servletRelativeAction="/backend/customer/create"
 							method="get">
 							<input type="submit" value="Add Customer"
 								class="btn btn-primary pull-right"
 								style="width: 100px; " />
 						</form:form>
-					</div>
+					</div> --%>
 					<div class="row"></div>
 					<%-- Search condition --%>
 					<div class="" style="margin-top : 10px;">
