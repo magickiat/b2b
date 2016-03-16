@@ -36,7 +36,9 @@ public class ContentServiceImpl implements ContentService {
     @Autowired
 	private ApplicationConfig applicationConfig;
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
+    @Transactional(readOnly = true)
     public List<ContentDTO> list() {
         return copyContentToDTO(contentDao.list());
     }
@@ -101,6 +103,7 @@ public class ContentServiceImpl implements ContentService {
 	}
 
     @Override
+    @Transactional
     public void save(CreateFeedContentForm feedContentForm) throws Exception {
         Content content = new Content();
         content.setTitle(feedContentForm.getTitle());
@@ -111,11 +114,13 @@ public class ContentServiceImpl implements ContentService {
     }
 
 	@Override
+	@Transactional
 	public void remove(final int contentId) {
 		contentDao.remove(contentId);
 	}
 
 	@Override
+	@Transactional
 	public void update(CreateFeedContentForm feedContentForm){
 		Content content = contentDao.findById(feedContentForm.getId());
 		content.setTitle(feedContentForm.getTitle());
