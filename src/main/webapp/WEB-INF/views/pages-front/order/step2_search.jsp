@@ -24,7 +24,7 @@
 			
 			
 			<div class="row">
-				<div class="col-md-12 bg_color">
+				<div class="col-md-12 bg_color showline2">
 					<div class="row row-header2 header2 txtupper">Search</div>
 					<!-- Search condition -->
 					<div class="">
