@@ -31,7 +31,7 @@
 		    <div class="row">&nbsp;</div>
 		    <div class="row">
 		    	<div class="col-md-12 bg_color showline2">
-		    		<%@include file="orderSummary.jspf" %>
+		    		<%@include file="orderSummaryReport.jspf" %>
 		    	</div>
 		    </div>
 			

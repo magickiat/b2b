@@ -1,0 +1,164 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!-- Header -->
+<div class="row">
+	<div class="col-sm-6">
+		<h1>${orderReport.orderCode}</h1>
+	</div>
+	<div class="col-sm-6 text-right">
+		<h1>${orderReport.orderStatus}</h1>
+	</div>
+</div>
+<!-- Order info -->
+<div class="row">
+	<div class="col-sm-12">
+		<table class="table table-list">
+			<thead>
+				<tr>
+					<td>Order Date</td>
+					<td>Expected Shipping Date</td>
+					<td>Payment Term</td>
+					<td>Payment Method</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<fmt:formatDate pattern="dd-MM-yyyy" value="${orderReport.orderDate}" />
+					</td>
+					<td></td>
+					<td>${orderReport.paymentTermDescription}</td>
+					<td>${orderReport.paymentMethod}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<!-- Order Address detail -->
+<div class="row">
+	<div class="col-sm-6">
+		<div class="row">
+			<div class="col-sm-12">
+				<b>Dispatch to:</b> ${orderReport.dispatchToAddress.orderAddr}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<b>Tel:</b> ${orderReport.dispatchToAddress.orderTel} <b>Fax:</b>
+				${orderReport.dispatchToAddress.fax}
+			</div>
+		</div>
+
+	</div>
+	<div class="col-sm-6">
+
+		<div class="row">
+			<div class="col-sm-12">
+				<b>Invoice to:</b> ${orderReport.invoiceToAddress.orderAddr}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<b>Tel:</b> ${orderReport.invoiceToAddress.orderTel} <b>Fax:</b>
+				${orderReport.invoiceToAddress.fax}
+			</div>
+		</div>
+
+	</div>
+</div>
+<div class="row">&nbsp;</div>
+<!-- Order detail -->
+<div class="row">
+	<div class="col-sm-12">
+		<table class="table table-hover table-list">
+			<thead>
+				<tr>
+					<th>No</th>
+					<th>Product Code</th>
+					<th>Description</th>
+					<th>Qty</th>
+					<th>Shipped</th>
+					<th>Pending</th>
+					<th>UOM</th>
+					<th>Unit Price</th>
+					<th>Amount</th>
+					<th>Currency</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${ orderReport.orderDetails }" var="ordDetail" varStatus="rowNum">
+					<tr>
+						<td>${ rowNum.index + 1 }</td>
+						<td>${ ordDetail.productCode }</td>
+						<td>${ ordDetail.productName }</td>
+						<td>${ ordDetail.amount }</td>
+
+						<td>Shipped</td>
+						<td>Pending</td>
+						<td>${ ordDetail.productUnit }</td>
+						<td>
+							<c:choose>
+								<c:when test="${ empty ordDetail.unitPrice }">TBA</c:when>
+								<c:otherwise>
+									<fmt:formatNumber pattern="#,###" maxIntegerDigits="12" value="${ ordDetail.unitPrice }" />
+								</c:otherwise>
+							</c:choose>
+						</td>
+
+
+
+						<td>
+							<c:choose>
+								<c:when test="${ empty ordDetail.unitPrice }">TBA</c:when>
+								<c:otherwise>
+									<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
+										value="${ ordDetail.amount * ordDetail.unitPrice }" />
+								</c:otherwise>
+							</c:choose>
+						</td>
+
+
+
+						<td>
+							<c:choose>
+								<c:when test="${ empty ordDetail.productCurrency }">TBA</c:when>
+								<c:otherwise>${ ordDetail.productCurrency }</c:otherwise>
+							</c:choose>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+
+		<div class="col-sm-12">&nbsp;</div>
+		<!-- Customer remark -->
+		<div class="col-sm-6">
+			<div class="row">
+				<b>Customer Remark</b>
+			</div>
+			<div class="row">${ orderReport.remarkCustomer }</div>
+		</div>
+
+		<div class="col-sm-6">
+			<div class="row">
+				<b>Shipping Type</b>
+			</div>
+			<div class="row">${ orderReport.shippingType }</div>
+		</div>
+
+
+		<!-- Staff remark -->
+		<c:if test="${ not empty orderReport.remarkOrders }">
+			<div class="col-sm-12">&nbsp;</div>
+			<div class="col-sm-12">
+				<div class="row">
+					<b>Staff Remark</b>
+				</div>
+				<div class="row">${ orderReport.remarkOrders }</div>
+			</div>
+		</c:if>
+	</div>
+
+	<div class="col-sm-12">&nbsp;</div>
+
+</div>
