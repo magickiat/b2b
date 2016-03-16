@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
@@ -12,25 +11,22 @@
 	<%@include file="/WEB-INF/views/pages-front/include/common_header.jspf"%>
 
 	<div class="container">
-		
-		<div class="col-md-12">
-			<div class="row">
-				<div class="col-md-12 bg_color" style="padding-bottom: 50px;">
-					<div class="row row-header2 header2 txtupper">Download</div>
-					<div class="row">&nbsp;</div>
-					<div class="row">
-						<div class="col-sm-2">
-							<img alt="download product image"
-								src='<c:url value="/images/pages-front/icon/download-productimage.png" />'
-								onclick="popupDownloadProductImage()" data-toggle="modal"
-								data-target="#display">
-						</div>
-						<div class="col-sm-10"></div>
+
+		<div class="row bg_color showline2">
+			<div class="col-md-12" style="padding-bottom: 50px;">
+				<div class="row row-header2 header2 txtupper">Download</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-2">
+						<img alt="download product image"
+							src='<c:url value="/images/pages-front/icon/download-productimage.png" />'
+							onclick="popupDownloadProductImage()" data-toggle="modal" data-target="#display">
 					</div>
+					<div class="col-sm-10"></div>
 				</div>
 			</div>
 		</div>
-		
+
 	</div>
 
 	<div id="display" class="modal fade" role="dialog">
@@ -64,15 +60,22 @@
 
 			setDialogTitle('Download Product Image');
 
-			$.get('<c:url value="/frontend/download/list-brand.json" />',
-				function(data) {
-					var result = '<ul>';
-					$.each(data, function(key, value) {
-						result += '<li><a href="<c:url value="/frontend/download/product-image/' +value.productTypeId+'" />">' + value.productTypeName + '</a></li>';
-					});
-					result += '</ul>';
-					setDialogBody(result);
-				});
+			$
+					.get(
+							'<c:url value="/frontend/download/list-brand.json" />',
+							function(data) {
+								var result = '<ul>';
+								$
+										.each(
+												data,
+												function(key, value) {
+													result += '<li><a href="<c:url value="/frontend/download/product-image/' +value.productTypeId+'" />">'
+															+ value.productTypeName
+															+ '</a></li>';
+												});
+								result += '</ul>';
+								setDialogBody(result);
+							});
 		}
 
 		function setDialogTitle(title) {
