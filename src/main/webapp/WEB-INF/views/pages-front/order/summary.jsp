@@ -1,31 +1,28 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
-	<%@include file="/WEB-INF/views/include/common_meta.jspf" %>
-	<title><spring:message code="page.header"></spring:message></title>
-	<%@include file="/WEB-INF/views/include/common_css.jspf"%>
+<%@include file="/WEB-INF/views/include/common_meta.jspf"%>
+<title><spring:message code="page.header"></spring:message></title>
+<%@include file="/WEB-INF/views/include/common_css.jspf"%>
 <link rel="stylesheet"
-	href="<c:url value="/scripts/assets/datepicker/bootstrap-datetimepicker.css"/>"
-	media="screen">
+	href="<c:url value="/scripts/assets/datepicker/bootstrap-datetimepicker.css"/>" media="screen">
 </head>
 <body>
 	<%@include file="/WEB-INF/views/pages-front/include/common_header.jspf"%>
 
 	<div class="container">
-	
+
 		<div class="col-md-12">
-		
+
 			<div class="row">
 				<div class="col-md-12 bg_color showline2">
 					<div class="row row-header2 header2 txtupper">Order Summary</div>
 					<!-- Search section -->
 					<div>
 						<form:form id="searchForm" modelAttribute="orderSummaryForm"
-							servletRelativeAction="/frontend/order/summary/search-action"
-							method="get">
+							servletRelativeAction="/frontend/order/summary/search-action" method="get">
 							<form:hidden path="custId" value="${orderSummaryForm.custId}" />
 							<form:hidden path="page" />
 							<%-- Search criteria row 1--%>
@@ -40,29 +37,26 @@
 								</div>
 								<div class="col-md-3">
 									<div class="form-group">
-										<form:select path="selectedBrand" cssClass="form-control"
-											multiple="false" onchange="submitForm()">
+										<form:select path="selectedBrand" cssClass="form-control" multiple="false"
+											onchange="submitForm()">
 											<form:option value="" label="ALL BRAND" />
-											<form:options items="${productType}"
-												itemLabel="productTypeName" itemValue="productTypeId" />
+											<form:options items="${productType}" itemLabel="productTypeName"
+												itemValue="productTypeId" />
 										</form:select>
 									</div>
 								</div>
 								<div class="col-md-3">
 									<div class="form-group">
-										<form:select path="selectedStatus" cssClass="form-control"
-											multiple="false">
+										<form:select path="selectedStatus" cssClass="form-control" multiple="false">
 											<form:option value="" label="ALL STATUS" />
-											<form:options items="${orderStatus}"
-												itemLabel="orderStatusName" itemValue="orderStatusId" />
+											<form:options items="${orderStatus}" itemLabel="orderStatusName"
+												itemValue="orderStatusId" />
 										</form:select>
 									</div>
 								</div>
 								<div class="col-md-3">
-									<button class="btn btn-success" onclick="submitForm()"
-										style="width: 100px;">Search</button>
-									<button class="btn btn-default" onclick="exportExcel()"
-										style="width: 100px;">Excel</button>
+									<button class="btn btn-success" onclick="submitForm()" style="width: 100px;">Search</button>
+									<button class="btn btn-default" onclick="exportExcel()" style="width: 100px;">Excel</button>
 								</div>
 							</div>
 							<%-- Search criteria row 2--%>
@@ -73,8 +67,7 @@
 										<div class="col-sm-9">
 											<div id="dateFromPicker" class="input-group date">
 												<form:input path="dateFrom" cssClass="form-control" />
-												<span class="input-group-addon"> <span
-													class="glyphicon glyphicon-calendar"></span>
+												<span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span>
 												</span>
 											</div>
 										</div>
@@ -83,8 +76,7 @@
 								<div class="col-md-2">
 									<div id="dateToPicker" class="input-group date">
 										<form:input path="dateTo" cssClass="form-control" />
-										<span class="input-group-addon"> <span
-											class="glyphicon glyphicon-calendar"></span>
+										<span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span>
 										</span>
 									</div>
 								</div>
@@ -97,31 +89,30 @@
 			</div>
 			<div class="row">&nbsp;</div>
 			<%-- Order detail section --%>
-	
+
 			<%-- Upper Paging --%>
 			<div class="row">
-			<%@include file="/WEB-INF/views/include/paging_submit.jspf"%>
+				<%@include file="/WEB-INF/views/include/paging_submit.jspf"%>
 			</div>
-	
+
 			<%-- List order model --%>
 			<div class="row">
 				<div class="col-md-12 bg_color showline2">
 					<%@include file="step2_include/order_summary_list.jspf"%>
 				</div>
 			</div>
-	
+
 			<%-- Lower Paging --%>
 			<div class="row">
-			<%@include file="/WEB-INF/views/include/paging_submit.jspf"%>
+				<%@include file="/WEB-INF/views/include/paging_submit.jspf"%>
 			</div>
-		
+
 		</div>
 
-		
+
 	</div>
 	<!-- Modal -->
-	<div class="modal modal-message modal-danger fade" id="alertModal"
-		role="dialog">
+	<div class="modal modal-message modal-danger fade" id="alertModal" role="dialog">
 		<div class="modal-dialog modal-sm">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -138,10 +129,8 @@
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>
 
-	<script
-		src="<c:url value="/scripts/assets/datepicker/moment-with-locales.js"/>"></script>
-	<script
-		src="<c:url value="/scripts/assets/datepicker/bootstrap-datetimepicker.js"/>"></script>
+	<script src="<c:url value="/scripts/assets/datepicker/moment-with-locales.js"/>"></script>
+	<script src="<c:url value="/scripts/assets/datepicker/bootstrap-datetimepicker.js"/>"></script>
 
 	<script type="text/javascript">
 		$(document).ready(function() {
