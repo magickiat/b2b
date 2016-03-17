@@ -89,7 +89,7 @@ public class BackendOrderController {
 
 		setForm(form, model);
 		model.addAttribute("resultPage", orderService.searchOrder(form));
-		model.addAttribute("searchOrderForm", new SearchOrderForm());
+		model.addAttribute("searchOrderForm", form);
 
 		return "pages-back/order/search";
 	}

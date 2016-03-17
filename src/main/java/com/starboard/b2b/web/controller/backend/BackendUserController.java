@@ -46,6 +46,6 @@ public class BackendUserController {
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	String search(Model model) {
 		model.addAttribute("users", userService.search(new UserSearchForm()));
-		return "pages-back/user/create";
+		return "pages-back/user/search";
 	}
 }

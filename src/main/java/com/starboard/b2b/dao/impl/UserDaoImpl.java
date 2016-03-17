@@ -83,7 +83,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public SearchResult<UserDTO> search(SearchRequest<UserSearchForm> req) {
 		String sql = "from User u";
-		String sqlTotal = "select count(i.id) from User u";
+		String sqlTotal = "select count(u.id) from User u";
 
 		Query queryTotal = sessionFactory.getCurrentSession().createQuery(sqlTotal);
 		Query query = sessionFactory.getCurrentSession().createQuery(sql);
