@@ -91,10 +91,16 @@
 						<td>${ rowNum.index + 1 }</td>
 						<td>${ ordDetail.productCode }</td>
 						<td>${ ordDetail.productName }</td>
-						<td>${ ordDetail.amount }</td>
+						<td>
+							<fmt:formatNumber pattern="#,###" maxIntegerDigits="12" value="${ ordDetail.amount }" />
+						</td>
 
-						<td>Shipped</td>
-						<td>Pending</td>
+						<td>
+							<fmt:formatNumber pattern="#,###" maxIntegerDigits="12" value="${ ordDetail.shiped }" />
+						</td>
+						<td>
+							<fmt:formatNumber pattern="#,###" maxIntegerDigits="12" value="${ ordDetail.pending }" />
+						</td>
 						<td>${ ordDetail.productUnit }</td>
 						<td>
 							<c:choose>
@@ -104,8 +110,6 @@
 								</c:otherwise>
 							</c:choose>
 						</td>
-
-
 
 						<td>
 							<c:choose>

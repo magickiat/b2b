@@ -19,6 +19,7 @@ import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.common.OrderStatusConfig;
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dao.AddrDao;
+import com.starboard.b2b.dao.InvoiceDao;
 import com.starboard.b2b.dao.OrderAddressDao;
 import com.starboard.b2b.dao.OrderDao;
 import com.starboard.b2b.dao.OrderDetailDao;
@@ -110,9 +111,12 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private ProductPriceDao productPriceDao;
-	
+
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private InvoiceDao invoiceDao;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -196,10 +200,10 @@ public class OrderServiceImpl implements OrderService {
 
 			ProductPriceDTO productPrice = productPriceDao.findProductPrice(product.getProductCode(), brandGroupId, user);
 			// Default currency
-			if(productPrice != null){
+			if (productPrice != null) {
 				if (StringUtils.isEmpty(product.getProductCurrency())) {
 					String currency = productPrice.getProductCurrency();
-					if(StringUtils.isEmpty(currency)){
+					if (StringUtils.isEmpty(currency)) {
 						currency = applicationConfig.getDefaultProductCurrency();
 					}
 					product.setProductCurrency(currency);
@@ -273,13 +277,17 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<SearchOrderDetailDTO> searchOrderDetail(Long orderId) {
-		return orderDetailDao.searchOrderDetail(orderId);
+		List<SearchOrderDetailDTO> result = orderDetailDao.searchOrderDetail(orderId);
+		findShippedOrderDetail(result);
+		return result;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<SearchOrderDetailDTO> searchOrderDetail(String orderCode) {
-		return orderDetailDao.searchOrderDetail(orderCode);
+		List<SearchOrderDetailDTO> result = orderDetailDao.searchOrderDetail(orderCode);
+		findShippedOrderDetail(result);
+		return result;
 	}
 
 	@Override
@@ -426,7 +434,7 @@ public class OrderServiceImpl implements OrderService {
 		order.setExpectReceiptDate(expectShipDate);
 		order.setExpectShipmentDate(expectShipDate);
 		order.setOrderStatus(OrderStatusConfig.APPROVED);
-		
+
 		orderDTO.setOrderStatus(OrderStatusConfig.APPROVED);
 	}
 
@@ -445,7 +453,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 		order.setOrderStatus(OrderStatusConfig.CANCELED);
-		
+
 		orderDTO.setOrderStatus(OrderStatusConfig.CANCELED);
 	}
 
@@ -467,11 +475,11 @@ public class OrderServiceImpl implements OrderService {
 		log.info("Updated order " + order.getOrderCode());
 
 		// ----- Order Details -----
-		
+
 		// clear order detail
 		int deleted = orderDetailDao.deleteByOrderId(order.getOrderId());
 		log.info("Delete order details " + deleted + " items.");
-		
+
 		List<SearchOrderDetailDTO> orderDetails = form.getOrderDetails();
 
 		if (orderDetails != null && !orderDetails.isEmpty()) {
@@ -485,23 +493,41 @@ public class OrderServiceImpl implements OrderService {
 
 				OrdDetail detail = new OrdDetail();
 				BeanUtils.copyProperties(dto, detail);
-				if(productPrice != null && detail.getAmount() > 0){
+				if (productPrice != null && detail.getAmount() > 0) {
 					// productPrice's amount = product price per unit
 					detail.setPrice(productPrice.getAmount());
 					detail.setProductCurrency(productPrice.getProductCurrency());
 				}
-				if(StringUtils.isEmpty(detail.getProductUnitId())){
+				if (StringUtils.isEmpty(detail.getProductUnitId())) {
 					detail.setProductUnitId(applicationConfig.getDefaultProductUnit());
 				}
 				detail.setUserCreate(order.getUserCreate());
 				detail.setTimeCreate(DateTimeUtil.getCurrentDate());
 				detail.setTimeUpdate(DateTimeUtil.getCurrentDate());
 				detail.setUserUpdate(UserUtil.getCurrentUsername());
-				
+
 				orderDetailDao.save(detail);
 			}
 		} else {
 			log.warn("This order hasn't order details");
+		}
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public void findShippedOrderDetail(List<SearchOrderDetailDTO> orderDetails) {
+		log.info("findShippedOrderDetail size: " + (orderDetails == null ? 0 : orderDetails.size()));
+
+		if (orderDetails != null && orderDetails.size() > 0) {
+			for (SearchOrderDetailDTO ordDetail : orderDetails) {
+				long shippedAmount = invoiceDao.findShippedAmount(ordDetail.getOrderDetailId());
+				ordDetail.setShiped(shippedAmount);
+
+				long totalAmount = ordDetail.getAmount();
+				ordDetail.setPending(totalAmount - shippedAmount);
+
+				log.info(String.format("OrderDetail: %s\ttotal: %d\tshipped: %d", ordDetail.getOrderDetailId(), totalAmount, shippedAmount));
+			}
 		}
 	}
 

@@ -40,6 +40,8 @@ public interface OrderService {
 	List<SearchOrderDetailDTO> searchOrderDetail(Long orderId);
 
 	List<SearchOrderDetailDTO> searchOrderDetail(String orderCode);
+	
+	void findShippedOrderDetail(List<SearchOrderDetailDTO> orderDetails);
 
 	SearchOrderDTO findOrderForReport(Long orderId);
 
