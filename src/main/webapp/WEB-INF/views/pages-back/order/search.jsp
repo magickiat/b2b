@@ -11,6 +11,8 @@
 <%@include file="/WEB-INF/views/include/common_meta.jspf"%>
 <title><spring:message code="page.header"></spring:message></title>
 <%@include file="/WEB-INF/views/include/common_cssbackend.jspf"%>
+<link rel="stylesheet"
+	href="<c:url value="/scripts/assets/datepicker/bootstrap-datetimepicker.css"/>" media="screen">
 </head>
 <body>
 	<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
@@ -155,11 +157,31 @@
 
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>
+	
+	<script src="<c:url value="/scripts/assets/datepicker/moment-with-locales.js"/>"></script>
+	<script src="<c:url value="/scripts/assets/datepicker/bootstrap-datetimepicker.js"/>"></script>
 
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-
+			// datepicker
+			var dateFromPicker = $('#dateFromPicker');
+			var dateToPicker = $('#dateToPicker');
+			dateFromPicker.datetimepicker({
+				locale : 'en',
+				format : 'YYYY-MM-DD'
+			});
+			dateToPicker.datetimepicker({
+				locale : 'en',
+				format : 'YYYY-MM-DD',
+				useCurrent : false
+			});
+			dateFromPicker.on("dp.change", function(e) {
+				$('#dateToPicker').data("DateTimePicker").minDate(e.date);
+			});
+			dateToPicker.on("dp.change", function(e) {
+				$('#dateFromPicker').data("DateTimePicker").maxDate(e.date);
+			});
 		});
 	</script>
 </body>
