@@ -111,14 +111,14 @@
 					<table class="table table-hover" id="list_customer">
 						<thead>
 							<tr>
-								<th>No.</th>
-								<th>Code</th>
-								<th>Name</th>
-								<th>Country</th>
-								<th>Contact Person</th>
-								<th>Telephone</th>
-								<th>Email</th>
-								<th>Address</th>
+								<th width="5%">No.</th>
+								<th width="10%">Code</th>
+								<th width="20%">Name</th>
+								<th width="10%">Country</th>
+								<th width="10%">Contact Person</th>
+								<th width="10%">Telephone</th>
+								<th width="15%">Email</th>
+								<th width="20%">Address</th>
 							</tr>
 						</thead>
 						<tbody>
