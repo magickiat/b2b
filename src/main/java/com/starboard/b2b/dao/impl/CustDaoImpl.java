@@ -3,14 +3,8 @@ package com.starboard.b2b.dao.impl;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +14,9 @@ import com.starboard.b2b.dao.CustDao;
 import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.ContactDTO;
 import com.starboard.b2b.dto.ProductBrandGroupDTO;
-import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchCustResult;
+import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.model.Cust;
-import com.starboard.b2b.model.CustPriceGroup;
 import com.starboard.b2b.web.form.customer.SearchCustomerForm;
 
 @Repository("custDao")

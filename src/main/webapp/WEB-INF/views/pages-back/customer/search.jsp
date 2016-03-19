@@ -135,21 +135,29 @@
 									<td>${ rowBegin + (rowNum.index + 1) }</td>
 									<td>${customer.custCode }</td>
 									<td>${customer.nameEn }</td>
-									<td><c:if test="${ not empty customer.addressList }">
-											<c:forEach items="${ customer.addressList }" var="addr">
-												<c:if test="${ addr.type == 1}">
-													<c:forEach items="${ searchForm.countryList }"
-														var="country">
-														<c:if
-															test="${ addr.regionCountryId == country.countryCode }">${ country.countryName }</c:if>
-													</c:forEach>
-												</c:if>
+									<td>
+										<c:if test="${ not empty customer.contactAddress }">
+											<c:forEach items="${ searchForm.countryList }" var="country">
+												<c:if
+													test="${ customer.contactAddress.regionCountryId == country.countryCode }">
+													<c:set var="addr" value="${ addr }" />
+															${ country.countryName }</c:if>
 											</c:forEach>
-										</c:if></td>
-									<td>Contact Person</td>
-									<td>Telephone</td>
-									<td>Email</td>
-									<td><c:if test="${ not empty customer.addressList}">
+										</c:if>
+									</td>
+									<td>
+										<c:if test="${ not empty customer.contacts }">
+											${ customer.contacts[0].nameEn }
+										</c:if>
+									</td>
+									<td>
+										<c:if test="${ not empty customer.contactAddress }">${ customer.contactAddress.tel1 }</c:if>
+									</td>
+									<td>
+										<c:if test="${ not empty customer.contactAddress }">${ customer.contactAddress.email }</c:if>
+									</td>
+									<td>
+										<c:if test="${ not empty customer.addressList}">
 											<c:choose>
 
 												<c:when
@@ -161,7 +169,8 @@
 												</c:otherwise>
 											</c:choose>
 
-										</c:if></td>
+										</c:if>
+									</td>
 								</tr>
 							</c:forEach>
 						</tbody>
