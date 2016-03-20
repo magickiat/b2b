@@ -44,9 +44,18 @@ public class BackendUserController {
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	String search(Model model) {
-		model.addAttribute("searchForm", new UserSearchForm());
-		model.addAttribute("users", userService.search(new UserSearchForm()));
+	String searchForm(Model model) {
+		log.info("searchForm");
+		return searchAction(new UserSearchForm(), model);
+	}
+
+	@RequestMapping(value = "/search-action", method = RequestMethod.GET)
+	String searchAction(@ModelAttribute("searchForm") UserSearchForm form, Model model) {
+		log.info("searchAction: " + form);
+		if (!model.containsAttribute("searchForm")) {
+			model.addAttribute("searchForm", form);
+		}
+		model.addAttribute("resultPage", userService.search(form));
 		return "pages-back/user/search";
 	}
 }
