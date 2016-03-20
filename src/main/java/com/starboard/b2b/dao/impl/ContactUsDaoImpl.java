@@ -39,8 +39,8 @@ public class ContactUsDaoImpl implements ContactUsDao {
 		if (req != null && req.getCondition() != null) {
 
 			if (StringUtils.isNotEmpty(req.getCondition().getKeyword())) {
-				crKeyword = Restrictions.or(Restrictions.or(Restrictions.like("contactName", req.getCondition().getKeyword(), MatchMode.ANYWHERE),
-						Restrictions.like("contactTitle", req.getCondition().getKeyword(), MatchMode.ANYWHERE)));
+				crKeyword = Restrictions.or(Restrictions.like("contactName", req.getCondition().getKeyword(), MatchMode.ANYWHERE),
+						Restrictions.like("contactTitle", req.getCondition().getKeyword(), MatchMode.ANYWHERE));
 			}
 		}
 
