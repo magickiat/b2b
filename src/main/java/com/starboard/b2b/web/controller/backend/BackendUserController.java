@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.SecurityService;
 import com.starboard.b2b.service.UserService;
+import com.starboard.b2b.web.form.user.UserForm;
 import com.starboard.b2b.web.form.user.UserRegisterForm;
 import com.starboard.b2b.web.form.user.UserSearchForm;
 
@@ -58,4 +60,55 @@ public class BackendUserController {
 		model.addAttribute("resultPage", userService.search(form));
 		return "pages-back/user/search";
 	}
+
+	@RequestMapping(value = "/edit-staff", method = RequestMethod.GET)
+	String editStaff(@RequestParam("userId") Integer userId, Model model) {
+		log.info("Edit staff id: " + userId);
+
+		User user = userService.findUserById(userId);
+
+		UserRegisterForm form = new UserRegisterForm();
+		form.setUserId(userId);
+		form.setEmail(user.getEmail());
+		form.setName(user.getName());
+		form.setUsername(user.getUsername());
+		form.setEnable(user.isEnabled());
+		model.addAttribute("registerForm", form);
+
+		return "pages-back/user/edit-staff";
+	}
+
+	@RequestMapping(value = "/edit-staff", method = RequestMethod.POST)
+	String editStaff(@ModelAttribute("registerForm") UserRegisterForm form, BindingResult binding, Model model) {
+		log.info("Edit staff id: " + form.getUserId());
+
+		if (!binding.hasErrors()) {
+			if (!form.getPassword().trim().equals(form.getConfirmPassword())) {
+				model.addAttribute("errorMsg", "Password does not match with Confirm Password.");
+				return "pages-back/user/edit-staff";
+			}
+
+			User user = userService.findUserById(form.getUserId());
+
+			if (user.getUsername().equals(form.getUsername()) || !userService.isExistUsername(form.getUsername())) {
+				UserForm userForm = new UserForm();
+
+				userForm.setUsername(form.getUsername());
+				userForm.setPassword(form.getPassword());
+				userForm.setEnable(form.getEnable());
+				userForm.setId(form.getUserId().toString());
+				userForm.setEnable(form.getEnable());
+				userForm.setEmail(form.getEmail());
+				userForm.setName(form.getName());
+
+				userService.update(userForm);
+				return searchForm(model);
+			} else {
+				model.addAttribute("errorMsg", "Exist username: " + form.getUsername());
+			}
+		}
+
+		return "pages-back/user/edit-staff";
+	}
+
 }

@@ -73,11 +73,12 @@
 						<thead>
 							<tr>
 								<th width="5%">No.</th>
-								<th>User Name</th>
-								<th>Active</th>
-								<th>Staff</th>
-								<th>Company</th>
-								<th>Active Timle</th>
+								<th width="15%">User Name</th>
+								<th width="20%">Email</th>
+								<th width="5%">Active</th>
+								<th width="5%">Staff</th>
+								<th width="35%">Company</th>
+								<th width="15%">Active Timle</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -100,6 +101,7 @@
 											onclick="editUser('${ user.customer.custId}', ${user.id })">
 											<td>${ rowBegin + (rowNum.index + 1) }</td>
 											<td>${user.name }</td>
+											<td>${ user.email }</td>
 											<td><c:choose>
 													<c:when test="${user.enabled }">Yes</c:when>
 													<c:otherwise>No</c:otherwise>
@@ -132,12 +134,13 @@
 
 	<script type="text/javascript">
 		function editUser(custId, userId) {
-			if (custId) {
-				window.location.href = '<c:url value="/backend/customer/edituser" />?userId='
-						+ userId;
-			}else{
-				showDialog('Not implement yet for Staff');
+			var baseUrl = '<c:url value="/backend/customer/edituser" />';
+			
+			if (!custId) {
+				baseUrl = '<c:url value="/backend/user/edit-staff" />';
 			}
+			
+			window.location.href = baseUrl + '?userId=' + userId;
 		}
 	</script>
 </body>
