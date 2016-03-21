@@ -10,7 +10,6 @@ public class UserRegisterForm {
 	private String name;
 	@NotEmpty(message = "Username is required")
 	private String username;
-	@NotEmpty(message = "Password is required")
 	private String password;
 	private String confirmPassword;
 	private String email;

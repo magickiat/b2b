@@ -1,5 +1,7 @@
 package com.starboard.b2b.web.controller.backend;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +81,7 @@ public class BackendUserController {
 	}
 
 	@RequestMapping(value = "/edit-staff", method = RequestMethod.POST)
-	String editStaff(@ModelAttribute("registerForm") UserRegisterForm form, BindingResult binding, Model model) {
+	String editStaff(@Valid @ModelAttribute("registerForm") UserRegisterForm form, BindingResult binding, Model model) {
 		log.info("Edit staff id: " + form.getUserId());
 
 		if (!binding.hasErrors()) {
