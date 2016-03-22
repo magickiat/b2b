@@ -40,7 +40,7 @@
 					<a href='<c:url value="/backend/user/search" />'>User management</a>
 				</li>
 				<li>
-					<a href="#">My Information</a>
+					<a href='<c:url value="/backend/user/info" />'>My Information</a>
 				</li>
 
 			</ul>

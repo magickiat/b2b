@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.SecurityService;
 import com.starboard.b2b.service.UserService;
+import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.user.UserForm;
 import com.starboard.b2b.web.form.user.UserRegisterForm;
 import com.starboard.b2b.web.form.user.UserSearchForm;
@@ -113,4 +114,9 @@ public class BackendUserController {
 		return "pages-back/user/edit-staff";
 	}
 
+	@RequestMapping("/info")
+	String myInformation(Model model) {
+		model.addAttribute("user", UserUtil.getCurrentUser());
+		return "pages-back/user/info";
+	}
 }
