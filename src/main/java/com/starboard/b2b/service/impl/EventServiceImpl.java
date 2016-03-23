@@ -1,5 +1,16 @@
 package com.starboard.b2b.service.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.dao.EventDao;
@@ -11,17 +22,6 @@ import com.starboard.b2b.service.EventService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.event.EventForm;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  *
@@ -37,7 +37,8 @@ public class EventServiceImpl implements EventService {
     @Autowired
 	private ApplicationConfig applicationConfig;
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public List<EventDTO> list() {
         return copyEventToDTO(eventDao.list());
     }

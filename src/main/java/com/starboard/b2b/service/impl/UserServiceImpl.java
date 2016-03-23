@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.starboard.b2b.common.Page;
 import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.dao.CustDao;
 import com.starboard.b2b.dao.UserDao;
@@ -99,16 +100,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public boolean update(UserForm userForm) {
-		
+
 		User user = userDao.findById(Integer.parseInt(userForm.getId()));
 		user.setName(userForm.getName());
 		user.setUsername(userForm.getUsername());
-		user.setEmail(userForm.getEmail());		
+		user.setEmail(userForm.getEmail());
 		user.setEnabled(userForm.isEnable());
-		if(StringUtils.isNotEmpty(userForm.getPassword())){
+		if (StringUtils.isNotEmpty(userForm.getPassword())) {
 			user.setPassword(new MD5().encode(userForm.getPassword()));
 		}
-		
+
 		return true;
 	}
 
@@ -120,21 +121,32 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public SearchResult<UserDTO> search(UserSearchForm form) {
+	public Page<UserDTO> search(UserSearchForm form) {
 		SearchRequest<UserSearchForm> req = new SearchRequest<>(form.getPage(), applicationConfig.getPageSize());
 		req.setCondition(form);
-		return userDao.search(req);
+		SearchResult<UserDTO> result = userDao.search(req);
+
+		// ----- prepare result page -----
+		Page<UserDTO> page = new Page<>();
+		page.setCurrent(req.getPage());
+		page.setResult(result.getResult());
+		page.setPageSize(req.getPageSize());
+		page.setTotal(result.getTotal());
+		
+		log.info("total = " + result.getTotal() + "\tPage size: " + req.getPageSize());
+
+		return page;
 	}
-	
+
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public boolean delete(UserForm userForm) {
 		boolean isSuccess = false;
 		User user = userDao.findById(Integer.parseInt(userForm.getId()));
-		try{
+		try {
 			userDao.delete(user);
 			isSuccess = true;
-		}catch(Exception e){
+		} catch (Exception e) {
 			isSuccess = false;
 		}
 		return isSuccess;

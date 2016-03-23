@@ -4,6 +4,8 @@ package com.starboard.b2b.dto;
 import java.util.Date;
 import java.util.List;
 
+import com.starboard.b2b.model.Contact;
+
 public class CustDTO {
 	private long custId;
 	private String custCode;
@@ -18,6 +20,9 @@ public class CustDTO {
 	private Date timeUpdate;
 	
 	private List<AddressDTO> addressList;
+	private List<ContactDTO> contacts; 
+	private AddressDTO contactAddress;
+	private CountryDTO country;
 
 	public long getCustId() {
 		return custId;
@@ -113,6 +118,30 @@ public class CustDTO {
 
 	public void setAddressList(List<AddressDTO> addressList) {
 		this.addressList = addressList;
+	}
+
+	public List<ContactDTO> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(List<ContactDTO> contacts) {
+		this.contacts = contacts;
+	}
+
+	public AddressDTO getContactAddress() {
+		return contactAddress;
+	}
+
+	public void setContactAddress(AddressDTO contactAddress) {
+		this.contactAddress = contactAddress;
+	}
+
+	public CountryDTO getCountry() {
+		return country;
+	}
+
+	public void setCountry(CountryDTO country) {
+		this.country = country;
 	}
 
 }

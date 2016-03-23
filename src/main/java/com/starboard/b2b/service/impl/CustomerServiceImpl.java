@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.dao.AddrDao;
@@ -187,12 +188,23 @@ public class CustomerServiceImpl implements CustomerService {
 		for (Cust cust : searchResult.getResult()) {
 			CustDTO dto = new CustDTO();
 			BeanUtils.copyProperties(cust, dto);
-			result.add(dto);
-		}
 
-		// ----- set address -----
-		for (CustDTO cust : result) {
-			cust.setAddressList(findAddressByCustomerId(cust.getCustId()));
+			dto.setAddressList(findAddressByCustomerId(cust.getCustId()));
+			dto.setContacts(findContactByCustomerId(cust.getCustId()));
+
+			// ----- Find contact dto for show ----- 
+			
+			if (dto.getAddressList() != null && dto.getAddressList().size() > 0) {
+				
+				for(AddressDTO addr : dto.getAddressList()){
+					if(addr.getType().equals(Long.toString(AddressConstant.USER_INVOICE_TO))){
+						dto.setContactAddress(addr);
+						break;
+					}
+				}
+			}
+
+			result.add(dto);
 		}
 
 		// ----- prepare result page -----
@@ -209,10 +221,10 @@ public class CustomerServiceImpl implements CustomerService {
 	@Transactional(readOnly = true)
 	public CustDTO findCustById(Long custId) {
 		log.info("findCustById " + custId);
-		
+
 		Cust cust = custDao.findById(custId);
-		if(cust == null){
-			throw new B2BException("Cannot found customer id " + custId );
+		if (cust == null) {
+			throw new B2BException("Cannot found customer id " + custId);
 		}
 		CustDTO dto = new CustDTO();
 		BeanUtils.copyProperties(cust, dto);

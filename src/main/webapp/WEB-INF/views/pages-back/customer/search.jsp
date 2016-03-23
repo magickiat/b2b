@@ -10,19 +10,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<%@include file="/WEB-INF/views/include/common_meta.jspf" %>
-	<title><spring:message code="page.header"></spring:message></title>
-	<%@include file="/WEB-INF/views/include/common_cssbackend.jspf"%>
+<%@include file="/WEB-INF/views/include/common_meta.jspf"%>
+<title><spring:message code="page.header"></spring:message></title>
+<%@include file="/WEB-INF/views/include/common_cssbackend.jspf"%>
 </head>
 <body>
 
 	<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
-	
+
 	<div class="container">
-	
-	
+
+
 		<div class="col-md-12">
-	
+
 			<div class="row">
 				<div class="col-md-12 bg_color">
 					<div class="row row-header2 header2 txtupper">Search Customer</div>
@@ -36,18 +36,19 @@
 					</div> --%>
 					<div class="row"></div>
 					<%-- Search condition --%>
-					<div class="" style="margin-top : 10px;">
-			
+					<div class="" style="margin-top: 10px;">
+
 						<%-- form name must be "searchForm" --%>
 						<form:form name="searchForm"
 							servletRelativeAction="/backend/customer/search"
-							modelAttribute="searchForm" cssClass="form-horizontal" method="GET">
-			
+							modelAttribute="searchForm" cssClass="form-horizontal"
+							method="GET">
+
 							<form:errors path="*" cssClass="alert alert-danger" element="div" />
-							
+
 							<%-- for paging --%>
 							<form:hidden path="page" />
-							
+
 							<div class="col-md-3">
 								<div class="form-group">
 									<label class="col-sm-3 control-label">SEARCH:</label>
@@ -56,7 +57,7 @@
 									</div>
 								</div>
 							</div>
-							
+
 							<div class="col-md-3">
 								<div class="">
 									<form:select path="selectedBrand" cssClass="form-control"
@@ -67,7 +68,7 @@
 									</form:select>
 								</div>
 							</div>
-			
+
 							<div class="col-md-3">
 								<div class="">
 									<form:select path="selectedCountry" cssClass="form-control"
@@ -78,52 +79,53 @@
 									</form:select>
 								</div>
 							</div>
-			
+
 							<div class="col-md-3">
-								<button class="btn btn-success pull-right" onclick="submitForm()"
-									style="width: 100px;">Search</button>
-									
-								<button class="btn btn-default pull-right" onclick="exportExcel()"
+								<button class="btn btn-success pull-right"
+									onclick="submitForm()" style="width: 100px;">Search</button>
+
+								<button class="btn btn-default pull-right"
+									onclick="exportExcel()"
 									style="width: 100px; margin-right: 10px;">Excel</button>
 							</div>
-							
+
 						</form:form>
-			
+
 					</div>
 				</div>
 			</div>
-	
-	
-			
-	
+
+
+
+
 			<div class="row">&nbsp;</div>
-	
+
 			<!-- Base URL for pagination -->
 			<c:set var="baseUrl" value="/backend/customer" />
 			<div class="row">
 				<%@include file="/WEB-INF/views/include/paging_submit.jspf"%>
 			</div>
-	
+
 			<div class="row bg_color showline2">
 				<div class="col-sm-12">
 					<table class="table table-hover" id="list_customer">
 						<thead>
 							<tr>
-								<th>No.</th>
-								<th>Code</th>
-								<th>Name</th>
-								<th>Country</th>
-								<th>Contact Person</th>
-								<th>Telephone</th>
-								<th>Email</th>
-								<th>Address</th>
+								<th width="5%">No.</th>
+								<th width="10%">Code</th>
+								<th width="20%">Name</th>
+								<th width="10%">Country</th>
+								<th width="10%">Contact Person</th>
+								<th width="10%">Telephone</th>
+								<th width="15%">Email</th>
+								<th width="20%">Address</th>
 							</tr>
 						</thead>
 						<tbody>
-	
+
 							<c:set var="rowBegin"
 								value="${ (( resultPage.current - 1) * resultPage.pageSize) }"></c:set>
-	
+
 							<c:forEach items="${resultPage.result }" var="customer"
 								varStatus="rowNum">
 								<c:url var="createUserUrl"
@@ -133,15 +135,31 @@
 									<td>${ rowBegin + (rowNum.index + 1) }</td>
 									<td>${customer.custCode }</td>
 									<td>${customer.nameEn }</td>
-									<td>Country</td>
-									<td>Contact Person</td>
-									<td>Telephone</td>
-									<td>Email</td>
 									<td>
-	
+										<c:if test="${ not empty customer.contactAddress }">
+											<c:forEach items="${ searchForm.countryList }" var="country">
+												<c:if
+													test="${ customer.contactAddress.regionCountryId == country.countryCode }">
+													<c:set var="addr" value="${ addr }" />
+															${ country.countryName }</c:if>
+											</c:forEach>
+										</c:if>
+									</td>
+									<td>
+										<c:if test="${ not empty customer.contacts }">
+											${ customer.contacts[0].nameEn }
+										</c:if>
+									</td>
+									<td>
+										<c:if test="${ not empty customer.contactAddress }">${ customer.contactAddress.tel1 }</c:if>
+									</td>
+									<td>
+										<c:if test="${ not empty customer.contactAddress }">${ customer.contactAddress.email }</c:if>
+									</td>
+									<td>
 										<c:if test="${ not empty customer.addressList}">
 											<c:choose>
-	
+
 												<c:when
 													test="${ fn:length(customer.addressList[0].address) gt 30 }">
 													<span title="${ customer.addressList[0].address }">${ fn:substring( customer.addressList[0].address, 0, 30 ) }...</span>
@@ -150,9 +168,8 @@
 													${ customer.addressList[0].address }
 												</c:otherwise>
 											</c:choose>
-	
+
 										</c:if>
-	
 									</td>
 								</tr>
 							</c:forEach>
@@ -160,7 +177,7 @@
 					</table>
 				</div>
 			</div>
-	
+
 			<%-- Under list pageing --%>
 			<div class="row">
 				<%@include file="/WEB-INF/views/include/paging_submit.jspf"%>
