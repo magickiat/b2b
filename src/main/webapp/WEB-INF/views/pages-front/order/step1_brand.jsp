@@ -31,7 +31,7 @@
 						<c:forEach items="${ brandGroupList }" var="brand" varStatus="rowCount">
 							<!-- Brand Logo -->
 							<div class="col-md-3">
-								<a href='<c:url value="/frontend/order/step2/index?brand_id=${ brand.brandGroupId }" />'>
+								<%-- <a href='<c:url value="/frontend/order/step2/index?brand_id=${ brand.brandGroupId }" />'>
 									<c:choose>
 										<c:when test="${brand.brandGroupId == 10}">
 											<img alt="starboard" src='<c:url value="/upload/brand/logo/starboard.png" />'
@@ -53,7 +53,34 @@
 												onerror="getDefaultFileImageName(this)" class="default-thumbnail" />
 										</c:when>
 									</c:choose>
-								</a>
+								</a> --%>
+
+
+								<c:choose>
+									<c:when test="${brand.brandGroupId == 10}">
+										<a href='<c:url value="/frontend/order/step2/index?brand_id=${ brand.brandGroupId }" />'>
+											<img alt="starboard" src='<c:url value="/upload/brand/logo/starboard.png" />'
+												id="starboardicon" onerror="getDefaultFileImageName(this)" class="default-thumbnail" />
+										</a>
+									</c:when>
+
+									<c:when test="${brand.brandGroupId == 30}">
+										<img alt="airush" src='<c:url value="/upload/brand/logo/airush.png" />' id="airushicon"
+											onerror="getDefaultFileImageName(this)" class="default-thumbnail" />
+									</c:when>
+
+									<c:when test="${brand.brandGroupId == 40}">
+										<img alt="severne" src='<c:url value="/upload/brand/logo/severne.png" />' id="severneicon"
+											onerror="getDefaultFileImageName(this)" class="default-thumbnail" />
+									</c:when>
+
+									<c:when test="${brand.brandGroupId == 50}">
+										<img alt="drake" src='<c:url value="/upload/brand/logo/drake.png" />' id="drake"
+											onerror="getDefaultFileImageName(this)" class="default-thumbnail" />
+									</c:when>
+								</c:choose>
+
+
 							</div>
 
 

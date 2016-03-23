@@ -1,0 +1,10 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page session="true"%>
+
+<div class="col-md-12">
+	<div class="row showline2">
+		<div class="col-md-12 bg_color">
+			<div class="row row-header2 header2 txtupper">under construction</div>
+		</div>
+	</div>
+</div>

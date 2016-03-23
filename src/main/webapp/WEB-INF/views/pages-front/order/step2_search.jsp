@@ -83,22 +83,22 @@
 							<div class="row">
 								<div class="col-md-3">&nbsp;</div>
 								<div class="col-md-2">
-									<div class="form-group">
+									<%-- <div class="form-group">
 										<form:select path="selectedYear" cssClass="form-control" multiple="false">
 											<form:option value="" label="ALL YEAR" />
 											<form:options items="${productYear}" itemLabel="productYearName" itemValue="productYearId" />
 										</form:select>
-									</div>
+									</div> --%>
 								</div>
 	
 								<div class="col-md-2">
-									<div class="form-group">
+									<%-- <div class="form-group">
 										<form:select path="selectedTechnology" cssClass="form-control" multiple="false">
 											<form:option value="" label="ALL TECHNOLOGY" />
 											<form:options items="${productTechnology}" itemLabel="productTechnologyName"
 												itemValue="productTechnologyId" />
 										</form:select>
-									</div>
+									</div> --%>
 								</div>
 	
 								<div class="col-md-2"></div>

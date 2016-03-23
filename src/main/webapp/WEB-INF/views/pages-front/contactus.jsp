@@ -12,6 +12,10 @@
 	<%@include file="/WEB-INF/views/pages-front/include/common_header.jspf"%>
 
 	<div class="container">
+	
+	<%@include file="/WEB-INF/views/under-construction.jspf" %>
+	
+	<%-- 
 		<div class="col-sm-12 bg_color showline2">
 
 			<div class="row row-header2 header2 txtupper">Contact Us</div>
@@ -72,7 +76,7 @@
 
 			</div>
 		</div>
-
+ --%>
 
 	</div>
 
