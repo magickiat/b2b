@@ -1,8 +1,14 @@
 package com.starboard.b2b.web.controller.backend;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +28,7 @@ import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.service.ProductService;
+import com.starboard.b2b.util.B2BFileUtil;
 import com.starboard.b2b.util.ExcelUtil;
 import com.starboard.b2b.web.form.product.SearchProductForm;
 
@@ -75,6 +82,39 @@ public class BackendProductController {
 		model.addAttribute("resultPage", searchProduct);
 		model.addAttribute("searchForm", searchForm);
 		return "pages-back/product/index";
+	}
+
+	@RequestMapping(value = "/download", method = RequestMethod.GET)
+	String download(HttpServletRequest req, HttpServletResponse response) throws Exception{
+		
+		String filename = "product.xlsx";
+		XSSFWorkbook workbook = B2BFileUtil.createExcelProduct(productService);
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ServletOutputStream os = response.getOutputStream();
+		try{
+			workbook.write(baos);
+			workbook.close();
+			
+			// Set servlet response excel
+			response.setContentLength(baos.size());
+			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+			response.setHeader("Cache-Control", "cache, must-revalidate");
+	        response.setHeader("Pragma", "public");
+			
+			
+			baos.writeTo(os);
+			
+		}catch(Exception e){
+			log.error(e.toString(), e);
+		} finally {
+			os.flush();
+			os.close();
+			baos.close();
+		}
+
+		return null;
 	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.GET)

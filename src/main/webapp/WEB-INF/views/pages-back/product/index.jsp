@@ -22,7 +22,7 @@
 				<div class="col-md-12 bg_color">
 					<div class="col-md-6 row row-header2 header2 txtupper">Products</div>
 					<div class="" style="margin-top: 15px;">
-						<a href='<c:url value="/upload/product/product.xlsx" />'
+						<a href='<c:url value="/backend/product/download" />'
 							class="pull-right btn btn-primary">Download Template</a>
 						<form id="uploadForm"
 							action='<c:url value="/backend/product/upload" />' method="get">

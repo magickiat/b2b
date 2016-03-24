@@ -23,4 +23,6 @@ public interface B2BConstant {
 	String PRODUCT_IMAGE_THUMBNAIL = "Thumbnail";
 
 	String UNDEFINED = "Undefined";
+
+	int SEARCH_ALL = -1;
 }

@@ -32,4 +32,6 @@ public interface ProductDao {
 	void merge(Product product);
 
 	boolean delete(long productId);
+
+	List<SearchProductModelDTO> findAll();
 }

@@ -85,4 +85,8 @@ public interface ProductService {
 
 	List<Product> findProductByBrandId(Long brandGroupId);
 
+	List<SearchProductModelDTO> searchProductForReport(SearchProductForm form, Long custId);
+
+	List<SearchProductModelDTO> findAllProduct();
+
 }

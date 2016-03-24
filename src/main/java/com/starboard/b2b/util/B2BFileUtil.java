@@ -17,6 +17,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +28,7 @@ import com.starboard.b2b.dto.B2BFile;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
+import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.model.Product;
 import com.starboard.b2b.service.OrderService;
@@ -153,6 +157,56 @@ public class B2BFileUtil {
 		}
 
 		return ArchiveUtil.zipExcel(excelMap);
+	}
+
+	public static XSSFWorkbook createExcelProduct(ProductService productService) {
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		// ----- Create header row sheet -----
+		XSSFSheet productSheet = workbook.createSheet("product");
+		XSSFRow rowHead = productSheet.createRow(0);
+		rowHead.createCell(0).setCellValue("product_type_id");
+		rowHead.createCell(1).setCellValue("product_code");
+		rowHead.createCell(2).setCellValue("product_name");
+		rowHead.createCell(3).setCellValue("product_buyer_group_id");
+		rowHead.createCell(4).setCellValue("product_model_id");
+		rowHead.createCell(5).setCellValue("product_technology_id");
+		rowHead.createCell(6).setCellValue("size");
+		rowHead.createCell(7).setCellValue("active");
+		rowHead.createCell(8).setCellValue("PRIMARYVENDORID");
+		rowHead.createCell(9).setCellValue("category");
+		
+		List<SearchProductModelDTO> searchProduct = productService.findAllProduct();
+		if(searchProduct != null && !searchProduct.isEmpty()){
+			int row = 1;
+			for (SearchProductModelDTO product : searchProduct) {
+				XSSFRow detailRow = productSheet.createRow(row++);
+				detailRow.createCell(0).setCellValue("");
+				detailRow.createCell(1).setCellValue(product.getProductCode());
+				detailRow.createCell(2).setCellValue("");
+				detailRow.createCell(3).setCellValue("");
+				detailRow.createCell(4).setCellValue("");
+				detailRow.createCell(5).setCellValue("");
+				detailRow.createCell(6).setCellValue("");
+				detailRow.createCell(7).setCellValue("");
+				detailRow.createCell(8).setCellValue("");
+				detailRow.createCell(9).setCellValue("");
+			}
+		}
+		
+
+		// ----- resize column -----
+		productSheet.autoSizeColumn(0);
+		productSheet.autoSizeColumn(1);
+		productSheet.autoSizeColumn(2);
+		productSheet.autoSizeColumn(3);
+		productSheet.autoSizeColumn(4);
+		productSheet.autoSizeColumn(5);
+		productSheet.autoSizeColumn(6);
+		productSheet.autoSizeColumn(7);
+		productSheet.autoSizeColumn(8);
+		productSheet.autoSizeColumn(9);
+
+		return workbook;
 	}
 
 	public static HSSFWorkbook createExcelOrder(Long[] orderId, OrderService orderService) {

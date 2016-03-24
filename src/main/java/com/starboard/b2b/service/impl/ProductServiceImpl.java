@@ -208,7 +208,6 @@ public class ProductServiceImpl implements ProductService {
 		// Find product model
 		SearchResult<SearchProductModelDTO> result = productDao.searchProductForFrontend(req, custId);
 
-		// Validate has image exist
 		List<SearchProductModelDTO> resultList = result.getResult();
 		log.info("resultList size: " + (resultList == null ? 0 : resultList.size()));
 
@@ -644,6 +643,24 @@ public class ProductServiceImpl implements ProductService {
 		}
 
 		return result;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<SearchProductModelDTO> searchProductForReport(SearchProductForm form, Long custId) {
+		SearchRequest<SearchProductForm> req = new SearchRequest<>(0, B2BConstant.SEARCH_ALL);
+		req.setCondition(form);
+
+		SearchResult<SearchProductModelDTO> result = productDao.searchProductForFrontend(req, custId);
+
+		return result.getResult();
+		
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<SearchProductModelDTO> findAllProduct() {
+		return productDao.findAll();
 	}
 
 }

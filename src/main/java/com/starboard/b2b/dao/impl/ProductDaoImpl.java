@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.starboard.b2b.common.B2BConstant;
 import com.starboard.b2b.dao.ProductDao;
 import com.starboard.b2b.dto.ProductSearchResult;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
@@ -52,9 +53,9 @@ public class ProductDaoImpl implements ProductDao {
 
 		// common query
 		StringBuffer sb = new StringBuffer();
-		sb.append("FROM Product p, ProductBuyerGroup pbg, ProductModel m where p.productBuyerGroupId = pbg.productBuyerGroupId ");
+		sb.append("FROM Product p, ProductModel m where ");
 
-		sb.append("and p.productModelId = m.productModelId ");
+		sb.append(" p.productModelId = m.productModelId ");
 		sb.append("and p.isActive = 1 ");
 
 		SearchProductForm condition = req.getCondition();
@@ -99,7 +100,7 @@ public class ProductDaoImpl implements ProductDao {
 		if ("image".equals(req.getCondition().getShowType())) {
 			sb.append(" GROUP BY p.productModelId ");
 		}
-		sb.append(" ORDER BY pbg.seq, p.productNameEn ");
+		sb.append(" ORDER BY p.productCode ");
 		sbQuery.append(sb);
 
 		// create query and set parameter
@@ -143,7 +144,11 @@ public class ProductDaoImpl implements ProductDao {
 		}
 		// query
 		Object total = queryTotal.uniqueResult();
-		List list = query.setFirstResult(req.getFirstResult()).setMaxResults(req.getPageSize()).list();
+
+		if (req.getPageSize() != B2BConstant.SEARCH_ALL) {
+			query.setFirstResult(req.getFirstResult()).setMaxResults(req.getPageSize());
+		}
+		List list = query.list();
 
 		SearchResult<SearchProductModelDTO> result = new SearchResult<>();
 		result.setTotal(total == null ? 0 : (long) total);
@@ -237,9 +242,9 @@ public class ProductDaoImpl implements ProductDao {
 
 		// common query
 		StringBuffer sb = new StringBuffer();
-		sb.append("FROM Product p, ProductBuyerGroup pbg, ProductModel m where p.productBuyerGroupId = pbg.productBuyerGroupId ");
+		sb.append("FROM Product p, ProductModel m ");
 
-		sb.append("and p.productModelId = m.productModelId ");
+		sb.append("where p.productModelId = m.productModelId ");
 
 		SearchProductForm condition = req.getCondition();
 		if (condition != null) {
@@ -280,7 +285,7 @@ public class ProductDaoImpl implements ProductDao {
 		if ("image".equals(req.getCondition().getShowType())) {
 			sb.append(" GROUP BY p.productModelId ");
 		}
-		sb.append(" ORDER BY pbg.seq, p.productNameEn ");
+		sb.append(" ORDER BY p.productCode ");
 		sbQuery.append(sb);
 
 		// create query and set parameter
@@ -336,12 +341,34 @@ public class ProductDaoImpl implements ProductDao {
 	public boolean delete(long productId) {
 		Session session = sf.getCurrentSession();
 		Product product = (Product) session.get(Product.class, productId);
-		if(product == null){
+		if (product == null) {
 			return false;
-		}else{
+		} else {
 			session.delete(product);
 			return true;
 		}
-		
+
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<SearchProductModelDTO> findAll() {
+		StringBuilder sbQuery = new StringBuilder(
+				"SELECT new com.starboard.b2b.dto.search.SearchProductModelDTO(p.productId, p.productCode, p.productPictureMedium, p.productModelId, m.productModelName, p.productNameEn, p.productPrice, p.productUnitId, p.productCurrency, m.image, p.productPreintro) ");
+
+		// common query
+		StringBuffer sb = new StringBuffer();
+		sb.append("FROM Product p,  ProductModel m  ");
+
+		sb.append("where p.productModelId = m.productModelId ");
+
+		sb.append(" ORDER BY p.productCode ");
+		sbQuery.append(sb);
+
+		// create query and set parameter
+		Query query = sf.getCurrentSession().createQuery(sbQuery.toString());
+
+		return query.list();
+
 	}
 }
