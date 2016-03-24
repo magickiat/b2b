@@ -42,8 +42,7 @@ public class ProductDaoImpl implements ProductDao {
 	@Transactional(readOnly = true)
 	public SearchResult<SearchProductModelDTO> searchProductForFrontend(SearchRequest<SearchProductForm> req, Long custId) {
 
-		StringBuilder sbQuery = new StringBuilder(
-				"SELECT new com.starboard.b2b.dto.search.SearchProductModelDTO(p.productId, p.productCode, p.productPictureMedium, p.productModelId, m.productModelName, p.productNameEn, p.productPrice, p.productUnitId, p.productCurrency, m.image, p.productPreintro) ");
+		StringBuilder sbQuery = new StringBuilder("SELECT " + getSearchProductConstructor());
 		StringBuilder sbTotal = new StringBuilder("");
 		if ("image".equals(req.getCondition().getShowType())) {
 			sbTotal.append(" select count(distinct p.productModelId) ");
@@ -231,8 +230,7 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public SearchResult<SearchProductModelDTO> searchProductForBackend(SearchRequest<SearchProductForm> req) {
 
-		StringBuilder sbQuery = new StringBuilder(
-				"SELECT new com.starboard.b2b.dto.search.SearchProductModelDTO(p.productId, p.productCode, p.productPictureMedium, p.productModelId, m.productModelName, p.productNameEn, p.productPrice, p.productUnitId, p.productCurrency, m.image, p.productPreintro, p.isActive, p.productTechnologyId, p.productYearId) ");
+		StringBuilder sbQuery = new StringBuilder("SELECT  " + getSearchProductConstructor());
 		StringBuilder sbTotal = new StringBuilder("");
 		if ("image".equals(req.getCondition().getShowType())) {
 			sbTotal.append(" select count(distinct p.productModelId) ");
@@ -337,6 +335,12 @@ public class ProductDaoImpl implements ProductDao {
 		return result;
 	}
 
+	private String getSearchProductConstructor() {
+		return "new com.starboard.b2b.dto.search.SearchProductModelDTO(p.productId, p.productCode, p.productPictureMedium, "
+				+ "p.productModelId, m.productModelName, p.productNameEn, p.productPrice, p.productUnitId, p.productCurrency, "
+				+ "m.image, p.productPreintro, p.isActive, p.productTechnologyId, p.productYearId, p.productTypeId) ";
+	}
+
 	@Override
 	public boolean delete(long productId) {
 		Session session = sf.getCurrentSession();
@@ -353,8 +357,7 @@ public class ProductDaoImpl implements ProductDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<SearchProductModelDTO> findAll() {
-		StringBuilder sbQuery = new StringBuilder(
-				"SELECT new com.starboard.b2b.dto.search.SearchProductModelDTO(p.productId, p.productCode, p.productPictureMedium, p.productModelId, m.productModelName, p.productNameEn, p.productPrice, p.productUnitId, p.productCurrency, m.image, p.productPreintro) ");
+		StringBuilder sbQuery = new StringBuilder("SELECT " + getSearchProductConstructor());
 
 		// common query
 		StringBuffer sb = new StringBuffer();

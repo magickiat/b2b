@@ -180,7 +180,7 @@ public class B2BFileUtil {
 			int row = 1;
 			for (SearchProductModelDTO product : searchProduct) {
 				XSSFRow detailRow = productSheet.createRow(row++);
-				detailRow.createCell(0).setCellValue("");
+				detailRow.createCell(0).setCellValue(product.getProductTypeId());
 				detailRow.createCell(1).setCellValue(product.getProductCode());
 				detailRow.createCell(2).setCellValue("");
 				detailRow.createCell(3).setCellValue("");
