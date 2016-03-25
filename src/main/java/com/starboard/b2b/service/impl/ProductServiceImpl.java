@@ -507,7 +507,6 @@ public class ProductServiceImpl implements ProductService {
 
 					product.setProductModelId(importProduct.getProductModelId().trim());
 					product.setProductBuyerGroupId(importProduct.getProductBuyerGroupId().trim());
-					product.setProductCategoryId(importProduct.getProductModelId().trim());
 					
 					product.setProductYearId(importProduct.getProductYearId());
 
@@ -515,10 +514,6 @@ public class ProductServiceImpl implements ProductService {
 						log.info("save " + product.getProductCode());
 						productDao.save(product);
 					} 
-//					else {
-//						log.info("update " + product.getProductCode());
-//						productDao.merge(product);
-//					}
 				}
 			}
 		}

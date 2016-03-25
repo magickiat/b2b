@@ -184,12 +184,12 @@ public class B2BFileUtil {
 				detailRow.createCell(1).setCellValue(product.getProductCode());
 				detailRow.createCell(2).setCellValue(product.getProductNameEn());
 				detailRow.createCell(3).setCellValue(product.getProductBuyerGroupId());
-				detailRow.createCell(4).setCellValue(product.getProductModelId());
+				detailRow.createCell(4).setCellValue(Long.valueOf(product.getYear()));
 				detailRow.createCell(5).setCellValue(product.getProductTechnologyId());
 				detailRow.createCell(6).setCellValue(product.getProductLength());
-				detailRow.createCell(7).setCellValue(product.getIsActive());
+				detailRow.createCell(7).setCellValue(Long.parseLong(product.getIsActive()));
 				detailRow.createCell(8).setCellValue(product.getVendor());
-				detailRow.createCell(9).setCellValue(product.getProductCategoryId());
+				detailRow.createCell(9).setCellValue(product.getProductModelId());
 			}
 		}
 

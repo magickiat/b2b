@@ -191,7 +191,7 @@ public class ExcelUtil {
 					// --------------------------------------------------
 					if (cellActive != null) {
 //						active = "" + cellActive.getNumericCellValue();
-						if(cellActive.getNumericCellValue() == 1 || cellActive.getNumericCellValue() == 3){
+						if(isActive(cellActive)){
 							active = "1";
 						}
 					}else{
@@ -241,6 +241,10 @@ public class ExcelUtil {
 
 		result.trimToSize();
 		return result;
+	}
+
+	private static boolean isActive(Cell cellActive) {
+		return cellActive.getNumericCellValue() == 1 || cellActive.getNumericCellValue() == 3;
 	}
 
 	public static List<ProductPriceDTO> parseProductPrice(InputStream inputStream) throws Exception {
