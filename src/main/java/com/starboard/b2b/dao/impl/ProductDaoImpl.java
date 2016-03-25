@@ -339,7 +339,7 @@ public class ProductDaoImpl implements ProductDao {
 		return "new com.starboard.b2b.dto.search.SearchProductModelDTO(p.productId, p.productCode, p.productPictureMedium, "
 				+ "p.productModelId, m.productModelName, p.productNameEn, p.productPrice, p.productUnitId, p.productCurrency, "
 				+ "m.image, p.productPreintro, p.isActive, p.productTechnologyId, p.productYearId, p.productTypeId, p.productBuyerGroupId, "
-				+ "p.productLength, p.vendor, p.productCategoryId) ";
+				+ "p.productLength, p.vendor, p.productCategoryId, p.statusFlag) ";
 		
 	}
 

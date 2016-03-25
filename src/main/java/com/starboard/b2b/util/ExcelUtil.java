@@ -132,6 +132,7 @@ public class ExcelUtil {
 					String active = "0";
 					String year = "";
 					String vendor = null;
+					String statusFlag = null;
 
 					// ----- validate and get value -----
 					// --------------------------------------------------
@@ -191,6 +192,8 @@ public class ExcelUtil {
 					// --------------------------------------------------
 					if (cellActive != null) {
 //						active = "" + cellActive.getNumericCellValue();
+						statusFlag = "" + (int)cellActive.getNumericCellValue();
+						log.info("status flag = '" + statusFlag + "'");
 						if(isActive(cellActive)){
 							active = "1";
 						}
@@ -226,6 +229,7 @@ public class ExcelUtil {
 					product.setIsActive(active);
 					product.setProductYearId(StringUtils.trim(year));
 					product.setVendor(StringUtils.trim(vendor));
+					product.setStatusFlag(statusFlag);
 
 					log.info("productType = " + product.getProductTypeId() + "\tproductCode = " + product.getProductCode());
 					result.add(product);

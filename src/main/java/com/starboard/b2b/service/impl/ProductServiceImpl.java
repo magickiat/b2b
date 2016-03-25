@@ -503,17 +503,19 @@ public class ProductServiceImpl implements ProductService {
 					if (ProductUtils.isWithnoseProduct(product.getProductNameEn())) {
 						flagWithNoseProduct = B2BConstant.WITHNOSE_PROTECTION;
 					}
+					
 					product.setProductPreintro(flagWithNoseProduct);
-
 					product.setProductModelId(importProduct.getProductModelId().trim());
 					product.setProductBuyerGroupId(importProduct.getProductBuyerGroupId().trim());
-					
 					product.setProductYearId(importProduct.getProductYearId());
+					product.setStatusFlag(importProduct.getStatusFlag());
+					
+					
 
 					if (isNull) {
 						log.info("save " + product.getProductCode());
 						productDao.save(product);
-					} 
+					}
 				}
 			}
 		}
@@ -652,7 +654,7 @@ public class ProductServiceImpl implements ProductService {
 		SearchResult<SearchProductModelDTO> result = productDao.searchProductForFrontend(req, custId);
 
 		return result.getResult();
-		
+
 	}
 
 	@Override

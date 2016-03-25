@@ -58,6 +58,8 @@ public class ProductDTO implements Serializable {
 	private String productPictureMedium;
 	private String productPictureBig;
 	
+	private String statusFlag;
+	
 	public ProductDTO() {
 	}
 	
@@ -424,5 +426,13 @@ public class ProductDTO implements Serializable {
 
 	public void setProductPictureBig(String productPictureBig) {
 		this.productPictureBig = productPictureBig;
+	}
+
+	public String getStatusFlag() {
+		return statusFlag;
+	}
+
+	public void setStatusFlag(String statusFlag) {
+		this.statusFlag = statusFlag;
 	}
 }

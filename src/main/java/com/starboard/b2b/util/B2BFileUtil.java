@@ -187,7 +187,7 @@ public class B2BFileUtil {
 				detailRow.createCell(4).setCellValue(Long.valueOf(product.getYear()));
 				detailRow.createCell(5).setCellValue(product.getProductTechnologyId());
 				detailRow.createCell(6).setCellValue(product.getProductLength());
-				detailRow.createCell(7).setCellValue(Long.parseLong(product.getIsActive()));
+				detailRow.createCell(7).setCellValue(Long.parseLong(product.getStatusFlag()));
 				detailRow.createCell(8).setCellValue(product.getVendor());
 				detailRow.createCell(9).setCellValue(product.getProductModelId());
 			}

@@ -60,6 +60,8 @@ public class Product implements java.io.Serializable {
 	private String productUnitId;
 	private BigDecimal sortBy;
 	private String isActive;
+	// if flag is 1 or 3 must set "isActive" = 1
+	private String statusFlag; 
 	private String company;
 	private String soCategory;
 	private String productPictureSmallHorizontal;
@@ -582,6 +584,15 @@ public class Product implements java.io.Serializable {
 
 	public void setTimeUpdate(Date timeUpdate) {
 		this.timeUpdate = timeUpdate;
+	}
+
+	@Column(name = "status_flag", length = 1)
+	public String getStatusFlag() {
+		return statusFlag;
+	}
+
+	public void setStatusFlag(String statusFlag) {
+		this.statusFlag = statusFlag;
 	}
 
 }
