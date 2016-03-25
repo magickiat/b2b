@@ -24,7 +24,6 @@
 					<div class="row row-header2 header2">User</div>
 
 					<div>&nbsp;</div>
-
 					<div class="row">
 
 						<form:form id="searchForm" modelAttribute="searchForm"
@@ -41,14 +40,19 @@
 								</div>
 							</div>
 
-							<div class="col-md-6">
+							<div class="col-md-4">
 								<input type="submit" class="btn btn-success" value="Search" />
 							</div>
 						</form:form>
 
+						<div class="col-sm-2">
+							<a class="btn btn-success"
+								href='<c:url value="/backend/user/create-staff" />'>Create
+								Staff User</a>
+						</div>
 					</div>
 
-
+					<div>&nbsp;</div>
 
 				</div>
 				<%-- <div class="col-sm-2">
@@ -102,19 +106,27 @@
 											<td>${ rowBegin + (rowNum.index + 1) }</td>
 											<td>${user.name }</td>
 											<td>${ user.email }</td>
-											<td><c:choose>
+											<td>
+												<c:choose>
 													<c:when test="${user.enabled }">Yes</c:when>
 													<c:otherwise>No</c:otherwise>
-												</c:choose></td>
-											<td><c:choose>
+												</c:choose>
+											</td>
+											<td>
+												<c:choose>
 													<c:when test="${empty user.customer }">Yes</c:when>
 													<c:otherwise>No</c:otherwise>
-												</c:choose></td>
-											<td><c:if test="${not empty user.customer }">
+												</c:choose>
+											</td>
+											<td>
+												<c:if test="${not empty user.customer }">
 										${ user.customer.nameEn }
-										</c:if></td>
-											<td><fmt:formatDate pattern="dd-MM-yyyy HH:mm"
-													value="${user.lastActive }" /></td>
+										</c:if>
+											</td>
+											<td>
+												<fmt:formatDate pattern="dd-MM-yyyy HH:mm"
+													value="${user.lastActive }" />
+											</td>
 										</tr>
 									</c:forEach>
 								</c:otherwise>

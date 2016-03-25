@@ -25,4 +25,7 @@ public interface B2BConstant {
 	String UNDEFINED = "Undefined";
 
 	int SEARCH_ALL = -1;
+	
+	String ROLE_ADMIN = "ROLE_ADMIN";
+	String ROLE_USER = "ROLE_USER";
 }

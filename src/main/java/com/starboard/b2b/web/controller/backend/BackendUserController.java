@@ -1,5 +1,8 @@
 package com.starboard.b2b.web.controller.backend;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.starboard.b2b.common.B2BConstant;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.SecurityService;
 import com.starboard.b2b.service.UserService;
@@ -118,5 +122,26 @@ public class BackendUserController {
 	String myInformation(Model model) {
 		model.addAttribute("user", UserUtil.getCurrentUser());
 		return "pages-back/user/info";
+	}
+
+	@RequestMapping("/create-staff")
+	String createStaff(Model model) {
+		model.addAttribute("registerForm", new UserRegisterForm());
+		return "pages-back/user/create-staff";
+	}
+
+	@RequestMapping(value = "/create-staff", method = RequestMethod.POST)
+	String createStaff(@ModelAttribute("registerForm") @Valid UserRegisterForm registerForm, BindingResult binding, Model model) {
+		log.info("/create-staff POST");
+		if (binding.hasErrors()) {
+			model.addAttribute("registerForm", registerForm);
+			return "pages-back/user/create-staff";
+		}
+
+		Set<String> role = new HashSet<>();
+		role.add(B2BConstant.ROLE_ADMIN);
+		registerForm.setRoles(role);
+		userService.add(registerForm);
+		return searchForm(model);
 	}
 }
