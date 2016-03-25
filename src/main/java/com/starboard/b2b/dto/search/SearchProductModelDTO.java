@@ -18,10 +18,15 @@ public class SearchProductModelDTO {
 	private String productTechnologyId;
 	private String year;
 	private Long productTypeId;
+	private String productBuyerGroupId;
+	private String productLength;
+	private String vendor;
+	private String productCategoryId;
 
 	public SearchProductModelDTO(long productId, String productCode, String productPictureMedium, String productModelId, String productModelName,
 			String productNameEn, BigDecimal productPrice, String productUnitId, String productCurrency, String modelImage, String productPreintro,
-			String isActive, String productTechnologyId, String year, Long productTypeId) {
+			String isActive, String productTechnologyId, String year, Long productTypeId, String productBuyerGroupId, String productLength,
+			String vendor, String productCategoryId) {
 		this.productId = productId;
 		this.productCode = productCode;
 		this.productPictureMedium = productPictureMedium;
@@ -36,6 +41,10 @@ public class SearchProductModelDTO {
 		this.productTechnologyId = productTechnologyId;
 		this.year = year;
 		this.productTypeId = productTypeId;
+		this.productBuyerGroupId = productBuyerGroupId;
+		this.productLength = productLength;
+		this.vendor = vendor;
+		this.productCategoryId = productCategoryId;
 	}
 
 	public long getProductId() {
@@ -156,6 +165,38 @@ public class SearchProductModelDTO {
 
 	public void setProductTypeId(Long productTypeId) {
 		this.productTypeId = productTypeId;
+	}
+
+	public String getProductBuyerGroupId() {
+		return productBuyerGroupId;
+	}
+
+	public void setProductBuyerGroupId(String productBuyerGroupId) {
+		this.productBuyerGroupId = productBuyerGroupId;
+	}
+
+	public String getProductLength() {
+		return productLength;
+	}
+
+	public void setProductLength(String productLength) {
+		this.productLength = productLength;
+	}
+
+	public String getVendor() {
+		return vendor;
+	}
+
+	public void setVendor(String vendor) {
+		this.vendor = vendor;
+	}
+
+	public String getProductCategoryId() {
+		return productCategoryId;
+	}
+
+	public void setProductCategoryId(String productCategoryId) {
+		this.productCategoryId = productCategoryId;
 	}
 
 }

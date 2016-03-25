@@ -484,8 +484,6 @@ public class ProductServiceImpl implements ProductService {
 					} else {
 						product.setProductTypeId(importProduct.getProductTypeId());
 						product.setProductNameEn(importProduct.getProductNameEn());
-						product.setProductBuyerGroupId(importProduct.getProductBuyerGroupId());
-						product.setProductModelId(importProduct.getProductModelId());
 						product.setProductTechnologyId(importProduct.getProductTechnologyId());
 						product.setProductLength(importProduct.getProductLength());
 						product.setIsActive(importProduct.getIsActive());
@@ -507,15 +505,20 @@ public class ProductServiceImpl implements ProductService {
 					}
 					product.setProductPreintro(flagWithNoseProduct);
 
+					product.setProductModelId(importProduct.getProductModelId().trim());
+					product.setProductBuyerGroupId(importProduct.getProductBuyerGroupId().trim());
+					product.setProductCategoryId(importProduct.getProductModelId().trim());
+					
 					product.setProductYearId(importProduct.getProductYearId());
 
 					if (isNull) {
 						log.info("save " + product.getProductCode());
 						productDao.save(product);
-					} else {
-						log.info("update " + product.getProductCode());
-						productDao.merge(product);
-					}
+					} 
+//					else {
+//						log.info("update " + product.getProductCode());
+//						productDao.merge(product);
+//					}
 				}
 			}
 		}

@@ -174,25 +174,24 @@ public class B2BFileUtil {
 		rowHead.createCell(7).setCellValue("active");
 		rowHead.createCell(8).setCellValue("PRIMARYVENDORID");
 		rowHead.createCell(9).setCellValue("category");
-		
+
 		List<SearchProductModelDTO> searchProduct = productService.findAllProduct();
-		if(searchProduct != null && !searchProduct.isEmpty()){
+		if (searchProduct != null && !searchProduct.isEmpty()) {
 			int row = 1;
 			for (SearchProductModelDTO product : searchProduct) {
 				XSSFRow detailRow = productSheet.createRow(row++);
 				detailRow.createCell(0).setCellValue(product.getProductTypeId());
 				detailRow.createCell(1).setCellValue(product.getProductCode());
-				detailRow.createCell(2).setCellValue("");
-				detailRow.createCell(3).setCellValue("");
-				detailRow.createCell(4).setCellValue("");
-				detailRow.createCell(5).setCellValue("");
-				detailRow.createCell(6).setCellValue("");
-				detailRow.createCell(7).setCellValue("");
-				detailRow.createCell(8).setCellValue("");
-				detailRow.createCell(9).setCellValue("");
+				detailRow.createCell(2).setCellValue(product.getProductNameEn());
+				detailRow.createCell(3).setCellValue(product.getProductBuyerGroupId());
+				detailRow.createCell(4).setCellValue(product.getProductModelId());
+				detailRow.createCell(5).setCellValue(product.getProductTechnologyId());
+				detailRow.createCell(6).setCellValue(product.getProductLength());
+				detailRow.createCell(7).setCellValue(product.getIsActive());
+				detailRow.createCell(8).setCellValue(product.getVendor());
+				detailRow.createCell(9).setCellValue(product.getProductCategoryId());
 			}
 		}
-		
 
 		// ----- resize column -----
 		productSheet.autoSizeColumn(0);

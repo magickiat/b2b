@@ -194,43 +194,47 @@ public class OrderServiceImpl implements OrderService {
 		CustPriceGroupDTO custPriceGroup = customerService.findCustPriceGroup(user.getCustomer().getCustCode(), brandGroupId);
 
 		// Save Order Detail
-		Set<Long> keySet = cart.keySet();
-		for (Long key : keySet) {
-			ProductDTO product = cart.get(key);
+		if(cart != null && !cart.isEmpty()){
+			Set<Long> keySet = cart.keySet();
+			for (Long key : keySet) {
+				ProductDTO product = cart.get(key);
 
-			ProductPriceDTO productPrice = productPriceDao.findProductPrice(product.getProductCode(), brandGroupId, user);
-			// Default currency
-			if (productPrice != null) {
-				if (StringUtils.isEmpty(product.getProductCurrency())) {
-					String currency = productPrice.getProductCurrency();
-					if (StringUtils.isEmpty(currency)) {
-						currency = applicationConfig.getDefaultProductCurrency();
+				ProductPriceDTO productPrice = productPriceDao.findProductPrice(product.getProductCode(), brandGroupId, user);
+				// Default currency
+				if (productPrice != null) {
+					if (StringUtils.isEmpty(product.getProductCurrency())) {
+						String currency = productPrice.getProductCurrency();
+						if (StringUtils.isEmpty(currency)) {
+							currency = applicationConfig.getDefaultProductCurrency();
+						}
+						product.setProductCurrency(currency);
 					}
-					product.setProductCurrency(currency);
 				}
-			}
-			// Default product unit id
-			if (StringUtils.isEmpty(product.getProductUnitId())) {
-				product.setProductUnitId(applicationConfig.getDefaultProductUnit());
-			}
+				// Default product unit id
+				if (StringUtils.isEmpty(product.getProductUnitId())) {
+					product.setProductUnitId(applicationConfig.getDefaultProductUnit());
+				}
 
-			// ----- Create order detail-----
+				// ----- Create order detail-----
 
-			OrdDetail orderDetail = new OrdDetail();
-			orderDetail.setOrderId(orderId);
-			orderDetail.setProductId(product.getProductId());
-			orderDetail.setAmount(product.getProductQuantity());
-			if (productPrice != null && product.getProductQuantity() > 0) {
-				orderDetail.setPrice(productPrice.getAmount());
+				OrdDetail orderDetail = new OrdDetail();
+				orderDetail.setOrderId(orderId);
+				orderDetail.setProductId(product.getProductId());
+				orderDetail.setAmount(product.getProductQuantity());
+				if (productPrice != null && product.getProductQuantity() > 0) {
+					orderDetail.setPrice(productPrice.getAmount());
+				}
+				orderDetail.setStatus(applicationConfig.getDefaultOrderDetailStatus());
+				orderDetail.setProductCurrency(product.getProductCurrency());
+				orderDetail.setProductUnitId(product.getProductUnitId());
+				orderDetail.setProductBuyerGroupId(custPriceGroup.getProductBuyerGroupId());
+				orderDetail.setUserCreate(user.getUsername());
+				orderDetail.setTimeCreate(currentDate);
+
+				orderDetailDao.save(orderDetail);
 			}
-			orderDetail.setStatus(applicationConfig.getDefaultOrderDetailStatus());
-			orderDetail.setProductCurrency(product.getProductCurrency());
-			orderDetail.setProductUnitId(product.getProductUnitId());
-			orderDetail.setProductBuyerGroupId(custPriceGroup.getProductBuyerGroupId());
-			orderDetail.setUserCreate(user.getUsername());
-			orderDetail.setTimeCreate(currentDate);
-
-			orderDetailDao.save(orderDetail);
+		}else{
+			throw new B2BException("Can't create order without product");
 		}
 
 		// Save Order address
