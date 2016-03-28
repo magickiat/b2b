@@ -84,6 +84,8 @@ public interface ProductService {
 	void createNewModel(String modelId);
 
 	List<Product> findProductByBrandId(Long brandGroupId);
+	
+	List<Product> findProductByProductTypeId(Long productTypeId);
 
 	List<SearchProductModelDTO> searchProductForReport(SearchProductForm form, Long custId);
 

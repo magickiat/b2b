@@ -135,7 +135,7 @@ public class B2BFileUtil {
 			rowHeader.createCell(2).setCellValue("Unit");
 			rowHeader.createCell(3).setCellValue("Qty");
 
-			List<Product> products = productService.findProductByBrandId(brandGroupId);
+			List<Product> products = productService.findProductByProductTypeId(brand.getProductTypeId());
 
 			if (products.size() > 0) {
 				for (int i = 0; i < products.size(); i++) {

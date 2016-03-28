@@ -376,4 +376,13 @@ public class ProductDaoImpl implements ProductDao {
 		return query.list();
 
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Product> findByProductTypeId(Long productTypeId) {
+		String queryString = " from Product p";
+		queryString += " where p.productTypeId = :productTypeId";
+
+		return (List<Product>) sf.getCurrentSession().createQuery(queryString).setLong("productTypeId", productTypeId).list();
+	}
 }

@@ -34,4 +34,6 @@ public interface ProductDao {
 	boolean delete(long productId);
 
 	List<SearchProductModelDTO> findAll();
+
+	List<Product> findByProductTypeId(Long productTypeId);
 }

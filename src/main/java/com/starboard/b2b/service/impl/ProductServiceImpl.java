@@ -412,6 +412,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<ProductTypeDTO> getProductTypes(Long customerId, Long brandGroupId) {
+		log.info("getProductTypes\tcustomerId = " + customerId + "\tbrandGroupId = " + brandGroupId);
 		List<ProductType> types = productTypeDao.findByCustomerAndBrand(customerId, brandGroupId);
 		if (types == null || types.isEmpty()) {
 			return null;
@@ -661,6 +662,12 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional(readOnly = true)
 	public List<SearchProductModelDTO> findAllProduct() {
 		return productDao.findAll();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Product> findProductByProductTypeId(Long productTypeId) {
+		return productDao.findByProductTypeId(productTypeId);
 	}
 
 }
