@@ -40,6 +40,7 @@ import com.starboard.b2b.model.CustPriceGroup;
 import com.starboard.b2b.model.ProductType;
 import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.util.ApplicationConfig;
+import com.starboard.b2b.util.CustCodeUtil;
 import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.brand.BrandForm;
@@ -359,9 +360,13 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public CustPriceGroupDTO findCustPriceGroup(String custCode, long productType) {
-		CustPriceGroup priceGroup = custPriceGroupDao.findByCustCode(custCode, productType);
+		String custCodeWithoutCurrency = CustCodeUtil.getCustCodeWithoutCurrency(custCode);
+		log.info("Use customer code = " + custCodeWithoutCurrency);
+		CustPriceGroup priceGroup = custPriceGroupDao.findByCustCode(custCodeWithoutCurrency, productType);
 		CustPriceGroupDTO dto = new CustPriceGroupDTO();
-		BeanUtils.copyProperties(priceGroup, dto);
+		if(priceGroup != null){
+			BeanUtils.copyProperties(priceGroup, dto);
+		}
 		return dto;
 	}
 }

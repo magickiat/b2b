@@ -19,7 +19,7 @@ public class CustPriceGroupDaoImpl implements CustPriceGroupDao {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public CustPriceGroup findByCustCode(String custCode, long productType) {
-		List list = sessionFactory.getCurrentSession().createCriteria(CustPriceGroup.class).add(Restrictions.eq("custCode", custCode))
+		List list = sessionFactory.getCurrentSession().createCriteria(CustPriceGroup.class).add(Restrictions.like("custCode", custCode))
 				.add(Restrictions.eq("productTypeId", productType)).list();
 		if (list != null && list.size() > 0) {
 			return (CustPriceGroup) list.get(0);
