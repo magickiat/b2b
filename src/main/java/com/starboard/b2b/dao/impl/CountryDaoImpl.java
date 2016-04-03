@@ -18,7 +18,7 @@ public class CountryDaoImpl implements CountryDao {
 	@SuppressWarnings("unchecked")
 	public List<CountryDTO> findAll() {
 		return sf.getCurrentSession()
-				.createQuery("select new com.starboard.b2b.dto.CountryDTO(c.countryCode, c.countryName) from Country c")
+				.createQuery("select new com.starboard.b2b.dto.CountryDTO(c.countryCode, c.countryName) from Country c order by c.countryName")
 				.list();
 	}
 }

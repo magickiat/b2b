@@ -161,8 +161,8 @@
 											<c:choose>
 
 												<c:when
-													test="${ fn:length(customer.addressList[0].address) gt 30 }">
-													<span title="${ customer.addressList[0].address }">${ fn:substring( customer.addressList[0].address, 0, 30 ) }...</span>
+													test="${ fn:length(customer.addressList[0].address) gt 25 }">
+													<span title="${ customer.addressList[0].address }">${ fn:substring( customer.addressList[0].address, 0, 25 ) }...</span>
 												</c:when>
 												<c:otherwise>
 													${ customer.addressList[0].address }
