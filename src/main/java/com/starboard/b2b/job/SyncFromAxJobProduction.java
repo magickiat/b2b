@@ -12,7 +12,7 @@ public class SyncFromAxJobProduction {
 
 	private static final Logger log = LoggerFactory.getLogger(SyncFromAxJobProduction.class);
 
-	@Scheduled(cron = "0 0/5 * * * ?")
+//	@Scheduled(cron = "0 0/5 * * * ?")
 	public void doIt() {
 		log.info("Hello world");
 	}
