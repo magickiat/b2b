@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class ProductTypeDaoImpl implements ProductTypeDao {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<ProductType> findAll() {
-		return sf.getCurrentSession().createCriteria(ProductType.class).list();
+		return sf.getCurrentSession().createCriteria(ProductType.class).addOrder(Order.asc("productTypeName")).list();
 	}
 
 	@Override

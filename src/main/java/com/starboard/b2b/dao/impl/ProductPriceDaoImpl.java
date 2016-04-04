@@ -1,5 +1,7 @@
 package com.starboard.b2b.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,7 @@ import com.starboard.b2b.dto.ProductPriceDTO;
 import com.starboard.b2b.model.ProductPrice;
 import com.starboard.b2b.model.ProductPriceId;
 import com.starboard.b2b.model.User;
+import com.starboard.b2b.util.CustCodeUtil;
 
 @Repository("productPriceDao")
 public class ProductPriceDaoImpl implements ProductPriceDao {
@@ -22,19 +25,20 @@ public class ProductPriceDaoImpl implements ProductPriceDao {
 
 	@Override
 	public ProductPriceDTO findProductPrice(String productCode, Long productTypeId, User user) {
-		log.info(
-				"productCode = " + productCode + "\tcustInvoiceCode = " + user.getCustomer().getInvoiceCode() + "\tproductTypeId = " + productTypeId + "\tuser.getCustomer().getCurrency() = " + user.getCustomer().getCurrency());
+		log.info("productCode = " + productCode + "\tcustInvoiceCode = " + user.getCustomer().getInvoiceCode() + "\tproductTypeId = " + productTypeId
+				+ "\tuser.getCustomer().getCurrency() = " + user.getCustomer().getCurrency());
 		String sb = " select new com.starboard.b2b.dto.ProductPriceDTO(p.id.productCode, p.id.productPriceGroupId, p.id.productCurrency, p.amount,p.productUnitId, p.msrePrice)  from ProductPrice p";
 		sb += " where p.id.productCode = :productCode";
-		sb += " and p.id.productCurrency = :productCurrency ";
-		sb += " and p.id.productPriceGroupId = ";
-		sb += "	(select productBuyerGroupId from CustPriceGroup cpg where cpg.custCode = :custInvoiceCode and cpg.productTypeId = :productTypeId)";
-		return (ProductPriceDTO) sessionFactory.getCurrentSession().createQuery(sb.toString())
-				.setString("productCode", productCode)
-				.setString("custInvoiceCode", user.getCustomer().getInvoiceCode())
-				.setString("productCurrency", user.getCustomer().getCurrency())
-				.setLong("productTypeId", productTypeId)
-				.uniqueResult();
+		sb += " and p.id.productPriceGroupId in ";
+		sb += "	(select productBuyerGroupId from CustPriceGroup cpg where cpg.custCode like :custInvoiceCode and cpg.productTypeId = :productTypeId)";
+		List prices = sessionFactory.getCurrentSession().createQuery(sb.toString()).setString("productCode", productCode)
+				.setString("custInvoiceCode", CustCodeUtil.getCustCodeWithoutCurrency(user.getCustomer().getInvoiceCode()) + "%")
+				.setLong("productTypeId", productTypeId).list();
+		if (prices != null && !prices.isEmpty()) {
+			return (ProductPriceDTO) prices.get(0);
+		} else {
+			return null;
+		}
 	}
 
 	@Override

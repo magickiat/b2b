@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -46,8 +45,7 @@
 						</form:form>
 
 						<div class="col-sm-2">
-							<a class="btn btn-success"
-								href='<c:url value="/backend/user/create-staff" />'>Create
+							<a class="btn btn-success" href='<c:url value="/backend/user/create-staff" />'>Create
 								Staff User</a>
 						</div>
 					</div>
@@ -77,11 +75,12 @@
 						<thead>
 							<tr>
 								<th width="5%">No.</th>
+								<th width="10%">Account</th>
 								<th width="15%">User Name</th>
 								<th width="20%">Email</th>
 								<th width="5%">Active</th>
 								<th width="5%">Staff</th>
-								<th width="35%">Company</th>
+								<th width="25%">Company</th>
 								<th width="15%">Active Timle</th>
 							</tr>
 						</thead>
@@ -95,37 +94,33 @@
 								</c:when>
 								<c:otherwise>
 
-									<c:set var="rowBegin"
-										value="${ (( resultPage.current - 1) * resultPage.pageSize) }"></c:set>
+									<c:set var="rowBegin" value="${ (( resultPage.current - 1) * resultPage.pageSize) }"></c:set>
 
 
-									<c:forEach items="${ resultPage.result }" var="user"
-										varStatus="rowNum">
+									<c:forEach items="${ resultPage.result }" var="user" varStatus="rowNum">
 										<tr id="${user.id }" style="cursor: pointer;"
 											onclick="editUser('${ user.customer.custId}', ${user.id })">
-											<td>${ rowBegin + (rowNum.index + 1) }</td>
-											<td>${user.name }</td>
-											<td>${ user.email }</td>
-											<td>
+											<td nowrap="nowrap">${ rowBegin + (rowNum.index + 1) }</td>
+											<td nowrap="nowrap">${ user.username }
+											<td nowrap="nowrap">${ user.name }</td>
+											<td nowrap="nowrap">${ user.email }</td>
+											<td nowrap="nowrap">
 												<c:choose>
 													<c:when test="${user.enabled }">Yes</c:when>
 													<c:otherwise>No</c:otherwise>
 												</c:choose>
 											</td>
-											<td>
+											<td nowrap="nowrap">
 												<c:choose>
 													<c:when test="${empty user.customer }">Yes</c:when>
 													<c:otherwise>No</c:otherwise>
 												</c:choose>
 											</td>
-											<td>
-												<c:if test="${not empty user.customer }">
-										${ user.customer.nameEn }
-										</c:if>
+											<td nowrap="nowrap">
+												<c:if test="${not empty user.customer }">${ user.customer.nameEn }</c:if>
 											</td>
-											<td>
-												<fmt:formatDate pattern="dd-MM-yyyy HH:mm"
-													value="${user.lastActive }" />
+											<td nowrap="nowrap">
+												<fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${user.lastActive }" />
 											</td>
 										</tr>
 									</c:forEach>

@@ -121,7 +121,7 @@ public class BackendCustomerController {
 		AddressForm addrFrom = new AddressForm();
 		model.addAttribute("customerForm", custDto);
 		model.addAttribute("users", users);
-		model.addAttribute("selectedBrand", customerService.getCustBrandGroupById(id));
+		model.addAttribute("selectedBrand", productService.getProductTypes(id));
 		model.addAttribute("listAddr", listAddress);
 		model.addAttribute("addressTypes", getAddressConstant());
 		model.addAttribute("listMobileType", customerService.getMobileType());

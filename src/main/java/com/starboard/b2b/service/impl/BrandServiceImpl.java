@@ -22,7 +22,7 @@ public class BrandServiceImpl implements BrandService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<ProductBrandGroupDTO> getBrandGroupList(Long custId) {
-		log.debug("getBrandGroupList --> custId: " + custId);
+		log.info("getBrandGroupList --> custId: " + custId);
 		return custDao.findProductBrandGroup(custId);
 	}
 

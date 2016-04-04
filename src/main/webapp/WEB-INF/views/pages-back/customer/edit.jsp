@@ -80,6 +80,7 @@
 								<thead>
 									<tr>
 										<th>No.</th>
+										<th>Account</th>
 										<th>User Name</th>
 										<th>Email</th>
 										<th>Active</th>
@@ -91,7 +92,8 @@
 									<c:forEach items="${users }" var="user" varStatus="rowNum">
 										<tr>
 											<td>${ rowNum.index + 1 }</td>
-											<td>${user.name }</td>
+											<td>${ user.username }
+											<td>${ user.name }</td>
 											<td>${ user.email }</td>
 											<td>
 												<c:choose>

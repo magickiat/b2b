@@ -151,7 +151,7 @@ public class FrontOrderController {
 		form.setBrandId(brandId);
 		model.addAttribute("searchProductForm", form);
 
-		setSearchCondition(form, model);
+		setSearchCondition(form, brandId, model);
 
 		Page<SearchProductModelDTO> resultPage = productService.searchProduct(form, UserUtil.getCurrentUser().getCustomer().getCustId());
 		model.addAttribute("resultPage", resultPage);
@@ -166,7 +166,7 @@ public class FrontOrderController {
 		// Show shopping cart
 		model.addAttribute("showShoppingCart", "true");
 
-		setSearchCondition(form, model);
+		setSearchCondition(form, brandId, model);
 		Page<SearchProductModelDTO> resultPage = productService.searchProduct(form, UserUtil.getCurrentUser().getCustomer().getCustId());
 		if ("list".equals(form.getShowType())) {
 			log.info("Find product price, search type 'List'");
@@ -248,8 +248,8 @@ public class FrontOrderController {
 		return "pages-front/order/step2_view_model";
 	}
 
-	private void setSearchCondition(SearchProductForm form, Model model) {
-		List<ProductTypeDTO> productTypes = productService.getProductTypes(UserUtil.getCurrentUser().getCustomer().getCustId());
+	private void setSearchCondition(SearchProductForm form, Long brandGroupId, Model model) {
+		List<ProductTypeDTO> productTypes = productService.getProductTypes(UserUtil.getCurrentUser().getCustomer().getCustId(), brandGroupId);
 		model.addAttribute("productType", productTypes);
 
 		// when all product type, find with relate product type
