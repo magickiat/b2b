@@ -127,7 +127,12 @@
 																onblur="updateQuantity(${product.productId}, this)" />
 															<c:set var="totalQuantity" value="${ totalQuantity +  product.productQuantity }" />
 														</td>
-														<td>${ product.productUnitId }</td>
+														<td>
+															<c:choose>
+																<c:when test="${ empty product.productUnitId }">PCS</c:when>
+																<c:otherwise>${ product.productUnitId }</c:otherwise>
+															</c:choose>
+														</td>
 														<td>
 															<input type="hidden" name="amount" value="${ p.price.amount }" />
 															<c:choose>
@@ -272,6 +277,8 @@
 				$.post('${updateToCartUrl}', param).done(function(response) {
 					console.log(JSON.stringify(response));
 				}).fail(function(result) {
+					console.log('Result: ' + result);
+					console.log('Error: ' + result.responseText);
 					alert(result.responseText);
 				});
 
@@ -306,7 +313,7 @@
 					var val = $(value).val();
 					val = (+val) * (+quantity);
 					console.log('quantity = ' + quantity + '\tprice = ' + val);
-					$('#total-amount-' + index).text(val);
+					$('#total-amount-' + index).text(formatNumber(val));
 					/* console.log('set amount: ' + $('#total-amount-' + index).text()); */
 					amount = (+amount) + (+val);
 				}
