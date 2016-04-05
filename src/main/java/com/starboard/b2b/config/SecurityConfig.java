@@ -35,7 +35,8 @@ excludeFilters = {
         @Filter(type = FilterType.ASSIGNABLE_TYPE,
                 value = {
                     WebConfig.class,
-                    SecurityConfig.class
+                    SecurityConfig.class,
+                    RootConfig.class
                 })
     })
 @EnableWebSecurity

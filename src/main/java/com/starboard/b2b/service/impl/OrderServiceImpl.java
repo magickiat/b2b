@@ -162,6 +162,11 @@ public class OrderServiceImpl implements OrderService {
 			throw new IllegalArgumentException("Address 'Dispatch To' is required");
 		}
 
+		//TODO prepare separate product by currency and new order by currency
+		
+		
+		
+		
 		Entry<Long, ProductDTO> firstProduct = cart.entrySet().iterator().next();
 		long brandGroupId = firstProduct.getValue().getProductTypeId();
 

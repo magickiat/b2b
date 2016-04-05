@@ -3,6 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html>
@@ -16,49 +17,51 @@
 
 
 	<div class="container">
-	
-	
+
+
 		<div class="col-md-12">
 
 			<div class="row">
-	
+
 				<div class="col-sm-12 bg_color">
 					<div class="row row-header2 header2 txtupper">customer detail</div>
-	
-	
+
+
 					<form:form servletRelativeAction="/backend/customer/update" class="form-horizontal"
 						modelAttribute="customerForm" method="post">
-	
+
 						<form:errors path="*" cssClass="alert alert-danger" element="div" />
-	
+
 						<div class="form-group">
 							<label class="control-label col-sm-2" for="code">Code:</label>
 							<div class="col-sm-9">
-								<form:input path="custCode" class="form-control" placeholder="Enter Code" />
+								<c:set var="code" value="${ fn:split(customerForm.custCode, '-') }"></c:set>
+								<input type="text" name="custCode" class="form-control" readonly="readonly" value="${code[0]}-${code[1]}" />
+								<%-- <form:input path="custCode" class="form-control" placeholder="Enter Code" readonly="true" /> --%>
 							</div>
 						</div>
-	
+
 						<div class="form-group">
 							<label class="control-label col-sm-2" for="name">Name:</label>
 							<div class="col-sm-9">
-								<form:input path="nameEn" class="form-control" placeholder="Enter Name" />
+								<form:input path="nameEn" class="form-control" placeholder="Enter Name" readonly="true" />
 							</div>
 							<form:hidden path="custId" />
 						</div>
-	
+
 						<div class="form-group">
 							<div class="col-sm-11"></div>
 							<div class="col-sm-1">
-								<button type="submit" class="btn btn-default pull-right">Save</button>
+								<!-- <button type="submit" class="btn btn-default pull-right">Save</button> -->
 							</div>
 						</div>
-	
+
 					</form:form>
 				</div>
 			</div>
-	
+
 			<hr />
-	
+
 			<div class="row">
 				<div class="col-sm-12 bg_color">
 					<div class="row">
@@ -73,7 +76,7 @@
 							</form:form>
 						</div>
 					</div>
-	
+
 					<div class="">
 						<div class="bg_color">
 							<table class="table table-hover" id="list_user">
@@ -120,7 +123,7 @@
 				</div>
 			</div>
 			<hr />
-	
+
 			<%-- List Address --%>
 			<div class="row">
 				<div class="col-sm-12 bg_color">
@@ -135,7 +138,7 @@
 								onclick="javascript:window.location.href = '${addAddressUrl}'">Add Address</button>
 						</div>
 					</div>
-	
+
 					<div class="">
 						<div class="bg_color">
 							<c:forEach items="${listAddr }" var="addr">
@@ -145,9 +148,9 @@
 						</div>
 					</div>
 				</div>
-	
+
 			</div>
-	
+
 			<hr />
 			<%-- List Contact --%>
 			<div class="row">
@@ -170,10 +173,10 @@
 					</div>
 					<div class="col-sm-12">&nbsp;</div>
 				</div>
-	
+
 			</div>
 			<hr />
-	
+
 			<%-- Product Brand --%>
 			<div class="row">
 				<div class="col-sm-12 bg_color">
@@ -188,7 +191,7 @@
 							</form:form>
 						</div>
 					</div>
-	
+
 					<div class="">
 						<div class="col-sm-12 bg_color">
 							<table class="table table-hover" id="list_brand">
@@ -211,10 +214,10 @@
 					</div>
 				</div>
 			</div>
-		
-		
+
+
 		</div>
-		
+
 	</div>
 	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
