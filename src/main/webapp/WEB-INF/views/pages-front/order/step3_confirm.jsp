@@ -275,7 +275,7 @@
 				console.log('productId = ' + productId);
 
 				$.post('${updateToCartUrl}', param).done(function(response) {
-					console.log(JSON.stringify(response));
+					console.log('Success: ' + JSON.stringify(response));
 				}).fail(function(result) {
 					console.log('Result: ' + result);
 					console.log('Error: ' + result.responseText);

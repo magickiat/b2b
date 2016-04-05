@@ -33,6 +33,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.starboard.b2b.bean.ExcelOrderBean;
 import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.common.B2BConstant;
@@ -385,7 +386,7 @@ public class FrontOrderController {
 
 	@RequestMapping(value = "update-to-cart", method = RequestMethod.POST)
 	@ResponseStatus(code = HttpStatus.OK)
-	public @ResponseBody void updateQuantityToCart(@RequestParam Long productId, @RequestParam Long quantity,
+	public @ResponseBody String updateQuantityToCart(@RequestParam Long productId, @RequestParam Long quantity,
 			@ModelAttribute("cart") Map<Long, ProductDTO> cart) throws IllegalArgumentException {
 
 		log.info("productId = " + productId + "\tquantity = " + quantity);
@@ -421,6 +422,8 @@ public class FrontOrderController {
 
 		productInCart.setProductQuantity(quantity);
 		log.info("Remaining quantity: " + productInCart.getProductQuantity());
+		
+		return new Gson().toJson("success");
 	}
 
 	//
