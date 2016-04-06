@@ -294,17 +294,19 @@ public class FrontOrderController {
 			//
 			List<ExcelOrderBean> orders = ExcelUtil.parseOrder(file.getBytes());
 			//
-//			if (orders == null) {
-//				throw new B2BException("order are not found in this upload file");
-//			}
+			// if (orders == null) {
+			// throw new B2BException("order are not found in this upload
+			// file");
+			// }
 			//
 			int orderSize = orders == null ? 0 : orders.size();
-			if(orderSize > 0){
+			if (orderSize > 0) {
 				List<ProductDTO> products = new ArrayList<>(orderSize);
 				for (ExcelOrderBean order : orders) {
 					ProductDTO product = productService.findByProductCode(order.getProductCode());
 					if (product.getProductCode() == null) {
-						// throw new B2BException(String.format("product not found
+						// throw new B2BException(String.format("product not
+						// found
 						// for product code %s", order.getProductCode()));
 						continue;
 					}
@@ -422,7 +424,7 @@ public class FrontOrderController {
 
 		productInCart.setProductQuantity(quantity);
 		log.info("Remaining quantity: " + productInCart.getProductQuantity());
-		
+
 		return new Gson().toJson("success");
 	}
 
@@ -531,26 +533,28 @@ public class FrontOrderController {
 		log.info("----- paymentMethod = " + paymentMethod);
 		log.info("----- ----- cart size = " + cart.size());
 
-		OrderDTO order = orderService.newOrder(invoiceTo, dispatchTo, shippingType, customerRemark, paymentMethod, cart);
-		model.addAttribute("order", order);
+		List<OrderDTO> orders = orderService.newOrderByCurrency(invoiceTo, dispatchTo, shippingType, customerRemark, paymentMethod, cart);
 
 		// ----- send mail to Sales -----
 		String host = environment.getProperty("base.url");
 		if (StringUtils.isEmpty(host)) {
 			throw new B2BException("Not found host config");
 		}
+		
+		for (OrderDTO order : orders) {
 
-		try {
-			emailService.sendEmailOrderToStaff(order, host);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-		}
+			try {
+				emailService.sendEmailOrderToStaff(order, host);
+			} catch (Exception e) {
+				log.error(e.getMessage(), e);
+			}
 
-		// ----- send mail to Customer -----
-		try {
-			emailService.sendEmailOrderToCustomer(order, host);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
+			// ----- send mail to Customer -----
+			try {
+				emailService.sendEmailOrderToCustomer(order, host);
+			} catch (Exception e) {
+				log.error(e.getMessage(), e);
+			}
 		}
 
 		// Clear Shopping Cart session
@@ -559,6 +563,10 @@ public class FrontOrderController {
 		model.addAttribute("cart", null);
 		session.setComplete();
 
+		// ----- show only first order in next step ----
+		OrderDTO order = orders.get(0);
+		model.addAttribute("order", order);
+		
 		final SearchOrderDTO orderReport = orderService.findOrderForReport(order.getOrderCode());
 		final List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(order.getOrderCode());
 		for (OrdAddressDTO ordAddress : ordAddresses) {

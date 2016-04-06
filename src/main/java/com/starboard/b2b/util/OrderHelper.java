@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import com.starboard.b2b.dto.ProductDTO;
 
 public class OrderHelper {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(OrderHelper.class);
 
 	private ApplicationConfig config;
@@ -37,8 +37,8 @@ public class OrderHelper {
 				}
 
 				String currency = product.getProductCurrency().toUpperCase();
-				log.info("Currency: " + currency);
-				
+				log.info("Product: " + product.getProductCode() + "Currency: " + currency);
+
 				List<ProductDTO> productList = productGroup.get(currency);
 				if (productList == null) {
 					productList = new ArrayList<>();

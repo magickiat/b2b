@@ -1,7 +1,9 @@
 package com.starboard.b2b.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -61,6 +63,7 @@ import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.service.UserService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.DateTimeUtil;
+import com.starboard.b2b.util.OrderHelper;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.order.OrderDecisionForm;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
@@ -150,6 +153,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
+	@Deprecated
 	public OrderDTO newOrder(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod,
 			Map<Long, ProductDTO> cart) {
 		Addr invoiceToAddr = addrDao.findById(invoiceTo);
@@ -538,6 +542,134 @@ public class OrderServiceImpl implements OrderService {
 				log.info(String.format("OrderDetail: %s\ttotal: %d\tshipped: %d", ordDetail.getOrderDetailId(), totalAmount, shippedAmount));
 			}
 		}
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public ArrayList<OrderDTO> newOrderByCurrency(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod,
+			Map<Long, ProductDTO> cart) {
+		
+		if(cart == null || cart.isEmpty()){
+			throw new B2BException("Can't create order without product");
+		}
+
+		// ----- Validate address -----
+		Addr invoiceToAddr = addrDao.findById(invoiceTo);
+		if (invoiceToAddr == null) {
+			throw new B2BException("Address 'Invoice To' is required");
+		}
+
+		Addr dispatchToAddr = addrDao.findById(dispatchTo);
+		if (dispatchToAddr == null) {
+			throw new B2BException("Address 'Dispatch To' is required");
+		}
+		
+		ArrayList<OrderDTO> orders = new ArrayList<>();
+		User user = UserUtil.getCurrentUser();
+		
+		// ----- set product price for group -----
+		Set<Entry<Long,ProductDTO>> set = cart.entrySet();
+		for (Entry<Long, ProductDTO> entry : set) {
+			ProductDTO product = entry.getValue();
+			ProductPriceDTO productPrice = productPriceDao.findProductPrice(product.getProductCode(), product.getProductTypeId(), user);
+			
+			BigDecimal amount = new BigDecimal(0);
+			String currency = null;
+			if(productPrice != null){
+				currency = productPrice.getProductCurrency();
+				amount = productPrice.getAmount();
+			}
+			product.setProductPrice(amount);
+			product.setProductCurrency(currency);
+		}
+		
+		// ----- group product by currency
+		OrderHelper orderHelper = new OrderHelper(applicationConfig);
+		HashMap<String,List<ProductDTO>> productByCurrency = orderHelper.groupProductByCurrency(cart);
+		Set<Entry<String, List<ProductDTO>>> productEntry = productByCurrency.entrySet();
+		
+		for (Entry<String, List<ProductDTO>> entry : productEntry) {
+			List<ProductDTO> products = entry.getValue();
+			if(products == null || products.size() == 0){
+				throw new B2BException("No product to create order");
+			}
+			
+			long brandGroupId = products.get(0).getProductTypeId();
+			// Save Order
+			String orderCode = generateOrderCode();
+			log.info("\tGenerated orderCode = " + orderCode);
+
+			Date currentDate = DateTimeUtil.getCurrentDate();
+			
+
+			Orders order = new Orders();
+			order.setCustId(user.getCustomer().getCustId());
+			order.setCustCode(user.getCustomer().getCustCode());
+			order.setCustUserId("" + user.getId());
+			order.setOrderCode(orderCode);
+			order.setOrderStatus(applicationConfig.getOrderStatusNew());
+			order.setOrderDate(currentDate);
+			order.setBrandGroupId(brandGroupId);
+			order.setShippingId(shippingType);
+			order.setPaymentMethodId(paymentMethod);
+			order.setPaymentCurrencyId(entry.getKey());
+			order.setPaymentTermId(applicationConfig.getNewOrderPaymentTermId());
+			order.setRemarkCustomer(customerRemark);
+			order.setTimeCreate(currentDate);
+			order.setUserCreate(user.getUsername());
+			order.setTimeUpdate(currentDate);
+
+			long orderId = orderDao.save(order);
+
+			CustPriceGroupDTO custPriceGroup = customerService.findCustPriceGroup(user.getCustomer().getCustCode(), brandGroupId);
+
+			// Save Order Detail
+			for (ProductDTO product : products) {
+				ProductPriceDTO productPrice = productPriceDao.findProductPrice(product.getProductCode(), brandGroupId, user);
+				// Default currency
+				if (productPrice != null) {
+					String currency = productPrice.getProductCurrency();
+					if (StringUtils.isEmpty(currency)) {
+						currency = applicationConfig.getDefaultProductCurrency();
+					}
+					product.setProductCurrency(currency);
+				}
+				// Default product unit id
+				if (StringUtils.isEmpty(product.getProductUnitId())) {
+					product.setProductUnitId(applicationConfig.getDefaultProductUnit());
+				}
+
+				// ----- Create order detail-----
+
+				OrdDetail orderDetail = new OrdDetail();
+				orderDetail.setOrderId(orderId);
+				orderDetail.setProductId(product.getProductId());
+				orderDetail.setAmount(product.getProductQuantity());
+				if (productPrice != null && product.getProductQuantity() > 0) {
+					orderDetail.setPrice(productPrice.getAmount());
+				}
+				orderDetail.setStatus(applicationConfig.getDefaultOrderDetailStatus());
+				orderDetail.setProductCurrency(product.getProductCurrency());
+				orderDetail.setProductUnitId(product.getProductUnitId());
+				orderDetail.setProductBuyerGroupId(custPriceGroup.getProductBuyerGroupId());
+				orderDetail.setUserCreate(user.getUsername());
+				orderDetail.setTimeCreate(currentDate);
+
+				orderDetailDao.save(orderDetail);
+			}
+		
+
+			// Save Order address
+			orderAddressDao.save(createOrderAddress(invoiceToAddr, orderId, AddressConstant.ORDER_INVOICE_TO));
+			orderAddressDao.save(createOrderAddress(dispatchToAddr, orderId, AddressConstant.ORDER_DISPATCH_TO));
+
+			// For generate report
+			OrderDTO dto = new OrderDTO();
+			BeanUtils.copyProperties(order, dto);
+			orders.add(dto);
+		}
+		
+		return orders;
 	}
 
 }

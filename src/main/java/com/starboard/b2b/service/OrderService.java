@@ -1,5 +1,6 @@
 package com.starboard.b2b.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,12 +25,15 @@ public interface OrderService {
 	List<ShippingTypeDTO> findAllShippingType();
 
 	List<PaymentMethodDTO> findAllPaymentMethod();
-	
+
 	List<PaymentTermDTO> findAllPaymentTerm();
 
 	long getNextRunningNo(int year);
 
 	OrderDTO newOrder(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod, Map<Long, ProductDTO> cart);
+
+	ArrayList<OrderDTO> newOrderByCurrency(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod,
+			Map<Long, ProductDTO> cart);
 
 	String generateOrderCode();
 
@@ -40,7 +44,7 @@ public interface OrderService {
 	List<SearchOrderDetailDTO> searchOrderDetail(Long orderId);
 
 	List<SearchOrderDetailDTO> searchOrderDetail(String orderCode);
-	
+
 	void findShippedOrderDetail(List<SearchOrderDetailDTO> orderDetails);
 
 	SearchOrderDTO findOrderForReport(Long orderId);
@@ -50,9 +54,9 @@ public interface OrderService {
 	List<OrdAddressDTO> findOrderAddress(String orderCode);
 
 	Page<SearchOrderDTO> searchOrder(OrderSummaryForm orderSummaryForm);
-	
+
 	List<SearchOrderDTO> searchOrderForReport(OrderSummaryForm orderSummaryForm);
-	
+
 	List<String> findAllOrderCurrency(Long orderId);
 
 	List<SearchOrderDTO> findOrderForReport(Long[] ordersId);
@@ -62,7 +66,7 @@ public interface OrderService {
 	SoDTO findSO(final long soId);
 
 	List<SoDetailDTO> findSoDetail(final long soId);
-	
+
 	UserDTO findUserByOrderCode(String orderCode);
 
 	List<SoDTO> listSO(long orderId);

@@ -87,7 +87,7 @@ public class OrderDaoImpl implements OrderDao {
 				"AND (:orderStatusId IS NULL OR os.orderStatusId = :orderStatusId) " +
 				"AND ((:fromDate IS NULL OR :toDate IS NULL) OR ( DATE(o.orderDate) BETWEEN :fromDate AND :toDate)) " +
 				"AND (:custId = 0 OR o.custId = :custId)  and o.paymentTermId = pt.paymentTermId " +
-				"ORDER BY o.orderDate DESC ";
+				"ORDER BY o.orderId DESC ";
 		final String ordersTotalQuery = "SELECT count(o.orderCode) " +
 				"FROM Orders o, ProductType p, Cust c, OrderStatus os, PaymentTerm pt " +
 				"WHERE o.brandGroupId = p.productTypeId " +
