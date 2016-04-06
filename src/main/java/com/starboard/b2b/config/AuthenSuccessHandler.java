@@ -1,23 +1,23 @@
 package com.starboard.b2b.config;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
-import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.stereotype.Service;
+
 /**
  * Created by User: Thanakit Jumparuang (jthanakit.dev@gmail.com) Date: 12/29/2015 12:10 AM
  */
 @Service
 public class AuthenSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
-    private static final Logger LOG = LogManager.getLogger(AuthenSuccessHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AuthenSuccessHandler.class);
 
     private int sessionTimeout;
 

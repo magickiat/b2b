@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.http.MediaType;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -74,16 +73,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		return new LocalValidatorFactoryBean();
 	}
 	
-	/*
-	 * PropertySourcesPlaceHolderConfigurer Bean only required for @Value("{}")
-	 * annotations. Remove this bean if you are not using @Value annotations for
-	 * injecting properties.
-	 */
-	@Bean
-	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-		return new PropertySourcesPlaceholderConfigurer();
-	}
-
 	// @Override
 	// public void configureMessageConverters(List<HttpMessageConverter<?>>
 	// converters) {

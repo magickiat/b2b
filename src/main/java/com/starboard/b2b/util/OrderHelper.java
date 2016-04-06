@@ -33,7 +33,7 @@ public class OrderHelper {
 				ProductDTO product = item.getValue();
 
 				if (StringUtils.isEmpty(product.getProductCurrency())) {
-					product.setProductCurrency(config.getDefaultProductCurrency());
+					product.setProductCurrency(config.getDefaultCurrencyForOrder());
 				}
 
 				String currency = product.getProductCurrency().toUpperCase();
