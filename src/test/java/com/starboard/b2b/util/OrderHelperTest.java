@@ -1,11 +1,12 @@
 package com.starboard.b2b.util;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -85,6 +86,15 @@ public class OrderHelperTest {
 		HashMap<String, List<ProductDTO>> productGroup = helper.groupProductByCurrency(cart);
 		assertFalse(productGroup.isEmpty());
 		assertTrue(productGroup.size() == 2);
+		
+		Set<Entry<String,List<ProductDTO>>> entrySet = productGroup.entrySet();
+		for (Entry<String, List<ProductDTO>> entry : entrySet) {
+			String key = entry.getKey();
+			List<ProductDTO> value = entry.getValue();
+			for (ProductDTO product : value) {
+				assertEquals(key, product.getProductCurrency());
+			}
+		}
 
 	}
 
