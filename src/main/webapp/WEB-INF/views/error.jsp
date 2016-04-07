@@ -22,7 +22,9 @@
 				<div class="col-sm-12 header2 txtupper bg_color">Problem occured</div>
 				<div class="col-sm-12 bg_color">Please contact administrator
 					with this message</div>
-				<div class="col-sm-12 bg_color">${exception.message}</div>
+				<div class="col-sm-12 bg_color showline2" style="padding: 10px;">
+				${exception.message}
+				</div>
 	
 				<!-- PLEASE DON'T REMOVE THIS COMMENT
 			    Failed URL: ${url}
