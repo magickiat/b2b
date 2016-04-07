@@ -162,7 +162,7 @@ public class ReportController {
 			log.info("byte size = " + exportReportToPdf.length);
 			
 			response.setContentLength(exportReportToPdf.length);
-			response.setContentType("application/x-pdf");
+			response.setContentType("application/pdf");
 			response.setHeader("Content-Disposition", "attachment; filename="+order.getOrderCode()+".pdf");
 			response.setHeader("Cache-Control", "cache, must-revalidate");
 	        response.setHeader("Pragma", "public");

@@ -28,15 +28,6 @@
 	}
 
 	function printPdf() {
-		var url = '<c:url value="/report/order/pdf?orderId=${orderId}" />';
-		var content = "<object id='pdfObject' type='application/pdf' data='"
-				+ url + "' width='100%' height='100%' />";
-		var x = window.open();
-		x.document.open();
-		x.document.write(content);
-		x.document.close();
-
-		return false;
-
+		exportPdf();
 	}
 </script>
