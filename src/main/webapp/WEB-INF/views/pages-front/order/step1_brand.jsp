@@ -31,6 +31,7 @@
 						<c:forEach items="${ brandGroupList }" var="brand" varStatus="rowCount">
 							<!-- Brand Logo -->
 							<div class="col-md-3">
+							<%-- 
 								<a href='<c:url value="/frontend/order/step2/index?brand_id=${ brand.brandGroupId }" />'>
 									<c:choose>
 										<c:when test="${brand.brandGroupId == 10}">
@@ -54,8 +55,7 @@
 										</c:when>
 									</c:choose>
 								</a> 
-
-<%-- 
+ --%>
 								<c:choose>
 									<c:when test="${brand.brandGroupId == 10}">
 										<a href='<c:url value="/frontend/order/step2/index?brand_id=${ brand.brandGroupId }" />'>
@@ -80,7 +80,6 @@
 									</c:when>
 								</c:choose>
 
- --%>
 							</div>
 
 
