@@ -63,7 +63,7 @@ public class ProductDaoImpl implements ProductDao {
 				sb.append("and p.productTypeId = :productTypeId ");
 			} else {
 				sb.append(
-						"and p.productTypeId in (select a.productTypeId from ProductType as a , CustBrandGroup b where a.productTypeId = b.id.brandGroupId and b.id.custId = :custId) ");
+						"and p.productTypeId in (select a.productTypeId from ProductType as a , CustBrandGroup b where a.productTypeId = b.id.brandGroupId and b.id.custId = :custId and b.id.brandGroupId = :brandGroupId) ");
 			}
 
 			if (StringUtils.isNotEmpty(condition.getSelectedBuyerGroup())) {
@@ -114,6 +114,9 @@ public class ProductDaoImpl implements ProductDao {
 			} else {
 				query.setLong("custId", custId);
 				queryTotal.setLong("custId", custId);
+				
+				query.setLong("brandGroupId", condition.getBrandId());
+				queryTotal.setLong("brandGroupId", condition.getBrandId());
 			}
 
 			if (StringUtils.isNotEmpty(condition.getSelectedBuyerGroup())) {
