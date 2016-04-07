@@ -58,6 +58,7 @@ import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.B2BFileUtil;
+import com.starboard.b2b.util.CartHelper;
 import com.starboard.b2b.util.ExcelUtil;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
@@ -168,6 +169,7 @@ public class FrontOrderController {
 		model.addAttribute("showShoppingCart", "true");
 
 		setSearchCondition(form, brandId, model);
+		form.setBrandId(brandId);
 		Page<SearchProductModelDTO> resultPage = productService.searchProduct(form, UserUtil.getCurrentUser().getCustomer().getCustId());
 		if ("list".equals(form.getShowType())) {
 			log.info("Find product price, search type 'List'");
@@ -286,34 +288,42 @@ public class FrontOrderController {
 	 * upload excel order
 	 */
 	@RequestMapping(value = "upload-orders", method = RequestMethod.POST)
-	public ModelAndView uploadExcelOrder(@RequestParam("file") MultipartFile file, @ModelAttribute("cart") Map<Long, ProductDTO> cart) {
+	public ModelAndView uploadExcelOrder(@ModelAttribute("brandId") Long currentBrandId, @RequestParam("file") MultipartFile file,
+			@ModelAttribute("cart") Map<Long, ProductDTO> cart) {
 		try {
 			if (file.isEmpty()) {
 				throw new B2BException("excel order file are not present in this request");
 			}
-			//
+
 			List<ExcelOrderBean> orders = ExcelUtil.parseOrder(file.getBytes());
-			//
-			// if (orders == null) {
-			// throw new B2BException("order are not found in this upload
-			// file");
-			// }
-			//
+
 			int orderSize = orders == null ? 0 : orders.size();
 			if (orderSize > 0) {
+
+				CartHelper helper = new CartHelper();
+				helper.setBrandService(brandService);
+				HashMap<Long, Long> brandGroup = helper.getBrandGroup();
+
 				List<ProductDTO> products = new ArrayList<>(orderSize);
+
 				for (ExcelOrderBean order : orders) {
+					// ----- validate product is available to sell -----
 					ProductDTO product = productService.findByProductCode(order.getProductCode());
 					if (product.getProductCode() == null) {
-						// throw new B2BException(String.format("product not
-						// found
-						// for product code %s", order.getProductCode()));
-						continue;
+						throw new B2BException(String.format("Product %s not available", order.getProductCode()));
 					}
+
+					// ----- validate product is current brand in cart -----
+					Long brandGroupId = brandGroup.get(product.getProductTypeId());
+					if (brandGroupId == null || brandGroupId != currentBrandId) {
+						throw new B2BException(String.format("Brand of product %s doesn't same as current brand", product.getProductCode()));
+					}
+
 					product.setProductQuantity(order.getQuantity());
 					products.add(product);
 				}
-				//
+
+				// ----- update cart -----
 				if (!products.isEmpty()) {
 					for (ProductDTO product : products) {
 						if (cart.get(product.getProductId()) == null) {
@@ -324,8 +334,9 @@ public class FrontOrderController {
 						}
 					}
 				}
+
 			}
-			//
+
 			return new ModelAndView("redirect:step3/checkout");
 		} catch (IOException ex) {
 			throw new B2BException("could not read excel order file");
@@ -540,7 +551,7 @@ public class FrontOrderController {
 		if (StringUtils.isEmpty(host)) {
 			throw new B2BException("Not found host config");
 		}
-		
+
 		for (OrderDTO order : orders) {
 
 			try {
@@ -566,7 +577,7 @@ public class FrontOrderController {
 		// ----- show only first order in next step ----
 		OrderDTO order = orders.get(0);
 		model.addAttribute("order", order);
-		
+
 		final SearchOrderDTO orderReport = orderService.findOrderForReport(order.getOrderCode());
 		final List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(order.getOrderCode());
 		for (OrdAddressDTO ordAddress : ordAddresses) {

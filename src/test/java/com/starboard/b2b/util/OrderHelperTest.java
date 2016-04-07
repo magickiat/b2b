@@ -28,7 +28,8 @@ public class OrderHelperTest {
 
 	@Before
 	public void init() {
-		helper = new OrderHelper(applicationConfig);
+		helper = new OrderHelper();
+		helper.setConfig(applicationConfig);
 	}
 
 	@Test

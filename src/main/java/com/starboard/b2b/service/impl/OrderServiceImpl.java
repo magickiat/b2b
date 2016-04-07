@@ -583,8 +583,9 @@ public class OrderServiceImpl implements OrderService {
 			product.setProductCurrency(currency);
 		}
 		
-		// ----- group product by currency
-		OrderHelper orderHelper = new OrderHelper(applicationConfig);
+		// ----- group product by currency -----
+		OrderHelper orderHelper = new OrderHelper();
+		orderHelper.setConfig(applicationConfig);
 		HashMap<String,List<ProductDTO>> productByCurrency = orderHelper.groupProductByCurrency(cart);
 		Set<Entry<String, List<ProductDTO>>> productEntry = productByCurrency.entrySet();
 		

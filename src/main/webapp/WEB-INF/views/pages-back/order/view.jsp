@@ -147,7 +147,7 @@
 							onclick="saveOrder()" />
 					</div>
 					<div class="col-sm-6 bg_color">
-						<input type="button" id="cancel" name="cancel" class="btn btn-default" value="Cancel"
+						<input type="button" id="Close" name="Close" class="btn btn-default" value="Close"
 							onclick="back()" />
 					</div>
 				</div>

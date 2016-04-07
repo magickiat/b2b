@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.starboard.b2b.dto.ProductDTO;
+import com.starboard.b2b.exception.B2BException;
 
 public class OrderHelper {
 
@@ -19,11 +20,11 @@ public class OrderHelper {
 
 	private ApplicationConfig config;
 
-	public OrderHelper(ApplicationConfig config) {
-		this.config = config;
-	}
-
 	public HashMap<String, List<ProductDTO>> groupProductByCurrency(Map<Long, ProductDTO> cart) {
+		if(config == null){
+			throw new B2BException("Config is required");
+		}
+		
 		HashMap<String, List<ProductDTO>> productGroup = new HashMap<>();
 
 		if (cart != null && !cart.isEmpty()) {
@@ -50,5 +51,9 @@ public class OrderHelper {
 
 		}
 		return productGroup;
+	}
+
+	public void setConfig(ApplicationConfig config) {
+		this.config = config;
 	}
 }
