@@ -139,7 +139,39 @@
 	</div>
 </sec:authorize>
 
+<!-- UPLOAD FORM BEGIN -->
+<div id="upload-form" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3>Upload Order</h3>
+			</div>
+			<div class="modal-body">
+				<form id="upload-orders" action="<c:url value="/frontend/order/upload-orders"/>" method="post"
+					enctype="multipart/form-data" role="form">
 
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+					<div class="form-group">
+						<label for="file">Select Excel Order:</label>
+						<input type="file" name="file">
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<div class="col-sm-6 text-left" style="padding: 0px;">
+					<a href="<c:url value="/frontend/order/download-template?brand_id=${brandId}"/>"
+						title="download excel order template" class="btn btn-default">Download Excel Order</a>
+				</div>
+				<div class="col-sm-6 text-right" style="padding: 0px;">
+					<button type="button" class="btn btn-primary" role="upload">Upload</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- UPLOAD FROM END-->
 
 <div style="clear: both; height: 20px;"></div>
 

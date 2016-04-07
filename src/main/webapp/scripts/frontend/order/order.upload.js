@@ -5,9 +5,13 @@
  */
 
 var app = {
-    order: {
-        upload: function () {
-            $('#upload-orders').submit();
-        }
-    }
+	order : {
+		upload : function() {
+			$('#upload-orders').submit();
+		}
+	}
 };
+
+$('#upload-form button[role="upload"]').on('click', function(event) {
+	app.order.upload();
+});

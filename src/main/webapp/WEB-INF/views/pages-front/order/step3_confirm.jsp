@@ -90,7 +90,7 @@
 							<div class="col-sm-2 text-right">
 								<input type="button" id="btn-add" onclick="gotoCreateOrder()" class="btn btn-success"
 									value="ADD" />
-								<input type="button" id="btn-upload" class="btn btn-success" onclick="gotoUploadOrder()"
+								<input type="button" id="btn-upload" class="btn btn-success" data-toggle="modal" data-target="#upload-form"
 									value="UPLOAD" />
 							</div>
 							<div class="row">&nbsp;</div>
@@ -250,6 +250,7 @@
 	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 
+	<script src="<c:url value="/scripts/frontend/order/order.upload.js"/>"></script>
 	<c:url var="updateToCartUrl" value="/frontend/order/update-to-cart.json" />
 
 	<script type="text/javascript">
@@ -380,6 +381,7 @@
 			$('.dispatch-to-address').hide();
 			$('#address-' + $(addressId).val()).show();
 		}
+	
 	</script>
 </body>
 </html>
