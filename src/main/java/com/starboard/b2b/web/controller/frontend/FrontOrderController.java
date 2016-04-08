@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -575,9 +576,22 @@ public class FrontOrderController {
 		model.addAttribute("cart", null);
 		session.setComplete();
 
-		OrderDTO order = orders.get(0);
+		// ----- for show finish button -----
 		model.addAttribute("orderComplete", true);
+		
+		//----- find all order details to show by currency -----
+		ArrayList<SearchOrderDTO> orderDetails = new ArrayList<>();
+		Iterator<OrderDTO> iterator = orders.iterator();
+		while (iterator.hasNext()) {
+			OrderDTO orderDTO = (OrderDTO) iterator.next();
+			orderDetails.add(searchOrder(orderDTO));
+		}
+		model.addAttribute("details", orderDetails);
 
+		return "pages-front/order/step4_submit";
+	}
+
+	private SearchOrderDTO searchOrder(OrderDTO order) {
 		final SearchOrderDTO orderReport = orderService.findOrderForReport(order.getOrderCode());
 		final List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(order.getOrderCode());
 		for (OrdAddressDTO ordAddress : ordAddresses) {
@@ -593,9 +607,7 @@ public class FrontOrderController {
 		if (orderDetails != null && !orderDetails.isEmpty()) {
 			orderReport.setOrderDetails(orderDetails);
 		}
-		model.addAttribute("orderReport", orderReport);
-
-		return "pages-front/order/step4_submit";
+		return orderReport;
 	}
 
 	@RequestMapping(value = "create", method = RequestMethod.GET)

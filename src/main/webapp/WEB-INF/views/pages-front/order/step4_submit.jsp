@@ -21,15 +21,8 @@
 			</div>
 			<div class="row">&nbsp;</div>
 
-			<c:set var="orderId" value="${ order.orderId }" />
-			<div class="row bg_color">
-				<div class="col-sm-12"><%@include file="/WEB-INF/views/include/export_report.jspf"%></div>
-			</div>
-
 			<div class="row">
-				<div class="col-sm-12 bg_color showline2">
-					<%@include file="orderSummary.jspf"%>
-				</div>
+				<%@include file="orderSummaryByCurrency.jspf"%>
 			</div>
 
 		</div>
