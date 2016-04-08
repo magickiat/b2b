@@ -15,8 +15,7 @@ public class WebAppInit extends AbstractAnnotationConfigDispatcherServletInitial
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class<?>[] { RootConfig.class, RepositoryConfig.class, ServiceConfig.class, SecurityUserDetailService.class,
-				SecurityConfig.class };
+		return new Class<?>[] { RootConfig.class, RepositoryConfig.class, SecurityUserDetailService.class, SecurityConfig.class };
 	}
 
 	@Override
@@ -37,8 +36,8 @@ public class WebAppInit extends AbstractAnnotationConfigDispatcherServletInitial
 	@Override
 	protected void customizeRegistration(Dynamic registration) {
 
-		MultipartConfigElement multipartConfigElement = new MultipartConfigElement(
-				"", maxUploadSizeInMb, maxUploadSizeInMb * 2, maxUploadSizeInMb / 2);
+		MultipartConfigElement multipartConfigElement = new MultipartConfigElement("", maxUploadSizeInMb, maxUploadSizeInMb * 2,
+				maxUploadSizeInMb / 2);
 
 		registration.setMultipartConfig(multipartConfigElement);
 

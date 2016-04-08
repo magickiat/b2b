@@ -21,9 +21,6 @@ import java.util.Properties;
 @PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
 public class RepositoryConfig {
 
-	// private static final Logger log =
-	// LoggerFactory.getLogger(RepositoryConfig.class);
-
 	@Autowired
 	private Environment env;
 

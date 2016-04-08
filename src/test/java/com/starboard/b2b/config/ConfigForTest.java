@@ -22,12 +22,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Profile("test")
 @EnableTransactionManagement
 @ComponentScan(basePackages = { "com.starboard.b2b.dao.impl" })
-public class TestRepositoryConfig {
+public class ConfigForTest {
 
 	@Bean
 	public DataSource dataSource() {
 		return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2)
-//				.addScript("/db/Dump20160330-3.sql")
+				// .addScript("/db/Dump20160330-3.sql")
 				.build();
 	}
 
@@ -53,11 +53,12 @@ public class TestRepositoryConfig {
 		Properties prop = new Properties();
 		prop.setProperty("hibernate.hbm2ddl.auto", "update");
 		prop.put("hibernate.show_sql", "true");
-//		prop.setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
+		// prop.setProperty("hibernate.dialect",
+		// "org.hibernate.dialect.HSQLDialect");
 		prop.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-//		prop.setProperty("hibernate.hbm2ddl.import_files", "/db/data.sql");
+		// prop.setProperty("hibernate.hbm2ddl.import_files", "/db/data.sql");
 
 		return prop;
 	}
-	
+
 }

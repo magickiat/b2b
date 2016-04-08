@@ -14,6 +14,17 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @Configuration
 @ComponentScan(basePackages = { "com.starboard.b2b.util" })
 public class RootConfig {
+	
+	/*
+	 * PropertySourcesPlaceHolderConfigurer Bean only required for @Value("{}")
+	 * annotations. Remove this bean if you are not using @Value annotations for
+	 * injecting properties.
+	 */
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+		return new PropertySourcesPlaceholderConfigurer();
+	}
+	
 	@Bean
 	public MessageSource messageSource() {
 		ResourceBundleMessageSource source = new ResourceBundleMessageSource();
@@ -37,13 +48,4 @@ public class RootConfig {
 		return intercept;
 	}
 
-	/*
-	 * PropertySourcesPlaceHolderConfigurer Bean only required for @Value("{}")
-	 * annotations. Remove this bean if you are not using @Value annotations for
-	 * injecting properties.
-	 */
-	@Bean
-	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-		return new PropertySourcesPlaceholderConfigurer();
-	}
 }

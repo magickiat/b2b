@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.http.MediaType;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -72,16 +73,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	public Validator getValidator() {
 		return new LocalValidatorFactoryBean();
 	}
-	
-	// @Override
-	// public void configureMessageConverters(List<HttpMessageConverter<?>>
-	// converters) {
-	// Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
-	// builder.serializationInclusion(JsonInclude.Include.NON_NULL);
-	// builder.propertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
-	// builder.serializationInclusion(Include.NON_EMPTY);
-	// builder.indentOutput(true).dateFormat(new
-	// SimpleDateFormat("yyyy-MM-dd"));
-	// converters.add(new MappingJackson2HttpMessageConverter(builder.build()));
-	// }
+
+	/*
+	 * PropertySourcesPlaceHolderConfigurer Bean only required for @Value("{}")
+	 * annotations. Remove this bean if you are not using @Value annotations for
+	 * injecting properties.
+	 */
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+		return new PropertySourcesPlaceholderConfigurer();
+	}
 }

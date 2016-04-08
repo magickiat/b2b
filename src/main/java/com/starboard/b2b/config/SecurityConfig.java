@@ -1,7 +1,8 @@
 package com.starboard.b2b.config;
 
-import com.starboard.b2b.security.CustomAccessDeniedHandler;
-import com.starboard.b2b.security.MD5;
+import java.util.concurrent.TimeUnit;
+
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,9 +25,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-import java.util.concurrent.TimeUnit;
-
-import javax.sql.DataSource;
+import com.starboard.b2b.security.CustomAccessDeniedHandler;
+import com.starboard.b2b.security.MD5;
 
 @Configuration
 @EnableTransactionManagement
