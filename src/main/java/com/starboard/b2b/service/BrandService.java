@@ -7,4 +7,6 @@ import com.starboard.b2b.dto.ProductBrandGroupDTO;
 public interface BrandService {
 
 	List<ProductBrandGroupDTO> getBrandGroupList(Long custId);
+
+	List<ProductBrandGroupDTO> getProductBrandGroup(Long custId);
 }

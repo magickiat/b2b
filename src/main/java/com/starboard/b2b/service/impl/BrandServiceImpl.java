@@ -26,4 +26,11 @@ public class BrandServiceImpl implements BrandService {
 		return custDao.findProductBrandGroup(custId);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<ProductBrandGroupDTO> getProductBrandGroup(Long custId) {
+		log.info("getProductBrandGroup --> custId: " + custId);
+		return custDao.findProductType(custId);
+	}
+
 }

@@ -18,6 +18,8 @@ public interface CustDao {
 	List<AddressDTO> findAddress(Long custId, Long addressType);
 
 	List<ProductBrandGroupDTO> findProductBrandGroup(Long custId);
+	
+	List<ProductBrandGroupDTO> findProductType(Long custId);
 
 	List<AddressDTO> findAddressByCustomerId(Long custId);
 

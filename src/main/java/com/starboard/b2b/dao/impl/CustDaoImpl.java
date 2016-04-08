@@ -41,22 +41,21 @@ public class CustDaoImpl implements CustDao {
 				where = " where c.custCode like :keyword or c.nameEn like :keyword ";
 			}
 		}
-		
+
 		queryString += where;
 		queryStringTotal += where;
-		
+
 		queryString += " group by c.nameEn order by c.custCode";
-		
 
 		Query query = sessionFactory.getCurrentSession().createQuery(queryString);
 		Query queryTotal = sessionFactory.getCurrentSession().createQuery(queryStringTotal);
-		
-		if(StringUtils.isNotEmpty(where)){
+
+		if (StringUtils.isNotEmpty(where)) {
 			query.setString("keyword", "%" + req.getCondition().getKeyword() + "%");
 			queryTotal.setString("keyword", "%" + req.getCondition().getKeyword() + "%");
 		}
 		List list = query.setFirstResult(req.getFirstResult()).setMaxResults(req.getPageSize()).list();
-		
+
 		// ----- Find total -----
 		Object totalRecord = queryTotal.uniqueResult();
 
@@ -80,8 +79,9 @@ public class CustDaoImpl implements CustDao {
 	@Override
 	public List<AddressDTO> findAddress(Long custId, Long addressType) {
 		StringBuffer sb = new StringBuffer();
-		sb.append(
-				"select new com.starboard.b2b.dto.AddressDTO(a.addrId,a.custId,a.custCode,a.contactId,a.address,a.subDistrict,a.district,a.province,a.regionCountryId,a.postCode,a.tel1,a.tel2,a.fax,a.email,a.transType,a.transTel,a.type,a.userCreate,a.userUpdate,a.timeCreate,a.timeUpdate) ");
+		sb.append(" select new com.starboard.b2b.dto.AddressDTO(a.addrId,a.custId,a.custCode,a.contactId, ");
+		sb.append(" a.address,a.subDistrict,a.district,a.province,a.regionCountryId,a.postCode,");
+		sb.append(" a.tel1,a.tel2,a.fax,a.email,a.transType,a.transTel,a.type,a.userCreate,a.userUpdate,a.timeCreate,a.timeUpdate) ");
 		sb.append(" from Addr a where a.custId = :custId and a.type = :type order by a.addrId asc");
 
 		return (List<AddressDTO>) sessionFactory.getCurrentSession().createQuery(sb.toString()).setLong("custId", custId).setLong("type", addressType)
@@ -109,8 +109,9 @@ public class CustDaoImpl implements CustDao {
 	@Override
 	public List<AddressDTO> findAddressByCustomerId(Long custId) {
 		StringBuffer sb = new StringBuffer();
-		sb.append(
-				"select new com.starboard.b2b.dto.AddressDTO(a.addrId,a.custId,a.custCode,a.contactId,a.address,a.subDistrict,a.district,a.province,a.regionCountryId,a.postCode,a.tel1,a.tel2,a.fax,a.email,a.transType,a.transTel,a.type,a.userCreate,a.userUpdate,a.timeCreate,a.timeUpdate) ");
+		sb.append(" select new com.starboard.b2b.dto.AddressDTO(a.addrId,a.custId,a.custCode,a.contactId, ");
+		sb.append(" a.address,a.subDistrict,a.district,a.province,a.regionCountryId,a.postCode,a.tel1,a.tel2,a.fax, ");
+		sb.append(" a.email,a.transType,a.transTel,a.type,a.userCreate,a.userUpdate,a.timeCreate,a.timeUpdate)");
 		sb.append(" from Addr a where a.custId = :custId order by a.type asc");
 
 		return (List<AddressDTO>) sessionFactory.getCurrentSession().createQuery(sb.toString()).setLong("custId", custId).list();
@@ -124,12 +125,25 @@ public class CustDaoImpl implements CustDao {
 	@Override
 	public List<ContactDTO> findContactByCustomerId(Long custId) {
 		StringBuffer sb = new StringBuffer();
-		sb.append(
-				"select new com.starboard.b2b.dto.ContactDTO(c.contactId, c.custId, c.nameTh, c.nameTitle, c.nameEn, c.nameNick, c.position, c.birthDate, c.address, c.email, c.tel, c.mobile, c.fax, c.skype, c.facebook, c.twitter, c.markUp, c.salesId, c.mobileId, c.imgPath, c.userCreate,	 c.userUpdate, c.timeCreate, c.timeUpdate, c.signaturePath) ");
+		sb.append(" select new com.starboard.b2b.dto.ContactDTO(c.contactId, c.custId, c.nameTh, c.nameTitle, c.nameEn, ");
+		sb.append(" c.nameNick, c.position, c.birthDate, c.address, c.email, c.tel, c.mobile, c.fax, c.skype, c.facebook, c.twitter, ");
+		sb.append(" c.markUp, c.salesId, c.mobileId, c.imgPath, c.userCreate,	 c.userUpdate, c.timeCreate, c.timeUpdate, c.signaturePath)");
 		sb.append(" from Contact c where c.custId = :custId order by c.contactId asc");
 
 		return (List<ContactDTO>) sessionFactory.getCurrentSession().createQuery(sb.toString()).setLong("custId", custId).list();
 
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ProductBrandGroupDTO> findProductType(Long custId) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select new com.starboard.b2b.dto.ProductBrandGroupDTO(pg.id.brandGroupId, cg.id.brandGroupId)");
+		sb.append(" from CustBrandGroup cg, ProductBrandGroup pg");
+		sb.append(" where cg.id.brandGroupId = pg.id.productTypeId");
+		sb.append(" and cg.id.custId = :custId");
+
+		return sessionFactory.getCurrentSession().createQuery(sb.toString()).setLong("custId", custId).list();
 	}
 
 }

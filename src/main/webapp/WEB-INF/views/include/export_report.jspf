@@ -6,7 +6,7 @@
 			<input type="button" class="btn btn-default" id="btnPdf" value="PDF" onclick="exportPdf()" />
 			<input type="button" class="btn btn-default" id="btnPrint" value="PRINT" onclick="printPdf()" />
 
-			<c:if test="${ not empty order }">
+			<c:if test="${ orderComplete }">
 				<input type="button" class="btn btn-default" id="btnFinish" value="FINISH"
 					onclick="gotoOrderSummary();" />
 			</c:if>

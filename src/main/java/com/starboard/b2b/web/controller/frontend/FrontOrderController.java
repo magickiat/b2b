@@ -314,6 +314,7 @@ public class FrontOrderController {
 					}
 
 					// ----- validate product is current brand in cart -----
+					log.info("product.getProductTypeId() = " + product.getProductTypeId());
 					Long brandGroupId = brandGroup.get(product.getProductTypeId());
 					if (brandGroupId == null || brandGroupId != currentBrandId) {
 						throw new B2BException(String.format("Brand of product %s doesn't same as current brand", product.getProductCode()));
@@ -574,9 +575,8 @@ public class FrontOrderController {
 		model.addAttribute("cart", null);
 		session.setComplete();
 
-		// ----- show only first order in next step ----
 		OrderDTO order = orders.get(0);
-		model.addAttribute("order", order);
+		model.addAttribute("orderComplete", true);
 
 		final SearchOrderDTO orderReport = orderService.findOrderForReport(order.getOrderCode());
 		final List<OrdAddressDTO> ordAddresses = orderService.findOrderAddress(order.getOrderCode());

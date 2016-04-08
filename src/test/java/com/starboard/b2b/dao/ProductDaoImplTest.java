@@ -14,12 +14,11 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import com.starboard.b2b.config.TestRepositoryConfig;
+import com.starboard.b2b.config.ConfigForTest;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchResult;
@@ -27,7 +26,7 @@ import com.starboard.b2b.model.Product;
 import com.starboard.b2b.web.form.product.SearchProductForm;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { TestRepositoryConfig.class })
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { ConfigForTest.class })
 @Transactional
 public class ProductDaoImplTest {
 
