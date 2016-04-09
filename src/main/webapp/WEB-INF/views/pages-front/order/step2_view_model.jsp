@@ -89,7 +89,7 @@
 					
 					$('input[type=radio][name=withnose]').change(
 							function() {
-
+								console.log('event changed ' + this.value);
 								if (this.value == 0) {
 									$('.withnose0').show();
 									$('.withnose1').hide();
@@ -113,9 +113,20 @@
 								changeProductTechnology(techId, product);
 
 							});
-
+					checkHasNoseProtectorOnly();
 				});
 
+		function checkHasNoseProtectorOnly(){
+			var numOfProductListNoWithnose = ${productListNoWithnose.size()};
+			var numOfProductListWithnose = ${productListWithnose.size()};
+			
+			// has only with nose protector
+			if(numOfProductListNoWithnose == 0 && numOfProductListWithnose > 0){
+				$('input[type=radio][name=withnose][value=0]').attr("disabled",true);
+				$('input[type=radio][name=withnose][value=1]').click();
+				
+			}
+		}
 		function changeProductTechnology(techId, productId) {
 
 			$('#currentTechId').val(techId);

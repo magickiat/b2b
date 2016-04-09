@@ -19,7 +19,7 @@
 	
 					<%-- Set current technology --%>
 					<c:if test="${rowNumTech.index == 0 }">
-						<input type="hidden" id="currentTechId" value="${ rowTech.key }" />
+						<input type="hidden" id="currentTechId" value="${stringUtil.removeSpecialChar(rowTech.key)}" />
 					</c:if>
 	
 					<div class="menu-link"
