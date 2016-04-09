@@ -35,22 +35,22 @@
 								<a href='<c:url value="/frontend/order/step2/index?brand_id=${ brand.brandGroupId }" />'>
 									<c:choose>
 										<c:when test="${brand.brandGroupId == 10}">
-											<img alt="starboard" src='<c:url value="/upload/brand/logo/starboard.png" />'
+											<img title="starboard" src='<c:url value="/upload/brand/logo/starboard.png" />'
 												id="starboardicon" onerror="getDefaultFileImageName(this)" class="default-thumbnail" />
 										</c:when>
 
 										<c:when test="${brand.brandGroupId == 30}">
-											<img alt="airush" src='<c:url value="/upload/brand/logo/airush.png" />' id="airushicon"
+											<img title="airush" src='<c:url value="/upload/brand/logo/airush.png" />' id="airushicon"
 												onerror="getDefaultFileImageName(this)" class="default-thumbnail" />
 										</c:when>
 
 										<c:when test="${brand.brandGroupId == 40}">
-											<img alt="severne" src='<c:url value="/upload/brand/logo/severne.png" />'
+											<img title="severne" src='<c:url value="/upload/brand/logo/severne.png" />'
 												id="severneicon" onerror="getDefaultFileImageName(this)" class="default-thumbnail" />
 										</c:when>
 
 										<c:when test="${brand.brandGroupId == 50}">
-											<img alt="drake" src='<c:url value="/upload/brand/logo/drake.png" />' id="drake"
+											<img title="drake" src='<c:url value="/upload/brand/logo/drake.png" />' id="drake"
 												onerror="getDefaultFileImageName(this)" class="default-thumbnail" />
 										</c:when>
 									</c:choose>
@@ -59,23 +59,23 @@
 								<c:choose>
 									<c:when test="${brand.brandGroupId == 10}">
 										<a href='<c:url value="/frontend/order/step2/index?brand_id=${ brand.brandGroupId }" />'>
-											<img alt="starboard" src='<c:url value="/upload/brand/logo/starboard.png" />'
+											<img title="starboard" src='<c:url value="/upload/brand/logo/starboard.png" />'
 												id="starboardicon" onerror="getDefaultFileImageName(this)" class="default-thumbnail" />
 										</a>
 									</c:when>
 
 									<c:when test="${brand.brandGroupId == 30}">
-										<img alt="airush" src='<c:url value="/upload/brand/logo/airush.png" />' id="airushicon"
+										<img title="airush" src='<c:url value="/upload/brand/logo/airush.png" />' id="airushicon"
 											onerror="getDefaultFileImageName(this)" class="default-thumbnail" />
 									</c:when>
 
 									<c:when test="${brand.brandGroupId == 40}">
-										<img alt="severne" src='<c:url value="/upload/brand/logo/severne.png" />' id="severneicon"
+										<img title="severne" src='<c:url value="/upload/brand/logo/severne.png" />' id="severneicon"
 											onerror="getDefaultFileImageName(this)" class="default-thumbnail" />
 									</c:when>
 
 									<c:when test="${brand.brandGroupId == 50}">
-										<img alt="drake" src='<c:url value="/upload/brand/logo/drake.png" />' id="drake"
+										<img title="drake" src='<c:url value="/upload/brand/logo/drake.png" />' id="drake"
 											onerror="getDefaultFileImageName(this)" class="default-thumbnail" />
 									</c:when>
 								</c:choose>
