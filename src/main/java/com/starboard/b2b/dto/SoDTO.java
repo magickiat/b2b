@@ -1,8 +1,8 @@
 package com.starboard.b2b.dto;
 
-import com.starboard.b2b.model.So;
-
 import java.util.Date;
+
+import com.starboard.b2b.model.sync.So;
 
 /**
  * SoDTO DTO

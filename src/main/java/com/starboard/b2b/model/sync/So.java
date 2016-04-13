@@ -1,4 +1,4 @@
-package com.starboard.b2b.model;
+package com.starboard.b2b.model.sync;
 // Generated Oct 25, 2015 1:54:35 PM by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;

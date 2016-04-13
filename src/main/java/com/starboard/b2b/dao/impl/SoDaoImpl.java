@@ -2,16 +2,13 @@ package com.starboard.b2b.dao.impl;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.starboard.b2b.dao.SoDao;
 import com.starboard.b2b.dto.SoDTO;
-import com.starboard.b2b.model.SoDetail;
+import com.starboard.b2b.model.sync.So;
 
 @Repository("soDao")
 public class SoDaoImpl implements SoDao {
@@ -27,12 +24,8 @@ public class SoDaoImpl implements SoDao {
 	}
 
 	@Override
-	public List<SoDetail> findByOrderDetailId(long orderDetailId) {
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(SoDetail.class);
-		criteria.add(Restrictions.eq("orderProductId", orderDetailId));
-		criteria.addOrder(Order.desc("timeCreate"));
-		criteria.addOrder(Order.desc("timeUpdate"));
-		
-		return criteria.list();
+	public void save(So so) {
+		sessionFactory.getCurrentSession().save(so);
 	}
+
 }

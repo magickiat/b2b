@@ -4,14 +4,12 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
@@ -51,12 +49,10 @@ public class ConfigForTest {
 
 	private Properties hibernateProperties() {
 		Properties prop = new Properties();
-		prop.setProperty("hibernate.hbm2ddl.auto", "update");
+		prop.put("hibernate.hbm2ddl.auto", "create");
 		prop.put("hibernate.show_sql", "true");
-		// prop.setProperty("hibernate.dialect",
-		// "org.hibernate.dialect.HSQLDialect");
-		prop.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-		// prop.setProperty("hibernate.hbm2ddl.import_files", "/db/data.sql");
+		prop.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+//		prop.put("hibernate.hbm2ddl.import_files", "classpath:import.sql");
 
 		return prop;
 	}

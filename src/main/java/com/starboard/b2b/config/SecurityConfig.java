@@ -26,39 +26,39 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import com.starboard.b2b.security.CustomAccessDeniedHandler;
-import com.starboard.b2b.security.MD5;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan(basePackages = { "com.starboard.b2b" },
-excludeFilters = {
-        @Filter(type = FilterType.ASSIGNABLE_TYPE,
-                value = {
-                    WebConfig.class,
-                    SecurityConfig.class,
-                    RootConfig.class
-                })
-    })
+@ComponentScan(basePackages = { "com.starboard.b2b.config", "com.starboard.b2b.dao", "com.starboard.b2b.security" }, excludeFilters = {
+		@Filter(type = FilterType.ASSIGNABLE_TYPE, value = { WebConfig.class, SecurityConfig.class, RootConfig.class }) })
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private static final String ROLE_USER = "USER";
+
 	private static final String ROLE_ADMIN = "ADMIN";
+
 	@Autowired
 	private UserDetailsService userDetailsService;
+
 	@Autowired
 	private DataSource datasource;
+
 	@Autowired
 	private Environment env;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
 	}
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/error-page/**", "/pages-front/images/**", "/upload/**", "/js/**", "/scripts/**", "/css/**", "/img/**", "/images/**", "/webjars/**", "/resources/**");
+		web.ignoring().antMatchers("/error-page/**", "/pages-front/images/**", "/upload/**", "/js/**", "/scripts/**", "/css/**", "/img/**",
+				"/images/**", "/webjars/**", "/resources/**");
 	}
 
 	@Override
@@ -68,35 +68,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		filter.setForceEncoding(true);
 		http.addFilterBefore(filter, CsrfFilter.class);
 
-//		http.headers().defaultsDisabled();
-		
-		http.authorizeRequests().antMatchers("/login/**", "/gen_user", "/system/env").permitAll()
-				.antMatchers("/backend/**").hasRole(ROLE_ADMIN)
-				.antMatchers("/frontend/**").hasAnyRole(ROLE_USER, ROLE_ADMIN)
-				.antMatchers("/report/**").authenticated()
-				.anyRequest().authenticated()
-				.and().formLogin().loginPage("/login")
-				.defaultSuccessUrl("/frontend")
-				.failureUrl("/login?error")
-				.and().logout().logoutSuccessUrl("/login")
-				.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-			    .and().rememberMe().rememberMeParameter("rememberMe").tokenRepository(persistentTokenRepository())
+		// http.headers().defaultsDisabled();
+
+		http.authorizeRequests().antMatchers("/login/**", "/gen_user", "/system/env").permitAll().antMatchers("/backend/**").hasRole(ROLE_ADMIN)
+				.antMatchers("/frontend/**").hasAnyRole(ROLE_USER, ROLE_ADMIN).antMatchers("/report/**").authenticated().anyRequest().authenticated()
+				.and().formLogin().loginPage("/login").defaultSuccessUrl("/frontend").failureUrl("/login?error").and().logout()
+				.logoutSuccessUrl("/login").and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).and().rememberMe()
+				.rememberMeParameter("rememberMe").tokenRepository(persistentTokenRepository())
 				.authenticationSuccessHandler(new AuthenSuccessHandler(Integer.valueOf(env.getProperty("session.timeout"))))
-				.tokenValiditySeconds((int) TimeUnit.MILLISECONDS.convert(5L, TimeUnit.DAYS)).and()
-				.csrf().ignoringAntMatchers("/login")
-				.and().exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());
+				.tokenValiditySeconds((int) TimeUnit.MILLISECONDS.convert(5L, TimeUnit.DAYS)).and().csrf().ignoringAntMatchers("/login").and()
+				.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());
 	}
 
 	@Bean
-	public PersistentTokenRepository persistentTokenRepository(){
+	public PersistentTokenRepository persistentTokenRepository() {
 		JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
 		tokenRepository.setDataSource(datasource);
 		return tokenRepository;
-	}
-
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new MD5();
 	}
 
 }

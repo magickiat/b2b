@@ -17,9 +17,9 @@ import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.OrdAddress;
 import com.starboard.b2b.model.Orders;
-import com.starboard.b2b.model.So;
-import com.starboard.b2b.model.SoDetail;
 import com.starboard.b2b.model.User;
+import com.starboard.b2b.model.sync.So;
+import com.starboard.b2b.model.sync.SoDetail;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
 
 @Repository("orderDao")

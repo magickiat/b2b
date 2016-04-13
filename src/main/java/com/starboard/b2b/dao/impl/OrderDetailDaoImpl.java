@@ -185,7 +185,21 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 
 	@Override
 	public int deleteByOrderId(long orderId) {
-		return sessionFactory.getCurrentSession().createQuery("delete from OrdDetail od where od.orderId = :orderId").setLong("orderId", orderId)
+		return sessionFactory.getCurrentSession()
+				.createQuery("delete from OrdDetail od where od.orderId = :orderId")
+				.setLong("orderId", orderId)
+				.executeUpdate();
+	}
+
+	@Override
+	public int deleteBySoNo(String soNo) {
+		String hql = "delete from OrdDetail as od where exists ";
+		hql += " ( from So as s, SoDetail as sd where s.soId = sd.soId ";
+		hql += " and sd.orderProductId = od.orderDetailId ";
+		hql += " and s.soNo = :soNo )";
+		return sessionFactory.getCurrentSession()
+				.createQuery(hql)
+				.setString("soNo", soNo)
 				.executeUpdate();
 	}
 }

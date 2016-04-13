@@ -8,8 +8,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+
+import com.starboard.b2b.security.MD5;
 
 @Configuration
 @ComponentScan(basePackages = { "com.starboard.b2b.util" })
@@ -48,4 +51,9 @@ public class RootConfig {
 		return intercept;
 	}
 
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new MD5();
+	}
 }

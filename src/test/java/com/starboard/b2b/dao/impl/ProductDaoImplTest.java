@@ -1,4 +1,4 @@
-package com.starboard.b2b.dao;
+package com.starboard.b2b.dao.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import com.starboard.b2b.config.ConfigForTest;
+import com.starboard.b2b.dao.ProductDao;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchResult;
