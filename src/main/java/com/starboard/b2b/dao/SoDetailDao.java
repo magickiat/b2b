@@ -6,4 +6,6 @@ public interface SoDetailDao {
 
 	void save(SoDetail detail);
 
+	int deleteBySoId(long soId);
+
 }

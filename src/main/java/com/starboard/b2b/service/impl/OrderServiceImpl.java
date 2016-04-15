@@ -32,6 +32,7 @@ import com.starboard.b2b.dao.PaymentTermDao;
 import com.starboard.b2b.dao.ProductPriceDao;
 import com.starboard.b2b.dao.ShippingTypeDao;
 import com.starboard.b2b.dao.SoDao;
+import com.starboard.b2b.dao.UserDao;
 import com.starboard.b2b.dto.CustPriceGroupDTO;
 import com.starboard.b2b.dto.OrdAddressDTO;
 import com.starboard.b2b.dto.OrderDTO;
@@ -120,6 +121,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private InvoiceDao invoiceDao;
+	
+	@Autowired
+	private UserDao userDao;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -393,7 +397,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional(readOnly = true)
 	public SoDTO findSO(long soId) {
-		So so = orderDao.findSoById(soId);
+		So so = soDao.findSoById(soId);
 		SoDTO dto = new SoDTO();
 		BeanUtils.copyProperties(so, dto);
 		return dto;
@@ -402,7 +406,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<SoDetailDTO> findSoDetail(long soId) {
-		List<SoDetail> so = orderDao.findSoDetailBySoId(soId);
+		List<SoDetail> so = soDao.findSoDetailBySoId(soId);
 		List<SoDetailDTO> soDTOs = new ArrayList<>();
 		if (so != null && !so.isEmpty()) {
 			SoDetailDTO dto = new SoDetailDTO();
@@ -421,7 +425,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional(readOnly = true)
 	public UserDTO findUserByOrderCode(String orderCode) {
-		User user = orderDao.findUserByOrderCode(orderCode);
+		User user = userDao.findUserByOrderCode(orderCode);
 		UserDTO userDTO = new UserDTO();
 		userDTO.setEmail(user.getEmail());
 		userDTO.setName(user.getName());

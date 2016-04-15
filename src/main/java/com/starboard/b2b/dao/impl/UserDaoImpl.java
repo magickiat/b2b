@@ -127,4 +127,11 @@ public class UserDaoImpl implements UserDao {
 		sessionFactory.getCurrentSession().delete(user);
 	}
 
+
+	@Override
+	public User findUserByOrderCode(String orderCode) {
+		return (User) sessionFactory.getCurrentSession().createQuery("SELECT u FROM User u, Orders o WHERE u.customerCustId = o.custId AND o.orderCode = :orderCode")
+				.setString("orderCode", orderCode).list().get(0);
+	}
+
 }

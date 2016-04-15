@@ -7,9 +7,6 @@ import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.OrdAddress;
 import com.starboard.b2b.model.Orders;
-import com.starboard.b2b.model.User;
-import com.starboard.b2b.model.sync.So;
-import com.starboard.b2b.model.sync.SoDetail;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
 
 public interface OrderDao {
@@ -40,19 +37,6 @@ public interface OrderDao {
 	List<OrdAddress> findOrderAddress(String orderCode);
 
 	List<SearchOrderDTO> findOrderForReport(Long[] ordersId);
-
-	/**
-	 * Find So by so no
-	 * @param soId so id
-	 * @return So object
-	 */
-	So findSoById(final long soId);
-	/**
-	 * Find So detail by so no
-	 * @param soId so id
-	 * @return So detail object
-	 */
-	List<SoDetail> findSoDetailBySoId(final long soId);
 	
-	User findUserByOrderCode(String orderCode);
+	Orders findByOrderCode(String roCode);
 }

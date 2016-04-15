@@ -28,7 +28,7 @@ public class TmpSoDaoImpl implements TmpSoDao {
 	public List<TmpSo> findSoForImport() {
 		String hql = " from TmpSo so ";
 		hql += " where importStatus = :importStatus and dtsSystem = :dtsSystem ";
-		hql += " order by runningNo";
+		hql += " order by soNo";
 
 		return sessionFactory.getCurrentSession().createQuery(hql)
 				.setString("dtsSystem", B2BConstant.AX_SYSTEM_NAME)

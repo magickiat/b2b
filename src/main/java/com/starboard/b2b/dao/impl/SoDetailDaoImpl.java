@@ -18,4 +18,12 @@ public class SoDetailDaoImpl implements SoDetailDao {
 		sessionFactory.getCurrentSession().save(detail);
 	}
 
+	@Override
+	public int deleteBySoId(long soId) {
+		String hql = "delete from SoDetail sd where sd.soId = :soId";
+		return sessionFactory.getCurrentSession().createQuery(hql)
+		.setLong("soId", soId)
+		.executeUpdate();
+	}
+
 }

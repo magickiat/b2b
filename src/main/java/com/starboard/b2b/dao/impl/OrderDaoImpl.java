@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,6 @@ import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.OrdAddress;
 import com.starboard.b2b.model.Orders;
-import com.starboard.b2b.model.User;
-import com.starboard.b2b.model.sync.So;
-import com.starboard.b2b.model.sync.SoDetail;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
 
 @Repository("orderDao")
@@ -219,28 +217,12 @@ public class OrderDaoImpl implements OrderDao {
 				.setLong("custId", custId)
 				.list();
 	}
-
-	/**
-	 * Find So by so id
-	 *
-	 * @param soId so id
-	 * @return So object
-	 */
-	@Override
-	public So findSoById(long soId) {
-		return (So) sessionFactory.getCurrentSession().get(So.class, soId);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<SoDetail> findSoDetailBySoId(long soId) {
-		return (List<SoDetail>) sessionFactory.getCurrentSession().createQuery("select sd from SoDetail sd where sd.soId = :soId")
-				.setLong("soId", soId).list();
-	}
 	
 	@Override
-	public User findUserByOrderCode(String orderCode) {
-		return (User) sessionFactory.getCurrentSession().createQuery("SELECT u FROM User u, Orders o WHERE u.customerCustId = o.custId AND o.orderCode = :orderCode")
-				.setString("orderCode", orderCode).list().get(0);
+	public Orders findByOrderCode(String roCode) {
+		return (Orders)sessionFactory.getCurrentSession()
+				.createCriteria(Orders.class)
+				.add(Restrictions.eq("orderCode", roCode))
+				.uniqueResult();
 	}
 }

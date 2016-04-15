@@ -28,4 +28,6 @@ public interface OrderDetailDao {
 	int deleteByOrderId(long orderId);
 
 	int deleteBySoNo(String soNo);
+
+	int deleteWithoutSoNo(Long orderId);
 }

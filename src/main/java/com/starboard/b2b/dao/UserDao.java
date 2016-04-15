@@ -29,4 +29,6 @@ public interface UserDao extends BaseDao {
 	void delete(User user);
 
 	SearchResult<UserDTO> search(SearchRequest<UserSearchForm> req);
+	
+	User findUserByOrderCode(String orderCode);
 }
