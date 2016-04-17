@@ -35,4 +35,9 @@ public class TmpSoDaoImpl implements TmpSoDao {
 				.setLong("importStatus", SyncConstant.STATUS_FOUR)
 				.list();
 	}
+
+	@Override
+	public void save(TmpSo tmpSo) {
+		sessionFactory.getCurrentSession().save(tmpSo);
+	}
 }

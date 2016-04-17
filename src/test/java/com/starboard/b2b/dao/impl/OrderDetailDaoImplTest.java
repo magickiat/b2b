@@ -28,7 +28,7 @@ import com.starboard.b2b.model.sync.SoDetail;
 import com.starboard.b2b.service.OrderService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { ConfigForTest.class, ServiceConfig.class, RootConfig.class})
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { ConfigForTest.class, ServiceConfig.class, RootConfig.class })
 @Transactional
 public class OrderDetailDaoImplTest {
 	//
@@ -71,7 +71,7 @@ public class OrderDetailDaoImplTest {
 		String soNo = "SO-001";
 		int deleteBySoNo = orderDetailDao.deleteBySoNo(soNo);
 		assertEquals(0, deleteBySoNo);
-		
+
 		// mockup SO has sync
 		So so = new So();
 		so.setSoId(1);
@@ -88,12 +88,45 @@ public class OrderDetailDaoImplTest {
 		List<OrdDetail> details = orderDetailDao.findByOrderId(order.getOrderId());
 		assertNotNull(details);
 		assertEquals(2, details.size());
-		
+
 		deleteBySoNo = orderDetailDao.deleteBySoNo(soNo);
 		assertEquals(1, deleteBySoNo);
-		
+
 		details = orderDetailDao.findByOrderId(order.getOrderId());
 		assertEquals(1, details.size());
 	}
 
+	@Test
+	public void testDeleteWithoutSoNo() {
+		// Create order
+		Orders order = new Orders();
+		order.setOrderCode(orderService.generateOrderCode());
+		orderDao.save(order);
+
+		// Create order detail
+		OrdDetail detail1 = new OrdDetail();
+		detail1.setOrderId(order.getOrderId());
+
+		OrdDetail detail2 = new OrdDetail();
+		detail2.setOrderId(order.getOrderId());
+
+		orderDetailDao.save(detail1);
+		orderDetailDao.save(detail2);
+
+		// mockup SO has sync
+		So so = new So();
+		so.setSoId(1);
+		so.setOrderId(order.getOrderId());
+		so.setSoNo("S001");
+		soDao.save(so);
+
+		SoDetail soDetail1 = new SoDetail();
+		soDetail1.setSoProductId(detail1.getOrderDetailId());
+		soDetail1.setSoId(so.getSoId());
+		soDetail1.setOrderProductId(detail1.getOrderDetailId());
+		soDetailDao.save(soDetail1);
+		
+		int deleteWithoutSoNo = orderDetailDao.deleteWithoutSoNo(order.getOrderId());
+		assertEquals(1, deleteWithoutSoNo);
+	}
 }

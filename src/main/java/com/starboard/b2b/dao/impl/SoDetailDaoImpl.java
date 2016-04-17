@@ -1,6 +1,9 @@
 package com.starboard.b2b.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -21,9 +24,19 @@ public class SoDetailDaoImpl implements SoDetailDao {
 	@Override
 	public int deleteBySoId(long soId) {
 		String hql = "delete from SoDetail sd where sd.soId = :soId";
-		return sessionFactory.getCurrentSession().createQuery(hql)
-		.setLong("soId", soId)
-		.executeUpdate();
+		return sessionFactory.getCurrentSession().createQuery(hql).setLong("soId", soId).executeUpdate();
+	}
+
+	@Override
+	public SoDetail findByOrderDetailId(Long orderDetailId) {
+		return (SoDetail) sessionFactory.getCurrentSession().createCriteria(SoDetail.class).add(Restrictions.eq("orderProductId", orderDetailId))
+				.uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<SoDetail> findBySoId(long soId) {
+		return sessionFactory.getCurrentSession().createCriteria(SoDetail.class).add(Restrictions.eq("soId", soId)).list();
 	}
 
 }

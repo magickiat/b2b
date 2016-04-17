@@ -10,4 +10,6 @@ public interface TmpSoDao {
 
 	List<TmpSo> findSoForImport();
 
+	void save(TmpSo so1);
+
 }

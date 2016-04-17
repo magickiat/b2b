@@ -130,6 +130,7 @@ public class SyncB2BServiceImpl implements SyncB2BService {
 			ordDetail.setTimeCreate(tmpSo.getDtsUpdate());
 			ordDetail.setTimeUpdate(tmpSo.getDtsUpdate());
 			orderDetailDao.save(ordDetail);
+			log.info(String.format("insert order_detail '%d' for %s complete", ordDetail.getOrderDetailId(), tmpSo.getSoNo()));
 
 			SoDetail soDetail = new SoDetail();
 			soDetail.setSoId(soInDb.getSoId());
@@ -143,6 +144,7 @@ public class SyncB2BServiceImpl implements SyncB2BService {
 			soDetail.setTimeCreate(tmpSo.getDtsUpdate());
 			soDetail.setTimeUpdate(tmpSo.getDtsUpdate());
 			soDetailDao.save(soDetail);
+			log.info(String.format("insert so_detail for %s complete", tmpSo.getSoNo()));
 
 			// ----- Step 5: Stamp flag for tmp_so -----
 			tmpSo.setImportStatus(Long.valueOf(SyncConstant.STATTUS_ONE));
