@@ -17,7 +17,7 @@ public class SyncFromAxJobProduction {
 
 	private SyncB2BService syncB2BService;
 
-	@Scheduled(cron = "0 0/10 * * * ?")
+//	@Scheduled(cron = "0 0/10 * * * ?")
 	public void doIt() {
 		log.info("Start sync data from AX...");
 		syncB2BService.syncSellOrderFromAX();
