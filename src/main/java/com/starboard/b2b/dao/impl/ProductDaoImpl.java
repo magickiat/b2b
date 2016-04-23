@@ -52,9 +52,9 @@ public class ProductDaoImpl implements ProductDao {
 
 		// common query
 		StringBuffer sb = new StringBuffer();
-		sb.append("FROM Product p, ProductModel m where ");
+		sb.append("FROM Product p, ProductModel m, ProductType pt  ");
 
-		sb.append(" p.productModelId = m.productModelId ");
+		sb.append(" where p.productModelId = m.productModelId  and p.productTypeId = pt.productTypeId ");
 		sb.append("and p.isActive = 1 ");
 
 		SearchProductForm condition = req.getCondition();
@@ -243,9 +243,9 @@ public class ProductDaoImpl implements ProductDao {
 
 		// common query
 		StringBuffer sb = new StringBuffer();
-		sb.append("FROM Product p, ProductModel m ");
+		sb.append(" FROM Product p, ProductModel m, ProductType pt ");
 
-		sb.append("where p.productModelId = m.productModelId ");
+		sb.append(" where p.productModelId = m.productModelId and p.productTypeId = pt.productTypeId ");
 
 		SearchProductForm condition = req.getCondition();
 		if (condition != null) {
@@ -342,7 +342,7 @@ public class ProductDaoImpl implements ProductDao {
 		return "new com.starboard.b2b.dto.search.SearchProductModelDTO(p.productId, p.productCode, p.productPictureMedium, "
 				+ "p.productModelId, m.productModelName, p.productNameEn, p.productPrice, p.productUnitId, p.productCurrency, "
 				+ "m.image, p.productPreintro, p.isActive, p.productTechnologyId, p.productYearId, p.productTypeId, p.productBuyerGroupId, "
-				+ "p.productLength, p.vendor, p.productCategoryId, p.statusFlag) ";
+				+ "p.productLength, p.vendor, p.productCategoryId, p.statusFlag, pt.productTypeName) ";
 
 	}
 
@@ -366,9 +366,9 @@ public class ProductDaoImpl implements ProductDao {
 
 		// common query
 		StringBuffer sb = new StringBuffer();
-		sb.append("FROM Product p,  ProductModel m  ");
+		sb.append("FROM Product p,  ProductModel m, ProductType pt   ");
 
-		sb.append("where p.productModelId = m.productModelId ");
+		sb.append("where p.productModelId = m.productModelId  and p.productTypeId = pt.productTypeId ");
 
 		sb.append(" ORDER BY p.productCode ");
 		sbQuery.append(sb);

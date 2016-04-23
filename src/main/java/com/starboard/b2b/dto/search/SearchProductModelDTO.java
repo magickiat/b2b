@@ -23,11 +23,12 @@ public class SearchProductModelDTO {
 	private String vendor;
 	private String productCategoryId;
 	private String statusFlag;
+	private String productTypeName;
 
 	public SearchProductModelDTO(long productId, String productCode, String productPictureMedium, String productModelId, String productModelName,
 			String productNameEn, BigDecimal productPrice, String productUnitId, String productCurrency, String modelImage, String productPreintro,
 			String isActive, String productTechnologyId, String year, Long productTypeId, String productBuyerGroupId, String productLength,
-			String vendor, String productCategoryId, String statusFlag) {
+			String vendor, String productCategoryId, String statusFlag, String productTypeName) {
 		this.productId = productId;
 		this.productCode = productCode;
 		this.productPictureMedium = productPictureMedium;
@@ -47,6 +48,7 @@ public class SearchProductModelDTO {
 		this.vendor = vendor;
 		this.productCategoryId = productCategoryId;
 		this.statusFlag = statusFlag;
+		this.productTypeName = productTypeName;
 	}
 
 	public long getProductId() {
@@ -207,6 +209,14 @@ public class SearchProductModelDTO {
 
 	public void setStatusFlag(String statusFlag) {
 		this.statusFlag = statusFlag;
+	}
+
+	public String getProductTypeName() {
+		return productTypeName;
+	}
+
+	public void setProductTypeName(String productTypeName) {
+		this.productTypeName = productTypeName;
 	}
 
 }
