@@ -1,18 +1,15 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page session="true"%>
 
-		<div class="row row-header2 header2 text-center">
-			<input type="button" class="btn btn-default" id="btnExcel" value="EXCEL" onclick="exportExcel()" />
-			<input type="button" class="btn btn-default" id="btnPdf" value="PDF" onclick="exportPdf()" />
-			<input type="button" class="btn btn-default" id="btnPrint" value="PRINT" onclick="printPdf()" />
+<div class="row row-header2 header2 text-center">
+	<input type="button" class="btn btn-default" id="btnExcel"
+		value="EXCEL" onclick="exportExcel()" />
+	<input type="button" class="btn btn-default" id="btnPdf" value="PDF"
+		onclick="exportPdf()" />
+	<input type="button" class="btn btn-default" id="btnPrint"
+		value="PRINT" onclick="printPdf()" />
 
-			<c:if test="${ orderComplete }">
-				<input type="button" class="btn btn-default" id="btnFinish" value="FINISH"
-					onclick="gotoOrderSummary();" />
-			</c:if>
 </div>
-
-<div id="pdfContainer" class="pdfContainer" style="display: none;"></div>
 
 <script type="text/javascript">
 	function exportExcel() {
@@ -28,6 +25,6 @@
 	}
 
 	function printPdf() {
-		exportPdf();
+		window.open('<c:url value="/report/print/pdf?orderId=${orderId}" />');
 	}
 </script>

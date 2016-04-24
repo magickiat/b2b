@@ -66,28 +66,27 @@ public class ReportController {
 	// https://poi.apache.org/spreadsheet/quick-guide.html
 	@RequestMapping(value = "order/excel", method = RequestMethod.GET)
 	String generateOrderExcel(@RequestParam("orderId[]") Long[] orderId, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
+
 		log.info("Generate excel order report: orderId = " + orderId);
 		String filename = "excel_order_list";
 		HSSFWorkbook workbook = B2BFileUtil.createExcelOrder(orderId, orderService);
-		
+
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ServletOutputStream os = response.getOutputStream();
-		try{
+		try {
 			workbook.write(baos);
 			workbook.close();
-			
+
 			// Set servlet response excel
 			response.setContentLength(baos.size());
 			response.setContentType("application/vnd.ms-excel");
 			response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + ".xls\"");
 			response.setHeader("Cache-Control", "cache, must-revalidate");
-	        response.setHeader("Pragma", "public");
-			
-			
+			response.setHeader("Pragma", "public");
+
 			baos.writeTo(os);
-			
-		}catch(Exception e){
+
+		} catch (Exception e) {
 			log.error(e.toString(), e);
 		} finally {
 			os.flush();
@@ -98,52 +97,53 @@ public class ReportController {
 		return null;
 	}
 
-	
-	
 	@RequestMapping(value = "ordersummary/excel", method = RequestMethod.GET)
-	String generateOrderSummaryExcel(@ModelAttribute("form") OrderSummaryForm form, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	String generateOrderSummaryExcel(@ModelAttribute("form") OrderSummaryForm form, Model model, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		log.info("search condition: " + form.toString());
-        setOrderSummarySearchFrom(form, model);
+		setOrderSummarySearchFrom(form, model);
 		List<SearchOrderDTO> list = orderService.searchOrderForReport(form);
-		if(list != null && list.size() > 0){
+		if (list != null && list.size() > 0) {
 			ArrayList<Long> orderId = new ArrayList<>();
-			
+
 			for (SearchOrderDTO dto : list) {
 				orderId.add(dto.getOrderId());
 			}
-			
+
 			return generateOrderExcel(orderId.toArray(new Long[orderId.size()]), request, response);
 		}
 
 		return null;
 	}
-	
-	 /**
-     * Set all required search condition for order summary page
-     * @param form Order Summary form
-     * @param model Model attributes
-     */
-    private void setOrderSummarySearchFrom(final OrderSummaryForm form, final Model model){
-        final List<ProductTypeDTO> productTypes = productService.findProductTypeByBrandId(form.getBrandId());
-        model.addAttribute("productType", productTypes);
-        final List<OrderStatusDTO> orderStatus = orderService.findAllOrderStatus();
-        model.addAttribute("orderStatus", orderStatus);
-    }
 
+	/**
+	 * Set all required search condition for order summary page
+	 * 
+	 * @param form
+	 *            Order Summary form
+	 * @param model
+	 *            Model attributes
+	 */
+	private void setOrderSummarySearchFrom(final OrderSummaryForm form, final Model model) {
+		final List<ProductTypeDTO> productTypes = productService.findProductTypeByBrandId(form.getBrandId());
+		model.addAttribute("productType", productTypes);
+		final List<OrderStatusDTO> orderStatus = orderService.findAllOrderStatus();
+		model.addAttribute("orderStatus", orderStatus);
+	}
 
 	@RequestMapping(value = "order/pdf", method = RequestMethod.GET)
 	@Transactional(readOnly = true)
 	String generateOrderPDF(Long orderId, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		log.info("orderId = " + orderId);
 		Map<String, Object> params = new HashMap<>();
-		
+
 		Session session = sessionFactory.openSession();
 
 		Connection connection = null;
 		Transaction tx = null;
 		OutputStream outStream = response.getOutputStream();
 		try {
-			
+
 			OrderDTO order = orderService.findOrder(orderId);
 
 			connection = ((SessionImpl) session).connection();
@@ -156,18 +156,19 @@ public class ReportController {
 
 			InputStream jasperStream = this.getClass().getResourceAsStream("/report/ro.jasper");
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
-			
+
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, connection);
 			byte[] exportReportToPdf = JasperExportManager.exportReportToPdf(jasperPrint);
 			log.info("byte size = " + exportReportToPdf.length);
-			
-			response.setContentLength(exportReportToPdf.length);
+
 			response.setContentType("application/pdf");
-			response.setHeader("Content-Disposition", "attachment; filename="+order.getOrderCode()+".pdf");
+			response.setHeader("Content-Disposition", "attachment; filename=" + order.getOrderCode() + ".pdf");
 			response.setHeader("Cache-Control", "cache, must-revalidate");
-	        response.setHeader("Pragma", "public");
+			response.setHeader("Pragma", "public");
+			response.setContentLength(exportReportToPdf.length);
+
 			outStream.write(exportReportToPdf);
-			
+
 			jasperStream.close();
 			tx.commit();
 		} catch (Exception e) {
@@ -180,8 +181,8 @@ public class ReportController {
 			if (connection != null) {
 				connection.close();
 			}
-			
-//			baos.close();
+
+			// baos.close();
 		}
 
 		return null;
@@ -200,9 +201,9 @@ public class ReportController {
 		try {
 
 			final SoDTO so = orderService.findSO(soId);
-			//find so detail before generate jasper report
+			// find so detail before generate jasper report
 			final List<SoDetailDTO> soDetail = orderService.findSoDetail(soId);
-			if(!soDetail.isEmpty()){
+			if (!soDetail.isEmpty()) {
 				connection = ((SessionImpl) session).connection();
 				tx = session.beginTransaction();
 				log.info("Generating pdf by Jasper");
@@ -219,10 +220,9 @@ public class ReportController {
 
 				response.setContentLength(baos.size());
 				response.setContentType("application/x-pdf");
-				response.setHeader("Content-Disposition", "inline; filename="+so.getSoNo()+".pdf");
+				response.setHeader("Content-Disposition", "inline; filename=" + so.getSoNo() + ".pdf");
 				response.setHeader("Cache-Control", "cache, must-revalidate");
-		        response.setHeader("Pragma", "public");
-				
+				response.setHeader("Pragma", "public");
 
 				baos.writeTo(outStream);
 
@@ -252,5 +252,61 @@ public class ReportController {
 	@ResponseBody
 	String countSoDetail(final Long soId) throws Exception {
 		return String.valueOf(orderService.findSoDetail(soId).size());
+	}
+
+	@RequestMapping(value = "print/pdf")
+	String viewPdf(@RequestParam("orderId") Long orderId, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		log.info("orderId = " + orderId);
+		Map<String, Object> params = new HashMap<>();
+
+		Session session = sessionFactory.openSession();
+
+		Connection connection = null;
+		Transaction tx = null;
+		OutputStream outStream = response.getOutputStream();
+		try {
+
+			OrderDTO order = orderService.findOrder(orderId);
+
+			connection = ((SessionImpl) session).connection();
+			tx = session.beginTransaction();
+
+			params.put("orderId", orderId);
+			params.put("showcate", false);
+			params.put("relativePage", 0);
+			params.put("SUBREPORT_DIR", this.getClass().getResource("/report/").getPath());
+
+			InputStream jasperStream = this.getClass().getResourceAsStream("/report/ro.jasper");
+			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, connection);
+			byte[] exportReportToPdf = JasperExportManager.exportReportToPdf(jasperPrint);
+			log.info("byte size = " + exportReportToPdf.length);
+
+			response.setContentType("application/pdf");
+			response.setHeader("Content-Disposition", "inline; filename=" + order.getOrderCode() + ".pdf");
+			response.setHeader("Cache-Control", "cache, must-revalidate");
+			response.setHeader("Pragma", "public");
+			response.setContentLength(exportReportToPdf.length);
+
+			outStream.write(exportReportToPdf);
+
+			jasperStream.close();
+			tx.commit();
+		} catch (Exception e) {
+			log.error(e.toString(), e);
+			if (tx != null) {
+				tx.rollback();
+			}
+		} finally {
+
+			if (connection != null) {
+				connection.close();
+			}
+
+			// baos.close();
+		}
+
+		return null;
 	}
 }

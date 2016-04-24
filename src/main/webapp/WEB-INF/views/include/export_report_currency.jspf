@@ -7,10 +7,6 @@
 	<input type="button" class="btn btn-default" value="PDF"
 		onclick="window.location.href = '<c:url value="/report/order/pdf?orderId=${orderId}" />'" />
 	<input type="button" class="btn btn-default" value="PRINT"
-		onclick="window.location.href = '<c:url value="/report/order/pdf?orderId=${orderId}" />'" />
+		onclick="window.open('<c:url value="/report/print/pdf?orderId=${orderId}" />')" />
 
-	<c:if test="${ orderComplete }">
-		<input type="button" class="btn btn-default" value="FINISH"
-			onclick="window.location.href = '<c:url value="/frontend/order/summary" />'" />
-	</c:if>
 </div>
