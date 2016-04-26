@@ -21,7 +21,7 @@
 <body>
 	<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf"%>
 	<div class="container">
-		<div class="col-md-12 bg_color">
+		<div class="col-md-12 bg_color showline2">
 			<div class="row row-header2 header2 txtupper">Event</div>
 			<form:form class="form-horizontal" servletRelativeAction="/backend/event/create" method="post"
 	               modelAttribute="eventForm">
@@ -38,7 +38,7 @@
 		        </div>
 				<div class="form-group">
 					<label class="col-sm-1">Event Date:</label>
-					<div class="col-sm-11">
+					<div class="col-sm-3">
 						<div id="dateFromPicker" class="input-group date">
 							<form:input path="timeEvent" cssClass="form-control" />
 							<span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span></span>

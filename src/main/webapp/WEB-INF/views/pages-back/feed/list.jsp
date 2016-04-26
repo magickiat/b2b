@@ -24,7 +24,7 @@
 	
 			<div class="row">
 				<div class="">
-					<div class="col-sm-12 bg_color">
+					<div class="col-sm-12 bg_color showline2">
 						<div class="row">
 							<div class=" col-sm-9">
 								<div class="row row-header2 header2 txtupper">Feed Content</div>
@@ -38,10 +38,10 @@
 						</div>
 						
 						<div class="">
-							<div class="bg_color">
+							<div class="">
 								<%-- Upper Paging --%>
 								<%@include file="/WEB-INF/views/include/paging.jspf" %>
-								<div class="col-sm-12 bg_color">
+								<div class="col-sm-12 ">
 									<table class="table table-hover">
 										<thead>
 											<tr>

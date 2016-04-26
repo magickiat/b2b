@@ -17,7 +17,7 @@
 		<div class="col-md-12">
 	
 			<div class="row">
-				<div class="col-md-12 bg_color">
+				<div class="col-md-12 bg_color showline2">
 					<div class="row col-md-6 row-header2 header2 txtupper">Search Contact us</div>
 					<div class="" style="margin-top:10px;">
 						<form action='<c:url value="/backend/contactus/add" />'>

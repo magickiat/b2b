@@ -16,7 +16,7 @@
 	
 		<div class="col-md-12">
 
-			<div class="row col-sm-12 bg_color">
+			<div class="row col-sm-12 bg_color showline2">
 				<div class="row row-header2 header2 txtupper">Contact Us</div>
 				
 				<form:form servletRelativeAction="/backend/contactus/add"

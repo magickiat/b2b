@@ -19,8 +19,8 @@
 		<div class="col-md-12">
 			
 			<div class="row">
-				<div class="col-sm-12 header2 txtupper bg_color">Problem occured</div>
-				<div class="col-sm-12 bg_color">Please contact administrator
+				<div class="col-sm-12 header2 txtupper bg_color showline2">Problem occured</div>
+				<div class="col-sm-12 bg_color showline2">Please contact administrator
 					with this message</div>
 				<div class="col-sm-12 bg_color showline2" style="padding: 10px;">
 				${exception.message}

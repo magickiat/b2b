@@ -23,7 +23,7 @@
 		<div class="col-md-12">
 
 			<div class="row">
-				<div class="col-md-12 bg_color">
+				<div class="col-md-12 bg_color showline2">
 					<div class="row row-header2 header2 txtupper">Search Customer</div>
 					<%-- <div class="" style="margin-top:10px;">
 						<form:form servletRelativeAction="/backend/customer/create"

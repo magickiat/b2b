@@ -6,7 +6,7 @@
 
 <div class="col-sm-12">&nbsp;</div>
 
-<div class="col-sm-12 bg_color" style="border: 1;">
+<div class="col-sm-12" style="border: 1;">
 	<div class="col-sm-12">&nbsp;</div>
 	<%-- Loop All Tech --%>
 	<form:form servletRelativeAction="/backend/customer/save_address" class="form-horizontal" modelAttribute="addressForm" method="post">

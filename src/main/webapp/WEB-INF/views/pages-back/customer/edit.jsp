@@ -23,7 +23,7 @@
 
 			<div class="row">
 
-				<div class="col-sm-12 bg_color">
+				<div class="col-sm-12 bg_color showline2">
 					<div class="row row-header2 header2 txtupper">customer detail</div>
 
 
@@ -63,7 +63,7 @@
 			<hr />
 
 			<div class="row">
-				<div class="col-sm-12 bg_color">
+				<div class="col-sm-12 bg_color showline2">
 					<div class="row">
 						<div class=" col-sm-11">
 							<div class="row row-header2 header2 txtupper">Login Account</div>
@@ -78,7 +78,7 @@
 					</div>
 
 					<div class="">
-						<div class="bg_color">
+						<div class="">
 							<table class="table table-hover" id="list_user">
 								<thead>
 									<tr>
@@ -126,7 +126,7 @@
 
 			<%-- List Address --%>
 			<div class="row">
-				<div class="col-sm-12 bg_color">
+				<div class="col-sm-12 bg_color showline2">
 					<div class="row">
 						<div class=" col-sm-9">
 							<div class="row row-header2 header2 txtupper">Address</div>
@@ -140,7 +140,7 @@
 					</div>
 
 					<div class="">
-						<div class="bg_color">
+						<div class="">
 							<c:forEach items="${listAddr }" var="addr">
 								<%@include file="list_address.jspf"%>
 							</c:forEach>
@@ -154,7 +154,7 @@
 			<hr />
 			<%-- List Contact --%>
 			<div class="row">
-				<div class="col-sm-12 bg_color">
+				<div class="col-sm-12 bg_color showline2">
 					<div class="row">
 						<div class=" col-sm-9">
 							<div class="row row-header2 header2 txtupper">Contact</div>
@@ -166,7 +166,7 @@
 								onclick="javascript:window.location.href = '${addContactUrl}'">Add Contact</button>
 						</div>
 					</div>
-					<div class="bg_color">
+					<div class="">
 						<c:forEach items="${listContact }" var="contact">
 							<%@include file="list_contact.jspf"%>
 						</c:forEach>
@@ -179,7 +179,7 @@
 
 			<%-- Product Brand --%>
 			<div class="row">
-				<div class="col-sm-12 bg_color">
+				<div class="col-sm-12 bg_color showline2">
 					<div class="row">
 						<div class=" col-sm-9">
 							<div class="row row-header2 header2 txtupper">Product Brand</div>
@@ -193,7 +193,7 @@
 					</div>
 
 					<div class="">
-						<div class="col-sm-12 bg_color">
+						<div class="col-sm-12 ">
 							<table class="table table-hover" id="list_brand">
 								<thead>
 									<tr>

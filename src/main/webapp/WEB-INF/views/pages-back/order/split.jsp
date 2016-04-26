@@ -23,16 +23,26 @@
 			<form:form id="splitOrderDetailForm" modelAttribute="splitForm"
 				servletRelativeAction="/backend/order/split-action" cssClass="form-horizontal">
 	
-				<div class="row bg_color">
-					<div class="col-sm-12">
-						<label for="splitNum" class="control-label col-sm-2">Split Product To :</label>
-						<form:input path="splitNum" cssClass="numberOnly" />
-						Line
-						<input type="submit" id="btnSplit" class="btn btn-default" value="Split" />
+				<div class="row bg_color showline2">
+					<div class="col-sm-12" style="padding-bottom: 10px; padding-top: 15px;">
+					
+						<div class="form-group">
+							<label for="splitNum" class="control-label col-sm-2">Split Product To :</label>
+							<div class="col-sm-2" style="width: 100px;">
+								<form:input path="splitNum" cssClass="form-control numberOnly" />
+							</div>
+							<div class="col-sm-1" style="width: 50px;">
+								<label for="splitNum" class="control-label">Line</label>
+							</div>
+							<div class="col-sm-2">
+								<input type="submit" id="btnSplit" class="btn btn-default" value="Split" />
+							</div>
+						</div>
+						
 					</div>
 				</div>
 				<div class="row">&nbsp;</div>
-				<div class="row showline2">
+				<div class="row bg_color showline2">
 					<div class="col-sm-12">&nbsp;</div>
 					<div class="col-sm-12">
 						<!-- Save value for passed to controller -->
@@ -109,7 +119,7 @@
 	
 										<td>
 											<form:input path="splitOrderDetails[${ rowNum.index }].amount"
-												cssClass="numberOnly splitqty" onblur="summarySplitQty()" />
+												cssClass="form-control numberOnly splitqty" onblur="summarySplitQty()" />
 										</td>
 										<td>${ ordDetail.productUnit }</td>
 	

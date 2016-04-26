@@ -20,7 +20,7 @@
 	
 			<div class="row">
 				
-				<div class="col-sm-12 bg_color">
+				<div class="col-sm-12 bg_color showline2">
 					<div class="row row-header2 header2 txtupper">Edit Account</div>
 					
 					<form:form id="userForm" servletRelativeAction="/backend/customer/edituser"

@@ -38,7 +38,7 @@
 				<form:hidden path="orderReport.invoiceToAddress.fax" />
 	
 				<!-- Header -->
-				<div class="row bg_color">
+				<div class="row bg_color showline2">
 	
 					<div class="col-sm-6 bg_color">
 						<h1>${approveForm.orderReport.orderCode}</h1>
@@ -49,14 +49,14 @@
 					</div>
 	
 	
-					<div class="col-sm-12 bg_color text-right" style="margin: 10px 0px;">
+					<div class="col-sm-12 text-right" style="margin: 10px 0px;">
 						<input type="button" id="btn-approve" class="btn btn-success" onclick="approve()"
 							value="Approve" />
 						<input type="button" id="btn-reject" class="btn btn-danger" onclick="reject()" value="Reject" />
 					</div>
 	
 					<!-- Order info -->
-					<div class="col-sm-12 bg_color">
+					<div class="col-sm-12">
 						<table class="table">
 							<thead>
 								<tr>
@@ -106,13 +106,13 @@
 	
 	
 					<!-- Order Address detail -->
-					<div class="col-sm-6 bg_color">
+					<div class="col-sm-6">
 						<div class="col-sm-12">Dispatch to:</div>
 						<div class="col-sm-12">${approveForm.orderReport.dispatchToAddress.orderAddr}</div>
 						<div class="col-sm-12">Tel: ${approveForm.orderReport.dispatchToAddress.orderTel} Fax:
 							${approveForm.orderReport.dispatchToAddress.fax}</div>
 					</div>
-					<div class="col-sm-6 bg_color">
+					<div class="col-sm-6">
 						<div class="col-sm-12">Invoice to:</div>
 	
 	
@@ -126,33 +126,31 @@
 					<%@include file="order_detail2.jspf"%>
 	
 					<!-- Customer remark -->
-					<div class="col-sm-6 bg_color" style="padding-bottom: 10px;">
+					<div class="col-sm-6" style="padding-bottom: 10px;">
 						<div class="">Customer Remark</div>
 						<div class="">
 							<textarea id="remarkCustomer" name="remarkCustomer" class="form-control" rows="5" cols="50">${ approveForm.remarkCustomer }</textarea>
 						</div>
 					</div>
-					<div class="col-sm-6 bg_color">
+					<div class="col-sm-6">
 						<div class="">Staff Remark</div>
 						<div class="" style="padding-bottom: 10px;">
 							<textarea id="remarkOrders" name="remarkOrders" class="form-control" rows="5" cols="50">${ approveForm.remarkOrders }</textarea>
 						</div>
 					</div>
-	
-	
-	
+					
 					<%-- Save, Cancel --%>
-					<div class="col-sm-6 bg_color text-right">
-						<input type="button" id="save" name="save" class="btn btn-default" value="Save"
+					<div class="col-sm-6 text-right">
+						<input type="button" id="save" name="save" class="btn btn-primary" value="Save"
 							onclick="saveOrder()" />
 					</div>
-					<div class="col-sm-6 bg_color">
+					<div class="col-sm-6">
 						<input type="button" id="Close" name="Close" class="btn btn-default" value="Close"
 							onclick="back()" />
 					</div>
+					<div class="row" style="clear: both; height: 30px;">&nbsp;</div>
 				</div>
 			</form:form>
-		
 		</div>
 
 	</div>

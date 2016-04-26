@@ -15,7 +15,7 @@
 	<%@include file="/WEB-INF/views/pages-back/include/common_header.jspf" %>
 	<div class="container">
 		
-		<div class="col-sm-12 bg_color">
+		<div class="col-sm-12 bg_color showline2">
 			<div class="row row-header2 header2 txtupper">Edit Feed Content</div>
 			
 			<form:form class="form-horizontal" servletRelativeAction="/backend/feed-contents/edit" method="post"

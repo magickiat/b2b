@@ -17,7 +17,7 @@
 		<div class="col-md-12">
 		
 			
-			<div class="col-sm-12 bg_color">
+			<div class="col-sm-12 bg_color showline2">
 				<div class="row row-header2 header2 txtupper">Create Account</div>
 				
 				<form:form servletRelativeAction="/backend/customer/createuser"

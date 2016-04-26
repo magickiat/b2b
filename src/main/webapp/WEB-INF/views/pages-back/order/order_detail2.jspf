@@ -2,7 +2,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<div class="col-sm-12 bg_color">
+<div class="col-sm-12">
 	<table class="table table-hover table-list">
 		<thead>
 			<tr>

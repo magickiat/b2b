@@ -23,7 +23,7 @@
 				<form:form servletRelativeAction="/backend/customer/add_brand"
 						cssClass="form-horizontal" commandName="brandForm" method="post">
 			
-					<div class="col-sm-12 bg_color">
+					<div class="col-sm-12 bg_color showline2">
 						<div class="row">
 							<div class=" col-sm-9">
 								<div class="row row-header2 header2 txtupper">Brand</div>
@@ -32,7 +32,7 @@
 								<input type="submit" value="Save" class="btn btn-default pull-right" />
 							</div>
 						</div>
-						<div class="col-sm-6 bg_color">
+						<div class="col-sm-6 ">
 							<div style="margin-left: 10px;">
 								<form:hidden path="custId" />
 								<form:checkboxes items="${ brands }" path="selectedBrand"

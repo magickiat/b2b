@@ -19,39 +19,38 @@
 		<div class="col-md-12">
 
 			<div class="row">
-				<div class="col-md-12 bg_color">
-					<div class="row row-header2 header2">User</div>
+				<div class="col-md-12 bg_color showline2">
+					<div class="row col-md-6 row-header2 header2 txtupper">User</div>
+					<div class="" style="margin-top:10px;">
+						<a class="btn btn-default pull-right" href='<c:url value="/backend/user/create-staff" />'>
+							Create Staff User
+						</a>
+					</div>
+					<div class="col-sm-12">&nbsp;</div>
+					
+					<div class="row col-sm-12">
 
-					<div>&nbsp;</div>
-					<div class="row">
-
-						<form:form id="searchForm" modelAttribute="searchForm"
+						<form:form id="searchForm" modelAttribute="searchForm" cssClass="form form-horizontal"
 							servletRelativeAction="/backend/user/search-action" method="get">
 							<form:hidden path="page" />
-
-
+							
 							<div class="col-md-6">
 								<div class="form-group">
-									<label class="col-sm-3 control-label">SEARCH:</label>
-									<div class="col-sm-9">
+									<label class="col-sm-2 control-label">SEARCH:</label>
+									<div class="col-sm-10">
 										<form:input path="keyword" cssClass="form-control" />
 									</div>
 								</div>
 							</div>
-
-							<div class="col-md-4">
-								<input type="submit" class="btn btn-success" value="Search" />
+							
+							<div class="col-md-6">
+								<input type="submit" class="btn btn-success pull-right" value="Search" />
 							</div>
+							
 						</form:form>
-
-						<div class="col-sm-2">
-							<a class="btn btn-success" href='<c:url value="/backend/user/create-staff" />'>Create
-								Staff User</a>
-						</div>
+						
 					</div>
-
-					<div>&nbsp;</div>
-
+				
 				</div>
 				<%-- <div class="col-sm-2">
 					<form:form servletRelativeAction="/backend/customer/create"

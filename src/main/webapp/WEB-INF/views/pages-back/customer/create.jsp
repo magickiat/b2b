@@ -18,7 +18,7 @@
 	
 			<div class="row">
 			
-				<div class="col-sm-12 bg_color">
+				<div class="col-sm-12 bg_color showline2">
 					<div class="row row-header2 header2 txtupper">Create Customer</div>
 					
 					<form:form servletRelativeAction="/backend/customer/create"

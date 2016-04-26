@@ -5,7 +5,7 @@
 
 
 <div class="col-sm-12">&nbsp;</div>
-<div class="col-sm-12 bg_color" style="border: 1;">
+<div class="col-sm-12" style="border: 1;">
 	<%-- Loop All Tech --%>
 	<div class="col-sm-12">&nbsp;</div>
 	<form:form servletRelativeAction="/backend/customer/save_contact" class="form-horizontal" modelAttribute="contactForm" method="post"> 

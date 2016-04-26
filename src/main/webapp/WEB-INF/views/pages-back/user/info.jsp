@@ -23,13 +23,13 @@
 
 			<div class="row">
 
-				<div class="col-sm-12 bg_color">
+				<div class="col-sm-12 bg_color showline2">
 					<div class="row row-header2 header2 txtupper">My Information</div>
 
 
 					<div>&nbsp;</div>
 
-					<div class="row bg_color">
+					<div class="row">
 
 						<div class="col-md-2">Name</div>
 						<div class="col-md-10">${ user.name }</div>
@@ -38,7 +38,7 @@
 						<div class="col-md-10">${ user.username }</div>
 
 						<div class="col-md-2">Email</div>
-						<div class="col-md-10">${ user.email }</div>
+						<div class="col-md-10">${ user.email } &nbsp;</div>
 
 						<div class="col-md-2">Last active</div>
 						<div class="col-md-10">

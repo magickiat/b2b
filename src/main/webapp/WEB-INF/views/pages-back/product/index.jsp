@@ -19,7 +19,7 @@
 		<div class="col-md-12">
 
 			<div class="row">
-				<div class="col-md-12 bg_color">
+				<div class="col-md-12 bg_color showline2">
 					<div class="col-md-6 row row-header2 header2 txtupper">Products</div>
 					<div class="" style="margin-top: 15px;">
 						<a href='<c:url value="/backend/product/download" />'
@@ -125,10 +125,6 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="row">&nbsp;</div>
-
-
 
 			<div class="row">&nbsp;</div>
 

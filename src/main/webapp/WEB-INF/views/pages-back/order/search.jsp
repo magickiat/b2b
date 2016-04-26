@@ -21,7 +21,7 @@
 	
 		<div class="col-md-12">
 			<div class="row">
-				<div class="col-md-12 bg_color">
+				<div class="col-md-12 bg_color showline2">
 					<div class="row row-header2 header2 txtupper">search order</div>
 					<!-- Search section -->
 					<div style="">
@@ -58,8 +58,8 @@
 									</div>
 								</div>
 								<div class="col-md-3">
-									<button class="btn btn-success" onclick="submitForm()" style="width: 100px;">Search</button>
 									<button class="btn btn-default" onclick="exportExcel()" style="width: 100px;">Excel</button>
+									<button class="btn btn-success" onclick="submitForm()" style="width: 100px;">Search</button>
 								</div>
 							</div>
 							<%-- Search criteria row 2--%>
