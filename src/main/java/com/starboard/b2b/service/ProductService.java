@@ -91,4 +91,6 @@ public interface ProductService {
 
 	List<SearchProductModelDTO> findAllProduct();
 
+	List<ProductPriceDTO> findAllProductPrice();
+
 }

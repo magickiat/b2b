@@ -17,6 +17,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -25,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.starboard.b2b.dto.B2BFile;
+import com.starboard.b2b.dto.ProductPriceDTO;
 import com.starboard.b2b.dto.ProductTypeDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
@@ -208,11 +211,11 @@ public class B2BFileUtil {
 		return workbook;
 	}
 
-	public static HSSFWorkbook createExcelOrder(Long[] orderId, OrderService orderService) {
-		HSSFWorkbook workbook = new HSSFWorkbook();
+	public static XSSFWorkbook createExcelOrder(Long[] orderId, OrderService orderService) {
+		XSSFWorkbook workbook = new XSSFWorkbook();
 		// ----- Create header row sheet "order" -----
-		HSSFSheet sheetOrder = workbook.createSheet("order");
-		HSSFRow rowHeadOrder = sheetOrder.createRow(0);
+		XSSFSheet sheetOrder = workbook.createSheet("order");
+		XSSFRow rowHeadOrder = sheetOrder.createRow(0);
 		rowHeadOrder.createCell(0).setCellValue("Request ID");
 		rowHeadOrder.createCell(1).setCellValue("Customer");
 		rowHeadOrder.createCell(2).setCellValue("Brand");
@@ -230,7 +233,7 @@ public class B2BFileUtil {
 				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY", Locale.US);
 				int orderRow = 1;
 				for (SearchOrderDTO order : orderList) {
-					HSSFRow orderRow1 = sheetOrder.createRow(orderRow++);
+					XSSFRow orderRow1 = sheetOrder.createRow(orderRow++);
 					orderRow1.createCell(0).setCellValue(StringUtils.isEmpty(order.getOrderCode()) ? "" : order.getOrderCode());
 					orderRow1.createCell(1).setCellValue(StringUtils.isEmpty(order.getCustomerName()) ? "" : order.getCustomerName());
 					orderRow1.createCell(2).setCellValue(StringUtils.isEmpty(order.getProductTypeName()) ? "" : order.getProductTypeName());
@@ -258,8 +261,8 @@ public class B2BFileUtil {
 				sheetOrder.autoSizeColumn(5);
 
 				// ----- Create orderline sheet -----
-				HSSFSheet sheetOrderLine = workbook.createSheet("orderline");
-				HSSFRow rowHeadOrderLine = sheetOrderLine.createRow(0);
+				XSSFSheet sheetOrderLine = workbook.createSheet("orderline");
+				XSSFRow rowHeadOrderLine = sheetOrderLine.createRow(0);
 				rowHeadOrderLine.createCell(0).setCellValue("Product Code");
 				rowHeadOrderLine.createCell(1).setCellValue("Description");
 				rowHeadOrderLine.createCell(2).setCellValue("Shiped");
@@ -274,7 +277,7 @@ public class B2BFileUtil {
 					DecimalFormat df = new DecimalFormat("#,##0.00");
 					BigDecimal totalPrice = new BigDecimal(0);
 					for (SearchOrderDetailDTO detail : orderDetails) {
-						HSSFRow detailRow = sheetOrderLine.createRow(row++);
+						XSSFRow detailRow = sheetOrderLine.createRow(row++);
 						detailRow.createCell(0).setCellValue(StringUtils.isEmpty(detail.getProductCode()) ? "" : detail.getProductCode());
 						detailRow.createCell(1).setCellValue(StringUtils.isEmpty(detail.getProductName()) ? "" : detail.getProductName());
 						detailRow.createCell(2).setCellValue(detail.getShiped());
@@ -289,7 +292,7 @@ public class B2BFileUtil {
 							totalPrice = totalPrice.add(amount);
 						}
 					}
-					HSSFRow totalPriceRow = sheetOrderLine.createRow(row);
+					XSSFRow totalPriceRow = sheetOrderLine.createRow(row);
 					totalPriceRow.createCell(6).setCellValue(df.format(totalPrice));
 
 					sheetOrderLine.autoSizeColumn(0);
@@ -308,6 +311,61 @@ public class B2BFileUtil {
 		} else {
 			log.warn("Required orderId");
 		}
+		return workbook;
+	}
+
+	public static XSSFWorkbook createExcelProductPrice(ProductService productService) {
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		// ----- Create header row -----
+		XSSFSheet sheetOrder = workbook.createSheet("price");
+		XSSFRow rowHeadOrder = sheetOrder.createRow(0);
+		rowHeadOrder.createCell(0).setCellValue("product_code");
+		rowHeadOrder.createCell(1).setCellValue("product_price_group_id");
+		rowHeadOrder.createCell(2).setCellValue("product_currency");
+		rowHeadOrder.createCell(3).setCellValue("amount");
+		rowHeadOrder.createCell(4).setCellValue("msre_price");
+		rowHeadOrder.createCell(5).setCellValue("product_unit_id");
+
+		List<ProductPriceDTO> productPrices = productService.findAllProductPrice();
+		log.info("order size: " + (productPrices == null ? 0 : productPrices.size()));
+
+		CellStyle cellStyle = workbook.createCellStyle();
+		cellStyle.setDataFormat(workbook.getCreationHelper().createDataFormat().getFormat("#.00"));
+		if (productPrices != null && productPrices.size() > 0) {
+
+			// ----- Create order detail row
+			int orderRow = 1;
+			for (ProductPriceDTO productPrice : productPrices) {
+				XSSFRow priceRow = sheetOrder.createRow(orderRow++);
+				priceRow.createCell(0).setCellValue(StringUtils.isEmpty(productPrice.getProductCode()) ? "" : productPrice.getProductCode());
+				priceRow.createCell(1).setCellValue(StringUtils.isEmpty(productPrice.getProductPriceGroupId()) ? "" : productPrice.getProductPriceGroupId());
+				priceRow.createCell(2).setCellValue(StringUtils.isEmpty(productPrice.getProductCurrency()) ? "" : productPrice.getProductCurrency());
+				
+				XSSFCell cellAmount = priceRow.createCell(3);
+				cellAmount.setCellStyle(cellStyle);
+				if(productPrice.getAmount() != null){
+					cellAmount.setCellValue(productPrice.getAmount().doubleValue());
+				}
+				
+				XSSFCell cellMsre = priceRow.createCell(4);
+				cellMsre.setCellStyle(cellStyle);
+				if(productPrice.getMsrePrice() != null){
+					cellMsre.setCellValue(productPrice.getMsrePrice().doubleValue());
+				}
+				priceRow.createCell(5).setCellValue(StringUtils.isEmpty(productPrice.getProductUnitId()) ? "" : productPrice.getProductUnitId());
+			}
+
+			// ----- resize column -----
+			sheetOrder.autoSizeColumn(0);
+			sheetOrder.autoSizeColumn(1);
+			sheetOrder.autoSizeColumn(2);
+			sheetOrder.autoSizeColumn(3);
+			sheetOrder.autoSizeColumn(4);
+			sheetOrder.autoSizeColumn(5);
+		} else {
+			log.warn("Not found any product_price");
+		}
+
 		return workbook;
 	}
 }

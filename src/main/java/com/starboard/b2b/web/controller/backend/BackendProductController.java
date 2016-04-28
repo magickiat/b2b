@@ -116,6 +116,40 @@ public class BackendProductController {
 
 		return null;
 	}
+	
+	
+	@RequestMapping(value = "/download-product-price", method = RequestMethod.GET)
+	String downloadProductPrice(HttpServletRequest req, HttpServletResponse response) throws Exception{
+		
+		String filename = "product-price.xlsx";
+		XSSFWorkbook workbook = B2BFileUtil.createExcelProductPrice(productService);
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ServletOutputStream os = response.getOutputStream();
+		try{
+			workbook.write(baos);
+			workbook.close();
+			
+			// Set servlet response excel
+			response.setContentLength(baos.size());
+			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+			response.setHeader("Cache-Control", "cache, must-revalidate");
+	        response.setHeader("Pragma", "public");
+			
+			
+			baos.writeTo(os);
+			
+		}catch(Exception e){
+			log.error(e.toString(), e);
+		} finally {
+			os.flush();
+			os.close();
+			baos.close();
+		}
+
+		return null;
+	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.GET)
 	String upload() {

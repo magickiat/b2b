@@ -20,7 +20,7 @@
 				<div class="col-sm-12 bg_color showline2">
 					<div class="col-md-6 row row-header2 header2 txtupper">Product price</div>
 					<div class="" style="margin-top: 15px;">
-						<a href='<c:url value="/upload/product/product-price.xlsx" />' class="pull-right btn btn-primary">Download Template</a>
+						<a href='<c:url value="/backend/product/download-product-price" />' class="pull-right btn btn-primary">Download Template</a>
 					</div>
 				</div>
 			</div>

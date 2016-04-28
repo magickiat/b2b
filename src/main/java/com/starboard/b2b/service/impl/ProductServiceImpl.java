@@ -670,4 +670,10 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.findByProductTypeId(productTypeId);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<ProductPriceDTO> findAllProductPrice() {
+		return productPriceDao.list();
+	}
+
 }

@@ -23,6 +23,7 @@ public class ProductPriceDaoImpl implements ProductPriceDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public ProductPriceDTO findProductPrice(String productCode, Long productTypeId, User user) {
 		log.info("productCode = " + productCode + "\tcustInvoiceCode = " + user.getCustomer().getInvoiceCode() + "\tproductTypeId = " + productTypeId
@@ -59,6 +60,13 @@ public class ProductPriceDaoImpl implements ProductPriceDao {
 		sql += " order by p.amount ";
 		return (ProductPriceDTO) sessionFactory.getCurrentSession().createQuery(sql).setString("productCode", productCode)
 				.setString("productBuyerGroupId", productBuyerGroupId).setMaxResults(1).uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ProductPriceDTO> list() {
+		String hql = "select new com.starboard.b2b.dto.ProductPriceDTO(p.id.productCode, p.id.productPriceGroupId, p.id.productCurrency, p.amount,p.productUnitId, p.msrePrice)  from ProductPrice p order by p.id.productCode";
+		return sessionFactory.getCurrentSession().createQuery(hql).list();
 	}
 
 }

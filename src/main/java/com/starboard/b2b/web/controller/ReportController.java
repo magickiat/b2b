@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -69,7 +70,7 @@ public class ReportController {
 
 		log.info("Generate excel order report: orderId = " + orderId);
 		String filename = "excel_order_list";
-		HSSFWorkbook workbook = B2BFileUtil.createExcelOrder(orderId, orderService);
+		XSSFWorkbook workbook = B2BFileUtil.createExcelOrder(orderId, orderService);
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ServletOutputStream os = response.getOutputStream();
@@ -79,8 +80,8 @@ public class ReportController {
 
 			// Set servlet response excel
 			response.setContentLength(baos.size());
-			response.setContentType("application/vnd.ms-excel");
-			response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + ".xls\"");
+			response.setContentType("pplication/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + ".xlsx\"");
 			response.setHeader("Cache-Control", "cache, must-revalidate");
 			response.setHeader("Pragma", "public");
 
