@@ -5,10 +5,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.web.HttpSessionRequiredException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 @ControllerAdvice
 public class GlobalDefaultExceptionHandler {
@@ -23,15 +25,25 @@ public class GlobalDefaultExceptionHandler {
 		// the framework handle it - like the OrderNotFoundException example
 		// at the start of this post.
 		// AnnotationUtils is a Spring Framework utility class.
-		if (AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class) != null)
+		if (AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class) != null) {
 			throw e;
+		}
 
 		log.error(e.toString(), e);
-		// Otherwise setup and send the user to a default error-view.
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("exception", e);
-		mav.addObject("url", req.getRequestURL());
-		mav.setViewName(DEFAULT_ERROR_VIEW);
-		return mav;
+
+		if (e instanceof HttpSessionRequiredException) {
+			// go to first page of (frontend or backend)
+			String path = req.getServletPath();
+			path = path.substring(1, path.indexOf("/"));
+			return new ModelAndView(new RedirectView(path));
+		} else {
+			// Otherwise setup and send the user to a default error-view.
+			ModelAndView mav = new ModelAndView();
+			mav.addObject("exception", e);
+			mav.addObject("url", req.getRequestURL());
+			mav.setViewName(DEFAULT_ERROR_VIEW);
+			return mav;
+		}
+
 	}
 }
