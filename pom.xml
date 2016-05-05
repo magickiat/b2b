@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.starboard</groupId>
 	<artifactId>b2b</artifactId>
-	<version>1.6.2</version>
+	<version>1.6.3</version>
 	<packaging>war</packaging>
 	<name>b2b</name>
 	<description>B2B Website</description>
