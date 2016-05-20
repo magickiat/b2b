@@ -20,7 +20,7 @@
 		<div class="col-md-12">
 
 			<div class="row">
-				<div class="col-md-8 bg_color showline2">
+				<div class="col-md-8 bg_color showline2" style="min-height: 550px;">
 					<c:choose>
 						<c:when test="${fn:length(resultPage.result) gt 0}">
 							<%-- Upper Paging --%>
@@ -57,7 +57,8 @@
 					</c:choose>
 
 				</div>
-				<div class="col-md-4 bg_color showline">
+				
+				<div class="col-md-4 bg_color showline2" style="min-height: 550px;">
 					<div class="row row-header header1">CALENDAR</div>
 					<div id="eventCalendar" style="min-height: 300px;"></div>
 				</div>

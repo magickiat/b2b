@@ -53,7 +53,7 @@
 }
 
 .eventCalendar-dayWithEvents {
-	background: rgba(0, 0, 0, 0.15);
+	/* 	background: rgba(0, 0, 0, 0.15); */
 }
 
 .eventCalendar-current {
@@ -93,7 +93,7 @@
 
 .eventCalendar-subtitle {
 	padding-left: 5px;
-	font-weight: bold;
+	/* 	font-weight: bold; */
 	font-size: 120%;
 }
 /* end of core CSS */
