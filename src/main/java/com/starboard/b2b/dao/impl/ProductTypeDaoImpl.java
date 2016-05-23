@@ -78,4 +78,9 @@ public class ProductTypeDaoImpl implements ProductTypeDao {
 		query.setLong("cid", customerId);
 		return query.list();
 	}
+
+	@Override
+	public void save(ProductType pt) {
+		sf.getCurrentSession().save(pt);
+	}
 }

@@ -14,10 +14,11 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@Profile("test")
+@ActiveProfiles("test")
 @EnableTransactionManagement
 @ComponentScan(basePackages = { "com.starboard.b2b.dao.impl" })
 public class ConfigForTest {

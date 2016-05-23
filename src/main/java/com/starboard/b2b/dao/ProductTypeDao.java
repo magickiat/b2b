@@ -17,4 +17,6 @@ public interface ProductTypeDao {
 	public List<ProductType> listDistinctProductType();
 
 	public List<ProductType> findByCustomer(Long customerId);
+
+	public void save(ProductType pt);
 }

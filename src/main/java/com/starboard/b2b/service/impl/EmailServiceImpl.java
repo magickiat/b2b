@@ -2,7 +2,11 @@ package com.starboard.b2b.service.impl;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.TreeMap;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -14,11 +18,11 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -27,16 +31,22 @@ import org.springframework.transaction.annotation.Transactional;
 import com.starboard.b2b.common.EmailTemplateConfig;
 import com.starboard.b2b.common.OrderStatusConfig;
 import com.starboard.b2b.dao.EmailTemplateDao;
+import com.starboard.b2b.dao.ProductEmailDao;
+import com.starboard.b2b.dao.ProductTypeDao;
 import com.starboard.b2b.dao.UserDao;
 import com.starboard.b2b.dto.OrderDTO;
+import com.starboard.b2b.dto.ProductEmailDTO;
+import com.starboard.b2b.dto.ProductTypeDTO;
+import com.starboard.b2b.dto.SearchProductEmailDTO;
 import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.model.EmailTemplate;
+import com.starboard.b2b.model.ProductEmail;
+import com.starboard.b2b.model.ProductType;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.EmailService;
 import com.starboard.b2b.service.ReportService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.EmailUtils;
-import com.starboard.b2b.util.UserUtil;
 
 @Service("emailService")
 @PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
@@ -55,31 +65,39 @@ public class EmailServiceImpl implements EmailService {
 
 	@Autowired
 	private ReportService reportService;
-	
+
 	@Autowired
 	private UserDao userDao;
 
-	private void sendEmail(String from, String[] toAddresses, String[] ccAddresses, String[] bccAddresses, String subject, String content,
-			String[] attachments) throws AddressException, MessagingException, IOException {
-		boolean enableSendMail = applicationConfig.getEnabledSendMail();
-		// Is disabled send email
-		if (!enableSendMail) {
-			return;
-		}
+	@Autowired
+	private ProductEmailDao productEmailDao;
 
-		SimpleMailMessage message = new SimpleMailMessage();
-		message.setFrom(from);
-		message.setTo(toAddresses);
-		message.setCc(ccAddresses);
-		message.setBcc(bccAddresses);
-		message.setSubject(subject);
+	@Autowired
+	private ProductTypeDao productTypeDao;
 
-		VelocityEngine ve = new VelocityEngine();
-		ve.init();
-
-		JavaMailSenderImpl sender = getMailSender();
-		sender.send(message);
-	}
+	// private void sendEmail(String from, String[] toAddresses, String[]
+	// ccAddresses, String[] bccAddresses, String subject, String content,
+	// String[] attachments) throws AddressException, MessagingException,
+	// IOException {
+	// boolean enableSendMail = applicationConfig.getEnabledSendMail();
+	// // Is disabled send email
+	// if (!enableSendMail) {
+	// return;
+	// }
+	//
+	// SimpleMailMessage message = new SimpleMailMessage();
+	// message.setFrom(from);
+	// message.setTo(toAddresses);
+	// message.setCc(ccAddresses);
+	// message.setBcc(bccAddresses);
+	// message.setSubject(subject);
+	//
+	// VelocityEngine ve = new VelocityEngine();
+	// ve.init();
+	//
+	// JavaMailSenderImpl sender = getMailSender();
+	// sender.send(message);
+	// }
 
 	private void sendEmail(String from, String[] toAddresses, String[] ccAddresses, String[] bccAddresses, String subject, String content,
 			byte[] attachments, String attachFilename) throws AddressException, MessagingException, IOException {
@@ -126,7 +144,7 @@ public class EmailServiceImpl implements EmailService {
 		log.info("send Email Order To Customer");
 
 		// ----- get customer user email -----
-		
+
 		String custEmail = getCustomerEmail(order);
 		if (StringUtils.isEmpty(custEmail)) {
 			log.warn("Customer email is required.");
@@ -181,7 +199,7 @@ public class EmailServiceImpl implements EmailService {
 
 	private String getCustomerEmail(OrderDTO order) {
 		User user = userDao.findByUsername(order.getUserCreate());
-		if(user == null){
+		if (user == null) {
 			throw new B2BException("Cannot found user: " + order.getUserCreate());
 		}
 		return user.getEmail();
@@ -257,5 +275,48 @@ public class EmailServiceImpl implements EmailService {
 		mailSender.setPassword(env.getProperty("email.password"));
 		mailSender.setJavaMailProperties(getMailProperties());
 		return mailSender;
+	}
+
+	@Override
+	@Transactional
+	public Map<Long, SearchProductEmailDTO> listProductEmail() {
+		TreeMap<Long, SearchProductEmailDTO> emails = new TreeMap<>();
+		List<ProductType> productTypes = productTypeDao.findAll();
+		for (ProductType productType : productTypes) {
+			ProductTypeDTO productTypeDto = new ProductTypeDTO();
+			BeanUtils.copyProperties(productType, productTypeDto);
+			SearchProductEmailDTO dto = new SearchProductEmailDTO();
+			dto.setProductType(productTypeDto);
+			emails.put(productType.getProductTypeId(), dto);
+		}
+
+		List<ProductEmailDTO> list = productEmailDao.findAll();
+		for (ProductEmailDTO productEmailDTO : list) {
+			SearchProductEmailDTO emailDTO = emails.get(productEmailDTO.getProductTypeId());
+			if (emailDTO != null) {
+				List<ProductEmailDTO> productEmailList = emailDTO.getEmails();
+				if (productEmailList == null) {
+					productEmailList = new ArrayList<>();
+				}
+				productEmailList.add(productEmailDTO);
+			} else {
+				log.warn("Not found product type for " + productEmailDTO);
+			}
+		}
+
+		return emails;
+	}
+
+	@Override
+	@Transactional
+	public void save(Long productTypeId, String email) {
+		ProductEmailDTO emailInDb = productEmailDao.findByEmail(productTypeId, email);
+		if(emailInDb != null){
+			throw new B2BException("Duplicate email");
+		}
+		ProductEmail productEmail = new ProductEmail();
+		productEmail.setProductTypeId(productTypeId);
+		productEmail.setEmail(email);
+		productEmailDao.save(productEmail);
 	}
 }
