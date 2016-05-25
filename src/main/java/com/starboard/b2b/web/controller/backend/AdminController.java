@@ -43,7 +43,7 @@ public class AdminController {
 
 	@RequestMapping(value = "/file/list", method = RequestMethod.GET)
 	String list(@RequestParam(name = "folder", required = false) String folder, Model model) throws B2BException {
-
+		log.info("selected folder = " + folder);
 		String rootPath = env.getProperty("upload.path");
 		if (rootPath == null) {
 			throw new B2BException("Not found upload path");
@@ -70,9 +70,9 @@ public class AdminController {
 
 			String subFolder = "";
 			if (StringUtils.isEmpty(folder)) {
-				subFolder = B2BConstant.PRODUCT_IMAGE_FOLDER + File.separator + files.get(0);
+				subFolder = B2BConstant.PRODUCT_IMAGE_FOLDER + "/" + files.get(0);
 			} else if (!folder.startsWith(B2BConstant.PRODUCT_IMAGE_FOLDER)) {
-				subFolder = B2BConstant.PRODUCT_IMAGE_FOLDER + File.separator + folder;
+				subFolder = B2BConstant.PRODUCT_IMAGE_FOLDER + "/" + folder;
 			} else {
 				subFolder = folder;
 			}

@@ -34,8 +34,10 @@ public class GlobalDefaultExceptionHandler {
 		if (e instanceof HttpSessionRequiredException) {
 			// go to first page of (frontend or backend)
 			String path = req.getServletPath();
-			path = path.substring(1, path.indexOf("/"));
-			return new ModelAndView(new RedirectView(path));
+			log.info("Request Path = " + path);
+			String newPath = path.split("/")[1];
+			log.info("Redirect to: " + newPath );
+			return new ModelAndView(new RedirectView(req.getContextPath()+"/" + newPath));
 		} else {
 			// Otherwise setup and send the user to a default error-view.
 			ModelAndView mav = new ModelAndView();

@@ -11,6 +11,7 @@
 	
 </head>
 <body class="pd-bottom">
+	<script src='<c:url value="/scripts/frontend/order/step2_view.js" />'></script>
 	
 	<%@include file="/WEB-INF/views/pages-front/include/common_header.jspf"%>
 	
@@ -76,11 +77,14 @@
 	<%@include file="/WEB-INF/views/include/common_footer.jspf" %>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 	<script src='<c:url value="/scripts/zoom/jquery.elevateZoom-3.0.8.min.js" />'></script>
+	
+	
 	<script type="text/javascript">
 		$(document).ready(
 				function() {
-
+					
 					showLogCurrentProduct();
+					showImage($('#currentTechId').val());
 
 					$('.zoomImg').elevateZoom({
 						scrollZoom : true
@@ -143,6 +147,7 @@
 			// Show first product of tech id
 			var productKey = techIdKey + '-item-' + productId;
 			$(productKey).show();
+			showImage(productId);
 
 			// Set default product size to first index
 			$('.size0').removeClass('btn-primary').addClass('btn-success');
@@ -186,7 +191,8 @@
 			// Set current product to show
 			var showItemKey = itemKey + '-' + productId;
 			$('.' + showItemKey).show();
-
+			showImage(productId);
+			
 			showPrice(productId);
 
 			clearzoom();
@@ -216,7 +222,20 @@
 				scrollZoom : true
 			});
 		}
-
+		
+		function showImage() {
+			var productId = $('#currentProduct').val();
+			
+			 var img = '<img class="product zoomImg" ';
+			 img += '	src="'+products[productId]+'" ';
+			 img += '	data-zoom-image="'+products[productId]+'" ';
+			 img += '	style="width: 475px;" onerror="this.onerror=null;this.src=\'<c:url value="/images/b2b/default_image.jpg" />\'" />';
+			 
+			 $('#showImage').html(img);
+			 
+			 $('#imgShow').attr('src', products[productId]);
+			 console.log(img);
+		}
 		
 	</script>
 	

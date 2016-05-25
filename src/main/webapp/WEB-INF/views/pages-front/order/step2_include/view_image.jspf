@@ -37,12 +37,19 @@
 							<c:out value="${ p.product.productNameEn }"></c:out>
 						</h3>
 
-						<img class="product zoomImg" src='<c:url value="/upload/product_image/BIG/${ p.product.productCode }.jpg" />'
-							data-zoom-image='<c:url value="${ imageUrl }" />'
-							style="width: 475px;" onerror="getDefaultFileImageName(this)" />
+						<script type="text/javascript">
+							products['${ p.product.productId }'] = '<c:url value="/upload/product_image/BIG/${ p.product.productCode }.jpg" />';
+						</script>
+
+<!-- 						<img class="product zoomImg" -->
+<%-- 							src='<c:url value="/upload/product_image/BIG/${ p.product.productCode }.jpg" />' --%>
+<%-- 							data-zoom-image='<c:url value="${ imageUrl }" />' --%>
+<!-- 							style="width: 475px;" onerror="getDefaultFileImageName(this)" /> -->
 					</div>
 				</c:forEach>
 			</div>
 		</c:forEach>
 	</div>
 </c:forEach>
+
+<div id="showImage"></div>
