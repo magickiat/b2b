@@ -171,6 +171,7 @@ public class ProductDaoImpl implements ProductDao {
 		sb.append(" where t.productTypeId = p.productTypeId");
 		sb.append(" and p.productModelId = :modelId");
 		sb.append(" AND p.productPreintro = :withnose");
+		sb.append(" and p.isActive=1 ");
 		sb.append(" ORDER BY p.productTechnologyId , p.productIntro ASC");
 
 		List list = sf.getCurrentSession().createQuery(sb.toString()).setString("modelId", modelId).setString("withnose", withnoseProtection).list();
@@ -189,6 +190,7 @@ public class ProductDaoImpl implements ProductDao {
 		sb.append(" from ProductType t, Product p");
 		sb.append(" where t.productTypeId = p.productTypeId");
 		sb.append(" and p.productModelId = :modelId");
+		sb.append(" and p.isActive = 1 ");
 		sb.append(" ORDER BY p.productTechnologyId , p.productIntro ASC");
 
 		List list = sf.getCurrentSession().createQuery(sb.toString()).setString("modelId", modelId).list();
