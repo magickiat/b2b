@@ -14,4 +14,6 @@ public interface ProductEmailDao {
 	List<ProductEmailDTO> findAll();
 
 	ProductEmailDTO findByEmail(Long productTypeId, String email);
+
+	ProductEmailDTO find(Long productTypeId, String email, String emailType);
 }

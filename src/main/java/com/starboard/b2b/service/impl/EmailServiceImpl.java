@@ -46,7 +46,9 @@ import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.EmailService;
 import com.starboard.b2b.service.ReportService;
 import com.starboard.b2b.util.ApplicationConfig;
+import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.EmailUtils;
+import com.starboard.b2b.util.UserUtil;
 
 @Service("emailService")
 @PropertySource(value = "classpath:application-${spring.profiles.active}.properties")
@@ -291,32 +293,42 @@ public class EmailServiceImpl implements EmailService {
 		}
 
 		List<ProductEmailDTO> list = productEmailDao.findAll();
+		if(list != null){
+			log.info("load emails size: " + list.size());
+		}else{
+			log.warn("not found any email");
+		}
 		for (ProductEmailDTO productEmailDTO : list) {
 			SearchProductEmailDTO emailDTO = emails.get(productEmailDTO.getProductTypeId());
 			if (emailDTO != null) {
 				List<ProductEmailDTO> productEmailList = emailDTO.getEmails();
 				if (productEmailList == null) {
 					productEmailList = new ArrayList<>();
+					emailDTO.setEmails(productEmailList);
 				}
 				productEmailList.add(productEmailDTO);
 			} else {
 				log.warn("Not found product type for " + productEmailDTO);
 			}
 		}
-
+		log.info("emails = " + emails);
 		return emails;
 	}
 
 	@Override
 	@Transactional
-	public void save(Long productTypeId, String email) {
-		ProductEmailDTO emailInDb = productEmailDao.findByEmail(productTypeId, email);
+	public void save(Long productTypeId, String email, String emailType) {
+		ProductEmailDTO emailInDb = productEmailDao.find(productTypeId, email, emailType);
 		if(emailInDb != null){
 			throw new B2BException("Duplicate email");
 		}
 		ProductEmail productEmail = new ProductEmail();
 		productEmail.setProductTypeId(productTypeId);
 		productEmail.setEmail(email);
+		productEmail.setEmailType(emailType);
+		productEmail.setUserCreate(UserUtil.getCurrentUsername());
+		productEmail.setTimeCreate(DateTimeUtil.getCurrentDate());
 		productEmailDao.save(productEmail);
 	}
+
 }

@@ -13,6 +13,7 @@ public class ProductEmail extends BaseModel {
 	private Long id;
 	private Long productTypeId;
 	private String email;
+	private String emailType;
 
 	public ProductEmail() {
 	}
@@ -44,6 +45,15 @@ public class ProductEmail extends BaseModel {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	@Column(name = "email_type", nullable = false)
+	public String getEmailType() {
+		return emailType;
+	}
+
+	public void setEmailType(String emailType) {
+		this.emailType = emailType;
 	}
 
 }

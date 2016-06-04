@@ -12,5 +12,5 @@ public interface EmailService {
 
 	Map<Long, SearchProductEmailDTO> listProductEmail();
 
-	void save(Long productTypeId, String email);
+	void save(Long productTypeId, String email, String type);
 }

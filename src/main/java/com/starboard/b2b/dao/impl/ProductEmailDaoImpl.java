@@ -35,15 +35,24 @@ public class ProductEmailDaoImpl implements ProductEmailDao {
 	@Override
 	public List<ProductEmailDTO> findAll() {
 		return sessionFactory.getCurrentSession()
-				.createQuery("select pe.id as id, pe.productTypeId as productTypeId, pe.email as email from ProductEmail pe order by pe.email ")
+				.createQuery("select pe.id as id, pe.productTypeId as productTypeId, pe.email as email, pe.emailType as emailType from ProductEmail pe order by pe.productTypeId, pe.email, pe.emailType ")
 				.setResultTransformer(Transformers.aliasToBean(ProductEmailDTO.class)).list();
 	}
 
 	@Override
 	public ProductEmailDTO findByEmail(Long productTypeId, String email) {
-		return (ProductEmailDTO) sessionFactory.getCurrentSession()
-				.createQuery("select pe.id as id, pe.productTypeId as productTypeId, pe.email as email from ProductEmail pe order by pe.email ")
+		String hql = "select pe.id as id, pe.productTypeId as productTypeId, pe.email as email, pe.emailType as emailType from ProductEmail pe ";
+		hql += "where pe.productTypeId = :productTypeId and email = :email";
+		return (ProductEmailDTO) sessionFactory.getCurrentSession().createQuery(hql).setLong("productTypeId", productTypeId).setString("email", email)
 				.setResultTransformer(Transformers.aliasToBean(ProductEmailDTO.class)).uniqueResult();
+	}
+
+	@Override
+	public ProductEmailDTO find(Long productTypeId, String email, String emailType) {
+		String hql = "select pe.id as id, pe.productTypeId as productTypeId, pe.email as email, pe.emailType as emailType from ProductEmail pe ";
+		hql += "where pe.productTypeId = :productTypeId and email = :email and emailType = :emailType";
+		return (ProductEmailDTO) sessionFactory.getCurrentSession().createQuery(hql).setLong("productTypeId", productTypeId).setString("email", email)
+				.setString("emailType", emailType).setResultTransformer(Transformers.aliasToBean(ProductEmailDTO.class)).uniqueResult();
 	}
 
 }

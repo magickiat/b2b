@@ -6,6 +6,7 @@ public class ProductEmailDTO {
 	private Long id;
 	private Long productTypeId;
 	private String email;
+	private String emailType;
 
 	public ProductEmailDTO() {
 	}
@@ -37,5 +38,13 @@ public class ProductEmailDTO {
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
+	}
+
+	public String getEmailType() {
+		return emailType;
+	}
+
+	public void setEmailType(String emailType) {
+		this.emailType = emailType;
 	}
 }

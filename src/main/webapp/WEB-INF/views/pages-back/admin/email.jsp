@@ -14,88 +14,96 @@
 	<div class="container">
 
 		<div class="col-md-12">
-			<div class="row">
 
-				<c:choose>
-					<c:when test="${ empty listProductEmail }">
-						<!-- 						<div class="col-sm-12">not found any product</div> -->
-					</c:when>
-					<c:otherwise>
-						<div class="col-sm-12">
-							<input type="button" class="btn btn-default" value="Save"
-								onclick="save()" />
-						</div>
-						<div class="col-sm-12">
-							<table class="table" style="width: 75%;">
-								<thead>
-									<tr>
-										<th style="width: 20%;">Product Type</th>
-										<th>Email</th>
-									</tr>
-								</thead>
-								<c:forEach items="${ listProductEmail }" var="entry">
-									<tr>
-										<td rowspan="2">${entry.value.productType.productTypeName }</td>
-										<td>
-											<img title="Add" style="cursor: pointer;"
-												onclick="popupAddEmail(${ entry.value.productType.productTypeId }, '${entry.value.productType.productTypeName }')"
-												src='<c:url value="/images/pages-front/icon/btn_add.png" />' />
-										</td>
-									</tr>
+			<div class="row showline2">
+				<div class="col-md-12">
+					<div class="row row-header2 header2">Email Settings</div>
+					<c:choose>
+						<c:when test="${ empty listProductEmail }">
+							<!-- 						<div class="col-sm-12">not found any product</div> -->
+						</c:when>
+						<c:otherwise>
+							<div class="col-sm-12">
+								<table class="table" style="width: 75%;">
+									<thead>
+										<tr>
+											<th style="width: 20%;">Product Type</th>
+											<th>&nbsp;</th>
+										</tr>
+									</thead>
+									<c:forEach items="${ listProductEmail }" var="entry">
+										<tr>
+											<td rowspan="2">${entry.value.productType.productTypeName }</td>
+											<td>
+												<input type="button" id="btnAddTo" class="btn btn-success"
+													value="Add Mail TO"
+													onclick="popupAddEmail(${ entry.value.productType.productTypeId }, '${entry.value.productType.productTypeName }', 'TO')" />
+												<input type="button" id="btnAddCC" class="btn btn-success"
+													value="Add Mail CC"
+													onclick="popupAddEmail(${ entry.value.productType.productTypeId }, '${entry.value.productType.productTypeName }', 'CC')" />
+											</td>
+										</tr>
 
-									<tr>
-										<td>
-											<form id="${entry.value.productType.productTypeId }">
+										<tr>
+											<td>
+												<form id="${entry.value.productType.productTypeId }">
+													<table
+														id="product-type-id-${entry.value.productType.productTypeId }"
+														class="table" style="width: 100%;">
+														<thead>
+															<tr>
+																<th>Email</th>
+																<th>Type</th>
+																<th>&nbsp;</th>
+															</tr>
+														</thead>
+														<tbody>
+															<c:choose>
 
-												<table
-													id="product-type-id-${entry.value.productType.productTypeId }"
-													style="width: 100%;">
-													<tbody>
-														<c:choose>
-															<c:when test="${ empty entry.value.emails }">
-																<tr
-																	id="noEmail-${entry.value.productType.productTypeId }">
-																	<td colspan="2">&nbsp;</td>
-																</tr>
-															</c:when>
-
-															<c:otherwise>
-
-																<c:forEach items="${ entry.value.emails }" var="e"
-																	varStatus="rowNum">
-
-																	<c:set var="maxRow" value="${ rowNum.index + 1 }" />
-
-																	<tr id="email-${ e.id }">
-																		<td>
-																			<input type="text" id="${ e.id }"
-																				class="form-control email-${ e.id }"
-																				value="${ e.email }" />
-																		</td>
-																		<td style="width: 20%;">
-																			<img title="Remove"
-																				style="cursor: pointer; margin-left: 10px;"
-																				onclick="confirmDelete(${ e.id })"
-																				src='<c:url value="/images/pages-front/icon/btn_remove.png" />' />
+																<c:when test="${ empty entry.value.emails }">
+																	<tr id="noEmail-${entry.value.emails }">
+																		<td colspan="3">
+																			<h4>No email</h4>
 																		</td>
 																	</tr>
-																</c:forEach>
-															</c:otherwise>
-														</c:choose>
-													</tbody>
-												</table>
+																</c:when>
 
-												<input type="hidden"
-													id="max-row-${entry.value.productType.productTypeId }"
-													value="${ maxRow }" />
-											</form>
-										</td>
-									</tr>
-								</c:forEach>
-							</table>
-						</div>
-					</c:otherwise>
-				</c:choose>
+																<c:otherwise>
+
+																	<c:forEach items="${ entry.value.emails }" var="e"
+																		varStatus="rowNum">
+
+																		<c:set var="maxRow" value="${ rowNum.index + 1 }" />
+
+																		<tr id="email-${ e.id }">
+																			<td>${ e.email }</td>
+																			<td>${ e.emailType }</td>
+																			<td style="width: 20%;">
+																				<img title="Remove"
+																					style="cursor: pointer; margin-left: 10px;"
+																					onclick="confirmDelete(${ e.id })"
+																					src='<c:url value="/images/pages-front/icon/btn_remove.png" />' />
+																			</td>
+																		</tr>
+																	</c:forEach>
+																</c:otherwise>
+															</c:choose>
+														</tbody>
+													</table>
+
+													<input type="hidden"
+														id="max-row-${entry.value.productType.productTypeId }"
+														value="${ maxRow }" />
+												</form>
+											</td>
+										</tr>
+									</c:forEach>
+								</table>
+							</div>
+						</c:otherwise>
+					</c:choose>
+				</div>
+
 			</div>
 		</div>
 
@@ -115,7 +123,7 @@
 
 
 	<script type="text/javascript">
-	function popupAddEmail(productTypeId, productTypeName){
+	function popupAddEmail(productTypeId, productTypeName, emailType){
 		console.log('productTypeId = ' + productTypeId);
 		var maxRow = $('#max-row-'+productTypeId);
 		if(maxRow){
@@ -132,51 +140,46 @@
 			buttons: {
 				"Save" : function(){
 					var email = $('#inputEmail').val();
-					console.log('save email' + email);
+					console.log('save email ' + email);
 					
 					if(email){
-
+						console.log('emailType = ' + emailType);
 						console.log('ajax save');
 						
 						var param = {
 							'productTypeId' : productTypeId,
-							'email' : email
+							'email' : email,
+							'emailType': emailType
 						};
 	
 	
 						$.post('<c:url value="/backend/email/save.json"/>', param).done(function(response) {
 							console.log('Success: ' + JSON.stringify(response));
+							showDialog('Save complete');
+							window.location.href = '<c:url value="/backend/email/" />';
 						}).fail(function(result) {
-							console.log('Result: ' + result);
 							console.log('Error: ' + result.responseText);
-							alert(result.responseText);
+							showDialog(result.responseText);
 						});
 						
 						
-					}else{
-						
 					}
-					
 					
 					  $(this).dialog("close");
 				},
 				 "Cancel": function () {
 		              console.log('Do nothing.');
+		              $('#inputEmail').val('');
 		              $(this).dialog("close");
 		          }
 			},
 		      close: function (event, ui) {
+		    	  $('#inputEmail').val('');
 		    	  $(this).dialog("close");
 		      }
 		});
 		
 		dialog.dialog('open');
-// 		var inputId = (new Date).getTime();
-// 		var deleteImage = '<c:url value="/images/pages-front/icon/btn_remove.png" />';
-// 		var deleteButton = '<img title="Remove" style="cursor: pointer;  margin-left: 10px;"';
-// 		deleteButton += 'onclick="confirmDelete('+inputId+')"';
-// 		deleteButton += 'src="'+deleteImage+'" />';
-// 		$('#product-type-id-'+productTypeId + ' > tbody:first').append('<tr id="email-'+inputId+'"><td><input type="text" id="'+inputId+'" name="email" class="product-'+productTypeId+' form-control" /></td><td>'+deleteButton+'</td></tr>');
 		
 	}
 	
@@ -191,7 +194,7 @@
 					buttons : {
 						"Delete" : function() {
 							console.log('confirm delete');
-							$('#email-'+id).remove();
+							//$('#email-'+id).remove();
 							$(this).dialog("close");
 						},
 						"Cancel" : function() {
