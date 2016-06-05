@@ -17,19 +17,22 @@
 
 			<div class="row">
 				<div class="col-sm-12 bg_color showline2">
-					<div class="row row-header2 header2 txtupper">Admin</div>
-					<div class="row" style="margin-top: 15px;">
-						<a class="btn btn-primary pull-right" style="margin-right: 10px;"
+					<div class="col-md-6 row row-header2 header2 txtupper">
+						Admin
+					</div>
+					<div class="" style="margin-top: 15px;">
+						<a class="btn btn-primary pull-right" 
 							href='<c:url value="/backend/email" />'>Set email</a>
+							
 						<a class="btn btn-primary pull-right" style="margin-right: 10px;"
 							href='<c:url value="/backend/admin/file/list" />'>Upload
 							image</a>
+							
 						<a class="btn btn-primary pull-right" style="margin-right: 10px;"
 							href='<c:url value="/backend/product/upload/product-price" />'>Upload
 							Product Price</a>
+							
 					</div>
-
-
 				</div>
 			</div>
 			<div class="row">&nbsp;</div>
