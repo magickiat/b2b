@@ -72,6 +72,8 @@ public interface ProductService {
 	List<ProductPriceGroupDTO> listProductPriceGroup();
 
 	List<ProductTypeDTO> listProductBrandGroupForJson();
+	
+	List<ProductTypeDTO> listProductBrandGroup();
 
 	void updateProduct(List<ProductDTO> products);
 

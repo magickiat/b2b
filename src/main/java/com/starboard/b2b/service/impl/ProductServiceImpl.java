@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.starboard.b2b.common.B2BConstant;
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dao.OrderDao;
+import com.starboard.b2b.dao.ProductBrandGroupDAO;
 import com.starboard.b2b.dao.ProductBuyerGroupDao;
 import com.starboard.b2b.dao.ProductCategoryDao;
 import com.starboard.b2b.dao.ProductDao;
@@ -94,6 +95,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductBuyerGroupDao productBuyerGroupDao;
+	
+	@Autowired
+	private ProductBrandGroupDAO productBrandGroupDAO;
 
 	@Autowired
 	private ProductPriceDao productPriceDao;
@@ -674,6 +678,11 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional(readOnly = true)
 	public List<ProductPriceDTO> findAllProductPrice() {
 		return productPriceDao.list();
+	}
+
+	@Override
+	public List<ProductTypeDTO> listProductBrandGroup() {
+		return productBrandGroupDAO.list();
 	}
 
 }

@@ -18,7 +18,6 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -31,8 +30,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.starboard.b2b.common.EmailTemplateConfig;
 import com.starboard.b2b.common.OrderStatusConfig;
 import com.starboard.b2b.dao.EmailTemplateDao;
+import com.starboard.b2b.dao.ProductBrandGroupDAO;
 import com.starboard.b2b.dao.ProductEmailDao;
-import com.starboard.b2b.dao.ProductTypeDao;
 import com.starboard.b2b.dao.UserDao;
 import com.starboard.b2b.dto.OrderDTO;
 import com.starboard.b2b.dto.ProductEmailDTO;
@@ -41,7 +40,6 @@ import com.starboard.b2b.dto.SearchProductEmailDTO;
 import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.model.EmailTemplate;
 import com.starboard.b2b.model.ProductEmail;
-import com.starboard.b2b.model.ProductType;
 import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.EmailService;
 import com.starboard.b2b.service.ReportService;
@@ -75,7 +73,7 @@ public class EmailServiceImpl implements EmailService {
 	private ProductEmailDao productEmailDao;
 
 	@Autowired
-	private ProductTypeDao productTypeDao;
+	private ProductBrandGroupDAO productBrandGroupDAO;
 
 	// private void sendEmail(String from, String[] toAddresses, String[]
 	// ccAddresses, String[] bccAddresses, String subject, String content,
@@ -248,12 +246,16 @@ public class EmailServiceImpl implements EmailService {
 		ve.evaluate(contextMsg, outputSubject, "emailMessage", template.getSubject());
 		ve.evaluate(contextMsg, outputBody, "emailMessage", template.getBody());
 
+		
+//		productEmailDao.findByProductTypeId(order.get)
+		//TODO find email by brand group id
+		
 		String from = applicationConfig.getMailFrom(); // Overrided to account
 		log.info("---> From: " + from);
 		String[] to = applicationConfig.getMailApprover();
 		log.info("---> To: " + to[0]);
 		String[] cc = applicationConfig.getMailCCApprover();
-		String[] bcc = applicationConfig.getMailBCCApprover();
+		String[] bcc = null;
 		String subject = outputSubject.toString();
 		String body = outputBody.toString();
 		String attachFilename = order.getOrderCode() + ".pdf";
@@ -283,13 +285,13 @@ public class EmailServiceImpl implements EmailService {
 	@Transactional
 	public Map<Long, SearchProductEmailDTO> listProductEmail() {
 		TreeMap<Long, SearchProductEmailDTO> emails = new TreeMap<>();
-		List<ProductType> productTypes = productTypeDao.findAll();
-		for (ProductType productType : productTypes) {
-			ProductTypeDTO productTypeDto = new ProductTypeDTO();
-			BeanUtils.copyProperties(productType, productTypeDto);
+		
+		List<ProductTypeDTO> productTypes = productBrandGroupDAO.list();
+		
+		for (ProductTypeDTO productType : productTypes) {
 			SearchProductEmailDTO dto = new SearchProductEmailDTO();
-			dto.setProductType(productTypeDto);
-			emails.put(productType.getProductTypeId(), dto);
+			dto.setProductType(productType);
+			emails.put(productType.getBrandGroupId(), dto);
 		}
 
 		List<ProductEmailDTO> list = productEmailDao.findAll();
@@ -299,7 +301,7 @@ public class EmailServiceImpl implements EmailService {
 			log.warn("not found any email");
 		}
 		for (ProductEmailDTO productEmailDTO : list) {
-			SearchProductEmailDTO emailDTO = emails.get(productEmailDTO.getProductTypeId());
+			SearchProductEmailDTO emailDTO = emails.get(productEmailDTO.getBrandGroupId());
 			if (emailDTO != null) {
 				List<ProductEmailDTO> productEmailList = emailDTO.getEmails();
 				if (productEmailList == null) {
@@ -317,13 +319,13 @@ public class EmailServiceImpl implements EmailService {
 
 	@Override
 	@Transactional
-	public void save(Long productTypeId, String email, String emailType) {
-		ProductEmailDTO emailInDb = productEmailDao.find(productTypeId, email, emailType);
+	public void save(Long brandGroupId, String email, String emailType) {
+		ProductEmailDTO emailInDb = productEmailDao.find(brandGroupId, email, emailType);
 		if(emailInDb != null){
 			throw new B2BException("Duplicate email");
 		}
 		ProductEmail productEmail = new ProductEmail();
-		productEmail.setProductTypeId(productTypeId);
+		productEmail.setBrandGroupId(brandGroupId);
 		productEmail.setEmail(email);
 		productEmail.setEmailType(emailType);
 		productEmail.setUserCreate(UserUtil.getCurrentUsername());

@@ -36,10 +36,10 @@ public class BackendEmailController {
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody
-	String save(@RequestParam Long productTypeId, @RequestParam String email, @RequestParam String emailType) {
-		log.info("save " + email + "\tProduct type id: " + productTypeId + "\tType: " + emailType);
+	String save(@RequestParam Long brandGroupId, @RequestParam String email, @RequestParam String emailType) {
+		log.info("save " + email + "\brandGroupId: " + brandGroupId + "\tType: " + emailType);
 		try {
-			emailService.save(productTypeId, email, emailType);
+			emailService.save(brandGroupId, email, emailType);
 			return null;
 		} catch (B2BException e) {
 			Log.error(e.getMessage());

@@ -3,16 +3,17 @@ package com.starboard.b2b.dto;
 
 public class ProductTypeDTO extends BaseDTO {
 
-	private long productTypeId;
+	private Long productTypeId;
 	private String productTypeName;
-	private long productTypeParentId;
+	private Long productTypeParentId;
 	private String productTypeDescription;
+	private Long brandGroupId;
 
-	public long getProductTypeId() {
+	public Long getProductTypeId() {
 		return productTypeId;
 	}
 
-	public void setProductTypeId(long productTypeId) {
+	public void setProductTypeId(Long productTypeId) {
 		this.productTypeId = productTypeId;
 	}
 
@@ -24,11 +25,11 @@ public class ProductTypeDTO extends BaseDTO {
 		this.productTypeName = productTypeName;
 	}
 
-	public long getProductTypeParentId() {
+	public Long getProductTypeParentId() {
 		return productTypeParentId;
 	}
 
-	public void setProductTypeParentId(long productTypeParentId) {
+	public void setProductTypeParentId(Long productTypeParentId) {
 		this.productTypeParentId = productTypeParentId;
 	}
 
@@ -38,6 +39,14 @@ public class ProductTypeDTO extends BaseDTO {
 
 	public void setProductTypeDescription(String productTypeDescription) {
 		this.productTypeDescription = productTypeDescription;
+	}
+
+	public Long getBrandGroupId() {
+		return brandGroupId;
+	}
+
+	public void setBrandGroupId(Long brandGroupId) {
+		this.brandGroupId = brandGroupId;
 	}
 
 }

@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Table(name = "product_email")
 public class ProductEmail extends BaseModel {
 	private Long id;
-	private Long productTypeId;
+	private Long brandGroupId;
 	private String email;
 	private String emailType;
 
@@ -27,15 +27,6 @@ public class ProductEmail extends BaseModel {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	@Column(name = "product_type_id", nullable = false)
-	public Long getProductTypeId() {
-		return productTypeId;
-	}
-
-	public void setProductTypeId(Long productTypeId) {
-		this.productTypeId = productTypeId;
 	}
 
 	@Column(name = "email", nullable = false)
@@ -54,6 +45,15 @@ public class ProductEmail extends BaseModel {
 
 	public void setEmailType(String emailType) {
 		this.emailType = emailType;
+	}
+
+	@Column(name = "brand_group_id", nullable = false)
+	public Long getBrandGroupId() {
+		return brandGroupId;
+	}
+
+	public void setBrandGroupId(Long brandGroupId) {
+		this.brandGroupId = brandGroupId;
 	}
 
 }

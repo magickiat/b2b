@@ -35,23 +35,24 @@ public class ProductEmailDaoImpl implements ProductEmailDao {
 	@Override
 	public List<ProductEmailDTO> findAll() {
 		return sessionFactory.getCurrentSession()
-				.createQuery("select pe.id as id, pe.productTypeId as productTypeId, pe.email as email, pe.emailType as emailType from ProductEmail pe order by pe.productTypeId, pe.email, pe.emailType ")
+				.createQuery(
+						"select pe.id as id, pe.brandGroupId as brandGroupId, pe.email as email, pe.emailType as emailType from ProductEmail pe order by pe.brandGroupId, pe.email, pe.emailType ")
 				.setResultTransformer(Transformers.aliasToBean(ProductEmailDTO.class)).list();
 	}
 
 	@Override
-	public ProductEmailDTO findByEmail(Long productTypeId, String email) {
-		String hql = "select pe.id as id, pe.productTypeId as productTypeId, pe.email as email, pe.emailType as emailType from ProductEmail pe ";
-		hql += "where pe.productTypeId = :productTypeId and email = :email";
-		return (ProductEmailDTO) sessionFactory.getCurrentSession().createQuery(hql).setLong("productTypeId", productTypeId).setString("email", email)
+	public ProductEmailDTO findByEmail(Long brandGroupId, String email) {
+		String hql = "select pe.id as id, pe.brandGroupId as brandGroupId, pe.email as email, pe.emailType as emailType from ProductEmail pe ";
+		hql += "where pe.brandGroupId = :brandGroupId and email = :email";
+		return (ProductEmailDTO) sessionFactory.getCurrentSession().createQuery(hql).setLong("brandGroupId", brandGroupId).setString("email", email)
 				.setResultTransformer(Transformers.aliasToBean(ProductEmailDTO.class)).uniqueResult();
 	}
 
 	@Override
-	public ProductEmailDTO find(Long productTypeId, String email, String emailType) {
-		String hql = "select pe.id as id, pe.productTypeId as productTypeId, pe.email as email, pe.emailType as emailType from ProductEmail pe ";
-		hql += "where pe.productTypeId = :productTypeId and email = :email and emailType = :emailType";
-		return (ProductEmailDTO) sessionFactory.getCurrentSession().createQuery(hql).setLong("productTypeId", productTypeId).setString("email", email)
+	public ProductEmailDTO find(Long brandGroupId, String email, String emailType) {
+		String hql = "select pe.id as id, pe.brandGroupId as brandGroupId, pe.email as email, pe.emailType as emailType from ProductEmail pe ";
+		hql += "where pe.brandGroupId = :brandGroupId and email = :email and emailType = :emailType";
+		return (ProductEmailDTO) sessionFactory.getCurrentSession().createQuery(hql).setLong("brandGroupId", brandGroupId).setString("email", email)
 				.setString("emailType", emailType).setResultTransformer(Transformers.aliasToBean(ProductEmailDTO.class)).uniqueResult();
 	}
 

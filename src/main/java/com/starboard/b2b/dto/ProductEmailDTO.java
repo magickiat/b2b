@@ -4,7 +4,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class ProductEmailDTO {
 	private Long id;
-	private Long productTypeId;
+	private Long brandGroupId;
 	private String email;
 	private String emailType;
 
@@ -17,14 +17,6 @@ public class ProductEmailDTO {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getProductTypeId() {
-		return productTypeId;
-	}
-
-	public void setProductTypeId(Long productTypeId) {
-		this.productTypeId = productTypeId;
 	}
 
 	public String getEmail() {
@@ -46,5 +38,13 @@ public class ProductEmailDTO {
 
 	public void setEmailType(String emailType) {
 		this.emailType = emailType;
+	}
+
+	public Long getBrandGroupId() {
+		return brandGroupId;
+	}
+
+	public void setBrandGroupId(Long brandGroupId) {
+		this.brandGroupId = brandGroupId;
 	}
 }
