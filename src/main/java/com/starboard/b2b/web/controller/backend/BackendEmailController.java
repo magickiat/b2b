@@ -47,4 +47,11 @@ public class BackendEmailController {
 		}
 	}
 
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	String delete(@RequestParam long deleteEmailId, Model model) {
+		log.info("delete email id: " + deleteEmailId);
+		int deleteByEmailId = emailService.deleteByEmailId(deleteEmailId);
+		log.info("delete complete: " + (deleteByEmailId == 1));
+		return index(model);
+	}
 }

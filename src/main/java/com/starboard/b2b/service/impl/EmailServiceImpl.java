@@ -333,4 +333,10 @@ public class EmailServiceImpl implements EmailService {
 		productEmailDao.save(productEmail);
 	}
 
+	@Override
+	@Transactional
+	public int deleteByEmailId(Long id) {
+		return productEmailDao.deleteById(id);
+	}
+
 }

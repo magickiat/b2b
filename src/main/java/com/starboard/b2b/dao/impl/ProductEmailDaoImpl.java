@@ -56,4 +56,10 @@ public class ProductEmailDaoImpl implements ProductEmailDao {
 				.setString("emailType", emailType).setResultTransformer(Transformers.aliasToBean(ProductEmailDTO.class)).uniqueResult();
 	}
 
+	@Override
+	public int deleteById(Long id) {
+		String hql = "delete from ProductEmail pe where pe.id = :id";
+		return sessionFactory.getCurrentSession().createQuery(hql).setLong("id", id).executeUpdate();
+	}
+
 }

@@ -16,4 +16,6 @@ public interface ProductEmailDao {
 	ProductEmailDTO findByEmail(Long productTypeId, String email);
 
 	ProductEmailDTO find(Long productTypeId, String email, String emailType);
+
+	int deleteById(Long id);
 }

@@ -13,4 +13,6 @@ public interface EmailService {
 	Map<Long, SearchProductEmailDTO> listProductEmail();
 
 	void save(Long productTypeId, String email, String type);
+	
+	int deleteByEmailId(Long id);
 }

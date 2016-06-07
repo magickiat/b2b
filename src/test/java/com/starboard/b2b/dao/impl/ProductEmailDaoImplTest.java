@@ -35,7 +35,7 @@ public class ProductEmailDaoImplTest {
 	@Test
 	public void testFindByProductTypeId() {
 		ProductEmail e1 = new ProductEmail();
-		e1.setProductTypeId(1L);
+		e1.setBrandGroupId(1L);
 		e1.setEmail("asdf");
 		productEmailDao.save(e1);
 
@@ -56,12 +56,12 @@ public class ProductEmailDaoImplTest {
 		productTypeDao.save(pt);
 
 		ProductEmail e2 = new ProductEmail();
-		e2.setProductTypeId(1L);
+		e2.setBrandGroupId(1L);
 		e2.setEmail("222");
 		productEmailDao.save(e2);
 
 		ProductEmail e1 = new ProductEmail();
-		e1.setProductTypeId(1L);
+		e1.setBrandGroupId(1L);
 		e1.setEmail("111");
 		productEmailDao.save(e1);
 

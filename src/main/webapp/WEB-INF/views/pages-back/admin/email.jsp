@@ -37,18 +37,18 @@
 											<td>
 												<input type="button" id="btnAddTo" class="btn btn-success"
 													value="Add Mail TO"
-													onclick="popupAddEmail(${ entry.value.productType.productTypeId }, '${entry.value.productType.productTypeName }', 'TO')" />
+													onclick="popupAddEmail(${ entry.value.productType.brandGroupId }, '${entry.value.productType.productTypeName }', 'TO')" />
 												<input type="button" id="btnAddCC" class="btn btn-success"
 													value="Add Mail CC"
-													onclick="popupAddEmail(${ entry.value.productType.productTypeId }, '${entry.value.productType.productTypeName }', 'CC')" />
+													onclick="popupAddEmail(${ entry.value.productType.brandGroupId }, '${entry.value.productType.productTypeName }', 'CC')" />
 											</td>
 										</tr>
 
 										<tr>
 											<td>
-												<form id="${entry.value.productType.productTypeId }">
+												<form id="${entry.value.productType.brandGroupId }">
 													<table
-														id="product-type-id-${entry.value.productType.productTypeId }"
+														id="product-type-id-${entry.value.productType.brandGroupId }"
 														class="table" style="width: 100%;">
 														<thead>
 															<tr>
@@ -79,10 +79,14 @@
 																			<td>${ e.email }</td>
 																			<td>${ e.emailType }</td>
 																			<td style="width: 20%;">
+
+
 																				<img title="Remove"
 																					style="cursor: pointer; margin-left: 10px;"
 																					onclick="confirmDelete(${ e.id })"
 																					src='<c:url value="/images/pages-front/icon/btn_remove.png" />' />
+
+
 																			</td>
 																		</tr>
 																	</c:forEach>
@@ -92,7 +96,7 @@
 													</table>
 
 													<input type="hidden"
-														id="max-row-${entry.value.productType.productTypeId }"
+														id="max-row-${entry.value.productType.brandGroupId }"
 														value="${ maxRow }" />
 												</form>
 											</td>
@@ -118,17 +122,26 @@
 				style="position: absolute; top: -1000px" />
 		</form>
 	</div>
+
+
+	<form id="delete-email" method="post"
+		action='<c:url value="/backend/email/delete" />'>
+		<input type="hidden" id="deleteEmailId" name="deleteEmailId" />
+		<input type="hidden" id="csrftoken_" name="${_csrf.parameterName}"
+			value="${_csrf.token}" />
+	</form>
+
 	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
 
 
 	<script type="text/javascript">
-	function popupAddEmail(productTypeId, productTypeName, emailType){
-		console.log('productTypeId = ' + productTypeId);
-		var maxRow = $('#max-row-'+productTypeId);
+	function popupAddEmail(brandGroupId, productTypeName, emailType){
+		console.log('brandGroupId = ' + brandGroupId);
+		var maxRow = $('#max-row-'+brandGroupId);
 		if(maxRow){
 			console.log('Not found email');
-// 			$('#noEmail-'+productTypeId).remove();
+// 			$('#noEmail-'+brandGroupId).remove();
 		}
 		
 		var dialog = $('#dialog-email').dialog({
@@ -147,7 +160,7 @@
 						console.log('ajax save');
 						
 						var param = {
-							'productTypeId' : productTypeId,
+							'brandGroupId' : brandGroupId,
 							'email' : email,
 							'emailType': emailType
 						};
@@ -193,8 +206,9 @@
 					modal : true,
 					buttons : {
 						"Delete" : function() {
-							console.log('confirm delete');
-							//$('#email-'+id).remove();
+							console.log('confirm delete email id: ' + id);
+							$('#deleteEmailId').val(id);
+							$('#delete-email').submit();
 							$(this).dialog("close");
 						},
 						"Cancel" : function() {
