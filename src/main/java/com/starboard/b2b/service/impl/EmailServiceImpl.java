@@ -214,13 +214,14 @@ public class EmailServiceImpl implements EmailService {
 		// Notification when new order
 		log.info("find email with brand_group_id = " + order.getBrandGroupId());
 		List<ProductEmail> staffEmailTo = productEmailDao.findByBrandGroupId(order.getBrandGroupId(), EmailType.TO);
-		if(staffEmailTo == null || staffEmailTo.isEmpty()){
+		if (staffEmailTo == null || staffEmailTo.isEmpty()) {
 			log.warn("Not found any staff email");
 			return;
 		}
-		
+
 		String emailTemplateId = order.getOrderStatus();
-		if (order.getOrderStatus() == OrderStatusConfig.WAIT_FOR_APPROVE) {
+
+		if (OrderStatusConfig.WAIT_FOR_APPROVE.equals(order.getOrderStatus())) {
 			emailTemplateId = EmailTemplateConfig.TEMPLATE_NEW_ORDER_FOR_SALE;
 		}
 
@@ -244,7 +245,7 @@ public class EmailServiceImpl implements EmailService {
 
 		VelocityContext contextMsg = new VelocityContext();
 		contextMsg.put("order", order);
-		contextMsg.put("serverPath", url);
+		contextMsg.put("serverPath", url);// ตรวจสอบว่า template ถูกหรือไม่
 
 		VelocityEngine ve = new VelocityEngine();
 		ve.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS, "org.apache.velocity.runtime.log.Log4JLogChute");
@@ -257,7 +258,7 @@ public class EmailServiceImpl implements EmailService {
 		String from = applicationConfig.getMailFrom(); // Overrided to account
 		String[] emailTo = EmailUtils.groupEmail(staffEmailTo);
 		String[] emailCC = EmailUtils.groupEmail(productEmailDao.findByBrandGroupId(order.getBrandGroupId(), EmailType.CC));
-		
+
 		log.info("---> From: " + from);
 		log.info("---> To[0]: " + emailTo[0]);
 		String[] bcc = null;
@@ -290,9 +291,9 @@ public class EmailServiceImpl implements EmailService {
 	@Transactional
 	public Map<Long, SearchProductEmailDTO> listProductEmail() {
 		TreeMap<Long, SearchProductEmailDTO> emails = new TreeMap<>();
-		
+
 		List<ProductTypeDTO> productTypes = productBrandGroupDAO.list();
-		
+
 		for (ProductTypeDTO productType : productTypes) {
 			SearchProductEmailDTO dto = new SearchProductEmailDTO();
 			dto.setProductType(productType);
@@ -300,9 +301,9 @@ public class EmailServiceImpl implements EmailService {
 		}
 
 		List<ProductEmailDTO> list = productEmailDao.findAll();
-		if(list != null){
+		if (list != null) {
 			log.info("load emails size: " + list.size());
-		}else{
+		} else {
 			log.warn("not found any email");
 		}
 		for (ProductEmailDTO productEmailDTO : list) {
@@ -326,7 +327,7 @@ public class EmailServiceImpl implements EmailService {
 	@Transactional
 	public void save(Long brandGroupId, String email, String emailType) {
 		ProductEmailDTO emailInDb = productEmailDao.find(brandGroupId, email, emailType);
-		if(emailInDb != null){
+		if (emailInDb != null) {
 			throw new B2BException("Duplicate email");
 		}
 		ProductEmail productEmail = new ProductEmail();
