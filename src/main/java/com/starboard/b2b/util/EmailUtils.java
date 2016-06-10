@@ -1,7 +1,11 @@
 package com.starboard.b2b.util;
 
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
+
+import com.starboard.b2b.model.ProductEmail;
 
 public class EmailUtils {
 
@@ -37,5 +41,17 @@ public class EmailUtils {
 			}
 		}
 		return null;
+	}
+
+	public static String[] groupEmail(List<ProductEmail> productEmailList) {
+		String[] emails = null;
+		if (productEmailList != null && !productEmailList.isEmpty()) {
+			emails = new String[productEmailList.size()];
+			for (int i = 0; i < productEmailList.size(); i++) {
+				emails[i] = productEmailList.get(i).getEmail();
+			}
+		}
+
+		return emails;
 	}
 }

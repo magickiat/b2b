@@ -3,6 +3,7 @@ package com.starboard.b2b.dao.impl;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -60,6 +61,18 @@ public class ProductEmailDaoImpl implements ProductEmailDao {
 	public int deleteById(Long id) {
 		String hql = "delete from ProductEmail pe where pe.id = :id";
 		return sessionFactory.getCurrentSession().createQuery(hql).setLong("id", id).executeUpdate();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ProductEmail> findByBrandGroupId(Long brandGroupId) {
+		return sessionFactory.getCurrentSession().createCriteria(ProductEmail.class).add(Restrictions.eq("brandGroupId", brandGroupId)).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ProductEmail> findByBrandGroupId(Long brandGroupId, String emailType) {
+		return sessionFactory.getCurrentSession().createCriteria(ProductEmail.class).add(Restrictions.eq("brandGroupId", brandGroupId)).add(Restrictions.eq("emailType", emailType)).list();
 	}
 
 }

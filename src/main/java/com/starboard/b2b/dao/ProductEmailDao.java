@@ -18,4 +18,8 @@ public interface ProductEmailDao {
 	ProductEmailDTO find(Long productTypeId, String email, String emailType);
 
 	int deleteById(Long id);
+
+	List<ProductEmail> findByBrandGroupId(Long brandGroupId);
+
+	List<ProductEmail> findByBrandGroupId(Long brandGroupId, String emailType);
 }

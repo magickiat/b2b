@@ -29,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.starboard.b2b.common.EmailTemplateConfig;
 import com.starboard.b2b.common.OrderStatusConfig;
+import com.starboard.b2b.config.EmailType;
 import com.starboard.b2b.dao.EmailTemplateDao;
 import com.starboard.b2b.dao.ProductBrandGroupDAO;
 import com.starboard.b2b.dao.ProductEmailDao;
@@ -211,6 +212,13 @@ public class EmailServiceImpl implements EmailService {
 		log.info("sendEmailOrderToStaff");
 
 		// Notification when new order
+		log.info("find email with brand_group_id = " + order.getBrandGroupId());
+		List<ProductEmail> staffEmailTo = productEmailDao.findByBrandGroupId(order.getBrandGroupId(), EmailType.TO);
+		if(staffEmailTo == null || staffEmailTo.isEmpty()){
+			log.warn("Not found any staff email");
+			return;
+		}
+		
 		String emailTemplateId = order.getOrderStatus();
 		if (order.getOrderStatus() == OrderStatusConfig.WAIT_FOR_APPROVE) {
 			emailTemplateId = EmailTemplateConfig.TEMPLATE_NEW_ORDER_FOR_SALE;
@@ -246,21 +254,18 @@ public class EmailServiceImpl implements EmailService {
 		ve.evaluate(contextMsg, outputSubject, "emailMessage", template.getSubject());
 		ve.evaluate(contextMsg, outputBody, "emailMessage", template.getBody());
 
-		
-//		productEmailDao.findByProductTypeId(order.get)
-		//TODO find email by brand group id
-		
 		String from = applicationConfig.getMailFrom(); // Overrided to account
+		String[] emailTo = EmailUtils.groupEmail(staffEmailTo);
+		String[] emailCC = EmailUtils.groupEmail(productEmailDao.findByBrandGroupId(order.getBrandGroupId(), EmailType.CC));
+		
 		log.info("---> From: " + from);
-		String[] to = applicationConfig.getMailApprover();
-		log.info("---> To: " + to[0]);
-		String[] cc = applicationConfig.getMailCCApprover();
+		log.info("---> To[0]: " + emailTo[0]);
 		String[] bcc = null;
 		String subject = outputSubject.toString();
 		String body = outputBody.toString();
 		String attachFilename = order.getOrderCode() + ".pdf";
 
-		sendEmail(from, to, cc, bcc, subject, body, report, attachFilename);
+		sendEmail(from, emailTo, emailCC, bcc, subject, body, report, attachFilename);
 	}
 
 	private Properties getMailProperties() {
