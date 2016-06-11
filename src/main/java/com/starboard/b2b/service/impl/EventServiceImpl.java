@@ -28,6 +28,7 @@ import com.starboard.b2b.web.form.event.EventForm;
  * Created by User: Thanakit Jumparuang (jthanakit.dev@gmail.com) Date: 1/22/2016 17:45
  */
 @Service("eventService")
+@Transactional
 public class EventServiceImpl implements EventService {
 	private static final Logger log = LoggerFactory.getLogger(EventServiceImpl.class);
 	private static final int maxContentLength = 1700;
