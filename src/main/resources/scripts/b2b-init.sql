@@ -2,14 +2,10 @@
 INSERT INTO role (role_id) VALUES ('ROLE_ADMIN');
 INSERT INTO role (role_id) VALUES ('ROLE_USER');
 
------ app config -----
-insert into app_config(config_key, config_value) values('page.size', '12');
------ default -----
-insert into app_config(config_key, config_value) values('default.product.tech', '000');
-insert into app_config(config_key, config_value) values('default.order.status', 'TBA');
-insert into app_config(config_key, config_value) values('default.payment.term.id', 'xxx');
-insert into app_config(config_key, config_value) values('default.product.price', 'xxx');
-insert into app_config(config_key, config_value) values('default.product.unit.id', 'xxx');
+---------- USER ----------
+INSERT INTO `b2b`.`user` (`time_create`, `account_non_expired`, `account_non_locked`, `credentials_non_expired`, `enabled`, `name`, `password`, `username`) VALUES ('2016-06-12 11:33:30', b'1', b'1', b'1', b'1', 'Administrator', '21232F297A57A5A743894A0E4A801FC3', 'admin');
 
+---------- USER_ROLE ----------
+INSERT INTO `b2b`.`user_role` (`user_id`, `role_role_id`) VALUES (1, 'ROLE_ADMIN');
 
 COMMIT;
