@@ -540,13 +540,14 @@ public class FrontOrderController {
 			@RequestParam String customerRemark, @RequestParam String paymentMethod, @ModelAttribute("brandId") Long brandId,
 			@ModelAttribute("cart") Map<Long, ProductDTO> cart, Model model, SessionStatus session, HttpServletRequest request) {
 		log.info("----- step4/submit POST");
+		log.info("----- brandId = " + brandId);
 		log.info("----- dispatchTo = " + dispatchTo);
 		log.info("----- shippingType = " + shippingType);
 		log.info("----- customerRemark = " + customerRemark);
 		log.info("----- paymentMethod = " + paymentMethod);
 		log.info("----- ----- cart size = " + cart.size());
 
-		List<OrderDTO> orders = orderService.newOrderByCurrency(invoiceTo, dispatchTo, shippingType, customerRemark, paymentMethod, cart);
+		List<OrderDTO> orders = orderService.newOrderByCurrency(brandId, invoiceTo, dispatchTo, shippingType, customerRemark, paymentMethod, cart);
 
 		// ----- send mail to Sales -----
 		String host = environment.getProperty("base.url");

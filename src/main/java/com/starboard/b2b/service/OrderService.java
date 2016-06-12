@@ -32,7 +32,7 @@ public interface OrderService {
 
 	OrderDTO newOrder(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod, Map<Long, ProductDTO> cart);
 
-	ArrayList<OrderDTO> newOrderByCurrency(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod,
+	ArrayList<OrderDTO> newOrderByCurrency(Long brandId, Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod,
 			Map<Long, ProductDTO> cart);
 
 	String generateOrderCode();

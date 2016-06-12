@@ -550,7 +550,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public ArrayList<OrderDTO> newOrderByCurrency(Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod,
+	public ArrayList<OrderDTO> newOrderByCurrency(Long brandId, Long invoiceTo, Long dispatchTo, String shippingType, String customerRemark, String paymentMethod,
 			Map<Long, ProductDTO> cart) {
 		
 		if(cart == null || cart.isEmpty()){
@@ -599,7 +599,6 @@ public class OrderServiceImpl implements OrderService {
 				throw new B2BException("No product to create order");
 			}
 			
-			long brandGroupId = products.get(0).getProductTypeId();
 			// Save Order
 			String orderCode = generateOrderCode();
 			log.info("\tGenerated orderCode = " + orderCode);
@@ -614,7 +613,7 @@ public class OrderServiceImpl implements OrderService {
 			order.setOrderCode(orderCode);
 			order.setOrderStatus(applicationConfig.getOrderStatusNew());
 			order.setOrderDate(currentDate);
-			order.setBrandGroupId(brandGroupId);
+			order.setBrandGroupId(brandId);
 			order.setShippingId(shippingType);
 			order.setPaymentMethodId(paymentMethod);
 			order.setPaymentCurrencyId(entry.getKey());
@@ -626,11 +625,11 @@ public class OrderServiceImpl implements OrderService {
 
 			long orderId = orderDao.save(order);
 
-			CustPriceGroupDTO custPriceGroup = customerService.findCustPriceGroup(user.getCustomer().getCustCode(), brandGroupId);
+			CustPriceGroupDTO custPriceGroup = customerService.findCustPriceGroup(user.getCustomer().getCustCode(), brandId);
 
 			// Save Order Detail
 			for (ProductDTO product : products) {
-				ProductPriceDTO productPrice = productPriceDao.findProductPrice(product.getProductCode(), brandGroupId, user);
+				ProductPriceDTO productPrice = productPriceDao.findProductPrice(product.getProductCode(), brandId, user);
 				// Default currency
 				if (productPrice != null) {
 					String currency = productPrice.getProductCurrency();
