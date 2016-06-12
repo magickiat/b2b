@@ -57,7 +57,7 @@
 					<ul class="dropdown-menu">
 						<li>
 							<form:form servletRelativeAction="/logout" method="post">
-								<input type="submit" style="width: 98%; margin-left: 1%;" class="btn btn-danger"
+								<input type="submit" style="width: 98%; margin-left: 1%;" class="btn btn-default"
 									value="Logout" />
 							</form:form>
 						</li>

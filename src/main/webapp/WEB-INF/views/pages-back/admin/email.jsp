@@ -24,7 +24,7 @@
 						</c:when>
 						<c:otherwise>
 							<div class="col-sm-12">
-								<table class="table" style="width: 75%;">
+								<table class="table" style="width: 99%;">
 									<thead>
 										<tr>
 											<th style="width: 20%;">Product Type</th>
@@ -35,10 +35,10 @@
 										<tr>
 											<td rowspan="2">${entry.value.productType.productTypeName }</td>
 											<td>
-												<input type="button" id="btnAddTo" class="btn btn-success"
+												<input type="button" id="btnAddTo" class="btn btn-success btn-sm"
 													value="Add Mail TO"
 													onclick="popupAddEmail(${ entry.value.productType.brandGroupId }, '${entry.value.productType.productTypeName }', 'TO')" />
-												<input type="button" id="btnAddCC" class="btn btn-success"
+												<input type="button" id="btnAddCC" class="btn btn-success btn-sm"
 													value="Add Mail CC"
 													onclick="popupAddEmail(${ entry.value.productType.brandGroupId }, '${entry.value.productType.productTypeName }', 'CC')" />
 											</td>
@@ -78,7 +78,7 @@
 																		<tr id="email-${ e.id }">
 																			<td>${ e.email }</td>
 																			<td>${ e.emailType }</td>
-																			<td style="width: 20%;">
+																			<td style="width: 20%; text-align: right;">
 
 
 																				<img title="Remove"

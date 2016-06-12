@@ -1,0 +1,29 @@
+.panel-stat3 .stat-icon {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    font-size: 30px;
+    opacity: .3;
+}
+
+.bg-info {
+    background-color: #a2a2a2;
+    color: #fff;
+}
+
+.bg-info:hover {
+    background-color: #777;
+    color: #fff;
+}
+
+.panel-stat3 {
+    position: relative;
+    overflow: hidden;
+    padding: 25px 20px;
+    margin-bottom: 20px;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}

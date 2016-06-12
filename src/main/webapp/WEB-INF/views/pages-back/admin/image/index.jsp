@@ -17,21 +17,20 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-12 bg_color">
-				<div class="row row-header2 header2">Image upload page</div>
-				<div class="col-sm-12" style="text-align: right;">
-					<button class="btn btn-danger" onclick="deleteFile()">Delete</button>
-					<button class="btn btn-default" onclick="upload()">Upload</button>
-					<button class="btn btn-default" onclick="newFolder()">New
-						Folder</button>
-					<button class="btn btn-default" onclick="back()">Back</button>
+			<div class="col-sm-12 bg_color showline2">
+				<div class="row col-md-6 row-header2 header2 txtupper">Image upload page</div>
+				<div class="" style="margin-top:10px;">
+					<button style="" class="btn btn-danger pull-right" onclick="deleteFile()">Delete</button>
+					<button style="margin-right: 5px;" class="btn btn-default pull-right" onclick="upload()">Upload</button>
+					<button style="margin-right: 5px;" class="btn btn-default pull-right" onclick="newFolder()">New Folder</button>
+					<button style="margin-right: 5px;" class="btn btn-default pull-right" onclick="back()">Back</button>
 				</div>
-
-
+				<div class="col-sm-12">&nbsp;</div>
 			</div>
 		</div>
 		<%-- Folder --%>
-		<div class="row bg_color">
+		<div class="row bg_color showline2" style="margin-top:10px;">
+			<div class="col-sm-12">&nbsp;</div>
 			<div class="col-sm-12">
 				<label for="selectedFolder">Image Path:</label>
 				<c:if test="${ not empty folders }">
@@ -47,17 +46,17 @@
 					</select>
 				</c:if>
 			</div>
+			<div class="col-sm-12">&nbsp;</div>
 		</div>
 
 		<%-- Files --%>
-		<div class="row bg_color">
+		<div class="row bg_color showline2" style="margin-top:10px;">
 
 			<table class="table table-hover">
 				<thead>
 					<tr>
 						<th>
-							<input type="checkbox" id="checkAll" class="checkbox"
-								onclick="checkAll()" />
+							<input type="checkbox" id="checkAll" class="checkbox" onclick="checkAll()" />
 						</th>
 						<th>No</th>
 						<th>Sub folder</th>
@@ -69,7 +68,7 @@
 
 					<c:forEach var="item" items="${ listFile }" varStatus="rowNum">
 						<tr>
-							<td align="center">
+							<td style="text-align: center; width: 50px;">
 								<input type="checkbox" id="${ item.nameWithPath }"
 									name="selectFile" class="checkbox"
 									value="${ item.nameWithPath }" />
