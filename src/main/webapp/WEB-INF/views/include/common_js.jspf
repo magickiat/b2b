@@ -10,7 +10,8 @@
 <script type="text/javascript" src="${jquery_ui}"></script>
 <script src="<c:url value="/scripts/assets/js/jquery.backstretch.min.js"/>"></script>
 <script src="<c:url value="/scripts/assets/js/scripts.js"/>"></script>
-
+<script src="<c:url value="/scripts/assets/datepicker/moment-with-locales.js"/>"></script>
+<script src="<c:url value="/scripts/assets/datepicker/bootstrap-datetimepicker.js"/>"></script>
 <%-- Message dialog --%>
 <div id="b2b-dialog" title="Messages" style="display: none;"></div>
 
