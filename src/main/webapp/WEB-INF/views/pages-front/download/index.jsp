@@ -12,9 +12,9 @@
 
 	<div class="container">
 	
-	<%@include file="/WEB-INF/views/under-construction.jspf" %>
+	<%--@include file="/WEB-INF/views/under-construction.jspf" --%>
 	
-	<%-- 
+	
 		<div class="col-sm-12">
 			<div class="row bg_color showline2">
 				<div class="col-md-12" style="padding-bottom: 50px;">
@@ -49,7 +49,7 @@
 					</div>
 				</div>
 			</div>
-		</div> --%>
+		</div> 
 
 
 	</div>

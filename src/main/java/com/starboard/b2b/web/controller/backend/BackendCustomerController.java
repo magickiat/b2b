@@ -288,15 +288,17 @@ public class BackendCustomerController {
 	@RequestMapping(value = "save_contact", method = RequestMethod.POST)
 	String saveContactSubmit(@ModelAttribute("contactForm") @Valid ContactForm contact, BindingResult binding, Model model) throws Exception {
 		log.info("/save_address POST");
-		log.warn("binding error: " + binding.hasErrors());
+		if(binding.hasErrors()){
+			model.addAttribute("errorMsg", binding.getAllErrors().get(0).toString());
+			model.addAttribute("contactForm", contact);
+			return update(contact.getCustId(), model);
+		}
 		model.addAttribute("contactForm", contact);
 
 		/*
 		 * if (binding.hasErrors()) { return "pages-back/customer/edit"; }
 		 */
-		customerService.saveContact(contact.getContactId(), contact.getCustId(), contact.getNameEn(), contact.getNameNick(), contact.getPosition(),
-				contact.getBirthDate(), contact.getAddress(), contact.getTel(), contact.getEmail(), contact.getMobile(), contact.getMobileId(),
-				contact.getFax(), contact.getSkype(), contact.getFacebook(), contact.getTwitter());
+		customerService.saveContact(contact);
 		return update(contact.getCustId(), model);
 	}
 

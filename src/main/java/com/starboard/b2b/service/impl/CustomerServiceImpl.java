@@ -44,6 +44,7 @@ import com.starboard.b2b.util.CustCodeUtil;
 import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.brand.BrandForm;
+import com.starboard.b2b.web.form.contact.ContactForm;
 import com.starboard.b2b.web.form.customer.CreateCustomerForm;
 import com.starboard.b2b.web.form.customer.SearchCustomerForm;
 
@@ -298,57 +299,47 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public void saveContact(Long contactId, Long custId, String nameEn, String nameNick, String position, Date birthDate, String address, String tel,
-			String email, String mobile, String mobileId, String fax, String skype, String facebook, String twitter) {
-		if (contactId == null || contactId == 0) {
-			// contactId = contactDao.maxId();
-			/*
-			 * if(contactId == null){ contactId = 0L; }
-			 */
-			// contactId = contactId+1;
-			contactDao.save(createContact(contactId, custId, nameEn, nameNick, position, birthDate, address, tel, email, mobile, mobileId, fax, skype,
-					facebook, twitter));
+	public void saveContact(ContactForm contactInfo) {
+		if (contactInfo.getContactId() == null || contactInfo.getContactId() == 0) {
+			contactDao.save(createContact(contactInfo));
 		} else {
-			Contact contact = contactDao.findById(contactId);
-			contact.setContactId(contactId);
-			contact.setCustId(custId);
-			contact.setNameEn(nameEn);
-			contact.setNameNick(nameNick);
-			contact.setPosition(position);
-			contact.setBirthDate(birthDate);
-			contact.setAddress(address);
-			contact.setEmail(email);
-			contact.setTel(tel);
-			contact.setEmail(email);
-			contact.setMobile(mobile);
-			contact.setMobileId(mobileId);
-			contact.setFax(fax);
-			contact.setSkype(skype);
-			contact.setFacebook(facebook);
-			contact.setTwitter(twitter);
+			Contact contact = contactDao.findById(contactInfo.getContactId());
+			contact.setContactId(contactInfo.getContactId());
+			contact.setCustId(contactInfo.getCustId());
+			contact.setNameEn(contactInfo.getNameEn());
+			contact.setNameNick(contactInfo.getNameNick());
+			contact.setPosition(contactInfo.getPosition());
+			contact.setBirthDate(contactInfo.getBirthDate());
+			contact.setAddress(contactInfo.getAddress());
+			contact.setEmail(contactInfo.getEmail());
+			contact.setTel(contactInfo.getTel());
+			contact.setMobile(contactInfo.getMobile());
+			contact.setMobileId(contactInfo.getMobileId());
+			contact.setFax(contactInfo.getFax());
+			contact.setSkype(contactInfo.getSkype());
+			contact.setFacebook(contactInfo.getFacebook());
+			contact.setTwitter(contactInfo.getTwitter());
 		}
 
 	}
 
-	public Contact createContact(Long contactId, Long custId, String nameEn, String nameNick, String position, Date birthDate, String address,
-			String tel, String email, String mobile, String mobileId, String fax, String skype, String facebook, String twitter) {
+	public Contact createContact(ContactForm contactInfo) {
 		Contact contact = new Contact();
-		contact.setContactId(contactId);
-		contact.setCustId(custId);
-		contact.setNameEn(nameEn);
-		contact.setNameNick(nameNick);
-		contact.setPosition(position);
-		contact.setBirthDate(birthDate);
-		contact.setAddress(address);
-		contact.setEmail(email);
-		contact.setTel(tel);
-		contact.setEmail(email);
-		contact.setMobile(mobile);
-		contact.setMobileId(mobileId);
-		contact.setFax(fax);
-		contact.setSkype(skype);
-		contact.setFacebook(facebook);
-		contact.setTwitter(twitter);
+		contact.setContactId(contactInfo.getContactId());
+		contact.setCustId(contactInfo.getCustId());
+		contact.setNameEn(contactInfo.getNameEn());
+		contact.setNameNick(contactInfo.getNameNick());
+		contact.setPosition(contactInfo.getPosition());
+		contact.setBirthDate(contactInfo.getBirthDate());
+		contact.setAddress(contactInfo.getAddress());
+		contact.setEmail(contactInfo.getEmail());
+		contact.setTel(contactInfo.getTel());
+		contact.setMobile(contactInfo.getMobile());
+		contact.setMobileId(contactInfo.getMobileId());
+		contact.setFax(contactInfo.getFax());
+		contact.setSkype(contactInfo.getSkype());
+		contact.setFacebook(contactInfo.getFacebook());
+		contact.setTwitter(contactInfo.getTwitter());
 		return contact;
 	}
 

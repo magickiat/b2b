@@ -5,5 +5,5 @@
 <link rel="stylesheet" href="<c:url value="/webjars/jquery-ui/1.11.4/jquery-ui.min.css"></c:url>">
 <link rel="stylesheet" href="<c:url value="/scripts/backend/font-awesome/css/francoisone.css"/>">
 <link rel="stylesheet" href="<c:url value="/scripts/backend/font-awesome/css/font-awesome.min.css"/>">
-<link rel="stylesheet" href="<c:url value="/scripts/backend/bootstrap-datepicker/css/bootstrap-datepicker.css"/>">
+<link rel="stylesheet" href="<c:url value="/scripts/assets/datepicker/bootstrap-datetimepicker.css"/>" media="screen">
 <link rel="stylesheet" href="<c:url value="/scripts/backend/css/b2b.css"/>">

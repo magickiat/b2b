@@ -1,6 +1,5 @@
 package com.starboard.b2b.service;
 
-import java.util.Date;
 import java.util.List;
 
 import com.starboard.b2b.common.Page;
@@ -13,6 +12,7 @@ import com.starboard.b2b.dto.CustPriceGroupDTO;
 import com.starboard.b2b.dto.MobileTypeDTO;
 import com.starboard.b2b.model.ProductType;
 import com.starboard.b2b.web.form.brand.BrandForm;
+import com.starboard.b2b.web.form.contact.ContactForm;
 import com.starboard.b2b.web.form.customer.CreateCustomerForm;
 import com.starboard.b2b.web.form.customer.SearchCustomerForm;
 
@@ -52,10 +52,9 @@ public interface CustomerService {
 
 	List<ContactDTO> findContactByCustomerId(Long custId);
 
-	void saveContact(Long contactId, Long custId, String nameEn, String nameNick, String position, Date birthDate, String address, String tel,
-			String email, String mobile, String mobileId, String fax, String skype, String facebook, String twitter);
-
 	List<MobileTypeDTO> getMobileType();
 
 	CustPriceGroupDTO findCustPriceGroup(String custCode, long productType);
+
+	void saveContact(ContactForm contact);
 }

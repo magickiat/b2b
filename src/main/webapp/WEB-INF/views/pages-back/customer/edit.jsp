@@ -243,6 +243,11 @@
 					$(this).find('.btn-ok').attr('href',
 							$(e.relatedTarget).data('href'));
 				});
+		
+		$('.date-picker').datetimepicker({
+			locale : 'en',
+			format : 'YYYY-MM-DD'
+		});
 	</script>
 </body>
 </html>
