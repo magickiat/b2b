@@ -148,12 +148,15 @@ public class SyncB2BServiceImpl implements SyncB2BService {
 
 			// ----- Step 5: Stamp flag for tmp_so -----
 			tmpSo.setImportStatus(Long.valueOf(SyncConstant.STATTUS_ONE));
+			log.info("Insert tmp_so");
 		}
 
 		// ----- Step 6: delete order_detail that has
+		log.info("Step 6");
 		Iterator<Long> iterator = orderSet.iterator();
 		while (iterator.hasNext()) {
 			Long orderId = (Long) iterator.next();
+			log.info("----- orderId = " + orderId);
 			int deleted = orderDetailDao.deleteWithoutSoNo(orderId);
 			log.info(String.format("Deleted order_detail without SO %d records.", deleted));
 		}

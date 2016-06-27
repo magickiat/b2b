@@ -10,6 +10,8 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +22,8 @@ import com.starboard.b2b.model.OrdDetail;
 
 @Repository("orderDetailDao")
 public class OrderDetailDaoImpl implements OrderDetailDao {
+
+	private static final Logger log = LoggerFactory.getLogger(OrderDetailDaoImpl.class);
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -185,9 +189,7 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 
 	@Override
 	public int deleteByOrderId(long orderId) {
-		return sessionFactory.getCurrentSession()
-				.createQuery("delete from OrdDetail od where od.orderId = :orderId")
-				.setLong("orderId", orderId)
+		return sessionFactory.getCurrentSession().createQuery("delete from OrdDetail od where od.orderId = :orderId").setLong("orderId", orderId)
 				.executeUpdate();
 	}
 
@@ -197,20 +199,22 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 		hql += " ( from So as s, SoDetail as sd where s.soId = sd.soId ";
 		hql += " and sd.orderProductId = od.orderDetailId ";
 		hql += " and s.soNo = :soNo )";
-		return sessionFactory.getCurrentSession()
-				.createQuery(hql)
-				.setString("soNo", soNo)
-				.executeUpdate();
+		return sessionFactory.getCurrentSession().createQuery(hql).setString("soNo", soNo).executeUpdate();
 	}
 
 	@Override
 	public int deleteWithoutSoNo(Long orderId) {
-		String hql = "delete from OrdDetail as od, SoDetail as sd, So as s where s.soId = sd.soId ";
-		hql += " and sd.orderProductId = od.orderDetailId ";
-		hql += " and s.soNo is null and s.orderId = :orderId)";
-		return sessionFactory.getCurrentSession()
-				.createQuery(hql)
-				.setLong("orderId", orderId)
-				.executeUpdate();
+		String hql = "delete from OrdDetail od ";
+		hql += " where od.orderDetailId not in (";
+
+		hql += " 	select sd.orderProductId from SoDetail sd where sd.soId in (";
+
+		hql += "		select s.id from So s where s.orderId = :orderId";
+
+		hql += ")   )";
+
+		log.info("hql ===== " + hql);
+
+		return sessionFactory.getCurrentSession().createQuery(hql).setLong("orderId", orderId).executeUpdate();
 	}
 }

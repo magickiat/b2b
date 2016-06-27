@@ -9,6 +9,8 @@ import javax.transaction.Transactional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -31,6 +33,7 @@ import com.starboard.b2b.service.OrderService;
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { ConfigForTest.class, ServiceConfig.class, RootConfig.class })
 @Transactional
 public class OrderDetailDaoImplTest {
+	private static final Logger log = LoggerFactory.getLogger(OrderDetailDaoImplTest.class);
 	//
 	// @Autowired
 	// private RoSyncService roSyncService;
@@ -121,7 +124,6 @@ public class OrderDetailDaoImplTest {
 		soDao.save(so);
 
 		SoDetail soDetail1 = new SoDetail();
-		soDetail1.setSoProductId(detail1.getOrderDetailId());
 		soDetail1.setSoId(so.getSoId());
 		soDetail1.setOrderProductId(detail1.getOrderDetailId());
 		soDetailDao.save(soDetail1);
