@@ -18,15 +18,6 @@ public class ProductEmailDaoImpl implements ProductEmailDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<ProductEmailDTO> findByProductTypeId(Long productTypeId) {
-		return sessionFactory.getCurrentSession()
-				.createQuery(
-						"select pe.id as id, pe.productTypeId as productTypeId, pe.email as email from ProductEmail pe where pe.productTypeId = :productTypeId")
-				.setLong("productTypeId", productTypeId).setResultTransformer(Transformers.aliasToBean(ProductEmailDTO.class)).list();
-	}
-
 	@Override
 	public void save(ProductEmail productEmail) {
 		sessionFactory.getCurrentSession().save(productEmail);
@@ -72,7 +63,8 @@ public class ProductEmailDaoImpl implements ProductEmailDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ProductEmail> findByBrandGroupId(Long brandGroupId, String emailType) {
-		return sessionFactory.getCurrentSession().createCriteria(ProductEmail.class).add(Restrictions.eq("brandGroupId", brandGroupId)).add(Restrictions.eq("emailType", emailType)).list();
+		return sessionFactory.getCurrentSession().createCriteria(ProductEmail.class).add(Restrictions.eq("brandGroupId", brandGroupId))
+				.add(Restrictions.eq("emailType", emailType)).list();
 	}
 
 }

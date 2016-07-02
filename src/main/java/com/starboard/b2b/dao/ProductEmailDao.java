@@ -9,8 +9,6 @@ public interface ProductEmailDao {
 
 	void save(ProductEmail productEmail);
 
-	List<ProductEmailDTO> findByProductTypeId(Long productTypeId);
-	
 	List<ProductEmailDTO> findAll();
 
 	ProductEmailDTO findByEmail(Long productTypeId, String email);

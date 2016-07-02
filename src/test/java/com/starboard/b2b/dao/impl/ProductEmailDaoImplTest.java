@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import com.starboard.b2b.config.ConfigForTest;
+import com.starboard.b2b.config.EmailType;
 import com.starboard.b2b.dao.ProductEmailDao;
 import com.starboard.b2b.dao.ProductTypeDao;
 import com.starboard.b2b.dto.ProductEmailDTO;
@@ -37,13 +38,14 @@ public class ProductEmailDaoImplTest {
 		ProductEmail e1 = new ProductEmail();
 		e1.setBrandGroupId(1L);
 		e1.setEmail("asdf");
+		e1.setEmailType(EmailType.TO);
 		productEmailDao.save(e1);
 
-		List<ProductEmailDTO> pe = productEmailDao.findByProductTypeId(1L);
+		List<ProductEmail> pe = productEmailDao.findByBrandGroupId(1L);
 		assertNotNull(pe);
 		assertEquals(1, pe.size());
 
-		ProductEmailDTO dto = pe.get(0);
+		ProductEmail dto = pe.get(0);
 		assertNotNull(dto);
 		assertEquals("asdf", dto.getEmail());
 	}
@@ -58,11 +60,13 @@ public class ProductEmailDaoImplTest {
 		ProductEmail e2 = new ProductEmail();
 		e2.setBrandGroupId(1L);
 		e2.setEmail("222");
+		e2.setEmailType(EmailType.TO);
 		productEmailDao.save(e2);
 
 		ProductEmail e1 = new ProductEmail();
 		e1.setBrandGroupId(1L);
 		e1.setEmail("111");
+		e1.setEmailType(EmailType.TO);
 		productEmailDao.save(e1);
 
 		List<ProductEmailDTO> list = productEmailDao.findAll();
