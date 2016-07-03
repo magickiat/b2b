@@ -10,6 +10,8 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +22,8 @@ import com.starboard.b2b.model.OrdDetail;
 
 @Repository("orderDetailDao")
 public class OrderDetailDaoImpl implements OrderDetailDao {
+	
+	private static final Logger log = LoggerFactory.getLogger(OrderDetailDaoImpl.class);
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -205,15 +209,14 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 
 	@Override
 	public int deleteWithoutSoNo(Long orderId) {
-//		String hql = "delete from OrdDetail as od1, SoDetail as sd, So as s where s.soId = sd.soId ";
-//		hql += " and sd.orderProductId = od.orderDetailId ";
-//		hql += " and s.soNo is null and s.orderId = :orderId)";
+		log.info("++++ order id = " + orderId);
 		
-		String hql = "delete from OrdDetail as od1 where od1.orderDetailId in( ";
+		String hql = "delete from OrdDetail as od1 where od1.orderId = :orderId and od1.orderDetailId not in( ";
 		hql += "	select od2.orderDetailId from  OrdDetail as od2";
 		hql += "	, SoDetail as sd, So s where od2.orderDetailId = sd.orderProductId ";
-		hql += "	and sd.soId = s.soId and s.soId is null";
-		hql += ") where od1.orderId = :orderId";
+		hql += "	and sd.soId = s.soId";
+		hql += "	and s.orderId = :orderId";
+		hql += ") ";
 		return sessionFactory.getCurrentSession()
 				.createQuery(hql)
 				.setLong("orderId", orderId)
