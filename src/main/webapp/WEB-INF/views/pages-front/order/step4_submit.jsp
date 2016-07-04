@@ -20,9 +20,10 @@
 				<img src='<c:url value="/images/pages-front/icon/step4.png" />'>
 			</div>
 			<div class="row">&nbsp;</div>
-
 			<div class="row">
-				<%@include file="orderSummaryByCurrency.jspf"%>
+				<div class="col-md-12">
+					<%@include file="orderSummaryByCurrency.jspf"%>
+				</div>
 			</div>
 
 		</div>

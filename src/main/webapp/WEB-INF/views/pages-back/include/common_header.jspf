@@ -56,8 +56,9 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li>
+							<button type="button" class="btn btn-default" style="width: 98%; margin-left: 1%;" onclick="logout_confirm()">Logout</button>
 							<form:form servletRelativeAction="/logout" method="post">
-								<input type="submit" style="width: 98%; margin-left: 1%;" class="btn btn-default"
+								<input type="submit" id="btn_backend_logout" style="width: 98%; margin-left: 1%; display: none;" class="btn btn-default"
 									value="Logout" />
 							</form:form>
 						</li>
@@ -81,3 +82,64 @@
 </div>
 
 <div id="dialog-msg" title="Message" style="display: none;">xxx</div>
+
+<!-- CONFIRM LOGOUT BEGIN-->
+<div id="div_confirm_logout" class="modal fade" tabindex="-1" role="dialog" 
+	aria-labelledby="myLargeModalLabel01" style="display: none;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h5 class="modal-title" id="title-msg-label">
+					MESSAGE CONFIRM
+				</h5>
+			</div>
+			<div class="modal-body" id="body-msg">
+				Do you want to log out ?
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-danger" onclick="logout()">Log out</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- CONFIRM LOGOUT BEGIN-->
+
+<!-- COMMOND MODAL BEGIN-->
+<div id="div_commond_modal" class="modal fade" tabindex="-1" role="dialog" 
+	aria-labelledby="myLargeModalLabel02" style="display: none;">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h5 class="modal-title">
+					MESSAGE
+				</h5>
+			</div>
+			<div class="modal-body" style="text-align: center;">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-danger">OK</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- COMMOND MODAL END-->
+
+<script type="text/javascript">
+	
+	function logout_confirm(){
+		$('#div_confirm_logout').modal();
+	}
+
+	function logout(){
+		$('#btn_backend_logout').click();
+	}
+</script>
+

@@ -19,8 +19,6 @@
 
 			<div class="row row-header2 header2 txtupper">Contact Us</div>
 
-			<div class="row">&nbsp;</div>
-
 			<div class="row">
 
 				<c:choose>
@@ -29,31 +27,31 @@
 						<c:forEach items="${ resultPage.result }" var="contact" varStatus="rowNum">
 							<div class="">
 								<div class="col-sm-12">
-									<h3>${ contact.contactTitle }</h3>
+									<h4>${ contact.contactTitle }</h4>
 								</div>
 
 								<div class="col-sm-1">
-									<strong>Name</strong>
+									<strong>Name:</strong>
 								</div>
 
 								<div class="col-sm-11">${ contact.contactName }</div>
 
 
 								<div class="col-sm-1">
-									<strong>Email</strong>
+									<strong>Email:</strong>
 								</div>
 
 								<div class="col-sm-11">${ contact.contactEmail }</div>
 
 
 								<div class="col-sm-1">
-									<strong>Detail</strong>
+									<strong>Detail:</strong>
 								</div>
 
 								<div class="col-sm-11">${ contact.contactDetail }</div>
 
 								<div class="col-sm-1">
-									<strong>Tel</strong>
+									<strong>Tel:</strong>
 								</div>
 
 								<div class="col-sm-11">${ contact.contactTel }</div>

@@ -9,7 +9,7 @@
 		<div class="row bg_color">
 			<div class="col-sm-12"><%@include file="/WEB-INF/views/include/export_report_currency.jspf"%></div>
 		</div>
-
+		<div class="row">&nbsp;</div>
 		<div class="row">
 			<div class="col-sm-12 bg_color showline2">
 				<!-- Header -->

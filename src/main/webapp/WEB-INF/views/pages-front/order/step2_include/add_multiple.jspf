@@ -3,8 +3,8 @@
 
 <div class="row">&nbsp;</div>
 <div class="row row-header2  showline2 bg_color" >
-	<div class="col-sm-12 header2 txtupper text-right" onclick="toggleAddMultiple()">
-		add multiple order <img alt="" src='<c:url value="/images/pages-front/icon/btn_add.png" />'>
+	<div class="col-sm-12 header2 txtupper text-right" onclick="toggleAddMultiple()" style="cursor: pointer;">
+		add multiple order <img id="img_toggle_addmultiple" alt="" src='<c:url value="/images/pages-front/icon/btn_add.png" />'>
 	</div>
 	
 	
@@ -102,6 +102,16 @@
 <script type="text/javascript">
 	function toggleAddMultiple(){
 		$('#add-multiple').toggle();
+		//$('#img_toggle_addmultiple').toggle();
+		var imgs = $('#img_toggle_addmultiple').attr("src").split('/');
+		var img = imgs[imgs.length-1];
+		if(img == 'btn_add.png'){
+			var src = $('#img_toggle_addmultiple').attr("src");
+			$('#img_toggle_addmultiple').attr("src", src.replace('btn_add.png','btn_remove.png'));
+		}else{
+			var src = $('#img_toggle_addmultiple').attr("src");
+			$('#img_toggle_addmultiple').attr("src", src.replace('btn_remove.png','btn_add.png'));
+		}
 	}
 	
 	function updateTotal(){

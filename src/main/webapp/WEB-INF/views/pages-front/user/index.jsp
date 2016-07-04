@@ -187,7 +187,7 @@
 	 		var isUpdateSuccess = false;
 	 		
 	 		if($("#addressEmail"+row).val() && !validateEmail($("#addressEmail"+row).val()) ){
-	 			showDialog("Address email is invalid! Please try again.");
+	 			showDialog("<div style='color: red;'>Address email is invalid! Please try again.</div>");
 	 			$("#addressEmail"+row).focus();
 	 			return false;	
 	 		}
@@ -203,22 +203,26 @@
 	                // do what ever you want with the server response
 					console.log("save complete");
 					if(data == "true"){
-						$('<div></div>').appendTo('body')
-						  .html('<div><h6>Address has been updated successfully.</h6></div>')
-						  .dialog({
-						      modal: true, title: 'message', zIndex: 10000, autoOpen: true,
-						      width: '300', resizable: false,
-						      buttons: {
-						          Ok: function () {
-						              $(this).dialog("close");
-						          },
-						      },
-						      close: function (event, ui) {
-						          $(this).remove();
-						      }
-						});
+						//$('<div></div>').appendTo('body')
+						//  .html('<div><h6>Address has been updated successfully.</h6></div>')
+						//  .dialog({
+						//      modal: true, title: 'message', zIndex: 10000, autoOpen: true,
+						//      width: '300', resizable: false,
+						//      buttons: {
+						//          Ok: function () {
+						//              $(this).dialog("close");
+						//          },
+						//      },
+						//      close: function (event, ui) {
+						//          $(this).remove();
+						//      }
+						//});
+						$('#div_commond_modal .modal-body').html('<div><h6>Address has been updated successfully.</h6></div>');
+			 			$('#div_commond_modal .modal-footer .btn-danger').hide();
+			 			$('#div_commond_modal').modal();
+						
 					}else{
-						$('<div></div>').appendTo('body')
+						/* $('<div></div>').appendTo('body')
 						  .html('<div><h6>Address updated has been failed.</h6></div>')
 						  .dialog({
 						      modal: true, title: 'message', zIndex: 10000, autoOpen: true,
@@ -231,7 +235,10 @@
 						      close: function (event, ui) {
 						          $(this).remove();
 						      }
-						});
+						}); */
+						$('#div_commond_modal .modal-body').html('<div style="color: red;"><h6>Address updated has been failed.</h6></div>');
+			 			$('#div_commond_modal .modal-footer .btn-danger').hide();
+			 			$('#div_commond_modal').modal();
 					}
 					
 					
@@ -242,8 +249,13 @@
 	 	function saveUser(){
 	 		
 	 		if($('#name').val() == null || $('#name').val() == ''){
-	 			showDialog('Name is required');
+	 			//showDialog('Name is required');
+
+	 			$('#div_commond_modal .modal-body').html('<div style="color: red;">Name is required</div>');
+	 			$('#div_commond_modal .modal-footer .btn-danger').hide();
+	 			$('#div_commond_modal').modal();
 	 			$('#name').focus();
+	 			
 	 			return false;
 	 		}
 	 		/* 
@@ -263,7 +275,7 @@
 	 		var confirmPassword = $('#confirmPassword').val();
 	 		if(password && confirmPassword){
 		 		if(password != confirmPassword){
-		 			showDialog('Password not match with Confirm password');
+		 			showDialog("<div style='color: red;'>Password not match with Confirm password</div>");
 		 			$('#password').focus();
 		 			return false;
 		 		}
@@ -271,7 +283,7 @@
 	 		
 	 		var email = $("#userEmail").val();
 	 		if(email && !validateEmail(email)){
-	 			showDialog("User's email is invalid! Please try again.");
+	 			showDialog("<div style='color: red;'>User's email is invalid! Please try again.</div>");
 	 			$("#userEmail").focus();
 	 			return false;
 	 		}
@@ -286,7 +298,7 @@
 	                // do what ever you want with the server response
 	            	console.log("save complete");
 					if(data == "true"){
-						$('<div></div>').appendTo('body')
+						/* $('<div></div>').appendTo('body')
 						  .html('<div><h6>User has been updated successfully<br/>Please logout and login again.</h6></div>')
 						  .dialog({
 						      modal: true, title: 'message', zIndex: 10000, autoOpen: true,
@@ -299,9 +311,12 @@
 						      close: function (event, ui) {
 						          $(this).remove();
 						      }
-						});
+						}); */
+						$('#div_commond_modal .modal-body').html('<div><h6>User has been updated successfully<br/>Please logout and login again.</h6></div>');
+			 			$('#div_commond_modal .modal-footer .btn-danger').hide();
+			 			$('#div_commond_modal').modal();
 					}else{
-						$('<div></div>').appendTo('body')
+						/* $('<div></div>').appendTo('body')
 						  .html('<div><h6>User updated has been failed.</h6></div>')
 						  .dialog({
 						      modal: true, title: 'message', zIndex: 10000, autoOpen: true,
@@ -314,7 +329,10 @@
 						      close: function (event, ui) {
 						          $(this).remove();
 						      }
-						});
+						}); */
+						$('#div_commond_modal .modal-body').html('<div style="color: red;"><h6>User updated has been failed.</h6></div>');
+			 			$('#div_commond_modal .modal-footer .btn-danger').hide();
+			 			$('#div_commond_modal').modal();
 					}
 	            }
 	        });	

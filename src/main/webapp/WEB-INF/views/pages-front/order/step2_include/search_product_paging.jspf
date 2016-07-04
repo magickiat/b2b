@@ -2,7 +2,7 @@
 <%@page session="true"%>
 
 <div class="col-sm-12">
-	<div class="row pull-right">
+	<div class="pull-right">
 		<c:choose>
 			<c:when test="${!empty resultPage.total and resultPage.total > 0}">
 			

@@ -13,6 +13,20 @@
     <link rel="stylesheet" href="<c:url value="/scripts/assets/font-awesome/css/francoisone.css"/>">
 	<link rel="stylesheet" href="<c:url value="/scripts/assets/css/form-elements.css"/>">
     <link rel="stylesheet" href="<c:url value="/scripts/assets/css/style.css"/>">
+    <!--override alert class-->
+    <style>
+    	.alert-danger {
+		    color: #a94442;
+		    background-color: #f2dede;
+		    border-color: #ebcccc;
+		}
+		.alert {
+		    padding: 10px;
+		    margin-bottom: 20px;
+		    border: 1px solid #ebcccc;
+		    border-radius: 4px;
+		}
+    </style>
 </head>
 <body>
 
@@ -26,7 +40,7 @@
                     	<div class="form-top">
                     		<div class="form-top-left">
                     			<h3>Login to Starboard Windsurfing</h3>
-                        		<p>Enter your username and password to log on:</p>
+                        		<p>Enter your Username and Password to log on:</p>
                     		</div>
                     		<div class="form-top-right">
                     			<i class="fa fa-lock"></i>
@@ -51,7 +65,7 @@
 			                        <div class="form-group">
 			                       	 	<label class="sr-only font_francois" for="password">Password</label>
 				                       	<form:password class="form-password form-control" path="password"
-											placeholder="Enter password" />
+											placeholder="Enter Password" />
 			                        </div>
 			                        <div class="form-group">
 				                       	<div class="checkbox">

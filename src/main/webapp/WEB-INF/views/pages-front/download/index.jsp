@@ -37,7 +37,7 @@
 
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<div class="modal-header">
+				<div class="modal-header" style="padding-top: 0px;">
 					<h3>
 						<span id="dialog-title"></span>
 					</h3>

@@ -86,7 +86,7 @@
 }
 
 .eventCalendar-daysList.eventCalendar-showAsWeek {
-	margin: 10px 5px;
+	margin: 10px 50px;
 	width: auto;
 	/* 	border: solid 1px #BCBCBC; */
 	/* 	border-bottom-width: 0; */
@@ -137,15 +137,14 @@
 	text-decoration: none;
 	font-size: 10px;
 	color: #424242;
+	border: solid 1px #BCBCBC;
+	border-width: 0 1px 1px 0;
+	/*height: 32px;
+	width: 32px;*/
 }
 
 .eventCalendar-day {
 	border-left: solid 1px #BCBCBC;
-}
-
-.eventCalendar-day a {
-	border: solid 1px #BCBCBC;
-	border-width: 0 1px 1px 0;
 }
 
 .eventCalendar-showAsWeek .eventCalendar-day {

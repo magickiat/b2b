@@ -14,10 +14,10 @@
 	<img src='<c:url value="/images/icon/loading_icon.gif" />' />
 </div>
 
-<nav class="navbar navbar-default navbar-static-top bg_color">
+<nav class="navbar navbar-default navbar-static-top bg_color" role="navigation">
 	<div class="container">
 		<div id="navbar" class="navbar-collapse collapse">
-			<ul class="nav navbar-nav">
+			<ul class="nav navbar-nav" style="margin: 0 auto;">
 				<li>
 					<a href="<c:url value="/" />">Home</a>
 				</li>
@@ -39,7 +39,7 @@
 				</li>
 				<li>
 					<sec:authorize access="isAuthenticated()">
-						<a onclick="logout()">Log out</a>
+						<a onclick="confirm_logout()">Log out</a>
 					</sec:authorize>
 				</li>
 			</ul>
@@ -56,7 +56,7 @@
 	<div class="" id="shadow2">
 		<div class="container">
 			<div class="col-sm-9">
-				Welcome : <span class="glyphicon glyphicon-user"></span> <strong>${user.name}</strong>
+				Welcome: <strong>${user.name}</strong>
 			</div>
 
 			<%-- Shopping cart --%>
@@ -125,7 +125,7 @@
 						</div>
 
 						<span onclick="showCartDetails()" style="cursor: pointer; float: right;"> <span>(</span>
-							<span id="numOfProduct">${ totalQuantity }</span> <span>) items</span>
+							<span id="numOfProduct">${ totalQuantity }</span> <span>) Item(s)</span>
 						</span>
 
 						<img alt="shopping cart" id="shoppingCart" onclick="showCartDetails()" class="img-btn-cursor"
@@ -175,6 +175,55 @@
 
 <div style="clear: both; height: 20px;"></div>
 
+<!-- CONFIRM LOGOUT BEGIN-->
+<div id="div_confirm_logout" class="modal fade" tabindex="-1" role="dialog" 
+	aria-labelledby="myLargeModalLabel01" style="display: none;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h5 class="modal-title" id="title-msg-label">
+					MESSAGE CONFIRM
+				</h5>
+			</div>
+			<div class="modal-body" id="body-msg">
+				Do you want to log out ?
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-danger" onclick="logout()">Log out</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- CONFIRM LOGOUT BEGIN-->
+
+<!-- COMMOND MODAL BEGIN-->
+<div id="div_commond_modal" class="modal fade" tabindex="-1" role="dialog" 
+	aria-labelledby="myLargeModalLabel02" style="display: none;">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h5 class="modal-title">
+					MESSAGE
+				</h5>
+			</div>
+			<div class="modal-body" style="text-align: center;">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-danger">OK</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- COMMOND MODAL END-->
+
 <script type="text/javascript">
 	function showCartDetails() {
 		//$("#cartDetails").dialog({
@@ -189,6 +238,10 @@
 			$('#dont-show-again').hide();
 		}
 		$("#cartDetails").modal();
+	}
+
+	function confirm_logout(){
+		$("#div_confirm_logout").modal();
 	}
 
 	function logout() {

@@ -152,9 +152,8 @@
 	}
 
 	function showDialog(msg) {
-<%-- http://stackoverflow.com/questions/10179040/jquery-dialog-open-and-automatically-close-after-3-seconds --%>
-	$('#b2b-dialog').html(
-				'<div class="text-center">' + escapeHtml(msg) + '</div>');
+		<%-- http://stackoverflow.com/questions/10179040/jquery-dialog-open-and-automatically-close-after-3-seconds --%>
+		/* $('#b2b-dialog').html('<div class="text-center">' + escapeHtml(msg) + '</div>');
 		$('#b2b-dialog').dialog({
 			dialogClass : 'style1',
 			autoOpen : true,
@@ -166,12 +165,18 @@
 					$(this).dialog("close");
 				}
 			}
-		});
+		}); */
+		$('#div_commond_modal .modal-body').html(msg);
+		$('#div_commond_modal .modal-footer .btn-danger').hide();
+		$('#div_commond_modal').modal();
 	}
 
 	function showDialogAutoClose(msg) {
-<%-- http://stackoverflow.com/questions/10179040/jquery-dialog-open-and-automatically-close-after-3-seconds --%>
-	/* console.log('begin animate'); */
+		<%-- http://stackoverflow.com/questions/10179040/jquery-dialog-open-and-automatically-close-after-3-seconds --%>
+		/* console.log('begin animate'); */
+		/*
+		//comment by nui for change modal
+		//begin comment by nui for change modal
 		$('#b2b-dialog').html(
 				'<div class="text-center">' + escapeHtml(msg) + '</div>');
 		$('#b2b-dialog').dialog({
@@ -186,6 +191,18 @@
 				}, 2000);
 			}
 		});
+		//end comment by nui for change modal
+		*/
+		//get commond modal
+		$('#div_commond_modal .modal-body').html(msg);
+		$('#div_commond_modal .modal-footer .btn-danger').hide();
+		$('#div_commond_modal').modal();
+		setTimeout(function() {
+			$('#div_commond_modal').modal('hide');
+		}, 2000);
+		
+		
+			
 	}
 	//Apply CSRF token to every calls
 	$(function() {

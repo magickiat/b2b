@@ -2,63 +2,69 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page session="true"%>
 
-<div class="row">
+<div class="col-md-12">
 	<c:choose>
 		<c:when test="${empty resultPage.result }">
 			<h3>Not found any product.</h3>
 		</c:when>
 	
 		<c:otherwise>
-	
-			<table class="table table-hover table-list">
-				<thead>
-					<tr>
-						<th>#</th>
-						<th>Product Code</th>
-						<th>Product Name</th>
-						<th>Product Price</th>
-						<th>Order Number</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:set var="rowBegin" value="${ (( resultPage.current - 1) * resultPage.pageSize) }"></c:set>
-					<c:forEach items="${ resultPage.result }" var="product"
-						varStatus="rowNum">
-	
+			<div class="row bg_color" style="background: #fff;">
+				<table class="table table-hover table-list">
+					<thead>
 						<tr>
-							<td>${ rowBegin + (rowNum.index + 1) }</td>
-							<td><a href='<c:url value="/frontend/order/step2/product/${ product.productId }" />'>${ product.productCode }</a></td>
-							<td>${ product.productNameEn }</td>
+							<th>#</th>
+							<th>Product Code</th>
+							<th>Product Name</th>
+							<th>Product Price</th>
+							<th>Order Number</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:set var="rowBegin" value="${ (( resultPage.current - 1) * resultPage.pageSize) }"></c:set>
+						<c:forEach items="${ resultPage.result }" var="product"
+							varStatus="rowNum">
+		
+							<tr>
+								<td>${ rowBegin + (rowNum.index + 1) }</td>
+								<td><a href='<c:url value="/frontend/order/step2/product/${ product.productId }" />'>${ product.productCode }</a></td>
+								<td>${ product.productNameEn }</td>
+								<td>
+									<c:choose>
+										<c:when test="${ empty product.productPrice}">
+											TBA
+										</c:when>
+										<c:otherwise>
+											<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
+												value="${ product.productPrice }">
+											</fmt:formatNumber>
+												${ product.productCurrency }
+										</c:otherwise>
+									</c:choose>
+								</td>
+								<td>
+									<input type="number" id="${ product.productId }"
+									name="product-order-number" class="form-control numberOnly"
+									maxlength="12" style="width: 80px;" />
+								</td>
+							</tr>
+		
+						</c:forEach>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
 							<td>
-								<c:choose>
-									<c:when test="${ empty product.productPrice}">
-										TBA
-									</c:when>
-									<c:otherwise>
-										<fmt:formatNumber pattern="#,###" maxIntegerDigits="12"
-											value="${ product.productPrice }">
-										</fmt:formatNumber>
-											${ product.productCurrency }
-									</c:otherwise>
-								</c:choose>
-							</td>
-							<td>
-								<input type="number" id="${ product.productId }"
-								name="product-order-number" class="form-control numberOnly"
-								maxlength="12" style="width: 80px;" />
+								<input type="button" id="addListToCart" class="btn btn-success"
+									value="ADD TO CART" onclick="addListToCart()" />
 							</td>
 						</tr>
-	
-					</c:forEach>
-	
-				</tbody>
-			</table>
-			<div align="center">
-				<input type="button" id="addListToCart" class="btn btn-success"
-					value="ADD TO CART" onclick="addListToCart()" />
+					</tbody>
+				</table>
 			</div>
-	
-	
+			
+			
 		</c:otherwise>
 	</c:choose>
 </div>
