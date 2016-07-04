@@ -34,6 +34,7 @@ import com.starboard.b2b.service.OrderService;
 @Transactional
 public class OrderDetailDaoImplTest {
 	private static final Logger log = LoggerFactory.getLogger(OrderDetailDaoImplTest.class);
+	
 	//
 	// @Autowired
 	// private RoSyncService roSyncService;
@@ -115,6 +116,9 @@ public class OrderDetailDaoImplTest {
 
 		orderDetailDao.save(detail1);
 		orderDetailDao.save(detail2);
+		
+		log.info("detail1 = " + detail1.getOrderDetailId());
+		log.info("detail2 = " + detail2.getOrderDetailId());
 
 		// mockup SO has sync
 		So so = new So();
@@ -122,11 +126,14 @@ public class OrderDetailDaoImplTest {
 		so.setOrderId(order.getOrderId());
 		so.setSoNo("S001");
 		soDao.save(so);
+		
 
 		SoDetail soDetail1 = new SoDetail();
 		soDetail1.setSoId(so.getSoId());
 		soDetail1.setOrderProductId(detail1.getOrderDetailId());
 		soDetailDao.save(soDetail1);
+		
+		log.info("soDetail1 = " + soDetail1.getSoProductId());
 		
 		int deleteWithoutSoNo = orderDetailDao.deleteWithoutSoNo(order.getOrderId());
 		assertEquals(1, deleteWithoutSoNo);

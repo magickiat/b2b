@@ -12,4 +12,7 @@ public interface TmpSoDao {
 
 	void save(TmpSo so1);
 
+	List<TmpSo> findGroupBySoNo();
+	
+	List<TmpSo> findBySoNo(String soNo);
 }

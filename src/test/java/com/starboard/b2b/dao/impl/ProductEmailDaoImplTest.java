@@ -34,11 +34,11 @@ public class ProductEmailDaoImplTest {
 	private ProductEmailDao productEmailDao;
 
 	@Test
-	public void testFindByBrandGroupId() {
+	public void testFindByProductTypeId() {
 		ProductEmail e1 = new ProductEmail();
 		e1.setBrandGroupId(1L);
 		e1.setEmail("asdf");
-		e1.setEmailType(EmailType.CC);
+		e1.setEmailType(EmailType.TO);
 		productEmailDao.save(e1);
 
 		List<ProductEmail> pe = productEmailDao.findByBrandGroupId(1L);
@@ -60,14 +60,13 @@ public class ProductEmailDaoImplTest {
 		ProductEmail e2 = new ProductEmail();
 		e2.setBrandGroupId(1L);
 		e2.setEmail("222");
-		e2.setEmailType(EmailType.CC);
+		e2.setEmailType(EmailType.TO);
 		productEmailDao.save(e2);
 
-		
 		ProductEmail e1 = new ProductEmail();
 		e1.setBrandGroupId(1L);
 		e1.setEmail("111");
-		e1.setEmailType(EmailType.CC);
+		e1.setEmailType(EmailType.TO);
 		productEmailDao.save(e1);
 
 		List<ProductEmailDTO> list = productEmailDao.findAll();

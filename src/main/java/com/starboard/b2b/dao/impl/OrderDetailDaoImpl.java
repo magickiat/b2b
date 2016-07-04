@@ -22,7 +22,7 @@ import com.starboard.b2b.model.OrdDetail;
 
 @Repository("orderDetailDao")
 public class OrderDetailDaoImpl implements OrderDetailDao {
-
+	
 	private static final Logger log = LoggerFactory.getLogger(OrderDetailDaoImpl.class);
 
 	@Autowired
@@ -189,7 +189,9 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 
 	@Override
 	public int deleteByOrderId(long orderId) {
-		return sessionFactory.getCurrentSession().createQuery("delete from OrdDetail od where od.orderId = :orderId").setLong("orderId", orderId)
+		return sessionFactory.getCurrentSession()
+				.createQuery("delete from OrdDetail od where od.orderId = :orderId")
+				.setLong("orderId", orderId)
 				.executeUpdate();
 	}
 
@@ -199,22 +201,25 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 		hql += " ( from So as s, SoDetail as sd where s.soId = sd.soId ";
 		hql += " and sd.orderProductId = od.orderDetailId ";
 		hql += " and s.soNo = :soNo )";
-		return sessionFactory.getCurrentSession().createQuery(hql).setString("soNo", soNo).executeUpdate();
+		return sessionFactory.getCurrentSession()
+				.createQuery(hql)
+				.setString("soNo", soNo)
+				.executeUpdate();
 	}
 
 	@Override
 	public int deleteWithoutSoNo(Long orderId) {
-		String hql = "delete from OrdDetail od ";
-		hql += " where od.orderDetailId not in (";
-
-		hql += " 	select sd.orderProductId from SoDetail sd where sd.soId in (";
-
-		hql += "		select s.id from So s where s.orderId = :orderId";
-
-		hql += ")   )";
-
-		log.info("hql ===== " + hql);
-
-		return sessionFactory.getCurrentSession().createQuery(hql).setLong("orderId", orderId).executeUpdate();
+		log.info("++++ order id = " + orderId);
+		
+		String hql = "delete from OrdDetail as od1 where od1.orderId = :orderId and od1.orderDetailId not in( ";
+		hql += "	select od2.orderDetailId from  OrdDetail as od2";
+		hql += "	, SoDetail as sd, So s where od2.orderDetailId = sd.orderProductId ";
+		hql += "	and sd.soId = s.soId";
+		hql += "	and s.orderId = :orderId";
+		hql += ") ";
+		return sessionFactory.getCurrentSession()
+				.createQuery(hql)
+				.setLong("orderId", orderId)
+				.executeUpdate();
 	}
 }
