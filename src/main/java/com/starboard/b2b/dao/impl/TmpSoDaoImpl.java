@@ -32,12 +32,39 @@ public class TmpSoDaoImpl implements TmpSoDao {
 
 		return sessionFactory.getCurrentSession().createQuery(hql)
 				.setString("dtsSystem", B2BConstant.AX_SYSTEM_NAME)
-				.setLong("importStatus", SyncConstant.STATUS_FOUR)
+				.setLong("importStatus", SyncConstant.WAIT_FOR_SYNC)
 				.list();
 	}
 
 	@Override
 	public void save(TmpSo tmpSo) {
 		sessionFactory.getCurrentSession().save(tmpSo);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TmpSo> findGroupBySoNo() {
+		String hql = " from TmpSo so ";
+		hql += " where importStatus = :importStatus and dtsSystem = :dtsSystem ";
+		hql += " group by so.soNo";
+
+		return sessionFactory.getCurrentSession().createQuery(hql)
+				.setString("dtsSystem", B2BConstant.AX_SYSTEM_NAME)
+				.setLong("importStatus", SyncConstant.WAIT_FOR_SYNC)
+				.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TmpSo> findBySoNo(String soNo) {
+		String hql = " from TmpSo so ";
+		hql += " where importStatus = :importStatus and dtsSystem = :dtsSystem ";
+		hql += " and soNo = :soNo";
+
+		return sessionFactory.getCurrentSession().createQuery(hql)
+				.setString("dtsSystem", B2BConstant.AX_SYSTEM_NAME)
+				.setLong("importStatus", SyncConstant.WAIT_FOR_SYNC)
+				.setString("soNo", soNo)
+				.list();
 	}
 }

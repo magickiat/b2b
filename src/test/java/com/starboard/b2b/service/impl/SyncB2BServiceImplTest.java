@@ -97,7 +97,7 @@ public class SyncB2BServiceImplTest {
 
 		TmpSo so1 = new TmpSo();
 		so1.setDtsSystem(B2BConstant.AX_SYSTEM_NAME);
-		so1.setImportStatus(Long.valueOf(SyncConstant.STATUS_FOUR));
+		so1.setImportStatus(Long.valueOf(SyncConstant.WAIT_FOR_SYNC));
 		so1.setRoCode(order.getOrderCode());
 		so1.setSoNo(SO_NO);
 		so1.setItemCode(p1.getProductCode());
