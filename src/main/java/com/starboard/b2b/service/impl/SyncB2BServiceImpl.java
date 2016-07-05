@@ -1,8 +1,6 @@
 package com.starboard.b2b.service.impl;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -20,9 +18,7 @@ import com.starboard.b2b.dao.ProductDao;
 import com.starboard.b2b.dao.SoDao;
 import com.starboard.b2b.dao.SoDetailDao;
 import com.starboard.b2b.dao.TmpSoDao;
-import com.starboard.b2b.model.OrdDetail;
 import com.starboard.b2b.model.Orders;
-import com.starboard.b2b.model.Product;
 import com.starboard.b2b.model.sync.So;
 import com.starboard.b2b.model.sync.SoDetail;
 import com.starboard.b2b.model.sync.TmpSo;
@@ -96,7 +92,7 @@ public class SyncB2BServiceImpl implements SyncB2BService {
 			}
 			
 			// ----- Step 3: Clear all SO detail of this SO -----
-			soDetailDao.deleteBySoId(so.getSoId());
+			//why soDetailDao.deleteBySoId(so.getSoId());
 			
 			List<TmpSo> tmpSoTransactionList = tmpSoDao.findBySoNo(tmpSo.getSoNo());
 			if(tmpSoTransactionList != null && !tmpSoTransactionList.isEmpty()){
@@ -104,32 +100,32 @@ public class SyncB2BServiceImpl implements SyncB2BService {
 					
 					
 					// ----- Step 4: Create Order detail and SO detail -----
-					OrdDetail ordDetail = new OrdDetail();
-					ordDetail.setOrderId(so.getOrderId());
-					ordDetail.setProductId(tmpSo.getOrderProductId());
-					ordDetail.setAmount(tmpSo.getAmount());
-					ordDetail.setProductBuyerGroupId(tmpSo.getProductBuyerGroupId());
-					ordDetail.setPrice(tmpSo.getPrice());
-					ordDetail.setProductCurrency(CurrencyUtils.parseCurrencyAXToB2B(tmpSo.getProductCurrency()));
-					ordDetail.setProductUnitId(tmpSo.getProductUnitId());
-					ordDetail.setTimeCreate(tmpSo.getDtsUpdate());
-					ordDetail.setTimeUpdate(tmpSo.getDtsUpdate());
-					orderDetailDao.save(ordDetail);
-					log.info(String.format("insert order_detail '%d' for %s complete", ordDetail.getOrderDetailId(), tmpSo.getSoNo()));
-		
+//					OrdDetail ordDetail = new OrdDetail();
+//					ordDetail.setOrderId(so.getOrderId());
+//					ordDetail.setProductId(tmpSo2.getOrderProductId());
+//					ordDetail.setAmount(tmpSo2.getAmount());
+//					ordDetail.setProductBuyerGroupId(tmpSo2.getProductBuyerGroupId());
+//					ordDetail.setPrice(tmpSo2.getPrice());
+//					ordDetail.setProductCurrency(CurrencyUtils.parseCurrencyAXToB2B(tmpSo2.getProductCurrency()));
+//					ordDetail.setProductUnitId(tmpSo2.getProductUnitId());
+//					ordDetail.setTimeCreate(tmpSo2.getDtsUpdate());
+//					ordDetail.setTimeUpdate(tmpSo2.getDtsUpdate());
+//					orderDetailDao.save(ordDetail);
+//					log.info(String.format("insert order_detail '%d' for %s complete", ordDetail.getOrderDetailId(), tmpSo2.getSoNo()));
+//		
 					SoDetail soDetail = new SoDetail();
 					soDetail.setSoId(so.getSoId());
-					soDetail.setProductId(tmpSo.getOrderProductId());
-					soDetail.setOrderProductId(ordDetail.getOrderDetailId());
-					soDetail.setPrice(tmpSo.getPrice());
-					soDetail.setAmount(tmpSo.getAmount());
-					soDetail.setProductBuyerGroupId(tmpSo.getProductBuyerGroupId());
-					soDetail.setProductCurrency(CurrencyUtils.parseCurrencyAXToB2B(tmpSo.getProductCurrency()));
-					soDetail.setProductUnitId(tmpSo.getProductUnitId());
-					soDetail.setTimeCreate(tmpSo.getDtsUpdate());
-					soDetail.setTimeUpdate(tmpSo.getDtsUpdate());
+					soDetail.setProductId(tmpSo2.getOrderProductId());
+					soDetail.setOrderProductId(tmpSo2.getOrderProductId());
+					soDetail.setPrice(tmpSo2.getPrice());
+					soDetail.setAmount(tmpSo2.getAmount());
+					soDetail.setProductBuyerGroupId(tmpSo2.getProductBuyerGroupId());
+					soDetail.setProductCurrency(CurrencyUtils.parseCurrencyAXToB2B(tmpSo2.getProductCurrency()));
+					soDetail.setProductUnitId(tmpSo2.getProductUnitId());
+					soDetail.setTimeCreate(tmpSo2.getDtsUpdate());
+					soDetail.setTimeUpdate(tmpSo2.getDtsUpdate());
 					soDetailDao.save(soDetail);
-					log.info(String.format("insert so_detail for %s complete", tmpSo.getSoNo()));
+					log.info(String.format("insert so_detail for %s complete", tmpSo2.getSoNo()));
 				}
 			}
 			// ----- Step 5: Stamp flag for tmp_so -----
