@@ -625,7 +625,6 @@ public class OrderServiceImpl implements OrderService {
 
 			long orderId = orderDao.save(order);
 
-			CustPriceGroupDTO custPriceGroup = customerService.findCustPriceGroup(user.getCustomer().getCustCode(), brandId);
 
 			// Save Order Detail
 			for (ProductDTO product : products) {
@@ -655,7 +654,7 @@ public class OrderServiceImpl implements OrderService {
 				orderDetail.setStatus(applicationConfig.getDefaultOrderDetailStatus());
 				orderDetail.setProductCurrency(product.getProductCurrency());
 				orderDetail.setProductUnitId(product.getProductUnitId());
-				orderDetail.setProductBuyerGroupId(custPriceGroup.getProductBuyerGroupId());
+				orderDetail.setProductBuyerGroupId(productPrice.getProductPriceGroupId());
 				orderDetail.setUserCreate(user.getUsername());
 				orderDetail.setTimeCreate(currentDate);
 
