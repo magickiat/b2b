@@ -22,15 +22,7 @@
 				<div class="col-md-12 bg_color showline2">
 					<div class="col-md-6 row row-header2 header2 txtupper">Products</div>
 					<div class="" style="margin-top: 15px;">
-						<a href='<c:url value="/backend/product/download" />'
-							class="pull-right btn btn-primary">Download Template</a>
-						<form id="uploadForm"
-							action='<c:url value="/backend/product/upload" />' method="get">
-							<input type="hidden" id="csrftoken_"
-								name="${_csrf.parameterName}" value="${_csrf.token}" />
-							<input type="submit" value="Upload Product"
-								class="pull-right btn btn-primary" style="margin-right: 5px;" />
-						</form>
+						
 					</div>
 					<div class="row">&nbsp;</div>
 					<div class="col-md-12" style="margin-top: 20px;">
