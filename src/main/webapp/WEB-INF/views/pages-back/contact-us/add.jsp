@@ -31,34 +31,52 @@
 					
 					<div class="">
 			            <div class="col-sm-12">
-			        		<div class="form-group">
-								<label for="title">Title*</label>
-								<form:input path="title" cssClass="form-control" />
-							</div>
-			
-							<div class="form-group">
-								<label for="name">Name*</label>
-								<form:input path="name" cssClass="form-control" />
-							</div>
-			
-							<div class="form-group">
-								<label for="email">Email</label>
-								<form:input path="email" cssClass="form-control" />
-							</div>
-			
-							<div class="form-group">
-								<label for="detail">Detail</label>
-								<form:textarea path="detail" cssClass="form-control" rows="5" />
-							</div>
-			
-							<div class="form-group">
-								<label for="tel">Tel</label>
-								<form:input path="tel" cssClass="form-control" />
-							</div>
-							
-							<div class="form-group">
-								<button type="submit" class="btn btn-primary">Save</button>
-							</div>
+			            
+			            	<div class="form-horizontal">
+								 
+								 <div class="form-group">
+								    <label for="title" class="col-sm-2 control-label">Title: </label>
+								    <div class="col-sm-10">
+								      <form:input path="title" cssClass="form-control" />
+								    </div>
+								 </div>
+								 
+								<div class="form-group">
+									<label for="name" class="col-sm-2 control-label">Name:</label>
+									<div class="col-sm-10">
+										<form:input path="name" cssClass="form-control" />
+									</div>
+								</div>
+				
+								<div class="form-group">
+									<label for="email" class="col-sm-2 control-label">Email:</label>
+									<div class="col-sm-10">
+										<form:input path="email" cssClass="form-control" />
+									</div>
+								</div>
+				
+								<div class="form-group">
+									<label for="detail" class="col-sm-2 control-label">Detail:</label>
+									<div class="col-sm-10">
+										<form:textarea path="detail" cssClass="form-control" rows="5" />
+									</div>
+								</div>
+				
+								<div class="form-group">
+									<label for="tel" class="col-sm-2 control-label">Tel:</label>
+									<div class="col-sm-10">
+										<form:input path="tel" cssClass="form-control" />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+										<button type="submit" class="btn btn-primary">Submit</button>
+									</div>
+								</div>
+								 
+		  					</div>
+		  					
 			            </div>
 			        </div>
 					

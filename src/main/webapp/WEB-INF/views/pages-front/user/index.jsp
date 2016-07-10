@@ -27,28 +27,28 @@
 						<div class="col-md-8">
 
 							<div class="form-group">
-								<label class="col-sm-3 control-label" for="name">Full Name</label>
+								<label class="col-sm-3 control-label" for="name">Full Name: </label>
 								<div class="col-sm-9">
 									<form:input path="name" class="form-control" value="${ userForm.name }" />
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-3 control-label" for="username">User Name</label>
+								<label class="col-sm-3 control-label" for="username">User Name:</label>
 								<div class="col-sm-9">
 									<form:input path="username" class="form-control" value="${ userForm.username }" />
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-3 control-label" for="password">Password</label>
+								<label class="col-sm-3 control-label" for="password">Password:</label>
 								<div class="col-sm-9">
 									<form:password path="password" class="form-control" value="${ userForm.password }" />
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-3 control-label" for="confirmPassword">Confirm Password</label>
+								<label class="col-sm-3 control-label" for="confirmPassword">Confirm Password: </label>
 								<div class="col-sm-9">
 									<form:password path="confirmPassword" class="form-control"
 										value="${ userForm.confirmPassword }" />
@@ -56,7 +56,7 @@
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-3 control-label" for="userEmail">Email</label>
+								<label class="col-sm-3 control-label" for="userEmail">Email: </label>
 								<div class="col-sm-9">
 									<form:input id="userEmail" path="email" class="form-control" value="${ userForm.email }" />
 								</div>
@@ -84,7 +84,7 @@
 				<div class="row">&nbsp;</div>
 				<div class="row">
 					<div class="col-md-12 bg_color showline2">
-						<div class="row row-header2 header2 txtupper">Address</div>
+						<div class="row row-header2 header2 txtupper">Address: </div>
 
 						<c:forEach items="${ userForm.addresses }" var="address" varStatus="row">
 							<form:hidden class="form-control" id="addressId${row.index}"

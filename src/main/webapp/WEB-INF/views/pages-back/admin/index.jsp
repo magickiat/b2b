@@ -58,7 +58,7 @@
 									href='<c:url value="/backend/admin/file/list" />'>Image</a>
 								</span>
 							</h3>
-							<h5>Upload image</h5>
+							<h5>Upload Image</h5>
 							<div class="stat-icon">
 								<i class="fa fa-picture-o fa-3x"></i>
 							</div>
@@ -79,17 +79,38 @@
 						</div>
 					</div>
 					<div class="col-sm-3">
-						<a href='<c:url value="/backend/product/download" />'
-							class="pull-right btn btn-primary">Download Template</a>
+						<%-- <a href='<c:url value="/backend/product/download" />' class="pull-right btn btn-primary">Download Template</a> --%>
+						<div class="panel-stat3 bg-info" id="download_template">
+							<h3 class="m-top-none">
+								<span id="serverloadCount"> <a style="color: #fff;"
+									href='<c:url value="/backend/product/download" />'>Download Template</a>
+								</span>
+							</h3>
+							<h5>Download Template</h5>
+							<div class="stat-icon">
+								<i class="fa fa-file-excel-o fa-3x"></i>
+							</div>
+						</div>
 					</div>
 					<div class="col-sm-3">
 						<form id="uploadForm"
 							action='<c:url value="/backend/product/upload" />' method="get">
-							<input type="hidden" id="csrftoken_"
-								name="${_csrf.parameterName}" value="${_csrf.token}" /> <input
-								type="submit" value="Upload Product"
-								class="pull-right btn btn-primary" style="margin-right: 5px;" />
+							<input type="hidden" id="csrftoken_" 
+								name="${_csrf.parameterName}" value="${_csrf.token}" /> 
+								<div class="panel-stat3 bg-info" id="upload_product">
+									<h3 class="m-top-none">
+										<span id="serverloadCount"> 
+											<input type="submit" value="Upload Product" 
+											class="" style="margin-right: 5px; background: none; border: none;" />
+										</span>
+									</h3>
+									<h5>Upload Product</h5>
+									<div class="stat-icon">
+										<i class="fa fa-cloud-upload fa-3x"></i>
+									</div>
+								</div>
 						</form>
+						
 					</div>
 				</div>
 			</div>
