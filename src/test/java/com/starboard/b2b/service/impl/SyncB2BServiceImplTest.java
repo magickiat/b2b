@@ -66,6 +66,8 @@ public class SyncB2BServiceImplTest {
 	private ProductDao productDao;
 
 	private String SO_NO = "SO-001";
+	
+	private long orderId;
 
 	@Before
 	public void init() {
@@ -82,6 +84,8 @@ public class SyncB2BServiceImplTest {
 		Orders order = new Orders();
 		order.setOrderCode(orderService.generateOrderCode());
 		orderDao.save(order);
+		
+		orderId = order.getOrderId();
 
 		// Create order detail
 		OrdDetail detail1 = new OrdDetail();
@@ -107,6 +111,10 @@ public class SyncB2BServiceImplTest {
 	@Test
 	public void testSyncSellOrderFromAX() {
 
+		List<OrdDetail> orderDetails = orderDetailDao.findByOrderId(orderId);
+		assertNotNull(orderDetails);
+		assertEquals(2, orderDetails.size());
+		
 		syncB2BService.syncSellOrderFromAX();
 
 		So so = soDao.findBySoNo(SO_NO);
@@ -114,8 +122,11 @@ public class SyncB2BServiceImplTest {
 		List<SoDetail> soDetails = soDetailDao.findBySoId(so.getSoId());
 		assertNotNull(soDetails);
 		assertEquals(1, soDetails.size());
-//		List<OrdDetail> orderDetails = orderDetailDao.findByOrderId(so.getOrderId());
-//		assertNull(orderDetails);
+		
+		
+		orderDetails = orderDetailDao.findByOrderId(orderId);
+		assertNotNull(orderDetails);
+		assertEquals(2, orderDetails.size());
 
 	}
 

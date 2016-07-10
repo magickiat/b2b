@@ -61,7 +61,6 @@ import com.starboard.b2b.model.sync.SoDetail;
 import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ProductService;
-import com.starboard.b2b.service.UserService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.DateTimeUtil;
 import com.starboard.b2b.util.OrderHelper;
@@ -115,9 +114,6 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private ProductPriceDao productPriceDao;
-
-	@Autowired
-	private UserService userService;
 
 	@Autowired
 	private InvoiceDao invoiceDao;
@@ -500,12 +496,11 @@ public class OrderServiceImpl implements OrderService {
 		List<SearchOrderDetailDTO> orderDetails = form.getOrderDetails();
 
 		if (orderDetails != null && !orderDetails.isEmpty()) {
-			User custUser = userService.findByUsername(order.getUserCreate());
 			for (SearchOrderDetailDTO dto : orderDetails) {
 				ProductPriceDTO productPrice = null;
 				ProductDTO product = productService.findById(dto.getProductId());
 				if (product != null) {
-					productPrice = productPriceDao.findProductPrice(dto.getProductCode(), order.getBrandGroupId(), custUser);
+					productPrice = productPriceDao.findProductPriceWithPriceGroup(product.getProductCode(), dto.getProductBuyerGroupId(), product.getProductPreintro());
 				}
 
 				OrdDetail detail = new OrdDetail();
@@ -514,6 +509,9 @@ public class OrderServiceImpl implements OrderService {
 					// productPrice's amount = product price per unit
 					detail.setPrice(productPrice.getAmount());
 					detail.setProductCurrency(productPrice.getProductCurrency());
+				}else{
+					detail.setPrice(null);
+					detail.setProductCurrency(null);
 				}
 				if (StringUtils.isEmpty(detail.getProductUnitId())) {
 					detail.setProductUnitId(applicationConfig.getDefaultProductUnit());
@@ -625,7 +623,6 @@ public class OrderServiceImpl implements OrderService {
 
 			long orderId = orderDao.save(order);
 
-			CustPriceGroupDTO custPriceGroup = customerService.findCustPriceGroup(user.getCustomer().getCustCode(), brandId);
 
 			// Save Order Detail
 			for (ProductDTO product : products) {
@@ -655,7 +652,7 @@ public class OrderServiceImpl implements OrderService {
 				orderDetail.setStatus(applicationConfig.getDefaultOrderDetailStatus());
 				orderDetail.setProductCurrency(product.getProductCurrency());
 				orderDetail.setProductUnitId(product.getProductUnitId());
-				orderDetail.setProductBuyerGroupId(custPriceGroup.getProductBuyerGroupId());
+				orderDetail.setProductBuyerGroupId(productPrice.getProductPriceGroupId());
 				orderDetail.setUserCreate(user.getUsername());
 				orderDetail.setTimeCreate(currentDate);
 
