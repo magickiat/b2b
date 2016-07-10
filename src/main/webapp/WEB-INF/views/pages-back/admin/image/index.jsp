@@ -221,7 +221,7 @@
 		});
 
 		$('#div_dialog_folder_confirm_delete .btn-danger').on('click',function(){
-			debugger;
+			
 			var subFolder = '${subFolder}';
 			var files = [];
 			$('input[name=selectFile]:checked')
@@ -234,8 +234,6 @@
 					'subFolder' : subFolder,
 					'files[]' : files
 				};
-
-				debugger;
 
 				$.post('<c:url value="/backend/admin/file/delete.json" />',param)
 					.done(function(data,statusText) {

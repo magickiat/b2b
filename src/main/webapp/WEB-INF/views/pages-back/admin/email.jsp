@@ -207,8 +207,6 @@
 
 			console.log(JSON.stringify(param));
 
-			debugger;
-
 			$.post('<c:url value="/backend/email/save.json"/>',param).done(function(response) {
 				console.log('Success: ' + JSON.stringify(response));
 				$('#div_dialog_email').modal('hide');
