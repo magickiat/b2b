@@ -126,8 +126,6 @@
 				</div>
 			</div>
 
-			<div class="row">&nbsp;</div>
-
 			<!-- Base URL for pagination -->
 			<c:set var="baseUrl" value="/backend/product/search" />
 

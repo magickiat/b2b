@@ -104,6 +104,7 @@
 
 
 	<%-- New folder form --%>
+	<%--
 	<form id="newFolderForm"
 		action='<c:url value="/backend/admin/file/new-folder" />'
 		method="post" style="display: none;">
@@ -118,7 +119,39 @@
 			<input type="text" id="folderName" name="folderName" />
 		</div>
 	</form>
-
+	--%>
+	<div id="div_dialog_newfolder" class="modal fade" tabindex="-1" role="dialog" 
+		aria-labelledby="myLargeModalLabel01" style="display: none;">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h5 class="modal-title">New Folder</h5>
+				</div>
+				<div class="modal-body">
+					<form id="newFolderForm" method="post" action='<c:url value="/backend/admin/file/new-folder" />'>
+						<input type="hidden" id="subFolder" name="subFolder" value="${ subFolder }" />
+						<input type="hidden" id="csrftoken_" name="${_csrf.parameterName}" value="${_csrf.token}" />
+						<div class="form-horizontal">
+							 <div class="row">
+							    <label for="txtEmail" class="col-sm-12 ">Folder name:</label>
+							    <div class="col-sm-12">
+							      <input type="text" id="folderName" class="form-control" name="folderName" />
+							    </div>
+							 </div>
+	  					</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-success">Create</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<%-- Upload dialog --%>
 	<div id="uploadDialog" class="modal fade">
 		<div class="modal-dialog">
@@ -147,6 +180,28 @@
 			</div>
 		</div>
 	</div>
+	
+	<%-- confirm delete --%>
+	<div id="div_dialog_folder_confirm_delete" class="modal fade" tabindex="-1" role="dialog" 
+		aria-labelledby="myLargeModalLabel01" style="display: none;">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h5 class="modal-title">Confirm?</h5>
+				</div>
+				<div class="modal-body">
+					Are you sure?
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-danger">Delete</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<%@include file="/WEB-INF/views/include/common_footer.jspf"%>
 	<%@include file="/WEB-INF/views/include/common_js.jspf"%>
@@ -155,6 +210,45 @@
 		src='<c:url value="/scripts/dropzone/dropzone.js" />'></script>
 
 	<script type="text/javascript">
+	
+		$('#div_dialog_newfolder').on('hide.bs.modal',function(){
+			$('#folderName').val('');
+		}).on('shown.bs.modal',function(){
+			$('#folderName').select();
+		});
+		$('#div_dialog_newfolder .btn-success').on('click',function(){
+			$('#newFolderForm').submit();
+		});
+
+		$('#div_dialog_folder_confirm_delete .btn-danger').on('click',function(){
+			debugger;
+			var subFolder = '${subFolder}';
+			var files = [];
+			$('input[name=selectFile]:checked')
+					.each(function(index, value) {
+						files.push($(value).val());
+					});
+			if (files.length > 0) {
+
+				var param = {
+					'subFolder' : subFolder,
+					'files[]' : files
+				};
+
+				debugger;
+
+				$.post('<c:url value="/backend/admin/file/delete.json" />',param)
+					.done(function(data,statusText) {
+						console.log('Delete ' + data+ ' files');
+					})
+					.fail(function(xhr,textStatus,errorThrown) {
+						alert('Error occured, please contact Administrator\n'+ xhr.responseText);
+					});
+			}
+
+			list(subFolder);
+		});
+	
 		function list(folder) {
 			if (folder.value) {
 				folder = folder.value;
@@ -168,7 +262,9 @@
 		}
 
 		function newFolder() {
-			$('#newFolderForm').dialog({
+			$('#div_dialog_newfolder').modal();
+			//commemt by nui on 2016-07-10 change modal bootstrap
+			/* $('#newFolderForm').dialog({
 				modal : true,
 				resizable : false,
 				buttons : [ {
@@ -183,7 +279,7 @@
 						$(this).dialog("close");
 					}
 				} ]
-			});
+			}); */
 		}
 
 		function upload() {
@@ -220,7 +316,9 @@
 		}
 
 		function deleteFile() {
-
+			$('#div_dialog_folder_confirm_delete').modal();
+			//comment by nui on 2016-07-10 change modal bootstrap
+			/* 
 			$("#dialog-confirm")
 					.dialog(
 							{
@@ -273,7 +371,8 @@
 										$(this).dialog("close");
 									}
 								}
-							});
+							}); 
+							*/
 		}
 	</script>
 </body>

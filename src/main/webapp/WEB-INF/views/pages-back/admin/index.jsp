@@ -42,7 +42,7 @@
 									<a style="color: #fff;" href='<c:url value="/backend/admin/file/list" />'>Image</a>
 								</span>
 							</h3>
-							<h5>Upload image</h5>
+							<h5>Upload Image</h5>
 							<div class="stat-icon">
 								<i class="fa fa-picture-o fa-3x"></i>
 							</div>
