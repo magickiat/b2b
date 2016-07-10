@@ -12,3 +12,4 @@ nb-configuration.xml
 src/main/resources/application-magic.properties
 src/main/resources/application-dev.properties
 nbactions.xml
+*.tern-project
