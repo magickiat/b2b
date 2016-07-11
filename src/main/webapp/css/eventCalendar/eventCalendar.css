@@ -2,6 +2,7 @@
  
 .eventCalendar-hidden {
 	display: none;
+	text-align: right;
 }
 
 .eventCalendar-wrap {
