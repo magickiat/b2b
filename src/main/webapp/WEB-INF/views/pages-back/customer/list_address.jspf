@@ -15,92 +15,100 @@
 				<form:errors path="*" cssClass="alert alert-danger" element="div" />
 			</div>
 		</div>
+		
 		<div class="formgroup">
 			<form:hidden path="addrId" value="${addr.addrId }"/>
 			<form:hidden path="custId" value="${addr.custId }"/>
 			<form:hidden path="custId" value="${addr.type }"/>
 			<div class="col-sm-1">
-				Address
+				Address:
 			</div>
-			<div class="col-sm-4">
-				<textarea name="address" id="address" rows="4" cols="50" class="form-control">${addr.address }</textarea>
+			<div class="col-sm-3" style="padding: 0;">
+				<div>
+					<textarea name="address" id="address" rows="4" cols="50" class="form-control">${addr.address }</textarea>
+				</div>
 			</div>
 			<div class="col-sm-1">
-				Country
+				Country:
 			</div>
 			<div class="col-sm-3">
-				<%-- <form:select path="regionCountryId" items="${ country }" itemLabel="countryName" itemValue="countryCode"></form:select> --%>
-				<select id="regionCountryId" name="regionCountryId" class="form-control">
-					<c:forEach items="${country }" var="country">
-						<c:choose>
-							<c:when test="${country.countryCode eq addr.regionCountryId}" >
-								<option value="${country.countryCode }" selected="selected">${country.countryName }</option>
-							</c:when>
-							<c:otherwise>
-								<option value="${country.countryCode }">${country.countryName }</option>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-				</select>
-				
-				<!-- <select style="width: 100%;">
-					<option>c1</option>
-					<option>c2</option>
-				</select> -->
+				<div style="padding-bottom: 5px;">
+					<select id="regionCountryId" name="regionCountryId" class="form-control">
+						<c:forEach items="${country }" var="country">
+							<c:choose>
+								<c:when test="${country.countryCode eq addr.regionCountryId}" >
+									<option value="${country.countryCode }" selected="selected">${country.countryName }</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${country.countryCode }">${country.countryName }</option>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</select>
+				</div>
 			</div>
 			<div class="col-sm-1">
-				Telephone
+				Telephone:
 			</div>
-			<div class="col-sm-2">
-				<form:input path="tel1" value="${addr.tel1 }" class="form-control"/>
-				<%-- <input type="text" id="tell" value="${addr.tel1 }"> --%>
+			<div class="col-sm-3">
+				<div style="padding-bottom: 5px;">
+					<form:input path="tel1" value="${addr.tel1 }" class="form-control"/>
+				</div>
 			</div>
 		</div>
+		
 		<div class="formgroup">
 			<div class="col-sm-1">
-				PostCode
+				PostCode:
 			</div>
 			<div class="col-sm-3">
-				<form:input path="postCode" value="${addr.postCode }" class="form-control"/>
-				<%-- <input type="text" id="postCode" value="${addr.postCode }"> --%>
+				<div style="padding-bottom: 5px;">
+					<form:input path="postCode" value="${addr.postCode }" class="form-control"/>
+				</div>
 			</div>
 			<div class="col-sm-1">
-				Fax
+				Fax:
 			</div>
-			<div class="col-sm-2">
-				<form:input path="fax" value="${addr.fax }" class="form-control"/>
-				<%-- <input type="text" id="fax" value="${addr.fax }"> --%>
+			<div class="col-sm-3">
+				<div style="padding-bottom: 5px;">
+					<form:input path="fax" value="${addr.fax }" class="form-control"/>
+				</div>
 			</div>
 		</div>
+		
 		<div class="formgroup">
 			<div class="col-sm-1">
-				Email
+				Email:
 			</div>
 			<div class="col-sm-3">
-				<form:input path="email" value="${addr.email }" class="form-control"/>
-				<%-- <input type="text" id="email" value="${addr.email }"> --%>
+				<div style="padding-bottom: 5px;">
+					<form:input path="email" value="${addr.email }" class="form-control"/>
+				</div>
 			</div>
 			<div class="col-sm-1">
-				Address Type
+				Address Type:
 			</div>
-			<div class="col-sm-2">
-				<select id="type" name="type" class="form-control">
-					<c:forEach items="${ addressTypes }" var="addressType">
-						<c:choose>
-							<c:when test="${addressType.key eq addr.type}" >
-								<option value="${addressType.key}" selected="selected">${ addressType.value }</option>
-							</c:when>
-							<c:otherwise>
-								<option value="${addressType.key}">${ addressType.value }</option>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-				</select>
+			<div class="col-sm-3">
+				<div style="padding-bottom: 5px;">
+					<select id="type" name="type" class="form-control">
+						<c:forEach items="${ addressTypes }" var="addressType">
+							<c:choose>
+								<c:when test="${addressType.key eq addr.type}" >
+									<option value="${addressType.key}" selected="selected">${ addressType.value }</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${addressType.key}">${ addressType.value }</option>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</select>
+				</div>
 			</div>
 		</div>
+		
 		<div class="formgroup">
 			<div class="col-sm-12">
-				<input type="submit" value="save" class="btn btn-default pull-right"/>
+				<input type="submit" value="save" class="btn btn-success pull-right"/>
 				<input type="reset" value="cancel" class="btn btn-default pull-right" style="margin-right: 5px;"/>
 			</div>
 		</div>

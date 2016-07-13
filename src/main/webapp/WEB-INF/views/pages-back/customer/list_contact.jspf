@@ -20,36 +20,19 @@
 			
 			<div class="formgroup">
 				<div class="col-sm-2">
-					Contact Name
+					Contact Name:
 				</div>
 				<div class="col-sm-4">
-					<form:input path="nameEn" value="${contact.nameEn }" class="form-control"/>
+					<div style="padding-bottom: 5px;">
+						<form:input path="nameEn" value="${contact.nameEn }" class="form-control"/>
+					</div>
 				</div>
 				<div class="col-sm-2">
-					Nick Name
+					Nick Name:
 				</div>
 				<div class="col-sm-4">
-					<form:input path="nameNick" value="${contact.nameNick }" class="form-control"/>
-				</div>
-			</div>
-			
-			
-			<div class="formgroup">
-				<div class="col-sm-2">
-					Position
-				</div>
-				<div class="col-sm-4">
-					<form:input path="position" value="${contact.position }" class="form-control"/>
-				</div>
-				<div class="col-sm-2">
-					Birth Date
-				</div>
-				<div class="col-sm-4">
-					<div id="birthdatePicker" class="input-group date-picker">
-						<form:input path="birthDate" value="${contact.birthDate }" cssClass="form-control" />
-						<span class="input-group-addon"> <span
-							class="glyphicon glyphicon-calendar"></span>
-						</span>
+					<div style="padding-bottom: 5px;">
+						<form:input path="nameNick" value="${contact.nameNick }" class="form-control"/>
 					</div>
 				</div>
 			</div>
@@ -57,72 +40,113 @@
 			
 			<div class="formgroup">
 				<div class="col-sm-2">
-					Address
+					Position:
 				</div>
 				<div class="col-sm-4">
-					<form:input path="address" value="${contact.address }" class="form-control"/>
+					<div style="padding-bottom: 5px;">
+						<form:input path="position" value="${contact.position }" class="form-control"/>
+					</div>
 				</div>
 				<div class="col-sm-2">
-					Telephone
+					Birth Date:
 				</div>
 				<div class="col-sm-4">
-					<form:input path="tel" value="${contact.tel}" class="form-control"/>
+					<div style="padding-bottom: 5px;">
+						<div id="birthdatePicker" class="input-group date-picker">
+							<form:input path="birthDate" value="${contact.birthDate }" cssClass="form-control" />
+							<span class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="formgroup">
+				<div class="col-sm-2">
+					Address:
+				</div>
+				<div class="col-sm-4">
+					<div style="padding-bottom: 5px;">
+						<form:input path="address" value="${contact.address }" class="form-control"/>
+					</div>
+				</div>
+				<div class="col-sm-2">
+					Telephone:
+				</div>
+				<div class="col-sm-4">
+					<div style="padding-bottom: 5px;">
+						<form:input path="tel" value="${contact.tel}" class="form-control"/>
+					</div>
 				</div>
 			</div>
 			
 			<div class="formgroup">
 				<div class="col-sm-2">
-					Email
+					Email:
 				</div>
 				<div class="col-sm-4">
-					<form:input path="email" value="${contact.email }" class="form-control"/>
+					<div style="padding-bottom: 5px;">
+						<form:input path="email" value="${contact.email }" class="form-control"/>
+					</div>
 				</div>
 				<div class="col-sm-2">
-					Mobile Phone
+					Mobile:
 				</div>
 				<div class="col-sm-4">
-					<form:input path="mobile" value="${contact.mobile }" class="form-control"/>
+					<div style="padding-bottom: 5px;">
+						<form:input path="mobile" value="${contact.mobile }" class="form-control"/>
+					</div>
 				</div>
 			</div>
 			
 			<div class="formgroup">
 				<div class="col-sm-2">
-					Fax
+					Fax: 
 				</div>
 				<div class="col-sm-4">
-					<form:input path="fax" value="${contact.fax }" class="form-control"/>
+					<div style="padding-bottom: 5px;">
+						<form:input path="fax" value="${contact.fax }" class="form-control"/>
+					</div>
 				</div>
 				<div class="col-sm-2">
-					Mobile Type
+					Mobile Type: 
 				</div>
 				<div class="col-sm-4">
-					<select id="mobileId" name="mobileId" class="form-control">
-						<c:forEach items="${listMobileType }" var="mobileType">
-							<c:choose>
-								<c:when test="${mobileType.mobileId eq contact.mobileId}" >
-									<option value="${mobileType.mobileId}" selected="selected">${ mobileType.name }</option>
-								</c:when>
-								<c:otherwise>
-									<option value="${mobileType.mobileId}">${ mobileType.name }</option>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-					</select>
+					<div style="padding-bottom: 5px;">
+						<select id="mobileId" name="mobileId" class="form-control">
+							<c:forEach items="${listMobileType }" var="mobileType">
+								<c:choose>
+									<c:when test="${mobileType.mobileId eq contact.mobileId}" >
+										<option value="${mobileType.mobileId}" selected="selected">${ mobileType.name }</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${mobileType.mobileId}">${ mobileType.name }</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</select>
+					</div>
 				</div>
 			</div>
 			
 			<div class="formgroup">
 				<div class="col-sm-2">
-					Skype
+					Skype : 
 				</div>
 				<div class="col-sm-4">
-					<form:input path="skype" value="${contact.skype }" class="form-control"/>
+					<div style="padding-bottom: 5px;">
+						<form:input path="skype" value="${contact.skype }" class="form-control"/>
+					</div>
 				</div>
 				<div class="col-sm-2">
-					Facebook
+					Facebook: 
 				</div>
 				<div class="col-sm-4">
-					<form:input path="facebook" value="${contact.facebook }" class="form-control"/>
+					<div style="padding-bottom: 5px;">
+						<form:input path="facebook" value="${contact.facebook }" class="form-control"/>
+					</div>
 				</div>
 			</div>
 			
@@ -131,7 +155,9 @@
 					Twitter
 				</div>
 				<div class="col-sm-4">
-					<form:input path="twitter" value="${contact.twitter }" class="form-control"/>
+					<div style="padding-bottom: 5px;">
+						<form:input path="twitter" value="${contact.twitter }" class="form-control"/>
+					</div>
 				</div>
 				<div class="col-sm-2">
 				</div>

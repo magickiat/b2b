@@ -88,7 +88,7 @@
 										<th>Email</th>
 										<th>Active</th>
 										<th>Active Time</th>
-										<th style="text-align: right;">Function</th>
+										<th style="text-align: right;"></th>
 									</tr>
 								</thead>
 								<tbody>
