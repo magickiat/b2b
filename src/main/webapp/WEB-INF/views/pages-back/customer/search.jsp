@@ -60,7 +60,7 @@
 									<form:select path="selectedBrand" cssClass="form-control" multiple="false">
 										<form:option value="" label="ALL BRAND GROUP" />
 										<form:options items="${searchForm.productTypeList}" itemLabel="productTypeName"
-											itemValue="productTypeId" />
+											itemValue="brandGroupId" />
 									</form:select>
 								</div>
 							</div>
@@ -114,43 +114,43 @@
 							<c:set var="rowBegin" value="${ (( resultPage.current - 1) * resultPage.pageSize) }"></c:set>
 
 							<c:forEach items="${resultPage.result }" var="customer" varStatus="rowNum">
-								<c:url var="createUserUrl" value="/backend/customer/update?id=${ customer.custId }" />
+								<c:url var="createUserUrl" value="/backend/customer/update?id=${ customer.cust.custId }" />
 								<tr style="cursor: pointer;" onclick="javascript:window.location.href = '${createUserUrl}'">
 									<td>${ rowBegin + (rowNum.index + 1) }</td>
 									<td nowrap="nowrap">
-										<c:set var="code" value="${ fn:split(customer.custCode, '-') }"></c:set>
+										<c:set var="code" value="${ fn:split(customer.cust.custCode, '-') }"></c:set>
 										${code[0]}-${code[1]}
 									</td>
-									<td nowrap="nowrap">${customer.nameEn }</td>
+									<td nowrap="nowrap">${customer.cust.nameEn }</td>
 									<td nowrap="nowrap">
-										<c:if test="${ not empty customer.contactAddress }">
+										<c:if test="${ not empty customer.address }">
 											<c:forEach items="${ searchForm.countryList }" var="country">
-												<c:if test="${ customer.contactAddress.regionCountryId == country.countryCode }">
+												<c:if test="${ customer.address.regionCountryId == country.countryCode }">
 													<c:set var="addr" value="${ addr }" />
 															${ country.countryName }</c:if>
 											</c:forEach>
 										</c:if>
 									</td>
 									<td nowrap="nowrap">
-										<c:if test="${ not empty customer.contacts }">
-											${ customer.contacts[0].nameEn }
-										</c:if>
+<%-- 										<c:if test="${ not empty customer.cust.contacts }"> --%>
+<%-- 											${ customer.contacts[0].nameEn } --%>
+<%-- 										</c:if> --%>
 									</td>
 									<td nowrap="nowrap">
-										<c:if test="${ not empty customer.contactAddress }">${ customer.contactAddress.tel1 }</c:if>
+										<c:if test="${ not empty customer.address }">${ customer.address.tel1 }</c:if>
 									</td>
 									<td nowrap="nowrap">
-										<c:if test="${ not empty customer.contactAddress }">${ customer.contactAddress.email }</c:if>
+										<c:if test="${ not empty customer.address }">${ customer.address.email }</c:if>
 									</td>
 									<td nowrap="nowrap">
-										<c:if test="${ not empty customer.addressList}">
+										<c:if test="${ not empty customer.address}">
 											<c:choose>
 
-												<c:when test="${ fn:length(customer.addressList[0].address) gt 25 }">
-													<span title="${ customer.addressList[0].address }">${ fn:substring( customer.addressList[0].address, 0, 25 ) }...</span>
+												<c:when test="${ fn:length(customer.address.address) gt 25 }">
+													<span title="${ customer.address.address }">${ fn:substring( customer.address.address, 0, 25 ) }...</span>
 												</c:when>
 												<c:otherwise>
-													${ customer.addressList[0].address }
+													${ customer.address.address }
 												</c:otherwise>
 											</c:choose>
 

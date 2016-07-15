@@ -2,11 +2,11 @@ package com.starboard.b2b.dto.search;
 
 import java.util.List;
 
-import com.starboard.b2b.model.Cust;
+import com.starboard.b2b.model.search.SearchUserResponse;
 
 public class SearchCustResult {
 	private long total;
-	private List<Cust> result;
+	private List<SearchUserResponse> result;
 
 	public long getTotal() {
 		return total;
@@ -16,12 +16,13 @@ public class SearchCustResult {
 		this.total = total;
 	}
 
-	public List<Cust> getResult() {
+	public List<SearchUserResponse> getResult() {
 		return result;
 	}
 
-	public void setResult(List<Cust> result) {
+	public void setResult(List<SearchUserResponse> result) {
 		this.result = result;
 	}
+
 
 }

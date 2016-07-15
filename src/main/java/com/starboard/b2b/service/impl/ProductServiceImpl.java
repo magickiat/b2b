@@ -669,6 +669,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<ProductTypeDTO> listProductBrandGroup() {
 		return productBrandGroupDAO.list();
 	}

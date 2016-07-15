@@ -67,7 +67,7 @@ public class BackendCustomerController {
 	@RequestMapping(value = "search", method = RequestMethod.GET)
 	String search(@ModelAttribute("searchForm") SearchCustomerForm searchForm, Model model) {
 		searchForm.setCountryList(countryService.findAll());
-		searchForm.setProductTypeList(productService.findAllProductType());
+		searchForm.setProductTypeList(productService.listProductBrandGroup());
 
 		model.addAttribute("searchForm", searchForm);
 		model.addAttribute("resultPage", customerService.listCust(searchForm));

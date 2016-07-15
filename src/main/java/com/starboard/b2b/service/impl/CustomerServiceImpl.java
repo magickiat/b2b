@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.common.Pagination;
 import com.starboard.b2b.dao.AddrDao;
@@ -38,6 +37,7 @@ import com.starboard.b2b.model.Contact;
 import com.starboard.b2b.model.Cust;
 import com.starboard.b2b.model.CustPriceGroup;
 import com.starboard.b2b.model.ProductType;
+import com.starboard.b2b.model.search.SearchUserResponse;
 import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.CustCodeUtil;
@@ -180,39 +180,17 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Page<CustDTO> listCust(SearchCustomerForm form) {
+	public Page<SearchUserResponse> listCust(SearchCustomerForm form) {
 
 		// ----- set request ------
 		SearchRequest<SearchCustomerForm> req = new SearchRequest<>(form.getPage(), applicationConfig.getPageSize());
 		req.setCondition(form);
 		SearchCustResult searchResult = custDao.listCust(req);
-		List<CustDTO> result = new ArrayList<>();
-		for (Cust cust : searchResult.getResult()) {
-			CustDTO dto = new CustDTO();
-			BeanUtils.copyProperties(cust, dto);
-
-			dto.setAddressList(findAddressByCustomerId(cust.getCustId()));
-			dto.setContacts(findContactByCustomerId(cust.getCustId()));
-
-			// ----- Find contact dto for show ----- 
-			
-			if (dto.getAddressList() != null && dto.getAddressList().size() > 0) {
-				
-				for(AddressDTO addr : dto.getAddressList()){
-					if(addr.getType().equals(Long.toString(AddressConstant.USER_INVOICE_TO))){
-						dto.setContactAddress(addr);
-						break;
-					}
-				}
-			}
-
-			result.add(dto);
-		}
 
 		// ----- prepare result page -----
-		Page<CustDTO> page = new Page<>();
+		Page<SearchUserResponse> page = new Page<>();
 		page.setCurrent(req.getPage());
-		page.setResult(result);
+		page.setResult(searchResult.getResult());
 		page.setPageSize(req.getPageSize());
 		page.setTotal(searchResult.getTotal());
 

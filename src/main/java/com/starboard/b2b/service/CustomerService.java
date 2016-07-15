@@ -11,6 +11,7 @@ import com.starboard.b2b.dto.CustDTO;
 import com.starboard.b2b.dto.CustPriceGroupDTO;
 import com.starboard.b2b.dto.MobileTypeDTO;
 import com.starboard.b2b.model.ProductType;
+import com.starboard.b2b.model.search.SearchUserResponse;
 import com.starboard.b2b.web.form.brand.BrandForm;
 import com.starboard.b2b.web.form.contact.ContactForm;
 import com.starboard.b2b.web.form.customer.CreateCustomerForm;
@@ -23,7 +24,7 @@ public interface CustomerService {
 
 	List<CustDTO> list();
 
-	Page<CustDTO> listCust(SearchCustomerForm form);
+	Page<SearchUserResponse> listCust(SearchCustomerForm form);
 
 	void add(CreateCustomerForm customer);
 

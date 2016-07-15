@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.dao.CustDao;
 import com.starboard.b2b.dto.AddressDTO;
 import com.starboard.b2b.dto.ContactDTO;
@@ -32,13 +33,21 @@ public class CustDaoImpl implements CustDao {
 	public SearchCustResult listCust(SearchRequest<SearchCustomerForm> req) {
 		log.info("search request: " + req);
 
-		String queryString = "from Cust c";
-		String queryStringTotal = "select count(distinct c.nameEn) from Cust c ";
+		String queryString = "select new com.starboard.b2b.model.search.SearchUserResponse(c, a) "
+				+ " from Cust c, Addr a where c.custId = a.custId and a.type = " + AddressConstant.USER_INVOICE_TO;
+		
+		String queryStringTotal = "select count(distinct c.nameEn) "
+				+ " from Cust c, Addr a where c.custId = a.custId and a.type = " + AddressConstant.USER_INVOICE_TO;
+		
 		// ----- Set criteria
 		String where = "";
 		if (req != null && req.getCondition() != null) {
 			if (StringUtils.isNotEmpty(req.getCondition().getKeyword())) {
-				where = " where c.custCode like :keyword or c.nameEn like :keyword ";
+				where += " and c.custCode like :keyword or c.nameEn like :keyword ";
+			}
+			
+			if(req.getCondition().getSelectedCountry() != null){
+				where += " and a.regionCountryId = :country";
 			}
 		}
 
@@ -51,8 +60,17 @@ public class CustDaoImpl implements CustDao {
 		Query queryTotal = sessionFactory.getCurrentSession().createQuery(queryStringTotal);
 
 		if (StringUtils.isNotEmpty(where)) {
-			query.setString("keyword", "%" + req.getCondition().getKeyword() + "%");
-			queryTotal.setString("keyword", "%" + req.getCondition().getKeyword() + "%");
+			if (StringUtils.isNotEmpty(req.getCondition().getKeyword())) {
+				query.setString("keyword", "%" + req.getCondition().getKeyword() + "%");
+				queryTotal.setString("keyword", "%" + req.getCondition().getKeyword() + "%");
+			}
+			
+			if(req.getCondition().getSelectedCountry() != null){
+				query.setString("country", req.getCondition().getSelectedCountry());
+				queryTotal.setString("country", req.getCondition().getSelectedCountry());
+			}
+			
+			
 		}
 		List list = query.setFirstResult(req.getFirstResult()).setMaxResults(req.getPageSize()).list();
 
