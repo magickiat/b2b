@@ -33,6 +33,7 @@ public class CustDaoImpl implements CustDao {
 	public SearchCustResult listCust(SearchRequest<SearchCustomerForm> req) {
 		log.info("search request: " + req);
 
+		//TODO join Contact, brand group
 		String queryString = "select new com.starboard.b2b.model.search.SearchUserResponse(c, a) "
 				+ " from Cust c, Addr a where c.custId = a.custId and a.type = " + AddressConstant.USER_INVOICE_TO;
 		
