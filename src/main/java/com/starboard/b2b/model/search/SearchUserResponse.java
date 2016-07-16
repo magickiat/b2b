@@ -1,35 +1,79 @@
 package com.starboard.b2b.model.search;
 
-import com.starboard.b2b.model.Addr;
-import com.starboard.b2b.model.Cust;
-
 public class SearchUserResponse {
-	private Cust cust;
-	private Addr address;
+	private Long custId;
+	private String custCode;
+	private String companyName;
+	private String contractName;
+	private String countryName;
+	private String tel;
+	private String email;
+	private String address;
 
 	public SearchUserResponse() {
 	}
 
-	public SearchUserResponse(Cust cust, Addr address) {
-		super();
-		this.cust = cust;
-		this.address = address;
+	public Long getCustId() {
+		return custId;
 	}
 
-	public Cust getCust() {
-		return cust;
+	public void setCustId(Long custId) {
+		this.custId = custId;
 	}
 
-	public void setCust(Cust cust) {
-		this.cust = cust;
+	public String getCustCode() {
+		return custCode;
 	}
 
-	public Addr getAddress() {
+	public void setCustCode(String custCode) {
+		this.custCode = custCode;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getContractName() {
+		return contractName;
+	}
+
+	public void setContractName(String contractName) {
+		this.contractName = contractName;
+	}
+
+	public String getCountryName() {
+		return countryName;
+	}
+
+	public void setCountryName(String countryName) {
+		this.countryName = countryName;
+	}
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getAddress() {
 		return address;
 	}
 
-	public void setAddress(Addr address) {
+	public void setAddress(String address) {
 		this.address = address;
 	}
-
 }

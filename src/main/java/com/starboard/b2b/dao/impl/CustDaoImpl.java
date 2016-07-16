@@ -3,8 +3,10 @@ package com.starboard.b2b.dao.impl;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.hibernate.Query;
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
+import org.hibernate.transform.Transformers;
+import org.hibernate.type.LongType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import com.starboard.b2b.dto.ProductBrandGroupDTO;
 import com.starboard.b2b.dto.search.SearchCustResult;
 import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.model.Cust;
+import com.starboard.b2b.model.search.SearchUserResponse;
 import com.starboard.b2b.web.form.customer.SearchCustomerForm;
 
 @Repository("custDao")
@@ -33,50 +36,43 @@ public class CustDaoImpl implements CustDao {
 	public SearchCustResult listCust(SearchRequest<SearchCustomerForm> req) {
 		log.info("search request: " + req);
 
-		//TODO join Contact, brand group
-		String queryString = "select new com.starboard.b2b.model.search.SearchUserResponse(c, a) "
-				+ " from Cust c, Addr a where c.custId = a.custId and a.type = " + AddressConstant.USER_INVOICE_TO;
-		
-		String queryStringTotal = "select count(distinct c.nameEn) "
-				+ " from Cust c, Addr a where c.custId = a.custId and a.type = " + AddressConstant.USER_INVOICE_TO;
-		
-		// ----- Set criteria
-		String where = "";
+		String nativeSql = "";
+		nativeSql += "SELECT  ";
+		nativeSql += "c.cust_id as custId, c.cust_code as custCode, c.name_en as companyName, ct.name_en as contractName, ctr.country_name as countryName, a.tel_1 as tel, a.email, a.address ";
+		nativeSql += "FROM cust c ";
+		nativeSql += "LEFT JOIN addr a ON c.cust_id = a.cust_id ";
+		nativeSql += "LEFT JOIN country ctr ON a.region_country_id = ctr.country_code ";
+		nativeSql += "LEFT JOIN contact ct ON c.cust_id = ct.cust_id ";
+		nativeSql += "LEFT JOIN cust_brand_group cg ON c.cust_id = cg.cust_id ";
+
 		if (req != null && req.getCondition() != null) {
+			String where = " where a.type = " + AddressConstant.USER_INVOICE_TO;
 			if (StringUtils.isNotEmpty(req.getCondition().getKeyword())) {
-				where += " and c.custCode like :keyword or c.nameEn like :keyword ";
+				where += " and ( c.name_en like '%" + req.getCondition().getKeyword() + "%' ";
+				where += "  		or ctr.country_name like  '%" + req.getCondition().getKeyword() + "%' ";
+				where += "  		or a.email like  '%" + req.getCondition().getKeyword() + "%' ";
+				where += "  		or a.address like  '%" + req.getCondition().getKeyword() + "%') ";
 			}
 			
-			if(req.getCondition().getSelectedCountry() != null){
-				where += " and a.regionCountryId = :country";
+			if(StringUtils.isNotEmpty(req.getCondition().getSelectedCountry())){
+				where += " and a.region_country_id = '" +  req.getCondition().getSelectedCountry() + "' ";
+			}
+
+			if (StringUtils.isNotEmpty(where)) {
+				nativeSql += where;
 			}
 		}
 
-		queryString += where;
-		queryStringTotal += where;
+		nativeSql += " GROUP BY c.name_en ";
 
-		queryString += " group by c.nameEn order by c.custCode";
-
-		Query query = sessionFactory.getCurrentSession().createQuery(queryString);
-		Query queryTotal = sessionFactory.getCurrentSession().createQuery(queryStringTotal);
-
-		if (StringUtils.isNotEmpty(where)) {
-			if (StringUtils.isNotEmpty(req.getCondition().getKeyword())) {
-				query.setString("keyword", "%" + req.getCondition().getKeyword() + "%");
-				queryTotal.setString("keyword", "%" + req.getCondition().getKeyword() + "%");
-			}
-			
-			if(req.getCondition().getSelectedCountry() != null){
-				query.setString("country", req.getCondition().getSelectedCountry());
-				queryTotal.setString("country", req.getCondition().getSelectedCountry());
-			}
-			
-			
-		}
-		List list = query.setFirstResult(req.getFirstResult()).setMaxResults(req.getPageSize()).list();
+		List list = sessionFactory.getCurrentSession().createSQLQuery(nativeSql).addScalar("custId", LongType.INSTANCE).addScalar("custCode")
+				.addScalar("companyName").addScalar("contractName").addScalar("countryName").addScalar("tel").addScalar("email").addScalar("address")
+				.setResultTransformer(Transformers.aliasToBean(SearchUserResponse.class)).setFirstResult(req.getFirstResult())
+				.setMaxResults(req.getPageSize()).list();
 
 		// ----- Find total -----
-		Object totalRecord = queryTotal.uniqueResult();
+		Object totalRecord = sessionFactory.getCurrentSession().createSQLQuery("select count(*) as total from (" + nativeSql + ") tmp")
+				.addScalar("total", LongType.INSTANCE).uniqueResult();
 
 		// ----- Set result -----
 		SearchCustResult result = new SearchCustResult();
