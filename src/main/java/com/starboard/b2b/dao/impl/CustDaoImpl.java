@@ -3,7 +3,6 @@ package com.starboard.b2b.dao.impl;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.LongType;
@@ -53,9 +52,15 @@ public class CustDaoImpl implements CustDao {
 				where += "  		or a.email like  '%" + req.getCondition().getKeyword() + "%' ";
 				where += "  		or a.address like  '%" + req.getCondition().getKeyword() + "%') ";
 			}
-			
-			if(StringUtils.isNotEmpty(req.getCondition().getSelectedCountry())){
-				where += " and a.region_country_id = '" +  req.getCondition().getSelectedCountry() + "' ";
+
+			if (StringUtils.isNotEmpty(req.getCondition().getSelectedCountry())) {
+				where += " and a.region_country_id = '" + req.getCondition().getSelectedCountry() + "' ";
+			}
+
+			if (req.getCondition().getSelectedBrand() != null) {
+				where += " and cg.brand_group_id in ( ";
+				where += " select product_type_id from product_brand_group pg where pg.brand_group_id = " + req.getCondition().getSelectedBrand();
+				where += ") ";
 			}
 
 			if (StringUtils.isNotEmpty(where)) {

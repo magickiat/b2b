@@ -58,15 +58,16 @@
 								</div>
 							</div>
 
-							<!-- 							<div class="col-md-3"> -->
-							<!-- 								<div class=""> -->
-							<%-- 									<form:select path="selectedBrand" cssClass="form-control" multiple="false"> --%>
-							<%-- 										<form:option value="" label="ALL BRAND GROUP" /> --%>
-							<%-- 										<form:options items="${searchForm.productTypeList}" itemLabel="productTypeName" --%>
-							<%-- 											itemValue="brandGroupId" /> --%>
-							<%-- 									</form:select> --%>
-							<!-- 								</div> -->
-							<!-- 							</div> -->
+							<div class="col-md-3">
+								<div class="">
+									<form:select path="selectedBrand" cssClass="form-control"
+										multiple="false">
+										<form:option value="" label="ALL BRAND GROUP" />
+										<form:options items="${searchForm.productTypeList}"
+											itemLabel="productTypeName" itemValue="brandGroupId" />
+									</form:select>
+								</div>
+							</div>
 
 							<div class="col-md-3">
 								<div class="">
