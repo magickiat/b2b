@@ -17,7 +17,12 @@
 <head>
 <%@include file="/WEB-INF/views/include/common_meta.jspf"%>
 <title><spring:message code="page.header"></spring:message></title>
-<%@include file="/WEB-INF/views/include/common_css.jspf"%>
+<c:if test="${side eq 'front'}">
+	<%@include file="/WEB-INF/views/include/common_css.jspf"%>
+</c:if>
+<c:if test="${side eq 'back'}">
+	<%@include file="/WEB-INF/views/include/common_cssbackend.jspf"%>
+</c:if>
 </head>
 <body>
 	<c:if test="${side eq 'front'}">

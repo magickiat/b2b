@@ -35,7 +35,7 @@
 				        </div>
 						
 						<div class="form-group">
-							<label class="control-label col-sm-2" for="name">Name:</label>
+							<label class="control-label col-sm-2" for="name">Name(*):</label>
 							<div class="col-sm-10">
 								<form:input path="name" class="form-control"
 									placeholder="Enter Name" />
@@ -43,14 +43,14 @@
 						</div>
 
 						<div class="form-group">
-							<label class="control-label col-sm-2" for="username">Username:</label>
+							<label class="control-label col-sm-2" for="username">Username(*):</label>
 							<div class="col-sm-10">
 								<form:input path="username" class="form-control"
 									placeholder="Enter Username" />
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-sm-2" for="password">Password:</label>
+							<label class="control-label col-sm-2" for="password">Password(*):</label>
 							<div class="col-sm-10">
 								<form:password class="form-control" path="password"
 									placeholder="Enter password" />
