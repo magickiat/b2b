@@ -27,7 +27,13 @@
 
 					<form:form servletRelativeAction="/backend/user/create-staff"
 						class="form-horizontal" commandName="registerForm" method="post">
-						<form:errors path="*" cssClass="error"></form:errors>
+						
+						<div class="">
+				            <div class="col-sm-12">
+				                <form:errors path="*" cssClass="alert alert-danger" element="div" />
+				            </div>
+				        </div>
+						
 						<div class="form-group">
 							<label class="control-label col-sm-2" for="name">Name:</label>
 							<div class="col-sm-10">
