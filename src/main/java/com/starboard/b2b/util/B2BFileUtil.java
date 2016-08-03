@@ -26,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.starboard.b2b.common.B2BConstant;
 import com.starboard.b2b.dto.B2BFile;
 import com.starboard.b2b.dto.ProductPriceDTO;
 import com.starboard.b2b.dto.ProductTypeDTO;
@@ -140,14 +141,18 @@ public class B2BFileUtil {
 
 			List<Product> products = productService.findProductByProductTypeId(brand.getProductTypeId());
 
+			int countRow = 1;
 			if (products.size() > 0) {
 				for (int i = 0; i < products.size(); i++) {
 					Product product = products.get(i);
-					HSSFRow productRow = sheetProduct.createRow(i + 1);
-					productRow.createCell(0).setCellValue(StringUtils.defaultIfEmpty(product.getProductNameEn(), ""));
-					productRow.createCell(1).setCellValue(StringUtils.defaultIfEmpty(product.getProductCode(), ""));
-					productRow.createCell(2).setCellValue(StringUtils.defaultIfEmpty(product.getProductUnitId(), config.getDefaultProductUnit()));
-					productRow.createCell(3).setCellValue("");
+					if(B2BConstant.PRODUCT_FLAG_ACTIVE.equals(product.getIsActive())){
+						HSSFRow productRow = sheetProduct.createRow(countRow++);
+						productRow.createCell(0).setCellValue(StringUtils.defaultIfEmpty(product.getProductNameEn(), ""));
+						productRow.createCell(1).setCellValue(StringUtils.defaultIfEmpty(product.getProductCode(), ""));
+						productRow.createCell(2).setCellValue(StringUtils.defaultIfEmpty(product.getProductUnitId(), config.getDefaultProductUnit()));
+						productRow.createCell(3).setCellValue("");
+					}
+					
 				}
 			}
 
