@@ -31,7 +31,7 @@
 		            </div>
 		        </div>
 		        <div class="form-group">
-		            <label class="col-sm-1">Title:</label>
+		            <label class="col-sm-1">Title(*):</label>
 		            <div class="col-sm-11">
 		                <form:input path="title" cssClass="form-control"/>
 		            </div>

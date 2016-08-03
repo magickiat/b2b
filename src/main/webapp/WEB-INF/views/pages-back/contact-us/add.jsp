@@ -35,14 +35,14 @@
 			            	<div class="form-horizontal">
 								 
 								 <div class="form-group">
-								    <label for="title" class="col-sm-2 control-label">Title: </label>
+								    <label for="title" class="col-sm-2 control-label">Title(*): </label>
 								    <div class="col-sm-10">
 								      <form:input path="title" cssClass="form-control" />
 								    </div>
 								 </div>
 								 
 								<div class="form-group">
-									<label for="name" class="col-sm-2 control-label">Name:</label>
+									<label for="name" class="col-sm-2 control-label">Name(*):</label>
 									<div class="col-sm-10">
 										<form:input path="name" cssClass="form-control" />
 									</div>

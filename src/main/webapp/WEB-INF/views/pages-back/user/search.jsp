@@ -80,7 +80,7 @@
 								<th width="5%">Active</th>
 								<th width="5%">Staff</th>
 								<th width="25%">Company</th>
-								<th width="15%">Active Timle</th>
+								<th width="15%">Active Time</th>
 							</tr>
 						</thead>
 						<tbody>
