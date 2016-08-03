@@ -65,7 +65,9 @@ public class ProductPriceDaoImpl implements ProductPriceDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ProductPriceDTO> list() {
-		String hql = "select new com.starboard.b2b.dto.ProductPriceDTO(p.id.productCode, p.id.productPriceGroupId, p.id.productCurrency, p.amount,p.productUnitId, p.msrePrice)  from ProductPrice p order by p.id.productCode";
+		String hql = "select new com.starboard.b2b.dto.ProductPriceDTO(p.id.productCode, p.id.productPriceGroupId, p.id.productCurrency, p.amount,p.productUnitId, p.msrePrice, pp.soCategory)  "
+				+ " from ProductPrice p, Product pp where p.id.productCode = pp.productCode "
+				+ " order by p.id.productCode";
 		return sessionFactory.getCurrentSession().createQuery(hql).list();
 	}
 

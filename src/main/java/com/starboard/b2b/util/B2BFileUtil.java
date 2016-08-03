@@ -170,48 +170,45 @@ public class B2BFileUtil {
 	public static XSSFWorkbook createExcelProduct(ProductService productService) {
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		// ----- Create header row sheet -----
+		int headerIndex = 0;
 		XSSFSheet productSheet = workbook.createSheet("product");
-		XSSFRow rowHead = productSheet.createRow(0);
-		rowHead.createCell(0).setCellValue("product_type_id");
-		rowHead.createCell(1).setCellValue("product_code");
-		rowHead.createCell(2).setCellValue("product_name");
-		rowHead.createCell(3).setCellValue("product_buyer_group_id");
-		rowHead.createCell(4).setCellValue("product_model_id");
-		rowHead.createCell(5).setCellValue("product_technology_id");
-		rowHead.createCell(6).setCellValue("size");
-		rowHead.createCell(7).setCellValue("active");
-		rowHead.createCell(8).setCellValue("PRIMARYVENDORID");
-		rowHead.createCell(9).setCellValue("category");
+		XSSFRow rowHead = productSheet.createRow(headerIndex);
+		rowHead.createCell(headerIndex++).setCellValue("product_type_id");
+		rowHead.createCell(headerIndex++).setCellValue("product_code");
+		rowHead.createCell(headerIndex++).setCellValue("product_name");
+		rowHead.createCell(headerIndex++).setCellValue("product_buyer_group_id");
+		rowHead.createCell(headerIndex++).setCellValue("product_model_id");
+		rowHead.createCell(headerIndex++).setCellValue("product_technology_id");
+		rowHead.createCell(headerIndex++).setCellValue("size");
+		rowHead.createCell(headerIndex++).setCellValue("active");
+		rowHead.createCell(headerIndex++).setCellValue("PRIMARYVENDORID");
+		rowHead.createCell(headerIndex++).setCellValue("category");
+		rowHead.createCell(headerIndex++).setCellValue("excel_sheet");
 
 		List<SearchProductModelDTO> searchProduct = productService.findAllProduct();
 		if (searchProduct != null && !searchProduct.isEmpty()) {
 			int row = 1;
 			for (SearchProductModelDTO product : searchProduct) {
+				int detailIndex = 0;
 				XSSFRow detailRow = productSheet.createRow(row++);
-				detailRow.createCell(0).setCellValue(product.getProductTypeId());
-				detailRow.createCell(1).setCellValue(product.getProductCode());
-				detailRow.createCell(2).setCellValue(product.getProductNameEn());
-				detailRow.createCell(3).setCellValue(product.getProductBuyerGroupId());
-				detailRow.createCell(4).setCellValue(Long.valueOf(product.getYear()));
-				detailRow.createCell(5).setCellValue(product.getProductTechnologyId());
-				detailRow.createCell(6).setCellValue(product.getProductLength());
-				detailRow.createCell(7).setCellValue(Long.parseLong(product.getStatusFlag()));
-				detailRow.createCell(8).setCellValue(product.getVendor());
-				detailRow.createCell(9).setCellValue(product.getProductModelId());
+				detailRow.createCell(detailIndex++).setCellValue(product.getProductTypeId());
+				detailRow.createCell(detailIndex++).setCellValue(product.getProductCode());
+				detailRow.createCell(detailIndex++).setCellValue(product.getProductNameEn());
+				detailRow.createCell(detailIndex++).setCellValue(product.getProductBuyerGroupId());
+				detailRow.createCell(detailIndex++).setCellValue(Long.valueOf(product.getYear()));
+				detailRow.createCell(detailIndex++).setCellValue(product.getProductTechnologyId());
+				detailRow.createCell(detailIndex++).setCellValue(product.getProductLength());
+				detailRow.createCell(detailIndex++).setCellValue(Long.parseLong(product.getStatusFlag()));
+				detailRow.createCell(detailIndex++).setCellValue(product.getVendor());
+				detailRow.createCell(detailIndex++).setCellValue(product.getProductModelId());
+				detailRow.createCell(detailIndex++).setCellValue("");
 			}
 		}
 
 		// ----- resize column -----
-		productSheet.autoSizeColumn(0);
-		productSheet.autoSizeColumn(1);
-		productSheet.autoSizeColumn(2);
-		productSheet.autoSizeColumn(3);
-		productSheet.autoSizeColumn(4);
-		productSheet.autoSizeColumn(5);
-		productSheet.autoSizeColumn(6);
-		productSheet.autoSizeColumn(7);
-		productSheet.autoSizeColumn(8);
-		productSheet.autoSizeColumn(9);
+		for(int i = 0; i < headerIndex; i++){
+			productSheet.autoSizeColumn(i);
+		}
 
 		return workbook;
 	}
@@ -322,14 +319,16 @@ public class B2BFileUtil {
 	public static XSSFWorkbook createExcelProductPrice(ProductService productService) {
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		// ----- Create header row -----
+		int headerIndex = 0;
 		XSSFSheet sheetOrder = workbook.createSheet("price");
-		XSSFRow rowHeadOrder = sheetOrder.createRow(0);
-		rowHeadOrder.createCell(0).setCellValue("product_code");
-		rowHeadOrder.createCell(1).setCellValue("product_price_group_id");
-		rowHeadOrder.createCell(2).setCellValue("product_currency");
-		rowHeadOrder.createCell(3).setCellValue("amount");
-		rowHeadOrder.createCell(4).setCellValue("msre_price");
-		rowHeadOrder.createCell(5).setCellValue("product_unit_id");
+		XSSFRow rowHeadOrder = sheetOrder.createRow(headerIndex);
+		rowHeadOrder.createCell(headerIndex++).setCellValue("product_code");
+		rowHeadOrder.createCell(headerIndex++).setCellValue("product_price_group_id");
+		rowHeadOrder.createCell(headerIndex++).setCellValue("product_currency");
+		rowHeadOrder.createCell(headerIndex++).setCellValue("amount");
+		rowHeadOrder.createCell(headerIndex++).setCellValue("msre_price");
+		rowHeadOrder.createCell(headerIndex++).setCellValue("product_unit_id");
+		rowHeadOrder.createCell(headerIndex++).setCellValue("so_category");
 
 		List<ProductPriceDTO> productPrices = productService.findAllProductPrice();
 		log.info("order size: " + (productPrices == null ? 0 : productPrices.size()));
@@ -341,32 +340,32 @@ public class B2BFileUtil {
 			// ----- Create order detail row
 			int orderRow = 1;
 			for (ProductPriceDTO productPrice : productPrices) {
+				int detailIndex = 0;
 				XSSFRow priceRow = sheetOrder.createRow(orderRow++);
-				priceRow.createCell(0).setCellValue(StringUtils.isEmpty(productPrice.getProductCode()) ? "" : productPrice.getProductCode());
-				priceRow.createCell(1).setCellValue(StringUtils.isEmpty(productPrice.getProductPriceGroupId()) ? "" : productPrice.getProductPriceGroupId());
-				priceRow.createCell(2).setCellValue(StringUtils.isEmpty(productPrice.getProductCurrency()) ? "" : productPrice.getProductCurrency());
+				priceRow.createCell(detailIndex++).setCellValue(StringUtils.isEmpty(productPrice.getProductCode()) ? "" : productPrice.getProductCode());
+				priceRow.createCell(detailIndex++).setCellValue(StringUtils.isEmpty(productPrice.getProductPriceGroupId()) ? "" : productPrice.getProductPriceGroupId());
+				priceRow.createCell(detailIndex++).setCellValue(StringUtils.isEmpty(productPrice.getProductCurrency()) ? "" : productPrice.getProductCurrency());
 				
-				XSSFCell cellAmount = priceRow.createCell(3);
+				XSSFCell cellAmount = priceRow.createCell(detailIndex++);
 				cellAmount.setCellStyle(cellStyle);
 				if(productPrice.getAmount() != null){
 					cellAmount.setCellValue(productPrice.getAmount().doubleValue());
 				}
 				
-				XSSFCell cellMsre = priceRow.createCell(4);
+				XSSFCell cellMsre = priceRow.createCell(detailIndex++);
 				cellMsre.setCellStyle(cellStyle);
 				if(productPrice.getMsrePrice() != null){
 					cellMsre.setCellValue(productPrice.getMsrePrice().doubleValue());
 				}
-				priceRow.createCell(5).setCellValue(StringUtils.isEmpty(productPrice.getProductUnitId()) ? "" : productPrice.getProductUnitId());
+				priceRow.createCell(detailIndex++).setCellValue(StringUtils.isEmpty(productPrice.getProductUnitId()) ? "" : productPrice.getProductUnitId());
+				priceRow.createCell(detailIndex++).setCellValue(productPrice.getSoCategory());
 			}
 
 			// ----- resize column -----
-			sheetOrder.autoSizeColumn(0);
-			sheetOrder.autoSizeColumn(1);
-			sheetOrder.autoSizeColumn(2);
-			sheetOrder.autoSizeColumn(3);
-			sheetOrder.autoSizeColumn(4);
-			sheetOrder.autoSizeColumn(5);
+			for(int i = 0; i< headerIndex; i++){
+				sheetOrder.autoSizeColumn(i);
+			}
+			
 		} else {
 			log.warn("Not found any product_price");
 		}

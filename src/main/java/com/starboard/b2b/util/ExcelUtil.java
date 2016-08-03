@@ -283,12 +283,14 @@ public class ExcelUtil {
 					}
 
 					// ----- get cell value -----
-					XSSFCell cellProductCode = row.getCell(0);
-					XSSFCell cellPriceGroup = row.getCell(1);
-					XSSFCell cellCurrency = row.getCell(2);
-					XSSFCell cellAmount = row.getCell(3);
-					XSSFCell cellMsrePrice = row.getCell(4);
-					XSSFCell cellUnitId = row.getCell(5);
+					int columnIndex = 0;
+					XSSFCell cellProductCode = row.getCell(columnIndex++);
+					XSSFCell cellPriceGroup = row.getCell(columnIndex++);
+					XSSFCell cellCurrency = row.getCell(columnIndex++);
+					XSSFCell cellAmount = row.getCell(columnIndex++);
+					XSSFCell cellMsrePrice = row.getCell(columnIndex++);
+					XSSFCell cellUnitId = row.getCell(columnIndex++);
+					XSSFCell cellSOCategory = row.getCell(columnIndex++);// so_category
 
 					String productCode = formatter.formatCellValue(cellProductCode);
 					String priceGroup = formatter.formatCellValue(cellPriceGroup);
@@ -296,6 +298,7 @@ public class ExcelUtil {
 					BigDecimal amount = null;
 					BigDecimal msrePrice = null;
 					String unitId = formatter.formatCellValue(cellUnitId);
+					String soCategory = formatter.formatCellValue(cellSOCategory);
 
 					// ----- validate and get value -----
 
@@ -303,6 +306,8 @@ public class ExcelUtil {
 						throw new B2BException("Product code is required");
 					}
 
+					// when price is string like 'TBA = to be anouce' it can skip because when not found product price
+					// it show TBA by default
 					if (cellAmount != null && cellAmount.getCellType() == Cell.CELL_TYPE_NUMERIC) {
 						amount = new BigDecimal(cellAmount.getNumericCellValue());
 						log.debug(amount.toPlainString());
@@ -314,8 +319,12 @@ public class ExcelUtil {
 						log.debug(msrePrice.toPlainString());
 						msrePrice = msrePrice.setScale(2, BigDecimal.ROUND_DOWN);
 					}
+					
+					if(StringUtils.isNotEmpty(soCategory) && soCategory.contains(",")){
+						soCategory = soCategory.split(",")[0].trim();
+					}
 
-					result.add(new ProductPriceDTO(productCode, priceGroup, currency, amount, unitId, msrePrice));
+					result.add(new ProductPriceDTO(productCode, priceGroup, currency, amount, unitId, msrePrice, soCategory));
 				}
 			} else {
 				throw new B2BException("Excel has only header row");

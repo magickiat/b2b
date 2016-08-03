@@ -13,6 +13,7 @@ public class ProductPriceDTO {
 	private java.math.BigDecimal amount;
 	private String productUnitId;
 	private BigDecimal msrePrice;
+	private String soCategory;
 	
 	public ProductPriceDTO() {
 	}
@@ -25,6 +26,17 @@ public class ProductPriceDTO {
 		this.amount = amount;
 		this.productUnitId = productUnitId;
 		this.msrePrice = msrePrice;
+	}
+	
+	public ProductPriceDTO(String productCode, String productPriceGroupId, String productCurrency, BigDecimal amount,
+			String productUnitId, BigDecimal msrePrice, String soCategory) {
+		this.productCode = productCode;
+		this.productPriceGroupId = productPriceGroupId;
+		this.productCurrency = productCurrency;
+		this.amount = amount;
+		this.productUnitId = productUnitId;
+		this.msrePrice = msrePrice;
+		this.soCategory = soCategory;
 	}
 
 	public String getProductCode() {
@@ -75,9 +87,18 @@ public class ProductPriceDTO {
 		this.msrePrice = msrePrice;
 	}
 	
+	
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
+	}
+
+	public String getSoCategory() {
+		return soCategory;
+	}
+
+	public void setSoCategory(String soCategory) {
+		this.soCategory = soCategory;
 	}
 
 }

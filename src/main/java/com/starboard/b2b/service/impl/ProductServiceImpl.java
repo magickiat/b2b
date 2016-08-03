@@ -571,6 +571,15 @@ public class ProductServiceImpl implements ProductService {
 				if (isNew) {
 					productPriceDao.save(price);
 				}
+				
+				// update product's so_category
+				if(StringUtils.isNotEmpty(dto.getSoCategory())){
+					Product product = productDao.findByProductCode(dto.getProductCode());
+					if(product != null){
+						product.setSoCategory(dto.getSoCategory().trim());
+					}
+				}
+				
 			}
 		}
 	}
