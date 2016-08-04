@@ -70,6 +70,8 @@ public class Product implements java.io.Serializable {
 	private String userUpdate;
 	private Date timeCreate;
 	private Date timeUpdate;
+	
+	private String excelSheet;
 
 	public Product() {
 	}
@@ -595,4 +597,14 @@ public class Product implements java.io.Serializable {
 		this.statusFlag = statusFlag;
 	}
 
+	@Column(name = "excel_sheet", length = 32)
+	public String getExcelSheet() {
+		return excelSheet;
+	}
+
+	public void setExcelSheet(String excelSheet) {
+		this.excelSheet = excelSheet;
+	}
+
+	
 }
