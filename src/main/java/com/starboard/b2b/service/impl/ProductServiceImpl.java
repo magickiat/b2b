@@ -505,7 +505,7 @@ public class ProductServiceImpl implements ProductService {
 					product.setProductBuyerGroupId(importProduct.getProductBuyerGroupId().trim());
 					product.setProductYearId(importProduct.getProductYearId());
 					product.setStatusFlag(importProduct.getStatusFlag());
-					
+					product.setExcelSheet(importProduct.getExcelSheet());
 					
 
 					if (isNull) {

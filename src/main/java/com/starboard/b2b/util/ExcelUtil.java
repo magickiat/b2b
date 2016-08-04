@@ -111,16 +111,18 @@ public class ExcelUtil {
 						continue;
 					}
 					// ----- get cell value -----
-					Cell cellTypeId = row.getCell(0);
-					Cell cellCode = row.getCell(1);
-					Cell cellName = row.getCell(2);
-					Cell cellBuyerGroupId = row.getCell(3);
-					Cell cellYear = row.getCell(4); //20160216 - Model = Year
-					Cell cellTechnology = row.getCell(5);
-					Cell cellSize = row.getCell(6);
-					Cell cellActive = row.getCell(7);
-					Cell cellVendor = row.getCell(8);
-					Cell cellModelId = row.getCell(9); //20160216 - Category = Model
+					int rowIndex = 0;
+					Cell cellTypeId = row.getCell(rowIndex++);
+					Cell cellCode = row.getCell(rowIndex++);
+					Cell cellName = row.getCell(rowIndex++);
+					Cell cellBuyerGroupId = row.getCell(rowIndex++);
+					Cell cellYear = row.getCell(rowIndex++); //20160216 - Model = Year
+					Cell cellTechnology = row.getCell(rowIndex++);
+					Cell cellSize = row.getCell(rowIndex++);
+					Cell cellActive = row.getCell(rowIndex++);
+					Cell cellVendor = row.getCell(rowIndex++);
+					Cell cellModelId = row.getCell(rowIndex++); //20160216 - Category = Model
+					Cell cellExcelSheet = row.getCell(rowIndex++); // for create sheet
 					
 					Long typeId = null;
 					String code = "";
@@ -133,6 +135,7 @@ public class ExcelUtil {
 					String year = "";
 					String vendor = null;
 					String statusFlag = null;
+					String excelSheet = "Undefined";
 
 					// ----- validate and get value -----
 					// --------------------------------------------------
@@ -212,6 +215,16 @@ public class ExcelUtil {
 					}
 					
 					
+					
+					if(cellExcelSheet != null){
+						String tmpSheet = fmt.formatCellValue(cellExcelSheet);
+						if(StringUtils.isNotEmpty(tmpSheet)){
+							excelSheet = tmpSheet;
+						}
+					}
+					
+					
+					
 					// ----- 2016/02/16 ----- insert product_model when not found
 					ProductModelDTO productModel = productService.findProductModel(modelId);
 					if(productModel == null){
@@ -230,6 +243,7 @@ public class ExcelUtil {
 					product.setProductYearId(StringUtils.trim(year));
 					product.setVendor(StringUtils.trim(vendor));
 					product.setStatusFlag(statusFlag);
+					product.setExcelSheet(excelSheet);
 
 					log.info("productType = " + product.getProductTypeId() + "\tproductCode = " + product.getProductCode());
 					result.add(product);

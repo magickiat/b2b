@@ -59,6 +59,7 @@ public class ProductDTO implements Serializable {
 	private String productPictureBig;
 	
 	private String statusFlag;
+	private String excelSheet;
 	
 	public ProductDTO() {
 	}
@@ -434,5 +435,13 @@ public class ProductDTO implements Serializable {
 
 	public void setStatusFlag(String statusFlag) {
 		this.statusFlag = statusFlag;
+	}
+
+	public String getExcelSheet() {
+		return excelSheet;
+	}
+
+	public void setExcelSheet(String excelSheet) {
+		this.excelSheet = excelSheet;
 	}
 }
