@@ -20,6 +20,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -47,35 +48,42 @@ public class ExcelUtil {
 	private static final DataFormatter formatter = new DataFormatter(DateTimeUtil.LOCALE);
 
 	public static List<ExcelOrderBean> parseOrder(byte[] data) throws IOException, EncryptedDocumentException, InvalidFormatException {
-		Sheet sheet = WorkbookFactory.create(new ByteArrayInputStream(data)).getSheetAt(0);
-		if (sheet == null) {
-			throw new B2BException("no sheet present in this workbook");
-		}
-		Iterator<Row> rows = sheet.iterator();
 		List<ExcelOrderBean> list = new ArrayList<>();
-		rows.next();// skip header
-		while (rows.hasNext()) {
-			Row row = rows.next();
-			
-			Cell productCodeCell = row.getCell(1);
-			Cell quantityCell = row.getCell(3);
-			
-			if (productCodeCell == null || productCodeCell.getCellType() != Cell.CELL_TYPE_STRING) {
-				continue;
+
+		Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(data));
+		int numOfSheets = workbook.getNumberOfSheets();
+		if (numOfSheets > 0) {
+			for (int i = 0; i < numOfSheets; i++) {
+				Sheet sheet = workbook.getSheetAt(i);
+				Iterator<Row> rows = sheet.iterator();
+
+				rows.next();// skip header
+				while (rows.hasNext()) {
+					Row row = rows.next();
+
+					Cell productCodeCell = row.getCell(1);
+					Cell quantityCell = row.getCell(3);
+
+					if (productCodeCell == null || productCodeCell.getCellType() != Cell.CELL_TYPE_STRING) {
+						continue;
+					}
+					if (quantityCell == null || quantityCell.getCellType() != Cell.CELL_TYPE_NUMERIC) {
+						continue;
+					}
+					int quantity = Double.valueOf(quantityCell.getNumericCellValue()).intValue();
+					if (quantity == 0) {
+						continue;
+					}
+
+					ExcelOrderBean order = new ExcelOrderBean();
+					order.setProductCode(productCodeCell.getStringCellValue());
+					order.setQuantity(quantity);
+					list.add(order);
+				}
 			}
-			if (quantityCell == null || quantityCell.getCellType() != Cell.CELL_TYPE_NUMERIC) {
-				continue;
-			}
-			int quantity = Double.valueOf(quantityCell.getNumericCellValue()).intValue();
-			if (quantity == 0) {
-				continue;
-			}
-			
-			ExcelOrderBean order = new ExcelOrderBean();
-			order.setProductCode(productCodeCell.getStringCellValue());
-			order.setQuantity(quantity);
-			list.add(order);
+
 		}
+
 		if (list.isEmpty()) {
 			return null;
 		}
@@ -116,14 +124,18 @@ public class ExcelUtil {
 					Cell cellCode = row.getCell(rowIndex++);
 					Cell cellName = row.getCell(rowIndex++);
 					Cell cellBuyerGroupId = row.getCell(rowIndex++);
-					Cell cellYear = row.getCell(rowIndex++); //20160216 - Model = Year
+					Cell cellYear = row.getCell(rowIndex++); // 20160216 - Model
+																// = Year
 					Cell cellTechnology = row.getCell(rowIndex++);
 					Cell cellSize = row.getCell(rowIndex++);
 					Cell cellActive = row.getCell(rowIndex++);
 					Cell cellVendor = row.getCell(rowIndex++);
-					Cell cellModelId = row.getCell(rowIndex++); //20160216 - Category = Model
-					Cell cellExcelSheet = row.getCell(rowIndex++); // for create sheet
-					
+					Cell cellModelId = row.getCell(rowIndex++); // 20160216 -
+																// Category =
+																// Model
+					Cell cellExcelSheet = row.getCell(rowIndex++); // for create
+																	// sheet
+
 					Long typeId = null;
 					String code = "";
 					String name = "";
@@ -140,33 +152,34 @@ public class ExcelUtil {
 					// ----- validate and get value -----
 					// --------------------------------------------------
 					if (cellTypeId == null) {
-//						throw new B2BException("Row " + (i+1) + " product_type_id is required");
+						// throw new B2BException("Row " + (i+1) + "
+						// product_type_id is required");
 						continue;
 					} else if (cellTypeId.getCellType() == Cell.CELL_TYPE_STRING) {
 						typeId = new BigDecimal(fmt.formatCellValue(cellTypeId)).longValue();
 					} else if (cellTypeId.getCellType() == Cell.CELL_TYPE_NUMERIC) {
 						typeId = ((Number) cellTypeId.getNumericCellValue()).longValue();
 					} else {
-						throw new B2BException("Row " + (i+1) + " product_type_id must be Number");
+						throw new B2BException("Row " + (i + 1) + " product_type_id must be Number");
 					}
 
 					// --------------------------------------------------
 					if (cellCode == null) {
-						throw new B2BException("Row " + (i+1) + " product code is required");
-					} else{
+						throw new B2BException("Row " + (i + 1) + " product code is required");
+					} else {
 						code = fmt.formatCellValue(cellCode);
 					}
 
 					// --------------------------------------------------
 					if (cellName == null) {
-						throw new B2BException("Row " + (i+1) + " product name is required");
-					} else{
+						throw new B2BException("Row " + (i + 1) + " product name is required");
+					} else {
 						name = fmt.formatCellValue(cellName);
 					}
 
 					// --------------------------------------------------
 					if (cellBuyerGroupId == null) {
-						throw new B2BException("Row " + (i+1) + " product buyer group is required");
+						throw new B2BException("Row " + (i + 1) + " product buyer group is required");
 					} else {
 						buyerGroupId = fmt.formatCellValue(cellBuyerGroupId);
 					}
@@ -174,33 +187,33 @@ public class ExcelUtil {
 					// --------------------------------------------------
 					if (cellModelId != null) {
 						modelId = fmt.formatCellValue(cellModelId);
-					}else{
+					} else {
 						modelId = B2BConstant.UNDEFINED;
 					}
 
 					// --------------------------------------------------
-					if(cellTechnology == null){
-						throw new B2BException("Row " + (i+1) + " product technology is required");
-					}else{
+					if (cellTechnology == null) {
+						throw new B2BException("Row " + (i + 1) + " product technology is required");
+					} else {
 						technology = fmt.formatCellValue(cellTechnology);
 					}
 
 					// --------------------------------------------------
 					if (cellSize != null) {
 						size = fmt.formatCellValue(cellSize);
-					}else{
+					} else {
 						size = B2BConstant.UNDEFINED;
 					}
 
 					// --------------------------------------------------
 					if (cellActive != null) {
-//						active = "" + cellActive.getNumericCellValue();
-						statusFlag = "" + (int)cellActive.getNumericCellValue();
+						// active = "" + cellActive.getNumericCellValue();
+						statusFlag = "" + (int) cellActive.getNumericCellValue();
 						log.info("status flag = '" + statusFlag + "'");
-						if(isActive(cellActive)){
+						if (isActive(cellActive)) {
 							active = "1";
 						}
-					}else{
+					} else {
 						active = "1";
 					}
 
@@ -208,26 +221,23 @@ public class ExcelUtil {
 					if (cellYear != null) {
 						year = fmt.formatCellValue(cellYear);
 					}
-					
+
 					// --------------------------------------------------
-					if(cellVendor != null){
+					if (cellVendor != null) {
 						vendor = fmt.formatCellValue(cellVendor);
 					}
-					
-					
-					
-					if(cellExcelSheet != null){
+
+					if (cellExcelSheet != null) {
 						String tmpSheet = fmt.formatCellValue(cellExcelSheet);
-						if(StringUtils.isNotEmpty(tmpSheet)){
+						if (StringUtils.isNotEmpty(tmpSheet)) {
 							excelSheet = tmpSheet;
 						}
 					}
-					
-					
-					
-					// ----- 2016/02/16 ----- insert product_model when not found
+
+					// ----- 2016/02/16 ----- insert product_model when not
+					// found
 					ProductModelDTO productModel = productService.findProductModel(modelId);
-					if(productModel == null){
+					if (productModel == null) {
 						productService.createNewModel(modelId);
 					}
 
@@ -320,7 +330,8 @@ public class ExcelUtil {
 						throw new B2BException("Product code is required");
 					}
 
-					// when price is string like 'TBA = to be anouce' it can skip because when not found product price
+					// when price is string like 'TBA = to be anouce' it can
+					// skip because when not found product price
 					// it show TBA by default
 					if (cellAmount != null && cellAmount.getCellType() == Cell.CELL_TYPE_NUMERIC) {
 						amount = new BigDecimal(cellAmount.getNumericCellValue());
@@ -333,8 +344,8 @@ public class ExcelUtil {
 						log.debug(msrePrice.toPlainString());
 						msrePrice = msrePrice.setScale(2, BigDecimal.ROUND_DOWN);
 					}
-					
-					if(StringUtils.isNotEmpty(soCategory) && soCategory.contains(",")){
+
+					if (StringUtils.isNotEmpty(soCategory) && soCategory.contains(",")) {
 						soCategory = soCategory.split(",")[0].trim();
 					}
 
