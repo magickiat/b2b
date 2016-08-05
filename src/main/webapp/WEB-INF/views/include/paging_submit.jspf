@@ -4,8 +4,9 @@
 <div class="col-sm-12">
 	<div class="row pull-right">
 		<c:choose>
-			<c:when test="${not empty resultPage.total && resultPage.total > resultPage.pageSize}">
-			
+			<c:when
+				test="${not empty resultPage.total && resultPage.total > resultPage.pageSize}">
+
 				<c:url var="firstUrl" value="searchPage('1')" />
 				<c:url var="lastUrl" value="searchPage('${resultPage.totalPage}')" />
 				<c:url var="prevUrl" value="searchPage('${resultPage.current - 1}')" />
@@ -48,6 +49,11 @@
 				</ul>
 
 			</c:when>
+			<c:otherwise>
+				<div class="pagination">
+					<div class="col-sm-12">&nbsp;</div>
+				</div>
+			</c:otherwise>
 
 		</c:choose>
 	</div>
