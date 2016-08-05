@@ -9,8 +9,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -54,7 +54,7 @@ public class ArchiveUtil {
 		return output.toByteArray();
 	}
 
-	public static byte[] zipExcel(HashMap<String, HSSFWorkbook> excelMap) throws IOException {
+	public static byte[] zipExcel(Map<String, HSSFWorkbook> excelMap) throws IOException {
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		try (ZipOutputStream zip = new ZipOutputStream(output)) {
 			for (Entry<String, HSSFWorkbook> entry : excelMap.entrySet()) {

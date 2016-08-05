@@ -8,16 +8,19 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.TreeMap;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -126,42 +129,86 @@ public class B2BFileUtil {
 			throw new B2BException("Not found any brand");
 		}
 
-		HashMap<String, HSSFWorkbook> excelMap = new HashMap<>();
+		TreeMap<String, HSSFWorkbook> excelMap = new TreeMap<>();
 
 		for (ProductTypeDTO brand : brands) {
 			log.info("Brand: " + brand.getProductTypeName());
-			HSSFWorkbook workbook = new HSSFWorkbook();
-			HSSFSheet sheetProduct = workbook.createSheet("Products");
-			HSSFRow rowHeader = sheetProduct.createRow(0);
 
-			rowHeader.createCell(0).setCellValue("Description");
-			rowHeader.createCell(1).setCellValue("Product Code");
-			rowHeader.createCell(2).setCellValue("Unit");
-			rowHeader.createCell(3).setCellValue("Qty");
-
+			TreeMap<String, ArrayList<Product>> groupSheetProducts = new TreeMap<>();
 			List<Product> products = productService.findProductByProductTypeId(brand.getProductTypeId());
 
-			int countRow = 1;
 			if (products.size() > 0) {
 				for (int i = 0; i < products.size(); i++) {
 					Product product = products.get(i);
-					if(B2BConstant.PRODUCT_FLAG_ACTIVE.equals(product.getIsActive())){
-						HSSFRow productRow = sheetProduct.createRow(countRow++);
-						productRow.createCell(0).setCellValue(StringUtils.defaultIfEmpty(product.getProductNameEn(), ""));
-						productRow.createCell(1).setCellValue(StringUtils.defaultIfEmpty(product.getProductCode(), ""));
-						productRow.createCell(2).setCellValue(StringUtils.defaultIfEmpty(product.getProductUnitId(), config.getDefaultProductUnit()));
-						productRow.createCell(3).setCellValue("");
+					if (B2BConstant.PRODUCT_FLAG_ACTIVE.equals(product.getIsActive())) {
+
+						ArrayList<Product> list = groupSheetProducts.get(product.getExcelSheet());
+						if (list == null) {
+							list = new ArrayList<>();
+							groupSheetProducts.put(product.getExcelSheet(), list);
+						}
+						list.add(product);
+
 					}
-					
+
 				}
 			}
 
-			sheetProduct.autoSizeColumn(0);
-			sheetProduct.autoSizeColumn(1);
-			sheetProduct.autoSizeColumn(2);
-			sheetProduct.autoSizeColumn(3);
+			if (!groupSheetProducts.isEmpty()) {
+				HSSFWorkbook workbook = new HSSFWorkbook();
+				Set<String> keySet = groupSheetProducts.keySet();
 
-			excelMap.put(StringUtil.removeSpecialChar(brand.getProductTypeName().replaceAll(" ", "_")), workbook);
+				int headerIndex = 0;
+				for (String group : keySet) {
+					int countRow = 0;
+					HSSFSheet sheetProduct = workbook.createSheet(group);
+					HSSFRow rowHeader = sheetProduct.createRow(countRow++);
+					headerIndex = 0;
+					// bold font
+					CellStyle style = workbook.createCellStyle();
+			        Font font = workbook.createFont();
+			        font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+			        style.setFont(font);
+			        
+			        HSSFCell cellDesc = rowHeader.createCell(headerIndex++);
+					cellDesc.setCellValue("Description");
+					cellDesc.setCellStyle(style);
+					
+					HSSFCell cellCode = rowHeader.createCell(headerIndex++);
+					cellCode.setCellValue("Product Code");
+					cellCode.setCellStyle(style);
+					
+					HSSFCell cellUnit = rowHeader.createCell(headerIndex++);
+					cellUnit.setCellValue("Unit");
+					cellUnit.setCellStyle(style);
+					
+					HSSFCell cellQty = rowHeader.createCell(headerIndex++);
+					cellQty.setCellValue("Qty");
+					cellQty.setCellStyle(style);
+					
+					
+
+					ArrayList<Product> list = groupSheetProducts.get(group);
+					if (list != null && !list.isEmpty()) {
+						for (Product product : list) {
+
+							HSSFRow productRow = sheetProduct.createRow(countRow++);
+							productRow.createCell(0).setCellValue(StringUtils.defaultIfEmpty(product.getProductNameEn(), ""));
+							productRow.createCell(1).setCellValue(StringUtils.defaultIfEmpty(product.getProductCode(), ""));
+							productRow.createCell(2)
+									.setCellValue(StringUtils.defaultIfEmpty(product.getProductUnitId(), config.getDefaultProductUnit()));
+							productRow.createCell(3).setCellValue("");
+						}
+
+					}
+					sheetProduct.autoSizeColumn(0);
+					sheetProduct.autoSizeColumn(1);
+				}
+
+				excelMap.put(StringUtil.removeSpecialChar(brand.getProductTypeName().replaceAll(" ", "_")), workbook);
+
+			}
+
 		}
 
 		return ArchiveUtil.zipExcel(excelMap);
@@ -206,7 +253,7 @@ public class B2BFileUtil {
 		}
 
 		// ----- resize column -----
-		for(int i = 0; i < headerIndex; i++){
+		for (int i = 0; i < headerIndex; i++) {
 			productSheet.autoSizeColumn(i);
 		}
 
@@ -342,30 +389,34 @@ public class B2BFileUtil {
 			for (ProductPriceDTO productPrice : productPrices) {
 				int detailIndex = 0;
 				XSSFRow priceRow = sheetOrder.createRow(orderRow++);
-				priceRow.createCell(detailIndex++).setCellValue(StringUtils.isEmpty(productPrice.getProductCode()) ? "" : productPrice.getProductCode());
-				priceRow.createCell(detailIndex++).setCellValue(StringUtils.isEmpty(productPrice.getProductPriceGroupId()) ? "" : productPrice.getProductPriceGroupId());
-				priceRow.createCell(detailIndex++).setCellValue(StringUtils.isEmpty(productPrice.getProductCurrency()) ? "" : productPrice.getProductCurrency());
-				
+				priceRow.createCell(detailIndex++)
+						.setCellValue(StringUtils.isEmpty(productPrice.getProductCode()) ? "" : productPrice.getProductCode());
+				priceRow.createCell(detailIndex++)
+						.setCellValue(StringUtils.isEmpty(productPrice.getProductPriceGroupId()) ? "" : productPrice.getProductPriceGroupId());
+				priceRow.createCell(detailIndex++)
+						.setCellValue(StringUtils.isEmpty(productPrice.getProductCurrency()) ? "" : productPrice.getProductCurrency());
+
 				XSSFCell cellAmount = priceRow.createCell(detailIndex++);
 				cellAmount.setCellStyle(cellStyle);
-				if(productPrice.getAmount() != null){
+				if (productPrice.getAmount() != null) {
 					cellAmount.setCellValue(productPrice.getAmount().doubleValue());
 				}
-				
+
 				XSSFCell cellMsre = priceRow.createCell(detailIndex++);
 				cellMsre.setCellStyle(cellStyle);
-				if(productPrice.getMsrePrice() != null){
+				if (productPrice.getMsrePrice() != null) {
 					cellMsre.setCellValue(productPrice.getMsrePrice().doubleValue());
 				}
-				priceRow.createCell(detailIndex++).setCellValue(StringUtils.isEmpty(productPrice.getProductUnitId()) ? "" : productPrice.getProductUnitId());
+				priceRow.createCell(detailIndex++)
+						.setCellValue(StringUtils.isEmpty(productPrice.getProductUnitId()) ? "" : productPrice.getProductUnitId());
 				priceRow.createCell(detailIndex++).setCellValue(productPrice.getSoCategory());
 			}
 
 			// ----- resize column -----
-			for(int i = 0; i< headerIndex; i++){
+			for (int i = 0; i < headerIndex; i++) {
 				sheetOrder.autoSizeColumn(i);
 			}
-			
+
 		} else {
 			log.warn("Not found any product_price");
 		}
