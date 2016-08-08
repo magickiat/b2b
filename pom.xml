@@ -3,7 +3,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.starboard</groupId>
 	<artifactId>b2b</artifactId>
-	<version>1.9</version>
 	<packaging>war</packaging>
 	<name>b2b</name>
 	<description>B2B Website</description>
@@ -297,4 +296,5 @@
 			</plugin>
 		</plugins>
 	</build>
+	<version>2.0</version>
 </project>
