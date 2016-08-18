@@ -1,6 +1,7 @@
 package com.starboard.b2b.service.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -14,8 +15,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import com.starboard.b2b.common.B2BConstant;
-import com.starboard.b2b.common.SyncConstant;
 import com.starboard.b2b.config.ConfigForTest;
 import com.starboard.b2b.config.RootConfig;
 import com.starboard.b2b.config.ServiceConfig;
@@ -24,13 +23,11 @@ import com.starboard.b2b.dao.OrderDetailDao;
 import com.starboard.b2b.dao.ProductDao;
 import com.starboard.b2b.dao.SoDao;
 import com.starboard.b2b.dao.SoDetailDao;
-import com.starboard.b2b.dao.TmpSoDao;
 import com.starboard.b2b.model.OrdDetail;
 import com.starboard.b2b.model.Orders;
 import com.starboard.b2b.model.Product;
 import com.starboard.b2b.model.sync.So;
 import com.starboard.b2b.model.sync.SoDetail;
-import com.starboard.b2b.model.sync.TmpSo;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.SyncB2BService;
 
@@ -58,9 +55,9 @@ public class SyncB2BServiceImplTest {
 
 	@Autowired
 	private SoDao soDao;
-
-	@Autowired
-	private TmpSoDao tmpSoDao;
+//
+//	@Autowired
+//	private TmpSoDao tmpSoDao;
 
 	@Autowired
 	private ProductDao productDao;
@@ -99,13 +96,13 @@ public class SyncB2BServiceImplTest {
 		orderDetailDao.save(detail1);
 		orderDetailDao.save(detail2);
 
-		TmpSo so1 = new TmpSo();
-		so1.setDtsSystem(B2BConstant.AX_SYSTEM_NAME);
-		so1.setImportStatus(Long.valueOf(SyncConstant.WAIT_FOR_SYNC));
-		so1.setRoCode(order.getOrderCode());
-		so1.setSoNo(SO_NO);
-		so1.setItemCode(p1.getProductCode());
-		tmpSoDao.save(so1);
+//		TmpSo so1 = new TmpSo();
+//		so1.setDtsSystem(B2BConstant.AX_SYSTEM_NAME);
+//		so1.setImportStatus(Long.valueOf(SyncConstant.WAIT_FOR_SYNC));
+//		so1.setRoCode(order.getOrderCode());
+//		so1.setSoNo(SO_NO);
+//		so1.setItemCode(p1.getProductCode());
+//		tmpSoDao.save(so1);
 	}
 
 	@Test

@@ -1,30 +1,17 @@
 package com.starboard.b2b.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
-import com.starboard.b2b.common.B2BConstant;
-import com.starboard.b2b.common.SyncConstant;
 import com.starboard.b2b.dao.OrderDao;
 import com.starboard.b2b.dao.OrderDetailDao;
 import com.starboard.b2b.dao.ProductDao;
 import com.starboard.b2b.dao.SoDao;
 import com.starboard.b2b.dao.SoDetailDao;
-import com.starboard.b2b.dao.TmpSoDao;
-import com.starboard.b2b.model.Orders;
-import com.starboard.b2b.model.sync.So;
-import com.starboard.b2b.model.sync.SoDetail;
-import com.starboard.b2b.model.sync.TmpSo;
 import com.starboard.b2b.service.SyncB2BService;
-import com.starboard.b2b.util.CurrencyUtils;
-import com.starboard.b2b.util.DateTimeUtil;
 
 @Service("syncB2BService")
 public class SyncB2BServiceImpl implements SyncB2BService {
@@ -35,7 +22,7 @@ public class SyncB2BServiceImpl implements SyncB2BService {
 	private OrderDetailDao orderDetailDao;
 	private SoDao soDao;
 	private SoDetailDao soDetailDao;
-	private TmpSoDao tmpSoDao;
+//	private TmpSoDao tmpSoDao;
 	private ProductDao productDao;
 
 	@Override
@@ -44,100 +31,100 @@ public class SyncB2BServiceImpl implements SyncB2BService {
 		log.info("Sync sell order from AX");
 
 		// ----- find SO from AX -----
-		List<TmpSo> tmpSoList = tmpSoDao.findGroupBySoNo();
-		if (tmpSoList == null || tmpSoList.isEmpty()) {
-			log.info("Not found any record for sync");
-			return;
-		}
-		
-		
-		
-		// list for report
-		ArrayList<TmpSo> tmpSoEmptyRoCode = new ArrayList<>(tmpSoList.size());
-		ArrayList<TmpSo> tmpSoNotFoundRoCode = new ArrayList<>(tmpSoList.size());
-		ArrayList<TmpSo> tmpSoOutdated = new ArrayList<>(tmpSoList.size());
-		
-		// create so
-		for (TmpSo tmpSo : tmpSoList) {
-			So so = soDao.findBySoNo(tmpSo.getSoNo());
-			if(so == null){ // Insert SO
-				if(StringUtils.isEmpty(tmpSo.getRoCode())){
-					tmpSoEmptyRoCode.add(tmpSo);
-					log.warn(tmpSo.getRunningNo() + " Not found RO_CODE");
-					continue;
-				}
-				
-				// find order
-				Orders order = orderDao.findByOrderCode(tmpSo.getRoCode());
-				if(order == null){
-					tmpSoNotFoundRoCode.add(tmpSo);
-					log.warn("Not found any order with RO Code = " + tmpSo.getRoCode());
-					continue;
-				}
-				
-				so = new So();
-				updateSoFromTemp(so, tmpSo, order.getOrderId());
-				so.setTimeCreate(DateTimeUtil.getCurrentDate());
-				so.setUserCreate(B2BConstant.AX_SYSTEM_NAME);
-				soDao.save(so);
-			}else{
-				if (isNotOutdated(tmpSo, so)) {
-					updateSoFromTemp(so, tmpSo);
-					so.setTimeUpdate(DateTimeUtil.getCurrentDate());
-					log.info(String.format("Update SO: %s completed", tmpSo.getSoNo()));
-				} else {
-					tmpSoOutdated.add(tmpSo);
-					log.info(String.format("Temp SO: %s is outdated", tmpSo.getSoNo()));
-				}
-			}
-			
-			// ----- Step 3: Clear all SO detail of this SO -----
-			//why soDetailDao.deleteBySoId(so.getSoId());
-			
-			List<TmpSo> tmpSoTransactionList = tmpSoDao.findBySoNo(tmpSo.getSoNo());
-			if(tmpSoTransactionList != null && !tmpSoTransactionList.isEmpty()){
-				for (TmpSo tmpSo2 : tmpSoTransactionList) {
-					
-					
-					// ----- Step 4: Create Order detail and SO detail -----
-//					OrdDetail ordDetail = new OrdDetail();
-//					ordDetail.setOrderId(so.getOrderId());
-//					ordDetail.setProductId(tmpSo2.getOrderProductId());
-//					ordDetail.setAmount(tmpSo2.getAmount());
-//					ordDetail.setProductBuyerGroupId(tmpSo2.getProductBuyerGroupId());
-//					ordDetail.setPrice(tmpSo2.getPrice());
-//					ordDetail.setProductCurrency(CurrencyUtils.parseCurrencyAXToB2B(tmpSo2.getProductCurrency()));
-//					ordDetail.setProductUnitId(tmpSo2.getProductUnitId());
-//					ordDetail.setTimeCreate(tmpSo2.getDtsUpdate());
-//					ordDetail.setTimeUpdate(tmpSo2.getDtsUpdate());
-//					orderDetailDao.save(ordDetail);
-//					log.info(String.format("insert order_detail '%d' for %s complete", ordDetail.getOrderDetailId(), tmpSo2.getSoNo()));
+//		List<TmpSo> tmpSoList = tmpSoDao.findGroupBySoNo();
+//		if (tmpSoList == null || tmpSoList.isEmpty()) {
+//			log.info("Not found any record for sync");
+//			return;
+//		}
 //		
-					SoDetail soDetail = new SoDetail();
-					soDetail.setSoId(so.getSoId());
-					soDetail.setProductId(tmpSo2.getOrderProductId());
-					soDetail.setOrderProductId(tmpSo2.getOrderProductId());
-					soDetail.setPrice(tmpSo2.getPrice());
-					soDetail.setAmount(tmpSo2.getAmount());
-					soDetail.setProductBuyerGroupId(tmpSo2.getProductBuyerGroupId());
-					soDetail.setProductCurrency(CurrencyUtils.parseCurrencyAXToB2B(tmpSo2.getProductCurrency()));
-					soDetail.setProductUnitId(tmpSo2.getProductUnitId());
-					soDetail.setTimeCreate(tmpSo2.getDtsUpdate());
-					soDetail.setTimeUpdate(tmpSo2.getDtsUpdate());
-					soDetailDao.save(soDetail);
-					log.info(String.format("insert so_detail for %s complete", tmpSo2.getSoNo()));
-				}
-			}
-			// ----- Step 5: Stamp flag for tmp_so -----
-			tmpSo.setImportStatus(Long.valueOf(SyncConstant.SYNC_COMPLETE));
-			
-		}
-		
-		
-		
-		
-		
-		
+//		
+//		
+//		// list for report
+//		ArrayList<TmpSo> tmpSoEmptyRoCode = new ArrayList<>(tmpSoList.size());
+//		ArrayList<TmpSo> tmpSoNotFoundRoCode = new ArrayList<>(tmpSoList.size());
+//		ArrayList<TmpSo> tmpSoOutdated = new ArrayList<>(tmpSoList.size());
+//		
+//		// create so
+//		for (TmpSo tmpSo : tmpSoList) {
+//			So so = soDao.findBySoNo(tmpSo.getSoNo());
+//			if(so == null){ // Insert SO
+//				if(StringUtils.isEmpty(tmpSo.getRoCode())){
+//					tmpSoEmptyRoCode.add(tmpSo);
+//					log.warn(tmpSo.getRunningNo() + " Not found RO_CODE");
+//					continue;
+//				}
+//				
+//				// find order
+//				Orders order = orderDao.findByOrderCode(tmpSo.getRoCode());
+//				if(order == null){
+//					tmpSoNotFoundRoCode.add(tmpSo);
+//					log.warn("Not found any order with RO Code = " + tmpSo.getRoCode());
+//					continue;
+//				}
+//				
+//				so = new So();
+//				updateSoFromTemp(so, tmpSo, order.getOrderId());
+//				so.setTimeCreate(DateTimeUtil.getCurrentDate());
+//				so.setUserCreate(B2BConstant.AX_SYSTEM_NAME);
+//				soDao.save(so);
+//			}else{
+//				if (isNotOutdated(tmpSo, so)) {
+//					updateSoFromTemp(so, tmpSo);
+//					so.setTimeUpdate(DateTimeUtil.getCurrentDate());
+//					log.info(String.format("Update SO: %s completed", tmpSo.getSoNo()));
+//				} else {
+//					tmpSoOutdated.add(tmpSo);
+//					log.info(String.format("Temp SO: %s is outdated", tmpSo.getSoNo()));
+//				}
+//			}
+//			
+//			// ----- Step 3: Clear all SO detail of this SO -----
+//			//why soDetailDao.deleteBySoId(so.getSoId());
+//			
+//			List<TmpSo> tmpSoTransactionList = tmpSoDao.findBySoNo(tmpSo.getSoNo());
+//			if(tmpSoTransactionList != null && !tmpSoTransactionList.isEmpty()){
+//				for (TmpSo tmpSo2 : tmpSoTransactionList) {
+//					
+//					
+//					// ----- Step 4: Create Order detail and SO detail -----
+////					OrdDetail ordDetail = new OrdDetail();
+////					ordDetail.setOrderId(so.getOrderId());
+////					ordDetail.setProductId(tmpSo2.getOrderProductId());
+////					ordDetail.setAmount(tmpSo2.getAmount());
+////					ordDetail.setProductBuyerGroupId(tmpSo2.getProductBuyerGroupId());
+////					ordDetail.setPrice(tmpSo2.getPrice());
+////					ordDetail.setProductCurrency(CurrencyUtils.parseCurrencyAXToB2B(tmpSo2.getProductCurrency()));
+////					ordDetail.setProductUnitId(tmpSo2.getProductUnitId());
+////					ordDetail.setTimeCreate(tmpSo2.getDtsUpdate());
+////					ordDetail.setTimeUpdate(tmpSo2.getDtsUpdate());
+////					orderDetailDao.save(ordDetail);
+////					log.info(String.format("insert order_detail '%d' for %s complete", ordDetail.getOrderDetailId(), tmpSo2.getSoNo()));
+////		
+//					SoDetail soDetail = new SoDetail();
+//					soDetail.setSoId(so.getSoId());
+//					soDetail.setProductId(tmpSo2.getOrderProductId());
+//					soDetail.setOrderProductId(tmpSo2.getOrderProductId());
+//					soDetail.setPrice(tmpSo2.getPrice());
+//					soDetail.setAmount(tmpSo2.getAmount());
+//					soDetail.setProductBuyerGroupId(tmpSo2.getProductBuyerGroupId());
+//					soDetail.setProductCurrency(CurrencyUtils.parseCurrencyAXToB2B(tmpSo2.getProductCurrency()));
+//					soDetail.setProductUnitId(tmpSo2.getProductUnitId());
+//					soDetail.setTimeCreate(tmpSo2.getDtsUpdate());
+//					soDetail.setTimeUpdate(tmpSo2.getDtsUpdate());
+//					soDetailDao.save(soDetail);
+//					log.info(String.format("insert so_detail for %s complete", tmpSo2.getSoNo()));
+//				}
+//			}
+//			// ----- Step 5: Stamp flag for tmp_so -----
+//			tmpSo.setImportStatus(Long.valueOf(SyncConstant.SYNC_COMPLETE));
+//			
+//		}
+//		
+//		
+//		
+//		
+//		
+//		
 		
 		
 		
@@ -256,24 +243,24 @@ public class SyncB2BServiceImpl implements SyncB2BService {
 //		}
 	}
 
-	
-
-	public boolean isNotOutdated(TmpSo tmpSo, So soInDb) {
-		return tmpSo.getDtsUpdate() != null && tmpSo.getDtsUpdate().before(soInDb.getTimeUpdate());
-	}
-
-	private void updateSoFromTemp(So so, TmpSo tmpSo, long orderId) {
-		so.setOrderId(orderId);
-		updateSoFromTemp(so, tmpSo);
-	}
-	
-	private void updateSoFromTemp(So so, TmpSo tmpSo) {
-		so.setShippingId(tmpSo.getShippingId());
-		so.setPaymentTermId(tmpSo.getTermCode());
-		so.setPaymentMethodId(tmpSo.getPaymentMethodId());
-		so.setExpectShipmentDate(tmpSo.getExpectShipmentDate());
-		so.setSoNo(tmpSo.getSoNo());
-	}
+//	
+//
+//	public boolean isNotOutdated(TmpSo tmpSo, So soInDb) {
+//		return tmpSo.getDtsUpdate() != null && tmpSo.getDtsUpdate().before(soInDb.getTimeUpdate());
+//	}
+//
+//	private void updateSoFromTemp(So so, TmpSo tmpSo, long orderId) {
+//		so.setOrderId(orderId);
+//		updateSoFromTemp(so, tmpSo);
+//	}
+//	
+//	private void updateSoFromTemp(So so, TmpSo tmpSo) {
+//		so.setShippingId(tmpSo.getShippingId());
+//		so.setPaymentTermId(tmpSo.getTermCode());
+//		so.setPaymentMethodId(tmpSo.getPaymentMethodId());
+//		so.setExpectShipmentDate(tmpSo.getExpectShipmentDate());
+//		so.setSoNo(tmpSo.getSoNo());
+//	}
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -300,11 +287,11 @@ public class SyncB2BServiceImpl implements SyncB2BService {
 	public void setSoDetailDao(SoDetailDao soDetailDao) {
 		this.soDetailDao = soDetailDao;
 	}
-
-	@Autowired
-	public void setTmpSoDao(TmpSoDao tmpSoDao) {
-		this.tmpSoDao = tmpSoDao;
-	}
+//
+//	@Autowired
+//	public void setTmpSoDao(TmpSoDao tmpSoDao) {
+//		this.tmpSoDao = tmpSoDao;
+//	}
 
 	@Autowired
 	public void setProductDao(ProductDao productDao) {

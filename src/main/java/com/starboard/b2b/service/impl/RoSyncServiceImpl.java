@@ -8,15 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.starboard.b2b.common.B2BConstant;
 import com.starboard.b2b.dao.OrderDao;
 import com.starboard.b2b.dao.OrderDetailDao;
-import com.starboard.b2b.dao.TmpRoDao;
 import com.starboard.b2b.dao.UserDao;
 import com.starboard.b2b.dto.search.SearchOrderDetailReportResult;
 import com.starboard.b2b.model.Orders;
 import com.starboard.b2b.model.User;
-import com.starboard.b2b.model.sync.TmpRo;
 import com.starboard.b2b.service.RoSyncService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.CurrencyUtils;
@@ -36,8 +33,8 @@ public class RoSyncServiceImpl implements RoSyncService {
 	@Autowired
 	private OrderDao orderDao;
 
-	@Autowired
-	private TmpRoDao tmpRoDao;
+//	@Autowired
+//	private TmpRoDao tmpRoDao;
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -55,63 +52,63 @@ public class RoSyncServiceImpl implements RoSyncService {
 			String saleId = orderUser.getCustomer().getSaleId();
 			Orders order = orderDao.findById(orderId);
 			for (SearchOrderDetailReportResult ordDetail : list) {
-				TmpRo tmpRo = createTmpRO(order, ordDetail);
-				tmpRo.setSalesId(saleId);
-				tmpRoDao.save(tmpRo);
+//				TmpRo tmpRo = createTmpRO(order, ordDetail);
+//				tmpRo.setSalesId(saleId);
+//				tmpRoDao.save(tmpRo);
 			}
 		}
 	}
 
-	private TmpRo createTmpRO(Orders ord, SearchOrderDetailReportResult ordDetail) {
-		TmpRo tmpRo = new TmpRo();
-		tmpRo.setOrderProductId(ordDetail.getOrderDetailId());
-		setTmpRo(ord, ordDetail, tmpRo);
-		return tmpRo;
-	}
+//	private TmpRo createTmpRO(Orders ord, SearchOrderDetailReportResult ordDetail) {
+//		TmpRo tmpRo = new TmpRo();
+//		tmpRo.setOrderProductId(ordDetail.getOrderDetailId());
+//		setTmpRo(ord, ordDetail, tmpRo);
+//		return tmpRo;
+//	}
 
-	public void setTmpRo(Orders ord, SearchOrderDetailReportResult ordDetail, TmpRo tmpRo) {
-		tmpRo.setOrderId(ordDetail.getOrderId());
-		tmpRo.setRoNumber(ord.getOrderCode());
-		tmpRo.setProductId(ordDetail.getProductId());
-
-		tmpRo.setItemId(ordDetail.getProductCode());
-		tmpRo.setProductName(ordDetail.getProductNameEn());
-		tmpRo.setCategory(ordDetail.getSaleOrderCat());
-		tmpRo.setCustAccount(ordDetail.getCustCode());
-		tmpRo.setCustName(ordDetail.getNameEn());
-		tmpRo.setNumberSeqCode(B2BConstant.VO_NUMBER_SEQ_CODE);
-		tmpRo.setSite(ordDetail.getSite());
-		tmpRo.setWarehouse(ordDetail.getWarehouse());
-
-		tmpRo.setReqShipDate(ord.getExpectShipmentDate());
-		tmpRo.setReqReceiptDate(ord.getExpectReceiptDate());
-		tmpRo.setAmount(ordDetail.getAmount());
-		tmpRo.setStatus(ordDetail.getStatus());
-
-		tmpRo.setSalesPrice(getSalePrice(ordDetail.getPrice()));
-		tmpRo.setUnit(getProductUnit(ordDetail.getProductUnitId()));
-		tmpRo.setProductBuyerGroupId(getProductBuyerGroup(ordDetail.getProductBuyerGroupId()));
-
-		tmpRo.setCurrencyCode(getCurrencyCode(tmpRo.getCustAccount(), ordDetail.getProductCurrency(), ordDetail.getProductCategoryId()));
-		tmpRo.setTermCode(ordDetail.getPaymentTermId());
-		tmpRo.setRunningNumber(0L);
-		
-		tmpRo.setCategory(ordDetail.getSaleOrderCat());
-		tmpRo.setWarehouse(ordDetail.getWarehouse());
-		tmpRo.setSite(ordDetail.getSite());
-		
-		tmpRo.setImportDateTime(null);
-		tmpRo.setSalesId(null);
-		tmpRo.setImportStatus(B2BConstant.ONE_IMPORT_STATUS);
-		tmpRo.setDtsSystem(B2BConstant.B2B_SYSTEM_NAME);
-		tmpRo.setDtsUpdate(ordDetail.getTimeUpdate());
-		
-		tmpRo.setUserCreate(ordDetail.getUserCreate());
-		tmpRo.setUserUpdate(ordDetail.getUserUpdate());
-		tmpRo.setTimeCreate(ordDetail.getTimeCreate());
-		tmpRo.setTimeUpdate(ordDetail.getTimeUpdate());
-		
-	}
+//	public void setTmpRo(Orders ord, SearchOrderDetailReportResult ordDetail, TmpRo tmpRo) {
+//		tmpRo.setOrderId(ordDetail.getOrderId());
+//		tmpRo.setRoNumber(ord.getOrderCode());
+//		tmpRo.setProductId(ordDetail.getProductId());
+//
+//		tmpRo.setItemId(ordDetail.getProductCode());
+//		tmpRo.setProductName(ordDetail.getProductNameEn());
+//		tmpRo.setCategory(ordDetail.getSaleOrderCat());
+//		tmpRo.setCustAccount(ordDetail.getCustCode());
+//		tmpRo.setCustName(ordDetail.getNameEn());
+//		tmpRo.setNumberSeqCode(B2BConstant.VO_NUMBER_SEQ_CODE);
+//		tmpRo.setSite(ordDetail.getSite());
+//		tmpRo.setWarehouse(ordDetail.getWarehouse());
+//
+//		tmpRo.setReqShipDate(ord.getExpectShipmentDate());
+//		tmpRo.setReqReceiptDate(ord.getExpectReceiptDate());
+//		tmpRo.setAmount(ordDetail.getAmount());
+//		tmpRo.setStatus(ordDetail.getStatus());
+//
+//		tmpRo.setSalesPrice(getSalePrice(ordDetail.getPrice()));
+//		tmpRo.setUnit(getProductUnit(ordDetail.getProductUnitId()));
+//		tmpRo.setProductBuyerGroupId(getProductBuyerGroup(ordDetail.getProductBuyerGroupId()));
+//
+//		tmpRo.setCurrencyCode(getCurrencyCode(tmpRo.getCustAccount(), ordDetail.getProductCurrency(), ordDetail.getProductCategoryId()));
+//		tmpRo.setTermCode(ordDetail.getPaymentTermId());
+//		tmpRo.setRunningNumber(0L);
+//		
+//		tmpRo.setCategory(ordDetail.getSaleOrderCat());
+//		tmpRo.setWarehouse(ordDetail.getWarehouse());
+//		tmpRo.setSite(ordDetail.getSite());
+//		
+//		tmpRo.setImportDateTime(null);
+//		tmpRo.setSalesId(null);
+//		tmpRo.setImportStatus(B2BConstant.ONE_IMPORT_STATUS);
+//		tmpRo.setDtsSystem(B2BConstant.B2B_SYSTEM_NAME);
+//		tmpRo.setDtsUpdate(ordDetail.getTimeUpdate());
+//		
+//		tmpRo.setUserCreate(ordDetail.getUserCreate());
+//		tmpRo.setUserUpdate(ordDetail.getUserUpdate());
+//		tmpRo.setTimeCreate(ordDetail.getTimeCreate());
+//		tmpRo.setTimeUpdate(ordDetail.getTimeUpdate());
+//		
+//	}
 
 	private String getCurrencyCode(String custAccount, String productCurrency, String productCategoryId) {
 		if (StringUtils.isEmpty(productCurrency)) {
