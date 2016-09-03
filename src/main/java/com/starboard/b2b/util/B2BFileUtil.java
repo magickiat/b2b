@@ -77,7 +77,7 @@ public class B2BFileUtil {
 			for (File file : listFiles) {
 				B2BFile f = new B2BFile();
 				f.setName(file.getName());
-				f.setNameWithPath((file.getAbsolutePath().substring(rootFolder.length() + 2)).replaceAll("\\\\", "/"));
+				f.setNameWithPath((file.getAbsolutePath().replaceAll("\\\\", "/").substring(rootFolder.length())));
 				f.setFullPath(file.getAbsolutePath());
 				f.setFolder(file.isDirectory());
 				// f.setContentType(contentType); // Find content type before
