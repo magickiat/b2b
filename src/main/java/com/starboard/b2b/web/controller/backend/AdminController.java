@@ -15,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +28,6 @@ import com.starboard.b2b.dto.B2BFile;
 import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.B2BFileUtil;
-import com.starboard.b2b.web.form.SearchImageForm;
 
 @Controller
 @RequestMapping("/backend/admin")
@@ -49,14 +46,11 @@ public class AdminController {
 		return "pages-back/admin/index";
 	}
 
-	@GetMapping("/file/index")
-	String file(Model model) {
-		return list(new SearchImageForm(), model);
-	}
-
 	@RequestMapping(value = "/file/list", method = RequestMethod.GET)
-	String list(@ModelAttribute("searchForm") SearchImageForm form, Model model) throws B2BException {
-		log.info("selected folder = " + form.getFolder());
+	String list(@RequestParam(name = "page") int page, @RequestParam(name = "folder", required = false) String folder, Model model) throws B2BException {
+		
+		
+		log.info("selected folder = " + folder);
 		String rootPath = env.getProperty("upload.path");
 		if (rootPath == null) {
 			throw new B2BException("Not found upload path");
@@ -70,10 +64,10 @@ public class AdminController {
 
 		model.addAttribute("folders", files);
 
-		String selectedFolder = form.getFolder();
-		if (StringUtils.isNotEmpty(form.getFolder())) {
-			if (form.getFolder().startsWith(B2BConstant.PRODUCT_IMAGE_FOLDER)) {
-				selectedFolder = form.getFolder().split("/")[1];
+		String selectedFolder = folder;
+		if (StringUtils.isNotEmpty(folder)) {
+			if (folder.startsWith(B2BConstant.PRODUCT_IMAGE_FOLDER)) {
+				selectedFolder = folder.split("/")[1];
 			}
 		}
 		model.addAttribute("selectedFolder", selectedFolder);
@@ -82,55 +76,69 @@ public class AdminController {
 			List<B2BFile> listFile = new ArrayList<>();
 
 			String subFolder = "";
-			if (StringUtils.isEmpty(form.getFolder())) {
+			if (StringUtils.isEmpty(folder)) {
 				subFolder = B2BConstant.PRODUCT_IMAGE_FOLDER + "/" + files.get(0);
-			} else if (!form.getFolder().startsWith(B2BConstant.PRODUCT_IMAGE_FOLDER)) {
-				subFolder = B2BConstant.PRODUCT_IMAGE_FOLDER + "/" + form.getFolder();
+			} else if (!folder.startsWith(B2BConstant.PRODUCT_IMAGE_FOLDER)) {
+				subFolder = B2BConstant.PRODUCT_IMAGE_FOLDER + "/" + folder;
 			} else {
-				subFolder = form.getFolder();
+				subFolder = folder;
 			}
 
 			listFile = B2BFileUtil.list(rootPath, subFolder);
 			log.info("listFile size: " + (listFile == null ? 0 : listFile.size()));
-			model.addAttribute("listFile", listFile);
 			model.addAttribute("subFolder", subFolder);
 			
+			
+			int pageSize = applicationConfig.getPageSize();
+			int firstItem = (page -1) * pageSize;
+			int lastItem = firstItem + pageSize;
+			
+			if(listFile.size() < lastItem){
+				lastItem = listFile.size();
+			}
+			
+			List<B2BFile> pagingItem = new ArrayList<>();
+			for(int i = firstItem; i < lastItem; i++){
+				pagingItem.add(listFile.get(i));
+			}
+			
 			Page<B2BFile> result = new Page<>();
-			result.setCurrent(form.getPage());
-			result.setResult(listFile);
-			result.setPageSize(applicationConfig.getPageSize());
+			result.setCurrent(page);
+			result.setResult(pagingItem);
+			result.setPageSize(pageSize);
 			result.setTotal(listFile.size());
 
 			model.addAttribute("resultPage", result);
-			model.addAttribute("searchForm", form);
+
 		}
 
 		return "pages-back/admin/image/index";
 	}
 
 	@RequestMapping(value = "/file/new-folder", method = RequestMethod.POST)
-	String newFolder(@ModelAttribute("searchForm") SearchImageForm form, Model model) {
+	String newFolder(@RequestParam(name = "subFolder", required = true) String subFolder,
+			@RequestParam(name = "folderName", required = true) String folderName, Model model) {
 
-		log.info("Sub folder = {}\tNew folder name: {}", form.getSubFolder(), form.getFolderName());
+		log.info("Sub folder = {}\tNew folder name: {}", subFolder, folderName);
 
 		String rootPath = env.getProperty("upload.path");
 		if (rootPath == null) {
 			throw new B2BException("Not found upload path");
 		}
 
-		if (form.getSubFolder().contains("..") || form.getFolderName().contains("..")) {
+		if (subFolder.contains("..") || folderName.contains("..")) {
 			throw new B2BException("Invalid path");
 		}
 
-		File rootFolder = new File(rootPath, form.getSubFolder());
+		File rootFolder = new File(rootPath, subFolder);
 		if (!rootFolder.isDirectory()) {
 			rootFolder.mkdirs();
-			// throw new B2BException("Invalid path");
+//			throw new B2BException("Invalid path");
 		}
 
-		File newFolder = new File(rootFolder.getAbsolutePath(), form.getFolderName());
+		File newFolder = new File(rootFolder.getAbsolutePath(), folderName);
 		if (newFolder.exists()) {
-			throw new B2BException("Exist folder: " + form.getFolderName());
+			throw new B2BException("Exist folder: " + folderName);
 		}
 
 		log.info("new folder path: " + newFolder.getAbsolutePath());
@@ -141,7 +149,7 @@ public class AdminController {
 			throw new B2BException("Cannot create folder");
 		}
 
-		return list(form, model);
+		return list(1, subFolder, model);
 
 	}
 
@@ -192,7 +200,6 @@ public class AdminController {
 	@RequestMapping(value = "/file/delete")
 	@ResponseBody
 	int deleteFile(@RequestParam("subFolder") String subFolder, @RequestParam("files[]") String[] files, Model model) {
-		log.info("delete file in subfolder " + subFolder);
 		String rootPath = env.getProperty("upload.path");
 		if (rootPath == null) {
 			throw new B2BException("Not found upload path");

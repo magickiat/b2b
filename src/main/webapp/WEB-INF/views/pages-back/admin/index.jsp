@@ -55,7 +55,7 @@
 						<div class="panel-stat3 bg-info" id="set_image">
 							<h3 class="m-top-none">
 								<span id="serverloadCount"> <a style="color: #fff;"
-									href='<c:url value="/backend/admin/file/list" />'>Image</a>
+									href='<c:url value="/backend/admin/file/list?folder=BIG&page=1" />'>Image</a>
 								</span>
 							</h3>
 							<h5>Upload Image</h5>
@@ -126,7 +126,7 @@
 				window.location = '<c:url value="/backend/email" />';
 			});
 			$('#set_image').click(function() {
-				window.location = '<c:url value="/backend/admin/file/list" />';
+				window.location = '<c:url value="/backend/admin/file/list?folder=BIG&page=1" />';
 			});
 			$('#set_prdprice')
 					.click(
