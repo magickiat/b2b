@@ -103,7 +103,7 @@ public class B2BFileUtil {
 		}
 
 		if (parent.exists() && parent.isDirectory()) {
-			File dest = new File(parent.getAbsolutePath(), uploadFile.getOriginalFilename());
+			File dest = new File(parent.getAbsolutePath(), StringUtil.removeSpecialChar(uploadFile.getOriginalFilename()));
 			FileUtils.writeByteArrayToFile(dest, uploadFile.getBytes(), false);
 		}
 	}

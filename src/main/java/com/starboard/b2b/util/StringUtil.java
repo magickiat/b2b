@@ -2,12 +2,15 @@ package com.starboard.b2b.util;
 
 public class StringUtil {
 
-    // http://stackoverflow.com/questions/4283351/how-to-replace-special-characters-in-a-string
-    public static String removeSpecialChar(String data) {
-        if (data != null) {
-            return data.replaceAll("\\W", "");
-        } else {
-            return "";
-        }
-    }
+	
+	public static String removeSpecialChar(String data) {
+		StringBuilder filename = new StringBuilder();
+
+		for (char c : data.toCharArray()) {
+			if (c == '.' || Character.isJavaIdentifierPart(c)) {
+				filename.append(c);
+			}
+		}
+		return filename.toString();
+	}
 }
