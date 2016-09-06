@@ -55,7 +55,7 @@
 						<div class="panel-stat3 bg-info" id="set_image">
 							<h3 class="m-top-none">
 								<span id="serverloadCount"> <a style="color: #fff;"
-									href='<c:url value="/backend/admin/file/list?folder=BIG&page=1" />'>Image</a>
+									href='<c:url value="/backend/admin/file/list" />'>Image</a>
 								</span>
 							</h3>
 							<h5>Upload Image</h5>
@@ -83,7 +83,8 @@
 						<div class="panel-stat3 bg-info" id="download_template">
 							<h3 class="m-top-none">
 								<span id="serverloadCount"> <a style="color: #fff;"
-									href='<c:url value="/backend/product/download" />'>Download Template</a>
+									href='<c:url value="/backend/product/download" />'>Download
+										Template</a>
 								</span>
 							</h3>
 							<h5>Download Template</h5>
@@ -95,22 +96,22 @@
 					<div class="col-sm-3">
 						<form id="uploadForm"
 							action='<c:url value="/backend/product/upload" />' method="get">
-							<input type="hidden" id="csrftoken_" 
-								name="${_csrf.parameterName}" value="${_csrf.token}" /> 
-								<div class="panel-stat3 bg-info" id="upload_product">
-									<h3 class="m-top-none">
-										<span id="serverloadCount"> 
-											<input type="submit" value="Upload Product" 
-											class="" style="margin-right: 5px; background: none; border: none;" />
-										</span>
-									</h3>
-									<h5>Upload Product</h5>
-									<div class="stat-icon">
-										<i class="fa fa-cloud-upload fa-3x"></i>
-									</div>
+							<input type="hidden" id="csrftoken_"
+								name="${_csrf.parameterName}" value="${_csrf.token}" />
+							<div class="panel-stat3 bg-info" id="upload_product">
+								<h3 class="m-top-none">
+									<span id="serverloadCount"> <input type="submit"
+										value="Upload Product" class=""
+										style="margin-right: 5px; background: none; border: none;" />
+									</span>
+								</h3>
+								<h5>Upload Product</h5>
+								<div class="stat-icon">
+									<i class="fa fa-cloud-upload fa-3x"></i>
 								</div>
+							</div>
 						</form>
-						
+
 					</div>
 				</div>
 			</div>
@@ -126,7 +127,7 @@
 				window.location = '<c:url value="/backend/email" />';
 			});
 			$('#set_image').click(function() {
-				window.location = '<c:url value="/backend/admin/file/list?folder=BIG&page=1" />';
+				window.location = '<c:url value="/backend/admin/file/list" />';
 			});
 			$('#set_prdprice')
 					.click(

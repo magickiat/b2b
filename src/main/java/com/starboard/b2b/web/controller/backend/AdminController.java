@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,10 +35,11 @@ import com.starboard.b2b.util.B2BFileUtil;
 public class AdminController {
 
 	private static final Logger log = LoggerFactory.getLogger(AdminController.class);
+	private static final String DEFAULT_CURRENT_PATH = B2BConstant.PRODUCT_IMAGE_FOLDER + "/" + B2BConstant.PRODUCT_IMAGE_BIG;
 
 	@Autowired
 	private Environment env;
-	
+
 	@Autowired
 	private ApplicationConfig applicationConfig;
 
@@ -46,62 +48,72 @@ public class AdminController {
 		return "pages-back/admin/index";
 	}
 
-	@RequestMapping(value = "/file/list", method = RequestMethod.GET)
-	String list(@RequestParam(name = "page") int page, @RequestParam(name = "folder", required = false) String folder, Model model) throws B2BException {
-		
-		
-		log.info("selected folder = " + folder);
+	@GetMapping("/file/list")
+	String list(@RequestParam(name = "page", defaultValue = "1") int page,
+			@RequestParam(name = "folder", defaultValue = B2BConstant.PRODUCT_IMAGE_BIG) String folder,
+			@RequestParam(name = "currentPath", defaultValue = DEFAULT_CURRENT_PATH) String currentPath,
+			@RequestParam(name = "keyword", required = false) String keyword, Model model) throws B2BException {
+
+		log.info("folder = " + folder);
+		log.info("keyword = " + keyword);
+		log.info("currentPath = " + currentPath);
+
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("folder", folder);
+		model.addAttribute("currentPath", currentPath);
+
+		if (currentPath.contains("..")) {
+			throw new IllegalArgumentException("Invalid path");
+		}
+		if (!currentPath.startsWith(B2BConstant.PRODUCT_IMAGE_FOLDER)) {
+			currentPath = B2BConstant.PRODUCT_IMAGE_FOLDER + "/" + currentPath;
+		}
+
 		String rootPath = env.getProperty("upload.path");
 		if (rootPath == null) {
 			throw new B2BException("Not found upload path");
 		}
 
 		// List folder
-		ArrayList<String> files = new ArrayList<>();
-		files.add("BIG");
-		files.add("Category");
-		files.add("Thumbnail");
+		ArrayList<String> files = new ArrayList<>(3);
+		files.add(B2BConstant.PRODUCT_IMAGE_BIG);
+		files.add(B2BConstant.PRODUCT_IMAGE_CATEGORY);
+		files.add(B2BConstant.PRODUCT_IMAGE_THUMBNAIL);
 
 		model.addAttribute("folders", files);
 
-		String selectedFolder = folder;
-		if (StringUtils.isNotEmpty(folder)) {
-			if (folder.startsWith(B2BConstant.PRODUCT_IMAGE_FOLDER)) {
-				selectedFolder = folder.split("/")[1];
-			}
-		}
-		model.addAttribute("selectedFolder", selectedFolder);
-
 		if (!files.isEmpty()) {
-			List<B2BFile> listFile = new ArrayList<>();
 
-			String subFolder = "";
-			if (StringUtils.isEmpty(folder)) {
-				subFolder = B2BConstant.PRODUCT_IMAGE_FOLDER + "/" + files.get(0);
-			} else if (!folder.startsWith(B2BConstant.PRODUCT_IMAGE_FOLDER)) {
-				subFolder = B2BConstant.PRODUCT_IMAGE_FOLDER + "/" + folder;
-			} else {
-				subFolder = folder;
+			List<B2BFile> listFile = B2BFileUtil.list(rootPath, currentPath);
+
+			if (!listFile.isEmpty() && StringUtils.isNotEmpty(keyword)) {
+				log.info("Filter by keyword: " + keyword);
+
+				List<B2BFile> tmpList = new ArrayList<>();
+				for (B2BFile b2bFile : listFile) {
+					if (b2bFile.getName().toLowerCase().contains(keyword.toLowerCase())) {
+						tmpList.add(b2bFile);
+					}
+				}
+
+				listFile = tmpList;
 			}
 
-			listFile = B2BFileUtil.list(rootPath, subFolder);
 			log.info("listFile size: " + (listFile == null ? 0 : listFile.size()));
-			model.addAttribute("subFolder", subFolder);
-			
-			
+
 			int pageSize = applicationConfig.getPageSize();
-			int firstItem = (page -1) * pageSize;
+			int firstItem = (page - 1) * pageSize;
 			int lastItem = firstItem + pageSize;
-			
-			if(listFile.size() < lastItem){
+
+			if (listFile.size() < lastItem) {
 				lastItem = listFile.size();
 			}
-			
+
 			List<B2BFile> pagingItem = new ArrayList<>();
-			for(int i = firstItem; i < lastItem; i++){
+			for (int i = firstItem; i < lastItem; i++) {
 				pagingItem.add(listFile.get(i));
 			}
-			
+
 			Page<B2BFile> result = new Page<>();
 			result.setCurrent(page);
 			result.setResult(pagingItem);
@@ -133,7 +145,7 @@ public class AdminController {
 		File rootFolder = new File(rootPath, subFolder);
 		if (!rootFolder.isDirectory()) {
 			rootFolder.mkdirs();
-//			throw new B2BException("Invalid path");
+			// throw new B2BException("Invalid path");
 		}
 
 		File newFolder = new File(rootFolder.getAbsolutePath(), folderName);
@@ -149,7 +161,7 @@ public class AdminController {
 			throw new B2BException("Cannot create folder");
 		}
 
-		return list(1, subFolder, model);
+		return list(1, null, null, null, model);
 
 	}
 

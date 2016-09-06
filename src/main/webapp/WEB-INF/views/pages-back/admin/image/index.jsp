@@ -36,29 +36,43 @@
 		</div>
 		<%-- Folder --%>
 		<div class="row bg_color showline2" style="margin-top: 10px;">
-			<div class="col-sm-12">&nbsp;</div>
-			<div class="col-sm-12">
-				<label for="selectedFolder">Image Path:</label>
-				<c:if test="${ not empty folders }">
-					<select id="selectedFolder" name="selectedFolder"
-						style="width: 200px;" class="form-control" onchange="list(this)">
-						<c:forEach var="folder" items="${ folders }">
-							<c:set var="selected" value="" />
-							<c:if test="${ selectedFolder eq folder }">
-								<c:set var="selected" value="selected" />
-							</c:if>
-							<option value="${ folder }" ${ selected }>${ folder }</option>
-						</c:forEach>
-					</select>
-				</c:if>
-			</div>
-			<div class="col-sm-12">&nbsp;</div>
+			<form action='<c:url value="/backend/admin/file/list"></c:url>'>
+				<input type="hidden" id="folder" name="folder" value="${ folder }" />
+				<input type="hidden" id="currentPath" name="currentPath"
+					value="${ currentPath }" />
+				<div class="col-sm-12">&nbsp;</div>
+				<div class="col-sm-4">
+					<label for="selectedFolder">Image Path:</label>
+					<c:if test="${ not empty folders }">
+						<select id="selectedFolder" name="selectedFolder"
+							style="width: 200px;" class="form-control" onchange="list(this)">
+							<c:forEach var="f" items="${ folders }">
+								<c:set var="selected" value="" />
+								<c:if test="${ folder eq f }">
+									<c:set var="selected" value="selected" />
+								</c:if>
+								<option value="${ f }" ${ selected }>${ f }</option>
+							</c:forEach>
+						</select>
+					</c:if>
+				</div>
+				<div class="col-sm-4">
+					<label for="keyword">Filename:</label> <br /> <input type="text"
+						id="keyword" name="keyword" class="form-control"
+						value="${ keyword }" />
+				</div>
+				<div class="col-sm-4" style="">
+					<label>&nbsp;</label> <br /> <input type="submit" value="Search"
+						class="btn btn-success" />
+				</div>
+				<div class="col-sm-12">&nbsp;</div>
+			</form>
 		</div>
 
 
 
 		<c:set var="baseUrl"
-			value="/backend/admin/file/list?folder=${ subFolder }" />
+			value="/backend/admin/file/list?keyword=${ keyword }&folder=${ folder }" />
 		<div class="row pull-right">
 			<div class="col-sm-12">
 				<c:choose>
@@ -83,7 +97,8 @@
 								</c:when>
 								<c:otherwise>
 									<li><a>Total: ${ resultPage.total }</a></li>
-									<li><a href="${firstUrl}" onclick="${firstUrl}">&lt;&lt;</a></li>
+									<li><a href="${firstUrl}" onclick="${firstUrl}">&lt;&lt;</a>
+									</li>
 									<li><a href="${prevUrl}" onclick="${prevUrl}">&lt;</a></li>
 								</c:otherwise>
 							</c:choose>
@@ -92,8 +107,9 @@
 							<c:forEach var="i" begin="${resultPage.beginPage }"
 								end="${ resultPage.endPage }">
 								<li
-									<c:if test="${ i == resultPage.current }">class="active"</c:if>><a
-									href='<c:url value="${baseUrl}&page=${ i }" />'>${ i }</a></li>
+									<c:if test="${ i == resultPage.current }">class="active"</c:if>>
+									<a href='<c:url value="${baseUrl}&page=${ i }" />'>${ i }</a>
+								</li>
 
 							</c:forEach>
 
@@ -104,7 +120,8 @@
 								</c:when>
 								<c:otherwise>
 									<li><a href="${nextUrl}" onclick="${nextUrl}">&gt;</a></li>
-									<li><a href="${lastUrl}" onclick="${lastUrl}">&gt;&gt;</a></li>
+									<li><a href="${lastUrl}" onclick="${lastUrl}">&gt;&gt;</a>
+									</li>
 								</c:otherwise>
 							</c:choose>
 						</ul>
@@ -130,15 +147,14 @@
 					<tr>
 						<th><input type="checkbox" id="checkAll" class="checkbox"
 							onclick="checkAll()" /></th>
-						<th>No</th>
-						<th>Sub folder</th>
-						<th>File name</th>
-						<th>Type</th>
+						<th width="20%">No</th>
+						<th width="60%">File name</th>
+						<th width="20%">Type</th>
 					</tr>
 				</thead>
 				<tbody>
-				
-				
+
+
 					<c:set var="rowBegin"
 						value="${ (( resultPage.current - 1) * resultPage.pageSize) }"></c:set>
 
@@ -149,17 +165,17 @@
 								type="checkbox" id="${ item.nameWithPath }" name="selectFile"
 								class="checkbox" value="${ item.nameWithPath }" /></td>
 							<td>${ rowBegin + (rowNum.index + 1) }</td>
-							<td>${ subFolder }</td>
 							<td><c:choose>
 									<c:when test="${ item.folder }">
-										<a href="#" onclick="list('${ item.nameWithPath }')">${ item.name }</a>
+										<span style="cursor: pointer; color: blue;"
+											onclick="list('${ item.nameWithPath }')">${ item.name }</span>
 									</c:when>
 									<c:otherwise>
 										<a href='<c:url value="/upload/${ item.nameWithPath }" />'>${ item.name }</a>
 									</c:otherwise>
 								</c:choose></td>
 							<td><c:choose>
-									<c:when test="${ item.folder }"> Folder</c:when>
+									<c:when test="${ item.folder }">Folder</c:when>
 									<c:otherwise>File</c:otherwise>
 								</c:choose></td>
 						</tr>
@@ -332,12 +348,18 @@
 							list(subFolder);
 						});
 
-		function list(folder) {
-			if (folder.value) {
-				folder = folder.value;
+		function list(path) {
+			var pathValue = '';
+			if (path.value) {
+				pathValue = path.value;
+			} else {
+				pathValue = path;
 			}
-			window.location.href = '<c:url value="/backend/admin/file/list?page=1&folder='
-					+ folder + '" />';
+			window.location.href = '<c:url value="/backend/admin/file/list?currentPath='
+					+ pathValue
+					+ '&folder='
+					+ $('#selectedFolder').val()
+					+ '" />';
 		}
 
 		function back() {
@@ -356,7 +378,7 @@
 		Dropzone.options.myAwesomeDropzone = {
 			paramName : "file",
 			maxFilesize : 10,
-			url : uploadURL + '?subFolder=${subFolder}',
+			url : uploadURL + '?subFolder=${currentPath}',
 			uploadMultiple : true,
 			parallelUploads : 5,
 			maxFiles : 100,
@@ -375,7 +397,7 @@
 		};
 		$(document).on('click', '#model-cl1', function(f) {
 			$('#uploadDialog').modal('hide');
-			list('${subFolder}');
+			list('${currentPath}');
 		});
 
 		function checkAll() {
