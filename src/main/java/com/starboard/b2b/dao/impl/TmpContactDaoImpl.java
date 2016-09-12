@@ -1,7 +1,7 @@
 package com.starboard.b2b.dao.impl;
 
 import com.starboard.b2b.dao.TmpContactDao;
-import com.starboard.b2b.model.Contact;
+import com.starboard.b2b.model.TmpContact;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +19,16 @@ public class TmpContactDaoImpl implements TmpContactDao {
 	public Long maxId() {
 		/*Object max =  sessionFactory.getCurrentSession().createSQLQuery("select max(contact_id) from contact").uniqueResult();
 		Long lmax = (Long)max;*/
-		return ((BigInteger) sessionFactory.getCurrentSession().createSQLQuery("SELECT MAX(contact_id) FROM contact").uniqueResult()).longValue();
+		return ((BigInteger) sessionFactory.getCurrentSession().createSQLQuery("SELECT MAX(contact_id) FROM TmpContact").uniqueResult()).longValue();
 	}
 
 	@Override
-	public Contact findById(Long contactId) {
-		return (Contact) sessionFactory.getCurrentSession().get(Contact.class, contactId);
+	public TmpContact findById(Long contactId) {
+		return (TmpContact) sessionFactory.getCurrentSession().get(TmpContact.class, contactId);
 	}
 
 	@Override
-	public void save(Contact obj) {
+	public void save(TmpContact obj) {
 		 sessionFactory.getCurrentSession().save(obj);
 	}
 
