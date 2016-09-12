@@ -57,13 +57,18 @@
 					</c:if>
 				</div>
 				<div class="col-sm-4">
-					<label for="keyword">Filename:</label> <br /> <input type="text"
-						id="keyword" name="keyword" class="form-control"
+					<label for="keyword">Filename:</label>
+					<br />
+					<input type="text" id="keyword" name="keyword" class="form-control"
 						value="${ keyword }" />
 				</div>
 				<div class="col-sm-4" style="">
-					<label>&nbsp;</label> <br /> <input type="submit" value="Search"
-						class="btn btn-success" />
+					<label>&nbsp;</label>
+					<br />
+					<input type="submit" value="Search" class="btn btn-success" />
+					&nbsp;
+					<input type="button" class="btn btn-default" value="Reset"
+						onclick="gotoImagePage();" />
 				</div>
 				<div class="col-sm-12">&nbsp;</div>
 			</form>
@@ -91,15 +96,26 @@
 							<!-- Previous 5 page -->
 							<c:choose>
 								<c:when test="${resultPage.current == 1}">
-									<li><a>Total: ${ resultPage.total }</a></li>
-									<li class="disabled"><a href="#">&lt;&lt;</a></li>
-									<li class="disabled"><a href="#">&lt;</a></li>
+									<li>
+										<a>Total: ${ resultPage.total }</a>
+									</li>
+									<li class="disabled">
+										<a href="#">&lt;&lt;</a>
+									</li>
+									<li class="disabled">
+										<a href="#">&lt;</a>
+									</li>
 								</c:when>
 								<c:otherwise>
-									<li><a>Total: ${ resultPage.total }</a></li>
-									<li><a href="${firstUrl}" onclick="${firstUrl}">&lt;&lt;</a>
+									<li>
+										<a>Total: ${ resultPage.total }</a>
 									</li>
-									<li><a href="${prevUrl}" onclick="${prevUrl}">&lt;</a></li>
+									<li>
+										<a href="${firstUrl}" onclick="${firstUrl}">&lt;&lt;</a>
+									</li>
+									<li>
+										<a href="${prevUrl}" onclick="${prevUrl}">&lt;</a>
+									</li>
 								</c:otherwise>
 							</c:choose>
 
@@ -115,12 +131,19 @@
 
 							<c:choose>
 								<c:when test="${resultPage.current == resultPage.totalPage}">
-									<li class="disabled"><a href="#">&gt;</a></li>
-									<li class="disabled"><a href="#">&gt;&gt;</a></li>
+									<li class="disabled">
+										<a href="#">&gt;</a>
+									</li>
+									<li class="disabled">
+										<a href="#">&gt;&gt;</a>
+									</li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="${nextUrl}" onclick="${nextUrl}">&gt;</a></li>
-									<li><a href="${lastUrl}" onclick="${lastUrl}">&gt;&gt;</a>
+									<li>
+										<a href="${nextUrl}" onclick="${nextUrl}">&gt;</a>
+									</li>
+									<li>
+										<a href="${lastUrl}" onclick="${lastUrl}">&gt;&gt;</a>
 									</li>
 								</c:otherwise>
 							</c:choose>
@@ -145,8 +168,10 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th><input type="checkbox" id="checkAll" class="checkbox"
-							onclick="checkAll()" /></th>
+						<th>
+							<input type="checkbox" id="checkAll" class="checkbox"
+								onclick="checkAll()" />
+						</th>
 						<th width="20%">No</th>
 						<th width="60%">File name</th>
 						<th width="20%">Type</th>
@@ -161,11 +186,14 @@
 					<c:forEach var="item" items="${ resultPage.result }"
 						varStatus="rowNum">
 						<tr>
-							<td style="text-align: center; width: 50px;"><input
-								type="checkbox" id="${ item.nameWithPath }" name="selectFile"
-								class="checkbox" value="${ item.nameWithPath }" /></td>
+							<td style="text-align: center; width: 50px;">
+								<input type="checkbox" id="${ item.nameWithPath }"
+									name="selectFile" class="checkbox"
+									value="${ item.nameWithPath }" />
+							</td>
 							<td>${ rowBegin + (rowNum.index + 1) }</td>
-							<td><c:choose>
+							<td>
+								<c:choose>
 									<c:when test="${ item.folder }">
 										<span style="cursor: pointer; color: blue;"
 											onclick="list('${ item.nameWithPath }')">${ item.name }</span>
@@ -173,11 +201,14 @@
 									<c:otherwise>
 										<a href='<c:url value="/upload/${ item.nameWithPath }" />'>${ item.name }</a>
 									</c:otherwise>
-								</c:choose></td>
-							<td><c:choose>
+								</c:choose>
+							</td>
+							<td>
+								<c:choose>
 									<c:when test="${ item.folder }">Folder</c:when>
 									<c:otherwise>File</c:otherwise>
-								</c:choose></td>
+								</c:choose>
+							</td>
 						</tr>
 					</c:forEach>
 
@@ -222,8 +253,9 @@
 					<form id="newFolderForm" method="post"
 						action='<c:url value="/backend/admin/file/new-folder" />'>
 						<input type="hidden" id="subFolder" name="subFolder"
-							value="${ subFolder }" /> <input type="hidden" id="csrftoken_"
-							name="${_csrf.parameterName}" value="${_csrf.token}" />
+							value="${ subFolder }" />
+						<input type="hidden" id="csrftoken_" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
 						<div class="form-horizontal">
 							<div class="row">
 								<label for="txtEmail" class="col-sm-12 ">Folder name:</label>
@@ -250,7 +282,9 @@
 				<div class="modal-body">
 					<div class="modal-title">
 						<ul class="nav nav-pills" id="ImgTab">
-							<li class="active"><a href="#uplod">Upload</a></li>
+							<li class="active">
+								<a href="#uplod">Upload</a>
+							</li>
 						</ul>
 					</div>
 					<div id='content' class="tab-content">
@@ -406,6 +440,10 @@
 
 		function deleteFile() {
 			$('#div_dialog_folder_confirm_delete').modal();
+		}
+		
+		function gotoImagePage(){
+			window.location.href='<c:url value="/backend/admin/file/list" />';
 		}
 	</script>
 </body>
