@@ -3,6 +3,7 @@ package com.starboard.b2b.web.form.contact;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class ContactForm {
@@ -233,4 +234,8 @@ public class ContactForm {
 		this.signaturePath = signaturePath;
 	}
 
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
 }

@@ -8,52 +8,53 @@
 <div class="col-sm-12" style="border: 1;">
 	<%-- Loop All Tech --%>
 	<div class="col-sm-12">&nbsp;</div>
-	<form:form servletRelativeAction="/backend/customer/save_contact" class="form-horizontal" modelAttribute="contactForm" method="post"> 
+	<form:form servletRelativeAction="/backend/customer/save_contact"
+		class="form-horizontal" modelAttribute="contactForm" method="post">
+
+		<input type="hidden" id="custId" name="custId" value="${ contact.custId }"/>
+		<input type="hidden" id="contactId" name="contactId" value="${ contact.contactId }"/>
+
 		<div class="row">
 			<div class="col-sm-12">
 				<form:errors path="*" cssClass="alert alert-danger" element="div" />
 			</div>
 		</div>
-		
+
 		<div class="row">
-			
-			
+
+
 			<div class="formgroup">
-				<div class="col-sm-2">
-					Contact Name:
-				</div>
+				<div class="col-sm-2">Contact Name:</div>
 				<div class="col-sm-4">
 					<div style="padding-bottom: 5px;">
-						<form:input path="nameEn" value="${contact.nameEn }" class="form-control"/>
+						<form:input path="nameEn" value="${contact.nameEn }"
+							class="form-control" />
 					</div>
 				</div>
-				<div class="col-sm-2">
-					Nick Name:
-				</div>
+				<div class="col-sm-2">Nick Name:</div>
 				<div class="col-sm-4">
 					<div style="padding-bottom: 5px;">
-						<form:input path="nameNick" value="${contact.nameNick }" class="form-control"/>
+						<form:input path="nameNick" value="${contact.nameNick }"
+							class="form-control" />
 					</div>
 				</div>
 			</div>
-			
-			
+
+
 			<div class="formgroup">
-				<div class="col-sm-2">
-					Position:
-				</div>
+				<div class="col-sm-2">Position:</div>
 				<div class="col-sm-4">
 					<div style="padding-bottom: 5px;">
-						<form:input path="position" value="${contact.position }" class="form-control"/>
+						<form:input path="position" value="${contact.position }"
+							class="form-control" />
 					</div>
 				</div>
-				<div class="col-sm-2">
-					Birth Date:
-				</div>
+				<div class="col-sm-2">Birth Date:</div>
 				<div class="col-sm-4">
 					<div style="padding-bottom: 5px;">
 						<div id="birthdatePicker" class="input-group date-picker">
-							<form:input path="birthDate" value="${contact.birthDate }" cssClass="form-control" />
+							<form:input path="birthDate" value="${contact.birthDate }"
+								cssClass="form-control" />
 							<span class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"></span>
 							</span>
@@ -61,64 +62,56 @@
 					</div>
 				</div>
 			</div>
-			
-			
+
+
 			<div class="formgroup">
-				<div class="col-sm-2">
-					Address:
-				</div>
+				<div class="col-sm-2">Address:</div>
 				<div class="col-sm-4">
 					<div style="padding-bottom: 5px;">
-						<form:input path="address" value="${contact.address }" class="form-control"/>
+						<form:input path="address" value="${contact.address }"
+							class="form-control" />
 					</div>
 				</div>
-				<div class="col-sm-2">
-					Telephone:
-				</div>
+				<div class="col-sm-2">Telephone:</div>
 				<div class="col-sm-4">
 					<div style="padding-bottom: 5px;">
-						<form:input path="tel" value="${contact.tel}" class="form-control"/>
+						<form:input path="tel" value="${contact.tel}" class="form-control" />
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="formgroup">
-				<div class="col-sm-2">
-					Email:
-				</div>
+				<div class="col-sm-2">Email:</div>
 				<div class="col-sm-4">
 					<div style="padding-bottom: 5px;">
-						<form:input path="email" value="${contact.email }" class="form-control"/>
+						<form:input path="email" value="${contact.email }"
+							class="form-control" />
 					</div>
 				</div>
-				<div class="col-sm-2">
-					Mobile:
-				</div>
+				<div class="col-sm-2">Mobile:</div>
 				<div class="col-sm-4">
 					<div style="padding-bottom: 5px;">
-						<form:input path="mobile" value="${contact.mobile }" class="form-control"/>
+						<form:input path="mobile" value="${contact.mobile }"
+							class="form-control" />
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="formgroup">
-				<div class="col-sm-2">
-					Fax: 
-				</div>
+				<div class="col-sm-2">Fax:</div>
 				<div class="col-sm-4">
 					<div style="padding-bottom: 5px;">
-						<form:input path="fax" value="${contact.fax }" class="form-control"/>
+						<form:input path="fax" value="${contact.fax }"
+							class="form-control" />
 					</div>
 				</div>
-				<div class="col-sm-2">
-					Mobile Type: 
-				</div>
+				<div class="col-sm-2">Mobile Type:</div>
 				<div class="col-sm-4">
 					<div style="padding-bottom: 5px;">
 						<select id="mobileId" name="mobileId" class="form-control">
 							<c:forEach items="${listMobileType }" var="mobileType">
 								<c:choose>
-									<c:when test="${mobileType.mobileId eq contact.mobileId}" >
+									<c:when test="${mobileType.mobileId eq contact.mobileId}">
 										<option value="${mobileType.mobileId}" selected="selected">${ mobileType.name }</option>
 									</c:when>
 									<c:otherwise>
@@ -130,48 +123,44 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="formgroup">
-				<div class="col-sm-2">
-					Skype : 
-				</div>
+				<div class="col-sm-2">Skype :</div>
 				<div class="col-sm-4">
 					<div style="padding-bottom: 5px;">
-						<form:input path="skype" value="${contact.skype }" class="form-control"/>
+						<form:input path="skype" value="${contact.skype }"
+							class="form-control" />
 					</div>
 				</div>
-				<div class="col-sm-2">
-					Facebook: 
-				</div>
+				<div class="col-sm-2">Facebook:</div>
 				<div class="col-sm-4">
 					<div style="padding-bottom: 5px;">
-						<form:input path="facebook" value="${contact.facebook }" class="form-control"/>
+						<form:input path="facebook" value="${contact.facebook }"
+							class="form-control" />
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="formgroup">
-				<div class="col-sm-2">
-					Twitter
-				</div>
+				<div class="col-sm-2">Twitter</div>
 				<div class="col-sm-4">
 					<div style="padding-bottom: 5px;">
-						<form:input path="twitter" value="${contact.twitter }" class="form-control"/>
+						<form:input path="twitter" value="${contact.twitter }"
+							class="form-control" />
 					</div>
 				</div>
-				<div class="col-sm-2">
-				</div>
-				<div class="col-sm-4">
-				</div>
+				<div class="col-sm-2"></div>
+				<div class="col-sm-4"></div>
 			</div>
-		
+
 		</div>
-		
+
 		<div class="formgroup">
 			<div class="col-sm-12">&nbsp;</div>
 			<div class="col-sm-12" align="center">
-				<input type="submit" value="save" class="btn btn-success pull-right"/>
-				<input type="reset" value="cancel" class="btn btn-default pull-right" style="margin-right: 5px;"/>
+				<input type="submit" value="save" class="btn btn-success pull-right" />
+				<input type="reset" value="cancel"
+					class="btn btn-default pull-right" style="margin-right: 5px;" />
 			</div>
 		</div>
 	</form:form>

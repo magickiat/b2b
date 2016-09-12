@@ -287,7 +287,7 @@ public class BackendCustomerController {
 
 	@RequestMapping(value = "save_contact", method = RequestMethod.POST)
 	String saveContactSubmit(@ModelAttribute("contactForm") @Valid ContactForm contact, BindingResult binding, Model model) throws Exception {
-		log.info("/save_address POST");
+		log.info("/save_address POST " + contact);
 		if(binding.hasErrors()){
 			model.addAttribute("errorMsg", binding.getAllErrors().get(0).toString());
 			model.addAttribute("contactForm", contact);
