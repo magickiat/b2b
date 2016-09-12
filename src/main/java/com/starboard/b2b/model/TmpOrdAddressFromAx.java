@@ -15,6 +15,7 @@ public class TmpOrdAddressFromAx {
 
 	private long orderAddressId;
 	private long orderId;
+	private String orderCode;
 	private String orderFname;
 	private String orderLname;
 	private String orderAddr;
@@ -243,6 +244,16 @@ public class TmpOrdAddressFromAx {
 
 	public void setOrderId(long orderId) {
 		this.orderId = orderId;
+	}
+	
+
+	@Column(name = "order_code", length = 100)
+	public String getOrderCode() {
+		return this.orderCode;
+	}
+
+	public void setOrderCode(String orderCode) {
+		this.orderCode = orderCode;
 	}
 
 }
