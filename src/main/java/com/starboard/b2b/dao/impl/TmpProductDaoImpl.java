@@ -7,6 +7,7 @@ import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.Product;
+import com.starboard.b2b.model.TmpProduct;
 import com.starboard.b2b.web.form.product.SearchProductForm;
 
 import org.apache.commons.lang.StringUtils;
@@ -33,7 +34,7 @@ public class TmpProductDaoImpl implements TmpProductDao {
 	@Override
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly = true)
-	public List<Product> list() {
+	public List<TmpProduct> list() {
 		return sf.getCurrentSession().createCriteria(Product.class).list();
 	}
 
@@ -201,33 +202,33 @@ public class TmpProductDaoImpl implements TmpProductDao {
 	}
 
 	@Override
-	public Product findById(long productId) {
-		return (Product) sf.getCurrentSession().get(Product.class, productId);
+	public TmpProduct findById(long productId) {
+		return (TmpProduct) sf.getCurrentSession().get(TmpProduct.class, productId);
 	}
 
 	@Override
-	public Product findByProductCode(String productCode) {
-		return (Product) sf.getCurrentSession().createCriteria(Product.class).add(Restrictions.eq("productCode", productCode)).uniqueResult();
+	public TmpProduct findByProductCode(String productCode) {
+		return (TmpProduct) sf.getCurrentSession().createCriteria(Product.class).add(Restrictions.eq("productCode", productCode)).uniqueResult();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Product> findByBrandGroupId(long brandGroupId) {
+	public List<TmpProduct> findByBrandGroupId(long brandGroupId) {
 		String queryString = " from Product p";
 		queryString += " where p.productTypeId in (";
 		queryString += " 	select bg.id.productTypeId from ProductBrandGroup bg where bg.id.brandGroupId = :brandGroupId";
 		queryString += " )";
 
-		return (List<Product>) sf.getCurrentSession().createQuery(queryString).setLong("brandGroupId", brandGroupId).list();
+		return (List<TmpProduct>) sf.getCurrentSession().createQuery(queryString).setLong("brandGroupId", brandGroupId).list();
 	}
 
 	@Override
-	public void save(Product product) {
+	public void save(TmpProduct product) {
 		sf.getCurrentSession().save(product);
 	}
 
 	@Override
-	public void merge(Product product) {
+	public void merge(TmpProduct product) {
 		sf.getCurrentSession().merge(product);
 	}
 
@@ -384,10 +385,10 @@ public class TmpProductDaoImpl implements TmpProductDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Product> findByProductTypeId(Long productTypeId) {
-		String queryString = " from Product p";
+	public List<TmpProduct> findByProductTypeId(Long productTypeId) {
+		String queryString = " from TmpProduct p";
 		queryString += " where p.productTypeId = :productTypeId";
 
-		return (List<Product>) sf.getCurrentSession().createQuery(queryString).setLong("productTypeId", productTypeId).list();
+		return (List<TmpProduct>) sf.getCurrentSession().createQuery(queryString).setLong("productTypeId", productTypeId).list();
 	}
 }

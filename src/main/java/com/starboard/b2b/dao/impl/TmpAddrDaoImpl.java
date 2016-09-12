@@ -2,6 +2,7 @@ package com.starboard.b2b.dao.impl;
 
 import com.starboard.b2b.dao.TmpAddrDao;
 import com.starboard.b2b.model.Addr;
+import com.starboard.b2b.model.TmpAddr;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -18,8 +19,8 @@ public class TmpAddrDaoImpl implements TmpAddrDao {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public Addr findById(long addrId) {
-		return (Addr) sessionFactory.getCurrentSession().get(Addr.class, addrId);
+	public TmpAddr findById(long addrId) {
+		return (TmpAddr) sessionFactory.getCurrentSession().get(Addr.class, addrId);
 	}
 
 	@Override
@@ -29,17 +30,17 @@ public class TmpAddrDaoImpl implements TmpAddrDao {
 
 	@Override
 	public Long maxId() {
-		return ((BigInteger) sessionFactory.getCurrentSession().createSQLQuery("select max(addr_id) from addr").uniqueResult()).longValue();
+		return ((BigInteger) sessionFactory.getCurrentSession().createSQLQuery("select max(addr_id) from TmpAddr").uniqueResult()).longValue();
 	}
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Addr> findByCustId(long custId) {
-		return sessionFactory.getCurrentSession().createCriteria(Addr.class).add(Restrictions.eq("custId", custId)).list();
+	public List<TmpAddr> findByCustId(long custId) {
+		return sessionFactory.getCurrentSession().createCriteria(TmpAddr.class).add(Restrictions.eq("custId", custId)).list();
 	}
 
 	@Override
-	public void update(Addr addr) {
+	public void update(TmpAddr addr) {
 		sessionFactory.getCurrentSession().update(addr);
 	}
 }
