@@ -93,7 +93,11 @@
 
 			<c:choose>
 				<c:when test="${empty resultPage.result }">
-
+					
+					<div class="row">
+						<%@include file="/WEB-INF/views/include/paging_submit.jspf"%>
+					</div>
+					
 					<div class="row">
 						<div class="col-md-12 bg_color showline2">
 
