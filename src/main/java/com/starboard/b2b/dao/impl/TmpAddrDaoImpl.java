@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.math.BigInteger;
 import java.util.List;
 
-@Repository("addrDao")
+//@Repository("addrDao")
 public class TmpAddrDaoImpl 
 //implements TmpAddrDao {
 {

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository("soDetailDao")
+//@Repository("soDetailDao")
 public class TmpSoDetailDaoImpl implements TmpSoDetailDao {
 
 	@Autowired

@@ -20,7 +20,7 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository("orderDao")
+//@Repository("orderDao")
 public class TmpOrderDaoImpl 
 //implements TmpOrderDao {
 {
