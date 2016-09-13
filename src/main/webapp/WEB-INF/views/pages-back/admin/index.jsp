@@ -27,10 +27,10 @@
 						<div class="panel-stat3 bg-info" id="sync-ax">
 							<h3 class="m-top-none">
 								<span id="serverloadCount"> <a style="color: #fff;"
-									href='<c:url value="/backend/admin/sync-ax" />'>Sync AX</a>
+									href='<c:url value="/backend/admin/sync-from-ax" />'>Sync from AX</a>
 								</span>
 							</h3>
-							<h5>Sync data with AX</h5>
+							<h5>Sync data from AX</h5>
 							<div class="stat-icon">
 								<i class="fa fa-envelope fa-3x"></i>
 							</div>

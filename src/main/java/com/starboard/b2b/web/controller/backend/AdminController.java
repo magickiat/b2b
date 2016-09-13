@@ -16,6 +16,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,21 +49,19 @@ public class AdminController {
 		return "pages-back/admin/index";
 	}
 
-	@RequestMapping(value = "/sync-ax", method = RequestMethod.GET)
+	@GetMapping("/sync-from-ax")
 	String syncAxSearch(@RequestParam(name = "page", defaultValue = "1") int page, Model model) {
-		return "pages-back/admin/sync";
+		return "pages-back/admin/sync-from-ax";
 	}
 
-	@RequestMapping(value = "/sync-ax", method = RequestMethod.POST)
+	@PostMapping("/sync-from-ax")
 	String syncAxAction(Model model) {
 		log.info("-----------------------------------------------");
 		log.info("\tBEGIN SYNC AX");
 		log.info("-----------------------------------------------");
-		
-		
-		//TODO call sync service
-		
-		
+
+		// TODO call sync service
+
 		log.info("-----------------------------------------------");
 		log.info("\tFINISHED lSYNC AX");
 		log.info("-----------------------------------------------");

@@ -19,7 +19,7 @@
 
 			<div class="row showline2">
 				<div class="col-md-12">
-					<div class="row row-header2 header2">Sync AX</div>
+					<div class="row row-header2 header2">Sync from AX</div>
 				</div>
 
 
@@ -29,7 +29,7 @@
 
 
 					<input type="button" class="btn btn-success center-block"
-						onclick="confirmSync()" value="Sync AX" />
+						onclick="confirmSync()" value="Begin Sync" />
 
 				</div>
 				<div class="col-sm-12">&nbsp;</div>
@@ -135,10 +135,10 @@
 	
 		$('#div_dialog_confirm_sync .btn-success').on('click',function(){
 			console.log('begin sync ax');
-			$.post('<c:url value="/backend/admin/sync-ax"/>').done(function(response) {
+			$.post('<c:url value="/backend/admin/sync-from-ax"/>').done(function(response) {
 				$('#div_dialog_confirm_sync').hide();
 				showDialog('Sync complete');
-				setTimeout(function() { window.location.href = '<c:url value="/backend/admin/sync-ax" />'; }, 2000);
+				setTimeout(function() { window.location.href = '<c:url value="/backend/admin/sync-from-ax" />'; }, 2000);
 			}).fail(function(result) {
 				$('#div_dialog_confirm_sync').hide();
 				console.log('Error: ' + result.responseText);
