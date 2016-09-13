@@ -1,12 +1,15 @@
 package com.starboard.b2b.dao.impl;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.starboard.b2b.dao.OrderAddressDao;
+import com.starboard.b2b.model.OrdAddress;
 
 @Repository("orderAddressDao")
 public class OrderAddressDaoImpl implements OrderAddressDao {
@@ -15,7 +18,13 @@ public class OrderAddressDaoImpl implements OrderAddressDao {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public Serializable save(Object obj){
+	public Serializable save(Object obj) {
 		return sessionFactory.getCurrentSession().save(obj);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<OrdAddress> findByOrderId(long orderId) {
+		return sessionFactory.getCurrentSession().createCriteria(OrdAddress.class).add(Restrictions.eq("orderId", orderId)).list();
 	}
 }

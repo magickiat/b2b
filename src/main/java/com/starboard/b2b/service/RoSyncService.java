@@ -4,6 +4,6 @@ public interface RoSyncService {
 
 	void syncProduct();
 
-	void syncRoFromB2BtoAX(long orderId);
+	void syncRoFromB2BtoAX(long orderId) throws Exception;
 
 }

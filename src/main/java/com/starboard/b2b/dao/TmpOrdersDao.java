@@ -7,4 +7,6 @@ public interface TmpOrdersDao {
     TmpOrders findBySoId(final long soId);
 
     void remove(final long soId);
+
+	void save(TmpOrders tmpOrders);
 }
