@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-@Repository("orderDetailDao")
+@Repository("tmpOrderDetailDao")
 public class TmpOrdDetailDaoImpl implements TmpOrdDetailDao {
 	
 	private static final Logger log = LoggerFactory.getLogger(TmpOrdDetailDaoImpl.class);

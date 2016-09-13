@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Repository("productDao")
+@Repository("tmpProductDao")
 public class TmpProductDaoImpl implements TmpProductDao {
 
 	private static final Logger log = LoggerFactory.getLogger(TmpProductDaoImpl.class);

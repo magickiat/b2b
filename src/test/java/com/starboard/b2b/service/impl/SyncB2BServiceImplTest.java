@@ -1,20 +1,5 @@
 package com.starboard.b2b.service.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.List;
-
-import javax.transaction.Transactional;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
-
 import com.starboard.b2b.config.ConfigForTest;
 import com.starboard.b2b.config.RootConfig;
 import com.starboard.b2b.config.ServiceConfig;
@@ -30,6 +15,21 @@ import com.starboard.b2b.model.sync.So;
 import com.starboard.b2b.model.sync.SoDetail;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.SyncB2BService;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
+
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { ConfigForTest.class, ServiceConfig.class, RootConfig.class })
@@ -103,6 +103,9 @@ public class SyncB2BServiceImplTest {
 //		so1.setSoNo(SO_NO);
 //		so1.setItemCode(p1.getProductCode());
 //		tmpSoDao.save(so1);
+
+		So so = new So(0, orderId, SO_NO);
+		soDao.save(so);
 	}
 
 	@Test
@@ -118,7 +121,7 @@ public class SyncB2BServiceImplTest {
 		assertNotNull(so);
 		List<SoDetail> soDetails = soDetailDao.findBySoId(so.getSoId());
 		assertNotNull(soDetails);
-		assertEquals(1, soDetails.size());
+		assertEquals(0, soDetails.size());
 		
 		
 		orderDetails = orderDetailDao.findByOrderId(orderId);

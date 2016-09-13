@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
 
-@Repository("contactDao")
+@Repository("tmpContactDao")
 public class TmpContactDaoImpl implements TmpContactDao {
 
 	@Autowired

@@ -1,7 +1,6 @@
 package com.starboard.b2b.dao.impl;
 
 import com.starboard.b2b.dao.TmpAddrDao;
-import com.starboard.b2b.model.Addr;
 import com.starboard.b2b.model.TmpAddr;
 
 import org.hibernate.SessionFactory;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.math.BigInteger;
 import java.util.List;
 
-@Repository("addrDao")
+@Repository("tmpAddrDao")
 public class TmpAddrDaoImpl implements TmpAddrDao {
 
 	@Autowired
@@ -20,7 +19,7 @@ public class TmpAddrDaoImpl implements TmpAddrDao {
 
 	@Override
 	public TmpAddr findById(long addrId) {
-		return (TmpAddr) sessionFactory.getCurrentSession().get(Addr.class, addrId);
+		return (TmpAddr) sessionFactory.getCurrentSession().get(TmpAddr.class, addrId);
 	}
 
 	@Override
