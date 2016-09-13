@@ -1,17 +1,16 @@
 package com.starboard.b2b.dao.impl;
 
-import com.starboard.b2b.dao.TmpSoDetailDao;
-import com.starboard.b2b.model.TmpSoDetail;
-import com.starboard.b2b.model.sync.SoDetail;
+import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.starboard.b2b.dao.TmpSoDetailDao;
+import com.starboard.b2b.model.TmpSoDetail;
 
-@Repository("soDetailDao")
+@Repository("tmpSoDetailDao")
 public class TmpSoDetailDaoImpl implements TmpSoDetailDao {
 
 	@Autowired
