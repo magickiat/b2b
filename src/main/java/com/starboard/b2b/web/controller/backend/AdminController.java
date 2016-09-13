@@ -48,6 +48,27 @@ public class AdminController {
 		return "pages-back/admin/index";
 	}
 
+	@RequestMapping(value = "/sync-ax", method = RequestMethod.GET)
+	String syncAxSearch(@RequestParam(name = "page", defaultValue = "1") int page, Model model) {
+		return "pages-back/admin/sync";
+	}
+
+	@RequestMapping(value = "/sync-ax", method = RequestMethod.POST)
+	String syncAxAction(Model model) {
+		log.info("-----------------------------------------------");
+		log.info("\tBEGIN SYNC AX");
+		log.info("-----------------------------------------------");
+		
+		
+		//TODO call sync service
+		
+		
+		log.info("-----------------------------------------------");
+		log.info("\tFINISHED lSYNC AX");
+		log.info("-----------------------------------------------");
+		return syncAxSearch(1, model);
+	}
+
 	@GetMapping("/file/list")
 	String list(@RequestParam(name = "page", defaultValue = "1") int page,
 			@RequestParam(name = "folder", defaultValue = B2BConstant.PRODUCT_IMAGE_BIG) String folder,

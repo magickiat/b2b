@@ -19,15 +19,28 @@
 
 			<div class="row">
 				<div class="col-sm-12 bg_color showline2">
-					<div class="col-md-6 row row-header2 header2 txtupper">Admin
-						Settings</div>
+					<div class="col-md-6 row row-header2 header2 txtupper">System</div>
 
 					<div class="row"></div>
 
 					<div class="col-sm-3">
-						<div class="panel-stat3 bg-info" id="set_email">
+						<div class="panel-stat3 bg-info" id="sync-ax">
 							<h3 class="m-top-none">
 								<span id="serverloadCount"> <a style="color: #fff;"
+									href='<c:url value="/backend/admin/sync-ax" />'>Sync AX</a>
+								</span>
+							</h3>
+							<h5>Sync data with AX</h5>
+							<div class="stat-icon">
+								<i class="fa fa-envelope fa-3x"></i>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-3">
+						<div class="panel-stat3 bg-info" id="syncAx">
+							<h3 class="m-top-none">
+								<span> <a style="color: #fff;"
 									href='<c:url value="/backend/email" />'>Set email</a>
 								</span>
 							</h3>
@@ -37,8 +50,6 @@
 							</div>
 						</div>
 					</div>
-
-					<div class="col-sm-3"></div>
 					<div class="col-sm-3"></div>
 					<div class="col-sm-3"></div>
 				</div>
