@@ -27,4 +27,12 @@ public class OrderAddressDaoImpl implements OrderAddressDao {
 	public List<OrdAddress> findByOrderId(long orderId) {
 		return sessionFactory.getCurrentSession().createCriteria(OrdAddress.class).add(Restrictions.eq("orderId", orderId)).list();
 	}
+
+	@Override
+	public int deleteByOrderId(long orderId) {
+		return sessionFactory.getCurrentSession()
+				.createQuery("delete from OrdAddress od where od.orderId = :orderId")
+				.setLong("orderId", orderId)
+				.executeUpdate();
+	}
 }

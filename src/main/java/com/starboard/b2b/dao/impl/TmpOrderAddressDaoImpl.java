@@ -12,10 +12,16 @@ public class TmpOrderAddressDaoImpl implements TmpOrderAddressDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Override
 	public void save(TmpOrdAddress addr) {
 		sessionFactory.getCurrentSession().save(addr);
+	}
+
+	@Override
+	public int deleteByOrderId(long orderId) {
+		return sessionFactory.getCurrentSession().createQuery("delete from TmpOrdAddress od where od.orderId = :orderId").setLong("orderId", orderId)
+				.executeUpdate();
 	}
 
 }

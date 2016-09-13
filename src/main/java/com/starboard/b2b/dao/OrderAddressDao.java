@@ -11,4 +11,6 @@ public interface OrderAddressDao {
 
 	List<OrdAddress> findByOrderId(long orderId);
 
+	int deleteByOrderId(long orderId);
+
 }

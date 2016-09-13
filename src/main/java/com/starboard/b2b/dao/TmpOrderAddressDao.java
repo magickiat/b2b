@@ -6,4 +6,6 @@ public interface TmpOrderAddressDao {
 
 	void save(TmpOrdAddress addr);
 
+	int deleteByOrderId(long orderId);
+
 }

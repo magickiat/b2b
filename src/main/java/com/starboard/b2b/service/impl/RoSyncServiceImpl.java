@@ -2,6 +2,8 @@ package com.starboard.b2b.service.impl;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ import com.starboard.b2b.service.RoSyncService;
 
 @Service("roSyncService")
 public class RoSyncServiceImpl implements RoSyncService {
+	
+	private static final Logger log = LoggerFactory.getLogger(RoSyncServiceImpl.class);
 
 	@Autowired
 	private OrderDao orderDao;
@@ -53,6 +57,21 @@ public class RoSyncServiceImpl implements RoSyncService {
 	public void syncRoFromB2BtoAX(long orderId) throws Exception {
 		Orders ord = orderDao.findById(orderId);
 		if (ord != null) {
+
+			List<TmpOrders> existTmpOrders = tmpOrdersDao.findByOrderCode(ord.getOrderCode());
+
+			if (existTmpOrders != null && !existTmpOrders.isEmpty() ) {
+				log.info("Clear old data with order code: " + ord.getOrderCode());
+				for (TmpOrders tmpOrders : existTmpOrders) {
+					tmpOrdDetailDao.deleteByOrderId(tmpOrders.getOrderId());
+					tmpOrderAddressDao.deleteByOrderId(tmpOrders.getOrderId());
+				}
+				
+				tmpOrdersDao.delete(existTmpOrders);
+				
+				
+			}
+			
 			// ----- save tmp_orders -----
 			TmpOrders tmpOrders = new TmpOrders();
 			BeanUtils.copyProperties(ord, tmpOrders);
