@@ -7,10 +7,13 @@ import com.starboard.b2b.dao.ProductDao;
 import com.starboard.b2b.dao.SoDao;
 import com.starboard.b2b.dao.SoDetailDao;
 import com.starboard.b2b.dao.TmpContactAXDao;
+import com.starboard.b2b.dao.TmpProductDao;
 import com.starboard.b2b.dao.TmpSoDao;
 import com.starboard.b2b.dao.TmpSoDetailDao;
 import com.starboard.b2b.model.Contact;
+import com.starboard.b2b.model.Product;
 import com.starboard.b2b.model.TmpContactFromAx;
+import com.starboard.b2b.model.TmpProduct;
 import com.starboard.b2b.service.SyncB2BService;
 
 import org.slf4j.Logger;
@@ -33,6 +36,9 @@ public class SyncB2BServiceImpl implements SyncB2BService {
 	private SoDetailDao soDetailDao;
 	private TmpSoDao tmpSoDao;
     private TmpSoDetailDao tmpSoDetailDao;
+    @Autowired
+    private TmpProductDao tmpProductDao;
+    @Autowired
 	private ProductDao productDao;
 	@Autowired
 	private TmpContactAXDao tmpContactAXDao;
@@ -74,8 +80,26 @@ public class SyncB2BServiceImpl implements SyncB2BService {
 	public void syncProductFromAX() {
         log.info("Sync Product from AX");
         //Step 1: Get data from AX
+        List<TmpProduct> tmpProducts = tmpProductDao.list();
         //Step 2: Insert / Update into sync table
-        //Step 3: Remove table from AX
+        if(tmpProducts != null && !tmpProducts.isEmpty()){
+            for (TmpProduct tmpProduct : tmpProducts) {
+                //Step 2.1: Check if Product Code is in Product
+                final Product product = productDao.findByProductCode(tmpProduct.getProductCode());
+                //If Exist: then update value
+                if(product != null){
+                    BeanUtils.copyProperties(tmpProduct, product, "productId");
+                    productDao.save(product);
+                } else {
+                //If Not Exist: then insert
+                    Product newProduct = new Product();
+                    BeanUtils.copyProperties(tmpProduct, newProduct, "productId");
+                    productDao.save(newProduct);
+                }
+            }
+         //Step 3: Remove from AX table
+            tmpProductDao.removeAll();
+        }
 	}
 
 	@Override
