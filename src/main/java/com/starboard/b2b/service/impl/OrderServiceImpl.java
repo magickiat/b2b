@@ -663,6 +663,10 @@ public class OrderServiceImpl implements OrderService {
 		
 
 			// Save Order address
+			List<OrdAddress> addressList = orderAddressDao.findByOrderId(orderId);
+			if(addressList != null && !addressList.isEmpty()){
+				orderAddressDao.deleteByOrderId(orderId);
+			}
 			orderAddressDao.save(createOrderAddress(invoiceToAddr, orderId, AddressConstant.ORDER_INVOICE_TO));
 			orderAddressDao.save(createOrderAddress(dispatchToAddr, orderId, AddressConstant.ORDER_DISPATCH_TO));
 
