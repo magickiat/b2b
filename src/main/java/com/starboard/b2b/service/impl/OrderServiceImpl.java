@@ -652,7 +652,9 @@ public class OrderServiceImpl implements OrderService {
 				orderDetail.setStatus(applicationConfig.getDefaultOrderDetailStatus());
 				orderDetail.setProductCurrency(product.getProductCurrency());
 				orderDetail.setProductUnitId(product.getProductUnitId());
-				orderDetail.setProductBuyerGroupId(productPrice.getProductPriceGroupId());
+				if (productPrice != null && product.getProductQuantity() > 0) {
+					orderDetail.setProductBuyerGroupId(productPrice.getProductPriceGroupId());
+				}
 				orderDetail.setUserCreate(user.getUsername());
 				orderDetail.setTimeCreate(currentDate);
 
