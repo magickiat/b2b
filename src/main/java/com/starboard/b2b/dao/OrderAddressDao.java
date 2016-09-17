@@ -1,9 +1,9 @@
 package com.starboard.b2b.dao;
 
+import com.starboard.b2b.model.OrdAddress;
+
 import java.io.Serializable;
 import java.util.List;
-
-import com.starboard.b2b.model.OrdAddress;
 
 public interface OrderAddressDao {
 
@@ -13,4 +13,5 @@ public interface OrderAddressDao {
 
 	int deleteByOrderId(long orderId);
 
+	int deleteByOrderCode(String orderCode);
 }
