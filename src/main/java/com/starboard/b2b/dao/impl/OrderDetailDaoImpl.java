@@ -222,4 +222,16 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 				.setLong("orderId", orderId)
 				.executeUpdate();
 	}
+
+	@Override
+	public int deleteByOrderCode(String orderCode) {
+		return sessionFactory.getCurrentSession()
+				.createQuery("delete from OrdDetail od " +
+						"where od.orderId in (" +
+						" select od.id from OrdDetail od, Orders o " +
+						" where o.orderId = od.orderId and o.orderCode = :orderCode " +
+						")")
+				.setString("orderCode", orderCode)
+				.executeUpdate();
+	}
 }

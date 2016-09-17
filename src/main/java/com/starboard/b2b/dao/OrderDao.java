@@ -1,13 +1,13 @@
 package com.starboard.b2b.dao;
 
-import java.util.List;
-
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.model.OrdAddress;
 import com.starboard.b2b.model.Orders;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
+
+import java.util.List;
 
 public interface OrderDao {
 
@@ -39,4 +39,6 @@ public interface OrderDao {
 	List<SearchOrderDTO> findOrderForReport(Long[] ordersId);
 	
 	Orders findByOrderCode(String roCode);
+
+    int deleteByOrderCode(String orderCode);
 }

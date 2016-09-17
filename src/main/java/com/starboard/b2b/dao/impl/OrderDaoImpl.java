@@ -1,7 +1,13 @@
 package com.starboard.b2b.dao.impl;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.starboard.b2b.dao.OrderDao;
+import com.starboard.b2b.dto.SoDTO;
+import com.starboard.b2b.dto.search.SearchOrderDTO;
+import com.starboard.b2b.dto.search.SearchRequest;
+import com.starboard.b2b.dto.search.SearchResult;
+import com.starboard.b2b.model.OrdAddress;
+import com.starboard.b2b.model.Orders;
+import com.starboard.b2b.web.form.order.OrderSummaryForm;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -11,14 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
-import com.starboard.b2b.dao.OrderDao;
-import com.starboard.b2b.dto.SoDTO;
-import com.starboard.b2b.dto.search.SearchOrderDTO;
-import com.starboard.b2b.dto.search.SearchRequest;
-import com.starboard.b2b.dto.search.SearchResult;
-import com.starboard.b2b.model.OrdAddress;
-import com.starboard.b2b.model.Orders;
-import com.starboard.b2b.web.form.order.OrderSummaryForm;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository("orderDao")
 public class OrderDaoImpl implements OrderDao {
@@ -225,4 +225,12 @@ public class OrderDaoImpl implements OrderDao {
 				.add(Restrictions.eq("orderCode", roCode))
 				.uniqueResult();
 	}
+
+    @Override
+    public int deleteByOrderCode(String orderCode) {
+		return sessionFactory.getCurrentSession()
+				.createQuery("delete from Orders o where o.orderCode = :orderCode")
+				.setString("orderCode", orderCode)
+				.executeUpdate();
+    }
 }

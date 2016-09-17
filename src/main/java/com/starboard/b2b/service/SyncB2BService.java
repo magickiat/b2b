@@ -12,6 +12,10 @@ public interface SyncB2BService {
 
 	void syncOrderFromAX();
 
+    //for Order
+    @Transactional(rollbackFor = Exception.class)
+    void syncOrdersFromAX();
+
     //for Order Detail
     @Transactional(rollbackFor = Exception.class)
     void syncOrderDetailFromAX();
