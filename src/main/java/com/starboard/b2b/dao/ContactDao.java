@@ -8,4 +8,6 @@ public interface ContactDao {
 	Contact findById(Long contactId);
 	
 	void save(Contact obj);
+
+    void removeByCustId(long custId);
 }

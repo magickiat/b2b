@@ -16,6 +16,7 @@ public class TmpOrdDetailFromAx {
 
 	private long orderDetailId;
 	private Long orderId;
+	private String orderCode;
 	private Long productId;
 	private Long amount;
 	private Long status;
@@ -170,6 +171,15 @@ public class TmpOrdDetailFromAx {
 
 	public void setOrderDetailId(long orderDetailId) {
 		this.orderDetailId = orderDetailId;
+	}
+
+	@Column(name = "order_code", length = 100)
+	public String getOrderCode() {
+		return this.orderCode;
+	}
+
+	public void setOrderCode(String orderCode) {
+		this.orderCode = orderCode;
 	}
 
 }

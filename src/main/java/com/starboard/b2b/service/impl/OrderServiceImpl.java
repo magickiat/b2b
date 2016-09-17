@@ -652,7 +652,9 @@ public class OrderServiceImpl implements OrderService {
 				orderDetail.setStatus(applicationConfig.getDefaultOrderDetailStatus());
 				orderDetail.setProductCurrency(product.getProductCurrency());
 				orderDetail.setProductUnitId(product.getProductUnitId());
-				orderDetail.setProductBuyerGroupId(productPrice.getProductPriceGroupId());
+				if (productPrice != null && product.getProductQuantity() > 0) {
+					orderDetail.setProductBuyerGroupId(productPrice.getProductPriceGroupId());
+				}
 				orderDetail.setUserCreate(user.getUsername());
 				orderDetail.setTimeCreate(currentDate);
 
@@ -661,6 +663,10 @@ public class OrderServiceImpl implements OrderService {
 		
 
 			// Save Order address
+			List<OrdAddress> addressList = orderAddressDao.findByOrderId(orderId);
+			if(addressList != null && !addressList.isEmpty()){
+				orderAddressDao.deleteByOrderId(orderId);
+			}
 			orderAddressDao.save(createOrderAddress(invoiceToAddr, orderId, AddressConstant.ORDER_INVOICE_TO));
 			orderAddressDao.save(createOrderAddress(dispatchToAddr, orderId, AddressConstant.ORDER_DISPATCH_TO));
 

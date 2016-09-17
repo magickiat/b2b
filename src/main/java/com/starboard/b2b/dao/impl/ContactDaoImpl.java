@@ -1,13 +1,13 @@
 package com.starboard.b2b.dao.impl;
 
-import java.math.BigInteger;
+import com.starboard.b2b.dao.ContactDao;
+import com.starboard.b2b.model.Contact;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.starboard.b2b.dao.ContactDao;
-import com.starboard.b2b.model.Contact;
+import java.math.BigInteger;
 
 @Repository("contactDao")
 public class ContactDaoImpl implements ContactDao{
@@ -32,4 +32,9 @@ public class ContactDaoImpl implements ContactDao{
 		 sessionFactory.getCurrentSession().save(obj);
 	}
 
+	@Override
+	public void removeByCustId(long custId) {
+		final String hql = "DELETE FROM Contact c WHERE c.custId = :custId";
+		sessionFactory.getCurrentSession().createQuery(hql).setLong("custId", custId).executeUpdate();
+	}
 }

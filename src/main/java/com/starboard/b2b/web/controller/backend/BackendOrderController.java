@@ -166,7 +166,7 @@ public class BackendOrderController {
 	}
 
 	@RequestMapping(value = "/approve", method = RequestMethod.POST)
-	String approve(@ModelAttribute("approveForm") OrderDecisionForm form, Model model, HttpServletRequest request) {
+	String approve(@ModelAttribute("approveForm") OrderDecisionForm form, Model model, HttpServletRequest request) throws Exception {
 		log.info(form.toString());
 		log.info("orderId: " + form.getOrderReport().getOrderId());
 
