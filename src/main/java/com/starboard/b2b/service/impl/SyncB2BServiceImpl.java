@@ -75,7 +75,7 @@ public class SyncB2BServiceImpl implements SyncB2BService {
             tmpContactAXDao.removeAll();
         }
     }
-
+    //For Address
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void syncAddressFromAX() {
@@ -84,7 +84,7 @@ public class SyncB2BServiceImpl implements SyncB2BService {
         //Step 2: Insert / Update into sync table
         //Step 3: Remove table from AX
     }
-
+    //For Product
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void syncProductFromAX() {
@@ -111,40 +111,34 @@ public class SyncB2BServiceImpl implements SyncB2BService {
             tmpProductDao.removeAll();
         }
     }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void syncOrderFromAX() {
-        log.info("Sync Order from AX");
-        //Step 1: Get data from AX
-        //Step 2: Insert / Update into sync table
-        //Step 3: Remove table from AX
-    }
-    //for Address
-
-    //for Product
-
-    //for Order
+    //For Order
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void syncOrdersFromAX() {
         log.info("Sync Order from AX");
         //Step 1: Get data from AX
         final List<TmpOrdersFromAx> ordersFromAxes = tmpOrdersAXDao.list();
+        //Step 2: Insert / Update into sync table
         if(ordersFromAxes != null && !ordersFromAxes.isEmpty()){
             for(TmpOrdersFromAx tmpOrdersFromAx : ordersFromAxes){
-                //Step 2: Remove orders which has order_code match with AX
-                orderDao.deleteByOrderCode(tmpOrdersFromAx.getOrderCode());
-                //Step 3: Insert data from AX into sync table
-                Orders orders = new Orders();
-                BeanUtils.copyProperties(tmpOrdersFromAx, orders, "orderId");
-                orderDao.save(orders);
+                //Step 2.1: Check if order code is in Orders
+                final Orders orders = orderDao.findByOrderCode(tmpOrdersFromAx.getOrderCode());
+                //If Exist: then update value
+                if (orders != null) {
+                    BeanUtils.copyProperties(tmpOrdersFromAx, orders, "orderId");
+                    orderDao.save(orders);
+                } else {
+                    //If Not Exist: then insert
+                    Orders newOrders = new Orders();
+                    BeanUtils.copyProperties(tmpOrdersFromAx, newOrders, "orderId");
+                    orderDao.save(newOrders);
+                }
             }
             //Step 4: Remove from AX table
-            tmpOrdDetailAXDao.removeAll();
+            tmpOrdersAXDao.removeAll();
         }
     }
-    //for Order Detail
+    //For Order Detail
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void syncOrderDetailFromAX() {
@@ -164,7 +158,7 @@ public class SyncB2BServiceImpl implements SyncB2BService {
             tmpOrdDetailAXDao.removeAll();
         }
     }
-    //for Order Address
+    //For Order Address
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void syncOrderAddressFromAX() {
@@ -184,11 +178,9 @@ public class SyncB2BServiceImpl implements SyncB2BService {
             tmpOrdAddressAXDao.removeAll();
         }
     }
-
-    //for Sale Order
+    //For Sale Order
 
     //for Sale Order Detail
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void syncSellOrderFromAX() {
