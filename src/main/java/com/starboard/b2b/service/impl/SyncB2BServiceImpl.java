@@ -1,5 +1,6 @@
 package com.starboard.b2b.service.impl;
 
+import com.starboard.b2b.dao.AddrDao;
 import com.starboard.b2b.dao.ContactDao;
 import com.starboard.b2b.dao.OrderAddressDao;
 import com.starboard.b2b.dao.OrderDao;
@@ -7,6 +8,7 @@ import com.starboard.b2b.dao.OrderDetailDao;
 import com.starboard.b2b.dao.ProductDao;
 import com.starboard.b2b.dao.SoDao;
 import com.starboard.b2b.dao.SoDetailDao;
+import com.starboard.b2b.dao.TmpAddrAXDao;
 import com.starboard.b2b.dao.TmpContactAXDao;
 import com.starboard.b2b.dao.TmpOrdAddressAXDao;
 import com.starboard.b2b.dao.TmpOrdDetailAXDao;
@@ -14,11 +16,13 @@ import com.starboard.b2b.dao.TmpOrdersAXDao;
 import com.starboard.b2b.dao.TmpProductDao;
 import com.starboard.b2b.dao.TmpSoDao;
 import com.starboard.b2b.dao.TmpSoDetailDao;
+import com.starboard.b2b.model.Addr;
 import com.starboard.b2b.model.Contact;
 import com.starboard.b2b.model.OrdAddress;
 import com.starboard.b2b.model.OrdDetail;
 import com.starboard.b2b.model.Orders;
 import com.starboard.b2b.model.Product;
+import com.starboard.b2b.model.TmpAddrFromAx;
 import com.starboard.b2b.model.TmpContactFromAx;
 import com.starboard.b2b.model.TmpOrdAddressFromAx;
 import com.starboard.b2b.model.TmpOrdDetailFromAx;
@@ -40,6 +44,7 @@ public class SyncB2BServiceImpl implements SyncB2BService {
 
     private static final Logger log = LoggerFactory.getLogger(SyncB2BServiceImpl.class);
 
+    private AddrDao addrDao;
     private OrderDao orderDao;
     private SoDao soDao;
     private SoDetailDao soDetailDao;
@@ -54,6 +59,7 @@ public class SyncB2BServiceImpl implements SyncB2BService {
     private OrderAddressDao orderAddressDao;
     private TmpOrdDetailAXDao tmpOrdDetailAXDao;
     private OrderDetailDao orderDetailDao;
+    private TmpAddrAXDao tmpAddrAXDao;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -81,8 +87,19 @@ public class SyncB2BServiceImpl implements SyncB2BService {
     public void syncAddressFromAX() {
         log.info("Sync Address from AX");
         //Step 1: Get data from AX
-        //Step 2: Insert / Update into sync table
-        //Step 3: Remove table from AX
+        final List<TmpAddrFromAx> addrFromAxes = tmpAddrAXDao.list();
+        if(addrFromAxes != null && !addrFromAxes.isEmpty()){
+            for(TmpAddrFromAx addrFromAx : addrFromAxes){
+                //Step 2: Remove addr which has cust_id match with AX
+                addrDao.deleteByCustId(addrFromAx.getCustId());
+                //Step 3: Insert data from AX into sync table
+                Addr addr = new Addr();
+                BeanUtils.copyProperties(addrFromAx, addr, "addrId");
+                addrDao.save(addr);
+            }
+            //Step 4: Remove from AX table
+            tmpAddrAXDao.removeAll();
+        }
     }
     //For Product
     @Override
@@ -198,6 +215,11 @@ public class SyncB2BServiceImpl implements SyncB2BService {
     }
 
     @Autowired
+    public void setAddrDao(AddrDao addrDao) {
+        this.addrDao = addrDao;
+    }
+
+    @Autowired
     public void setOrderDao(OrderDao orderDao) {
         this.orderDao = orderDao;
     }
@@ -262,7 +284,13 @@ public class SyncB2BServiceImpl implements SyncB2BService {
         this.orderAddressDao = orderAddressDao;
     }
 
+    @Autowired
     public void setTmpOrdDetailAXDao(TmpOrdDetailAXDao tmpOrdDetailAXDao) {
         this.tmpOrdDetailAXDao = tmpOrdDetailAXDao;
+    }
+
+    @Autowired
+    public void setTmpAddrAXDao(TmpAddrAXDao tmpAddrAXDao) {
+        this.tmpAddrAXDao = tmpAddrAXDao;
     }
 }
