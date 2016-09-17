@@ -1,6 +1,6 @@
 package com.starboard.b2b.dao.impl;
 
-import com.starboard.b2b.dao.TmpOrderAddressAXDao;
+import com.starboard.b2b.dao.TmpOrdAddressAXDao;
 import com.starboard.b2b.model.TmpOrdAddressFromAx;
 
 import org.hibernate.SessionFactory;
@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository("tmpOrderAddressAXDao")
-public class TmpOrderAddressAXDaoImpl implements TmpOrderAddressAXDao {
+public class TmpOrdAddressAXDaoImpl implements TmpOrdAddressAXDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;

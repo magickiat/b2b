@@ -8,16 +8,18 @@ import com.starboard.b2b.dao.ProductDao;
 import com.starboard.b2b.dao.SoDao;
 import com.starboard.b2b.dao.SoDetailDao;
 import com.starboard.b2b.dao.TmpContactAXDao;
-import com.starboard.b2b.dao.TmpOrderAddressAXDao;
+import com.starboard.b2b.dao.TmpOrdDetailAXDao;
+import com.starboard.b2b.dao.TmpOrdAddressAXDao;
 import com.starboard.b2b.dao.TmpProductDao;
 import com.starboard.b2b.dao.TmpSoDao;
 import com.starboard.b2b.dao.TmpSoDetailDao;
-import com.starboard.b2b.dao.impl.TmpOrderAddressAXDaoImpl;
 import com.starboard.b2b.model.Contact;
 import com.starboard.b2b.model.OrdAddress;
+import com.starboard.b2b.model.OrdDetail;
 import com.starboard.b2b.model.Product;
 import com.starboard.b2b.model.TmpContactFromAx;
 import com.starboard.b2b.model.TmpOrdAddressFromAx;
+import com.starboard.b2b.model.TmpOrdDetailFromAx;
 import com.starboard.b2b.model.TmpProduct;
 import com.starboard.b2b.service.SyncB2BService;
 
@@ -36,7 +38,6 @@ public class SyncB2BServiceImpl implements SyncB2BService {
     private static final Logger log = LoggerFactory.getLogger(SyncB2BServiceImpl.class);
 
     private OrderDao orderDao;
-    private OrderDetailDao orderDetailDao;
     private SoDao soDao;
     private SoDetailDao soDetailDao;
     private TmpSoDao tmpSoDao;
@@ -45,8 +46,10 @@ public class SyncB2BServiceImpl implements SyncB2BService {
     private ProductDao productDao;
     private TmpContactAXDao tmpContactAXDao;
     private ContactDao contactDao;
-    private TmpOrderAddressAXDao tmpOrdAddressAXDao;
+    private TmpOrdAddressAXDao tmpOrdAddressAXDao;
     private OrderAddressDao orderAddressDao;
+    private TmpOrdDetailAXDao tmpOrdDetailAXDao;
+    private OrderDetailDao orderDetailDao;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -121,7 +124,25 @@ public class SyncB2BServiceImpl implements SyncB2BService {
     //for Order
 
     //for Order Detail
-
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void syncOrderDetailFromAX() {
+        log.info("Sync Order Detail from AX");
+        //Step 1: Get data from AX
+        final List<TmpOrdDetailFromAx> ordDetailFromAxes = tmpOrdDetailAXDao.list();
+        if(ordDetailFromAxes != null && !ordDetailFromAxes.isEmpty()){
+            for(TmpOrdDetailFromAx tmpOrdDetailFromAx : ordDetailFromAxes){
+                //Step 2: Remove order_detail which has order_code match with AX
+                orderDetailDao.deleteByOrderCode(tmpOrdDetailFromAx.getOrderCode());
+                //Step 3: Insert data from AX into sync table
+                OrdDetail ordDetail = new OrdDetail();
+                BeanUtils.copyProperties(tmpOrdDetailFromAx, ordDetail, "orderDetailId", "orderCode");
+                orderDetailDao.save(ordDetail);
+            }
+            //Step 4: Remove from AX table
+            tmpOrdDetailAXDao.removeAll();
+        }
+    }
     //for Order Address
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -214,7 +235,16 @@ public class SyncB2BServiceImpl implements SyncB2BService {
     }
 
     @Autowired
-    public void setTmpOrdAddressAXDao(TmpOrderAddressAXDaoImpl tmpOrdAddressAXDao) {
+    public void setTmpOrdAddressAXDao(TmpOrdAddressAXDao tmpOrdAddressAXDao) {
         this.tmpOrdAddressAXDao = tmpOrdAddressAXDao;
+    }
+
+    @Autowired
+    public void setOrderAddressDao(OrderAddressDao orderAddressDao) {
+        this.orderAddressDao = orderAddressDao;
+    }
+
+    public void setTmpOrdDetailAXDao(TmpOrdDetailAXDao tmpOrdDetailAXDao) {
+        this.tmpOrdDetailAXDao = tmpOrdDetailAXDao;
     }
 }

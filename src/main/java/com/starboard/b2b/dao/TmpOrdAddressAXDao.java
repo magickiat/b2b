@@ -4,7 +4,7 @@ import com.starboard.b2b.model.TmpOrdAddressFromAx;
 
 import java.util.List;
 
-public interface TmpOrderAddressAXDao {
+public interface TmpOrdAddressAXDao {
 
 	List<TmpOrdAddressFromAx> list();
 
