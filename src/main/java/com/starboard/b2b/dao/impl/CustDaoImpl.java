@@ -166,4 +166,9 @@ public class CustDaoImpl implements CustDao {
 		return sessionFactory.getCurrentSession().createQuery(sb.toString()).setLong("custId", custId).list();
 	}
 
+	@Override
+	public void save(Cust cust) {
+		sessionFactory.getCurrentSession().save(cust);
+	}
+
 }
