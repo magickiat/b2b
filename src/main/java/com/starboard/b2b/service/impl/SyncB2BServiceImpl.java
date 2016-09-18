@@ -28,6 +28,8 @@ import com.starboard.b2b.model.TmpOrdAddressFromAx;
 import com.starboard.b2b.model.TmpOrdDetailFromAx;
 import com.starboard.b2b.model.TmpOrdersFromAx;
 import com.starboard.b2b.model.TmpProduct;
+import com.starboard.b2b.model.TmpSo;
+import com.starboard.b2b.model.sync.So;
 import com.starboard.b2b.service.SyncB2BService;
 
 import org.slf4j.Logger;
@@ -196,17 +198,32 @@ public class SyncB2BServiceImpl implements SyncB2BService {
         }
     }
     //For Sale Order
-
-    //for Sale Order Detail
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void syncSellOrderFromAX() {
-        log.info("Sync sell order from AX");
+        log.info("Sync Sell Order from AX");
         //Step 1: Get data from AX
+        final List<TmpSo> tmpSos = tmpSoDao.list();
         //Step 2: Insert / Update into sync table
-        //Step 3: Remove table from AX
+        if(tmpSos != null && !tmpSos.isEmpty()){
+            for(TmpSo tmpSo : tmpSos){
+                //Step 2.1: Check if order code is in Orders
+                final So so = soDao.findBySoNo(tmpSo.getSoNo());
+                //If Exist: then update value
+                if (so != null) {
+                    BeanUtils.copyProperties(tmpSo, so, "soId");
+                    soDao.save(so);
+                } else {
+                    //If Not Exist: then insert
+                    So newSo = new So();
+                    BeanUtils.copyProperties(tmpSo, newSo, "soId");
+                    soDao.save(newSo);
+                }
+            }
+            //Step 4: Remove from AX table
+            tmpSoDao.removeAll();
+        }
     }
-
 
     @Override
     @Transactional(rollbackFor = Exception.class)

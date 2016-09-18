@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository("tmpSoDao")
 public class TmpSoDaoImpl implements TmpSoDao {
 
@@ -26,5 +28,17 @@ public class TmpSoDaoImpl implements TmpSoDao {
             sessionFactory.getCurrentSession()
                     .delete(deleteObject);
         }
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<TmpSo> list() {
+        return sessionFactory.getCurrentSession().createCriteria(TmpSo.class).list();
+    }
+
+    @Override
+    public void removeAll() {
+        final String hql = "DELETE FROM TmpSo";
+        sessionFactory.getCurrentSession().createQuery(hql).executeUpdate();
     }
 }
