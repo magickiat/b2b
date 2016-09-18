@@ -1,22 +1,11 @@
 package com.starboard.b2b.service.impl;
 
-import com.starboard.b2b.config.ConfigForTest;
-import com.starboard.b2b.config.RootConfig;
-import com.starboard.b2b.config.ServiceConfig;
-import com.starboard.b2b.dao.OrderDao;
-import com.starboard.b2b.dao.OrderDetailDao;
-import com.starboard.b2b.dao.ProductDao;
-import com.starboard.b2b.dao.SoDao;
-import com.starboard.b2b.dao.SoDetailDao;
-import com.starboard.b2b.model.OrdDetail;
-import com.starboard.b2b.model.Orders;
-import com.starboard.b2b.model.Product;
-import com.starboard.b2b.model.sync.So;
-import com.starboard.b2b.model.sync.SoDetail;
-import com.starboard.b2b.service.OrderService;
-import com.starboard.b2b.service.SyncB2BService;
+import static org.junit.Assert.*;
 
-import org.junit.Before;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,115 +13,106 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import java.util.List;
-
-import javax.transaction.Transactional;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import com.starboard.b2b.config.ConfigForTest;
+import com.starboard.b2b.config.RootConfig;
+import com.starboard.b2b.config.ServiceConfig;
+import com.starboard.b2b.dao.ContactDao;
+import com.starboard.b2b.dao.ProductDao;
+import com.starboard.b2b.dao.TmpContactAXDao;
+import com.starboard.b2b.dao.TmpProductDao;
+import com.starboard.b2b.model.Contact;
+import com.starboard.b2b.model.Product;
+import com.starboard.b2b.model.TmpContactFromAx;
+import com.starboard.b2b.model.TmpProduct;
+import com.starboard.b2b.service.SyncB2BService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { ConfigForTest.class, ServiceConfig.class, RootConfig.class })
 @Transactional
 public class SyncB2BServiceImplTest {
 
-//	private static final Logger log = LoggerFactory.getLogger(SyncB2BServiceImplTest.class);
+	//private static final Logger log = LoggerFactory.getLogger(SyncB2BServiceImplTest.class);
 
 	@Autowired
 	private SyncB2BService syncB2BService;
 
 	@Autowired
-	private OrderService orderService;
-
+	private ContactDao contactDao;
+	
 	@Autowired
-	private OrderDetailDao orderDetailDao;
-
+	private TmpContactAXDao tmpContactAXDao;
+	
 	@Autowired
-	private OrderDao orderDao;
-
-	@Autowired
-	private SoDetailDao soDetailDao;
-
-	@Autowired
-	private SoDao soDao;
-//
-//	@Autowired
-//	private TmpSoDao tmpSoDao;
-
+	private TmpProductDao tmpProductDao;
+	
 	@Autowired
 	private ProductDao productDao;
-
-	private String SO_NO = "SO-001";
 	
-	private long orderId;
-
-	@Before
-	public void init() {
-		Product p1 = new Product();
-		p1.setProductCode("P001");
-
-		Product p2 = new Product();
-		p2.setProductCode("P002");
-
-		productDao.save(p1);
-		productDao.save(p2);
-
-		// Create order
-		Orders order = new Orders();
-		order.setOrderCode(orderService.generateOrderCode());
-		orderDao.save(order);
-		
-		orderId = order.getOrderId();
-
-		// Create order detail
-		OrdDetail detail1 = new OrdDetail();
-		detail1.setOrderId(order.getOrderId());
-		detail1.setProductId(p1.getProductId());
-
-		OrdDetail detail2 = new OrdDetail();
-		detail2.setOrderId(order.getOrderId());
-		detail2.setProductId(p2.getProductId());
-
-		orderDetailDao.save(detail1);
-		orderDetailDao.save(detail2);
-
-//		TmpSo so1 = new TmpSo();
-//		so1.setDtsSystem(B2BConstant.AX_SYSTEM_NAME);
-//		so1.setImportStatus(Long.valueOf(SyncConstant.WAIT_FOR_SYNC));
-//		so1.setRoCode(order.getOrderCode());
-//		so1.setSoNo(SO_NO);
-//		so1.setItemCode(p1.getProductCode());
-//		tmpSoDao.save(so1);
-
-		So so = new So(0, orderId, SO_NO);
-		soDao.save(so);
-	}
-
+	private final long custId = 1011L;
+	
 	@Test
-	public void testSyncSellOrderFromAX() {
-
-		List<OrdDetail> orderDetails = orderDetailDao.findByOrderId(orderId);
-		assertNotNull(orderDetails);
-		assertEquals(2, orderDetails.size());
-		
-		syncB2BService.syncSellOrderFromAX();
-
-		So so = soDao.findBySoNo(SO_NO);
-		assertNotNull(so);
-		List<SoDetail> soDetails = soDetailDao.findBySoId(so.getSoId());
-		assertNotNull(soDetails);
-		assertEquals(0, soDetails.size());
+	public void testSyncContactFromAX() {
+		// mock data from ax
+		TmpContactFromAx tmpCont1 = new TmpContactFromAx();
+		tmpCont1.setContactId(1L);
+		tmpCont1.setCustId(custId);
+		tmpCont1.setNameEn("mark");
+		tmpContactAXDao.save(tmpCont1);
 		
 		
-		orderDetails = orderDetailDao.findByOrderId(orderId);
-		assertNotNull(orderDetails);
-		assertEquals(2, orderDetails.size());
-
+		
+		syncB2BService.syncContactFromAX();
+		
+		
+		
+		List<Contact> cont1 = contactDao.findByCustId(custId);
+		assertNotNull(cont1);
+		assertEquals(1, cont1.size());
+		assertEquals("mark", cont1.get(0).getNameEn());
 	}
-
-	// @Test
-	// public void testSyncInvoiceFromAX() {
-	// fail("Not yet implemented");
-	// }
+	
+	@Test
+	public void tesetSyncProductFromAX(){
+		
+		// mock exist product
+		Product p1 = new Product();
+		p1.setProductId(1L);
+		p1.setProductCode("P001");
+		p1.setProductNameEn("XXX");
+		productDao.save(p1);
+		
+		// mock data from ax
+		TmpProduct tmpProduct = new TmpProduct();
+		tmpProduct.setProductId(1L);
+		tmpProduct.setProductCode("P001");
+		tmpProduct.setProductNameEn("Product 1");
+		tmpProductDao.save(tmpProduct);
+		
+		TmpProduct tmpProduct2 = new TmpProduct();
+		tmpProduct2.setProductId(2L);
+		tmpProduct2.setProductCode("P002");
+		tmpProduct2.setProductNameEn("Product 2");
+		tmpProductDao.save(tmpProduct2);
+		
+		
+		
+		
+		syncB2BService.syncProductFromAX();
+		
+		
+		
+		List<Product> list = productDao.list();
+		assertNotNull(list);
+		assertEquals(2, list.size());
+		
+		Product product = productDao.findByProductCode("P001");
+		assertNotNull(product);
+		assertEquals("Product 1", product.getProductNameEn());
+		
+		Product product2 = productDao.findByProductCode("P002");
+		assertNotNull(product2);
+		assertEquals("Product 2", product2.getProductNameEn());
+		
+	}
 
 }

@@ -9,4 +9,6 @@ public interface TmpProductDao {
 	List<TmpProduct> list();
 
 	void removeAll();
+
+	void save(TmpProduct tmpProduct);
 }

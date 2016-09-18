@@ -32,4 +32,9 @@ public class TmpProductDaoImpl implements TmpProductDao {
 		final String hql = "DELETE FROM TmpProduct";
 		sessionFactory.getCurrentSession().createQuery(hql).executeUpdate();
 	}
+
+	@Override
+	public void save(TmpProduct tmpProduct) {
+		sessionFactory.getCurrentSession().save(tmpProduct);
+	}
 }
