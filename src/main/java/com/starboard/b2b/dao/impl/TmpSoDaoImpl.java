@@ -16,6 +16,11 @@ public class TmpSoDaoImpl implements TmpSoDao {
     private SessionFactory sessionFactory;
 
     @Override
+    public void save(TmpSo tmpSo) {
+        sessionFactory.getCurrentSession().save(tmpSo);
+    }
+
+    @Override
     public TmpSo findBySoId(long soId) {
         return (TmpSo) sessionFactory.getCurrentSession()
                 .get(TmpSo.class, soId);

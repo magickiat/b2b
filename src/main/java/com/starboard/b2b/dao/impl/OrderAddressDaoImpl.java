@@ -39,10 +39,10 @@ public class OrderAddressDaoImpl implements OrderAddressDao {
     @Override
     public int deleteByOrderCode(String orderCode) {
 		return sessionFactory.getCurrentSession()
-				.createQuery("delete from OrdAddress od " +
-						"where od.orderId in (" +
-						" select od.id from OrdAddress od, Orders o " +
-						" where o.orderId = od.orderId and o.orderCode = :orderCode " +
+				.createQuery("delete from OrdAddress oa " +
+						"where oa.orderAddressId in (" +
+						" select oad.orderAddressId from OrdAddress oad, Orders o " +
+						" where o.orderId = oad.orderId and o.orderCode = :orderCode " +
 						")")
 				.setString("orderCode", orderCode)
 				.executeUpdate();

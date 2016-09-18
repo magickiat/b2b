@@ -91,6 +91,13 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 		return sessionFactory.getCurrentSession().createCriteria(OrdDetail.class).add(Restrictions.eq("orderId", orderId)).list();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<OrdDetail> findByOrderCode(String orderCode) {
+		String hql = "select od from OrdDetail od, Orders o where o.orderId = od.orderId and o.orderCode = :orderCode";
+		return sessionFactory.getCurrentSession().createQuery(hql).setString("orderCode", orderCode).list();
+	}
+
 	@SuppressWarnings("rawtypes")
 	@Override
 	public List<SearchOrderDetailReportResult> findOrderDetailByOrderId(long orderId) {
@@ -227,8 +234,8 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 	public int deleteByOrderCode(String orderCode) {
 		return sessionFactory.getCurrentSession()
 				.createQuery("delete from OrdDetail od " +
-						"where od.orderId in (" +
-						" select od.id from OrdDetail od, Orders o " +
+						"where od.orderDetailId in (" +
+						" select odd.orderDetailId from OrdDetail odd, Orders o " +
 						" where o.orderId = od.orderId and o.orderCode = :orderCode " +
 						")")
 				.setString("orderCode", orderCode)

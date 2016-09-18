@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface TmpSoDao {
 
+    void save(TmpSo tmpSo);
+
     TmpSo findBySoId(final long soId);
 
     void remove(final long soId);

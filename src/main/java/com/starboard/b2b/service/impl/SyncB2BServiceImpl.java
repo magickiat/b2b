@@ -96,7 +96,7 @@ public class SyncB2BServiceImpl implements SyncB2BService {
                 addrDao.deleteByCustId(addrFromAx.getCustId());
                 //Step 3: Insert data from AX into sync table
                 Addr addr = new Addr();
-                BeanUtils.copyProperties(addrFromAx, addr, "addrId");
+                BeanUtils.copyProperties(addrFromAx, addr);
                 addrDao.save(addr);
             }
             //Step 4: Remove from AX table
@@ -149,7 +149,7 @@ public class SyncB2BServiceImpl implements SyncB2BService {
                 } else {
                     //If Not Exist: then insert
                     Orders newOrders = new Orders();
-                    BeanUtils.copyProperties(tmpOrdersFromAx, newOrders, "orderId");
+                    BeanUtils.copyProperties(tmpOrdersFromAx, newOrders);
                     orderDao.save(newOrders);
                 }
             }
