@@ -17,6 +17,7 @@ public class TmpSo {
 
 	private long soId;
 	private long orderId;
+	private String orderCode;
 	private String shippingId;
 	private String paymentTermId;
 	private String paymentMethodId;
@@ -155,4 +156,12 @@ public class TmpSo {
 		this.timeUpdate = timeUpdate;
 	}
 
+	@Column(name = "order_code", length = 100)
+	public String getOrderCode() {
+		return this.orderCode;
+	}
+
+	public void setOrderCode(String orderCode) {
+		this.orderCode = orderCode;
+	}
 }
