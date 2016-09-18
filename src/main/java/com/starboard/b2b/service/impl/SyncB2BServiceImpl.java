@@ -76,7 +76,7 @@ public class SyncB2BServiceImpl implements SyncB2BService {
                 contactDao.removeByCustId(tmpContactFromAx.getCustId());
                 //Step 3: Insert into sync table
                 Contact syncContact = new Contact();
-                BeanUtils.copyProperties(tmpContactFromAx, syncContact);
+                BeanUtils.copyProperties(tmpContactFromAx, syncContact, "contactId");
                 contactDao.save(syncContact);
             }
             //Step 4: Remove from AX

@@ -1,7 +1,6 @@
 package com.starboard.b2b.dao.impl;
 
 import com.starboard.b2b.dao.TmpContactAXDao;
-import com.starboard.b2b.model.TmpContact;
 import com.starboard.b2b.model.TmpContactFromAx;
 
 import org.hibernate.SessionFactory;
@@ -21,7 +20,7 @@ public class TmpContactAXDaoImpl implements TmpContactAXDao {
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly = true)
 	public List<TmpContactFromAx> list() {
-		return sessionFactory.getCurrentSession().createCriteria(TmpContact.class).list();
+		return sessionFactory.getCurrentSession().createCriteria(TmpContactFromAx.class).list();
 	}
 
 	@Override

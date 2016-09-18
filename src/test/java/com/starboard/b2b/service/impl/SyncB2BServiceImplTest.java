@@ -1,18 +1,5 @@
 package com.starboard.b2b.service.impl;
 
-import static org.junit.Assert.*;
-
-import java.util.List;
-
-import javax.transaction.Transactional;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
-
 import com.starboard.b2b.config.ConfigForTest;
 import com.starboard.b2b.config.RootConfig;
 import com.starboard.b2b.config.ServiceConfig;
@@ -25,6 +12,20 @@ import com.starboard.b2b.model.Product;
 import com.starboard.b2b.model.TmpContactFromAx;
 import com.starboard.b2b.model.TmpProduct;
 import com.starboard.b2b.service.SyncB2BService;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
+
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { ConfigForTest.class, ServiceConfig.class, RootConfig.class })
@@ -57,14 +58,11 @@ public class SyncB2BServiceImplTest {
 		tmpCont1.setContactId(1L);
 		tmpCont1.setCustId(custId);
 		tmpCont1.setNameEn("mark");
+		tmpCont1.setAddress("Address for mark");
 		tmpContactAXDao.save(tmpCont1);
-		
-		
-		
+
 		syncB2BService.syncContactFromAX();
-		
-		
-		
+
 		List<Contact> cont1 = contactDao.findByCustId(custId);
 		assertNotNull(cont1);
 		assertEquals(1, cont1.size());
@@ -72,7 +70,7 @@ public class SyncB2BServiceImplTest {
 	}
 	
 	@Test
-	public void tesetSyncProductFromAX(){
+	public void testSyncProductFromAX(){
 		
 		// mock exist product
 		Product p1 = new Product();
@@ -113,6 +111,31 @@ public class SyncB2BServiceImplTest {
 		assertNotNull(product2);
 		assertEquals("Product 2", product2.getProductNameEn());
 		
+	}
+
+	@Test
+	public void testSyncAddressFromAX() throws Exception {
+
+	}
+
+	@Test
+	public void testSyncOrdersFromAX() throws Exception {
+
+	}
+
+	@Test
+	public void testSyncOrderDetailFromAX() throws Exception {
+
+	}
+
+	@Test
+	public void testSyncOrderAddressFromAX() throws Exception {
+
+	}
+
+	@Test
+	public void testSyncSellOrderFromAX() throws Exception {
+
 	}
 
 }
