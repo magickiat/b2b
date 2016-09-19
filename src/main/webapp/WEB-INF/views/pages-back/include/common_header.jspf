@@ -39,10 +39,6 @@
 				<li>
 					<a href='<c:url value="/backend/user/search" />'>User management</a>
 				</li>
-				<li>
-					<a href='<c:url value="/backend/user/info" />'>My Information</a>
-				</li>
-
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
