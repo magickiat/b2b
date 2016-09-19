@@ -275,6 +275,11 @@ public class SyncB2BServiceImplTest {
 
 		// Sync it
 		syncB2BService.syncOrdersFromAX();
+		
+		List<Orders> list = orderDao.list();
+		assertNotNull(list);
+		assertEquals(3, list.size());
+		
 
 		// Assert
 		final Orders ordersCode1 = orderDao.findByOrderCode(ORD_CODE_1);
@@ -318,9 +323,10 @@ public class SyncB2BServiceImplTest {
 		orderDetailDao.save(ordDetail3);
 
 		TmpOrdDetailFromAx ordDetailFromAx = new TmpOrdDetailFromAx();
-		ordDetailFromAx.setOrderId(orders1.getOrderId());
-		ordDetailFromAx.setOrderCode(orders1.getOrderCode());
+		ordDetailFromAx.setOrderId(99L);
+		ordDetailFromAx.setOrderCode(ORD_CODE_1);
 		ordDetailFromAx.setPrice(BigDecimal.valueOf(100));
+		ordDetailFromAx.setProductUnitId("PCS");
 		tmpOrdDetailAXDao.save(ordDetailFromAx);
 
 		// Sync it
@@ -331,11 +337,47 @@ public class SyncB2BServiceImplTest {
 		assertNotNull(detailOrder1);
 		assertEquals(1, detailOrder1.size());
 		assertEquals(BigDecimal.valueOf(100), detailOrder1.get(0).getPrice());
+		assertEquals("PCS", detailOrder1.get(0).getProductUnitId());
 
 		final List<OrdDetail> detailOrder2 = orderDetailDao.findByOrderId(orders2.getOrderId());
 		assertNotNull(detailOrder2);
 		assertEquals(1, detailOrder2.size());
 		assertEquals(BigDecimal.ZERO, detailOrder2.get(0).getPrice());
+	}
+	
+	@Test
+	public void testSyncNewOrderDetailFromAX() throws Exception {
+		
+		TmpOrdersFromAx orders1Ax = new TmpOrdersFromAx();
+		orders1Ax.setOrderId(123L);
+		orders1Ax.setCustId(custId3);
+		orders1Ax.setOrderCode("OD001");
+		tmpOrdersAXDao.save(orders1Ax);
+
+		TmpOrdDetailFromAx ordDetailFromAx = new TmpOrdDetailFromAx();
+		ordDetailFromAx.setOrderId(orders1Ax.getOrderId());
+		ordDetailFromAx.setOrderCode("OD001");
+		ordDetailFromAx.setPrice(BigDecimal.valueOf(100));
+		ordDetailFromAx.setProductUnitId("PCS");
+		tmpOrdDetailAXDao.save(ordDetailFromAx);
+
+		// Sync Order
+		syncB2BService.syncOrdersFromAX();
+		// Sync Order Detail
+		syncB2BService.syncOrderDetailFromAX();
+
+		// Assert orders
+		Orders orders = orderDao.findByOrderCode(orders1Ax.getOrderCode());
+		assertNotNull(orders);
+		assertEquals(orders1Ax.getOrderCode(), orders.getOrderCode());
+		
+		// Assert order detail
+		final List<OrdDetail> detailOrder1 = orderDetailDao.findByOrderCode(orders1Ax.getOrderCode());
+		assertNotNull(detailOrder1);
+		assertEquals(1, detailOrder1.size());
+		assertEquals(BigDecimal.valueOf(100), detailOrder1.get(0).getPrice());
+		assertEquals("PCS", detailOrder1.get(0).getProductUnitId());
+
 	}
 
 	@Test
