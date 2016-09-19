@@ -38,4 +38,11 @@ public class TmpContactAXDaoImpl implements TmpContactAXDao {
 		final String hql = "DELETE FROM TmpContactFromAx";
 		sessionFactory.getCurrentSession().createQuery(hql).executeUpdate();
 	}
+
+    @Override
+	@SuppressWarnings("unchecked")
+    public List<Long> findCustIds() {
+		String hql = "SELECT DISTINCT tc.custId FROM TmpContactFromAx tc";
+		return sessionFactory.getCurrentSession().createQuery(hql).list();
+    }
 }

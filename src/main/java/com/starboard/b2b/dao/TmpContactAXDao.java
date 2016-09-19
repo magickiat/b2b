@@ -12,4 +12,6 @@ public interface TmpContactAXDao {
 	void save(TmpContactFromAx obj);
 
 	void removeAll();
+
+    List<Long> findCustIds();
 }
