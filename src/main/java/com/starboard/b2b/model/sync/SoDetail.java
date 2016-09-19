@@ -22,7 +22,6 @@ public class SoDetail implements java.io.Serializable {
 	private long soProductId;
 	private Long orderProductId;
 	private Long soId;
-	private Long productId;
 	private Long amount;
 	private String productBuyerGroupId;
 	private BigDecimal price;
@@ -40,13 +39,12 @@ public class SoDetail implements java.io.Serializable {
 		this.soProductId = soProductId;
 	}
 
-	public SoDetail(long soProductId, Long orderProductId, Long soId, Long productId, Long amount,
+	public SoDetail(long soProductId, Long orderProductId, Long soId, Long amount,
 			String productBuyerGroupId, BigDecimal price, String productCurrency, String productUnitId,
 			String userCreate, String userUpdate, Date timeCreate, Date timeUpdate) {
 		this.soProductId = soProductId;
 		this.orderProductId = orderProductId;
 		this.soId = soId;
-		this.productId = productId;
 		this.amount = amount;
 		this.productBuyerGroupId = productBuyerGroupId;
 		this.price = price;
@@ -85,15 +83,6 @@ public class SoDetail implements java.io.Serializable {
 
 	public void setSoId(Long soId) {
 		this.soId = soId;
-	}
-
-	@Column(name = "product_id")
-	public Long getProductId() {
-		return this.productId;
-	}
-
-	public void setProductId(Long productId) {
-		this.productId = productId;
 	}
 
 	@Column(name = "amount")

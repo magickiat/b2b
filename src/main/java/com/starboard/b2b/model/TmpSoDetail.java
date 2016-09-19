@@ -19,7 +19,7 @@ public class TmpSoDetail {
 	private long soProductId;
 	private Long orderProductId;
 	private Long soId;
-	private Long productId;
+	private String soNo;
 	private Long amount;
 	private String productBuyerGroupId;
 	private BigDecimal price;
@@ -37,12 +37,11 @@ public class TmpSoDetail {
 		this.soProductId = soProductId;
 	}
 
-	public TmpSoDetail(long soProductId, Long orderProductId, Long soId, Long productId, Long amount, String productBuyerGroupId, BigDecimal price,
+	public TmpSoDetail(long soProductId, Long orderProductId, Long soId, Long amount, String productBuyerGroupId, BigDecimal price,
 			String productCurrency, String productUnitId, String userCreate, String userUpdate, Date timeCreate, Date timeUpdate) {
 		this.soProductId = soProductId;
 		this.orderProductId = orderProductId;
 		this.soId = soId;
-		this.productId = productId;
 		this.amount = amount;
 		this.productBuyerGroupId = productBuyerGroupId;
 		this.price = price;
@@ -81,15 +80,6 @@ public class TmpSoDetail {
 
 	public void setSoId(Long soId) {
 		this.soId = soId;
-	}
-
-	@Column(name = "product_id")
-	public Long getProductId() {
-		return this.productId;
-	}
-
-	public void setProductId(Long productId) {
-		this.productId = productId;
 	}
 
 	@Column(name = "amount")
@@ -175,4 +165,12 @@ public class TmpSoDetail {
 		this.timeUpdate = timeUpdate;
 	}
 
+	@Column(name = "so_no", nullable = false, length = 32)
+	public String getSoNo() {
+		return this.soNo;
+	}
+
+	public void setSoNo(String soNo) {
+		this.soNo = soNo;
+	}
 }

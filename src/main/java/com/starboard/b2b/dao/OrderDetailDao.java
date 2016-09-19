@@ -20,7 +20,9 @@ public interface OrderDetailDao {
 	List<SearchOrderDetailDTO> searchOrderDetail(Long[] ordersId);
 	
 	List<OrdDetail> findByOrderId(long orderId);
-	
+
+	List<OrdDetail> findByOrderCode(String orderCode);
+
 	List<SearchOrderDetailReportResult> findOrderDetailByOrderId(long orderId);
 
 	OrdDetail findById(long orderDetailId);
@@ -30,4 +32,6 @@ public interface OrderDetailDao {
 	int deleteBySoNo(String soNo);
 
 	int deleteWithoutSoNo(Long orderId);
+
+    int deleteByOrderCode(String orderCode);
 }

@@ -24,4 +24,6 @@ public interface CustDao {
 	List<AddressDTO> findAddressByCustomerId(Long custId);
 
 	List<ContactDTO> findContactByCustomerId(Long custId);
+
+	void save(Cust cust);
 }

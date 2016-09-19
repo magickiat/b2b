@@ -1,13 +1,15 @@
 package com.starboard.b2b.dao.impl;
 
-import com.starboard.b2b.dao.ContactDao;
-import com.starboard.b2b.model.Contact;
+import java.math.BigInteger;
+import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigInteger;
+import com.starboard.b2b.dao.ContactDao;
+import com.starboard.b2b.model.Contact;
 
 @Repository("contactDao")
 public class ContactDaoImpl implements ContactDao{
@@ -36,5 +38,11 @@ public class ContactDaoImpl implements ContactDao{
 	public void removeByCustId(long custId) {
 		final String hql = "DELETE FROM Contact c WHERE c.custId = :custId";
 		sessionFactory.getCurrentSession().createQuery(hql).setLong("custId", custId).executeUpdate();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Contact> findByCustId(long custId) {
+		return sessionFactory.getCurrentSession().createCriteria(Contact.class).add(Restrictions.eq("custId", custId)).list();
 	}
 }

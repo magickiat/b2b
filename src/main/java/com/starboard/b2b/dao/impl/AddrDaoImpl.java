@@ -1,16 +1,15 @@
 package com.starboard.b2b.dao.impl;
 
-import java.math.BigInteger;
-
-import java.util.List;
+import com.starboard.b2b.dao.AddrDao;
+import com.starboard.b2b.model.Addr;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.starboard.b2b.dao.AddrDao;
-import com.starboard.b2b.model.Addr;
+import java.math.BigInteger;
+import java.util.List;
 
 @Repository("addrDao")
 public class AddrDaoImpl implements AddrDao {
@@ -43,4 +42,12 @@ public class AddrDaoImpl implements AddrDao {
 	public void update(Addr addr) {
 		sessionFactory.getCurrentSession().update(addr);
 	}
+
+    @Override
+    public int deleteByCustId(long custId) {
+		return sessionFactory.getCurrentSession()
+				.createQuery("delete from Addr a where a.custId = :custId")
+				.setLong("custId", custId)
+				.executeUpdate();
+    }
 }

@@ -1,8 +1,8 @@
 package com.starboard.b2b.dao;
 
-import java.util.List;
-
 import com.starboard.b2b.model.Addr;
+
+import java.util.List;
 
 public interface AddrDao {
 
@@ -16,4 +16,5 @@ public interface AddrDao {
 	
 	void update(Addr addr);
 
+    int deleteByCustId(long custId);
 }

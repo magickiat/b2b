@@ -8,9 +8,13 @@ public interface SyncB2BService {
 
 	void syncProductFromAX();
 
-	void syncOrderFromAX();
+    void syncOrdersFromAX();
 
-	void syncSellOrderFromAX();
+    void syncOrderDetailFromAX();
+
+    void syncOrderAddressFromAX();
+
+    void syncSellOrderFromAX();
 
 	void syncInvoiceFromAX();
 

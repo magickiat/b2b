@@ -20,7 +20,6 @@ public class InvoiceDetail implements java.io.Serializable {
 	private long invoiceProductId;
 	private Long orderProductId;
 	private Long invoiceId;
-	private Long productId;
 	private Long amount;
 	private String productBuyerGroupId;
 	private BigDecimal price;
@@ -38,13 +37,12 @@ public class InvoiceDetail implements java.io.Serializable {
 		this.invoiceProductId = invoiceProductId;
 	}
 
-	public InvoiceDetail(long invoiceProductId, Long orderProductId, Long invoiceId, Long productId, Long amount,
+	public InvoiceDetail(long invoiceProductId, Long orderProductId, Long invoiceId, Long amount,
 			String productBuyerGroupId, BigDecimal price, String productCurrency, String productUnitId,
 			String userCreate, String userUpdate, Date timeCreate, Date timeUpdate) {
 		this.invoiceProductId = invoiceProductId;
 		this.orderProductId = orderProductId;
 		this.invoiceId = invoiceId;
-		this.productId = productId;
 		this.amount = amount;
 		this.productBuyerGroupId = productBuyerGroupId;
 		this.price = price;
@@ -83,15 +81,6 @@ public class InvoiceDetail implements java.io.Serializable {
 
 	public void setInvoiceId(Long invoiceId) {
 		this.invoiceId = invoiceId;
-	}
-
-	@Column(name = "product_id")
-	public Long getProductId() {
-		return this.productId;
-	}
-
-	public void setProductId(Long productId) {
-		this.productId = productId;
 	}
 
 	@Column(name = "amount")

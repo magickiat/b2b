@@ -1,15 +1,15 @@
 package com.starboard.b2b.dao.impl;
 
-import java.io.Serializable;
-import java.util.List;
+import com.starboard.b2b.dao.OrderAddressDao;
+import com.starboard.b2b.model.OrdAddress;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.starboard.b2b.dao.OrderAddressDao;
-import com.starboard.b2b.model.OrdAddress;
+import java.io.Serializable;
+import java.util.List;
 
 @Repository("orderAddressDao")
 public class OrderAddressDaoImpl implements OrderAddressDao {
@@ -35,4 +35,16 @@ public class OrderAddressDaoImpl implements OrderAddressDao {
 				.setLong("orderId", orderId)
 				.executeUpdate();
 	}
+
+    @Override
+    public int deleteByOrderCode(String orderCode) {
+		return sessionFactory.getCurrentSession()
+				.createQuery("delete from OrdAddress oa " +
+						"where oa.orderAddressId in (" +
+						" select oad.orderAddressId from OrdAddress oad, Orders o " +
+						" where o.orderId = oad.orderId and o.orderCode = :orderCode " +
+						")")
+				.setString("orderCode", orderCode)
+				.executeUpdate();
+    }
 }
