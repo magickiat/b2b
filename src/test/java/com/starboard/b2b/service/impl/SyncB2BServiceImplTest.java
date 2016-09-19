@@ -68,13 +68,13 @@ public class SyncB2BServiceImplTest {
 
 	@Autowired
 	private ContactDao contactDao;
-	
+
 	@Autowired
 	private TmpContactAXDao tmpContactAXDao;
-	
+
 	@Autowired
 	private TmpProductDao tmpProductDao;
-	
+
 	@Autowired
 	private ProductDao productDao;
 
@@ -107,7 +107,7 @@ public class SyncB2BServiceImplTest {
 
 	@Autowired
 	private SoDao soDao;
-	
+
 	private final long custId = 1011L;
 	private final long custId2 = 1012L;
 	private final long custId3 = 1013L;
@@ -123,61 +123,68 @@ public class SyncB2BServiceImplTest {
 		tmpCont1.setAddress("Address for mark");
 		tmpContactAXDao.save(tmpCont1);
 
+		// mock data from ax
+		TmpContactFromAx tmpCont2 = new TmpContactFromAx();
+		tmpCont2.setContactId(2L);
+		tmpCont2.setCustId(custId);
+		tmpCont2.setNameEn("mark xxxxx");
+		tmpCont2.setAddress("Address for mark xxxxx");
+		tmpContactAXDao.save(tmpCont2);
+
+		
+		//TODO failed because delete in loop. It must select distinct and delete before loop
 		syncB2BService.syncContactFromAX();
 
+		
+		
 		List<Contact> cont1 = contactDao.findByCustId(custId);
 		assertNotNull(cont1);
-		assertEquals(1, cont1.size());
+		assertEquals(2, cont1.size());
 		assertEquals("mark", cont1.get(0).getNameEn());
 	}
-	
+
 	@Test
-	public void testSyncProductFromAX(){
-		
+	public void testSyncProductFromAX() {
+
 		// mock exist product
 		Product p1 = new Product();
 		p1.setProductId(1L);
 		p1.setProductCode("P001");
 		p1.setProductNameEn("XXX");
 		productDao.save(p1);
-		
+
 		// mock data from ax
 		TmpProduct tmpProduct = new TmpProduct();
 		tmpProduct.setProductId(1L);
 		tmpProduct.setProductCode("P001");
 		tmpProduct.setProductNameEn("Product 1");
 		tmpProductDao.save(tmpProduct);
-		
+
 		TmpProduct tmpProduct2 = new TmpProduct();
 		tmpProduct2.setProductId(2L);
 		tmpProduct2.setProductCode("P002");
 		tmpProduct2.setProductNameEn("Product 2");
 		tmpProductDao.save(tmpProduct2);
-		
-		
-		
-		
+
 		syncB2BService.syncProductFromAX();
-		
-		
-		
+
 		List<Product> list = productDao.list();
 		assertNotNull(list);
 		assertEquals(2, list.size());
-		
+
 		Product product = productDao.findByProductCode("P001");
 		assertNotNull(product);
 		assertEquals("Product 1", product.getProductNameEn());
-		
+
 		Product product2 = productDao.findByProductCode("P002");
 		assertNotNull(product2);
 		assertEquals("Product 2", product2.getProductNameEn());
-		
+
 	}
 
 	@Test
 	public void testSyncAddressFromAX() throws Exception {
-		//Mock data
+		// Mock data
 		Addr addr1 = new Addr();
 		addr1.setAddrId(101L);
 		addr1.setAddress("Address 1 Cust 1");
@@ -218,10 +225,10 @@ public class SyncB2BServiceImplTest {
 		addr2Ax.setCustId(custId3);
 		tmpAddrAXDao.save(addr2Ax);
 
-		//Sync it
+		// Sync it
 		syncB2BService.syncAddressFromAX();
 
-		//Assert
+		// Assert
 		final List<Addr> addrCust1 = addrDao.findByCustId(custId);
 		assertNotNull(addrCust1);
 		assertEquals(1, addrCust1.size());
@@ -243,7 +250,7 @@ public class SyncB2BServiceImplTest {
 
 	@Test
 	public void testSyncOrdersFromAX() throws Exception {
-		//Mock data
+		// Mock data
 		Orders orders1 = new Orders();
 		orders1.setCustId(custId);
 		orders1.setOrderCode(ORD_CODE_1);
@@ -266,10 +273,10 @@ public class SyncB2BServiceImplTest {
 		orders2Ax.setOrderCode(ORD_CODE_3);
 		tmpOrdersAXDao.save(orders2Ax);
 
-		//Sync it
+		// Sync it
 		syncB2BService.syncOrdersFromAX();
 
-		//Assert
+		// Assert
 		final Orders ordersCode1 = orderDao.findByOrderCode(ORD_CODE_1);
 		assertEquals(custId3, ordersCode1.getCustId().longValue());
 
@@ -282,7 +289,7 @@ public class SyncB2BServiceImplTest {
 
 	@Test
 	public void testSyncOrderDetailFromAX() throws Exception {
-		//Mock data
+		// Mock data
 		Orders orders1 = new Orders();
 		orders1.setOrderId(ORDER_ID_1);
 		orders1.setCustId(custId);
@@ -316,10 +323,10 @@ public class SyncB2BServiceImplTest {
 		ordDetailFromAx.setPrice(BigDecimal.valueOf(100));
 		tmpOrdDetailAXDao.save(ordDetailFromAx);
 
-		//Sync it
+		// Sync it
 		syncB2BService.syncOrderDetailFromAX();
 
-		//Assert
+		// Assert
 		final List<OrdDetail> detailOrder1 = orderDetailDao.findByOrderId(orders1.getOrderId());
 		assertNotNull(detailOrder1);
 		assertEquals(1, detailOrder1.size());
@@ -333,8 +340,8 @@ public class SyncB2BServiceImplTest {
 
 	@Test
 	public void testSyncOrderAddressFromAX() throws Exception {
-		//Mock data
-		//Mock data
+		// Mock data
+		// Mock data
 		Orders orders1 = new Orders();
 		orders1.setOrderId(ORDER_ID_1);
 		orders1.setCustId(custId);
@@ -368,10 +375,10 @@ public class SyncB2BServiceImplTest {
 		ordAddressFromAx.setOrderAddr("Order 1 Address AX");
 		tmpOrdAddressAXDao.save(ordAddressFromAx);
 
-		//Sync it
+		// Sync it
 		syncB2BService.syncOrderAddressFromAX();
 
-		//Assert
+		// Assert
 		final List<OrdAddress> addressOrder1 = orderAddressDao.findByOrderId(orders1.getOrderId());
 		assertNotNull(addressOrder1);
 		assertEquals(1, addressOrder1.size());
@@ -385,7 +392,7 @@ public class SyncB2BServiceImplTest {
 
 	@Test
 	public void testSyncSellOrderFromAX() throws Exception {
-		//Mock data
+		// Mock data
 		So so1 = new So();
 		so1.setSoNo("SoNo1");
 		so1.setOrderId(ORDER_ID_1);
@@ -410,10 +417,10 @@ public class SyncB2BServiceImplTest {
 		tmpSo2.setUserCreate("admin");
 		tmpSoDao.save(tmpSo2);
 
-		//Sync it
+		// Sync it
 		syncB2BService.syncSellOrderFromAX();
 
-		//Assert
+		// Assert
 		final So soNo1 = soDao.findBySoNo("SoNo1");
 		assertEquals(ORDER_ID_2, soNo1.getOrderId());
 
