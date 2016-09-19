@@ -68,13 +68,16 @@ public class SyncB2BServiceImpl implements SyncB2BService {
     @Transactional(rollbackFor = Exception.class)
     public void syncContactFromAX() {
         log.info("Sync Contact from AX");
-        //Step 1: Get data from AX
+        //Step 1: Get distinct custId from AX
+        List<Long> custIdsAx = tmpContactAXDao.findCustIds();
+        //Step 2: Remove all Contact which match custIdAx;
+        if (custIdsAx != null && !custIdsAx.isEmpty()) {
+            contactDao.removeByCustIds(custIdsAx);
+        }
+        //Step 3: Get data from AX & insert into Sync table
         List<TmpContactFromAx> tmpContactFromAXs = tmpContactAXDao.list();
         if (tmpContactFromAXs != null && !tmpContactFromAXs.isEmpty()) {
             for (TmpContactFromAx tmpContactFromAx : tmpContactFromAXs) {
-                //Step 2: Clear all match cust_id
-                contactDao.removeByCustId(tmpContactFromAx.getCustId());
-                //Step 3: Insert into sync table
                 Contact syncContact = new Contact();
                 BeanUtils.copyProperties(tmpContactFromAx, syncContact, "contactId");
                 contactDao.save(syncContact);
