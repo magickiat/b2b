@@ -34,4 +34,11 @@ public class TmpAddrAXDaoImpl implements TmpAddrAXDao {
 		sessionFactory.getCurrentSession().save(tmpAddrFromAx);
 	}
 
+    @Override
+	@SuppressWarnings("unchecked")
+    public List<Long> findCustIds() {
+		String hql = "SELECT DISTINCT ta.custId FROM TmpAddrFromAx ta";
+		return sessionFactory.getCurrentSession().createQuery(hql).list();
+    }
+
 }

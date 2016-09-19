@@ -17,4 +17,6 @@ public interface AddrDao {
 	void update(Addr addr);
 
     int deleteByCustId(long custId);
+
+    int deleteByCustIds(List<Long> custIds);
 }

@@ -131,12 +131,8 @@ public class SyncB2BServiceImplTest {
 		tmpCont2.setAddress("Address for mark xxxxx");
 		tmpContactAXDao.save(tmpCont2);
 
-		
-		//TODO failed because delete in loop. It must select distinct and delete before loop
 		syncB2BService.syncContactFromAX();
 
-		
-		
 		List<Contact> cont1 = contactDao.findByCustId(custId);
 		assertNotNull(cont1);
 		assertEquals(2, cont1.size());

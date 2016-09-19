@@ -91,13 +91,16 @@ public class SyncB2BServiceImpl implements SyncB2BService {
     @Transactional(rollbackFor = Exception.class)
     public void syncAddressFromAX() {
         log.info("Sync Address from AX");
-        //Step 1: Get data from AX
-        final List<TmpAddrFromAx> addrFromAxes = tmpAddrAXDao.list();
+        //Step 1: Get distinct custId from AX
+        List<Long> custIdsAx = tmpAddrAXDao.findCustIds();
+        //Step 2: Remove all Addr which match custIdAx;
+        if (custIdsAx != null && !custIdsAx.isEmpty()) {
+            addrDao.deleteByCustIds(custIdsAx);
+        }
+        //Step 3: Get data from AX & insert into Sync table
+        List<TmpAddrFromAx> addrFromAxes = tmpAddrAXDao.list();
         if(addrFromAxes != null && !addrFromAxes.isEmpty()){
             for(TmpAddrFromAx addrFromAx : addrFromAxes){
-                //Step 2: Remove addr which has cust_id match with AX
-                addrDao.deleteByCustId(addrFromAx.getCustId());
-                //Step 3: Insert data from AX into sync table
                 Addr addr = new Addr();
                 BeanUtils.copyProperties(addrFromAx, addr);
                 addrDao.save(addr);
