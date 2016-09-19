@@ -213,6 +213,14 @@ public class SyncB2BServiceImplTest {
 		addr1Ax.setCustId(custId);
 		tmpAddrAXDao.save(addr1Ax);
 
+		TmpAddrFromAx addr3Ax = new TmpAddrFromAx();
+        addr3Ax.setAddrId(106L);
+        addr3Ax.setAddress("Address Cust 4 AX");
+        addr3Ax.setProvince(ORDER_ID_1);
+        addr3Ax.setPostCode("P4AX");
+        addr3Ax.setCustId(custId);
+		tmpAddrAXDao.save(addr3Ax);
+
 		TmpAddrFromAx addr2Ax = new TmpAddrFromAx();
 		addr2Ax.setAddrId(105L);
 		addr2Ax.setAddress("Address Cust 3 AX");
@@ -227,7 +235,7 @@ public class SyncB2BServiceImplTest {
 		// Assert
 		final List<Addr> addrCust1 = addrDao.findByCustId(custId);
 		assertNotNull(addrCust1);
-		assertEquals(1, addrCust1.size());
+		assertEquals(2, addrCust1.size());
 		assertEquals(104L, addrCust1.get(0).getAddrId());
 		assertEquals("Address Cust 1 AX", addrCust1.get(0).getAddress());
 
