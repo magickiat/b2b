@@ -47,4 +47,18 @@ public class OrderAddressDaoImpl implements OrderAddressDao {
 				.setString("orderCode", orderCode)
 				.executeUpdate();
     }
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Long> findIdsByOrderCodes(List<String> orderCodes){
+		final String hql = " select distinct oad.orderAddressId from OrdAddress oad, Orders o " +
+				" where o.orderId = oad.orderId and o.orderCode in (:orderCodes)";
+		return sessionFactory.getCurrentSession().createQuery(hql).setParameterList("orderCodes", orderCodes).list();
+	}
+
+	@Override
+	public int deleteByIds(List<Long> ids) {
+		final String hql = "delete from OrdAddress oa where oa.orderAddressId in (:ids)";
+		return sessionFactory.getCurrentSession().createQuery(hql).setParameterList("ids", ids).executeUpdate();
+	}
 }

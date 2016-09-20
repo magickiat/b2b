@@ -188,13 +188,19 @@ public class SyncB2BServiceImpl implements SyncB2BService {
     @Transactional(rollbackFor = Exception.class)
     public void syncOrderAddressFromAX() {
         log.info("Sync Order Address from AX");
-        //Step 1: Get data from AX
+        //Step 1: Get distinct order codes from AX
+        List<String> orderCodeAxes = tmpOrdAddressAXDao.findOrderCodes();
+        //Step 2: Remove all order_address which match orderCodeAxes;
+        if(orderCodeAxes != null && !orderCodeAxes.isEmpty()){
+            final List<Long> ids = orderAddressDao.findIdsByOrderCodes(orderCodeAxes);
+            if(ids != null && !ids.isEmpty()){
+                orderAddressDao.deleteByIds(ids);
+            }
+        }
+        //Step 3: Get data from AX & insert into sync table
         final List<TmpOrdAddressFromAx> ordAddressFromAxes = tmpOrdAddressAXDao.list();
         if(ordAddressFromAxes != null && !ordAddressFromAxes.isEmpty()){
             for(TmpOrdAddressFromAx ordAddressFromAx : ordAddressFromAxes){
-                //Step 2: Remove order_address which has order_code match with AX
-                orderAddressDao.deleteByOrderCode(ordAddressFromAx.getOrderCode());
-                //Step 3: Insert data from AX into sync table
                 OrdAddress orderAddress = new OrdAddress();
                 BeanUtils.copyProperties(ordAddressFromAx, orderAddress, "orderAddressId", "orderCode");
                 orderAddressDao.save(orderAddress);

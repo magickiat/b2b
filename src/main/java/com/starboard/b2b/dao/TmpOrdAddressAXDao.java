@@ -14,4 +14,5 @@ public interface TmpOrdAddressAXDao {
 
 	int deleteByOrderId(long orderId);
 
+    List<String> findOrderCodes();
 }

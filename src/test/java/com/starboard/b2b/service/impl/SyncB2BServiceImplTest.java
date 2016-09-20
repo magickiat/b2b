@@ -374,10 +374,18 @@ public class SyncB2BServiceImplTest {
 		orderAddressDao.save(ordAddress3);
 
 		TmpOrdAddressFromAx ordAddressFromAx = new TmpOrdAddressFromAx();
+		ordAddressFromAx.setOrderAddressId(1L);
 		ordAddressFromAx.setOrderId(orders1.getOrderId());
 		ordAddressFromAx.setOrderCode(orders1.getOrderCode());
 		ordAddressFromAx.setOrderAddr("Order 1 Address AX");
 		tmpOrdAddressAXDao.save(ordAddressFromAx);
+
+		TmpOrdAddressFromAx ordAddressFromAx2 = new TmpOrdAddressFromAx();
+		ordAddressFromAx2.setOrderAddressId(2L);
+		ordAddressFromAx2.setOrderId(orders1.getOrderId());
+		ordAddressFromAx2.setOrderCode(orders1.getOrderCode());
+		ordAddressFromAx2.setOrderAddr("Order 1 Address 2 AX");
+		tmpOrdAddressAXDao.save(ordAddressFromAx2);
 
 		// Sync it
 		syncB2BService.syncOrderAddressFromAX();
@@ -385,7 +393,7 @@ public class SyncB2BServiceImplTest {
 		// Assert
 		final List<OrdAddress> addressOrder1 = orderAddressDao.findByOrderId(orders1.getOrderId());
 		assertNotNull(addressOrder1);
-		assertEquals(1, addressOrder1.size());
+		assertEquals(2, addressOrder1.size());
 		assertEquals("Order 1 Address AX", addressOrder1.get(0).getOrderAddr());
 
 		final List<OrdAddress> addressOrder2 = orderAddressDao.findByOrderId(orders2.getOrderId());

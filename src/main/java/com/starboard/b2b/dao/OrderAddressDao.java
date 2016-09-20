@@ -14,4 +14,9 @@ public interface OrderAddressDao {
 	int deleteByOrderId(long orderId);
 
 	int deleteByOrderCode(String orderCode);
+
+    @SuppressWarnings("unchecked")
+    List<Long> findIdsByOrderCodes(List<String> orderCodes);
+
+	int deleteByIds(List<Long> ids);
 }
