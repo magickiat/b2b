@@ -233,4 +233,10 @@ public class OrderDaoImpl implements OrderDao {
 				.setString("orderCode", orderCode)
 				.executeUpdate();
     }
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Orders> list() {
+		return sessionFactory.getCurrentSession().createCriteria(Orders.class).list();
+	}
 }

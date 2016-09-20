@@ -303,7 +303,6 @@ public class CustomerServiceImpl implements CustomerService {
 
 	public Contact createContact(ContactForm contactInfo) {
 		Contact contact = new Contact();
-		contact.setContactId(contactInfo.getContactId());
 		contact.setCustId(contactInfo.getCustId());
 		contact.setNameEn(contactInfo.getNameEn());
 		contact.setNameNick(contactInfo.getNameNick());
