@@ -16,4 +16,6 @@ public interface TmpAddrDao {
 	
 	void update(TmpAddr addr);
 
+	int deleteByCustId(long custId);
+
 }

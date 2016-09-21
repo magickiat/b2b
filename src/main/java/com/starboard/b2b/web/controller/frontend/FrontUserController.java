@@ -8,7 +8,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,10 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.dto.CountryDTO;
-import com.starboard.b2b.model.User;
 import com.starboard.b2b.service.AddrService;
 import com.starboard.b2b.service.CountryService;
 import com.starboard.b2b.service.UserService;
+import com.starboard.b2b.service.impl.SyncAXService;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.address.AddressForm;
 import com.starboard.b2b.web.form.user.UserForm;
@@ -40,6 +39,12 @@ public class FrontUserController {
 
 	@Autowired
 	private CountryService countryService;
+	
+	
+	@Autowired
+	private SyncAXService syncAXService;
+	
+	
 
 	@RequestMapping("index")
 	String index(Model model) {
@@ -89,6 +94,9 @@ public class FrontUserController {
 				isUpdateSuccess = addrService.update(addressForm);
 			}
 		}
+		// prepare data for sync to AX system
+		syncAXService.syncAddr(userForm.getCustId());
+		
 		return (isUpdateSuccess==true?"true":"false");
 	}
 
