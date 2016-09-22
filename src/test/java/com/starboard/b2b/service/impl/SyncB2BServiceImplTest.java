@@ -51,6 +51,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -375,7 +376,7 @@ public class SyncB2BServiceImplTest {
 		assertNotNull(detailOrder2);
 		assertEquals(1, detailOrder2.size());
 		assertEquals(BigDecimal.ZERO, detailOrder2.get(0).getPrice());
-        assertEquals("PCS", detailOrder2.get(0).getProductUnitId());
+        assertNull(detailOrder2.get(0).getProductUnitId());
 
 		final List<OrdDetail> detailOrder3 = orderDetailDao.findByOrderId(orders3.getOrderId());
 		assertNotNull(detailOrder3);
@@ -568,8 +569,8 @@ public class SyncB2BServiceImplTest {
 		final List<SoDetail> soDetails1 = soDetail1Dao.findBySoId(so1.getSoId());
 		assertNotNull(soDetails1);
 		assertEquals(2, soDetails1.size());
-		assertEquals(BigDecimal.valueOf(101), soDetails1.get(0).getPrice());
-		assertEquals(BigDecimal.valueOf(100), soDetails1.get(1).getPrice());
+		assertEquals(BigDecimal.valueOf(100), soDetails1.get(0).getPrice());
+		assertEquals(BigDecimal.valueOf(101), soDetails1.get(1).getPrice());
 
 		final List<SoDetail> soDetails2 = soDetail1Dao.findBySoId(so2.getSoId());
 		assertNotNull(soDetails2);
