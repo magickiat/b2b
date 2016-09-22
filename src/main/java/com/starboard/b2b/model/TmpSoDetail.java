@@ -18,6 +18,7 @@ public class TmpSoDetail {
 
 	private long soProductId;
 	private Long orderProductId;
+	private String productCode;
 	private Long soId;
 	private String soNo;
 	private Long amount;
@@ -172,5 +173,14 @@ public class TmpSoDetail {
 
 	public void setSoNo(String soNo) {
 		this.soNo = soNo;
+	}
+	
+	@Column(name = "product_code", length = 32)
+	public String getProductCode() {
+		return this.productCode;
+	}
+
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
 	}
 }

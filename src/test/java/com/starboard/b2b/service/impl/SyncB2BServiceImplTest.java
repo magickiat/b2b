@@ -342,6 +342,7 @@ public class SyncB2BServiceImplTest {
 		ordDetailFromAx.setOrderId(4L);
 		ordDetailFromAx.setOrderCode(orders1.getOrderCode());
 		ordDetailFromAx.setPrice(BigDecimal.valueOf(100));
+		ordDetailFromAx.setProductUnitId("PCS");
 		tmpOrdDetailAXDao.save(ordDetailFromAx);
 
 		TmpOrdDetailFromAx ordDetailFromAx2 = new TmpOrdDetailFromAx();
@@ -349,6 +350,7 @@ public class SyncB2BServiceImplTest {
 		ordDetailFromAx2.setOrderId(orders1.getOrderId());
 		ordDetailFromAx2.setOrderCode(orders1.getOrderCode());
 		ordDetailFromAx2.setPrice(BigDecimal.valueOf(101));
+		ordDetailFromAx2.setProductUnitId("PCS");
 		tmpOrdDetailAXDao.save(ordDetailFromAx2);
 
 		TmpOrdDetailFromAx ordDetailFromAx3 = new TmpOrdDetailFromAx();
@@ -356,6 +358,7 @@ public class SyncB2BServiceImplTest {
 		ordDetailFromAx3.setOrderId(orders3.getOrderId());
 		ordDetailFromAx3.setOrderCode(orders3.getOrderCode());
 		ordDetailFromAx3.setPrice(BigDecimal.valueOf(111));
+		ordDetailFromAx3.setProductUnitId("PCS");
 		tmpOrdDetailAXDao.save(ordDetailFromAx3);
 
 		// Sync it
@@ -366,16 +369,54 @@ public class SyncB2BServiceImplTest {
 		assertNotNull(detailOrder1);
 		assertEquals(2, detailOrder1.size());
 		assertEquals(BigDecimal.valueOf(100), detailOrder1.get(0).getPrice());
+		assertEquals("PCS", detailOrder1.get(0).getProductUnitId());
 
 		final List<OrdDetail> detailOrder2 = orderDetailDao.findByOrderId(orders2.getOrderId());
 		assertNotNull(detailOrder2);
 		assertEquals(1, detailOrder2.size());
 		assertEquals(BigDecimal.ZERO, detailOrder2.get(0).getPrice());
+        assertEquals("PCS", detailOrder2.get(0).getProductUnitId());
 
 		final List<OrdDetail> detailOrder3 = orderDetailDao.findByOrderId(orders3.getOrderId());
 		assertNotNull(detailOrder3);
 		assertEquals(1, detailOrder3.size());
 		assertEquals(BigDecimal.valueOf(111), detailOrder3.get(0).getPrice());
+        assertEquals("PCS", detailOrder3.get(0).getProductUnitId());
+	}
+
+	@Test
+	public void testSyncNewOrderDetailFromAX() throws Exception {
+
+		TmpOrdersFromAx orders1Ax = new TmpOrdersFromAx();
+		orders1Ax.setOrderId(123L);
+		orders1Ax.setCustId(custId3);
+		orders1Ax.setOrderCode("OD001");
+		tmpOrdersAXDao.save(orders1Ax);
+
+		TmpOrdDetailFromAx ordDetailFromAx = new TmpOrdDetailFromAx();
+		ordDetailFromAx.setOrderId(orders1Ax.getOrderId());
+		ordDetailFromAx.setOrderCode("OD001");
+		ordDetailFromAx.setPrice(BigDecimal.valueOf(100));
+		ordDetailFromAx.setProductUnitId("PCS");
+		tmpOrdDetailAXDao.save(ordDetailFromAx);
+
+		// Sync Order
+		syncB2BService.syncOrdersFromAX();
+		// Sync Order Detail
+		syncB2BService.syncOrderDetailFromAX();
+
+		// Assert orders
+		Orders orders = orderDao.findByOrderCode(orders1Ax.getOrderCode());
+		assertNotNull(orders);
+		assertEquals(orders1Ax.getOrderCode(), orders.getOrderCode());
+
+		// Assert order detail
+		final List<OrdDetail> detailOrder1 = orderDetailDao.findByOrderCode(orders1Ax.getOrderCode());
+		assertNotNull(detailOrder1);
+		assertEquals(1, detailOrder1.size());
+		assertEquals(BigDecimal.valueOf(100), detailOrder1.get(0).getPrice());
+		assertEquals("PCS", detailOrder1.get(0).getProductUnitId());
+
 	}
 
 	@Test

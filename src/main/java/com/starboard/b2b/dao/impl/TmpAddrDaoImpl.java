@@ -23,15 +23,15 @@ public class TmpAddrDaoImpl implements TmpAddrDao {
 	}
 
 	@Override
-	public void save(Object obj){
-		 sessionFactory.getCurrentSession().save(obj);
+	public void save(Object obj) {
+		sessionFactory.getCurrentSession().save(obj);
 	}
 
 	@Override
 	public Long maxId() {
 		return ((BigInteger) sessionFactory.getCurrentSession().createSQLQuery("select max(addr_id) from TmpAddr").uniqueResult()).longValue();
 	}
-	
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<TmpAddr> findByCustId(long custId) {
@@ -41,5 +41,11 @@ public class TmpAddrDaoImpl implements TmpAddrDao {
 	@Override
 	public void update(TmpAddr addr) {
 		sessionFactory.getCurrentSession().update(addr);
+	}
+
+	@Override
+	public int deleteByCustId(long custId) {
+		return sessionFactory.getCurrentSession().createQuery("delete from TmpAddr ad where ad.custId = :custId").setLong("custId", custId)
+				.executeUpdate();
 	}
 }

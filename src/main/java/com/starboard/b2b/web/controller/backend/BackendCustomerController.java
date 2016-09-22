@@ -32,6 +32,7 @@ import com.starboard.b2b.service.CountryService;
 import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.service.UserService;
+import com.starboard.b2b.service.impl.SyncAXService;
 import com.starboard.b2b.web.form.address.AddressForm;
 import com.starboard.b2b.web.form.brand.BrandForm;
 import com.starboard.b2b.web.form.contact.ContactForm;
@@ -56,6 +57,9 @@ public class BackendCustomerController {
 
 	@Autowired
 	private CountryService countryService;
+	
+	@Autowired
+	private SyncAXService syncAXService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	String search(Model model) throws Exception {
@@ -252,6 +256,9 @@ public class BackendCustomerController {
 		customerService.saveAddress(addressForm.getAddrId(), addressForm.getCustId(), addressForm.getAddress(), addressForm.getRegionCountryId(),
 				addressForm.getTel1(), addressForm.getPostCode(), addressForm.getFax(), addressForm.getEmail(), addressForm.getType());
 
+		// prepare data for sync to AX system
+		syncAXService.syncAddr(addressForm.getCustId());
+		
 		return update(addressForm.getCustId(), model);
 	}
 

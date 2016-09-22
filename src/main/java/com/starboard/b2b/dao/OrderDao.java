@@ -41,4 +41,6 @@ public interface OrderDao {
 	Orders findByOrderCode(String roCode);
 
     int deleteByOrderCode(String orderCode);
+
+	List<Orders> list();
 }
