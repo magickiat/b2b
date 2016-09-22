@@ -1,8 +1,8 @@
 package com.starboard.b2b.dao;
 
-import java.util.List;
-
 import com.starboard.b2b.model.sync.SoDetail;
+
+import java.util.List;
 
 public interface SoDetailDao {
 
@@ -14,4 +14,7 @@ public interface SoDetailDao {
 
 	List<SoDetail> findBySoId(long soId);
 
+    List<Long> findIdsSoNos(List<String> soNos);
+
+	void deleteByIds(List<Long> ids);
 }

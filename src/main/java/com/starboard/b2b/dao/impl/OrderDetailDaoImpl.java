@@ -241,4 +241,20 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 				.setString("orderCode", orderCode)
 				.executeUpdate();
 	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Long> findIdsByOrderCodes(List<String> orderCodeAxes) {
+		return sessionFactory.getCurrentSession()
+				.createQuery("select distinct odd.orderDetailId from OrdDetail odd, Orders o where odd.orderId = o.orderId and o.orderCode in (:orderCodes)")
+				.setParameterList("orderCodes", orderCodeAxes).list();
+	}
+
+	@Override
+	public void deleteByIds(List<Long> ids) {
+		sessionFactory.getCurrentSession()
+				.createQuery("delete from OrdDetail od where od.orderDetailId in (:ids)")
+				.setParameterList("ids", ids)
+				.executeUpdate();
+	}
 }

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2016-02-22T11:59:11 -->
+<!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
+<!-- 2016-09-22T01:30:55 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ro" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba40db7d-9060-4710-81d4-f1a174b6499e">
 	<property name="ireport.zoom" value="4.0"/>
 	<property name="ireport.x" value="1520"/>
 	<property name="ireport.y" value="0"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="B2B Local DB"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="b2b_data.xml"/>
 	<style name="right" hTextAlign="Right" hImageAlign="Right"/>
 	<style name="center" hTextAlign="Center" hImageAlign="Center"/>
 	<style name="tabColor" hTextAlign="Center" hImageAlign="Center" vTextAlign="Middle" vImageAlign="Middle" fontName="SansSerif" fontSize="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true">
@@ -33,34 +33,41 @@
 	<parameter name="allPageSize" class="java.lang.Integer"/>
 	<parameter name="relativePage" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[select (od.price*od.amount) as total,
-p.product_buyer_group_id,
-ptype.product_type_name,
-od.product_unit_id,
-pt.payment_term_name,
-pm.payment_method_name,
-r.remark_customer,
-o.order_id,
-o.so_id,
-p.product_code,
-p.product_name_en,
-o.expect_shipment_date,
-r.order_code,
-o.so_no,
-st.shipping_type_name,
-r.payment_currency_id,
-od.amount,
-od.price 
-from product_type ptype,payment_term pt,payment_method pm,so o,shipping_type st,product p, so_detail od, orders r
-where ptype.product_type_id = p.product_type_id 
-and pt.payment_term_id = o.payment_term_id 
-and pm.payment_method_id = o.payment_method_id 
-and o.order_id = r.order_id 
-and od.so_id = o.so_id 
-and od.product_id = p.product_id 
-and o.shipping_id = st.shipping_type_id 
-and o.so_id=$P{soId}
-order by od.product_id, od.order_detail_id]]>
+		<![CDATA[SELECT (od.price * od.amount) AS total,
+  p.product_buyer_group_id,
+  ptype.product_type_name,
+  od.product_unit_id,
+  pt.payment_term_name,
+  pm.payment_method_name,
+  r.remark_customer,
+  o.order_id,
+  o.so_id,
+  p.product_code,
+  p.product_name_en,
+  o.expect_shipment_date,
+  r.order_code,
+  o.so_no,
+  st.shipping_type_name,
+  r.payment_currency_id,
+  od.amount,
+  od.price
+FROM product_type ptype,
+	payment_term pt,
+	payment_method pm,
+	so o,
+	shipping_type st,
+	product p,
+	so_detail od,
+	orders r
+WHERE ptype.product_type_id = p.product_type_id
+      AND pt.payment_term_id = o.payment_term_id
+      AND pm.payment_method_id = o.payment_method_id
+      AND o.order_id = r.order_id
+      AND od.so_id = o.so_id
+      AND od.product_id = p.product_id
+      AND o.shipping_id = st.shipping_type_id
+      AND o.so_id =  $P{soId}
+order by od.product_id, order_product_id]]>
 	</queryString>
 	<field name="total" class="java.math.BigDecimal"/>
 	<field name="product_buyer_group_id" class="java.lang.String">
@@ -141,7 +148,7 @@ order by od.product_id, od.order_detail_id]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="20" isBold="true" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[Sales Order]]></text>
+				<text><![CDATA[Invoice]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="tabColor" x="21" y="163" width="121" height="12" isPrintWhenDetailOverflows="true" uuid="1520f35a-13b2-446e-9271-a208a1f1d1db"/>

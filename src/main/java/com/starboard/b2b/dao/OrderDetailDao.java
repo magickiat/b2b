@@ -34,4 +34,8 @@ public interface OrderDetailDao {
 	int deleteWithoutSoNo(Long orderId);
 
     int deleteByOrderCode(String orderCode);
+
+    List<Long> findIdsByOrderCodes(List<String> orderCodeAxes);
+
+	void deleteByIds(List<Long> ids);
 }

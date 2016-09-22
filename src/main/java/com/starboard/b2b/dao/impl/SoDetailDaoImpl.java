@@ -1,14 +1,14 @@
 package com.starboard.b2b.dao.impl;
 
-import java.util.List;
+import com.starboard.b2b.dao.SoDetailDao;
+import com.starboard.b2b.model.sync.SoDetail;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.starboard.b2b.dao.SoDetailDao;
-import com.starboard.b2b.model.sync.SoDetail;
+import java.util.List;
 
 @Repository("soDetailDao")
 public class SoDetailDaoImpl implements SoDetailDao {
@@ -37,6 +37,19 @@ public class SoDetailDaoImpl implements SoDetailDao {
 	@Override
 	public List<SoDetail> findBySoId(long soId) {
 		return sessionFactory.getCurrentSession().createCriteria(SoDetail.class).add(Restrictions.eq("soId", soId)).list();
+	}
+
+    @Override
+	@SuppressWarnings("unchecked")
+    public List<Long> findIdsSoNos(List<String> soNos) {
+		String hql = "select distinct sd.soProductId from SoDetail sd, So s where sd.soId = s.soId and s.soNo in (:soNos)";
+		return sessionFactory.getCurrentSession().createQuery(hql).setParameterList("soNos", soNos).list();
+    }
+
+	@Override
+	public void deleteByIds(List<Long> ids) {
+		String hql = "delete from SoDetail sd where sd.soProductId in (:ids)";
+		sessionFactory.getCurrentSession().createQuery(hql).setParameterList("ids", ids).executeUpdate();
 	}
 
 }

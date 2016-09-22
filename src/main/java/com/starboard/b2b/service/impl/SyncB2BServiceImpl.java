@@ -29,7 +29,9 @@ import com.starboard.b2b.model.TmpOrdDetailFromAx;
 import com.starboard.b2b.model.TmpOrdersFromAx;
 import com.starboard.b2b.model.TmpProduct;
 import com.starboard.b2b.model.TmpSo;
+import com.starboard.b2b.model.TmpSoDetail;
 import com.starboard.b2b.model.sync.So;
+import com.starboard.b2b.model.sync.SoDetail;
 import com.starboard.b2b.service.SyncB2BService;
 
 import org.slf4j.Logger;
@@ -40,6 +42,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.WeakHashMap;
 
 @Service("syncB2BService")
 public class SyncB2BServiceImpl implements SyncB2BService {
@@ -86,6 +89,7 @@ public class SyncB2BServiceImpl implements SyncB2BService {
             tmpContactAXDao.removeAll();
         }
     }
+
     //For Address
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -99,8 +103,8 @@ public class SyncB2BServiceImpl implements SyncB2BService {
         }
         //Step 3: Get data from AX & insert into Sync table
         List<TmpAddrFromAx> addrFromAxes = tmpAddrAXDao.list();
-        if(addrFromAxes != null && !addrFromAxes.isEmpty()){
-            for(TmpAddrFromAx addrFromAx : addrFromAxes){
+        if (addrFromAxes != null && !addrFromAxes.isEmpty()) {
+            for (TmpAddrFromAx addrFromAx : addrFromAxes) {
                 Addr addr = new Addr();
                 BeanUtils.copyProperties(addrFromAx, addr);
                 addrDao.save(addr);
@@ -109,6 +113,7 @@ public class SyncB2BServiceImpl implements SyncB2BService {
             tmpAddrAXDao.removeAll();
         }
     }
+
     //For Product
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -136,6 +141,7 @@ public class SyncB2BServiceImpl implements SyncB2BService {
             tmpProductDao.removeAll();
         }
     }
+
     //For Order
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -144,8 +150,8 @@ public class SyncB2BServiceImpl implements SyncB2BService {
         //Step 1: Get data from AX
         final List<TmpOrdersFromAx> ordersFromAxes = tmpOrdersAXDao.list();
         //Step 2: Insert / Update into sync table
-        if(ordersFromAxes != null && !ordersFromAxes.isEmpty()){
-            for(TmpOrdersFromAx tmpOrdersFromAx : ordersFromAxes){
+        if (ordersFromAxes != null && !ordersFromAxes.isEmpty()) {
+            for (TmpOrdersFromAx tmpOrdersFromAx : ordersFromAxes) {
                 //Step 2.1: Check if order code is in Orders
                 final Orders orders = orderDao.findByOrderCode(tmpOrdersFromAx.getOrderCode());
                 //If Exist: then update value
@@ -155,34 +161,56 @@ public class SyncB2BServiceImpl implements SyncB2BService {
                 } else {
                     //If Not Exist: then insert
                     Orders newOrders = new Orders();
-                    BeanUtils.copyProperties(tmpOrdersFromAx, newOrders);
+                    BeanUtils.copyProperties(tmpOrdersFromAx, newOrders, "orderId");
                     orderDao.save(newOrders);
                 }
+                //Step 4: Remove order detail by order code
+                orderDetailDao.deleteByOrderCode(tmpOrdersFromAx.getOrderCode());
             }
-            //Step 4: Remove from AX table
+            //Step 5: Remove from AX table
             tmpOrdersAXDao.removeAll();
         }
     }
+
     //For Order Detail
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void syncOrderDetailFromAX() {
         log.info("Sync Order Detail from AX");
-        //Step 1: Get data from AX
+        WeakHashMap<String, Long> cacheOrder = new WeakHashMap<>();
+        //Step 1: Get distinct custId from AX
+        List<String> orderCodeAxes = tmpOrdDetailAXDao.findOrderCodes();
+        //Step 2: Remove all order_address which match orderCodeAxes;
+        if (orderCodeAxes != null && !orderCodeAxes.isEmpty()) {
+            final List<Long> ids = orderDetailDao.findIdsByOrderCodes(orderCodeAxes);
+            if (ids != null && !ids.isEmpty()) {
+                orderDetailDao.deleteByIds(ids);
+            }
+        }
+        //Step 3: Get data from AX & insert into Sync table
         final List<TmpOrdDetailFromAx> ordDetailFromAxes = tmpOrdDetailAXDao.list();
-        if(ordDetailFromAxes != null && !ordDetailFromAxes.isEmpty()){
-            for(TmpOrdDetailFromAx tmpOrdDetailFromAx : ordDetailFromAxes){
-                //Step 2: Remove order_detail which has order_code match with AX
-                orderDetailDao.deleteByOrderCode(tmpOrdDetailFromAx.getOrderCode());
-                //Step 3: Insert data from AX into sync table
+        if (ordDetailFromAxes != null && !ordDetailFromAxes.isEmpty()) {
+            for (TmpOrdDetailFromAx tmpOrdDetailFromAx : ordDetailFromAxes) {
+                //Step 3.1: Find orders by order code before insert
+                Long orderId = cacheOrder.get(tmpOrdDetailFromAx.getOrderCode());
+                if (orderId == null) {
+                    final Orders orders = orderDao.findByOrderCode(tmpOrdDetailFromAx.getOrderCode());
+                    if (orders == null) {
+                        continue;
+                    }
+                    orderId = orders.getOrderId();
+                    cacheOrder.put(orders.getOrderCode(), orderId);
+                }
                 OrdDetail ordDetail = new OrdDetail();
                 BeanUtils.copyProperties(tmpOrdDetailFromAx, ordDetail, "orderDetailId", "orderCode");
+                ordDetail.setOrderId(orderId);
                 orderDetailDao.save(ordDetail);
             }
             //Step 4: Remove from AX table
             tmpOrdDetailAXDao.removeAll();
         }
     }
+
     //For Order Address
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -191,16 +219,16 @@ public class SyncB2BServiceImpl implements SyncB2BService {
         //Step 1: Get distinct order codes from AX
         List<String> orderCodeAxes = tmpOrdAddressAXDao.findOrderCodes();
         //Step 2: Remove all order_address which match orderCodeAxes;
-        if(orderCodeAxes != null && !orderCodeAxes.isEmpty()){
+        if (orderCodeAxes != null && !orderCodeAxes.isEmpty()) {
             final List<Long> ids = orderAddressDao.findIdsByOrderCodes(orderCodeAxes);
-            if(ids != null && !ids.isEmpty()){
+            if (ids != null && !ids.isEmpty()) {
                 orderAddressDao.deleteByIds(ids);
             }
         }
         //Step 3: Get data from AX & insert into sync table
         final List<TmpOrdAddressFromAx> ordAddressFromAxes = tmpOrdAddressAXDao.list();
-        if(ordAddressFromAxes != null && !ordAddressFromAxes.isEmpty()){
-            for(TmpOrdAddressFromAx ordAddressFromAx : ordAddressFromAxes){
+        if (ordAddressFromAxes != null && !ordAddressFromAxes.isEmpty()) {
+            for (TmpOrdAddressFromAx ordAddressFromAx : ordAddressFromAxes) {
                 OrdAddress orderAddress = new OrdAddress();
                 BeanUtils.copyProperties(ordAddressFromAx, orderAddress, "orderAddressId", "orderCode");
                 orderAddressDao.save(orderAddress);
@@ -209,6 +237,7 @@ public class SyncB2BServiceImpl implements SyncB2BService {
             tmpOrdAddressAXDao.removeAll();
         }
     }
+
     //For Sale Order
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -217,8 +246,8 @@ public class SyncB2BServiceImpl implements SyncB2BService {
         //Step 1: Get data from AX
         final List<TmpSo> tmpSos = tmpSoDao.list();
         //Step 2: Insert / Update into sync table
-        if(tmpSos != null && !tmpSos.isEmpty()){
-            for(TmpSo tmpSo : tmpSos){
+        if (tmpSos != null && !tmpSos.isEmpty()) {
+            for (TmpSo tmpSo : tmpSos) {
                 //Step 2.1: Check if order code is in Orders
                 final So so = soDao.findBySoNo(tmpSo.getSoNo());
                 //If Exist: then update value
@@ -234,6 +263,33 @@ public class SyncB2BServiceImpl implements SyncB2BService {
             }
             //Step 4: Remove from AX table
             tmpSoDao.removeAll();
+        }
+    }
+
+    //For Sale Order Detail
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void syncSellOrderDetailFromAX() {
+        log.info("Sync Sell Order Detail from AX");
+        //Step 1: Get distinct order codes from AX
+        List<String> soNos = tmpSoDetailDao.findSoNos();
+        //Step 2: Remove all so_detail which match soNos;
+        if (soNos != null && !soNos.isEmpty()) {
+            final List<Long> ids = soDetailDao.findIdsSoNos(soNos);
+            if (ids != null && !ids.isEmpty()) {
+                soDetailDao.deleteByIds(ids);
+            }
+        }
+        //Step 3: Get data from AX & insert into sync table
+        final List<TmpSoDetail> tmpSoDetails = tmpSoDetailDao.list();
+        if (tmpSoDetails != null && !tmpSoDetails.isEmpty()) {
+            for (TmpSoDetail tmpSoDetail : tmpSoDetails) {
+                SoDetail soDetail = new SoDetail();
+                BeanUtils.copyProperties(tmpSoDetail, soDetail, "soProductId");
+                soDetailDao.save(soDetail);
+            }
+            //Step 4: Remove from AX table
+            tmpSoDetailDao.removeAll();
         }
     }
 

@@ -34,4 +34,11 @@ public class TmpOrdDetailAXDaoImpl implements TmpOrdDetailAXDao {
 		sessionFactory.getCurrentSession().save(ordAddressFromAx);
 	}
 
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<String> findOrderCodes() {
+		final String hql = "SELECT DISTINCT tod.orderCode FROM TmpOrdDetailFromAx tod";
+		return sessionFactory.getCurrentSession().createQuery(hql).list();
+	}
+
 }

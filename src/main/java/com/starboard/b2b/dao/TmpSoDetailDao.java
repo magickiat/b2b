@@ -14,4 +14,9 @@ public interface TmpSoDetailDao {
 
 	List<TmpSoDetail> findBySoId(long soId);
 
+    List<String> findSoNos();
+
+	List<TmpSoDetail> list();
+
+    void removeAll();
 }

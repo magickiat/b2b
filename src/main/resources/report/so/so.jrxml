@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2016-02-22T11:59:11 -->
+<!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
+<!-- 2016-09-22T01:37:25 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ro" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba40db7d-9060-4710-81d4-f1a174b6499e">
 	<property name="ireport.zoom" value="4.0"/>
 	<property name="ireport.x" value="1520"/>
 	<property name="ireport.y" value="0"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="B2B Local DB"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="b2b_data.xml"/>
 	<style name="right" hTextAlign="Right" hImageAlign="Right"/>
 	<style name="center" hTextAlign="Center" hImageAlign="Center"/>
 	<style name="tabColor" hTextAlign="Center" hImageAlign="Center" vTextAlign="Middle" vImageAlign="Middle" fontName="SansSerif" fontSize="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true">
@@ -60,7 +60,7 @@ and od.so_id = o.so_id
 and od.product_id = p.product_id 
 and o.shipping_id = st.shipping_type_id 
 and o.so_id=$P{soId}
-order by od.product_id, od.order_detail_id]]>
+order by od.product_id, od.order_product_id]]>
 	</queryString>
 	<field name="total" class="java.math.BigDecimal"/>
 	<field name="product_buyer_group_id" class="java.lang.String">
