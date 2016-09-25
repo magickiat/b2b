@@ -1,19 +1,24 @@
 package com.starboard.b2b.web.controller;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.starboard.b2b.dto.InvoiceDTO;
+import com.starboard.b2b.dto.InvoiceDetailDTO;
+import com.starboard.b2b.dto.OrderDTO;
+import com.starboard.b2b.dto.OrderStatusDTO;
+import com.starboard.b2b.dto.ProductTypeDTO;
+import com.starboard.b2b.dto.SoDTO;
+import com.starboard.b2b.dto.SoDetailDTO;
+import com.starboard.b2b.dto.search.SearchOrderDTO;
+import com.starboard.b2b.service.OrderService;
+import com.starboard.b2b.service.ProductService;
+import com.starboard.b2b.util.B2BFileUtil;
+import com.starboard.b2b.web.form.order.OrderSummaryForm;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -31,22 +36,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.starboard.b2b.dto.OrderDTO;
-import com.starboard.b2b.dto.OrderStatusDTO;
-import com.starboard.b2b.dto.ProductTypeDTO;
-import com.starboard.b2b.dto.SoDTO;
-import com.starboard.b2b.dto.SoDetailDTO;
-import com.starboard.b2b.dto.search.SearchOrderDTO;
-import com.starboard.b2b.service.OrderService;
-import com.starboard.b2b.service.ProductService;
-import com.starboard.b2b.util.B2BFileUtil;
-import com.starboard.b2b.web.form.order.OrderSummaryForm;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/report")
@@ -253,6 +254,79 @@ public class ReportController {
 	@ResponseBody
 	String countSoDetail(final Long soId) throws Exception {
 		return String.valueOf(orderService.findSoDetail(soId).size());
+	}
+
+	/**
+	 * Check number of Invoice detail
+	 * @param invoiceId Invoice id
+	 * @return Number of Invoice detail regards to Invoice id
+	 * @throws Exception Throws any Exception
+	 */
+	@RequestMapping(value = "iv/detail/count")
+	@ResponseBody
+	String countInvoiceDetail(final Long invoiceId) throws Exception {
+		return String.valueOf(orderService.findSoDetail(invoiceId).size());
+	}
+
+
+	@RequestMapping(value = "iv/pdf", method = RequestMethod.GET)
+	@Transactional(readOnly = true)
+	String generateInvoicePDF(final Long invoiceId, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		final Map<String, Object> params = new HashMap<>();
+		final Session session = sessionFactory.openSession();
+		log.info("Calling generateInvoicePDF for invoice id {}", invoiceId);
+		Connection connection = null;
+		Transaction tx = null;
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		OutputStream outStream = response.getOutputStream();
+		try {
+
+			final InvoiceDTO invoice = orderService.findInvoice(invoiceId);
+			// find so detail before generate jasper report
+			final List<InvoiceDetailDTO> invoiceDetail = orderService.findInvoiceDetail(invoiceId);
+			if (!invoiceDetail.isEmpty()) {
+				connection = ((SessionImpl) session).connection();
+				tx = session.beginTransaction();
+				log.info("Generating invoice pdf by Jasper");
+				params.put("invoiceId", invoiceId);
+				params.put("showcate", false);
+				params.put("relativePage", 0);
+				params.put("SUBREPORT_DIR", this.getClass().getResource("/report/").getPath());
+
+				final InputStream jasperStream = this.getClass().getResourceAsStream("/report/so/so.jasper");
+				final JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+
+				final JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, connection);
+				JasperExportManager.exportReportToPdfStream(jasperPrint, baos);
+
+				response.setContentLength(baos.size());
+				response.setContentType("application/x-pdf");
+				response.setHeader("Content-Disposition", "inline; filename=" + invoice.getInvoiceNo() + ".pdf");
+				response.setHeader("Cache-Control", "cache, must-revalidate");
+				response.setHeader("Pragma", "public");
+
+				baos.writeTo(outStream);
+
+				jasperStream.close();
+				tx.commit();
+			}
+		} catch (Exception e) {
+			log.error(e.toString(), e);
+			if (tx != null) {
+				tx.rollback();
+			}
+			log.error("Got problem while exporting sales order pdf with error {}", e.getMessage(), e);
+		} finally {
+
+			if (connection != null) {
+				connection.close();
+			}
+			outStream.flush();
+			outStream.close();
+			baos.close();
+		}
+
+		return null;
 	}
 
 	@RequestMapping(value = "print/pdf")

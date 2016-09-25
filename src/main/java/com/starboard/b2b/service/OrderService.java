@@ -1,10 +1,8 @@
 package com.starboard.b2b.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import com.starboard.b2b.common.Page;
+import com.starboard.b2b.dto.InvoiceDTO;
+import com.starboard.b2b.dto.InvoiceDetailDTO;
 import com.starboard.b2b.dto.OrdAddressDTO;
 import com.starboard.b2b.dto.OrderDTO;
 import com.starboard.b2b.dto.OrderStatusDTO;
@@ -19,6 +17,10 @@ import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 import com.starboard.b2b.web.form.order.OrderDecisionForm;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public interface OrderService {
 
@@ -77,4 +79,7 @@ public interface OrderService {
 
 	void updateOrder(OrderDecisionForm form);
 
+	InvoiceDTO findInvoice(Long invoiceId);
+
+	List<InvoiceDetailDTO> findInvoiceDetail(Long invoiceId);
 }

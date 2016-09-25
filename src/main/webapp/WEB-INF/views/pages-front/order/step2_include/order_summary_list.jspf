@@ -45,7 +45,16 @@
 							<fmt:formatDate pattern="dd-MM-yyyy" value="${ order.orderDate }" />
 						</td>
 						<td>${ order.orderStatus }</td>
-						<td>&nbsp;</td>
+						<td>
+							<c:if test="${ order.invoices != null && order.invoices.size() > 0}">
+								<select name="invoice" id="invoiceSelect${rowNum.index}" class="form-control" onchange="exportInvPdf(this)">
+									<option value="0">Select Invoice Ref No</option>
+									<c:forEach items="${ order.invoices }" var="invoice" varStatus="row">
+										<option value="${invoice.invoiceId}">${invoice.invoiceNo}</option>
+									</c:forEach>
+								</select>
+							</c:if>
+						</td>
 					</tr>
 
 				</c:forEach>

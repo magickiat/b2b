@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
-<!-- 2016-09-22T01:30:55 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ro" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba40db7d-9060-4710-81d4-f1a174b6499e">
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2016-09-25T13:50:13 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba40db7d-9060-4710-81d4-f1a174b6499e">
 	<property name="ireport.zoom" value="4.0"/>
 	<property name="ireport.x" value="1520"/>
 	<property name="ireport.y" value="0"/>
@@ -16,7 +16,7 @@
 	<style name="normal10" fontName="SansSerif" fontSize="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
 	<style name="normalCenter" hTextAlign="Left" hImageAlign="Left" vTextAlign="Middle" vImageAlign="Middle" fontName="SansSerif" fontSize="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
 	<subDataset name="Table Dataset 1" uuid="b1e4d6d9-6642-4efd-b6aa-181e3b11a787"/>
-	<parameter name="soId" class="java.lang.String">
+	<parameter name="invoiceId" class="java.lang.String">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA[new Long(0)]]></defaultValueExpression>
 	</parameter>
@@ -32,7 +32,7 @@
 	</parameter>
 	<parameter name="allPageSize" class="java.lang.Integer"/>
 	<parameter name="relativePage" class="java.lang.Integer"/>
-	<queryString>
+	<queryString language="plsql">
 		<![CDATA[SELECT (od.price * od.amount) AS total,
   p.product_buyer_group_id,
   ptype.product_type_name,
@@ -46,28 +46,34 @@
   p.product_name_en,
   o.expect_shipment_date,
   r.order_code,
-  o.so_no,
+  inv.invoice_no,
   st.shipping_type_name,
   r.payment_currency_id,
   od.amount,
   od.price
-FROM product_type ptype,
-	payment_term pt,
-	payment_method pm,
-	so o,
-	shipping_type st,
-	product p,
-	so_detail od,
-	orders r
+FROM product_type ptype, payment_term pt,
+  payment_method pm,
+  so o,
+  so_detail od,
+  shipping_type st,
+  product p,
+  orders r,
+  ord_detail ord,
+  invoice inv,
+  invoice_detail invd
 WHERE ptype.product_type_id = p.product_type_id
       AND pt.payment_term_id = o.payment_term_id
       AND pm.payment_method_id = o.payment_method_id
       AND o.order_id = r.order_id
       AND od.so_id = o.so_id
-      AND od.product_id = p.product_id
+      AND ord.order_id = r.order_id
+      AND od.order_product_id = ord.order_detail_id
+      AND ord.product_id = p.product_id
       AND o.shipping_id = st.shipping_type_id
-      AND o.so_id =  $P{soId}
-order by od.product_id, order_product_id]]>
+      AND o.so_id = inv.so_id
+      AND invd.invoice_id = inv.invoice_id
+      AND inv.invoice_id = $P{invoiceId}
+ORDER BY od.product_id, od.order_product_id]]>
 	</queryString>
 	<field name="total" class="java.math.BigDecimal"/>
 	<field name="product_buyer_group_id" class="java.lang.String">
@@ -106,7 +112,7 @@ order by od.product_id, order_product_id]]>
 	<field name="order_code" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="so_no" class="java.lang.String">
+	<field name="invoice_no" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="shipping_type_name" class="java.lang.String">
@@ -205,7 +211,7 @@ order by od.product_id, order_product_id]]>
 			</textField>
 			<textField>
 				<reportElement style="normal" x="171" y="175" width="100" height="12" isPrintWhenDetailOverflows="true" uuid="2c592bc0-6f0e-4505-a761-8a3b3b1cfef5"/>
-				<textFieldExpression><![CDATA[$F{so_no}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{invoice_no}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="normal" x="293" y="175" width="128" height="14" isPrintWhenDetailOverflows="true" uuid="38623cbc-c8b2-4dee-9a22-11116a65a08f"/>

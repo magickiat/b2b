@@ -1,22 +1,5 @@
 package com.starboard.b2b.service.impl;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.starboard.b2b.common.AddressConstant;
 import com.starboard.b2b.common.OrderStatusConfig;
 import com.starboard.b2b.common.Page;
@@ -34,6 +17,8 @@ import com.starboard.b2b.dao.ShippingTypeDao;
 import com.starboard.b2b.dao.SoDao;
 import com.starboard.b2b.dao.UserDao;
 import com.starboard.b2b.dto.CustPriceGroupDTO;
+import com.starboard.b2b.dto.InvoiceDTO;
+import com.starboard.b2b.dto.InvoiceDetailDTO;
 import com.starboard.b2b.dto.OrdAddressDTO;
 import com.starboard.b2b.dto.OrderDTO;
 import com.starboard.b2b.dto.OrderStatusDTO;
@@ -51,6 +36,8 @@ import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchResult;
 import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.model.Addr;
+import com.starboard.b2b.model.Invoice;
+import com.starboard.b2b.model.InvoiceDetail;
 import com.starboard.b2b.model.OrdAddress;
 import com.starboard.b2b.model.OrdDetail;
 import com.starboard.b2b.model.OrderStatus;
@@ -67,6 +54,23 @@ import com.starboard.b2b.util.OrderHelper;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.order.OrderDecisionForm;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 @Service("orderService")
 public class OrderServiceImpl implements OrderService {
@@ -526,6 +530,28 @@ public class OrderServiceImpl implements OrderService {
 		} else {
 			log.warn("This order hasn't order details");
 		}
+	}
+
+    @Override
+	@Transactional(readOnly = true)
+    public InvoiceDTO findInvoice(Long invoiceId) {
+		Invoice invoice = invoiceDao.findInvoiceById(invoiceId);
+		InvoiceDTO dto = new InvoiceDTO();
+		BeanUtils.copyProperties(invoice, dto);
+		return dto;
+    }
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<InvoiceDetailDTO> findInvoiceDetail(Long invoiceId) {
+		List<InvoiceDetail> invoice = invoiceDao.findInvoiceDetailByInvoiceId(invoiceId);
+		List<InvoiceDetailDTO> invoiceDetailDTOs = new ArrayList<>();
+		if (invoice != null && !invoice.isEmpty()) {
+			InvoiceDetailDTO dto = new InvoiceDetailDTO();
+			BeanUtils.copyProperties(invoice, dto);
+			invoiceDetailDTOs.add(dto);
+		}
+		return invoiceDetailDTOs;
 	}
 
 	@Override
