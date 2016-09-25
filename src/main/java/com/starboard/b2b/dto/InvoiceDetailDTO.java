@@ -9,10 +9,9 @@ import java.util.Date;
  */
 public class InvoiceDetailDTO implements java.io.Serializable {
 
-	private long soProductId;
+	private long invoiceProductId;
 	private Long orderProductId;
-	private Long soId;
-	private Long productId;
+	private Long invoiceId;
 	private Long amount;
 	private String productBuyerGroupId;
 	private BigDecimal price;
@@ -26,17 +25,16 @@ public class InvoiceDetailDTO implements java.io.Serializable {
 	public InvoiceDetailDTO() {
 	}
 
-	public InvoiceDetailDTO(long soProductId) {
-		this.soProductId = soProductId;
+	public InvoiceDetailDTO(long invoiceProductId) {
+		this.invoiceProductId = invoiceProductId;
 	}
 
-	public InvoiceDetailDTO(long soProductId, Long orderProductId, Long soId, Long productId, Long amount,
-                            String productBuyerGroupId, BigDecimal price, String productCurrency, String productUnitId,
-                            String userCreate, String userUpdate, Date timeCreate, Date timeUpdate) {
-		this.soProductId = soProductId;
+	public InvoiceDetailDTO(long invoiceProductId, Long orderProductId, Long invoiceId,
+							Long amount, String productBuyerGroupId, BigDecimal price, String productCurrency,
+							String productUnitId, String userCreate, String userUpdate, Date timeCreate, Date timeUpdate) {
+		this.invoiceProductId = invoiceProductId;
 		this.orderProductId = orderProductId;
-		this.soId = soId;
-		this.productId = productId;
+		this.invoiceId = invoiceId;
 		this.amount = amount;
 		this.productBuyerGroupId = productBuyerGroupId;
 		this.price = price;
@@ -48,40 +46,32 @@ public class InvoiceDetailDTO implements java.io.Serializable {
 		this.timeUpdate = timeUpdate;
 	}
 
-	public long getSoProductId() {
-		return this.soProductId;
+	public long getInvoiceProductId() {
+		return invoiceProductId;
 	}
 
-	public void setSoProductId(long soProductId) {
-		this.soProductId = soProductId;
+	public void setInvoiceProductId(long invoiceProductId) {
+		this.invoiceProductId = invoiceProductId;
 	}
 
 	public Long getOrderProductId() {
-		return this.orderProductId;
+		return orderProductId;
 	}
 
 	public void setOrderProductId(Long orderProductId) {
 		this.orderProductId = orderProductId;
 	}
 
-	public Long getSoId() {
-		return this.soId;
+	public Long getInvoiceId() {
+		return invoiceId;
 	}
 
-	public void setSoId(Long soId) {
-		this.soId = soId;
-	}
-
-	public Long getProductId() {
-		return this.productId;
-	}
-
-	public void setProductId(Long productId) {
-		this.productId = productId;
+	public void setInvoiceId(Long invoiceId) {
+		this.invoiceId = invoiceId;
 	}
 
 	public Long getAmount() {
-		return this.amount;
+		return amount;
 	}
 
 	public void setAmount(Long amount) {
@@ -89,7 +79,7 @@ public class InvoiceDetailDTO implements java.io.Serializable {
 	}
 
 	public String getProductBuyerGroupId() {
-		return this.productBuyerGroupId;
+		return productBuyerGroupId;
 	}
 
 	public void setProductBuyerGroupId(String productBuyerGroupId) {
@@ -97,7 +87,7 @@ public class InvoiceDetailDTO implements java.io.Serializable {
 	}
 
 	public BigDecimal getPrice() {
-		return this.price;
+		return price;
 	}
 
 	public void setPrice(BigDecimal price) {
@@ -105,7 +95,7 @@ public class InvoiceDetailDTO implements java.io.Serializable {
 	}
 
 	public String getProductCurrency() {
-		return this.productCurrency;
+		return productCurrency;
 	}
 
 	public void setProductCurrency(String productCurrency) {
@@ -113,7 +103,7 @@ public class InvoiceDetailDTO implements java.io.Serializable {
 	}
 
 	public String getProductUnitId() {
-		return this.productUnitId;
+		return productUnitId;
 	}
 
 	public void setProductUnitId(String productUnitId) {
@@ -121,7 +111,7 @@ public class InvoiceDetailDTO implements java.io.Serializable {
 	}
 
 	public String getUserCreate() {
-		return this.userCreate;
+		return userCreate;
 	}
 
 	public void setUserCreate(String userCreate) {
@@ -129,7 +119,7 @@ public class InvoiceDetailDTO implements java.io.Serializable {
 	}
 
 	public String getUserUpdate() {
-		return this.userUpdate;
+		return userUpdate;
 	}
 
 	public void setUserUpdate(String userUpdate) {
@@ -137,7 +127,7 @@ public class InvoiceDetailDTO implements java.io.Serializable {
 	}
 
 	public Date getTimeCreate() {
-		return this.timeCreate;
+		return timeCreate;
 	}
 
 	public void setTimeCreate(Date timeCreate) {
@@ -145,7 +135,7 @@ public class InvoiceDetailDTO implements java.io.Serializable {
 	}
 
 	public Date getTimeUpdate() {
-		return this.timeUpdate;
+		return timeUpdate;
 	}
 
 	public void setTimeUpdate(Date timeUpdate) {

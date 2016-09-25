@@ -544,12 +544,14 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<InvoiceDetailDTO> findInvoiceDetail(Long invoiceId) {
-		List<InvoiceDetail> invoice = invoiceDao.findInvoiceDetailByInvoiceId(invoiceId);
+		List<InvoiceDetail> invoiceDetails = invoiceDao.findInvoiceDetailByInvoiceId(invoiceId);
 		List<InvoiceDetailDTO> invoiceDetailDTOs = new ArrayList<>();
-		if (invoice != null && !invoice.isEmpty()) {
-			InvoiceDetailDTO dto = new InvoiceDetailDTO();
-			BeanUtils.copyProperties(invoice, dto);
-			invoiceDetailDTOs.add(dto);
+		if (invoiceDetails != null && !invoiceDetails.isEmpty()) {
+			for(InvoiceDetail invoiceDetail : invoiceDetails){
+				InvoiceDetailDTO dto = new InvoiceDetailDTO();
+				BeanUtils.copyProperties(invoiceDetail, dto);
+				invoiceDetailDTOs.add(dto);
+			}
 		}
 		return invoiceDetailDTOs;
 	}

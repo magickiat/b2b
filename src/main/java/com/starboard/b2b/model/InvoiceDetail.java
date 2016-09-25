@@ -20,7 +20,6 @@ public class InvoiceDetail implements java.io.Serializable {
 
 	private long invoiceProductId;
 	private Long orderProductId;
-	private String productCode;
 	private Long invoiceId;
 	private Long amount;
 	private String productBuyerGroupId;
@@ -166,14 +165,5 @@ public class InvoiceDetail implements java.io.Serializable {
 
 	public void setTimeUpdate(Date timeUpdate) {
 		this.timeUpdate = timeUpdate;
-	}
-
-	@Column(name = "product_code", length = 32)
-	public String getProductCode() {
-		return this.productCode;
-	}
-
-	public void setProductCode(String productCode) {
-		this.productCode = productCode;
 	}
 }

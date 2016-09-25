@@ -194,24 +194,22 @@
 
 		function exportInvPdf(iv) {
 			if (iv.value != 0) {
-				$
-						.get(
-								'<c:url value="/report/iv/detail/count"/>',
-								{
-									invoiceId : iv.value
-								},
-								function(data) {
-									if (data != null && data != '0') {
-										window.location.href = '<c:url value="/report/iv/pdf"/>?invoiceId=' + iv.value;
-									} else {
-										var alertMsg = "Could not found detail for invoice id " + iv.value;
-										var alertModal = $('#alertModal');
-										alertModal.find('.modal-header > .modal-title')
-												.html('Not found Invoice detail!');
-										alertModal.find('.modal-body').html(alertMsg);
-										alertModal.modal();
-									}
-								});
+				$.get('<c:url value="/report/iv/detail/count"/>',
+					  {
+						  invoiceId: iv.value
+					  },
+					  function (data) {
+						  if (data != null && data != '0') {
+							  window.location.href = '<c:url value="/report/iv/pdf"/>?invoiceId=' + iv.value;
+						  } else {
+							  var alertMsg = "Could not found detail for invoice id " + iv.value;
+							  var alertModal = $('#alertModal');
+							  alertModal.find('.modal-header > .modal-title')
+									  .html('Not found Invoice detail!');
+							  alertModal.find('.modal-body').html(alertMsg);
+							  alertModal.modal();
+						  }
+					  });
 			}
 		}
 	</script>

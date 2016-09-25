@@ -293,7 +293,7 @@ public class ReportController {
 				params.put("relativePage", 0);
 				params.put("SUBREPORT_DIR", this.getClass().getResource("/report/").getPath());
 
-				final InputStream jasperStream = this.getClass().getResourceAsStream("/report/so/so.jasper");
+				final InputStream jasperStream = this.getClass().getResourceAsStream("/report/invoice/invoice.jasper");
 				final JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
 
 				final JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, connection);

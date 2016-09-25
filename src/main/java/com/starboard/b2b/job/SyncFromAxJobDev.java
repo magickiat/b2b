@@ -21,8 +21,8 @@ public class SyncFromAxJobDev {
 	public void doIt() {
 		log.info("Start sync data from AX...");
 		// TODO move data from temp table to data table
-		syncB2BService.syncSellOrderFromAX();
-		syncB2BService.syncSellOrderDetailFromAX();
+//		syncB2BService.syncSellOrderFromAX();
+//		syncB2BService.syncSellOrderDetailFromAX();
 	}
 
 }

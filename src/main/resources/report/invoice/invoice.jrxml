@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
-<!-- 2016-09-25T13:50:13 -->
+<!-- 2016-09-25T23:38:25 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba40db7d-9060-4710-81d4-f1a174b6499e">
 	<property name="ireport.zoom" value="4.0"/>
 	<property name="ireport.x" value="1520"/>
@@ -32,7 +32,7 @@
 	</parameter>
 	<parameter name="allPageSize" class="java.lang.Integer"/>
 	<parameter name="relativePage" class="java.lang.Integer"/>
-	<queryString language="plsql">
+	<queryString>
 		<![CDATA[SELECT (od.price * od.amount) AS total,
   p.product_buyer_group_id,
   ptype.product_type_name,
@@ -46,7 +46,7 @@
   p.product_name_en,
   o.expect_shipment_date,
   r.order_code,
-  inv.invoice_no,
+  iv.invoice_no,
   st.shipping_type_name,
   r.payment_currency_id,
   od.amount,
@@ -58,21 +58,21 @@ FROM product_type ptype, payment_term pt,
   shipping_type st,
   product p,
   orders r,
-  ord_detail ord,
-  invoice inv,
-  invoice_detail invd
+  ord_detail rd,
+  invoice iv,
+  invoice_detail ivd
 WHERE ptype.product_type_id = p.product_type_id
       AND pt.payment_term_id = o.payment_term_id
       AND pm.payment_method_id = o.payment_method_id
       AND o.order_id = r.order_id
       AND od.so_id = o.so_id
-      AND ord.order_id = r.order_id
-      AND od.order_product_id = ord.order_detail_id
-      AND ord.product_id = p.product_id
+      AND rd.order_id = r.order_id
+      AND od.order_product_id = rd.order_detail_id
+      AND rd.product_id = p.product_id
       AND o.shipping_id = st.shipping_type_id
-      AND o.so_id = inv.so_id
-      AND invd.invoice_id = inv.invoice_id
-      AND inv.invoice_id = $P{invoiceId}
+      AND o.so_id = iv.so_id
+      AND ivd.invoice_id = iv.invoice_id
+      AND iv.invoice_id =  $P{invoiceId}
 ORDER BY od.product_id, od.order_product_id]]>
 	</queryString>
 	<field name="total" class="java.math.BigDecimal"/>
