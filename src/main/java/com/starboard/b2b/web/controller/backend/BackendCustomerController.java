@@ -306,6 +306,7 @@ public class BackendCustomerController {
 		 * if (binding.hasErrors()) { return "pages-back/customer/edit"; }
 		 */
 		customerService.saveContact(contact);
+		syncAXService.syncContact(contact);
 		return update(contact.getCustId(), model);
 	}
 

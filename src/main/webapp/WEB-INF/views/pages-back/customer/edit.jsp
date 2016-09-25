@@ -60,7 +60,7 @@
 				</div>
 			</div>
 
-			<hr />
+			<div class="row">&nbsp;</div>
 
 			<div class="row">
 				<div class="col-sm-12 bg_color showline2">
@@ -122,7 +122,7 @@
 					</div>
 				</div>
 			</div>
-			<hr />
+			<div class="row">&nbsp;</div>
 
 			<%-- List Address --%>
 			<div class="row">
@@ -151,7 +151,7 @@
 
 			</div>
 
-			<hr />
+			<div class="row">&nbsp;</div>
 			<%-- List Contact --%>
 			<div class="row">
 				<div class="col-sm-12 bg_color showline2">
@@ -175,7 +175,7 @@
 				</div>
 
 			</div>
-			<hr />
+			<div class="row">&nbsp;</div>
 
 			<%-- Product Brand --%>
 			<div class="row">
