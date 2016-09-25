@@ -71,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// http.headers().defaultsDisabled();
 
 		http.authorizeRequests().antMatchers("/login/**", "/gen_user", "/system/env").permitAll().antMatchers("/backend/**").hasRole(ROLE_ADMIN)
-				.antMatchers("/frontend/**").hasAnyRole(ROLE_USER, ROLE_ADMIN).antMatchers("/report/**").authenticated().anyRequest().authenticated()
+				.antMatchers("/frontend/**").hasRole(ROLE_USER).antMatchers("/report/**").authenticated().anyRequest().authenticated()
 				.and().formLogin().loginPage("/login").defaultSuccessUrl("/frontend").failureUrl("/login?error").and().logout()
 				.logoutSuccessUrl("/login").and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).and().rememberMe()
 				.rememberMeParameter("rememberMe").tokenRepository(persistentTokenRepository())
