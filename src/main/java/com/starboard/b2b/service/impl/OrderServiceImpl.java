@@ -406,14 +406,16 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<SoDetailDTO> findSoDetail(long soId) {
-		List<SoDetail> so = soDao.findSoDetailBySoId(soId);
-		List<SoDetailDTO> soDTOs = new ArrayList<>();
-		if (so != null && !so.isEmpty()) {
-			SoDetailDTO dto = new SoDetailDTO();
-			BeanUtils.copyProperties(so, dto);
-			soDTOs.add(dto);
+		List<SoDetail> soDetails = soDao.findSoDetailBySoId(soId);
+		List<SoDetailDTO> soDetailDTOs = new ArrayList<>();
+		if (soDetails != null && !soDetails.isEmpty()) {
+			for(SoDetail soDetail : soDetails){
+				SoDetailDTO dto = new SoDetailDTO();
+				BeanUtils.copyProperties(soDetail, dto);
+				soDetailDTOs.add(dto);
+			}
 		}
-		return soDTOs;
+		return soDetailDTOs;
 	}
 
 	@Override
