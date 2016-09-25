@@ -194,7 +194,16 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 		return (OrdDetail) sessionFactory.getCurrentSession().get(OrdDetail.class, orderDetailId);
 	}
 
-	@Override
+    @Override
+    public Long findIdByOrderIdAndProductId(long orderId, long productId) {
+        return (Long) sessionFactory.getCurrentSession()
+				.createQuery("select distinct odd.orderDetailId from OrdDetail odd where odd.orderId = :orderId and odd.productId = :productId")
+				.setLong("orderId", orderId)
+				.setLong("productId", productId)
+				.uniqueResult();
+    }
+
+    @Override
 	public int deleteByOrderId(long orderId) {
 		return sessionFactory.getCurrentSession()
 				.createQuery("delete from OrdDetail od where od.orderId = :orderId")

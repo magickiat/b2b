@@ -27,6 +27,8 @@ public interface OrderDetailDao {
 
 	OrdDetail findById(long orderDetailId);
 
+	Long findIdByOrderIdAndProductId(long orderId, long productId);
+
 	int deleteByOrderId(long orderId);
 
 	int deleteBySoNo(String soNo);

@@ -525,12 +525,12 @@ public class SyncB2BServiceImplTest {
 		// Mock data
 		So so1 = new So();
 		so1.setOrderId(ORDER_ID_1);
-		so1.setSoNo("soNo1");
+		so1.setSoNo("soNo111");
 		soDao.save(so1);
 
 		So so2 = new So();
 		so2.setOrderId(ORDER_ID_1);
-		so2.setSoNo("soNo2");
+		so2.setSoNo("soNo211");
 		soDao.save(so2);
 
 		SoDetail soDetail1 = new SoDetail();
@@ -543,15 +543,16 @@ public class SyncB2BServiceImplTest {
 		soDetail2.setPrice(BigDecimal.ONE);
 		soDetail1Dao.save(soDetail2);
 
-		SoDetail ordDetail3 = new SoDetail();
-		ordDetail3.setSoId(so2.getSoId());
-		ordDetail3.setPrice(BigDecimal.ZERO);
-		soDetail1Dao.save(ordDetail3);
+		SoDetail soDetail3 = new SoDetail();
+		soDetail3.setSoId(so2.getSoId());
+		soDetail3.setPrice(BigDecimal.ZERO);
+		soDetail1Dao.save(soDetail3);
 
 		TmpSoDetail tmpSoDetail1 = new TmpSoDetail();
 		tmpSoDetail1.setSoProductId(1L);
 		tmpSoDetail1.setSoId(so1.getSoId());
 		tmpSoDetail1.setSoNo(so1.getSoNo());
+		tmpSoDetail1.setProductCode("P00111");
 		tmpSoDetail1.setPrice(BigDecimal.valueOf(100));
 		tmpSoDetailDao.save(tmpSoDetail1);
 
@@ -559,8 +560,44 @@ public class SyncB2BServiceImplTest {
 		tmpSoDetail2.setSoProductId(2L);
 		tmpSoDetail2.setSoId(so1.getSoId());
 		tmpSoDetail2.setSoNo(so1.getSoNo());
+		tmpSoDetail2.setProductCode("P00211");
 		tmpSoDetail2.setPrice(BigDecimal.valueOf(101));
 		tmpSoDetailDao.save(tmpSoDetail2);
+
+		//prepare product
+		Product p1 = new Product();
+		p1.setProductCode("P00111");
+		p1.setProductNameEn("XXX");
+		productDao.save(p1);
+
+		Product p2 = new Product();
+		p2.setProductCode("P00211");
+		p2.setProductNameEn("XXX2");
+		productDao.save(p2);
+
+		Product p3 = new Product();
+		p3.setProductCode("P00311");
+		p2.setProductNameEn("XXX3");
+		productDao.save(p3);
+
+		//prepare order detail
+		OrdDetail ordDetail1 = new OrdDetail();
+		ordDetail1.setOrderId(ORDER_ID_1);
+		ordDetail1.setProductId(p1.getProductId());
+		ordDetail1.setPrice(BigDecimal.TEN);
+		orderDetailDao.save(ordDetail1);
+
+		OrdDetail ordDetail2 = new OrdDetail();
+		ordDetail2.setOrderId(ORDER_ID_1);
+		ordDetail2.setProductId(p2.getProductId());
+		ordDetail2.setPrice(BigDecimal.ONE);
+		orderDetailDao.save(ordDetail2);
+
+		OrdDetail ordDetail3 = new OrdDetail();
+		ordDetail3.setOrderId(ORDER_ID_1);
+		ordDetail3.setProductId(p3.getProductId());
+		ordDetail3.setPrice(BigDecimal.ZERO);
+		orderDetailDao.save(ordDetail3);
 
 		// Sync it
 		syncB2BService.syncSellOrderDetailFromAX();
