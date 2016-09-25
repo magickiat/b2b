@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
-<!-- 2016-09-26T00:57:12 -->
+<!-- 2016-09-26T02:25:24 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba40db7d-9060-4710-81d4-f1a174b6499e">
 	<property name="ireport.zoom" value="4.0"/>
 	<property name="ireport.x" value="1520"/>
 	<property name="ireport.y" value="0"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="b2b_data.xml"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="B2B2"/>
 	<style name="right" hTextAlign="Right" hImageAlign="Right"/>
 	<style name="center" hTextAlign="Center" hImageAlign="Center"/>
 	<style name="tabColor" hTextAlign="Center" hImageAlign="Center" vTextAlign="Middle" vImageAlign="Middle" fontName="SansSerif" fontSize="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true">
@@ -16,6 +16,127 @@
 	<style name="normal10" fontName="SansSerif" fontSize="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
 	<style name="normalCenter" hTextAlign="Left" hImageAlign="Left" vTextAlign="Middle" vImageAlign="Middle" fontName="SansSerif" fontSize="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true"/>
 	<subDataset name="Table Dataset 1" uuid="b1e4d6d9-6642-4efd-b6aa-181e3b11a787"/>
+	<subDataset name="Dataset1" uuid="92a7088d-b0f3-4491-ad9e-915f5802f62c">
+		<property name="com.jaspersoft.studio.data.sql.tables" value="aW52b2ljZV9kZXRhaWwgLDEwMywxNSw1Y2ExODU3NS0xNzJiLTQ4NWMtOGM2NS01YjA0N2IzY2U5&#xA;MGI7c29fZGV0YWlsICw1MjMsMTUsYjlmM2MzMjgtMzNiYi00MWM4LWFjZWYtNGJkOThlMzhhOGJi&#xA;O3BheW1lbnRfdGVybSAsNzAyLDE1LDBhOWJmZWIxLWI5MDQtNDVhOS1hZDAxLTE0NmE4MjMzOWNi&#xA;MztzaGlwcGluZ190eXBlICw5ODQsMTUsYTJiMWJhYmYtY2FjYi00NWJlLWI3NGYtY2QwNGQ1NDBk&#xA;M2JiO29yZGVycyAsNjI0LDE1LDhiNmRhZWIzLTIyNzUtNGEyMC04NDE2LTMwNzhkNmI0ZTdiMjtp&#xA;bnZvaWNlICwxNSwxNSxmYWQzZTVjMi1jMGU2LTQ1ZmYtOGQ5NS0wZDQwZjFhMDIzYTc7cHJvZHVj&#xA;dF90eXBlICwzMjIsMTUsNTZiMmY2YWItMGUxYi00OGE2LThjZDgtZmM2ODM5N2UzOGMzO3NvICw0&#xA;NjMsMTUsMzhmNzE5OWItYTVmYS00YmIyLTkyYjgtMmYyODJiNjc2YjgwO3BheW1lbnRfbWV0aG9k&#xA;ICw4MzEsMTUsZmMyN2U2MzQtOTlkNy00MDViLTg2ODItZmE5Mzg2MmI3NjZiO3Byb2R1Y3QgLDIz&#xA;MiwxNSw2MzFmZjZiMy0yZTRlLTQ0OTAtYTlhMy05ZDYwNGQ0ZGI1MTk7"/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="B2B2"/>
+		<queryString>
+			<![CDATA[SELECT 
+    (od.price * od.amount) AS total,
+    p.product_buyer_group_id,
+    ptype.product_type_name,
+    od.product_unit_id,
+    pt.payment_term_name,
+    pm.payment_method_name,
+    r.remark_customer,
+    o.order_id,
+    o.so_id,
+    p.product_code,
+    p.product_name_en,
+    o.expect_shipment_date,
+    r.order_code,
+    iv.invoice_no,
+    st.shipping_type_name,
+    r.payment_currency_id,
+    od.amount,
+    od.price
+FROM
+    invoice iv
+        LEFT JOIN
+    invoice_detail ivd ON iv.invoice_id = ivd.invoice_id
+        LEFT JOIN
+    product p ON ivd.order_product_id = p.product_id
+        LEFT JOIN
+    product_type ptype ON p.product_type_id = ptype.product_type_id
+        LEFT JOIN
+    so o ON o.so_id = iv.so_id
+        LEFT JOIN
+    so_detail od ON o.so_id = od.so_id
+        LEFT JOIN
+    orders r ON r.order_id = o.order_id
+        LEFT JOIN
+    payment_term pt ON o.payment_term_id = pt.payment_term_id
+        LEFT JOIN
+    payment_method pm ON o.payment_method_id = pm.payment_method_name
+        LEFT JOIN
+    shipping_type st ON o.shipping_id = st.shipping_type_id
+WHERE
+    iv.invoice_id = 1
+ORDER BY ivd.order_product_id
+]]>
+		</queryString>
+		<field name="total" class="java.math.BigDecimal"/>
+		<field name="product_buyer_group_id" class="java.lang.String"/>
+		<field name="product_type_name" class="java.lang.String"/>
+		<field name="product_unit_id" class="java.lang.String"/>
+		<field name="payment_term_name" class="java.lang.String"/>
+		<field name="payment_method_name" class="java.lang.String"/>
+		<field name="remark_customer" class="java.lang.String"/>
+		<field name="order_id" class="java.lang.Long"/>
+		<field name="so_id" class="java.lang.Long"/>
+		<field name="product_code" class="java.lang.String"/>
+		<field name="product_name_en" class="java.lang.String"/>
+		<field name="expect_shipment_date" class="java.sql.Timestamp"/>
+		<field name="order_code" class="java.lang.String"/>
+		<field name="invoice_no" class="java.lang.String"/>
+		<field name="shipping_type_name" class="java.lang.String"/>
+		<field name="payment_currency_id" class="java.lang.String"/>
+		<field name="amount" class="java.lang.Long"/>
+		<field name="price" class="java.math.BigDecimal"/>
+		<group name="total">
+			<groupExpression><![CDATA[$F{total}]]></groupExpression>
+		</group>
+		<group name="product_buyer_group_id">
+			<groupExpression><![CDATA[$F{product_buyer_group_id}]]></groupExpression>
+		</group>
+		<group name="product_type_name">
+			<groupExpression><![CDATA[$F{product_type_name}]]></groupExpression>
+		</group>
+		<group name="product_unit_id">
+			<groupExpression><![CDATA[$F{product_unit_id}]]></groupExpression>
+		</group>
+		<group name="payment_term_name">
+			<groupExpression><![CDATA[$F{payment_term_name}]]></groupExpression>
+		</group>
+		<group name="payment_method_name">
+			<groupExpression><![CDATA[$F{payment_method_name}]]></groupExpression>
+		</group>
+		<group name="remark_customer">
+			<groupExpression><![CDATA[$F{remark_customer}]]></groupExpression>
+		</group>
+		<group name="order_id">
+			<groupExpression><![CDATA[$F{order_id}]]></groupExpression>
+		</group>
+		<group name="so_id">
+			<groupExpression><![CDATA[$F{so_id}]]></groupExpression>
+		</group>
+		<group name="product_code">
+			<groupExpression><![CDATA[$F{product_code}]]></groupExpression>
+		</group>
+		<group name="product_name_en">
+			<groupExpression><![CDATA[$F{product_name_en}]]></groupExpression>
+		</group>
+		<group name="expect_shipment_date">
+			<groupExpression><![CDATA[$F{expect_shipment_date}]]></groupExpression>
+		</group>
+		<group name="order_code">
+			<groupExpression><![CDATA[$F{order_code}]]></groupExpression>
+		</group>
+		<group name="invoice_no">
+			<groupExpression><![CDATA[$F{invoice_no}]]></groupExpression>
+		</group>
+		<group name="shipping_type_name">
+			<groupExpression><![CDATA[$F{shipping_type_name}]]></groupExpression>
+		</group>
+		<group name="payment_currency_id">
+			<groupExpression><![CDATA[$F{payment_currency_id}]]></groupExpression>
+		</group>
+		<group name="amount">
+			<groupExpression><![CDATA[$F{amount}]]></groupExpression>
+		</group>
+		<group name="price">
+			<groupExpression><![CDATA[$F{price}]]></groupExpression>
+		</group>
+	</subDataset>
 	<parameter name="invoiceId" class="java.lang.String">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA[new Long(0)]]></defaultValueExpression>
@@ -33,48 +154,49 @@
 	<parameter name="allPageSize" class="java.lang.Integer"/>
 	<parameter name="relativePage" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[SELECT (od.price * od.amount) AS total,
-  p.product_buyer_group_id,
-  ptype.product_type_name,
-  od.product_unit_id,
-  pt.payment_term_name,
-  pm.payment_method_name,
-  r.remark_customer,
-  o.order_id,
-  o.so_id,
-  p.product_code,
-  p.product_name_en,
-  o.expect_shipment_date,
-  r.order_code,
-  iv.invoice_no,
-  st.shipping_type_name,
-  r.payment_currency_id,
-  od.amount,
-  od.price
-FROM product_type ptype, payment_term pt,
-  payment_method pm,
-  so o,
-  so_detail od,
-  shipping_type st,
-  product p,
-  orders r,
-  ord_detail rd,
-  invoice iv,
-  invoice_detail ivd
-WHERE ptype.product_type_id = p.product_type_id
-      AND pt.payment_term_id = o.payment_term_id
-      AND pm.payment_method_id = o.payment_method_id
-      AND o.order_id = r.order_id
-      AND od.so_id = o.so_id
-      AND rd.order_id = r.order_id
-      AND od.order_product_id = rd.order_detail_id
-      AND rd.product_id = p.product_id
-      AND o.shipping_id = st.shipping_type_id
-      AND o.so_id = iv.so_id
-      AND ivd.invoice_id = iv.invoice_id
-      AND ivd.order_product_id = od.order_product_id
-      AND iv.invoice_id =  $P{invoiceId}
-ORDER BY p.product_id, od.order_product_id;]]>
+		<![CDATA[SELECT 
+    (od.price * od.amount) AS total,
+    p.product_buyer_group_id,
+    ptype.product_type_name,
+    od.product_unit_id,
+    pt.payment_term_name,
+    pm.payment_method_name,
+    r.remark_customer,
+    o.order_id,
+    o.so_id,
+    p.product_code,
+    p.product_name_en,
+    o.expect_shipment_date,
+    r.order_code,
+    iv.invoice_no,
+    st.shipping_type_name,
+    r.payment_currency_id,
+    od.amount,
+    od.price
+FROM
+    invoice iv
+        LEFT JOIN
+    invoice_detail ivd ON iv.invoice_id = ivd.invoice_id
+        LEFT JOIN
+    product p ON ivd.order_product_id = p.product_id
+        LEFT JOIN
+    product_type ptype ON p.product_type_id = ptype.product_type_id
+        LEFT JOIN
+    so o ON o.so_id = iv.so_id
+        LEFT JOIN
+    so_detail od ON o.so_id = od.so_id
+        LEFT JOIN
+    orders r ON r.order_id = o.order_id
+        LEFT JOIN
+    payment_term pt ON o.payment_term_id = pt.payment_term_id
+        LEFT JOIN
+    payment_method pm ON o.payment_method_id = pm.payment_method_name
+        LEFT JOIN
+    shipping_type st ON o.shipping_id = st.shipping_type_id
+WHERE
+    iv.invoice_id = $P{invoiceId}
+ORDER BY ivd.order_product_id
+]]>
 	</queryString>
 	<field name="total" class="java.math.BigDecimal"/>
 	<field name="product_buyer_group_id" class="java.lang.String">
@@ -162,11 +284,11 @@ ORDER BY p.product_id, od.order_product_id;]]>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Expected Shipping Date]]></text>
+				<text><![CDATA[Term of payment]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="tabColor" x="171" y="163" width="100" height="12" isPrintWhenDetailOverflows="true" uuid="493c6c23-8ba6-40ad-9e4c-def0195b8950"/>
-				<text><![CDATA[Order Number]]></text>
+				<text><![CDATA[Invoice No.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="tabColor" x="303" y="163" width="100" height="12" isPrintWhenDetailOverflows="true" uuid="66150a92-b41c-4dd6-92a4-1d7ef3895cd9"/>
@@ -208,7 +330,7 @@ ORDER BY p.product_id, od.order_product_id;]]>
 			</rectangle>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement style="normal" x="14" y="175" width="133" height="12" isPrintWhenDetailOverflows="true" uuid="748dd2ed-bb2e-4723-b043-deb6d1fc6507"/>
-				<textFieldExpression><![CDATA[$F{expect_shipment_date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{payment_term_name}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="normal" x="171" y="175" width="100" height="12" isPrintWhenDetailOverflows="true" uuid="2c592bc0-6f0e-4505-a761-8a3b3b1cfef5"/>
@@ -405,219 +527,10 @@ ORDER BY p.product_id, od.order_product_id;]]>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="166" splitType="Stretch">
-			<staticText>
-				<reportElement style="normal10" x="0" y="43" width="55" height="20" uuid="e9af5510-e1db-459e-9794-316f10005c2b"/>
-				<box>
-					<topPen lineWidth="0.5" lineStyle="Dashed"/>
-				</box>
-				<text><![CDATA[*Remark :  ]]></text>
-			</staticText>
-			<rectangle>
-				<reportElement x="0" y="63" width="379" height="101" uuid="ba510a44-3acd-4799-bbb7-e2f8cb7c4cca"/>
-			</rectangle>
-			<staticText>
-				<reportElement style="tabColor" x="14" y="63" width="100" height="20" uuid="6b19e00f-36bd-4305-b9b8-1edf573cc964"/>
-				<textElement textAlignment="Left"/>
-				<text><![CDATA[Payment : ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="tabColor" x="14" y="77" width="100" height="20" uuid="2045147c-1396-4ecf-90f7-345510fa34c9"/>
-				<textElement textAlignment="Left">
-					<font isStrikeThrough="false"/>
-				</textElement>
-				<text><![CDATA[Terms : ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="tabColor" x="14" y="89" width="100" height="20" uuid="890d8976-46e6-4da0-baa7-3299c941a189"/>
-				<textElement textAlignment="Left"/>
-				<text><![CDATA[Currency : ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="tabColor" x="14" y="99" width="100" height="20" uuid="86c94205-bd1a-4556-a008-b23914c0a711"/>
-				<textElement textAlignment="Left"/>
-				<text><![CDATA[Beneficiary : ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="tabColor" x="14" y="109" width="100" height="20" uuid="01cd123a-0e7e-49bf-84df-c2db96b4038d"/>
-				<textElement textAlignment="Left"/>
-				<text><![CDATA[Banker : ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="normalCenter" x="114" y="99" width="254" height="20" uuid="73596265-7004-495f-b2a6-54f81ca9286f"/>
-				<text><![CDATA[TACO IMPORT EXPORT CO.,LTD]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="normalCenter" x="114" y="109" width="213" height="20" uuid="647f8872-dbf2-47d5-b436-553f3f0446e8"/>
-				<text><![CDATA[Kasikorn Bank Public Co., LTD]]></text>
-			</staticText>
-			<rectangle>
-				<reportElement x="379" y="63" width="176" height="81" uuid="cd2a5857-a8b2-4458-8b59-012a16f64148"/>
-			</rectangle>
-			<rectangle>
-				<reportElement x="379" y="144" width="176" height="20" uuid="f31b0870-9fa8-4042-aecf-81c797bfdddc"/>
-			</rectangle>
-			<textField>
-				<reportElement style="normal10" x="55" y="43" width="500" height="20" uuid="7a1fe4c6-4558-43a2-8e83-42f93386ff3b"/>
-				<box>
-					<pen lineStyle="Dashed"/>
-					<topPen lineWidth="0.5" lineStyle="Dashed"/>
-					<leftPen lineStyle="Dashed"/>
-					<bottomPen lineStyle="Dashed"/>
-					<rightPen lineStyle="Dashed"/>
-				</box>
-				<textFieldExpression><![CDATA[($F{remark_customer} != null) ? $F{remark_customer} : ""]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="normalCenter" x="114" y="89" width="265" height="20" uuid="e714a2b7-2c81-4ad5-828f-ca8b96ebda5a"/>
-				<textFieldExpression><![CDATA[$P{productCurrency}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="normalCenter" x="114" y="63" width="265" height="20" uuid="a6c62997-d36c-4433-9284-96d94ca19289"/>
-				<textFieldExpression><![CDATA[$F{payment_method_name}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="false">
-				<reportElement style="normalCenter" x="114" y="77" width="265" height="20" uuid="56289418-4497-4fb6-aa6e-da068f6edb97"/>
-				<textFieldExpression><![CDATA[$F{payment_term_name}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement style="normalCenter" x="114" y="119" width="213" height="20" uuid="2c6ac9cb-bcbe-412a-b300-3a717754f32a"/>
-				<text><![CDATA[Bangplee Branch]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="normalCenter" x="114" y="129" width="213" height="20" uuid="cf00660e-1bfd-4aed-912e-424a39292f44"/>
-				<text><![CDATA[Thailand, Swift Code: KASITHBK]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="normalCenter" x="114" y="139" width="213" height="20" uuid="090c5284-ea6f-4d65-8aba-ec90c6f9aabb"/>
-				<text><![CDATA[Acc No. 340-92-0012-4]]></text>
-			</staticText>
-			<subreport>
-				<reportElement x="379" y="63" width="176" height="100" uuid="7e2102fe-ca0d-42e3-8145-0831e597f388"/>
-				<subreportParameter name="productCurrency">
-					<subreportParameterExpression><![CDATA[$P{productCurrency}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="orderId">
-					<subreportParameterExpression><![CDATA[$F{order_id}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "sumTotal.jasper"]]></subreportExpression>
-			</subreport>
-		</band>
+		<band height="166" splitType="Stretch"/>
 	</pageFooter>
 	<lastPageFooter>
-		<band height="167">
-			<staticText>
-				<reportElement style="normal10" x="0" y="44" width="55" height="20" uuid="b5c46b68-f0d3-4cbb-81cc-0b447349bda9"/>
-				<box>
-					<topPen lineWidth="0.5" lineStyle="Dashed"/>
-				</box>
-				<text><![CDATA[*Remark :  ]]></text>
-			</staticText>
-			<rectangle>
-				<reportElement x="0" y="64" width="379" height="101" uuid="58055080-7fd5-4c2e-8285-372f1cde00ad"/>
-			</rectangle>
-			<staticText>
-				<reportElement style="tabColor" x="14" y="64" width="100" height="20" uuid="db0c5f83-0121-4549-8999-901ea0d7822d"/>
-				<textElement textAlignment="Left"/>
-				<text><![CDATA[Payment : ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="tabColor" x="14" y="78" width="100" height="20" uuid="b7e7fe71-18f7-4120-a5bc-d07fad4ee227"/>
-				<textElement textAlignment="Left">
-					<font isStrikeThrough="false"/>
-				</textElement>
-				<text><![CDATA[Terms : ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="tabColor" x="14" y="90" width="100" height="20" uuid="9af20f49-4c4b-421f-aec3-2a9524a397c4"/>
-				<textElement textAlignment="Left"/>
-				<text><![CDATA[Currency : ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="tabColor" x="14" y="100" width="100" height="20" uuid="316fee9a-f80a-44fc-a474-7d2a0b49539b"/>
-				<textElement textAlignment="Left"/>
-				<text><![CDATA[Beneficiary : ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="tabColor" x="14" y="110" width="100" height="20" uuid="0cbf62b6-3132-47ac-8ab6-82571e156b8e"/>
-				<textElement textAlignment="Left"/>
-				<text><![CDATA[Banker : ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="normalCenter" x="114" y="100" width="254" height="20" uuid="6f4d2636-87ae-4b4c-bbd4-6a36070bf515"/>
-				<text><![CDATA[TACO IMPORT EXPORT CO.,LTD]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="normalCenter" x="114" y="110" width="213" height="20" uuid="96303567-1cde-4146-9f74-d6c7f96fb6cf"/>
-				<text><![CDATA[Kasikorn Bank Public Co., LTD]]></text>
-			</staticText>
-			<rectangle>
-				<reportElement x="379" y="64" width="176" height="101" uuid="0786f39b-ef00-4f80-9af6-8f4730bcd91e"/>
-			</rectangle>
-			<textField>
-				<reportElement style="normalCenter" x="114" y="90" width="265" height="20" uuid="47af205e-d5f4-4988-99c6-d07b3914f5d1"/>
-				<textFieldExpression><![CDATA[$P{productCurrency}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="normalCenter" x="114" y="64" width="265" height="20" uuid="bb24205c-b4c4-4e08-87ef-7b15e6684e89"/>
-				<textFieldExpression><![CDATA[$F{payment_method_name}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="normalCenter" x="114" y="78" width="265" height="20" uuid="e3c55ac1-dc31-4699-801b-f346507b89df"/>
-				<textFieldExpression><![CDATA[$F{payment_term_name}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement style="normalCenter" x="114" y="120" width="213" height="20" uuid="c5bb6314-71c7-4252-9faf-b13c20f357d2"/>
-				<text><![CDATA[Bangplee Branch]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="normalCenter" x="114" y="130" width="213" height="20" uuid="d98eca05-5bc0-4de3-894e-7c9b7a0ae8a0"/>
-				<text><![CDATA[Thailand, Swift Code: KASITHBK]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="normalCenter" x="114" y="140" width="213" height="20" uuid="292b9bd3-f9eb-4a4c-8688-1c653845d18d"/>
-				<text><![CDATA[Acc No. 340-92-0012-4]]></text>
-			</staticText>
-			<subreport>
-				<reportElement x="379" y="64" width="176" height="100" uuid="54f88fc2-bc7d-4bd1-9a47-63c180536ee6"/>
-				<subreportParameter name="productCurrency">
-					<subreportParameterExpression><![CDATA[$P{productCurrency}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="orderId">
-					<subreportParameterExpression><![CDATA[$F{order_id}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "sumTotal.jasper"]]></subreportExpression>
-			</subreport>
-			<line>
-				<reportElement x="379" y="142" width="176" height="1" uuid="e8821d3f-3286-432d-8170-3ebd087c2a1c"/>
-			</line>
-			<subreport>
-				<reportElement x="271" y="0" width="282" height="44" uuid="8fe457f5-b84f-4ddc-a511-6a963d2a04ed">
-					<printWhenExpression><![CDATA[$P{showcate}==true]]></printWhenExpression>
-				</reportElement>
-				<subreportParameter name="productCurrency">
-					<subreportParameterExpression><![CDATA[$P{productCurrency}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="orderId">
-					<subreportParameterExpression><![CDATA[$F{order_id}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "sumTypeProduct.jasper"]]></subreportExpression>
-			</subreport>
-			<textField>
-				<reportElement style="normal10" x="53" y="44" width="500" height="20" uuid="72a1ebd2-e827-4308-9526-e315f699e8cc"/>
-				<box>
-					<pen lineStyle="Dashed"/>
-					<topPen lineWidth="0.5" lineStyle="Dashed"/>
-					<leftPen lineStyle="Dashed"/>
-					<bottomPen lineStyle="Dashed"/>
-					<rightPen lineStyle="Dashed"/>
-				</box>
-				<textFieldExpression><![CDATA[($F{remark_customer} != null) ? $F{remark_customer} : ""]]></textFieldExpression>
-			</textField>
-		</band>
+		<band/>
 	</lastPageFooter>
 	<summary>
 		<band splitType="Stretch"/>
