@@ -273,7 +273,6 @@ public class SyncB2BServiceImpl implements SyncB2BService {
         log.info("Sync Sell Order Detail from AX");
         WeakHashMap<String, Long> cacheSo = new WeakHashMap<>();
         WeakHashMap<String, Long> cacheProduct = new WeakHashMap<>();
-        WeakHashMap<String, Long> cacheOrdDetail = new WeakHashMap<>();
         //Step 1: Get distinct order codes from AX
         List<String> soNos = tmpSoDetailDao.findSoNos();
         //Step 2: Remove all so_detail which match soNos;
@@ -301,25 +300,16 @@ public class SyncB2BServiceImpl implements SyncB2BService {
                 Long productId = cacheProduct.get(tmpSoDetail.getProductCode());
                 if (productId == null) {
                     final Product product = productDao.findByProductCode(tmpSoDetail.getProductCode());
-                    if (product == null) {
-                        continue;
+                    if (product != null) {
+                        productId = product.getProductId();
+                        cacheProduct.put(product.getProductCode(), productId);
                     }
-                    productId = product.getProductId();
-                    cacheProduct.put(product.getProductCode(), productId);
                 }
-                Long ordDetailId = cacheOrdDetail.get(""+soId+"-"+productId);
-                if (ordDetailId == null) {
-                    final So so = soDao.findSoById(soId);
-                    ordDetailId = orderDetailDao.findIdByOrderIdAndProductId(so.getOrderId(), productId);
-                    if (ordDetailId == null) {
-                        continue;
-                    }
-                    cacheOrdDetail.put(""+soId+"-"+productId, ordDetailId);
-                }
+
                 SoDetail soDetail = new SoDetail();
                 BeanUtils.copyProperties(tmpSoDetail, soDetail, "soProductId");
                 soDetail.setSoId(soId);
-                soDetail.setOrderProductId(ordDetailId);
+                soDetail.setOrderProductId(productId);
                 soDetailDao.save(soDetail);
             }
             //Step 4: Remove from AX table
