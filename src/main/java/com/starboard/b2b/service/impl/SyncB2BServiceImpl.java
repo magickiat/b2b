@@ -243,6 +243,7 @@ public class SyncB2BServiceImpl implements SyncB2BService {
     @Transactional(rollbackFor = Exception.class)
     public void syncSellOrderFromAX() {
         log.info("Sync Sell Order from AX");
+        WeakHashMap<String, Long> cacheOrder = new WeakHashMap<>();
         //Step 1: Get data from AX
         final List<TmpSo> tmpSos = tmpSoDao.list();
         //Step 2: Insert / Update into sync table
@@ -250,14 +251,26 @@ public class SyncB2BServiceImpl implements SyncB2BService {
             for (TmpSo tmpSo : tmpSos) {
                 //Step 2.1: Check if order code is in Orders
                 final So so = soDao.findBySoNo(tmpSo.getSoNo());
+                //Find order id by order code
+                Long orderId = cacheOrder.get(tmpSo.getOrderCode());
+                if (orderId == null) {
+                    final Orders orders = orderDao.findByOrderCode(tmpSo.getOrderCode());
+                    if (orders == null) {
+                        continue;
+                    }
+                    orderId = orders.getOrderId();
+                    cacheOrder.put(orders.getOrderCode(), orderId);
+                }
                 //If Exist: then update value
                 if (so != null) {
                     BeanUtils.copyProperties(tmpSo, so, "soId");
+                    so.setOrderId(orderId);
                     soDao.save(so);
                 } else {
                     //If Not Exist: then insert
                     So newSo = new So();
                     BeanUtils.copyProperties(tmpSo, newSo, "soId");
+                    newSo.setOrderId(orderId);
                     soDao.save(newSo);
                 }
             }
