@@ -181,7 +181,7 @@
 										window.location.href = '<c:url value="/report/so/pdf"/>?soId='
 												+ so.value;
 									} else {
-										var alertMsg = "Could not found detail for invoice id " + so.value;
+										var alertMsg = "Could not found detail for invoice id " + $(so).find('option:selected').text();
 										var alertModal = $('#alertModal');
 										alertModal.find('.modal-header > .modal-title')
 												.html('Not found Invoice detail!');
@@ -202,7 +202,7 @@
 						  if (data != null && data != '0') {
 							  window.location.href = '<c:url value="/report/iv/pdf"/>?invoiceId=' + iv.value;
 						  } else {
-							  var alertMsg = "Could not found detail for invoice id " + iv.value;
+							  var alertMsg = "Could not found detail for invoice id " + $(iv).find('option:selected').text();
 							  var alertModal = $('#alertModal');
 							  alertModal.find('.modal-header > .modal-title')
 									  .html('Not found Invoice detail!');

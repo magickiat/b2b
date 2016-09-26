@@ -265,7 +265,7 @@ public class ReportController {
 	@RequestMapping(value = "iv/detail/count")
 	@ResponseBody
 	String countInvoiceDetail(final Long invoiceId) throws Exception {
-		return String.valueOf(orderService.findSoDetail(invoiceId).size());
+		return String.valueOf(orderService.findInvoiceDetail(invoiceId).size());
 	}
 
 
