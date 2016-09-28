@@ -482,27 +482,44 @@ public class SyncB2BServiceImplTest {
 	@Test
 	public void testSyncSellOrderFromAX() throws Exception {
 		// Mock data
+		Orders orders1 = new Orders();
+		orders1.setCustId(custId);
+		orders1.setOrderCode(ORD_CODE_1);
+		orderDao.save(orders1);
+
+		Orders orders2 = new Orders();
+		orders2.setCustId(custId2);
+		orders2.setOrderCode(ORD_CODE_2);
+		orderDao.save(orders2);
+
+		Orders orders3 = new Orders();
+		orders3.setCustId(custId3);
+		orders3.setOrderCode(ORD_CODE_3);
+		orderDao.save(orders3);
+
 		So so1 = new So();
 		so1.setSoNo("SoNo1");
-		so1.setOrderId(ORDER_ID_1);
+		so1.setOrderId(orders1.getOrderId());
 		so1.setUserCreate("admin");
 		soDao.save(so1);
 
 		So so2 = new So();
 		so2.setSoNo("SoNo2");
-		so2.setOrderId(ORDER_ID_2);
+		so2.setOrderId(orders2.getOrderId());
 		so2.setUserCreate("admin");
 		soDao.save(so2);
 
 		TmpSo tmpSo1 = new TmpSo();
 		tmpSo1.setSoNo("SoNo1");
-		tmpSo1.setOrderId(ORDER_ID_2);
+		tmpSo1.setOrderId(orders2.getOrderId());
+		tmpSo1.setOrderCode(orders2.getOrderCode());
 		tmpSo1.setUserCreate("admin");
 		tmpSoDao.save(tmpSo1);
 
 		TmpSo tmpSo2 = new TmpSo();
 		tmpSo2.setSoNo("SoNo3");
-		tmpSo2.setOrderId(ORDER_ID_3);
+		tmpSo2.setOrderId(orders3.getOrderId());
+		tmpSo2.setOrderCode(orders3.getOrderCode());
 		tmpSo2.setUserCreate("admin");
 		tmpSoDao.save(tmpSo2);
 
@@ -511,13 +528,13 @@ public class SyncB2BServiceImplTest {
 
 		// Assert
 		final So soNo1 = soDao.findBySoNo("SoNo1");
-		assertEquals(ORDER_ID_2, soNo1.getOrderId());
+		assertEquals(orders2.getOrderId(), soNo1.getOrderId());
 
 		final So soNo2 = soDao.findBySoNo("SoNo2");
-		assertEquals(ORDER_ID_2, soNo2.getOrderId());
+		assertEquals(orders2.getOrderId(), soNo2.getOrderId());
 
 		final So soNo3 = soDao.findBySoNo("SoNo3");
-		assertEquals(ORDER_ID_3, soNo3.getOrderId());
+		assertEquals(orders3.getOrderId(), soNo3.getOrderId());
 	}
 
 	@Test
