@@ -619,7 +619,8 @@ public class SyncB2BServiceImplTest {
 
 		TmpOrdAddressFromAx tmpOrdAddr1 = new TmpOrdAddressFromAx();
 		tmpOrdAddr1.setOrderAddressId(258);
-		tmpOrdAddr1.setOrderId(999);// TODO find new order_id by using order_code
+		tmpOrdAddr1.setOrderId(999);// TODO find new order_id by using
+									// order_code
 		tmpOrdAddr1.setOrderAddr("new addr");
 		tmpOrdAddr1.setType(1L);
 		tmpOrdAddr1.setOrderCode("OR-001");
@@ -696,9 +697,15 @@ public class SyncB2BServiceImplTest {
 
 	@Test
 	public void testSyncSo_whenNew_mustInserted() {
+
+		Orders od = new Orders();
+		od.setOrderCode("OR-001");
+		orderDao.save(od);
+
 		TmpSo tmpSo1 = new TmpSo();
 		tmpSo1.setSoNo("S-001");
 		tmpSo1.setOrderId(999);
+		tmpSo1.setOrderCode("OR-001");
 		tmpSo1.setUserCreate("admin");
 		tmpSoDao.save(tmpSo1);
 
@@ -707,20 +714,25 @@ public class SyncB2BServiceImplTest {
 
 		So so = soDao.findBySoNo("S-001");
 		assertNotNull(so);
-		assertEquals(999, so.getOrderId());
+		assertEquals(od.getOrderId(), so.getOrderId());
 	}
 
 	@Test
 	public void testSyncSo_whenExist_mustUpdated() {
+		Orders od = new Orders();
+		od.setOrderCode("OR-001");
+		orderDao.save(od);
+
 		So so1 = new So();
 		so1.setSoNo("S-001");
-		so1.setOrderId(999);
+		so1.setOrderId(od.getOrderId());
 		so1.setUserCreate("admin");
 		soDao.save(so1);
 
 		TmpSo tmpSo1 = new TmpSo();
 		tmpSo1.setSoNo("S-001");
 		tmpSo1.setOrderId(888);
+		tmpSo1.setOrderCode("OR-001");
 		tmpSo1.setUserCreate("admin");
 		tmpSoDao.save(tmpSo1);
 
