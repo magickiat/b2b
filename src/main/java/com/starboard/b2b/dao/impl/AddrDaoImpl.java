@@ -56,4 +56,13 @@ public class AddrDaoImpl implements AddrDao {
 		final String hql = "DELETE FROM Addr a WHERE a.custId in (:custIds)";
 		return sessionFactory.getCurrentSession().createQuery(hql).setParameterList("custIds", custIds).executeUpdate();
     }
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Addr> findbyCustCode(String custCode) {
+		return sessionFactory.getCurrentSession()
+				.createQuery("from Addr a where a.custCode = :custCode")
+				.setString("custCode", custCode)
+				.list();
+	}
 }

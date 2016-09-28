@@ -19,4 +19,6 @@ public interface AddrDao {
     int deleteByCustId(long custId);
 
     int deleteByCustIds(List<Long> custIds);
+
+	List<Addr> findbyCustCode(String custCode);
 }

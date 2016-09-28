@@ -51,4 +51,10 @@ public class ContactDaoImpl implements ContactDao{
 	public List<Contact> findByCustId(long custId) {
 		return sessionFactory.getCurrentSession().createCriteria(Contact.class).add(Restrictions.eq("custId", custId)).list();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Contact> list() {
+		return sessionFactory.getCurrentSession().createCriteria(Contact.class).list();
+	}
 }
