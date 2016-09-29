@@ -92,15 +92,14 @@
      <![endif]-->
      <script>
 	     jQuery(document).ready(function() {
-	     	$.backstretch([
-							"<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.jpg"/>"
-	     	               , "<c:url value="/scripts/assets/img/backgrounds/severne_windsurf_banner.jpg"/>"
-	     	               , "<c:url value="/scripts/assets/img/backgrounds/2014_AIRUSH_BANNER.jpg"/>"
-	     	               , "<c:url value="/scripts/assets/img/backgrounds/sup_banner.jpg"/>"
-	     	               , "<c:url value="/scripts/assets/img/backgrounds/surf_banner.jpg"/>"
-	     	               , "<c:url value="/scripts/assets/img/backgrounds/windsurf_banner.jpg"/>"
-	     	               
-	     	               ], {duration: 4000, fade: 750});
+		    var background = [];
+			$.each(JSON.parse('${background}').data,function(index, obj){
+				 background.push('<c:url value="/upload/"/>' + obj );
+			});
+			 //JSON.parse(json);
+			if(background.length==0)
+				background.push('<c:url value="/scripts/assets/img/backgrounds/starboardbglogin.jpg"/>');
+	     	$.backstretch(background, {duration: 4000, fade: 750});
 	     	$.backstretch("resize");
 	     });
      </script>

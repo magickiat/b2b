@@ -21,6 +21,11 @@ public interface B2BConstant {
 	String PRODUCT_IMAGE_BIG = "Big";
 	String PRODUCT_IMAGE_CATEGORY = "Category";
 	String PRODUCT_IMAGE_THUMBNAIL = "Thumbnail";
+	
+	String TEMPLATE_IMAGE_FOLDER = "background_image";
+	String TEMPLATE_IMAGE_FRONT_END = "Frontend";
+	String TEMPLATE_IMAGE_BACK_END = "Backend";
+	String TEMPLATE_IMAGE_SLIDE_END = "SlideBackground";
 
 	String UNDEFINED = "Undefined";
 
