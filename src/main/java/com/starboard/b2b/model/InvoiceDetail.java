@@ -3,6 +3,7 @@ package com.starboard.b2b.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -165,5 +166,4 @@ public class InvoiceDetail implements java.io.Serializable {
 	public void setTimeUpdate(Date timeUpdate) {
 		this.timeUpdate = timeUpdate;
 	}
-
 }

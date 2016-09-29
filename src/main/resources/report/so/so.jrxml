@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2016-02-22T11:59:11 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ro" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba40db7d-9060-4710-81d4-f1a174b6499e">
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2016-09-26T02:21:36 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SO" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba40db7d-9060-4710-81d4-f1a174b6499e">
 	<property name="ireport.zoom" value="4.0"/>
 	<property name="ireport.x" value="1520"/>
 	<property name="ireport.y" value="0"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="B2B Local DB"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<style name="right" hTextAlign="Right" hImageAlign="Right"/>
 	<style name="center" hTextAlign="Center" hImageAlign="Center"/>
 	<style name="tabColor" hTextAlign="Center" hImageAlign="Center" vTextAlign="Middle" vImageAlign="Middle" fontName="SansSerif" fontSize="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="WareeSans.ttf" isPdfEmbedded="true">
@@ -33,87 +33,63 @@
 	<parameter name="allPageSize" class="java.lang.Integer"/>
 	<parameter name="relativePage" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[select (od.price*od.amount) as total,
-p.product_buyer_group_id,
-ptype.product_type_name,
-od.product_unit_id,
-pt.payment_term_name,
-pm.payment_method_name,
-r.remark_customer,
-o.order_id,
-o.so_id,
-p.product_code,
-p.product_name_en,
-o.expect_shipment_date,
-r.order_code,
-o.so_no,
-st.shipping_type_name,
-r.payment_currency_id,
-od.amount,
-od.price 
-from product_type ptype,payment_term pt,payment_method pm,so o,shipping_type st,product p, so_detail od, orders r
-where ptype.product_type_id = p.product_type_id 
-and pt.payment_term_id = o.payment_term_id 
-and pm.payment_method_id = o.payment_method_id 
-and o.order_id = r.order_id 
-and od.so_id = o.so_id 
-and od.product_id = p.product_id 
-and o.shipping_id = st.shipping_type_id 
-and o.so_id=$P{soId}
-order by od.product_id, od.order_detail_id]]>
+		<![CDATA[SELECT 
+    (sd.price * sd.amount) AS total,
+    p.product_buyer_group_id,
+    ptype.product_type_name,
+    sd.product_unit_id,
+    pt.payment_term_name,
+    pm.payment_method_name,
+    r.remark_customer,
+    s.order_id,
+    s.so_id,
+    p.product_code,
+    p.product_name_en,
+    s.expect_shipment_date,
+    r.order_code,
+    s.so_no,
+    st.shipping_type_name,
+    r.payment_currency_id,
+    sd.amount,
+    sd.price
+FROM
+    so s
+        LEFT JOIN
+    so_detail sd ON s.so_id = sd.so_id
+        LEFT JOIN
+    product p ON sd.order_product_id = p.product_id
+        LEFT JOIN
+    product_type ptype ON ptype.product_type_id = p.product_type_id
+        LEFT JOIN
+    payment_term pt ON s.payment_term_id = pt.payment_term_id
+        LEFT JOIN
+    payment_method pm ON s.payment_method_id = pm.payment_method_id
+        LEFT JOIN
+    shipping_type st ON s.shipping_id = st.shipping_type_id
+        LEFT JOIN
+    orders r ON r.order_id = s.order_id
+WHERE
+    s.so_id = $P{soId}
+ORDER BY sd.order_product_id]]>
 	</queryString>
 	<field name="total" class="java.math.BigDecimal"/>
-	<field name="product_buyer_group_id" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="product_type_name" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="product_unit_id" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="payment_term_name" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="payment_method_name" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="remark_customer" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="order_id" class="java.lang.Long">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="so_id" class="java.lang.Long">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="product_code" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="product_name_en" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="expect_shipment_date" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="order_code" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="so_no" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="shipping_type_name" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="payment_currency_id" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="amount" class="java.lang.Long">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="price" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="product_buyer_group_id" class="java.lang.String"/>
+	<field name="product_type_name" class="java.lang.String"/>
+	<field name="product_unit_id" class="java.lang.String"/>
+	<field name="payment_term_name" class="java.lang.String"/>
+	<field name="payment_method_name" class="java.lang.String"/>
+	<field name="remark_customer" class="java.lang.String"/>
+	<field name="order_id" class="java.lang.Long"/>
+	<field name="so_id" class="java.lang.Long"/>
+	<field name="product_code" class="java.lang.String"/>
+	<field name="product_name_en" class="java.lang.String"/>
+	<field name="expect_shipment_date" class="java.sql.Timestamp"/>
+	<field name="order_code" class="java.lang.String"/>
+	<field name="so_no" class="java.lang.String"/>
+	<field name="shipping_type_name" class="java.lang.String"/>
+	<field name="payment_currency_id" class="java.lang.String"/>
+	<field name="amount" class="java.lang.Long"/>
+	<field name="price" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>

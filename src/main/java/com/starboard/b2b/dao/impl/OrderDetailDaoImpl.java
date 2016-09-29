@@ -194,7 +194,16 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 		return (OrdDetail) sessionFactory.getCurrentSession().get(OrdDetail.class, orderDetailId);
 	}
 
-	@Override
+    @Override
+    public Long findIdByOrderIdAndProductId(long orderId, long productId) {
+        return (Long) sessionFactory.getCurrentSession()
+				.createQuery("select distinct odd.orderDetailId from OrdDetail odd where odd.orderId = :orderId and odd.productId = :productId")
+				.setLong("orderId", orderId)
+				.setLong("productId", productId)
+				.uniqueResult();
+    }
+
+    @Override
 	public int deleteByOrderId(long orderId) {
 		return sessionFactory.getCurrentSession()
 				.createQuery("delete from OrdDetail od where od.orderId = :orderId")
@@ -239,6 +248,22 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 						" where o.orderId = od.orderId and o.orderCode = :orderCode " +
 						")")
 				.setString("orderCode", orderCode)
+				.executeUpdate();
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Long> findIdsByOrderCodes(List<String> orderCodeAxes) {
+		return sessionFactory.getCurrentSession()
+				.createQuery("select distinct odd.orderDetailId from OrdDetail odd, Orders o where odd.orderId = o.orderId and o.orderCode in (:orderCodes)")
+				.setParameterList("orderCodes", orderCodeAxes).list();
+	}
+
+	@Override
+	public void deleteByIds(List<Long> ids) {
+		sessionFactory.getCurrentSession()
+				.createQuery("delete from OrdDetail od where od.orderDetailId in (:ids)")
+				.setParameterList("ids", ids)
 				.executeUpdate();
 	}
 }

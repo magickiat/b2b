@@ -1,6 +1,7 @@
 package com.starboard.b2b.dao.impl;
 
 import com.starboard.b2b.dao.OrderDao;
+import com.starboard.b2b.dto.InvoiceDTO;
 import com.starboard.b2b.dto.SoDTO;
 import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchRequest;
@@ -131,9 +132,10 @@ public class OrderDaoImpl implements OrderDao {
 				.setLong("custId", custId)
 				.uniqueResult();
 		final SearchResult<SearchOrderDTO> result = new SearchResult<>();
-		//Find Sales Order for each order
+		//Find Sales Order && Invoice for each order
 		for (Object object : searchOrderDTOs) {
 			SearchOrderDTO sOrder = (SearchOrderDTO) object;
+			//Sales Order
 			List<SoDTO> so = sessionFactory.getCurrentSession().createQuery("SELECT new com.starboard.b2b.dto.SoDTO(s) from So s where s.orderId = :orderId")
 					.setLong("orderId", sOrder.getOrderId())
 					.list();
@@ -141,6 +143,15 @@ public class OrderDaoImpl implements OrderDao {
 				sOrder.setSalesOrders(so);
 			}else{
 				sOrder.setSalesOrders(new ArrayList<SoDTO>());
+			}
+			//Invoice
+			List<InvoiceDTO> invoice = sessionFactory.getCurrentSession().createQuery("SELECT new com.starboard.b2b.dto.InvoiceDTO(iv) from Invoice iv, So s where  iv.soId = s.soId and s.orderId = :orderId")
+					.setLong("orderId", sOrder.getOrderId())
+					.list();
+			if(invoice != null && !invoice.isEmpty() ){
+				sOrder.setInvoices(invoice);
+			}else{
+				sOrder.setInvoices(new ArrayList<InvoiceDTO>());
 			}
 		}
 		result.setTotal(ordersTotal == null ? 0 : (long) ordersTotal);

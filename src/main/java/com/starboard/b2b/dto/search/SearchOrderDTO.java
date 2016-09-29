@@ -1,12 +1,13 @@
 package com.starboard.b2b.dto.search;
 
+import com.starboard.b2b.dto.InvoiceDTO;
 import com.starboard.b2b.dto.OrdAddressDTO;
 import com.starboard.b2b.dto.SoDTO;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import java.util.List;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 public class SearchOrderDTO {
 
@@ -35,6 +36,7 @@ public class SearchOrderDTO {
 
 	private List<SearchOrderDetailDTO> orderDetails;
 	private List<SoDTO> salesOrders;
+	private List<InvoiceDTO> invoices;
 	private List<String> documents;
 
 	public SearchOrderDTO() {
@@ -178,6 +180,14 @@ public class SearchOrderDTO {
 
 	public void setSalesOrders(List<SoDTO> salesOrders) {
 		this.salesOrders = salesOrders;
+	}
+
+	public void setInvoices(List<InvoiceDTO> invoices) {
+		this.invoices = invoices;
+	}
+
+	public List<InvoiceDTO> getInvoices() {
+		return invoices;
 	}
 
 	public List<String> getDocuments() {

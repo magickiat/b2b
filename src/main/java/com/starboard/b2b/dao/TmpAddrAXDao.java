@@ -11,4 +11,6 @@ public interface TmpAddrAXDao {
     void removeAll();
 
     void save(TmpAddrFromAx tmpAddrFromAx);
+
+    List<Long> findCustIds();
 }

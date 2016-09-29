@@ -39,4 +39,24 @@ public class TmpSoDetailDaoImpl implements TmpSoDetailDao {
 		return sessionFactory.getCurrentSession().createCriteria(TmpSoDetail.class).add(Restrictions.eq("soId", soId)).list();
 	}
 
+    @Override
+	@SuppressWarnings("unchecked")
+    public List<String> findSoNos() {
+		String hql = "select distinct sd.soNo from TmpSoDetail sd";
+		return sessionFactory.getCurrentSession().createQuery(hql).list();
+    }
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<TmpSoDetail> list() {
+		String hql = "select distinct sd from TmpSoDetail sd";
+		return sessionFactory.getCurrentSession().createQuery(hql).list();
+	}
+
+    @Override
+    public void removeAll() {
+		final String hql = "DELETE FROM TmpSoDetail";
+		sessionFactory.getCurrentSession().createQuery(hql).executeUpdate();
+    }
+
 }

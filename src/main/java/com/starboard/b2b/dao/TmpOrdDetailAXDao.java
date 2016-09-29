@@ -11,4 +11,6 @@ public interface TmpOrdDetailAXDao {
     void removeAll();
 
     void save(TmpOrdDetailFromAx ordAddressFromAx);
+
+    List<String> findOrderCodes();
 }

@@ -16,4 +16,6 @@ public interface ContactDao {
     void removeByCustIds(List<Long> custIds);
 
     List<Contact> findByCustId(long custId);
+
+	List<Contact> list();
 }
