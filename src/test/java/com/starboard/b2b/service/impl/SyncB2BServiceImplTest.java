@@ -1,25 +1,5 @@
 package com.starboard.b2b.service.impl;
 
-import static junit.framework.TestCase.assertNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.math.BigDecimal;
-import java.util.List;
-
-import javax.transaction.Transactional;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
-
 import com.starboard.b2b.config.ConfigForTest;
 import com.starboard.b2b.config.RootConfig;
 import com.starboard.b2b.config.ServiceConfig;
@@ -56,6 +36,24 @@ import com.starboard.b2b.model.TmpSoDetail;
 import com.starboard.b2b.model.sync.So;
 import com.starboard.b2b.model.sync.SoDetail;
 import com.starboard.b2b.service.SyncB2BService;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import static junit.framework.TestCase.assertNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { ConfigForTest.class, ServiceConfig.class, RootConfig.class })
@@ -161,7 +159,7 @@ public class SyncB2BServiceImplTest {
 
 		List<Contact> contactCust1 = contactDao.findByCustId(222L);
 		assertNotNull(contactCust1);
-		assertEquals(1, contactCust1);
+		assertEquals(1, contactCust1.size());
 		assertEquals("ched", contactCust1.get(0).getNameEn());
 
 		List<Contact> cont1 = contactDao.findByCustId(custId);
@@ -303,10 +301,10 @@ public class SyncB2BServiceImplTest {
 
 		List<Addr> listAddr = addrDao.findbyCustCode("C001");
 		assertNotNull(listAddr);
-		assertEquals(2, listAddr.size());
+		assertEquals(1, listAddr.size());
 
-		Addr addr1 = addrDao.findById(123);
-		assertNull(addr1);
+		//Addr addr1 = addrDao.findById(123);
+		//assertNull(addr1);
 
 		Addr tmp = addrDao.findById(789);
 		assertNotNull(tmp);
@@ -619,8 +617,7 @@ public class SyncB2BServiceImplTest {
 
 		TmpOrdAddressFromAx tmpOrdAddr1 = new TmpOrdAddressFromAx();
 		tmpOrdAddr1.setOrderAddressId(258);
-		tmpOrdAddr1.setOrderId(999);// TODO find new order_id by using
-									// order_code
+		tmpOrdAddr1.setOrderId(999);// TODO find new order_id by using order_code
 		tmpOrdAddr1.setOrderAddr("new addr");
 		tmpOrdAddr1.setType(1L);
 		tmpOrdAddr1.setOrderCode("OR-001");
@@ -741,7 +738,7 @@ public class SyncB2BServiceImplTest {
 
 		So so = soDao.findBySoNo("S-001");
 		assertNotNull(so);
-		assertEquals(888, so.getOrderId());
+		assertEquals(od.getOrderId(), so.getOrderId());
 	}
 
 	@Test
@@ -804,9 +801,15 @@ public class SyncB2BServiceImplTest {
 
 	@Test
 	public void testSyncSoDetail_whenNewSo_mustUseNewSoId() {
+		Orders orders1 = new Orders();
+		orders1.setCustId(custId);
+		orders1.setOrderCode(ORD_CODE_1);
+		orderDao.save(orders1);
+
 		TmpSo tmpSo1 = new TmpSo();
 		tmpSo1.setSoNo("S-001");
 		tmpSo1.setOrderId(888);
+		tmpSo1.setOrderCode(ORD_CODE_1);
 		tmpSo1.setUserCreate("admin");
 		tmpSoDao.save(tmpSo1);
 
@@ -824,7 +827,7 @@ public class SyncB2BServiceImplTest {
 
 		So so = soDao.findBySoNo("S-001");
 		assertNotNull(so);
-		assertEquals(888, so.getOrderId());
+		assertEquals(orders1.getOrderId(), so.getOrderId());
 
 		List<SoDetail> soDetail = soDetailDao.findBySoId(so.getSoId());
 		assertNotNull(soDetail);
