@@ -57,8 +57,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/error-page/**", "/pages-front/images/**", "/upload/**", "/js/**", "/scripts/**", "/css/**", "/img/**",
-				"/images/**", "/webjars/**", "/resources/**");
+		web.ignoring().antMatchers(
+				"/error-page/**"
+				, "/pages-front/images/**"
+				, "/upload/**"
+				, "/js/**"
+				, "/scripts/**"
+				, "/css/**"
+				, "/img/**"
+				, "/images/**"
+				, "/webjars/**"
+				, "/resources/**");
 	}
 
 	@Override
@@ -70,10 +79,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		// http.headers().defaultsDisabled();
 
-		http.authorizeRequests().antMatchers("/login/**", "/gen_user", "/system/env").permitAll().antMatchers("/backend/**").hasRole(ROLE_ADMIN)
-				.antMatchers("/frontend/**").hasRole(ROLE_USER).antMatchers("/report/**").authenticated().anyRequest().authenticated()
-				.and().formLogin().loginPage("/login").defaultSuccessUrl("/frontend").failureUrl("/login?error").and().logout()
-				.logoutSuccessUrl("/login").and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).and().rememberMe()
+		http.authorizeRequests()
+			.antMatchers("/login/**").permitAll()
+			.antMatchers("/backend/**").hasRole(ROLE_ADMIN)
+			.antMatchers("/frontend/**").hasRole(ROLE_USER)
+			.antMatchers("/report/**").authenticated()
+			.anyRequest().authenticated()
+			.and().formLogin()
+				.loginPage("/login")
+				.defaultSuccessUrl("/frontend")
+				.failureUrl("/login")
+				.and().logout()
+				.logoutSuccessUrl("/login")
+				.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).and().rememberMe()
 				.rememberMeParameter("rememberMe").tokenRepository(persistentTokenRepository())
 				.authenticationSuccessHandler(new AuthenSuccessHandler(Integer.valueOf(env.getProperty("session.timeout"))))
 				.tokenValiditySeconds((int) TimeUnit.MILLISECONDS.convert(5L, TimeUnit.DAYS)).and().csrf().ignoringAntMatchers("/login").and()
