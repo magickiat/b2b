@@ -19,9 +19,39 @@
 	$(document)
 			.ready(
 					function() {
-
-						$
-								.backstretch('<c:url value="/scripts/assets/img/backgrounds/starboardbg.jpg"/>');
+						var url_service = '';
+						if(window.location.href.toLowerCase().indexOf('backend') > 0){
+							url_service = '<c:url value="/backend/admin/image/background"/>';
+						}else{
+							url_service = '<c:url value="/frontend/image/background"/>';
+						}
+						//console.log(url_service);
+						if(url_service.length>0)
+						{
+							$.get(url_service,{},
+								function(data) {
+									//console.log(data);
+									if(data)
+									{
+										var image_background = JSON.parse(data);
+										var background = [];
+										$.each(image_background.data,function(index, obj){
+											 background.push('<c:url value="/upload/"/>' + obj );
+										});
+										if(background.length==0)
+											background.push('<c:url value="/scripts/assets/img/backgrounds/starboardbg.jpg"/>');
+										
+								     	$.backstretch(background, {duration: 4000, fade: 100});
+								     	$.backstretch("resize");
+									}
+							});
+						}
+						else
+						{
+							//set background all 
+							$.backstretch('<c:url value="/scripts/assets/img/backgrounds/starboardbg.jpg"/>');
+						}
+						
 
 						$('nav > ul.nav > li').click(function(e) {
 							$('ul.nav > li').removeClass('active');

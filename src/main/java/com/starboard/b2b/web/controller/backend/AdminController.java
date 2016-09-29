@@ -3,6 +3,7 @@ package com.starboard.b2b.web.controller.backend;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,12 +25,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.fasterxml.jackson.core.io.JsonStringEncoder;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.starboard.b2b.common.B2BConstant;
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dto.B2BFile;
 import com.starboard.b2b.exception.B2BException;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.B2BFileUtil;
+import com.starboard.b2b.web.controller.login.LoginForm;
 
 @Controller
 @RequestMapping("/backend/admin")
@@ -241,4 +246,160 @@ public class AdminController {
 		log.info("Deleted {} files", deletedFile);
 		return deletedFile;
 	}
+	
+	
+	@GetMapping("/template/list")
+	String template_list(@RequestParam(name = "page", defaultValue = "1") int page,
+			@RequestParam(name = "folder", defaultValue = B2BConstant.TEMPLATE_IMAGE_FOLDER) String folder,
+			@RequestParam(name = "currentPath", defaultValue = B2BConstant.TEMPLATE_IMAGE_FOLDER + "/" + B2BConstant.TEMPLATE_IMAGE_FRONT_END) String currentPath,
+			@RequestParam(name = "keyword", required = false) String keyword, Model model) throws B2BException {
+
+		log.info("template folder = " + folder);
+		log.info("template keyword = " + keyword);
+		log.info("template currentPath = " + currentPath);
+
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("folder", folder);
+		model.addAttribute("currentPath", currentPath);
+
+		if (currentPath.contains("..")) {
+			throw new IllegalArgumentException("Invalid path");
+		}
+		if (!currentPath.startsWith(B2BConstant.TEMPLATE_IMAGE_FOLDER)) {
+			currentPath = B2BConstant.TEMPLATE_IMAGE_FOLDER + "/" + currentPath;
+		}
+
+		String rootPath = env.getProperty("upload.path");
+		if (rootPath == null) {
+			throw new B2BException("Not found upload path");
+		}
+
+		// List folder
+		ArrayList<String> files = new ArrayList<>(3);
+		files.add(B2BConstant.TEMPLATE_IMAGE_FRONT_END);
+		files.add(B2BConstant.TEMPLATE_IMAGE_BACK_END);
+		files.add(B2BConstant.TEMPLATE_IMAGE_SLIDE_END);
+		model.addAttribute("folders", files);
+
+		if (!files.isEmpty()) {
+
+			List<B2BFile> listFile = B2BFileUtil.list(rootPath, currentPath);
+
+			if (!listFile.isEmpty() && StringUtils.isNotEmpty(keyword)) {
+				log.info("template Filter by keyword: " + keyword);
+
+				List<B2BFile> tmpList = new ArrayList<>();
+				for (B2BFile b2bFile : listFile) {
+					if (b2bFile.getName().toLowerCase().contains(keyword.toLowerCase())) {
+						tmpList.add(b2bFile);
+					}
+				}
+
+				listFile = tmpList;
+			}
+
+			log.info("template listFile size: " + (listFile == null ? 0 : listFile.size()));
+
+			int pageSize = applicationConfig.getPageSize();
+			int firstItem = (page - 1) * pageSize;
+			int lastItem = firstItem + pageSize;
+
+			if (listFile.size() < lastItem) {
+				lastItem = listFile.size();
+			}
+
+			List<B2BFile> pagingItem = new ArrayList<>();
+			for (int i = firstItem; i < lastItem; i++) {
+				pagingItem.add(listFile.get(i));
+			}
+
+			Page<B2BFile> result = new Page<>();
+			result.setCurrent(page);
+			result.setResult(pagingItem);
+			result.setPageSize(pageSize);
+			result.setTotal(listFile.size());
+
+			model.addAttribute("resultPage", result);
+
+		}
+
+		return "pages-back/admin/image/template";
+	}
+	
+	@RequestMapping(value = "/template/upload", method = RequestMethod.POST)
+	public @ResponseBody List<B2BFile> template_upload(@RequestParam String subFolder, MultipartHttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+
+		Map<String, MultipartFile> fileMap = request.getFileMap();
+		// Maintain a list to send back the files info. to the client side
+		List<B2BFile> uploadedFiles = new ArrayList<>();
+
+		// Iterate through the map
+		for (MultipartFile uploadFile : fileMap.values()) {
+
+			log.info("template uploaded file: {}\tContent type: {}", uploadFile.getOriginalFilename(), uploadFile.getContentType());
+			B2BFile file = new B2BFile();
+			file.setName(uploadFile.getName());
+			file.setNameWithPath(subFolder + uploadFile.getName());
+			file.setSize(uploadFile.getSize());
+			file.setContentType(uploadFile.getContentType());
+
+			if (uploadFile.getSize() < 1) {
+				file.setRemark("File size is zero");
+			} else if (!B2BFileUtil.isImage(uploadFile.getContentType())) {
+				file.setImage(false);
+			} else {
+				file.setImage(true);
+
+				// Save the file to local disk
+				String rootPath = env.getProperty("upload.path");
+				if (rootPath == null) {
+					throw new B2BException("Not found upload path");
+				}
+				try {
+					B2BFileUtil.saveFileToLocalDisk(rootPath, B2BConstant.TEMPLATE_IMAGE_FOLDER + "/" + subFolder, uploadFile);
+				} catch (Exception e) {
+					log.error(e.getMessage(), e);
+					file.setRemark(e.getMessage());
+				}
+			}
+			// adding the file info to the list
+			uploadedFiles.add(file);
+		}
+
+		return uploadedFiles;
+	}
+
+	@RequestMapping(value = "/template/delete")
+	@ResponseBody
+	int template_deleteFile(@RequestParam("subFolder") String subFolder, @RequestParam("files[]") String[] files, Model model) {
+		String rootPath = env.getProperty("upload.path");
+		if (rootPath == null) {
+			throw new B2BException("Not found upload path");
+		}
+
+		int deletedFile = B2BFileUtil.delete(rootPath, files);
+		log.info("template Deleted {} files", deletedFile);
+		return deletedFile;
+	}
+	
+	@RequestMapping(value = "image/background")
+	@ResponseBody
+	String getbackground() {
+		Map<String, List<String>> response = new HashMap<String, List<String>>();
+		Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+		List<String> file_list = new ArrayList<String>();
+		String rootPath = env.getProperty("upload.path");
+		log.info("path: " + B2BConstant.TEMPLATE_IMAGE_FOLDER + "/" + B2BConstant.TEMPLATE_IMAGE_BACK_END);
+		log.info("current : " + B2BConstant.TEMPLATE_IMAGE_BACK_END);
+		List<B2BFile> listFile = B2BFileUtil.list(rootPath, B2BConstant.TEMPLATE_IMAGE_FOLDER + "/" + B2BConstant.TEMPLATE_IMAGE_BACK_END);
+		for (B2BFile b2bFile : listFile) {
+			if (b2bFile.getNameWithPath().length() > 0) {
+				file_list.add(b2bFile.getNameWithPath());
+			}
+		}
+		response.put("data", file_list);
+		return gson.toJson(response);
+	}
+	
 }

@@ -126,6 +126,35 @@
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-sm-12">&nbsp;</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 bg_color showline2">
+					<div class="col-md-6 row row-header2 header2 txtupper">Template Settings</div>
+
+					<div class="row"></div>
+
+					<div class="col-sm-3">
+						<div class="panel-stat3 bg-info" 
+							onclick="window.location='<c:url value="/backend/admin/template/list" />'">
+							<h3 class="m-top-none">
+								<span> <a style="color: #fff;"
+									href='<c:url value="/backend/admin/template/list" />'>Background Image</a>
+								</span>
+							</h3>
+							<h5>Settings Background Image</h5>
+							<div class="stat-icon">
+								<i class="fa fa-th-large fa-3x"></i>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-3"></div>
+					<div class="col-sm-3"></div>
+					<div class="col-sm-3"></div>
+				</div>
+			</div>
 		</div>
 
 	</div>
