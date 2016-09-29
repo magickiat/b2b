@@ -37,7 +37,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		// Upload folder
 		log.info("upload path: " + uploadPath);
-		registry.addResourceHandler("/upload/**").addResourceLocations("file://" + uploadPath);
+		registry.addResourceHandler("/upload/**").addResourceLocations("file:///" + uploadPath);
 		// WebJars
 		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/").setCachePeriod(31556926);
 	}
