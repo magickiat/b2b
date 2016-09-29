@@ -17,7 +17,7 @@ public class SyncFromAxJobDev {
 	@Autowired
 	private SyncB2BService syncB2BService;
 	// un-comment to scheduling
-	@Scheduled(cron = "0 0/1 * * * ?")
+	//@Scheduled(cron = "0 0/1 * * * ?")
 	public void doIt() {
 		log.info("Start sync data from AX...");
 		// TODO move data from temp table to data table
