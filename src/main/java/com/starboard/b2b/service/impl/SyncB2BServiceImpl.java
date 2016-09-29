@@ -67,6 +67,19 @@ public class SyncB2BServiceImpl implements SyncB2BService {
     private TmpAddrAXDao tmpAddrAXDao;
 
     @Override
+    public void syncAllFromAX() {
+        syncContactFromAX();
+        syncAddressFromAX();
+        syncProductFromAX();
+        syncOrdersFromAX();
+        syncOrderDetailFromAX();
+        syncOrderAddressFromAX();
+        syncSellOrderFromAX();
+        syncSellOrderDetailFromAX();
+        syncInvoiceFromAX();
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     @Transactional(rollbackFor = Exception.class)
     public void syncContactFromAX() {
