@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.starboard.b2b.service.SyncB2BService;
 
-@Component
+@Component("syncFromAx")
 @Profile("prd")
 public class SyncFromAxJobProduction {
 
@@ -17,7 +17,7 @@ public class SyncFromAxJobProduction {
 
 	private SyncB2BService syncB2BService;
 
-//	@Scheduled(cron = "0 0/10 * * * ?")
+	@Scheduled(cron = "0 0 18 * * ?")
 	public void doIt() {
 		log.info("Start sync data from AX...");
 		syncB2BService.syncSellOrderFromAX();
