@@ -32,7 +32,7 @@
 							</h3>
 							<h5>Sync data from AX</h5>
 							<div class="stat-icon">
-								<i class="fa fa-envelope fa-3x"></i>
+								<i class="fa fa-refresh fa-3x"></i>
 							</div>
 						</div>
 					</div>
@@ -137,10 +137,10 @@
 
 					<div class="col-sm-3">
 						<div class="panel-stat3 bg-info" 
-							onclick="window.location='<c:url value="/backend/admin/template/list" />'">
+							onclick="window.location='<c:url value="/backend/admin/template/list?currentPath=Frontend&folder=Frontend" />'">
 							<h3 class="m-top-none">
 								<span> <a style="color: #fff;"
-									href='<c:url value="/backend/admin/template/list" />'>Background Image</a>
+									href='<c:url value="/backend/admin/template/list?currentPath=Frontend&folder=Frontend" />'>Background Image</a>
 								</span>
 							</h3>
 							<h5>Settings Background Image</h5>
