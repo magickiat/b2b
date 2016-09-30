@@ -67,6 +67,19 @@ public class SyncB2BServiceImpl implements SyncB2BService {
     private TmpAddrAXDao tmpAddrAXDao;
 
     @Override
+    public void syncAllFromAX() {
+        syncContactFromAX();
+        syncAddressFromAX();
+        syncProductFromAX();
+        syncOrdersFromAX();
+        syncOrderDetailFromAX();
+        syncOrderAddressFromAX();
+        syncSellOrderFromAX();
+        syncSellOrderDetailFromAX();
+        syncInvoiceFromAX();
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     @Transactional(rollbackFor = Exception.class)
     public void syncContactFromAX() {
@@ -192,15 +205,8 @@ public class SyncB2BServiceImpl implements SyncB2BService {
         if (ordDetailFromAxes != null && !ordDetailFromAxes.isEmpty()) {
             for (TmpOrdDetailFromAx tmpOrdDetailFromAx : ordDetailFromAxes) {
                 //Step 3.1: Find orders by order code before insert
-                Long orderId = cacheOrder.get(tmpOrdDetailFromAx.getOrderCode());
-                if (orderId == null) {
-                    final Orders orders = orderDao.findByOrderCode(tmpOrdDetailFromAx.getOrderCode());
-                    if (orders == null) {
-                        continue;
-                    }
-                    orderId = orders.getOrderId();
-                    cacheOrder.put(orders.getOrderCode(), orderId);
-                }
+                Long orderId = getOrderId(cacheOrder, tmpOrdDetailFromAx.getOrderCode());
+                if (orderId == null) continue;
                 OrdDetail ordDetail = new OrdDetail();
                 BeanUtils.copyProperties(tmpOrdDetailFromAx, ordDetail, "orderDetailId", "orderCode");
                 ordDetail.setOrderId(orderId);
@@ -216,6 +222,7 @@ public class SyncB2BServiceImpl implements SyncB2BService {
     @Transactional(rollbackFor = Exception.class)
     public void syncOrderAddressFromAX() {
         log.info("Sync Order Address from AX");
+        WeakHashMap<String, Long> cacheOrder = new WeakHashMap<>();
         //Step 1: Get distinct order codes from AX
         List<String> orderCodeAxes = tmpOrdAddressAXDao.findOrderCodes();
         //Step 2: Remove all order_address which match orderCodeAxes;
@@ -229,8 +236,11 @@ public class SyncB2BServiceImpl implements SyncB2BService {
         final List<TmpOrdAddressFromAx> ordAddressFromAxes = tmpOrdAddressAXDao.list();
         if (ordAddressFromAxes != null && !ordAddressFromAxes.isEmpty()) {
             for (TmpOrdAddressFromAx ordAddressFromAx : ordAddressFromAxes) {
+                Long orderId = getOrderId(cacheOrder, ordAddressFromAx.getOrderCode());
+                if (orderId == null) continue;
                 OrdAddress orderAddress = new OrdAddress();
                 BeanUtils.copyProperties(ordAddressFromAx, orderAddress, "orderAddressId", "orderCode");
+                orderAddress.setOrderId(orderId);
                 orderAddressDao.save(orderAddress);
             }
             //Step 4: Remove from AX table
@@ -252,15 +262,8 @@ public class SyncB2BServiceImpl implements SyncB2BService {
                 //Step 2.1: Check if order code is in Orders
                 final So so = soDao.findBySoNo(tmpSo.getSoNo());
                 //Find order id by order code
-                Long orderId = cacheOrder.get(tmpSo.getOrderCode());
-                if (orderId == null) {
-                    final Orders orders = orderDao.findByOrderCode(tmpSo.getOrderCode());
-                    if (orders == null) {
-                        continue;
-                    }
-                    orderId = orders.getOrderId();
-                    cacheOrder.put(orders.getOrderCode(), orderId);
-                }
+                Long orderId = getOrderId(cacheOrder, tmpSo.getOrderCode());
+                if (orderId == null) continue;
                 //If Exist: then update value
                 if (so != null) {
                     BeanUtils.copyProperties(tmpSo, so, "soId");
@@ -414,5 +417,19 @@ public class SyncB2BServiceImpl implements SyncB2BService {
     @Autowired
     public void setTmpAddrAXDao(TmpAddrAXDao tmpAddrAXDao) {
         this.tmpAddrAXDao = tmpAddrAXDao;
+    }
+
+
+    private Long getOrderId(WeakHashMap<String, Long> cacheOrder, String orderCode) {
+        Long orderId  = cacheOrder.get(orderCode);
+        if (orderId == null) {
+            final Orders orders = orderDao.findByOrderCode(orderCode);
+            if (orders == null) {
+                return null;
+            }
+            orderId = orders.getOrderId();
+            cacheOrder.put(orders.getOrderCode(), orderId);
+        }
+        return orderId;
     }
 }

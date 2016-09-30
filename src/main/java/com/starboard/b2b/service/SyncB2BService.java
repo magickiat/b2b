@@ -1,8 +1,8 @@
 package com.starboard.b2b.service;
 
-import org.springframework.transaction.annotation.Transactional;
-
 public interface SyncB2BService {
+
+    void syncAllFromAX();
 
 	void syncContactFromAX();
 
@@ -18,8 +18,6 @@ public interface SyncB2BService {
 
     void syncSellOrderFromAX();
 
-    //For Sale Order
-    @Transactional(rollbackFor = Exception.class)
     void syncSellOrderDetailFromAX();
 
     void syncInvoiceFromAX();

@@ -2029,7 +2029,7 @@ INSERT INTO addr VALUES (2,'test 2',0,NULL,2101,0,'ballbonn@gmail.com','test','t
 INSERT INTO addr VALUES (3216,'FLAT 1201-2, 12/F., CHAI WAN IND. CITY, PHASE 1, 60 WING TAI RD., CHAI WAN, HONG KONG',0,NULL,1001,0,'ballbonn@gmail.com','tes','test',0,'HONG KONG',0,'test','','2012-07-05 15:58:39',NULL,'',0,'2','bonn',NULL);
 
 
-INSERT INTO contact VALUES (8,'5',NULL,1001,'7','11','9',NULL,NULL,'8','IP','1','2',NULL,NULL,'3',NULL,NULL,'10','6,12',NULL,NULL,NULL,NULL,NULL);
+-- INSERT INTO contact VALUES (8,'5',NULL,1001,'7','11','9',NULL,NULL,'8','IP','1','2',NULL,NULL,'3',NULL,NULL,'10','6,12',NULL,NULL,NULL,NULL,NULL);
 
 INSERT INTO contactus VALUES (1,'asdfasdf This is a details','magicalcyber@gmail.com','User XXX','123456789','Title','2016-03-16 13:06:38',NULL,'admin',NULL);
 INSERT INTO contactus VALUES (2,'asdfasdfasdfasdf','email@email.com','User xXx','1345667','Mr.','2016-03-16 13:07:03',NULL,'admin',NULL);
