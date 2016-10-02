@@ -243,9 +243,9 @@ public class OrderDetailDaoImpl implements OrderDetailDao {
 	public int deleteByOrderCode(String orderCode) {
 		return sessionFactory.getCurrentSession()
 				.createQuery("delete from OrdDetail od " +
-						"where od.orderDetailId in (" +
-						" select odd.orderDetailId from OrdDetail odd, Orders o " +
-						" where o.orderId = od.orderId and o.orderCode = :orderCode " +
+						"where od.orderId in (" +
+						" select o.orderId from Orders o " +
+						" where o.orderCode = :orderCode " +
 						")")
 				.setString("orderCode", orderCode)
 				.executeUpdate();
