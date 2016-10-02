@@ -17,11 +17,11 @@ public class SyncFromAxJobProduction {
 
 	private SyncB2BService syncB2BService;
 
-	@Scheduled(cron = "0 0 18 * * ?")
+	@Scheduled(cron = "0 0 0/6 * * ?")
 	public void doIt() {
 		log.info("Start sync data from AX...");
-		syncB2BService.syncSellOrderFromAX();
-		syncB2BService.syncInvoiceFromAX();
+		syncB2BService.syncAllFromAX();
+		log.info("Finished sync data from AX...");
 	}
 
 	@Autowired

@@ -14,15 +14,14 @@ import org.springframework.stereotype.Component;
 public class SyncFromAxJobDev {
 
 	private static final Logger log = LoggerFactory.getLogger(SyncFromAxJobDev.class);
+
 	@Autowired
 	private SyncB2BService syncB2BService;
-	// un-comment to scheduling
-	//@Scheduled(cron = "0 0/1 * * * ?")
+
+	@Scheduled(cron = "0 0/5 * * * ?")
 	public void doIt() {
 		log.info("Start sync data from AX...");
-		// TODO move data from temp table to data table
-		syncB2BService.syncSellOrderFromAX();
-		syncB2BService.syncSellOrderDetailFromAX();
+		syncB2BService.syncAllFromAX();
 	}
 
 }
