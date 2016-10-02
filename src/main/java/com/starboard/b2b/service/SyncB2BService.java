@@ -1,8 +1,12 @@
 package com.starboard.b2b.service;
 
+import com.starboard.b2b.common.Page;
+import com.starboard.b2b.dto.search.SearchSyncRequest;
+import com.starboard.b2b.dto.search.SyncAxDto;
+
 public interface SyncB2BService {
 
-    void syncAllFromAX();
+	void syncAllFromAX() throws Exception;
 
 	void syncContactFromAX();
 
@@ -10,16 +14,18 @@ public interface SyncB2BService {
 
 	void syncProductFromAX();
 
-    void syncOrdersFromAX();
+	void syncOrdersFromAX();
 
-    void syncOrderDetailFromAX();
+	void syncOrderDetailFromAX();
 
-    void syncOrderAddressFromAX();
+	void syncOrderAddressFromAX();
 
-    void syncSellOrderFromAX();
+	void syncSellOrderFromAX();
 
-    void syncSellOrderDetailFromAX();
+	void syncSellOrderDetailFromAX();
 
-    //void syncInvoiceFromAX();
+	Page<SyncAxDto> search(SearchSyncRequest req);
+
+	// void syncInvoiceFromAX();
 
 }

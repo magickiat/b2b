@@ -25,16 +25,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.fasterxml.jackson.core.io.JsonStringEncoder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.starboard.b2b.common.B2BConstant;
 import com.starboard.b2b.common.Page;
 import com.starboard.b2b.dto.B2BFile;
+import com.starboard.b2b.dto.search.SearchSyncRequest;
 import com.starboard.b2b.exception.B2BException;
+import com.starboard.b2b.service.SyncB2BService;
 import com.starboard.b2b.util.ApplicationConfig;
 import com.starboard.b2b.util.B2BFileUtil;
-import com.starboard.b2b.web.controller.login.LoginForm;
 
 @Controller
 @RequestMapping("/backend/admin")
@@ -45,6 +45,9 @@ public class AdminController {
 
 	@Autowired
 	private Environment env;
+	
+	@Autowired
+	private SyncB2BService syncB2BService;
 
 	@Autowired
 	private ApplicationConfig applicationConfig;
@@ -56,16 +59,21 @@ public class AdminController {
 
 	@GetMapping("/sync-from-ax")
 	String syncAxSearch(@RequestParam(name = "page", defaultValue = "1") int page, Model model) {
+		SearchSyncRequest req = new SearchSyncRequest();
+		req.setPage(page);
+		
+		model.addAttribute("resultPage", syncB2BService.search(req));
+		
 		return "pages-back/admin/sync-from-ax";
 	}
 
 	@PostMapping("/sync-from-ax")
-	String syncAxAction(Model model) {
+	String syncAxAction(Model model) throws Exception {
 		log.info("-----------------------------------------------");
 		log.info("\tBEGIN SYNC AX");
 		log.info("-----------------------------------------------");
 
-		// TODO call sync service
+		syncB2BService.syncAllFromAX();
 
 		log.info("-----------------------------------------------");
 		log.info("\tFINISHED lSYNC AX");

@@ -19,7 +19,7 @@ public class SyncFromAxJobDev {
 	private SyncB2BService syncB2BService;
 
 	@Scheduled(cron = "0 0/5 * * * ?")
-	public void doIt() {
+	public void doIt() throws Exception {
 		log.info("Start sync data from AX...");
 		syncB2BService.syncAllFromAX();
 	}

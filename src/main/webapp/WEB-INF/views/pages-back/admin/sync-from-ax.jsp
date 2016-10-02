@@ -25,12 +25,13 @@
 
 				<div class="col-sm-12">&nbsp;</div>
 
-				<div class="col-sm-12">
-
-
+				<div class="col-sm-6">
 					<input type="button" class="btn btn-success center-block"
 						onclick="confirmSync()" value="Begin Sync" />
-
+				</div>
+				<div class="col-sm-6">
+					<input type="button" class="btn btn-success center-block"
+						onclick="refresh()" value="Refresh" />
 				</div>
 				<div class="col-sm-12">&nbsp;</div>
 			</div>
@@ -71,16 +72,14 @@
 										value="${ (( resultPage.current - 1) * resultPage.pageSize) }"></c:set>
 
 
-									<c:forEach items="${ resultPage.result }" var="user"
+									<c:forEach items="${ resultPage.result }" var="sync"
 										varStatus="rowNum">
-										<tr id="${user.id }" style="cursor: pointer;"
-											onclick="editUser('${ user.customer.custId}', ${user.id })">
+										<tr id="${user.id }" style="cursor: pointer;">
 											<td nowrap="nowrap">${ rowBegin + (rowNum.index + 1) }</td>
 											<td nowrap="nowrap"><fmt:formatDate
-													pattern="dd-MM-yyyy HH:mm" value="${user.lastActive }" />
-											</td>
-											<td nowrap="nowrap">${ user.name }</td>
-											<td nowrap="nowrap">${ user.email }</td>
+													pattern="dd-MM-yyyy HH:mm" value="${sync.syncDate }" /></td>
+											<td nowrap="nowrap">${ sync.status }</td>
+											<td nowrap="nowrap">${ sync.remark }</td>
 
 										</tr>
 									</c:forEach>
@@ -132,23 +131,40 @@
 
 
 	<script type="text/javascript">
-	
-		$('#div_dialog_confirm_sync .btn-success').on('click',function(){
-			console.log('begin sync ax');
-			$.post('<c:url value="/backend/admin/sync-from-ax"/>').done(function(response) {
-				$('#div_dialog_confirm_sync').hide();
-				showDialog('Sync complete');
-				setTimeout(function() { window.location.href = '<c:url value="/backend/admin/sync-from-ax" />'; }, 2000);
-			}).fail(function(result) {
-				$('#div_dialog_confirm_sync').hide();
-				console.log('Error: ' + result.responseText);
-				showDialog(result.responseText);
-			}); 
-			console.log('sync ax complete');
-		});
-	
-		function confirmSync(){
+		$('#div_dialog_confirm_sync .btn-success')
+				.on(
+						'click',
+						function() {
+							console.log('begin sync ax');
+							$
+									.post(
+											'<c:url value="/backend/admin/sync-from-ax"/>')
+									.done(
+											function(response) {
+												$('#div_dialog_confirm_sync')
+														.hide();
+												showDialog('Sync process has begin<br/>Please wait for a moment for process complete.');
+												setTimeout(
+														function() {
+															window.location.href = '<c:url value="/backend/admin/sync-from-ax" />';
+														}, 3000);
+											})
+									.fail(
+											function(result) {
+												$('#div_dialog_confirm_sync')
+														.hide();
+												console.log('Error: '
+														+ result.responseText);
+												showDialog(result.responseText);
+											});
+						});
+
+		function confirmSync() {
 			$('#div_dialog_confirm_sync').modal();
+		}
+
+		function refresh() {
+			window.location.href = "";
 		}
 	</script>
 
