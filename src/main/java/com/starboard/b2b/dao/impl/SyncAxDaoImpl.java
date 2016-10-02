@@ -13,7 +13,6 @@ import com.starboard.b2b.dto.search.SearchRequest;
 import com.starboard.b2b.dto.search.SearchSyncRequest;
 import com.starboard.b2b.dto.search.SearchSyncResult;
 import com.starboard.b2b.dto.search.SyncAxDto;
-import com.starboard.b2b.model.Event;
 import com.starboard.b2b.model.SyncAx;
 
 @Repository("syncAxDao")
@@ -38,7 +37,7 @@ public class SyncAxDaoImpl implements SyncAxDao {
 				.setResultTransformer(Transformers.aliasToBean(SyncAxDto.class)).setFirstResult(req.getFirstResult())
 				.setMaxResults(req.getPageSize()).list();
 
-		Object totalRecord = sessionFactory.getCurrentSession().createCriteria(Event.class).setProjection(Projections.rowCount()).uniqueResult();
+		Object totalRecord = sessionFactory.getCurrentSession().createCriteria(SyncAx.class).setProjection(Projections.rowCount()).uniqueResult();
 		result.setResult(list);
 		result.setTotal((long) totalRecord);
 

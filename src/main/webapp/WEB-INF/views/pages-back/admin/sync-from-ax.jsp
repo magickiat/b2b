@@ -39,7 +39,7 @@
 
 
 			<!-- Base URL for pagination -->
-			<c:set var="baseUrl" value="/backend/admin/sync" />
+			<c:set var="baseUrl" value="/backend/admin/sync-from-ax" />
 			<div class="row">
 				<%@include file="/WEB-INF/views/include/paging.jspf"%>
 			</div>
