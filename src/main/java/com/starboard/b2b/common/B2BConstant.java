@@ -18,7 +18,7 @@ public interface B2BConstant {
 	long ONE_IMPORT_STATUS = 1;
 
 	String PRODUCT_IMAGE_FOLDER = "product_image";
-	String PRODUCT_IMAGE_BIG = "Big";
+	String PRODUCT_IMAGE_BIG = "BIG";
 	String PRODUCT_IMAGE_CATEGORY = "Category";
 	String PRODUCT_IMAGE_THUMBNAIL = "Thumbnail";
 	
