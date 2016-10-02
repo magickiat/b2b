@@ -20,6 +20,6 @@ public interface SyncB2BService {
 
     void syncSellOrderDetailFromAX();
 
-    void syncInvoiceFromAX();
+    //void syncInvoiceFromAX();
 
 }

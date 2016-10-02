@@ -77,7 +77,7 @@ public class SyncB2BServiceImpl implements SyncB2BService {
         syncOrderAddressFromAX();
         syncSellOrderFromAX();
         syncSellOrderDetailFromAX();
-        syncInvoiceFromAX();
+        //syncInvoiceFromAX();
     }
 
     @Override
@@ -334,11 +334,11 @@ public class SyncB2BServiceImpl implements SyncB2BService {
         }
     }
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void syncInvoiceFromAX() {
-        log.info("sync invoice from AX");
-    }
+//    @Override
+//    @Transactional(rollbackFor = Exception.class)
+//    public void syncInvoiceFromAX() {
+//        log.info("sync invoice from AX");
+//    }
 
     @Autowired
     public void setAddrDao(AddrDao addrDao) {
