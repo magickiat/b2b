@@ -22,7 +22,6 @@
 				<div class="" style="margin-top: 10px;">
 					<button style="" class="btn btn-danger pull-right" onclick="deleteFile()">Delete</button>
 					<button style="margin-right: 5px;" class="btn btn-default pull-right" onclick="upload()">Upload</button>
-					<button style="margin-right: 5px;" class="btn btn-default pull-right" onclick="back()">Back</button>
 				</div>
 				<div class="col-sm-12">&nbsp;</div>
 			</div>
