@@ -67,6 +67,7 @@ public class SyncB2BServiceImpl implements SyncB2BService {
     private TmpAddrAXDao tmpAddrAXDao;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void syncAllFromAX() {
         syncContactFromAX();
         syncAddressFromAX();
