@@ -8,13 +8,21 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,15 +60,18 @@ import com.starboard.b2b.dto.search.SearchOrderDTO;
 import com.starboard.b2b.dto.search.SearchOrderDetailDTO;
 import com.starboard.b2b.dto.search.SearchProductModelDTO;
 import com.starboard.b2b.exception.B2BException;
+import com.starboard.b2b.model.Product;
 import com.starboard.b2b.service.BrandService;
 import com.starboard.b2b.service.CustomerService;
 import com.starboard.b2b.service.EmailService;
 import com.starboard.b2b.service.OrderService;
 import com.starboard.b2b.service.ProductService;
 import com.starboard.b2b.util.ApplicationConfig;
+import com.starboard.b2b.util.ArchiveUtil;
 import com.starboard.b2b.util.B2BFileUtil;
 import com.starboard.b2b.util.CartHelper;
 import com.starboard.b2b.util.ExcelUtil;
+import com.starboard.b2b.util.StringUtil;
 import com.starboard.b2b.util.UserUtil;
 import com.starboard.b2b.web.form.order.OrderSummaryForm;
 import com.starboard.b2b.web.form.product.SearchProductForm;
@@ -579,8 +590,8 @@ public class FrontOrderController {
 
 		// ----- for show finish button -----
 		model.addAttribute("orderComplete", true);
-		
-		//----- find all order details to show by currency -----
+
+		// ----- find all order details to show by currency -----
 		ArrayList<SearchOrderDTO> orderDetails = new ArrayList<>();
 		Iterator<OrderDTO> iterator = orders.iterator();
 		while (iterator.hasNext()) {
@@ -680,4 +691,193 @@ public class FrontOrderController {
 		model.addAttribute("orderStatus", orderStatus);
 	}
 
+	/**
+	 * Generate excel Order form
+	 */
+	@RequestMapping(value = "gen-order-form", method = RequestMethod.GET)
+	public String genOrderForm(@RequestParam("brand_id") Long brandGroupId, HttpServletResponse response) throws IOException {
+
+		log.info("gen-order-form: brandGroupId = " + brandGroupId);
+
+		List<ProductTypeDTO> brands = productService.getProductTypes(UserUtil.getCurrentUser().getCustomer().getCustId(), brandGroupId);
+
+		if (brands.size() == 0) {
+			throw new B2BException("Not found any brand");
+		}
+
+		TreeMap<String, HSSFWorkbook> excelMap = new TreeMap<>();
+
+		// Gen excel for a brand
+		for (ProductTypeDTO brand : brands) {
+			log.info("Brand: " + brand.getProductTypeName());
+
+			// Get product under a brand
+			TreeMap<String, TreeMap<String, TreeMap<String, ArrayList<Product>>>> groupSheetProducts = new TreeMap<>();
+			List<Product> products = productService.findProductByProductTypeId(brand.getProductTypeId());
+
+			// group product for excel sheet by sheet_name
+			if (products.size() > 0) {
+				for (int i = 0; i < products.size(); i++) {
+					Product product = products.get(i);
+					if (B2BConstant.PRODUCT_FLAG_ACTIVE.equals(product.getIsActive())) {
+
+						if (product.getExcelSheet() == null) {
+							product.setExcelSheet(B2BConstant.UNDEFINED);
+						}
+
+						// Step 1: check excel sheet
+						TreeMap<String, TreeMap<String, ArrayList<Product>>> sheet = groupSheetProducts.get(product.getExcelSheet());
+						if (sheet == null) {
+							sheet = new TreeMap<>();
+							groupSheetProducts.put(product.getExcelSheet(), sheet);
+						}
+
+						// Step 2: check model
+						TreeMap<String, ArrayList<Product>> model = sheet.get(product.getProductModelId());
+						if (model == null) {
+							model = new TreeMap<>();
+							sheet.put(product.getProductModelId(), model);
+						}
+
+						// Step 3: check technology
+						ArrayList<Product> technology = model.get(product.getProductTechnologyId());
+						if (technology == null) {
+							technology = new ArrayList<>();
+							model.put(product.getProductTechnologyId(), technology);
+						}
+
+						// Step 4: Add product
+						technology.add(product);
+					}
+				}
+			}
+
+			// group product
+
+			// Gen excel for a brand
+			if (!groupSheetProducts.isEmpty()) {
+				HSSFWorkbook workbook = new HSSFWorkbook();
+				Set<String> keySet = groupSheetProducts.keySet();
+
+				CellStyle styleCenter = workbook.createCellStyle();
+				styleCenter.setAlignment(CellStyle.ALIGN_CENTER);
+				styleCenter.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+
+				int headerIndex = 0;
+				for (String group : keySet) {
+					int countRow = 0;
+					HSSFSheet sheetProduct = workbook.createSheet(group);
+					HSSFRow rowHeader = sheetProduct.createRow(countRow++);
+					headerIndex = 0;
+					// bold font
+					CellStyle style = workbook.createCellStyle();
+					Font font = workbook.createFont();
+					font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+					style.setFont(font);
+
+					HSSFCell cellModel = rowHeader.createCell(headerIndex++);
+					cellModel.setCellValue("Category");
+					cellModel.setCellStyle(style);
+
+					HSSFCell cellTech = rowHeader.createCell(headerIndex++);
+					cellTech.setCellValue("Technology");
+					cellTech.setCellStyle(style);
+
+					HSSFCell cellDesc = rowHeader.createCell(headerIndex++);
+					cellDesc.setCellValue("Description");
+					cellDesc.setCellStyle(style);
+
+					HSSFCell cellCode = rowHeader.createCell(headerIndex++);
+					cellCode.setCellValue("Product Code");
+					cellCode.setCellStyle(style);
+
+					HSSFCell cellUnit = rowHeader.createCell(headerIndex++);
+					cellUnit.setCellValue("Unit");
+					cellUnit.setCellStyle(style);
+
+					HSSFCell cellQty = rowHeader.createCell(headerIndex++);
+					cellQty.setCellValue("Qty");
+					cellQty.setCellStyle(style);
+
+					// Step 1: group model
+					TreeMap<String, TreeMap<String, ArrayList<Product>>> models = groupSheetProducts.get(group);
+					if (models != null) {
+
+						Set<String> keyModel = models.keySet();
+						for (String modelName : keyModel) {
+							int beginRowModel = countRow;
+
+							// Step 2: group technology
+							log.debug("modelName = " + modelName);
+							TreeMap<String, ArrayList<Product>> technologies = models.get(modelName);
+							if (technologies != null) {
+								Set<String> keyTech = technologies.keySet();
+								// Step 3: product
+
+								for (String techName : keyTech) {
+									int beginRowTech = countRow;
+									log.debug("\ttechName = " + techName);
+
+									ArrayList<Product> list = technologies.get(techName);
+
+									if (list != null && !list.isEmpty()) {
+
+										// Step 4: list product
+										for (Product product : list) {
+											int columnIndex = 0;
+											HSSFRow productRow = sheetProduct.createRow(countRow++);
+
+											HSSFCell cellRowModel = productRow.createCell(columnIndex++);
+											cellRowModel.setCellStyle(styleCenter);
+											cellRowModel.setCellValue(StringUtils.defaultIfEmpty(product.getProductModelId(), ""));
+
+											HSSFCell cellRowTech = productRow.createCell(columnIndex++);
+											cellRowTech.setCellStyle(styleCenter);
+											cellRowTech.setCellValue(StringUtils.defaultIfEmpty(product.getProductTechnologyId(), ""));
+
+											productRow.createCell(columnIndex++)
+													.setCellValue(StringUtils.defaultIfEmpty(product.getProductNameEn(), ""));
+											productRow.createCell(columnIndex++)
+													.setCellValue(StringUtils.defaultIfEmpty(product.getProductCode(), ""));
+											productRow.createCell(columnIndex++).setCellValue(StringUtils.defaultIfEmpty(product.getProductUnitId(),
+													applicationConfig.getDefaultProductUnit()));
+											productRow.createCell(columnIndex++).setCellValue("");
+										}
+
+									}
+
+									// merge tech step 3
+									sheetProduct.addMergedRegion(new CellRangeAddress(beginRowTech, countRow - 1, 1, 1));
+									log.debug("\tEnd techName = " + techName);
+
+								}
+
+							}
+							// merge model step 2
+							sheetProduct.addMergedRegion(new CellRangeAddress(beginRowModel, countRow - 1, 0, 0));
+							log.debug("End modelName = " + modelName);
+						}
+					}
+
+					for (int i = 0; i < 4; i++) {
+						sheetProduct.autoSizeColumn(i, true);
+					}
+				}
+
+				excelMap.put(StringUtil.removeSpecialChar(brand.getProductTypeName().replaceAll(" ", "_")), workbook);
+
+			}
+
+		}
+
+		byte[] zip = ArchiveUtil.zipExcel(excelMap);
+
+		response.setContentLength(zip.length);
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-Disposition", "attachment; filename=ORDER_FORM.zip");
+		try (OutputStream output = response.getOutputStream()) {
+			output.write(zip);
+		}
+		return null;
+	}
 }
