@@ -25,9 +25,9 @@
 						onclick="deleteFile()">Delete</button>
 					<button style="margin-right: 5px;"
 						class="btn btn-default pull-right" onclick="upload()">Upload</button>
-					<button style="margin-right: 5px;"
-						class="btn btn-default pull-right" onclick="newFolder()">New
-						Folder</button>
+<!-- 					<button style="margin-right: 5px;" -->
+<!-- 						class="btn btn-default pull-right" onclick="newFolder()">New -->
+<!-- 						Folder</button> -->
 					<button style="margin-right: 5px;"
 						class="btn btn-default pull-right" onclick="back()">Back</button>
 				</div>
