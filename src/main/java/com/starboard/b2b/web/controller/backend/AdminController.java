@@ -175,13 +175,13 @@ public class AdminController {
 			throw new B2BException("Invalid path");
 		}
 
-		File rootFolder = new File(rootPath, subFolder);
+		File rootFolder = new File(rootPath + B2BConstant.PRODUCT_IMAGE_FOLDER , subFolder);
 		if (!rootFolder.isDirectory()) {
 			rootFolder.mkdirs();
 			// throw new B2BException("Invalid path");
 		}
 
-		File newFolder = new File(rootFolder.getAbsolutePath(), folderName);
+		File newFolder = new File(rootFolder, folderName);
 		if (newFolder.exists()) {
 			throw new B2BException("Exist folder: " + folderName);
 		}
@@ -229,7 +229,7 @@ public class AdminController {
 					throw new B2BException("Not found upload path");
 				}
 				try {
-					B2BFileUtil.saveFileToLocalDisk(rootPath, subFolder, uploadFile);
+					B2BFileUtil.saveFileToLocalDisk(rootPath + B2BConstant.PRODUCT_IMAGE_FOLDER , subFolder, uploadFile);
 				} catch (Exception e) {
 					log.error(e.getMessage(), e);
 					file.setRemark(e.getMessage());
@@ -398,8 +398,8 @@ public class AdminController {
 		Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 		List<String> file_list = new ArrayList<String>();
 		String rootPath = env.getProperty("upload.path");
-		log.info("path: " + B2BConstant.TEMPLATE_IMAGE_FOLDER + "/" + B2BConstant.TEMPLATE_IMAGE_BACK_END);
-		log.info("current : " + B2BConstant.TEMPLATE_IMAGE_BACK_END);
+		log.debug("path: " + B2BConstant.TEMPLATE_IMAGE_FOLDER + "/" + B2BConstant.TEMPLATE_IMAGE_BACK_END);
+		log.debug("current : " + B2BConstant.TEMPLATE_IMAGE_BACK_END);
 		List<B2BFile> listFile = B2BFileUtil.list(rootPath, B2BConstant.TEMPLATE_IMAGE_FOLDER + "/" + B2BConstant.TEMPLATE_IMAGE_BACK_END);
 		for (B2BFile b2bFile : listFile) {
 			if (b2bFile.getNameWithPath().length() > 0) {

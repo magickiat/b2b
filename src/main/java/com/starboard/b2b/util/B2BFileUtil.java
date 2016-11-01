@@ -46,8 +46,8 @@ public class B2BFileUtil {
 	private static final Logger log = LoggerFactory.getLogger(B2BFileUtil.class);
 
 	public static List<B2BFile> list(String rootFolder, String path) {
-		log.info("root: " + rootFolder);
-		log.info("path: " + path);
+		log.debug("root: " + rootFolder);
+		log.debug("path: " + path);
 
 		ArrayList<B2BFile> files = new ArrayList<>();
 
