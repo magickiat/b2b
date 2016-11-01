@@ -795,9 +795,21 @@ public class FrontOrderController {
 					cellUnit.setCellValue("Unit");
 					cellUnit.setCellStyle(style);
 
-					HSSFCell cellQty = rowHeader.createCell(headerIndex++);
-					cellQty.setCellValue("Qty");
-					cellQty.setCellStyle(style);
+					HSSFCell cellQtyNormal = rowHeader.createCell(headerIndex++);
+					cellQtyNormal.setCellValue("Normal");
+					cellQtyNormal.setCellStyle(style);
+					
+					HSSFCell cellQtyTeam = rowHeader.createCell(headerIndex++);
+					cellQtyTeam.setCellValue("Team");
+					cellQtyTeam.setCellStyle(style);
+					
+					HSSFCell cellQtyDemo = rowHeader.createCell(headerIndex++);
+					cellQtyDemo.setCellValue("Demo");
+					cellQtyDemo.setCellStyle(style);
+					
+					HSSFCell cellQtyFree = rowHeader.createCell(headerIndex++);
+					cellQtyFree.setCellValue("Free");
+					cellQtyFree.setCellStyle(style);
 
 					// Step 1: group model
 					TreeMap<String, TreeMap<String, ArrayList<Product>>> models = groupSheetProducts.get(group);
