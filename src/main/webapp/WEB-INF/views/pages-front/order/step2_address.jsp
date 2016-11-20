@@ -34,7 +34,7 @@
 								<!-- Quick Order -->
 								<div class="col-md-2" style="margin-top: 30px;">
 									<a
-										href='<c:url value="/frontend/order/step2/search?brand_id=${ brandId }" />'>
+										href='<c:url value="/frontend/order/step2/list-tab?brand_id=${ brandId }" />'>
 										<img alt="Quick Order"
 											src='<c:url value="/images/pages-front/icon/quick_order.png" />' />
 									</a>

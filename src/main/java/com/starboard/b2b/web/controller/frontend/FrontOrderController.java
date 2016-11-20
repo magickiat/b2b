@@ -161,7 +161,7 @@ public class FrontOrderController {
 
 		// set search condition
 		SearchProductForm form = new SearchProductForm();
-		form.setShowType("image");
+		form.setShowType("list");
 		form.setBrandId(brandId);
 		model.addAttribute("searchProductForm", form);
 
@@ -189,6 +189,47 @@ public class FrontOrderController {
 		}
 		model.addAttribute("resultPage", resultPage);
 
+		return "pages-front/order/step2_search";
+	}
+
+	@RequestMapping(value = "step2/list-tab", method = RequestMethod.GET)
+	String step2ListAllProduct(@RequestParam("brand_id") Long brandId, Model model) {
+		List<ProductTypeDTO> brands = productService.getProductTypes(UserUtil.getCurrentUser().getCustomer().getCustId(), brandId);
+
+		if (brands.size() == 0) {
+			throw new B2BException("Not found any brand");
+		}
+
+		TreeMap<String, ArrayList<Product>> groupSheetProducts = new TreeMap<>();
+		for (ProductTypeDTO brand : brands) {
+			log.info("Brand: " + brand.getProductTypeName());
+
+			List<Product> products = productService.findProductByProductTypeId(brand.getProductTypeId());
+			if (products.size() > 0) {
+				for (int i = 0; i < products.size(); i++) {
+					Product product = products.get(i);
+					if (B2BConstant.PRODUCT_FLAG_ACTIVE.equals(product.getIsActive())) {
+
+						ArrayList<Product> list = groupSheetProducts.get(product.getExcelSheet());
+						if (list == null) {
+							list = new ArrayList<>();
+							groupSheetProducts.put(product.getExcelSheet(), list);
+						}
+						list.add(product);
+
+					}
+
+				}
+
+			}
+
+		}
+		// set search condition
+		SearchProductForm form = new SearchProductForm();
+		form.setShowType("list");
+		form.setBrandId(brandId);
+		model.addAttribute("searchProductForm", form);
+		model.addAttribute("groupSheetProducts", groupSheetProducts);
 		return "pages-front/order/step2_search";
 	}
 
@@ -798,15 +839,15 @@ public class FrontOrderController {
 					HSSFCell cellQtyNormal = rowHeader.createCell(headerIndex++);
 					cellQtyNormal.setCellValue("Normal");
 					cellQtyNormal.setCellStyle(style);
-					
+
 					HSSFCell cellQtyTeam = rowHeader.createCell(headerIndex++);
 					cellQtyTeam.setCellValue("Team");
 					cellQtyTeam.setCellStyle(style);
-					
+
 					HSSFCell cellQtyDemo = rowHeader.createCell(headerIndex++);
 					cellQtyDemo.setCellValue("Demo");
 					cellQtyDemo.setCellStyle(style);
-					
+
 					HSSFCell cellQtyFree = rowHeader.createCell(headerIndex++);
 					cellQtyFree.setCellValue("Free");
 					cellQtyFree.setCellStyle(style);
@@ -847,12 +888,14 @@ public class FrontOrderController {
 											cellRowTech.setCellStyle(styleCenter);
 											cellRowTech.setCellValue(StringUtils.defaultIfEmpty(product.getProductTechnologyId(), ""));
 
+											productRow.createCell(columnIndex++).setCellValue(
+													StringUtils.defaultIfEmpty(product.getProductNameEn(), ""));
+											productRow.createCell(columnIndex++).setCellValue(
+													StringUtils.defaultIfEmpty(product.getProductCode(), ""));
 											productRow.createCell(columnIndex++)
-													.setCellValue(StringUtils.defaultIfEmpty(product.getProductNameEn(), ""));
-											productRow.createCell(columnIndex++)
-													.setCellValue(StringUtils.defaultIfEmpty(product.getProductCode(), ""));
-											productRow.createCell(columnIndex++).setCellValue(StringUtils.defaultIfEmpty(product.getProductUnitId(),
-													applicationConfig.getDefaultProductUnit()));
+													.setCellValue(
+															StringUtils.defaultIfEmpty(product.getProductUnitId(),
+																	applicationConfig.getDefaultProductUnit()));
 											productRow.createCell(columnIndex++).setCellValue("");
 										}
 
