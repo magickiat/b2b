@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-@Component("syncFromAx")
-@Profile("dev")
+//@Component("syncFromAx")
+//@Profile("dev")
 public class SyncFromAxJobDev {
 
 	private static final Logger log = LoggerFactory.getLogger(SyncFromAxJobDev.class);
@@ -18,7 +18,7 @@ public class SyncFromAxJobDev {
 	@Autowired
 	private SyncB2BService syncB2BService;
 
-	@Scheduled(cron = "0 0/5 * * * ?")
+	//@Scheduled(cron = "0 0/5 * * * ?")
 	public void doIt() throws Exception {
 		log.info("Start sync data from AX...");
 		syncB2BService.syncAllFromAX();

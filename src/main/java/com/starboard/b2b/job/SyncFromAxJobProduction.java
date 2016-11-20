@@ -9,15 +9,15 @@ import org.springframework.stereotype.Component;
 
 import com.starboard.b2b.service.SyncB2BService;
 
-@Component("syncFromAx")
-@Profile("prd")
+//@Component("syncFromAx")
+//@Profile("prd")
 public class SyncFromAxJobProduction {
 
 	private static final Logger log = LoggerFactory.getLogger(SyncFromAxJobProduction.class);
 
 	private SyncB2BService syncB2BService;
 
-	@Scheduled(cron = "0 0 0/6 * * ?")
+	//@Scheduled(cron = "0 0 0/6 * * ?")
 	public void doIt() throws Exception {
 		log.info("Start sync data from AX...");
 		syncB2BService.syncAllFromAX();
